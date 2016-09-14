@@ -1,0 +1,7 @@
+/.idea/
+/gradle.properties
+/build/
+/target/
+/.gradle/
+/classes/
+hs_err_pid*

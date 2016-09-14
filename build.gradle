@@ -1,0 +1,84 @@
+group 'org.liquidengine'
+
+Properties up = new Properties(); up.load(new FileInputStream("version.properties")); properties.putAll(up);
+version up.getProperty("liquidengine.legui.version")
+
+apply plugin: 'java'
+if (file("./postbuild.gradle").exists()) apply from: './postbuild.gradle'
+apply plugin: 'idea'
+idea { module { downloadJavadoc = true; downloadSources = true; } }
+
+project.sourceCompatibility = 1.8
+project.targetCompatibility = 1.8
+compileJava.options.encoding = 'UTF-8'
+
+def BUILD = hasProperty("BUILD") ? getProperty("BUILD") : "";
+if (BUILD == "SNAPSHOT") {
+    project.version += "-SNAPSHOT"
+}
+
+configurations.all {
+    resolutionStrategy.cacheChangingModulesFor 10, 'seconds'
+}
+
+allprojects {
+    repositories {
+        mavenCentral()
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+    }
+}
+def lwjgl_version = '3.0.1-SNAPSHOT'
+def joml_version = "1.8.3-SNAPSHOT"
+def log4j_version = '2.3'
+def commons_version = '3.4'
+def commons_collections = '4.1'
+def junit_version = '4.12'
+def le_cbchain = '0.1.0'
+def guava_version = '19.0'
+
+repositories {
+    jcenter()
+    mavenCentral()
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+    maven { url "https://gitlab.com/LiquidEngine/repo/raw/snapshots" }
+    maven { url "https://gitlab.com/LiquidEngine/repo/raw/releases" }
+}
+
+dependencies {
+
+    compile group: "org.joml", name: "joml", version: joml_version, changing: true
+    compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: log4j_version
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: commons_version
+    compile group: 'org.apache.commons', name: 'commons-collections4', version: commons_collections
+    compile group: 'com.google.guava', name: 'guava', version: guava_version
+
+    compile group: 'org.liquidengine', name: 'cbchain', version: le_cbchain, changing: true
+
+    compile group: 'org.lwjgl', name: 'lwjgl-stb', version: lwjgl_version, changing: true
+    compile group: 'org.lwjgl', name: 'lwjgl-stb', version: lwjgl_version, classifier: 'natives-windows', changing: true
+    compile group: 'org.lwjgl', name: 'lwjgl-stb', version: lwjgl_version, classifier: 'natives-linux', changing: true
+    compile group: 'org.lwjgl', name: 'lwjgl-stb', version: lwjgl_version, classifier: 'natives-macos', changing: true
+
+    compile group: 'org.lwjgl', name: 'lwjgl-glfw', version: lwjgl_version, changing: true
+    compile group: 'org.lwjgl', name: 'lwjgl-glfw', version: lwjgl_version, classifier: 'natives-windows', changing: true
+    compile group: 'org.lwjgl', name: 'lwjgl-glfw', version: lwjgl_version, classifier: 'natives-linux', changing: true
+    compile group: 'org.lwjgl', name: 'lwjgl-glfw', version: lwjgl_version, classifier: 'natives-macos', changing: true
+
+    compile group: 'org.lwjgl', name: 'lwjgl-nanovg', version: lwjgl_version, changing: true
+    compile group: 'org.lwjgl', name: 'lwjgl-nanovg', version: lwjgl_version, classifier: 'natives-windows', changing: true
+    compile group: 'org.lwjgl', name: 'lwjgl-nanovg', version: lwjgl_version, classifier: 'natives-linux', changing: true
+    compile group: 'org.lwjgl', name: 'lwjgl-nanovg', version: lwjgl_version, classifier: 'natives-macos', changing: true
+
+    compile group: 'org.lwjgl', name: 'lwjgl-opengl', version: lwjgl_version, changing: true
+
+    compile group: 'org.lwjgl', name: 'lwjgl', version: lwjgl_version, changing: true
+    compile group: 'org.lwjgl', name: 'lwjgl', version: lwjgl_version, classifier: 'natives-windows', changing: true
+    compile group: 'org.lwjgl', name: 'lwjgl', version: lwjgl_version, classifier: 'natives-linux', changing: true
+    compile group: 'org.lwjgl', name: 'lwjgl', version: lwjgl_version, classifier: 'natives-macos', changing: true
+
+    runtime group: 'org.lwjgl', name: 'lwjgl-platform', version: lwjgl_version, classifier: 'natives-windows', changing: true
+    runtime group: 'org.lwjgl', name: 'lwjgl-platform', version: lwjgl_version, classifier: 'natives-linux', changing: true
+    runtime group: 'org.lwjgl', name: 'lwjgl-platform', version: lwjgl_version, classifier: 'natives-osx', changing: true
+
+    testCompile group: 'junit', name: 'junit', version: junit_version
+}
