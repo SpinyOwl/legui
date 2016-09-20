@@ -1,6 +1,6 @@
 package org.liquidengine.legui.example;
 
-import org.joml.Vector2f;
+import org.joml.Vector2i;
 import org.joml.Vector4f;
 import org.liquidengine.legui.context.LeguiCallbackKeeper;
 import org.liquidengine.legui.context.LeguiContext;
@@ -74,6 +74,7 @@ public class Example {
 
         exampleGui = new ExampleGui(width, height);
         leguiContext = new LeguiContext(windowPointer, exampleGui);
+        leguiContext.setDebug(true);
 
         eventProcessor = new LeguiEventProcessor(exampleGui, leguiContext);
         renderer = new NvgLeguiRenderer(leguiContext);
@@ -99,11 +100,11 @@ public class Example {
         long timer = System.currentTimeMillis();
 
         while (running) {
-            leguiContext.update();
+            leguiContext.updateGlfwWindow();
 
             glClearColor(clearColor.x, clearColor.y, clearColor.z, 1);
-            Vector2f windowSize = leguiContext.getWindowSize();
-            glViewport(0, 0, (int) windowSize.x, (int) windowSize.y);
+            Vector2i windowSize = leguiContext.getTargetSize();
+            glViewport(0, 0, windowSize.x, windowSize.y);
             glClear(GL_COLOR_BUFFER_BIT);
 
             renderer.render(exampleGui);

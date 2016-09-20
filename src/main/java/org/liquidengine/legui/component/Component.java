@@ -2,8 +2,13 @@ package org.liquidengine.legui.component;
 
 import org.joml.Vector2f;
 import org.joml.Vector4f;
-import org.liquidengine.legui.component.additional.Border;
+import org.liquidengine.legui.component.border.Border;
+import org.liquidengine.legui.component.intersector.LeguiIntersector;
+import org.liquidengine.legui.context.LeguiContext;
 import org.liquidengine.legui.processor.component.LeguiEventProcessorContainer;
+import org.liquidengine.legui.render.LeguiComponentRenderer;
+import org.liquidengine.legui.render.LeguiRendererProvider;
+import org.liquidengine.legui.util.ColorConstants;
 
 /**
  * Component is an object that have graphical representation in legui system
@@ -14,13 +19,34 @@ public abstract class Component {
     private final LeguiEventProcessorContainer processors = new LeguiEventProcessorContainer(this);
     protected Vector2f position;
     protected Vector2f size;
-    protected Vector4f backgroundColor;
+    protected Vector4f backgroundColor = ColorConstants.lightBlue();
+
     protected Border border;
-    protected boolean enabled;
-    protected boolean visible;
-    protected boolean focused;
+
+    protected boolean enabled = true;
+    protected boolean visible = true;
+    protected boolean focused = false;
+
     protected ComponentContainer parent;
-    private LeguiIntersector intersector;
+    protected LeguiIntersector intersector;
+    protected LeguiComponentRenderer renderer = LeguiRendererProvider.getProvider().getRenderer(this);
+
+    public Component() {
+        this(10, 10, 10, 10);
+    }
+
+    public Component(float x, float y, float width, float height) {
+        this(new Vector2f(x, y), new Vector2f(width, height));
+    }
+
+    public Component(Vector2f position, Vector2f size) {
+        this.position = position;
+        this.size = size;
+    }
+
+    public void render(LeguiContext context) {
+        renderer.render(this, context);
+    }
 
     public ComponentContainer getParent() {
         return parent;
@@ -38,12 +64,20 @@ public abstract class Component {
         this.position = position;
     }
 
+    public void setPosition(float x, float y) {
+        this.position.set(x, y);
+    }
+
     public Vector2f getSize() {
         return size;
     }
 
     public void setSize(Vector2f size) {
         this.size = size;
+    }
+
+    public void setSize(float width, float height) {
+        this.size.set(width, height);
     }
 
     public Vector4f getBackgroundColor() {

@@ -24,7 +24,7 @@ public class LeguiEventProcessor {
     public LeguiEventProcessor(Component mainGuiComponent, LeguiContext context) {
         this.mainGuiComponent = mainGuiComponent;
         this.context = context;
-        callbacks = new LeguiCallbackKeeper(context.getWindowPointer());
+        callbacks = new LeguiCallbackKeeper(context.getTargetPointer());
         leguiEventQueue = new LeguiEventQueue(callbacks);
     }
 

@@ -38,7 +38,7 @@ public class GuiCursorPosEventProcessor extends LeguiSystemEventProcessor<Cursor
     private void processEventOnContainer(CursorPosEvent event, Component gui, Component target) {
         updateComponentStatesAndCallListeners(event, gui, target);
         ComponentContainer container = (ComponentContainer) gui;
-        List<Component> all = container.getAll();
+        List<Component> all = container.getComponents();
         for (Component element : all) {
             process(event, element, target);
         }

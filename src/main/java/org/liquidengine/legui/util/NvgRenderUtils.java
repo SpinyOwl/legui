@@ -78,7 +78,6 @@ public final class NvgRenderUtils {
                                               NVGColor nvgColor,
                                               String text,
                                               HorizontalAlign horizontalAlign, VerticalAlign verticalAlign, boolean hide) {
-        Vector4f color = new Vector4f(1, 1, 1, 0.5f);
         nvgFontSize(context, fontSize);
         nvgFontFace(context, font);
 

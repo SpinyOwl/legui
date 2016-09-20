@@ -42,7 +42,7 @@ public final class ColorConstants {
     }
 
     public static Vector4f lightBlue() {
-        return new Vector4f(0.3f, 0.3f, 1, 1);
+        return new Vector4f(0.6f, 0.7f, 1, 1);
     }
 
     public static Vector4f black() {

@@ -7,7 +7,6 @@ import org.lwjgl.BufferUtils;
 import java.io.*;
 import java.nio.ByteBuffer;
 import java.nio.channels.Channels;
-import java.nio.channels.FileChannel;
 import java.nio.channels.ReadableByteChannel;
 
 import static org.lwjgl.BufferUtils.createByteBuffer;
@@ -69,25 +68,6 @@ public final class IOUtil {
         return newBuffer;
     }
 
-    /**
-     * Reads the specified resource and returns the raw data as a ByteBuffer.
-     *
-     * @param resource   the resource to read
-     * @param bufferSize the initial buffer size
-     * @return the resource data
-     * @throws IOException if an IO error occurs
-     */
-    public static ByteBuffer ioResourceToByteBuffer(InputStream resource, int bufferSize) throws IOException {
-        ByteBuffer buffer = createByteBuffer(bufferSize);
-        InputStream source = resource;
-        if (source == null) throw new IOException("Input stream resource is null!");
-
-        buffer = readToBuffer(buffer, source);
-
-        buffer.flip();
-        return buffer;
-    }
-
     private static ByteBuffer readToBuffer(ByteBuffer buffer, InputStream source) {
         try (ReadableByteChannel rbc = Channels.newChannel(source)) {
             while (true) {
@@ -139,30 +119,39 @@ public final class IOUtil {
      * @return the resource data
      * @throws IOException if an IO error occurs
      */
+    public static ByteBuffer ioResourceToByteBuffer(InputStream resource, int bufferSize) throws IOException {
+        ByteBuffer buffer = createByteBuffer(bufferSize);
+        InputStream source = resource;
+        if (source == null) throw new IOException("Input stream resource is null!");
+
+        buffer = readToBuffer(buffer, source);
+
+        buffer.flip();
+        return buffer;
+    }
+
+    /**
+     * Reads the specified resource and returns the raw data as a ByteBuffer.
+     *
+     * @param resource   the resource to read
+     * @param bufferSize the initial buffer size
+     * @return the resource data
+     * @throws IOException if an IO error occurs
+     */
     public static ByteBuffer ioResourceToByteBuffer(String resource, int bufferSize) throws IOException {
         ByteBuffer buffer;
 
         File file = new File(resource);
-        if (file.isFile()) {
-            FileInputStream fis = new FileInputStream(file);
-            FileChannel fc = fis.getChannel();
-
-            buffer = BufferUtils.createByteBuffer((int) fc.size() + 1);
-
-            while (fc.read(buffer) != -1) ;
-
-            fis.close();
-            fc.close();
+        if (file.exists() && file.isFile()) {
+            FileInputStream source = new FileInputStream(file);
+            buffer = ioResourceToByteBuffer(source, bufferSize);
+        buffer.flip();
         } else {
-            buffer = createByteBuffer(bufferSize);
-
             InputStream source = Thread.currentThread().getContextClassLoader().getResourceAsStream(resource);
             if (source == null) throw new FileNotFoundException(resource);
-
-            readToBuffer(buffer, source);
+            buffer = ioResourceToByteBuffer(source, bufferSize);
         }
 
-        buffer.flip();
         return buffer;
     }
 

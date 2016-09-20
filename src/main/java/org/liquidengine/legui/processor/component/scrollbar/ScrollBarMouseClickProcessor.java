@@ -46,17 +46,17 @@
 //        }
 //        if (curPos < left) {
 //            newVal = curValue - visibleAmount;
-//            if (!released) update(gui, maxValue, minValue, newVal);
+//            if (!released) updateGlfwWindow(gui, maxValue, minValue, newVal);
 //        } else if (curPos > left + barSize) {
 //            newVal = curValue + visibleAmount;
-//            if (!released) update(gui, maxValue, minValue, newVal);
+//            if (!released) updateGlfwWindow(gui, maxValue, minValue, newVal);
 //        } else {
 //            if (released) gui.setScrolling(false);
 //            else gui.setScrolling(true);
 //        }
 //    }
 //
-//    private void update(ScrollBar gui, float maxValue, float minValue, float newVal) {
+//    private void updateGlfwWindow(ScrollBar gui, float maxValue, float minValue, float newVal) {
 //        if (newVal > maxValue) newVal = maxValue;
 //        else if (newVal < minValue) newVal = minValue;
 //        gui.setCurValue(newVal);

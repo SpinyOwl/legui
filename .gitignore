@@ -4,4 +4,5 @@
 /target/
 /.gradle/
 /classes/
+/out/
 hs_err_pid*
