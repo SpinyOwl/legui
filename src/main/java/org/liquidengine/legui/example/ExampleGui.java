@@ -1,6 +1,7 @@
 package org.liquidengine.legui.example;
 
 import org.liquidengine.legui.component.ComponentContainer;
+import org.liquidengine.legui.component.Image;
 import org.liquidengine.legui.component.Label;
 import org.liquidengine.legui.component.Panel;
 
@@ -9,6 +10,7 @@ import org.liquidengine.legui.component.Panel;
  * Created by Shcherbin Alexander on 9/19/2016.
  */
 public class ExampleGui extends ComponentContainer {
+    private Image image;
 
     public ExampleGui(int width, int height) {
         super(0, 0, width, height);
@@ -48,5 +50,22 @@ public class ExampleGui extends ComponentContainer {
 
         Label label = new Label(1 * 20, 30, 100, 20, "Hello Label");
         this.addComponent(label);
+
+        image = Image.createImage("org/liquidengine/legui/example/1.jpg");
+        image.setPosition(20, 60);
+        image.setSize(100, 100);
+        this.addComponent(image);
+    }
+
+    public Image getImage() {
+        return image;
+    }
+
+    public void setImage(Image image) {
+        this.removeComponent(this.image);
+        this.image = image;
+        if(image!=null){
+            this.addComponent(image);
+        }
     }
 }

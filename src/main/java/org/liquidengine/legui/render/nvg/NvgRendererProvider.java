@@ -1,14 +1,16 @@
 package org.liquidengine.legui.render.nvg;
 
 import org.liquidengine.legui.component.Component;
+import org.liquidengine.legui.component.Image;
 import org.liquidengine.legui.component.Label;
 import org.liquidengine.legui.component.border.Border;
 import org.liquidengine.legui.component.border.LineBorder;
 import org.liquidengine.legui.render.LeguiBorderRenderer;
 import org.liquidengine.legui.render.LeguiComponentRenderer;
 import org.liquidengine.legui.render.LeguiRendererProvider;
-import org.liquidengine.legui.render.nvg.component.NvgLabelRenderer;
 import org.liquidengine.legui.render.nvg.border.NvgLineBorderRenderer;
+import org.liquidengine.legui.render.nvg.component.NvgImageRenderer;
+import org.liquidengine.legui.render.nvg.component.NvgLabelRenderer;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -30,6 +32,7 @@ public class NvgRendererProvider extends LeguiRendererProvider {
 
         // components
         registerRenderer(Label.class, new NvgLabelRenderer());
+        registerRenderer(Image.class, new NvgImageRenderer());
 
         // borders
         registerRenderer(LineBorder.class, new NvgLineBorderRenderer());

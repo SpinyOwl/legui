@@ -1,0 +1,58 @@
+package org.liquidengine.legui.component;
+
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+import org.liquidengine.legui.component.border.LineBorder;
+import org.liquidengine.legui.context.ImageStorage;
+import org.liquidengine.legui.util.ColorConstants;
+
+import java.nio.ByteBuffer;
+
+/**
+ * Created by Shcherbin Alexander on 9/22/2016.
+ */
+public class Image extends Component {
+    private String path;
+    private ByteBuffer imageData;
+
+
+    public Image(String path, ByteBuffer imageData) {
+        this.path = path;
+        this.imageData = imageData;
+        initialize();
+    }
+
+    private void initialize() {
+        border = new LineBorder(this, ColorConstants.darkGray(), 1);
+    }
+
+    public static Image createImage(String path) {
+        return ImageStorage.getInstance().loadImage(path);
+    }
+
+    public ByteBuffer getImageData() {
+        return imageData;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return EqualsBuilder.reflectionEquals(this, other);
+    }
+
+    @Override
+    public int hashCode() {
+        return HashCodeBuilder.reflectionHashCode(this);
+    }
+}

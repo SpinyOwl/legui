@@ -2,6 +2,7 @@ package org.liquidengine.legui.example;
 
 import org.joml.Vector2i;
 import org.joml.Vector4f;
+import org.liquidengine.legui.component.Image;
 import org.liquidengine.legui.context.LeguiCallbackKeeper;
 import org.liquidengine.legui.context.LeguiContext;
 import org.liquidengine.legui.processor.LeguiEventProcessor;
@@ -42,6 +43,7 @@ public class Example {
 
     private int updates;
     private int currentUps;
+    private int time = 0;
 
 
     public Example(int width, int height, String title) {
@@ -115,6 +117,7 @@ public class Example {
 
             updates++;
             if (System.currentTimeMillis() - timer >= 1000) {
+                time++;
                 timer += 1000;
                 currentUps = updates;
                 updates = 0;
@@ -125,7 +128,11 @@ public class Example {
     }
 
     private void update() {
-
+        if(time>5){
+            if(exampleGui.getImage()!=null){
+                exampleGui.setImage(Image.createImage("org/liquidengine/legui/example/2.jpg"));
+            }
+        }
     }
 
     private void startEventProcessor() {
