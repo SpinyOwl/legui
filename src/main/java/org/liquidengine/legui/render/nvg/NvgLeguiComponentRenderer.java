@@ -10,8 +10,8 @@ import org.liquidengine.legui.render.LeguiComponentRenderer;
 public abstract class NvgLeguiComponentRenderer implements LeguiComponentRenderer {
 
     @Override
-    public final void render(Component gui, LeguiContext context) {
-        render(gui, context, (Long) context.getContextData().get("nvgContext"));
+    public final void render(Component component, LeguiContext context) {
+        render(component, context, (Long) context.getContextData().get("nvgContext"));
     }
 
     public abstract void render(Component component, LeguiContext context, long nvgContext);

@@ -1,5 +1,9 @@
 package org.liquidengine.legui.component;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.border.Border;
@@ -19,7 +23,7 @@ public abstract class Component {
     private final LeguiEventProcessorContainer processors = new LeguiEventProcessorContainer(this);
     protected Vector2f position;
     protected Vector2f size;
-    protected Vector4f backgroundColor = ColorConstants.lightBlue();
+    protected Vector4f backgroundColor = ColorConstants.lightGray();
 
     protected Border border;
 
@@ -126,5 +130,20 @@ public abstract class Component {
 
     public void setIntersector(LeguiIntersector intersector) {
         this.intersector = intersector;
+    }
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return EqualsBuilder.reflectionEquals(this, other);
+    }
+
+    @Override
+    public int hashCode() {
+        return HashCodeBuilder.reflectionHashCode(this);
     }
 }

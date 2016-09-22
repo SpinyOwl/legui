@@ -11,8 +11,8 @@ public interface LeguiComponentRenderer {
     /**
      * Render Gui and fit it to target width and height
      *
-     * @param gui gui component to render
+     * @param component gui component to render
      */
-    void render(Component gui, LeguiContext context);
+    void render(Component component, LeguiContext context);
 
 }

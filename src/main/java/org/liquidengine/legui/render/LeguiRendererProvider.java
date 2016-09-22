@@ -1,6 +1,7 @@
 package org.liquidengine.legui.render;
 
 import org.liquidengine.legui.component.Component;
+import org.liquidengine.legui.component.border.Border;
 import org.liquidengine.legui.render.nvg.NvgRendererProvider;
 
 /**
@@ -17,6 +18,7 @@ public abstract class LeguiRendererProvider {
     }
 
     public abstract LeguiComponentRenderer getRenderer(Component component);
+    public abstract LeguiBorderRenderer getRenderer(Border border);
 
     private static final class PH {
         private static LeguiRendererProvider PROVIDER = new NvgRendererProvider();

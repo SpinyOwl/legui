@@ -25,7 +25,7 @@ public final class NvgRenderUtils {
     }
 
     /**
-     * Used to renderNvg text to rectangle bounds
+     * Used to renderNvg textState to rectangle bounds
      *
      * @param context         nanovg context
      * @param x               x position of rectangle
@@ -34,11 +34,11 @@ public final class NvgRenderUtils {
      * @param h               height of rectangle
      * @param fontSize        titleFont size
      * @param font            titleFont name which contains in titleFont register
-     * @param textColor       text color
-     * @param text            text
+     * @param textColor       textState color
+     * @param text            textState
      * @param horizontalAlign horizontal align
      * @param verticalAlign   vertical align
-     * @param hide            true if need to hide out of bounds text
+     * @param hide            true if need to hide out of bounds textState
      */
     public static void renderTextLineToBounds(long context,
                                               float x, float y, float w, float h,
@@ -54,7 +54,7 @@ public final class NvgRenderUtils {
 
 
     /**
-     * Used to renderNvg text to rectangle bounds
+     * Used to renderNvg textState to rectangle bounds
      *
      * @param context         nanovg context
      * @param x               x position of rectangle
@@ -63,12 +63,12 @@ public final class NvgRenderUtils {
      * @param h               height of rectangle
      * @param fontSize        titleFont size
      * @param font            titleFont name which contains in titleFont register
-     * @param textColor       text color
-     * @param nvgColor        nvg text color
-     * @param text            text
+     * @param textColor       textState color
+     * @param nvgColor        nvg textState color
+     * @param text            textState
      * @param horizontalAlign horizontal align
      * @param verticalAlign   vertical align
-     * @param hide            true if need to hide out of bounds text
+     * @param hide            true if need to hide out of bounds textState
      */
     public static void renderTextLineToBounds(long context,
                                               float x, float y, float w, float h,
@@ -117,7 +117,7 @@ public final class NvgRenderUtils {
 
 
     /**
-     * Used to renderNvg text to rectangle bounds
+     * Used to renderNvg textState to rectangle bounds
      *
      * @param context         nanovg context
      * @param x               x position of rectangle
@@ -126,8 +126,8 @@ public final class NvgRenderUtils {
      * @param h               height of rectangle
      * @param fontSize        titleFont size
      * @param font            titleFont name which contains in titleFont register
-     * @param textColor       text color
-     * @param text            text
+     * @param textColor       textState color
+     * @param text            textState
      * @param horizontalAlign horizontal align
      * @param verticalAlign   vertical align
      */
@@ -214,11 +214,22 @@ public final class NvgRenderUtils {
     }
 
 
+    /**
+     * Creates scissor for provided component by it's parent components
+     *
+     * @param context nanovg context
+     * @param gui     {@link Component}
+     */
     public static void createScissor(long context, Component gui) {
         Component parent = gui.getParent();
         createScissorByParent(context, parent);
     }
 
+    /**
+     * Creates scissor by provided component and it's parent components
+     *
+     * @param context nanovg context
+     */
     public static void createScissorByParent(long context, Component parent) {
         if (parent != null) {
             Vector2f p = calculatePosition(parent);
@@ -231,5 +242,14 @@ public final class NvgRenderUtils {
                 nvgIntersectScissor(context, p.x, p.y, s.x, s.y);
             }
         }
+    }
+
+    /**
+     * Resets scissor
+     *
+     * @param context
+     */
+    public static void resetScissor(long context) {
+        nvgResetScissor(context);
     }
 }

@@ -14,13 +14,13 @@ package org.liquidengine.legui.processor.component.textinput;
 //                    gui.setCaretPosition(caretPosition - 1);
 //                }
 //            } else if (key == GLFW_KEY_RIGHT && event.action != GLFW_RELEASE) {
-//                if (caretPosition < gui.getText().length()) {
+//                if (caretPosition < gui.getTextState().length()) {
 //                    gui.setCaretPosition(caretPosition + 1);
 //                }
 //            } else if ((key == GLFW_KEY_UP || key == GLFW_KEY_HOME) && event.action != GLFW_RELEASE) {
 //                gui.setCaretPosition(0);
 //            } else if ((key == GLFW_KEY_DOWN || key == GLFW_KEY_END) && event.action != GLFW_RELEASE) {
-//                gui.setCaretPosition(gui.getText().length());
+//                gui.setCaretPosition(gui.getTextState().length());
 //            } else if (key == GLFW_KEY_BACKSPACE && event.action != GLFW_RELEASE) {
 //                if (caretPosition != 0) {
 //                    gui.deleteCharAt(caretPosition - 1);
