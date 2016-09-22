@@ -100,18 +100,6 @@ public class LeguiEventQueue {
         return eventQueue.poll();
     }
 
-    public LeguiSystemEvent peek() {
-        return eventQueue.peek();
-    }
-
-    public LeguiSystemEvent element() {
-        return eventQueue.element();
-    }
-
-    public LeguiSystemEvent remove() {
-        return eventQueue.remove();
-    }
-
     public boolean isEmpty() {
         return eventQueue.isEmpty();
     }
