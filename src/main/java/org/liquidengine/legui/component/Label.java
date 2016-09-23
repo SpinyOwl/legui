@@ -43,6 +43,7 @@ public class Label extends Component {
         intersector = new RectangleIntersector();
         backgroundColor.set(0);
         border = new LineBorder(this, ColorConstants.red(), 1);
+        textState.padding.set(2,0,2,0);
     }
 
     public TextState getTextState() {

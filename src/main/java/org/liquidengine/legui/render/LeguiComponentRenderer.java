@@ -9,10 +9,20 @@ import org.liquidengine.legui.context.LeguiContext;
 public interface LeguiComponentRenderer {
 
     /**
+     * Initialize renderer
+     */
+    void initialize();
+
+    /**
      * Render Gui and fit it to target width and height
      *
      * @param component gui component to render
      */
     void render(Component component, LeguiContext context);
+
+    /**
+     * Destroy renderer
+     */
+    void destroy();
 
 }

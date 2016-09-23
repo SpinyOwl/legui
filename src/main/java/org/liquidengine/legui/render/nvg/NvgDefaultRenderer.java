@@ -1,5 +1,9 @@
 package org.liquidengine.legui.render.nvg;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.Component;
@@ -25,32 +29,46 @@ public class NvgDefaultRenderer extends NvgLeguiComponentRenderer {
     private NVGColor colorA = NVGColor.malloc();
 
     @Override
-    public void render(Component gui, LeguiContext leguiContext, long context) {
+    public void render(Component component, LeguiContext leguiContext, long context) {
         nvgSave(context);
 
-        Vector2f pos = calculatePosition(gui);
-        Vector2f size = gui.getSize();
-        Vector4f backgroundColor = new Vector4f(gui.getBackgroundColor());
+        Vector2f pos = calculatePosition(component);
+        Vector2f size = component.getSize();
+        Vector4f backgroundColor = new Vector4f(component.getBackgroundColor());
 
-        createScissor(context, gui);
+        createScissor(context, component);
         // rectangle
         nvgBeginPath(context);
-        nvgRoundedRect(context, pos.x, pos.y, size.x, size.y, 0);
+        nvgRoundedRect(context, pos.x, pos.y, size.x, size.y, component.getCornerRadius());
         nvgFillColor(context, rgba(backgroundColor, colorA));
         nvgFill(context);
 
-        Border border = gui.getBorder();
+        Border border = component.getBorder();
         if (border != null) {
             border.render(leguiContext);
         }
 
         resetScissor(context);
 
-        if (gui instanceof ComponentContainer) {
-            ComponentContainer container = (ComponentContainer) gui;
+        if (component instanceof ComponentContainer) {
+            ComponentContainer container = (ComponentContainer) component;
             List<Component> all = container.getComponents();
             all.stream().filter(Component::isVisible).forEach(child -> child.render(leguiContext));
         }
     }
 
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return EqualsBuilder.reflectionEquals(this, other);
+    }
+
+    @Override
+    public int hashCode() {
+        return HashCodeBuilder.reflectionHashCode(this);
+    }
 }

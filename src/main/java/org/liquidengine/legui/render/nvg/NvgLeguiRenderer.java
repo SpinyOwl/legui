@@ -4,6 +4,7 @@ import org.joml.Vector2i;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.context.LeguiContext;
 import org.liquidengine.legui.font.FontRegister;
+import org.liquidengine.legui.render.LeguiComponentRenderer;
 import org.liquidengine.legui.render.LeguiRenderer;
 import org.lwjgl.nanovg.NanoVGGL3;
 
@@ -34,6 +35,9 @@ public class NvgLeguiRenderer extends LeguiRenderer {
         }
 
         context.getContextData().put("nvgContext", nvgContext);
+
+        NvgRendererProvider.getProvider().getComponentRenderers().forEach(LeguiComponentRenderer::initialize);
+
     }
 
     @Override
@@ -54,5 +58,6 @@ public class NvgLeguiRenderer extends LeguiRenderer {
     @Override
     public void destroy() {
         NanoVGGL3.nnvgDeleteGL3(nvgContext);
+        NvgRendererProvider.getProvider().getComponentRenderers().forEach(LeguiComponentRenderer::destroy);
     }
 }

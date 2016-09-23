@@ -45,6 +45,8 @@ public class Example {
     private int currentUps;
     private int time = 0;
 
+    private boolean gcing;
+
 
     public Example(int width, int height, String title) {
         this.width = width;
@@ -83,7 +85,10 @@ public class Example {
 
         callbackKeeper = eventProcessor.getCallbacks();
         GLFWWindowCloseCallbackI closeCallback = window1 -> running = false;
-        GLFWKeyCallbackI keyCloseCallback = (window, key, code, action, mods) -> running = !(key == GLFW_KEY_ESCAPE && action != GLFW_RELEASE);
+        GLFWKeyCallbackI keyCloseCallback = (window, key, code, action, mods) -> {
+            if (key == GLFW_KEY_ESCAPE && action != GLFW_RELEASE) running = !running;
+            if (key == GLFW_KEY_G && action != GLFW_RELEASE) gcing = !gcing;
+        };
         callbackKeeper.getChainWindowCloseCallback().add(closeCallback);
         callbackKeeper.getChainKeyCallback().add(keyCloseCallback);
         running = true;
@@ -128,8 +133,8 @@ public class Example {
     }
 
     private void update() {
-        if(time>5){
-            if(exampleGui.getImage()!=null){
+        if (time > 5) {
+            if (exampleGui.getImage() != null) {
                 exampleGui.setImage(Image.createImage("org/liquidengine/legui/example/2.jpg"));
             }
         }
@@ -143,7 +148,7 @@ public class Example {
     }
 
     // @formatter:off
-    private void handleSystemEvents() { while (running) glfwPollEvents(); }
+    private void handleSystemEvents() { while (running) { glfwPollEvents(); if(gcing) { System.out.println("GC"); System.gc(); } } }
     // @formatter:on
 
     private void destroy() {

@@ -5,9 +5,10 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.liquidengine.legui.component.border.LineBorder;
-import org.liquidengine.legui.context.ImageStorage;
 import org.liquidengine.legui.util.ColorConstants;
+import org.liquidengine.legui.util.IOUtil;
 
+import java.io.IOException;
 import java.nio.ByteBuffer;
 
 /**
@@ -24,12 +25,19 @@ public class Image extends Component {
         initialize();
     }
 
-    private void initialize() {
-        border = new LineBorder(this, ColorConstants.darkGray(), 1);
+    public static Image createImage(String path) {
+        Image image = null;
+        try {
+            ByteBuffer data = IOUtil.ioResourceToByteBuffer(path, 32 * 1024);
+            image = new Image(path, data);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return image;
     }
 
-    public static Image createImage(String path) {
-        return ImageStorage.getInstance().loadImage(path);
+    private void initialize() {
+        border = new LineBorder(this, ColorConstants.darkGray(), 1);
     }
 
     public ByteBuffer getImageData() {

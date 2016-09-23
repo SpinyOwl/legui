@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="warn" name="leguilog" packages="">
+    <Appenders>
+        <Console name="STDOUT" target="SYSTEM_OUT">
+            <PatternLayout>
+                <Pattern>%d{HH:mm:ss} %-5p\t[%-7t]\t%-40c{2.}:\t%L\t:\t%m%n</Pattern>
+            </PatternLayout>
+            <!--<ThresholdFilter level="ERROR" onMatch="DENY" onMismatch="ACCEPT"/>-->
+            <ThresholdFilter level="INFO"/>
+        </Console>
+        <Console name="STDERR" ignoreExceptions="false" target="SYSTEM_ERR">
+            <PatternLayout>
+                <Pattern>%d{HH:mm:ss} %-5p\t[%-7t]\t%-40c{2.}:\t%L\t:\t%m%n</Pattern>
+            </PatternLayout>
+            <ThresholdFilter level="ERROR" onMatch="ACCEPT" onMismatch="DENY"/>
+        </Console>
+        <RollingFile name="RollingFileError" fileName="logs/legui-error.log"
+                     filePattern="target/logs/$${date:yyyy-MM}/legui-%d{MM-dd-yyyy}-%i.log.gz">
+            <PatternLayout>
+                <Pattern>%d{HH:mm:ss} %-5p\t[%-7t]\t%-40c{2.}:\t%L\t:\t%m%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="20 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+            <ThresholdFilter level="error"/>
+        </RollingFile>
+        <RollingFile name="RollingFile" fileName="logs/legui-all.log"
+                     filePattern="target/logs/$${date:yyyy-MM}/legui-%d{MM-dd-yyyy}-%i.log.gz">
+            <PatternLayout>
+                <Pattern>%d{HH:mm:ss} %-5p\t[%-7t]\t%-40c{2.}:\t%L\t:\t%m%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="20 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
+    </Appenders>
+    <Loggers>
+        <Logger name="FileLogger" level="debug"></Logger>
+        <Root level="debug">
+            <AppenderRef ref="RollingFileError"/>
+            <AppenderRef ref="RollingFile"/>
+            <AppenderRef ref="STDOUT"/>
+            <AppenderRef ref="STDERR"/>
+        </Root>
+    </Loggers>
+</Configuration>

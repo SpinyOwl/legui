@@ -1,9 +1,7 @@
 package org.liquidengine.legui.example;
 
-import org.liquidengine.legui.component.ComponentContainer;
-import org.liquidengine.legui.component.Image;
-import org.liquidengine.legui.component.Label;
-import org.liquidengine.legui.component.Panel;
+import org.joml.Vector4f;
+import org.liquidengine.legui.component.*;
 
 
 /**
@@ -55,6 +53,10 @@ public class ExampleGui extends ComponentContainer {
         image.setPosition(20, 60);
         image.setSize(100, 100);
         this.addComponent(image);
+
+        Button button = new Button(20, 170, 50, 20);
+        button.setBackgroundColor(new Vector4f(1));
+        this.addComponent(button);
     }
 
     public Image getImage() {
@@ -64,8 +66,9 @@ public class ExampleGui extends ComponentContainer {
     public void setImage(Image image) {
         this.removeComponent(this.image);
         this.image = image;
-        if(image!=null){
+        if (image != null) {
             this.addComponent(image);
         }
     }
+
 }

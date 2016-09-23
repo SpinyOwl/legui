@@ -3,8 +3,10 @@ package org.liquidengine.legui.util;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.Component;
+import org.liquidengine.legui.component.TextState;
 import org.liquidengine.legui.component.align.HorizontalAlign;
 import org.liquidengine.legui.component.align.VerticalAlign;
+import org.liquidengine.legui.font.FontRegister;
 import org.lwjgl.nanovg.NVGColor;
 import org.lwjgl.nanovg.NVGPaint;
 import org.lwjgl.nanovg.NVGTextRow;
@@ -22,6 +24,25 @@ import static org.lwjgl.system.MemoryUtil.memAddress;
  */
 public final class NvgRenderUtils {
     private NvgRenderUtils() {
+    }
+
+    public static void renderTextStateToBounds(long nvgContext, Vector2f pos, Vector2f size, TextState textState) {
+        Vector4f pad = textState.getPadding();
+        String font = textState.getFont() == null ? FontRegister.DEFAULT : textState.getFont();
+        HorizontalAlign horizontalAlign = textState.getHorizontalAlign();
+        VerticalAlign verticalAlign = textState.getVerticalAlign();
+        NvgRenderUtils.renderTextLineToBounds(nvgContext,
+            /* X position             */ pos.x + 0.5f + pad.x,
+            /* Y position             */ pos.y + pad.y,
+            /* Width                  */ size.x - pad.x - pad.z,
+            /* Height                 */ size.y - pad.y - pad.w,
+            /* font size              */ textState.getFontSize(),
+            /* font name              */font,
+            /* text color             */ textState.getTextColor(),
+            /* text to render         */ textState.getText(),
+            /* horizontal alignment   */ horizontalAlign,
+            /* vertical alignment     */ verticalAlign,
+            /* hide out of bound text */ true);
     }
 
     /**

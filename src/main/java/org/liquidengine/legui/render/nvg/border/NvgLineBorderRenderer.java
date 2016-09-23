@@ -1,5 +1,9 @@
 package org.liquidengine.legui.render.nvg.border;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.Component;
@@ -29,12 +33,34 @@ public class NvgLineBorderRenderer extends NvgLeguiBorderRenderer {
 
         Vector4f color = lineBorder.getBorderColor();
         float thickness = lineBorder.getThickness();
-        float borderRadius = lineBorder.getBorderRadius();
 
         nvgBeginPath(nvgContext);
         nvgStrokeWidth(nvgContext, thickness);
-        nvgRoundedRect(nvgContext, pos.x, pos.y, size.x, size.y, borderRadius);
+        nvgRoundedRect(nvgContext, pos.x, pos.y, size.x, size.y, component.getCornerRadius());
         nvgStrokeColor(nvgContext, rgba(color, colorA));
         nvgStroke(nvgContext);
+    }
+
+    @Override
+    public void initialize() {
+    }
+
+    @Override
+    public void destroy() {
+    }
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return EqualsBuilder.reflectionEquals(this, other);
+    }
+
+    @Override
+    public int hashCode() {
+        return HashCodeBuilder.reflectionHashCode(this);
     }
 }

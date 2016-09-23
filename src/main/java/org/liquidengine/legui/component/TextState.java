@@ -98,8 +98,8 @@ public class TextState {
         this.padding = padding;
     }
 
-    public void setPadding(float top, float right, float bottom, float left) {
-        this.padding = new Vector4f(top, right, bottom, left);
+    public void setPadding(float left, float top, float right, float bottom) {
+        this.padding = new Vector4f(left, top, right, bottom);
     }
 
     // textState component methods

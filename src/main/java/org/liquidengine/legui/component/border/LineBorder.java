@@ -1,5 +1,9 @@
 package org.liquidengine.legui.component.border;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.util.ColorConstants;
@@ -10,7 +14,6 @@ import org.liquidengine.legui.util.ColorConstants;
 public class LineBorder extends Border {
     private Vector4f borderColor;
     private float thickness;
-    private float borderRadius;
 
     public LineBorder(Component component, Vector4f borderColor, float thickness) {
         super(component);
@@ -39,11 +42,18 @@ public class LineBorder extends Border {
         this.thickness = thickness;
     }
 
-    public float getBorderRadius() {
-        return borderRadius;
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
     }
 
-    public void setBorderRadius(float borderRadius) {
-        this.borderRadius = borderRadius;
+    @Override
+    public boolean equals(Object other) {
+        return EqualsBuilder.reflectionEquals(this, other);
+    }
+
+    @Override
+    public int hashCode() {
+        return HashCodeBuilder.reflectionHashCode(this);
     }
 }

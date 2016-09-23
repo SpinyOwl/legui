@@ -7,6 +7,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.border.Border;
+import org.liquidengine.legui.component.border.LineBorder;
 import org.liquidengine.legui.component.intersector.LeguiIntersector;
 import org.liquidengine.legui.context.LeguiContext;
 import org.liquidengine.legui.processor.component.LeguiEventProcessorContainer;
@@ -25,11 +26,13 @@ public abstract class Component {
     protected Vector2f size;
     protected Vector4f backgroundColor = ColorConstants.lightGray();
 
-    protected Border border;
+    protected Border border = new LineBorder(this, ColorConstants.transparent(), 0);
 
     protected boolean enabled = true;
     protected boolean visible = true;
     protected boolean focused = false;
+
+    protected float cornerRadius = 0;
 
     protected ComponentContainer parent;
     protected LeguiIntersector intersector;
@@ -130,6 +133,14 @@ public abstract class Component {
 
     public void setIntersector(LeguiIntersector intersector) {
         this.intersector = intersector;
+    }
+
+    public float getCornerRadius() {
+        return cornerRadius;
+    }
+
+    public void setCornerRadius(float cornerRadius) {
+        this.cornerRadius = cornerRadius;
     }
 
     @Override
