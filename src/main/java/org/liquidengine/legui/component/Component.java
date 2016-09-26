@@ -7,10 +7,10 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.border.Border;
-import org.liquidengine.legui.component.border.LineBorder;
+import org.liquidengine.legui.component.border.SimpleLineBorder;
 import org.liquidengine.legui.component.intersector.LeguiIntersector;
 import org.liquidengine.legui.context.LeguiContext;
-import org.liquidengine.legui.processor.component.LeguiEventProcessorContainer;
+import org.liquidengine.legui.processor.system.component.LeguiEventProcessorContainer;
 import org.liquidengine.legui.render.LeguiComponentRenderer;
 import org.liquidengine.legui.render.LeguiRendererProvider;
 import org.liquidengine.legui.util.ColorConstants;
@@ -26,7 +26,7 @@ public abstract class Component {
     protected Vector2f size;
     protected Vector4f backgroundColor = ColorConstants.lightGray();
 
-    protected Border border = new LineBorder(this, ColorConstants.transparent(), 0);
+    protected Border border = new SimpleLineBorder(this, ColorConstants.transparent(), 0);
 
     protected boolean enabled = true;
     protected boolean visible = true;

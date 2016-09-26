@@ -4,7 +4,7 @@ import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.Label;
-import org.liquidengine.legui.component.TextState;
+import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.component.border.Border;
 import org.liquidengine.legui.context.LeguiContext;
 import org.liquidengine.legui.render.nvg.NvgLeguiComponentRenderer;

@@ -5,9 +5,10 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
-import org.liquidengine.legui.component.align.HorizontalAlign;
-import org.liquidengine.legui.component.border.LineBorder;
+import org.liquidengine.legui.component.border.SimpleLineBorder;
 import org.liquidengine.legui.component.intersector.RectangleIntersector;
+import org.liquidengine.legui.component.optional.TextState;
+import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.util.ColorConstants;
 
 
@@ -48,8 +49,8 @@ public class Button extends Component {
         this.textState = new TextState(text);
         intersector = new RectangleIntersector();
         backgroundColor.set(0.9f, 0.9f, 0.9f, 1.0f);
-        border = new LineBorder(this, ColorConstants.darkGray(), 1);
-        textState.horizontalAlign = HorizontalAlign.CENTER;
+        border = new SimpleLineBorder(this, ColorConstants.darkGray(), 1);
+        textState.setHorizontalAlign(HorizontalAlign.CENTER);
     }
 
     public TextState getTextState() {

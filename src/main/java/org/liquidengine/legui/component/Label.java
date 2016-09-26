@@ -1,8 +1,9 @@
 package org.liquidengine.legui.component;
 
 import org.joml.Vector2f;
-import org.liquidengine.legui.component.border.LineBorder;
+import org.liquidengine.legui.component.border.SimpleLineBorder;
 import org.liquidengine.legui.component.intersector.RectangleIntersector;
+import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.util.ColorConstants;
 
 /**
@@ -42,14 +43,13 @@ public class Label extends Component {
         this.textState = new TextState(text);
         intersector = new RectangleIntersector();
         backgroundColor.set(0);
-        border = new LineBorder(this, ColorConstants.red(), 1);
-        textState.padding.set(2,0,2,0);
+        border = new SimpleLineBorder(this, ColorConstants.red(), 1);
+        textState.getPadding().set(2, 0, 2, 0);
     }
 
     public TextState getTextState() {
         return textState;
     }
-
 
 
 }

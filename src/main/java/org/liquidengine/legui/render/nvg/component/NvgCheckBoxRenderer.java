@@ -4,9 +4,9 @@ import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.CheckBox;
 import org.liquidengine.legui.component.Component;
-import org.liquidengine.legui.component.TextState;
-import org.liquidengine.legui.component.align.HorizontalAlign;
-import org.liquidengine.legui.component.align.VerticalAlign;
+import org.liquidengine.legui.component.optional.TextState;
+import org.liquidengine.legui.component.optional.align.HorizontalAlign;
+import org.liquidengine.legui.component.optional.align.VerticalAlign;
 import org.liquidengine.legui.context.LeguiContext;
 import org.liquidengine.legui.font.FontRegister;
 import org.liquidengine.legui.render.nvg.NvgDefaultRenderer;
@@ -14,6 +14,7 @@ import org.liquidengine.legui.util.NvgRenderUtils;
 import org.liquidengine.legui.util.Util;
 import org.lwjgl.nanovg.NVGColor;
 
+import static org.liquidengine.legui.component.theme.Theme.DEFAULT_THEME;
 import static org.liquidengine.legui.util.NVGUtils.rgba;
 import static org.liquidengine.legui.util.NvgRenderUtils.createScissor;
 import static org.liquidengine.legui.util.NvgRenderUtils.resetScissor;
@@ -70,18 +71,18 @@ public class NvgCheckBoxRenderer extends NvgDefaultRenderer {
             Vector4f textColor = textState.getTextColor();
             if (checkBox.isChecked()) {
                 // renderNvg check symbol
-//                if (component.isFocused()) {
-//                    NvgRenderUtils.renderTextLineToBounds(nvgContext, x1 + hoff, y + hoff, iconWid, h, fontSize, FontRegister.MATERIAL_ICONS_REGULAR,
-//                            DEFAULT_THEME.getFocusedStrokeColorLight(), colorA, ICON_CHECKED, HorizontalAlign.CENTER, VerticalAlign.MIDDLE, false);
-//                }
+                if (component.isFocused()) {
+                    NvgRenderUtils.renderTextLineToBounds(nvgContext, x1 + hoff, y + hoff, iconWid, h, fontSize, FontRegister.MATERIAL_ICONS_REGULAR,
+                            DEFAULT_THEME.getFocusedStrokeColorLight(), colorA, ICON_CHECKED, HorizontalAlign.CENTER, VerticalAlign.MIDDLE, false);
+                }
                 NvgRenderUtils.renderTextLineToBounds(nvgContext, x1, y, iconWid, h, fontSize, FontRegister.MATERIAL_ICONS_REGULAR,
                         textColor, colorA, ICON_CHECKED, HorizontalAlign.CENTER, VerticalAlign.MIDDLE, false);
             } else {
                 // renderNvg box
-//                if (component.isFocused()) {
-//                    NvgRenderUtils.renderTextLineToBounds(nvgContext, x1 + hoff, y + hoff, iconWid, h, fontSize, FontRegister.MATERIAL_ICONS_REGULAR,
-//                            DEFAULT_THEME.getFocusedStrokeColorLight(), colorA, ICON_UNCHECKED, HorizontalAlign.CENTER, VerticalAlign.MIDDLE, false);
-//                }
+                if (component.isFocused()) {
+                    NvgRenderUtils.renderTextLineToBounds(nvgContext, x1 + hoff, y + hoff, iconWid, h, fontSize, FontRegister.MATERIAL_ICONS_REGULAR,
+                            DEFAULT_THEME.getFocusedStrokeColorLight(), colorA, ICON_UNCHECKED, HorizontalAlign.CENTER, VerticalAlign.MIDDLE, false);
+                }
                 NvgRenderUtils.renderTextLineToBounds(nvgContext, x1, y, iconWid, h, fontSize,
                         FontRegister.MATERIAL_ICONS_REGULAR, textColor, colorA, ICON_UNCHECKED, HorizontalAlign.CENTER, VerticalAlign.MIDDLE, false);
             }
