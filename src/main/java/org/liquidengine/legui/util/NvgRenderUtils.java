@@ -27,6 +27,10 @@ public final class NvgRenderUtils {
     }
 
     public static void renderTextStateToBounds(long nvgContext, Vector2f pos, Vector2f size, TextState textState) {
+        renderTextStateToBounds(nvgContext, pos, size, textState, true);
+    }
+
+    public static void renderTextStateToBounds(long nvgContext, Vector2f pos, Vector2f size, TextState textState, boolean hide) {
         Vector4f pad = textState.getPadding();
         String font = textState.getFont() == null ? FontRegister.DEFAULT : textState.getFont();
         HorizontalAlign horizontalAlign = textState.getHorizontalAlign();
@@ -42,7 +46,7 @@ public final class NvgRenderUtils {
             /* text to render         */ textState.getText(),
             /* horizontal alignment   */ horizontalAlign,
             /* vertical alignment     */ verticalAlign,
-            /* hide out of bound text */ true);
+            /* hide out of bound text */ hide);
     }
 
     /**

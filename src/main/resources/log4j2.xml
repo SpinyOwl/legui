@@ -36,6 +36,7 @@
                 <SizeBasedTriggeringPolicy size="20 MB"/>
             </Policies>
             <DefaultRolloverStrategy max="10"/>
+            <ThresholdFilter level="warn"/>
         </RollingFile>
     </Appenders>
     <Loggers>

@@ -1,9 +1,6 @@
 package org.liquidengine.legui.render.nvg;
 
-import org.liquidengine.legui.component.Button;
-import org.liquidengine.legui.component.Component;
-import org.liquidengine.legui.component.Image;
-import org.liquidengine.legui.component.Label;
+import org.liquidengine.legui.component.*;
 import org.liquidengine.legui.component.border.Border;
 import org.liquidengine.legui.component.border.LineBorder;
 import org.liquidengine.legui.render.LeguiBorderRenderer;
@@ -11,6 +8,7 @@ import org.liquidengine.legui.render.LeguiComponentRenderer;
 import org.liquidengine.legui.render.LeguiRendererProvider;
 import org.liquidengine.legui.render.nvg.border.NvgLineBorderRenderer;
 import org.liquidengine.legui.render.nvg.component.NvgButtonRenderer;
+import org.liquidengine.legui.render.nvg.component.NvgCheckBoxRenderer;
 import org.liquidengine.legui.render.nvg.component.NvgImageRenderer;
 import org.liquidengine.legui.render.nvg.component.NvgLabelRenderer;
 
@@ -38,6 +36,7 @@ public class NvgRendererProvider extends LeguiRendererProvider {
         registerRenderer(Label.class, new NvgLabelRenderer());
         registerRenderer(Image.class, new NvgImageRenderer());
         registerRenderer(Button.class, new NvgButtonRenderer());
+        registerRenderer(CheckBox.class, new NvgCheckBoxRenderer());
 
         // borders
         registerRenderer(LineBorder.class, new NvgLineBorderRenderer());
