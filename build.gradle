@@ -28,7 +28,7 @@ allprojects {
     }
 }
 def lwjgl_version = '3.0.1-SNAPSHOT'
-def joml_version = "1.8.4-SNAPSHOT"
+def joml_version = "1.8.5-SNAPSHOT"
 def log4j_version = '2.3'
 def commons_version = '3.4'
 def commons_collections = '4.1'

@@ -45,7 +45,7 @@ public class CheckBox extends Component {
     private void initialize(String text) {
         this.textState = new TextState(text);
         intersector = new RectangleIntersector();
-        backgroundColor.set(0.9f, 0.9f, 0.9f, 1.0f);
+        backgroundColor.set(0f);
         textState.setHorizontalAlign(HorizontalAlign.CENTER);
     }
 

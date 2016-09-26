@@ -60,7 +60,6 @@ public class ExampleGui extends ComponentContainer {
         this.addComponent(button);
 
         CheckBox checkBox1 = new CheckBox(20, 200, 50, 20);
-        checkBox1.setBackgroundColor(new Vector4f(1));
         this.addComponent(checkBox1);
 
         CheckBox checkBox2 = new CheckBox(20, 230, 50, 20);
