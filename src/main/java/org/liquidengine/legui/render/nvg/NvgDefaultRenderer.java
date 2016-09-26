@@ -30,24 +30,25 @@ public class NvgDefaultRenderer extends NvgLeguiComponentRenderer {
 
     @Override
     public void render(Component component, LeguiContext leguiContext, long context) {
-        nvgSave(context);
-
-        Vector2f pos = calculatePosition(component);
-        Vector2f size = component.getSize();
-        Vector4f backgroundColor = new Vector4f(component.getBackgroundColor());
-
         createScissor(context, component);
-        // rectangle
-        nvgBeginPath(context);
-        nvgRoundedRect(context, pos.x, pos.y, size.x, size.y, component.getCornerRadius());
-        nvgFillColor(context, rgba(backgroundColor, colorA));
-        nvgFill(context);
+        {
+            nvgSave(context);
 
-        Border border = component.getBorder();
-        if (border != null) {
-            border.render(leguiContext);
+            Vector2f pos = calculatePosition(component);
+            Vector2f size = component.getSize();
+            Vector4f backgroundColor = new Vector4f(component.getBackgroundColor());
+
+            // rectangle
+            nvgBeginPath(context);
+            nvgRoundedRect(context, pos.x, pos.y, size.x, size.y, component.getCornerRadius());
+            nvgFillColor(context, rgba(backgroundColor, colorA));
+            nvgFill(context);
+
+            Border border = component.getBorder();
+            if (border != null) {
+                border.render(leguiContext);
+            }
         }
-
         resetScissor(context);
 
         if (component instanceof ComponentContainer) {

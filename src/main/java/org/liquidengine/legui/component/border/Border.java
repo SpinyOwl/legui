@@ -9,8 +9,9 @@ import org.liquidengine.legui.render.LeguiRendererProvider;
  * Created by Shcherbin Alexander on 9/14/2016.
  */
 public abstract class Border {
-    private LeguiBorderRenderer renderer;
-    private Component component;
+    protected LeguiBorderRenderer renderer;
+    protected Component component;
+    protected boolean enabled = true;
 
     public Border(Component component) {
         this.component = component;
@@ -23,5 +24,13 @@ public abstract class Border {
 
     public Component getComponent() {
         return component;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 }

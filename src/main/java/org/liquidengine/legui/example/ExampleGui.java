@@ -2,6 +2,7 @@ package org.liquidengine.legui.example;
 
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.*;
+import org.liquidengine.legui.component.optional.Orientation;
 
 
 /**
@@ -57,6 +58,27 @@ public class ExampleGui extends ComponentContainer {
         Button button = new Button(20, 170, 50, 20);
         button.setBackgroundColor(new Vector4f(1));
         this.addComponent(button);
+
+        ProgressBar progressBar = new ProgressBar(250, 10, 100, 10);
+        progressBar.setValue(50);
+        this.addComponent(progressBar);
+
+        RadioButton radioButton1 = new RadioButton(250, 30, 100, 20);
+        this.addComponent(radioButton1);
+        radioButton1.setSelected(true);
+        RadioButton radioButton2 = new RadioButton(250, 60, 100, 20);
+        this.addComponent(radioButton2);
+        radioButton2.setSelected(false);
+
+        Slider slider1 = new Slider(250, 90, 100, 20, 30);
+        this.addComponent(slider1);
+
+        Slider slider2 = new Slider(220, 90, 20, 100, 50);
+        slider2.setOrientation(Orientation.VERTICAL);
+        this.addComponent(slider2);
+
+        TextInput textInput = new TextInput(250,130,100,30);
+        this.addComponent(textInput);
     }
 
     public Image getImage() {

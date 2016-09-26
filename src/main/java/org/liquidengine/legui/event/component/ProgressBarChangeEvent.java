@@ -1,33 +1,23 @@
-package org.liquidengine.legui.component;
+package org.liquidengine.legui.event.component;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
-import org.joml.Vector2f;
-import org.liquidengine.legui.component.border.SimpleLineBorder;
+import org.liquidengine.legui.component.ProgressBar;
 
 /**
- * Created by Shcherbin Alexander on 9/22/2016.
+ * Created by Shcherbin Alexander on 9/26/2016.
  */
-public class Panel extends ComponentContainer {
+public class ProgressBarChangeEvent {
+    public final ProgressBar progressBar;
+    public final float oldValue;
+    public final float newValue;
 
-    public Panel() {
-        initialize();
-    }
-
-    public Panel(float x, float y, float width, float height) {
-        super(x, y, width, height);
-        initialize();
-    }
-
-    public Panel(Vector2f position, Vector2f size) {
-        super(position, size);
-        initialize();
-    }
-
-    private void initialize() {
-        border = new SimpleLineBorder(this);
+    public ProgressBarChangeEvent(ProgressBar progressBar, float oldValue, float newValue) {
+        this.progressBar = progressBar;
+        this.oldValue = oldValue;
+        this.newValue = newValue;
     }
 
     @Override
@@ -44,4 +34,5 @@ public class Panel extends ComponentContainer {
     public int hashCode() {
         return HashCodeBuilder.reflectionHashCode(this);
     }
+
 }

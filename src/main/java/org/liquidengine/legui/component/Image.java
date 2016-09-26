@@ -4,7 +4,7 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
-import org.liquidengine.legui.component.border.LineBorder;
+import org.liquidengine.legui.component.border.SimpleLineBorder;
 import org.liquidengine.legui.util.ColorConstants;
 import org.liquidengine.legui.util.IOUtil;
 
@@ -37,7 +37,7 @@ public class Image extends Component {
     }
 
     private void initialize() {
-        border = new LineBorder(this, ColorConstants.darkGray(), 1);
+        border = new SimpleLineBorder(this, ColorConstants.darkGray(), 1);
     }
 
     public ByteBuffer getImageData() {
