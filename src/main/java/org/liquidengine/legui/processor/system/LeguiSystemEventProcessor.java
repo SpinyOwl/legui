@@ -22,5 +22,5 @@ public abstract class LeguiSystemEventProcessor<T extends LeguiSystemEvent> {
      * @param event   event to process
      * @param mainGui mainGui element for which should be processed event
      */
-    public abstract void processEvent(T event, Component mainGui, Component target);
+    public abstract void processEvent(T event, Component mainGui);
 }

@@ -4,6 +4,7 @@ import org.joml.Vector2f;
 import org.joml.Vector2i;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.ComponentContainer;
+import org.liquidengine.legui.component.ContainerHolder;
 import org.liquidengine.legui.event.system.LeguiSystemEvent;
 import org.liquidengine.legui.event.system.MouseClickEvent;
 import org.lwjgl.glfw.GLFW;
@@ -29,6 +30,7 @@ public class LeguiContext {
     private Vector2f targetMousePosition;
     private Vector2f targetPosition;
     private Component focusedGui;
+    private Component mouseTargetGui;
     private boolean[] mouseButtonStates = new boolean[GLFW.GLFW_MOUSE_BUTTON_LAST];
     private boolean transferToChild;
 
@@ -172,8 +174,8 @@ public class LeguiContext {
         if (gui != focused) {
             gui.setFocused(false);
         }
-        if (gui instanceof ComponentContainer) {
-            ComponentContainer container = (ComponentContainer) gui;
+        if (gui instanceof ContainerHolder) {
+            ComponentContainer container = ((ContainerHolder) gui).getContainer();
             List<Component> all = container.getComponents();
             for (Component element : all) {
                 release(element, focused);
@@ -200,5 +202,13 @@ public class LeguiContext {
 
     public void setDebug(boolean debug) {
         this.debug = debug;
+    }
+
+    public Component getMouseTargetGui() {
+        return mouseTargetGui;
+    }
+
+    public void setMouseTargetGui(Component mouseTargetGui) {
+        this.mouseTargetGui = mouseTargetGui;
     }
 }

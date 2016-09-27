@@ -7,5 +7,5 @@ public enum VerticalAlign {
     TOP,
     MIDDLE,
     BOTTOM,
-    BASELINE;
+    BASELINE
 }

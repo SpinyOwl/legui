@@ -3,6 +3,7 @@ package org.liquidengine.legui.example;
 import org.joml.Vector2i;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.Image;
+import org.liquidengine.legui.component.Label;
 import org.liquidengine.legui.context.LeguiCallbackKeeper;
 import org.liquidengine.legui.context.LeguiContext;
 import org.liquidengine.legui.processor.LeguiEventProcessor;
@@ -138,6 +139,8 @@ public class Example {
                 exampleGui.setImage(Image.createImage("org/liquidengine/legui/example/2.jpg"));
             }
         }
+        Label label = exampleGui.getLabel();
+        label.getTextState().setText(leguiContext.getMouseTargetGui() + "");
     }
 
     private void startEventProcessor() {

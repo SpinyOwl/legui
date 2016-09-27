@@ -8,7 +8,7 @@ import static org.lwjgl.glfw.GLFW.*;
  * Class used to keep chain callbacks for gui library.
  * Created by Shcherbin Alexander on 6/23/2016.
  */
-public class GuiCallbackKeeper {
+public class LeguiCallbackKeeper {
 
     private final ChainCharCallback chainCharCallback = new ChainCharCallback();
     private final ChainDropCallback chainDropCallback = new ChainDropCallback();
@@ -86,7 +86,7 @@ public class GuiCallbackKeeper {
         return chainWindowSizeCallback;
     }
 
-    public GuiCallbackKeeper(long window) {
+    public LeguiCallbackKeeper(long window) {
         glfwSetCharCallback(window, chainCharCallback);
         glfwSetDropCallback(window, chainDropCallback);
         glfwSetKeyCallback(window, chainKeyCallback);

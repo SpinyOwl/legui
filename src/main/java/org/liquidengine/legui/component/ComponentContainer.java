@@ -5,7 +5,6 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
-import org.joml.Vector2f;
 
 import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -16,18 +15,12 @@ import java.util.stream.Stream;
 /**
  * Created by Shcherbin Alexander on 9/14/2016.
  */
-public abstract class ComponentContainer extends Component {
+public final class ComponentContainer<T extends Component & ContainerHolder> {
     protected final List<Component> components = SetUniqueList.setUniqueList(new CopyOnWriteArrayList<>());
+    private T containerHolder;
 
-    public ComponentContainer() {
-    }
-
-    public ComponentContainer(float x, float y, float width, float height) {
-        super(x, y, width, height);
-    }
-
-    public ComponentContainer(Vector2f position, Vector2f size) {
-        super(position, size);
+    public ComponentContainer(T containerHolder) {
+        this.containerHolder = containerHolder;
     }
 
     public int containerSize() {
@@ -47,35 +40,73 @@ public abstract class ComponentContainer extends Component {
     }
 
     public boolean addComponent(Component component) {
+        if (component == containerHolder) return false;
+        changeParent(component);
         return components.add(component);
     }
 
-    public boolean removeComponent(Object o) {
-        return components.remove(o);
+    public boolean addAllComponents(Collection<? extends Component> c) {
+        c.forEach(abstractGui -> {
+            if (abstractGui != containerHolder) changeParent(abstractGui);
+        });
+        return components.addAll(c);
+    }
+
+    public boolean addAllComponents(int index, Collection<? extends Component> c) {
+        c.forEach(abstractGui -> {
+            if (abstractGui != containerHolder) changeParent(abstractGui);
+        });
+        return components.addAll(index, c);
+    }
+
+    public void addComponent(int index, Component element) {
+        components.add(index, element);
+    }
+
+    private void changeParent(Component element) {
+        Component parent = element.parent;
+        if (parent != null && (parent instanceof ContainerHolder)) {
+            ComponentContainer container = ((ContainerHolder) parent).getContainer();
+            container.removeComponent(element);
+        }
+        element.parent = containerHolder;
+    }
+
+    public boolean removeComponent(Component component) {
+        if (component.parent != null && component.parent == containerHolder && components.contains(component)) {
+            component.parent = null;
+            return components.remove(component);
+        }
+        return false;
+    }
+
+    public void removeAllComponents(Collection<? extends Component> c) {
+        c.forEach(compo -> compo.parent = null);
+        components.removeAll(c);
+    }
+
+    public Component removeComponent(int index) {
+        Component remove = components.remove(index);
+        remove.parent = null;
+        return components.remove(index);
+    }
+
+    public boolean removeComponentIf(Predicate<? super Component> filter) {
+        components.stream().filter(filter).forEach(compo -> compo.parent = null);
+        return components.removeIf(filter);
+    }
+
+    public void clearComponents() {
+        components.forEach(compo -> compo.parent = null);
+        components.clear();
     }
 
     public boolean containerContainsAll(Collection<?> c) {
         return components.containsAll(c);
     }
 
-    public boolean addAllComponents(Collection<? extends Component> c) {
-        return components.addAll(c);
-    }
-
-    public boolean addAllComponents(int index, Collection<? extends Component> c) {
-        return components.addAll(index, c);
-    }
-
-    public boolean removeAllComponents(Collection<?> c) {
-        return components.removeAll(c);
-    }
-
     public void sortComponents(Comparator<? super Component> c) {
         components.sort(c);
-    }
-
-    public void clearComponents() {
-        components.clear();
     }
 
     public Component getComponent(int index) {
@@ -86,20 +117,8 @@ public abstract class ComponentContainer extends Component {
         return components.set(index, element);
     }
 
-    public void addComponent(int index, Component element) {
-        components.add(index, element);
-    }
-
-    public Component removeComponent(int index) {
-        return components.remove(index);
-    }
-
     public int indexOfComponent(Object o) {
         return components.indexOf(o);
-    }
-
-    public boolean removeComponentIf(Predicate<? super Component> filter) {
-        return components.removeIf(filter);
     }
 
     public Stream<Component> componentStream() {
@@ -121,7 +140,7 @@ public abstract class ComponentContainer extends Component {
 
     @Override
     public String toString() {
-        return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }
 
     @Override

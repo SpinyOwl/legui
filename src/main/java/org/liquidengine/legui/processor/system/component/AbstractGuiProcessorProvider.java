@@ -17,8 +17,6 @@ public abstract class AbstractGuiProcessorProvider {
 
     public abstract LeguiComponentEventProcessor getGuiProcessor(Class<? extends Component> guiClass, Class<? extends LeguiSystemEvent> eventClass);
 
-    public abstract void registerGuiProcessor(Class<? extends Component> guiClass, Class<? extends LeguiSystemEvent> eventClass, LeguiComponentEventProcessor guiProcessor);
-
     private static class PPH {
         private static AbstractGuiProcessorProvider PROVIDER = new LeguiComponentEventProcessorProvider();
     }

@@ -9,6 +9,7 @@ import org.joml.Vector4f;
 import org.liquidengine.legui.component.border.Border;
 import org.liquidengine.legui.component.border.SimpleLineBorder;
 import org.liquidengine.legui.component.intersector.LeguiIntersector;
+import org.liquidengine.legui.component.intersector.RectangleIntersector;
 import org.liquidengine.legui.context.LeguiContext;
 import org.liquidengine.legui.processor.system.component.LeguiEventProcessorContainer;
 import org.liquidengine.legui.render.LeguiComponentRenderer;
@@ -34,8 +35,8 @@ public abstract class Component {
 
     protected float cornerRadius = 0;
 
-    protected ComponentContainer parent;
-    protected LeguiIntersector intersector;
+    protected Component parent;
+    protected LeguiIntersector intersector = new RectangleIntersector();
     protected LeguiComponentRenderer renderer = LeguiRendererProvider.getProvider().getRenderer(this);
 
     public Component() {
@@ -55,7 +56,7 @@ public abstract class Component {
         renderer.render(this, context);
     }
 
-    public ComponentContainer getParent() {
+    public Component getParent() {
         return parent;
     }
 
@@ -145,7 +146,7 @@ public abstract class Component {
 
     @Override
     public String toString() {
-        return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }
 
     @Override

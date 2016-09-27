@@ -63,7 +63,6 @@ public class RectangleIntersector implements LeguiIntersector {
         int start[] = {0};
         int count = 4;
         PolygonsIntersection intersector = new PolygonsIntersection(verticies, start, count);
-        boolean b = intersector.testPoint(point.x, point.y);
-        return b;
+        return intersector.testPoint(point.x, point.y);
     }
 }

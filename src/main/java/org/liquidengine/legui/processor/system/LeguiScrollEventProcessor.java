@@ -7,14 +7,15 @@ import org.liquidengine.legui.event.system.ScrollEvent;
 /**
  * Created by Shcherbin Alexander on 8/30/2016.
  */
-public class GuiScrollEventProcessor extends LeguiSystemEventProcessor<ScrollEvent> {
+public class LeguiScrollEventProcessor extends LeguiSystemEventProcessor<ScrollEvent> {
 
-    public GuiScrollEventProcessor(LeguiContext context) {
+    public LeguiScrollEventProcessor(LeguiContext context) {
         super(context);
     }
 
     @Override
-    public void processEvent(ScrollEvent event, Component mainGui, Component target) {
+    public void processEvent(ScrollEvent event, Component mainGui) {
+        Component target = context.getMouseTargetGui();
         if (target != null) {
             callListeners(target, event);
             target.getProcessors().getScrollEventProcessor().process(target, event, context);

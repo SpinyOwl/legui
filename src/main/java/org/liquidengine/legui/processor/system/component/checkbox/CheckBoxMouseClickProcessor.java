@@ -1,23 +1,23 @@
-//package org.liquidengine.legui.processor.system.component.checkbox;
-//
-//import org.liquidengine.legui.element.CheckBox;
-//import org.liquidengine.legui.event.system.MouseClickEvent;
-//import org.liquidengine.legui.processor.element.IGuiProcessor;
-//import org.liquidengine.legui.processor.system.GuiEventProcessorState;
-//
-//import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
-//
-///**
-// * Created by Alexander on 28.08.2016.
-// */
-//public class CheckBoxMouseClickProcessor implements IGuiProcessor<CheckBox, MouseClickEvent> {
-//    @Override
-//    public void process(CheckBox gui, MouseClickEvent event, GuiEventProcessorState processorState) {
-//        if (processorState.getFocusedGui() == gui) {
-//            if (event.action == GLFW_RELEASE) {
-//                CheckBox checkBox = (CheckBox) gui;
-//                checkBox.setChecked(!checkBox.isChecked());
-//            }
-//        }
-//    }
-//}
+package org.liquidengine.legui.processor.system.component.checkbox;
+
+import org.liquidengine.legui.component.CheckBox;
+import org.liquidengine.legui.context.LeguiContext;
+import org.liquidengine.legui.event.system.MouseClickEvent;
+import org.liquidengine.legui.processor.system.component.LeguiComponentEventProcessor;
+
+import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
+
+/**
+ * Created by Alexander on 28.08.2016.
+ */
+public class CheckBoxMouseClickProcessor implements LeguiComponentEventProcessor<CheckBox, MouseClickEvent> {
+
+    @Override
+    public void process(CheckBox checkBox, MouseClickEvent event, LeguiContext processorState) {
+        if (processorState.getFocusedGui() == checkBox) {
+            if (event.action == GLFW_RELEASE) {
+                checkBox.setChecked(!checkBox.isChecked());
+            }
+        }
+    }
+}

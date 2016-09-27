@@ -3,6 +3,7 @@ package org.liquidengine.legui.util;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.Component;
+import org.liquidengine.legui.component.ContainerHolder;
 
 import java.nio.ByteBuffer;
 
@@ -25,16 +26,20 @@ public final class Util {
     }
 
     public static Vector2f calculatePosition(Component gui) {
-        Vector2f pos = new Vector2f();
-        Component current = gui;
-        Component parent = current.getParent();
+        return calculateParentOffset(gui).add(gui.getPosition());
+    }
+
+    public static Vector2f calculateParentOffset(Component component) {
+        Vector2f offset = new Vector2f();
+        Component parent = component.getParent();
         while (parent != null) {
-            pos.add(current.getPosition());
-            current = parent;
-            parent = current.getParent();
+            offset.add(parent.getPosition());
+            if (parent instanceof ContainerHolder) {
+                offset.add(((ContainerHolder) parent).getContainerPosition());
+            }
+            parent = parent.getParent();
         }
-        pos.add(current.getPosition());
-        return pos;
+        return offset;
     }
 
     public static ByteBuffer utf8(int cp) {
@@ -72,7 +77,7 @@ public final class Util {
         dest.w = 1;
     }
 
-    public static Vector4f half(Vector4f color){
+    public static Vector4f half(Vector4f color) {
         return new Vector4f(color).div(2);
     }
 

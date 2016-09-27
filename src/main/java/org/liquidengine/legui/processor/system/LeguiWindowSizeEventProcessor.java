@@ -8,14 +8,15 @@ import org.liquidengine.legui.event.system.WindowSizeEvent;
 /**
  * Created by Alexander on 01.07.2016.
  */
-public class GuiWindowSizeEventProcessor extends LeguiSystemEventProcessor<WindowSizeEvent> {
+public class LeguiWindowSizeEventProcessor extends LeguiSystemEventProcessor<WindowSizeEvent> {
 
-    public GuiWindowSizeEventProcessor(LeguiContext context) {
+    public LeguiWindowSizeEventProcessor(LeguiContext context) {
         super(context);
     }
 
     @Override
-    public void processEvent(WindowSizeEvent event, Component mainGui, Component target) {
+    public void processEvent(WindowSizeEvent event, Component mainGui) {
+        Component target = context.getMouseTargetGui();
         if (target != null) {
             target.getProcessors().getWindowSizeEventProcessor().process(target, event, context);
         } else {

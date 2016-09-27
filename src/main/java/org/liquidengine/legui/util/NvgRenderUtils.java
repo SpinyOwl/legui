@@ -188,9 +188,8 @@ public final class NvgRenderUtils {
         float baseline = (vp > 2 ? hh / 4.0f : 0);
         float vv = (vp == 3 ? 1 : vp);
         float y1 = bounds[1] + (h + hh) * 0.5f * vv + (vp > 2 ? (+baseline) : 0);
-        float ret[] = new float[]{x1, y1, ww, hh,
+        return new float[]{x1, y1, ww, hh,
                 x1 - (ww * 0.5f * hp), y1 - (hh * 0.5f * vv) - baseline, ww, hh};
-        return ret;
     }
 
     public static float[] createBounds(float x, float y, float w, float h, HorizontalAlign horizontalAlign, VerticalAlign verticalAlign, float tw, float th) {
@@ -202,9 +201,8 @@ public final class NvgRenderUtils {
         float baseline = (vp > 2 ? th / 4.0f : 0);
         float vv = (vp == 3 ? 1 : vp);
         float y1 = y + h * 0.5f * vv + (vp > 2 ? (+baseline) : 0);
-        float ret[] = new float[]{x1, y1, tw, th,
+        return new float[]{x1, y1, tw, th,
                 x1 - (tw * 0.5f * hp), y1 - (th * 0.5f * vv) - baseline, tw, th};
-        return ret;
     }
 
 

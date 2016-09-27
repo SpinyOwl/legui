@@ -1,12 +1,17 @@
 package org.liquidengine.legui.processor;
 
+import org.joml.Vector2f;
 import org.liquidengine.legui.component.Component;
+import org.liquidengine.legui.component.ComponentContainer;
+import org.liquidengine.legui.component.ContainerHolder;
 import org.liquidengine.legui.context.LeguiCallbackKeeper;
 import org.liquidengine.legui.context.LeguiContext;
 import org.liquidengine.legui.context.LeguiEventQueue;
 import org.liquidengine.legui.event.system.*;
 import org.liquidengine.legui.processor.system.*;
+import org.lwjgl.glfw.GLFW;
 
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -26,34 +31,35 @@ public class LeguiEventProcessor {
         this.context = context;
         callbacks = new LeguiCallbackKeeper(context.getTargetPointer());
         leguiEventQueue = new LeguiEventQueue(callbacks);
+        initialize();
     }
 
     private void initialize() {
-        GuiCharModsEventProcessor guiCharModsEventProcessor = new GuiCharModsEventProcessor(context);
+        LeguiCharModsEventProcessor guiCharModsEventProcessor = new LeguiCharModsEventProcessor(context);
         registerProcessor(CharModsEvent.class, guiCharModsEventProcessor);
 
-        GuiCursorEnterEventProcessor guiCursorEnterEventProcessor = new GuiCursorEnterEventProcessor(context);
+        LeguiCursorEnterEventProcessor guiCursorEnterEventProcessor = new LeguiCursorEnterEventProcessor(context);
         registerProcessor(CursorEnterEvent.class, guiCursorEnterEventProcessor);
 
-        GuiCursorPosEventProcessor cursorPosEventProcessor = new GuiCursorPosEventProcessor(context);
+        LeguiCursorPosEventProcessor cursorPosEventProcessor = new LeguiCursorPosEventProcessor(context);
         registerProcessor(CursorPosEvent.class, cursorPosEventProcessor);
 
-        GuiMouseClickEventProcessor mouseClickEventProcessor = new GuiMouseClickEventProcessor(context);
+        LeguiMouseClickEventProcessor mouseClickEventProcessor = new LeguiMouseClickEventProcessor(context);
         registerProcessor(MouseClickEvent.class, mouseClickEventProcessor);
 
-        GuiCharEventProcessor charEventProcessor = new GuiCharEventProcessor(context);
+        LeguiCharEventProcessor charEventProcessor = new LeguiCharEventProcessor(context);
         registerProcessor(CharEvent.class, charEventProcessor);
 
-        GuiWindowSizeEventProcessor windowSizeEventProcessor = new GuiWindowSizeEventProcessor(context);
+        LeguiWindowSizeEventProcessor windowSizeEventProcessor = new LeguiWindowSizeEventProcessor(context);
         registerProcessor(WindowSizeEvent.class, windowSizeEventProcessor);
 
-        GuiKeyEventProcessor keyEventProcessor = new GuiKeyEventProcessor(context);
+        LeguiKeyEventProcessor keyEventProcessor = new LeguiKeyEventProcessor(context);
         registerProcessor(KeyEvent.class, keyEventProcessor);
 
-        GuiDropEventCallback dropEventCallback = new GuiDropEventCallback(context);
+        LeguiDropEventCallback dropEventCallback = new LeguiDropEventCallback(context);
         registerProcessor(DropEvent.class, dropEventCallback);
 
-        GuiScrollEventProcessor scrollEventProcessor = new GuiScrollEventProcessor(context);
+        LeguiScrollEventProcessor scrollEventProcessor = new LeguiScrollEventProcessor(context);
         registerProcessor(ScrollEvent.class, scrollEventProcessor);
     }
 
@@ -74,12 +80,61 @@ public class LeguiEventProcessor {
      */
     public void processEvent() {
         LeguiSystemEvent event = leguiEventQueue.poll();
-        if (event == null) return;
-
-        LeguiSystemEventProcessor concreteEventProcessor = processorMap.get(event.getClass());
-        if (concreteEventProcessor == null) return;
+        if (event != null) {
+            LeguiSystemEventProcessor concreteEventProcessor = processorMap.get(event.getClass());
+            if (concreteEventProcessor != null) {
+                context.setMouseTargetGui(getMouseTarget(null, mainGuiComponent, context.getCursorPosition()));
+                concreteEventProcessor.processEvent(event, mainGuiComponent);
+                releaseFocus(event, mainGuiComponent);
+            }
+        }
     }
 
+    private Component getMouseTarget(Component target, Component component, Vector2f cursorPosition) {
+        if (component instanceof ContainerHolder) {
+            if (component.isVisible()) {
+                ComponentContainer container = ((ContainerHolder) component).getContainer();
+                if (component.getIntersector().intersects(component, cursorPosition)) {
+                    target = component;
+                    for (Component element : container.getComponents()) {
+                        target = getMouseTarget(target, element, cursorPosition);
+                    }
+                }
+            }
+        } else {
+            if (component.isVisible() && component.isEnabled() && component.getIntersector().intersects(component, cursorPosition)) {
+                target = component;
+            }
+        }
+        return target;
+    }
+
+    private void releaseFocus(LeguiSystemEvent event, Component mainGuiComponent) {
+        boolean release = false;
+        if ( //@formatter:off
+                ((event instanceof MouseClickEvent) && ((MouseClickEvent) event).action == GLFW.GLFW_RELEASE) ||
+                ((event instanceof KeyEvent)        && ((KeyEvent) event).action        == GLFW.GLFW_RELEASE)
+           ) { //@formatter:on
+            release = true;
+        }
+
+        if (release) {
+            release(mainGuiComponent, context.getFocusedGui());
+        }
+    }
+
+    private void release(Component gui, Component focused) {
+        if (gui != focused) {
+            gui.setFocused(false);
+        }
+        if (gui instanceof ContainerHolder) {
+            ComponentContainer container = ((ContainerHolder) gui).getContainer();
+            List<Component> all = container.getComponents();
+            for (Component element : all) {
+                release(element, focused);
+            }
+        }
+    }
 
     /**
      * Used to register processors for processing events and translate them to event processor

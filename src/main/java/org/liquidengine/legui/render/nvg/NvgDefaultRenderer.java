@@ -8,6 +8,7 @@ import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.ComponentContainer;
+import org.liquidengine.legui.component.ContainerHolder;
 import org.liquidengine.legui.component.border.Border;
 import org.liquidengine.legui.context.LeguiContext;
 import org.liquidengine.legui.util.ColorConstants;
@@ -36,7 +37,7 @@ public class NvgDefaultRenderer extends NvgLeguiComponentRenderer {
 
             Vector2f pos = calculatePosition(component);
             Vector2f size = component.getSize();
-            Vector4f backgroundColor = new Vector4f(component.getBackgroundColor());
+            Vector4f backgroundColor =component.getBackgroundColor();
 
             // rectangle
             nvgBeginPath(context);
@@ -51,16 +52,16 @@ public class NvgDefaultRenderer extends NvgLeguiComponentRenderer {
         }
         resetScissor(context);
 
-        if (component instanceof ComponentContainer) {
-            ComponentContainer container = (ComponentContainer) component;
-            List<Component> all = container.getComponents();
-            all.stream().filter(Component::isVisible).forEach(child -> child.render(leguiContext));
+        if (component instanceof ContainerHolder) {
+            ComponentContainer container = ((ContainerHolder) component).getContainer();
+            List<Component> components = container.getComponents();
+            components.stream().filter(Component::isVisible).forEach(child -> child.render(leguiContext));
         }
     }
 
     @Override
     public String toString() {
-        return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }
 
     @Override

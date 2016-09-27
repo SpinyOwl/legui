@@ -3,11 +3,15 @@ package org.liquidengine.legui.processor.system.component;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.liquidengine.legui.component.CheckBox;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.event.system.LeguiSystemEvent;
+import org.liquidengine.legui.event.system.MouseClickEvent;
 import org.liquidengine.legui.event.system.ScrollEvent;
+import org.liquidengine.legui.processor.system.component.checkbox.CheckBoxMouseClickProcessor;
 import org.liquidengine.legui.processor.system.component.def.DefaultGuiScrollProcessor;
 
 import java.util.Map;
@@ -30,7 +34,7 @@ public class LeguiComponentEventProcessorProvider extends AbstractGuiProcessorPr
     }
 
     private void registerProcessors() {
-        // registerGuiProcessor(CheckBox.class, MouseClickEvent.class, new CheckBoxMouseClickProcessor());
+         registerGuiProcessor(CheckBox.class, MouseClickEvent.class, new CheckBoxMouseClickProcessor());
 
         // registerGuiProcessor(Slider.class, MouseClickEvent.class, new SliderMouseClickProcessor());
         // registerGuiProcessor(Slider.class, CursorPosEvent.class, new SliderCursorPosProcessor());
@@ -56,7 +60,6 @@ public class LeguiComponentEventProcessorProvider extends AbstractGuiProcessorPr
         return guiProcessorMap.getOrDefault(key, defaultValue);
     }
 
-    @Override
     public void registerGuiProcessor(Class<? extends Component> guiClass, Class<? extends LeguiSystemEvent> eventClass, LeguiComponentEventProcessor guiProcessor) {
         guiProcessorMap.put(new ProviderKey(guiClass, eventClass), guiProcessor);
     }
@@ -71,34 +74,20 @@ public class LeguiComponentEventProcessorProvider extends AbstractGuiProcessorPr
             this.second = second;
         }
 
+
         @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
+        public String toString() {
+            return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
+        }
 
-            if (!(o instanceof ProviderKey)) return false;
-
-            ProviderKey that = (ProviderKey) o;
-
-            return new EqualsBuilder()
-                    .append(first, that.first)
-                    .append(second, that.second)
-                    .isEquals();
+        @Override
+        public boolean equals(Object other) {
+            return EqualsBuilder.reflectionEquals(this, other);
         }
 
         @Override
         public int hashCode() {
-            return new HashCodeBuilder(17, 37)
-                    .append(first)
-                    .append(second)
-                    .toHashCode();
-        }
-
-        @Override
-        public String toString() {
-            return new ToStringBuilder(this)
-                    .append("first", first)
-                    .append("second", second)
-                    .toString();
+            return HashCodeBuilder.reflectionHashCode(this);
         }
     }
 
