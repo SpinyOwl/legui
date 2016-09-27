@@ -1,5 +1,6 @@
 package org.liquidengine.legui.example;
 
+import org.joml.Vector2f;
 import org.joml.Vector2i;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.Image;
@@ -74,7 +75,7 @@ public class Example {
         }
 
         windowPointer = glfwCreateWindow(width, height, initialTitle, NULL, NULL);
-        glfwSwapInterval(1);
+//        glfwSwapInterval(1);
         glfwShowWindow(windowPointer);
 
         exampleGui = new ExampleGui(width, height);
@@ -135,12 +136,23 @@ public class Example {
 
     private void update() {
         if (time > 5) {
-            if (exampleGui.getImage() != null) {
-                exampleGui.setImage(Image.createImage("org/liquidengine/legui/example/2.jpg"));
+            Image image = exampleGui.getImage();
+            if (image != null && image.getPath().equals("org/liquidengine/legui/example/1.jpg")) {
+                exampleGui.getContainer().removeComponent(image);
+                Image image1 = Image.createImage("org/liquidengine/legui/example/2.jpg");
+                exampleGui.getContainer().addComponent(image1);
+                exampleGui.setImage(image1);
             }
         }
         Label label = exampleGui.getLabel();
         label.getTextState().setText(leguiContext.getMouseTargetGui() + "");
+
+        Label mouseLabel = exampleGui.getMouseLabel();
+        Vector2f mousePosition = leguiContext.getMousePosition();
+        mouseLabel.getTextState().setText(String.format("X:%4s, Y:%4s", mousePosition.x, mousePosition.y));
+
+        Label upsLabel = exampleGui.getUpsLabel();
+        upsLabel.getTextState().setText("UPS: " + currentUps);
     }
 
     private void startEventProcessor() {

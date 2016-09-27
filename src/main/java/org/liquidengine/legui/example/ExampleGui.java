@@ -10,6 +10,8 @@ import org.liquidengine.legui.component.optional.Orientation;
  */
 public class ExampleGui extends Panel {
     private final Label label;
+    private final Label mouseLabel;
+    private final Label upsLabel;
     private Image image;
 
     public ExampleGui(int width, int height) {
@@ -48,8 +50,14 @@ public class ExampleGui extends Panel {
         Panel p11 = new Panel(11 * 20, 10, 10, 10);
         this.getContainer().addComponent(p11);
 
-        label = new Label(1 * 20, 30, 100, 20, "Hello Label");
+        label = new Label(20, 30, 100, 20, "Hello Label");
         this.getContainer().addComponent(label);
+
+        mouseLabel = new Label(130, 30, 100, 20, "Hello Label");
+        this.getContainer().addComponent(mouseLabel);
+
+        upsLabel = new Label(130, 60, 100, 20, "Hello Label");
+        this.getContainer().addComponent(upsLabel);
 
         image = Image.createImage("org/liquidengine/legui/example/1.jpg");
         image.setPosition(20, 60);
@@ -90,18 +98,11 @@ public class ExampleGui extends Panel {
         this.getContainer().addComponent(textInput);
 
         Widget widget = new Widget("Hello widget", 250,170,100,100);
-        Panel component = new Panel(10, 10, 10, 10);
-        component.getBackgroundColor().set(1,0,0,1);
-        widget.getContainer().addComponent(component);
-        Panel component1 = new Panel(30, 10, 10, 10);
-        component1.getBackgroundColor().set(1,0,0,1);
-        widget.getContainer().addComponent(component1);
-        Panel component2 = new Panel(10, 30, 10, 10);
-        component2.getBackgroundColor().set(1,0,0,1);
-        widget.getContainer().addComponent(component2);
-        Panel component3 = new Panel(30, 30, 10, 10);
-        component3.getBackgroundColor().set(1,0,0,1);
-        widget.getContainer().addComponent(component3);
+        Panel component0 = new Panel(-5, -5, 10, 10); component0.getBackgroundColor().set(1,0,0,1); widget.getContainer().addComponent(component0);
+        Panel component1 = new Panel(-5, 75, 10, 10); component1.getBackgroundColor().set(1,0,0,1); widget.getContainer().addComponent(component1);
+        Panel component2 = new Panel(95, -5, 10, 10); component2.getBackgroundColor().set(1,0,0,1); widget.getContainer().addComponent(component2);
+        Panel component3 = new Panel(95, 75, 10, 10); component3.getBackgroundColor().set(1,0,0,1); widget.getContainer().addComponent(component3);
+        Panel component4 = new Panel(45, 35, 10, 10); component4.getBackgroundColor().set(1,0,0,1); widget.getContainer().addComponent(component4);
         widget.setTitleHeight(20);
         this.getContainer().addComponent(widget);
     }
@@ -111,14 +112,18 @@ public class ExampleGui extends Panel {
     }
 
     public void setImage(Image image) {
-        this.getContainer().removeComponent(this.image);
         this.image = image;
-        if (image != null) {
-            this.getContainer().addComponent(image);
-        }
     }
 
     public Label getLabel() {
         return label;
+    }
+
+    public Label getMouseLabel() {
+        return mouseLabel;
+    }
+
+    public Label getUpsLabel() {
+        return upsLabel;
     }
 }

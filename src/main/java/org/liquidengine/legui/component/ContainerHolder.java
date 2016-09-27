@@ -8,4 +8,5 @@ import org.joml.Vector2f;
 public interface ContainerHolder {
     ComponentContainer getContainer();
     Vector2f getContainerPosition();
+    Vector2f getContainerSize();
 }

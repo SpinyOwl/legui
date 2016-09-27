@@ -1,6 +1,10 @@
 package org.liquidengine.legui.component;
 
 import org.apache.commons.collections4.list.SetUniqueList;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -60,5 +64,35 @@ public class RadioButtonGroup implements Serializable {
 
     public SetUniqueList<RadioButton> getRadioButtons() {
         return (SetUniqueList<RadioButton>) Arrays.asList((RadioButton[]) radioButtons.toArray());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (o == null || getClass() != o.getClass()) return false;
+
+        RadioButtonGroup that = (RadioButtonGroup) o;
+
+        return new EqualsBuilder()
+                .append(radioButtons, that.radioButtons)
+                .append(selection, that.selection)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37)
+                .append(radioButtons)
+                .append(selection)
+                .toHashCode();
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+                .append("radioButtons", radioButtons)
+                .append("selection", selection)
+                .toString();
     }
 }

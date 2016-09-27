@@ -1,18 +1,26 @@
 package org.liquidengine.legui.component;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
+import org.joml.Vector4f;
+import org.liquidengine.legui.component.border.SimpleLineBorder;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
+import org.liquidengine.legui.util.ColorConstants;
 
 /**
  * Created by Shcherbin Alexander on 9/27/2016.
  */
 public class Widget extends Component implements ContainerHolder {
     protected TextState textState;
-    protected ComponentContainer container = new ComponentContainer();
+    protected ComponentContainer container = new ComponentContainer(this);
 
     protected float titleHeight = 20;
     protected boolean titleEnabled = true;
+    protected Vector4f titleBackgroundColor = ColorConstants.lightGray();
 
     protected boolean closeable = true;
     protected boolean resizable = false;
@@ -50,6 +58,7 @@ public class Widget extends Component implements ContainerHolder {
         textState.setHorizontalAlign(HorizontalAlign.LEFT);
         textState.getPadding().set(10, 5, 10, 5);
         backgroundColor.set(1);
+        border = new SimpleLineBorder(this, ColorConstants.black(), 1);
     }
 
     public float getTitleHeight() {
@@ -84,6 +93,18 @@ public class Widget extends Component implements ContainerHolder {
         this.resizable = resizable;
     }
 
+    public Vector4f getTitleBackgroundColor() {
+        return titleBackgroundColor;
+    }
+
+    public void setTitleBackgroundColor(Vector4f titleBackgroundColor) {
+        this.titleBackgroundColor = titleBackgroundColor;
+    }
+
+    public TextState getTitleTextState() {
+        return textState;
+    }
+
     @Override
     public ComponentContainer getContainer() {
         return container;
@@ -91,10 +112,58 @@ public class Widget extends Component implements ContainerHolder {
 
     @Override
     public Vector2f getContainerPosition() {
-        return new Vector2f(titleEnabled ? titleHeight : 0, 0);
+        return new Vector2f(0, titleEnabled ? titleHeight : 0);
     }
 
-    public TextState getTitleTextState() {
-        return textState;
+    @Override
+    public Vector2f getContainerSize() {
+        return new Vector2f(size).sub(getContainerPosition());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Widget widget = (Widget) o;
+
+        return new EqualsBuilder()
+                .appendSuper(super.equals(o))
+                .append(titleHeight, widget.titleHeight)
+                .append(titleEnabled, widget.titleEnabled)
+                .append(closeable, widget.closeable)
+                .append(resizable, widget.resizable)
+                .append(textState, widget.textState)
+                .append(container, widget.container)
+                .append(titleBackgroundColor, widget.titleBackgroundColor)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37)
+                .appendSuper(super.hashCode())
+                .append(textState)
+                .append(container)
+                .append(titleHeight)
+                .append(titleEnabled)
+                .append(titleBackgroundColor)
+                .append(closeable)
+                .append(resizable)
+                .toHashCode();
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+                .append("textState", textState)
+                .append("container", container)
+                .append("titleHeight", titleHeight)
+                .append("titleEnabled", titleEnabled)
+                .append("titleBackgroundColor", titleBackgroundColor)
+                .append("closeable", closeable)
+                .append("resizable", resizable)
+                .toString();
     }
 }

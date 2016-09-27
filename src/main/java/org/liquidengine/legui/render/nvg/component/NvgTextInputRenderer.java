@@ -231,13 +231,6 @@ public class NvgTextInputRenderer extends NvgLeguiComponentRenderer {
         gui.setMouseCaretPosition(newCPos + textBounds[0]);
     }
 
-//    private void drawBorder(long context, float x, float y, float w, float h, float br, Vector4f strokeColorDark, Vector4f strokeColorLight) {
-////        // light
-////        NvgRenderUtils.drawRectStroke(context, x + 0.5f, y + 0.5f, w, h, strokeColorLight, br, 1);
-////        // dark
-////        NvgRenderUtils.drawRectStroke(context, x + 1.5f, y + 1.5f, w - 1.5f, h - 1.5f, strokeColorDark, br, 1);
-//    }
-
     private void drawBackground(long context, float x, float y, float w, float h, float br, Vector4f bc) {
         if (bc.w != 0) {
             nvgSave(context);
@@ -255,10 +248,10 @@ public class NvgTextInputRenderer extends NvgLeguiComponentRenderer {
 
     private void getTextToDrawBounds(float tw, int nGlypths, int r, int[] textBounds) {
         textBounds[0] = 0;
-        textBounds[1] = getR(tw, nGlypths, r);
+        textBounds[1] = getR(tw, nGlypths);
     }
 
-    private int getR(float tw, int nGlypths, int r) {
+    private int getR(float tw, int nGlypths) {
         int low = 0, high = nGlypths - 1, mid = 0;
         while (high - low > 1) {
             mid = (low + high) >>> 1;
@@ -268,6 +261,7 @@ public class NvgTextInputRenderer extends NvgLeguiComponentRenderer {
                 low = mid;
             }
         }
+        int r;
         if (glyphs.get(mid).maxx() > tw) r = low;
         else r = high;
         return r;

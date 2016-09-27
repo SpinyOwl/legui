@@ -3,6 +3,7 @@ package org.liquidengine.legui.util;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.Component;
+import org.liquidengine.legui.component.ContainerHolder;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
@@ -256,7 +257,11 @@ public final class NvgRenderUtils {
     public static void createScissorByParent(long context, Component parent) {
         if (parent != null) {
             Vector2f p = calculatePosition(parent);
-            Vector2f s = parent.getSize();
+            Vector2f s = new Vector2f(parent.getSize());
+            if(parent instanceof ContainerHolder){
+                p=p.add(((ContainerHolder) parent).getContainerPosition());
+                s=s.sub(((ContainerHolder) parent).getContainerPosition());
+            }
             nvgScissor(context, p.x, p.y, s.x, s.y);
 
             while ((parent = parent.getParent()) != null) {

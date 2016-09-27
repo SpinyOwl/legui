@@ -13,7 +13,7 @@ import org.liquidengine.legui.component.border.SimpleLineBorder;
 public class Panel extends Component implements ContainerHolder {
 
     private static final Vector2f NULL = new Vector2f(0);
-    protected ComponentContainer<Panel> container = new ComponentContainer(this);
+    protected ComponentContainer container = new ComponentContainer(this);
 
     public Panel() {
         initialize();
@@ -34,21 +34,6 @@ public class Panel extends Component implements ContainerHolder {
     }
 
     @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return EqualsBuilder.reflectionEquals(this, other);
-    }
-
-    @Override
-    public int hashCode() {
-        return HashCodeBuilder.reflectionHashCode(this);
-    }
-
-    @Override
     public ComponentContainer getContainer() {
         return container;
     }
@@ -56,5 +41,39 @@ public class Panel extends Component implements ContainerHolder {
     @Override
     public Vector2f getContainerPosition() {
         return NULL;
+    }
+
+    @Override
+    public Vector2f getContainerSize() {
+        return size;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Panel panel = (Panel) o;
+
+        return new EqualsBuilder()
+                .appendSuper(super.equals(o))
+                .append(container, panel.container)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37)
+                .appendSuper(super.hashCode())
+                .append(container)
+                .toHashCode();
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+                .append("container", container)
+                .toString();
     }
 }

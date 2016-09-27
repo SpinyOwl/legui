@@ -64,17 +64,37 @@ public class ProgressBar extends Component {
     }
 
     @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
-    }
+    public boolean equals(Object o) {
+        if (this == o) return true;
 
-    @Override
-    public boolean equals(Object other) {
-        return EqualsBuilder.reflectionEquals(this, other);
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ProgressBar that = (ProgressBar) o;
+
+        return new EqualsBuilder()
+                .appendSuper(super.equals(o))
+                .append(value, that.value)
+                .append(progressColor, that.progressColor)
+                .append(progressBarUpdateListeners, that.progressBarUpdateListeners)
+                .isEquals();
     }
 
     @Override
     public int hashCode() {
-        return HashCodeBuilder.reflectionHashCode(this);
+        return new HashCodeBuilder(17, 37)
+                .appendSuper(super.hashCode())
+                .append(value)
+                .append(progressColor)
+                .append(progressBarUpdateListeners)
+                .toHashCode();
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+                .append("value", value)
+                .append("progressColor", progressColor)
+                .append("progressBarUpdateListeners", progressBarUpdateListeners)
+                .toString();
     }
 }

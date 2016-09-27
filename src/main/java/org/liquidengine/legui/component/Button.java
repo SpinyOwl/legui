@@ -58,17 +58,31 @@ public class Button extends Component {
     }
 
     @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
-    }
+    public boolean equals(Object o) {
+        if (this == o) return true;
 
-    @Override
-    public boolean equals(Object other) {
-        return EqualsBuilder.reflectionEquals(this, other);
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Button button = (Button) o;
+
+        return new EqualsBuilder()
+                .appendSuper(super.equals(o))
+                .append(textState, button.textState)
+                .isEquals();
     }
 
     @Override
     public int hashCode() {
-        return HashCodeBuilder.reflectionHashCode(this);
+        return new HashCodeBuilder(17, 37)
+                .appendSuper(super.hashCode())
+                .append(textState)
+                .toHashCode();
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+                .append("textState", textState)
+                .toString();
     }
 }

@@ -7,6 +7,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
@@ -15,11 +16,11 @@ import java.util.stream.Stream;
 /**
  * Created by Shcherbin Alexander on 9/14/2016.
  */
-public final class ComponentContainer<T extends Component & ContainerHolder> {
-    protected final List<Component> components = SetUniqueList.setUniqueList(new CopyOnWriteArrayList<>());
-    private T containerHolder;
+public final class ComponentContainer {
+    protected final Set<Component> components = new java.util.concurrent.CopyOnWriteArraySet<>();
+    private Component containerHolder;
 
-    public ComponentContainer(T containerHolder) {
+    public ComponentContainer(Component containerHolder) {
         this.containerHolder = containerHolder;
     }
 
@@ -52,17 +53,6 @@ public final class ComponentContainer<T extends Component & ContainerHolder> {
         return components.addAll(c);
     }
 
-    public boolean addAllComponents(int index, Collection<? extends Component> c) {
-        c.forEach(abstractGui -> {
-            if (abstractGui != containerHolder) changeParent(abstractGui);
-        });
-        return components.addAll(index, c);
-    }
-
-    public void addComponent(int index, Component element) {
-        components.add(index, element);
-    }
-
     private void changeParent(Component element) {
         Component parent = element.parent;
         if (parent != null && (parent instanceof ContainerHolder)) {
@@ -85,12 +75,6 @@ public final class ComponentContainer<T extends Component & ContainerHolder> {
         components.removeAll(c);
     }
 
-    public Component removeComponent(int index) {
-        Component remove = components.remove(index);
-        remove.parent = null;
-        return components.remove(index);
-    }
-
     public boolean removeComponentIf(Predicate<? super Component> filter) {
         components.stream().filter(filter).forEach(compo -> compo.parent = null);
         return components.removeIf(filter);
@@ -103,22 +87,6 @@ public final class ComponentContainer<T extends Component & ContainerHolder> {
 
     public boolean containerContainsAll(Collection<?> c) {
         return components.containsAll(c);
-    }
-
-    public void sortComponents(Comparator<? super Component> c) {
-        components.sort(c);
-    }
-
-    public Component getComponent(int index) {
-        return components.get(index);
-    }
-
-    public Component setComponent(int index, Component element) {
-        return components.set(index, element);
-    }
-
-    public int indexOfComponent(Object o) {
-        return components.indexOf(o);
     }
 
     public Stream<Component> componentStream() {
@@ -137,19 +105,4 @@ public final class ComponentContainer<T extends Component & ContainerHolder> {
         return new ArrayList<>(components);
     }
 
-
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return EqualsBuilder.reflectionEquals(this, other);
-    }
-
-    @Override
-    public int hashCode() {
-        return HashCodeBuilder.reflectionHashCode(this);
-    }
 }

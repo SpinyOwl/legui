@@ -145,17 +145,62 @@ public abstract class Component {
     }
 
     @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
-    }
+    public boolean equals(Object o) {
+        if (this == o) return true;
 
-    @Override
-    public boolean equals(Object other) {
-        return EqualsBuilder.reflectionEquals(this, other);
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Component component = (Component) o;
+
+        return new EqualsBuilder()
+                .append(enabled, component.enabled)
+                .append(visible, component.visible)
+                .append(focused, component.focused)
+                .append(cornerRadius, component.cornerRadius)
+                .append(processors, component.processors)
+                .append(position, component.position)
+                .append(size, component.size)
+                .append(backgroundColor, component.backgroundColor)
+                .append(border, component.border)
+                .append(parent, component.parent)
+                .append(intersector, component.intersector)
+                .append(renderer, component.renderer)
+                .isEquals();
     }
 
     @Override
     public int hashCode() {
-        return HashCodeBuilder.reflectionHashCode(this);
+        return new HashCodeBuilder(17, 37)
+                .append(processors)
+                .append(position)
+                .append(size)
+                .append(backgroundColor)
+                .append(border)
+                .append(enabled)
+                .append(visible)
+                .append(focused)
+                .append(cornerRadius)
+                .append(parent)
+                .append(intersector)
+                .append(renderer)
+                .toHashCode();
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+                .append("processors", processors)
+                .append("position", position)
+                .append("size", size)
+                .append("backgroundColor", backgroundColor)
+                .append("border", border)
+                .append("enabled", enabled)
+                .append("visible", visible)
+                .append("focused", focused)
+                .append("cornerRadius", cornerRadius)
+                .append("parent", parent)
+                .append("intersector", intersector)
+                .append("renderer", renderer)
+                .toString();
     }
 }

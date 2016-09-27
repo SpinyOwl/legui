@@ -43,17 +43,32 @@ public class SimpleLineBorder extends Border {
     }
 
     @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
-    }
+    public boolean equals(Object o) {
+        if (this == o) return true;
 
-    @Override
-    public boolean equals(Object other) {
-        return EqualsBuilder.reflectionEquals(this, other);
+        if (o == null || getClass() != o.getClass()) return false;
+
+        SimpleLineBorder that = (SimpleLineBorder) o;
+
+        return new EqualsBuilder()
+                .append(thickness, that.thickness)
+                .append(borderColor, that.borderColor)
+                .isEquals();
     }
 
     @Override
     public int hashCode() {
-        return HashCodeBuilder.reflectionHashCode(this);
+        return new HashCodeBuilder(17, 37)
+                .append(borderColor)
+                .append(thickness)
+                .toHashCode();
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+                .append("borderColor", borderColor)
+                .append("thickness", thickness)
+                .toString();
     }
 }
