@@ -3,6 +3,7 @@ package org.liquidengine.legui.example;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.*;
 import org.liquidengine.legui.component.optional.Orientation;
+import org.liquidengine.legui.util.ColorConstants;
 
 
 /**
@@ -99,6 +100,11 @@ public class ExampleGui extends Panel {
 
         Widget widget = new Widget("Hello widget", 250,170,100,100);
         widget.setTitleHeight(20);
+        widget.setCloseButtonColor(ColorConstants.black());
+        widget.setTitleBackgroundColor(ColorConstants.lightGreen());
+
+        widget.setCollapsible(true);
+        widget.setCollapsed(true);
         Panel component0 = new Panel(-5, -5, 10, 10); component0.getBackgroundColor().set(1,0,0,1); widget.getContainer().addComponent(component0);
         Panel component1 = new Panel(-5, 75, 10, 10); component1.getBackgroundColor().set(1,0,0,1); widget.getContainer().addComponent(component1);
         Panel component2 = new Panel(95, -5, 10, 10); component2.getBackgroundColor().set(1,0,0,1); widget.getContainer().addComponent(component2);
