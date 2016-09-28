@@ -98,12 +98,12 @@ public class ExampleGui extends Panel {
         this.getContainer().addComponent(textInput);
 
         Widget widget = new Widget("Hello widget", 250,170,100,100);
+        widget.setTitleHeight(20);
         Panel component0 = new Panel(-5, -5, 10, 10); component0.getBackgroundColor().set(1,0,0,1); widget.getContainer().addComponent(component0);
         Panel component1 = new Panel(-5, 75, 10, 10); component1.getBackgroundColor().set(1,0,0,1); widget.getContainer().addComponent(component1);
         Panel component2 = new Panel(95, -5, 10, 10); component2.getBackgroundColor().set(1,0,0,1); widget.getContainer().addComponent(component2);
         Panel component3 = new Panel(95, 75, 10, 10); component3.getBackgroundColor().set(1,0,0,1); widget.getContainer().addComponent(component3);
         Panel component4 = new Panel(45, 35, 10, 10); component4.getBackgroundColor().set(1,0,0,1); widget.getContainer().addComponent(component4);
-        widget.setTitleHeight(20);
         this.getContainer().addComponent(widget);
     }
 

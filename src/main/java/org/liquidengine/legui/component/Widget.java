@@ -17,6 +17,7 @@ import org.liquidengine.legui.util.ColorConstants;
 public class Widget extends Component implements ContainerHolder {
     protected TextState textState;
     protected ComponentContainer container = new ComponentContainer(this);
+    protected Vector4f closeButtonColor = ColorConstants.red();
 
     protected float titleHeight = 20;
     protected boolean titleEnabled = true;
@@ -120,6 +121,14 @@ public class Widget extends Component implements ContainerHolder {
         return new Vector2f(size).sub(getContainerPosition());
     }
 
+    public Vector4f getCloseButtonColor() {
+        return closeButtonColor;
+    }
+
+    public void setCloseButtonColor(Vector4f closeButtonColor) {
+        this.closeButtonColor = closeButtonColor;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -137,6 +146,7 @@ public class Widget extends Component implements ContainerHolder {
                 .append(textState, widget.textState)
                 .append(container, widget.container)
                 .append(titleBackgroundColor, widget.titleBackgroundColor)
+                .append(closeButtonColor, widget.closeButtonColor)
                 .isEquals();
     }
 
@@ -149,6 +159,7 @@ public class Widget extends Component implements ContainerHolder {
                 .append(titleHeight)
                 .append(titleEnabled)
                 .append(titleBackgroundColor)
+                .append(closeButtonColor)
                 .append(closeable)
                 .append(resizable)
                 .toHashCode();
@@ -162,6 +173,7 @@ public class Widget extends Component implements ContainerHolder {
                 .append("titleHeight", titleHeight)
                 .append("titleEnabled", titleEnabled)
                 .append("titleBackgroundColor", titleBackgroundColor)
+                .append("closeButtonColor", closeButtonColor)
                 .append("closeable", closeable)
                 .append("resizable", resizable)
                 .toString();

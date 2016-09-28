@@ -4,20 +4,18 @@ import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.ComponentContainer;
-import org.liquidengine.legui.component.ContainerHolder;
 import org.liquidengine.legui.component.Widget;
 import org.liquidengine.legui.component.border.Border;
+import org.liquidengine.legui.component.optional.align.HorizontalAlign;
+import org.liquidengine.legui.component.optional.align.VerticalAlign;
 import org.liquidengine.legui.context.LeguiContext;
+import org.liquidengine.legui.font.FontRegister;
 import org.liquidengine.legui.render.nvg.NvgLeguiComponentRenderer;
 import org.liquidengine.legui.util.ColorConstants;
 import org.lwjgl.nanovg.NVGColor;
 
-import java.util.List;
-
 import static org.liquidengine.legui.util.NVGUtils.rgba;
-import static org.liquidengine.legui.util.NvgRenderUtils.createScissor;
-import static org.liquidengine.legui.util.NvgRenderUtils.createScissorByParent;
-import static org.liquidengine.legui.util.NvgRenderUtils.resetScissor;
+import static org.liquidengine.legui.util.NvgRenderUtils.*;
 import static org.liquidengine.legui.util.Util.calculatePosition;
 import static org.liquidengine.legui.util.Util.negativeColor;
 import static org.lwjgl.nanovg.NanoVG.*;
@@ -26,6 +24,10 @@ import static org.lwjgl.nanovg.NanoVG.*;
  * Created by Shcherbin Alexander on 9/27/2016.
  */
 public class NvgWidgetRenderer extends NvgLeguiComponentRenderer {
+    private static final float THRESHOLD = 186f / 255f;
+    private static final Vector4f BLACK = ColorConstants.black();
+    private static final Vector4f WHITE = ColorConstants.white();
+    private static final String CLOSE_ICON = new String(Character.toChars(0xE5CD));
     private NVGColor colorA = NVGColor.calloc();
 
     @Override
@@ -33,31 +35,57 @@ public class NvgWidgetRenderer extends NvgLeguiComponentRenderer {
         Widget widget = (Widget) component;
         Vector4f backgroundColor = new Vector4f(component.getBackgroundColor());
         float titleHeight = widget.getTitleHeight();
+
         Vector2f position = calculatePosition(component);
+        Vector2f widgetSize = widget.getSize();
+
         float y = position.y + titleHeight - 0.5f;
+        float rightX = position.x + widgetSize.x;
 
         // draw title
-        createScissor(context, component);
-        {
-            Vector2f size = new Vector2f(widget.getSize().x, titleHeight);
-            nvgIntersectScissor(context, position.x, position.y, size.x, size.y);
-            Vector4f titleBackgroundColor = widget.getTitleBackgroundColor();
+        if (widget.isTitleEnabled()) {
+            createScissor(context, component);
+            {
+                Vector2f size = new Vector2f(widgetSize.x - (widget.isCloseable() ? titleHeight : 0), titleHeight);
+                Vector4f titleBackgroundColor = widget.getTitleBackgroundColor();
 
-            nvgBeginPath(context);
-            nvgRoundedRect(context, position.x, position.y, size.x, size.y, component.getCornerRadius());
-            nvgFillColor(context, rgba(titleBackgroundColor, colorA));
-            nvgFill(context);
+                nvgBeginPath(context);
+                nvgRoundedRect(context, position.x, position.y, size.x, size.y, component.getCornerRadius());
+                nvgFillColor(context, rgba(titleBackgroundColor, colorA));
+                nvgFill(context);
 
-            nvgLineCap(context, NVG_ROUND);
-            nvgLineJoin(context, NVG_ROUND);
-            nvgStrokeWidth(context, 1);
-            nvgStrokeColor(context, rgba(negativeColor(titleBackgroundColor), colorA));
-            nvgBeginPath(context);
-            nvgMoveTo(context, position.x, y);
-            nvgLineTo(context, position.x + size.x, y);
-            nvgStroke(context);
+                renderTextStateToBounds(context, position, size, widget.getTitleTextState(), true);
+
+                if (widget.isCloseable()) {
+                    Vector4f closeButtonColor = widget.getCloseButtonColor();
+
+                    nvgBeginPath(context);
+                    float xp = rightX - titleHeight;
+                    nvgRoundedRect(context, xp, position.y, titleHeight, titleHeight, component.getCornerRadius());
+                    nvgFillColor(context, rgba(closeButtonColor, colorA));
+                    nvgFill(context);
+                    Vector4f closeColor = null;
+                    if ((closeButtonColor.x * 0.299f + closeButtonColor.y * 0.587f + closeButtonColor.z * 0.114f) > THRESHOLD) closeColor = BLACK;
+                    else closeColor = WHITE;
+
+                    renderTextLineToBounds(context, xp + titleHeight * 0.2f, position.y, 0.8f * titleHeight, titleHeight, titleHeight, FontRegister
+                                    .MATERIAL_ICONS_REGULAR,
+                            closeColor,
+                            CLOSE_ICON, HorizontalAlign.CENTER, VerticalAlign.MIDDLE, false);
+                }
+
+                //draw intersector
+                nvgLineCap(context, NVG_ROUND);
+                nvgLineJoin(context, NVG_ROUND);
+                nvgStrokeWidth(context, 1);
+                nvgStrokeColor(context, rgba(negativeColor(titleBackgroundColor), colorA));
+                nvgBeginPath(context);
+                nvgMoveTo(context, position.x, y);
+                nvgLineTo(context, rightX, y);
+                nvgStroke(context);
+            }
+            resetScissor(context);
         }
-        resetScissor(context);
 
         //draw container
         createScissorByParent(context, component);
@@ -82,19 +110,10 @@ public class NvgWidgetRenderer extends NvgLeguiComponentRenderer {
         resetScissor(context);
 
         // draw child components
-        if (component instanceof ContainerHolder) {
-            ComponentContainer container = ((ContainerHolder) component).getContainer();
-            List<Component> components = container.getComponents();
-            components.stream().filter(Component::isVisible).forEach(child -> child.render(leguiContext));
-        }
-        createScissor(context, component);
-        {
-            Border border = widget.getBorder();
-            if (border != null) {
-                border.render(leguiContext);
-            }
-        }
-        resetScissor(context);
+        ComponentContainer container = widget.getContainer();
+        container.getComponents().stream().filter(Component::isVisible).forEach(child -> child.render(leguiContext));
+
+        //draw intersector
         createScissorByParent(context, component);
         {
             nvgLineCap(context, NVG_ROUND);
@@ -103,8 +122,17 @@ public class NvgWidgetRenderer extends NvgLeguiComponentRenderer {
             nvgStrokeColor(context, rgba(negativeColor(backgroundColor), colorA));
             nvgBeginPath(context);
             nvgMoveTo(context, position.x, y + 0.5f);
-            nvgLineTo(context, position.x + component.getSize().x, y + 0.5f);
+            nvgLineTo(context, rightX, y + 0.5f);
             nvgStroke(context);
+        }
+        resetScissor(context);
+        //draw border
+        createScissor(context, component);
+        {
+            Border border = widget.getBorder();
+            if (border != null) {
+                border.render(leguiContext);
+            }
         }
         resetScissor(context);
 
