@@ -2,6 +2,7 @@ package org.liquidengine.legui.example;
 
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.*;
+import org.liquidengine.legui.component.border.SimpleLineBorder;
 import org.liquidengine.legui.component.optional.Orientation;
 import org.liquidengine.legui.util.ColorConstants;
 
@@ -10,7 +11,7 @@ import org.liquidengine.legui.util.ColorConstants;
  * Created by Shcherbin Alexander on 9/19/2016.
  */
 public class ExampleGui extends Panel {
-    private final Label label;
+    private final Label mouseTargetLabel;
     private final Label mouseLabel;
     private final Label upsLabel;
     private Image image;
@@ -51,8 +52,8 @@ public class ExampleGui extends Panel {
         Panel p11 = new Panel(11 * 20, 10, 10, 10);
         this.getContainer().addComponent(p11);
 
-        label = new Label(20, 30, 100, 20, "Hello Label");
-        this.getContainer().addComponent(label);
+        mouseTargetLabel = new Label(400, 10, 390, 20, "Hello Label");
+        this.getContainer().addComponent(mouseTargetLabel);
 
         mouseLabel = new Label(130, 30, 100, 20, "Hello Label");
         this.getContainer().addComponent(mouseLabel);
@@ -81,12 +82,15 @@ public class ExampleGui extends Panel {
         progressBar.setValue(50);
         this.getContainer().addComponent(progressBar);
 
+        RadioButtonGroup radioButtonGroup = new RadioButtonGroup();
         RadioButton radioButton1 = new RadioButton(250, 30, 100, 20);
         this.getContainer().addComponent(radioButton1);
         radioButton1.setSelected(true);
+        radioButton1.setRadioButtonGroup(radioButtonGroup);
         RadioButton radioButton2 = new RadioButton(250, 60, 100, 20);
         this.getContainer().addComponent(radioButton2);
         radioButton2.setSelected(false);
+        radioButton2.setRadioButtonGroup(radioButtonGroup);
 
         Slider slider1 = new Slider(250, 90, 100, 20, 30);
         this.getContainer().addComponent(slider1);
@@ -103,14 +107,34 @@ public class ExampleGui extends Panel {
         widget.setCloseButtonColor(ColorConstants.black());
         widget.setTitleBackgroundColor(ColorConstants.lightGreen());
 
-        widget.setCollapsible(true);
-        widget.setCollapsed(true);
         Panel component0 = new Panel(-5, -5, 10, 10); component0.getBackgroundColor().set(1,0,0,1); widget.getContainer().addComponent(component0);
         Panel component1 = new Panel(-5, 75, 10, 10); component1.getBackgroundColor().set(1,0,0,1); widget.getContainer().addComponent(component1);
         Panel component2 = new Panel(95, -5, 10, 10); component2.getBackgroundColor().set(1,0,0,1); widget.getContainer().addComponent(component2);
         Panel component3 = new Panel(95, 75, 10, 10); component3.getBackgroundColor().set(1,0,0,1); widget.getContainer().addComponent(component3);
         Panel component4 = new Panel(45, 35, 10, 10); component4.getBackgroundColor().set(1,0,0,1); widget.getContainer().addComponent(component4);
         this.getContainer().addComponent(widget);
+
+        ScrollBar scrollBar1 = new ScrollBar(360,170,20,100,20);
+        scrollBar1.setOrientation(Orientation.VERTICAL);
+        scrollBar1.setVisibleAmount(20);
+        scrollBar1.setArrowsEnabled(true);
+        scrollBar1.setBackgroundColor(ColorConstants.black());
+        scrollBar1.setScrollColor(ColorConstants.white());
+        scrollBar1.setArrowColor(ColorConstants.blue());
+        scrollBar1.setBorder(new SimpleLineBorder(scrollBar1, ColorConstants.red(), 1));
+        this.getContainer().addComponent(scrollBar1);
+
+        ScrollBar scrollBar2 = new ScrollBar(390,170,20,100,20);
+        scrollBar2.setOrientation(Orientation.VERTICAL);
+        scrollBar2.setVisibleAmount(20);
+        scrollBar2.setArrowsEnabled(true);
+        scrollBar2.setBackgroundColor(ColorConstants.darkGray());
+        scrollBar2.setScrollColor(ColorConstants.white());
+        scrollBar2.setArrowColor(ColorConstants.white());
+        this.getContainer().addComponent(scrollBar2);
+
+        Panel panel1 = new Panel(420,170,100,100); panel1.setBackgroundColor(ColorConstants.blue()); this.getContainer().addComponent(panel1);
+        Panel panel2 = new Panel(450,170,100,100); panel2.setBackgroundColor(ColorConstants.green()); this.getContainer().addComponent(panel2);
     }
 
     public Image getImage() {
@@ -121,8 +145,8 @@ public class ExampleGui extends Panel {
         this.image = image;
     }
 
-    public Label getLabel() {
-        return label;
+    public Label getMouseTargetLabel() {
+        return mouseTargetLabel;
     }
 
     public Label getMouseLabel() {

@@ -63,6 +63,13 @@ public class RadioButton extends Component {
             this.radioButtonGroup.remove(this);
         }
         this.radioButtonGroup = radioButtonGroup;
+        if (selected) {
+            if (radioButtonGroup.getSelection() != null) {
+                selected = false;
+            } else {
+                radioButtonGroup.setSelection(this, true);
+            }
+        }
     }
 
     public TextState getTextState() {

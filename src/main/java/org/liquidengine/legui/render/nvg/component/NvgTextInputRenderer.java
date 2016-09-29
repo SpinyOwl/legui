@@ -21,9 +21,10 @@ import org.lwjgl.system.MemoryUtil;
 
 import java.nio.ByteBuffer;
 
-import static org.liquidengine.legui.component.theme.Theme.DEFAULT_THEME;
 import static org.liquidengine.legui.util.NvgRenderUtils.createScissor;
 import static org.liquidengine.legui.util.NvgRenderUtils.resetScissor;
+import static org.liquidengine.legui.util.Util.blackOrWhite;
+import static org.liquidengine.legui.util.Util.half;
 import static org.lwjgl.nanovg.NanoVG.*;
 import static org.lwjgl.system.MemoryUtil.memAddress;
 
@@ -60,8 +61,6 @@ public class NvgTextInputRenderer extends NvgLeguiComponentRenderer {
             VerticalAlign verticalAlign = textState.getVerticalAlign();
 
             Vector4f bc = new Vector4f(agui.getBackgroundColor());
-            Vector4f strokeColorDark = new Vector4f(DEFAULT_THEME.getStrokeColorDark());
-            Vector4f strokeColorLight = new Vector4f(DEFAULT_THEME.getStrokeColorLight());
 
             float fontSize = textState.getFontSize();
             String font = textState.getFont() == null ? FontRegister.DEFAULT : textState.getFont();
@@ -82,7 +81,6 @@ public class NvgTextInputRenderer extends NvgLeguiComponentRenderer {
             }
 
             drawBackground(context, x, y, w, h, br, bc);
-//            drawBorder(context, x, y, w, h, br, strokeColorDark, strokeColorLight);
 
             Border border = agui.getBorder();
             if (border != null) {
@@ -100,6 +98,7 @@ public class NvgTextInputRenderer extends NvgLeguiComponentRenderer {
                 text = updateRenderedText(agui, context, tw, renderBounds);
                 textToDraw = text.substring(renderBounds[0], renderBounds[1]);
             } catch (Throwable e) {
+                System.err.println("ERROR");
             }
             if (textToDraw == null) return;
             ByteBuffer byteText = MemoryUtil.memUTF8(textToDraw);
@@ -115,7 +114,7 @@ public class NvgTextInputRenderer extends NvgLeguiComponentRenderer {
             int ng = nnvgTextGlyphPositions(context, bounds[0], bounds[1], memAddress(byteText), 0, glyphAddress, maxGlyphCount);
             // draw caret
             if (agui.isFocused()) {
-                calcMouseCaretPos(leguiContext, bounds, ng, agui, renderBounds);
+                calcMouseCaretPos(leguiContext, bounds, ng, agui, renderBounds, context);
                 drawCaret(context, horizontalAlign, bc, tx, tw, bounds, byteText, caretPos - renderBounds[0], ng);
             }
         }
@@ -123,7 +122,7 @@ public class NvgTextInputRenderer extends NvgLeguiComponentRenderer {
     }
 
 
-    public String updateRenderedText(TextInput agui, long context, float tw, int[] renderBounds) {
+    public String updateRenderedText(TextInput agui, long context, float targetTextWidth, int[] renderBounds) {
         String text = agui.getTextState().getText();
         ByteBuffer byteText = MemoryUtil.memUTF8(text);
         long glyphAddress = memAddress(glyphs);
@@ -132,7 +131,7 @@ public class NvgTextInputRenderer extends NvgLeguiComponentRenderer {
         int nGlypths = nnvgTextGlyphPositions(context, 0, 0, memAddress(byteText), 0, glyphAddress, maxGlyphCount);
         int caretPos = agui.getCaretPosition();
 
-        int l = 0, r = nGlypths > 0 ? nGlypths : -1;
+        int leftPos = 0, rightPos = nGlypths > 0 ? nGlypths : -1;
 
         // get text to render depending on cursor position
         int textBounds[] = new int[2];
@@ -144,21 +143,21 @@ public class NvgTextInputRenderer extends NvgLeguiComponentRenderer {
                 return text;
             }
 
-            float wid = 0;
-            int lb = caretPos;
-            int rb = caretPos;
-            while (wid <= tw && !(lb == 0 && rb == nGlypths)) {
-                if (lb > 0) lb--;
-                if (rb < nGlypths) rb++;
+            float width = 0;
+            int leftBound = caretPos;
+            int rightBound = caretPos;
+            while (width <= targetTextWidth && !(leftBound == 0 && rightBound == nGlypths)) {
+                if (leftBound > 0) leftBound--;
+                if (rightBound < nGlypths) rightBound++;
 
-                float left = glyphs.get(lb).x();
-                float right = (rb == nGlypths ? glyphs.get(rb - 1).maxx() : glyphs.get(rb).x());
-                wid = right - left;
+                float left = glyphs.get(leftBound).x();
+                float right = (rightBound == nGlypths ? glyphs.get(rightBound - 1).maxx() : glyphs.get(rightBound).x());
+                width = right - left;
             }
-            renderBounds[0] = lb;
-            renderBounds[1] = rb;
+            renderBounds[0] = leftBound;
+            renderBounds[1] = rightBound;
         } else {
-            getTextToDrawBounds(tw, nGlypths, r, textBounds);
+            getTextToDrawBounds(targetTextWidth, nGlypths, rightPos, textBounds);
             renderBounds[0] = textBounds[0];
             renderBounds[1] = textBounds[1] + 1;
         }
@@ -179,13 +178,15 @@ public class NvgTextInputRenderer extends NvgLeguiComponentRenderer {
                 caretx = tx + horizontalAlign.index * tw / 2f;
             }
         }
-        Util.negativeColor(bc, caretColor);
+        blackOrWhite(bc, caretColor);
         caretColor.w = (float) Math.abs(GLFW.glfwGetTime() % 1 * 2 - 1);
 
         NvgRenderUtils.drawRectangle(context, caretColor, (int) caretx, bounds[5], 1f, bounds[7]);
     }
 
-    private void calcMouseCaretPos(LeguiContext renderContext, float[] bounds, int ng, TextInput gui, int[] textBounds) {
+
+
+    private void calcMouseCaretPos(LeguiContext renderContext, float[] bounds, int ng, TextInput gui, int[] textBounds, long context) {
 //        float mouseCaretx = 0;
         Vector2f cursorPosition = renderContext.getCursorPosition();
 
@@ -196,8 +197,10 @@ public class NvgTextInputRenderer extends NvgLeguiComponentRenderer {
         int newCPos = 0;
         if (mx <= fl) {
             newCPos = 0;
+            NvgRenderUtils.drawRectangle(context, half(caretColor), fl, bounds[5], 1f, bounds[7]);
         } else if (mx >= fr) {
             newCPos = ng;
+            NvgRenderUtils.drawRectangle(context, half(caretColor), fr, bounds[5], 1f, bounds[7]);
         } else {
             int upper = ng - 1;
             for (int i = 0; i < upper; newCPos = i++) {
@@ -206,9 +209,11 @@ public class NvgTextInputRenderer extends NvgLeguiComponentRenderer {
 
                 if (mx >= x && mx <= maxx) {
                     if (maxx - mx > mx - x) {
+                        NvgRenderUtils.drawRectangle(context, half(caretColor), x, bounds[5], 1f, bounds[7]);
                         newCPos = i;
                     } else {
                         newCPos = i + 1;
+                        NvgRenderUtils.drawRectangle(context, half(caretColor), maxx, bounds[5], 1f, bounds[7]);
                     }
                     break;
                 }

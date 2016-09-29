@@ -7,6 +7,7 @@ import org.liquidengine.legui.component.ContainerHolder;
 import org.liquidengine.legui.component.intersector.LeguiIntersector;
 import org.liquidengine.legui.context.LeguiContext;
 import org.liquidengine.legui.event.system.MouseClickEvent;
+import org.liquidengine.legui.processor.LeguiEventProcessorUtils;
 import org.liquidengine.legui.util.Util;
 
 import static org.lwjgl.glfw.GLFW.GLFW_PRESS;
@@ -29,7 +30,7 @@ public class LeguiMouseClickEventProcessor extends LeguiSystemEventProcessor<Mou
         context.getMouseButtonStates()[event.button] = event.action == GLFW_PRESS;
         context.getMouseButtonPressPosition()[event.button] = event.action == GLFW_PRESS ? new Vector2f(cursorPosition) : null;
         if (target != null) {
-            process(event, target);
+            process(event, mainGui, target);
         }
     }
 
@@ -59,7 +60,7 @@ public class LeguiMouseClickEventProcessor extends LeguiSystemEventProcessor<Mou
         }
     }
 
-    private void process(MouseClickEvent event, Component gui) {
+    private void process(MouseClickEvent event, Component mainGui, Component gui) {
         Component focusedGui = context.getFocusedGui();
         if (!gui.equals(focusedGui)) gui.setFocused(false);
 
@@ -72,10 +73,12 @@ public class LeguiMouseClickEventProcessor extends LeguiSystemEventProcessor<Mou
                 pushUp(gui);
                 context.setFocusedGui(gui);
                 gui.setFocused(true);
+                LeguiEventProcessorUtils.release(mainGui, gui);
 //                gui.getListeners().getMouseActionListeners().forEach(listener -> listener.onPress(event.button, cursorPosition));
             }
         } else if (event.action == GLFW_RELEASE && intersects) {
             if (focusedGui == null) return;
+            LeguiEventProcessorUtils.release(mainGui, gui);
             if (focusedGui.getIntersector().intersects(focusedGui, cursorPosition)) {
 //                focusedGui.getListeners().getMouseActionListeners().forEach(listener -> listener.onClick(event.button, cursorPosition));
             }

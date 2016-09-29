@@ -60,6 +60,13 @@ public class Widget extends Component implements ContainerHolder {
         textState.getPadding().set(10, 5, 10, 5);
         backgroundColor.set(1);
         border = new SimpleLineBorder(this, ColorConstants.black(), 1);
+        componentListenerHolder.addMouseDragEventListener(event -> {
+            if(event.getComponent()==this){
+                Vector2f sub = event.getCursorPosition().sub(event.getCursorPositionPrev());
+                System.out.println(sub);
+                position.add(sub);
+            }
+        });
     }
 
     public float getTitleHeight() {

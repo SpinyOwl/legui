@@ -81,4 +81,21 @@ public final class Util {
         return new Vector4f(color).div(2);
     }
 
+    public static Vector4f blackOrWhite(Vector4f color) {
+        return blackOrWhite(color, new Vector4f(1));
+    }
+
+    public static Vector4f blackOrWhite(Vector4f color, Vector4f targetColor) {
+        if ((color.x * 0.299f + color.y * 0.587f + color.z * 0.114f) > 170f / 255f) {
+            targetColor.x = 0;
+            targetColor.y = 0;
+            targetColor.z = 0;
+        } else {
+            targetColor.x = 1;
+            targetColor.y = 1;
+            targetColor.z = 1;
+        }
+        return targetColor;
+    }
+
 }

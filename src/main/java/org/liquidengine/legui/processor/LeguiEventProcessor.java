@@ -9,9 +9,7 @@ import org.liquidengine.legui.context.LeguiContext;
 import org.liquidengine.legui.context.LeguiEventQueue;
 import org.liquidengine.legui.event.system.*;
 import org.liquidengine.legui.processor.system.*;
-import org.lwjgl.glfw.GLFW;
 
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -85,7 +83,6 @@ public class LeguiEventProcessor {
             if (concreteEventProcessor != null) {
                 context.setMouseTargetGui(getMouseTarget(null, mainGuiComponent, context.getCursorPosition()));
                 concreteEventProcessor.processEvent(event, mainGuiComponent);
-                releaseFocus(event, mainGuiComponent);
             }
         }
     }
@@ -107,33 +104,6 @@ public class LeguiEventProcessor {
             }
         }
         return target;
-    }
-
-    private void releaseFocus(LeguiSystemEvent event, Component mainGuiComponent) {
-        boolean release = false;
-        if ( //@formatter:off
-                ((event instanceof MouseClickEvent) && ((MouseClickEvent) event).action == GLFW.GLFW_RELEASE) ||
-                ((event instanceof KeyEvent)        && ((KeyEvent) event).action        == GLFW.GLFW_RELEASE)
-           ) { //@formatter:on
-            release = true;
-        }
-
-        if (release) {
-            release(mainGuiComponent, context.getFocusedGui());
-        }
-    }
-
-    private void release(Component gui, Component focused) {
-        if (gui != focused) {
-            gui.setFocused(false);
-        }
-        if (gui instanceof ContainerHolder) {
-            ComponentContainer container = ((ContainerHolder) gui).getContainer();
-            List<Component> all = container.getComponents();
-            for (Component element : all) {
-                release(element, focused);
-            }
-        }
     }
 
     /**

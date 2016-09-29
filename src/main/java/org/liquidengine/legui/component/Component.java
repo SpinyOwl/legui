@@ -11,6 +11,7 @@ import org.liquidengine.legui.component.border.SimpleLineBorder;
 import org.liquidengine.legui.component.intersector.LeguiIntersector;
 import org.liquidengine.legui.component.intersector.RectangleIntersector;
 import org.liquidengine.legui.context.LeguiContext;
+import org.liquidengine.legui.listener.component.LeguiComponentListenerHolder;
 import org.liquidengine.legui.processor.system.component.LeguiEventProcessorContainer;
 import org.liquidengine.legui.render.LeguiComponentRenderer;
 import org.liquidengine.legui.render.LeguiRendererProvider;
@@ -38,6 +39,8 @@ public abstract class Component {
     protected Component parent;
     protected LeguiIntersector intersector = new RectangleIntersector();
     protected LeguiComponentRenderer renderer = LeguiRendererProvider.getProvider().getRenderer(this);
+
+    protected LeguiComponentListenerHolder componentListenerHolder = new LeguiComponentListenerHolder();
 
     public Component() {
         this(10, 10, 10, 10);
@@ -86,6 +89,10 @@ public abstract class Component {
 
     public void setSize(float width, float height) {
         this.size.set(width, height);
+    }
+
+    public LeguiComponentListenerHolder getComponentListenerHolder() {
+        return componentListenerHolder;
     }
 
     public Vector4f getBackgroundColor() {

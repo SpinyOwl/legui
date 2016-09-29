@@ -41,6 +41,7 @@ public class NvgRendererProvider extends LeguiRendererProvider {
         registerRenderer(ProgressBar.class, new NvgProgressBarRenderer());
         registerRenderer(RadioButton.class, new NvgRadioButtonRenderer());
         registerRenderer(Slider.class, new NvgSliderRenderer());
+        registerRenderer(ScrollBar.class, new NvgScrollBarRenderer());
         registerRenderer(TextInput.class, new NvgTextInputRenderer());
         registerRenderer(Widget.class, new NvgWidgetRenderer());
 

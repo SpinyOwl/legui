@@ -13,38 +13,62 @@ import org.liquidengine.legui.util.ColorConstants;
 
 
 /**
+ * An implementation of "push" button
+ * <p>
  * Created by Shcherbin Alexander on 9/22/2016.
  */
 public class Button extends Component {
 
     protected TextState textState;
 
+    /**
+     * Creates a button with default text.
+     */
     public Button() {
         this("Button");
     }
 
+    /**
+     * Creates a button with default text and specified position and size.
+     */
     public Button(float x, float y, float width, float height) {
         this(x, y, width, height, "Button");
     }
 
+    /**
+     * Creates a button with default text and specified position and size.
+     */
     public Button(Vector2f position, Vector2f size) {
         this(position, size, "Button");
     }
 
+    /**
+     * Creates a button with specified text.
+     */
     public Button(String text) {
         initialize(text);
     }
 
+    /**
+     * Creates a button with specified text and specified position and size.
+     */
     public Button(float x, float y, float width, float height, String text) {
         super(x, y, width, height);
         initialize(text);
     }
 
+    /**
+     * Creates a button with specified text and specified position and size.
+     */
     public Button(Vector2f position, Vector2f size, String text) {
         super(position, size);
         initialize(text);
     }
 
+    /**
+     * Initialize button with specified text
+     * @param text
+     */
     private void initialize(String text) {
         this.textState = new TextState(text);
         intersector = new RectangleIntersector();
@@ -53,6 +77,10 @@ public class Button extends Component {
         textState.setHorizontalAlign(HorizontalAlign.CENTER);
     }
 
+    /**
+     * Returns text data of button
+     * @return text state of button
+     */
     public TextState getTextState() {
         return textState;
     }

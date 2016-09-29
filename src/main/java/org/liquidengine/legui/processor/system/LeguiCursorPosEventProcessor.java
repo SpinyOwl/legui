@@ -5,9 +5,12 @@ import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.ComponentContainer;
 import org.liquidengine.legui.component.ContainerHolder;
 import org.liquidengine.legui.context.LeguiContext;
+import org.liquidengine.legui.event.component.MouseDragEvent;
 import org.liquidengine.legui.event.system.CursorPosEvent;
 
 import java.util.List;
+
+import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_LEFT;
 
 /**
  * Event processor for cursor events. Updates GUI element depending on cursor position. Calls CursorEventListeners of GUI element
@@ -38,7 +41,6 @@ public class LeguiCursorPosEventProcessor extends LeguiSystemEventProcessor<Curs
 
 
     private void processEventOnContainer(CursorPosEvent event, Component gui, Component target) {
-        updateComponentStatesAndCallListeners(event, gui, target);
         ComponentContainer container = ((ContainerHolder) gui).getContainer();
         List<Component> all = container.getComponents();
         for (Component element : all) {
@@ -53,6 +55,12 @@ public class LeguiCursorPosEventProcessor extends LeguiSystemEventProcessor<Curs
      * @param gui
      */
     private void updateComponentStatesAndCallListeners(CursorPosEvent event, Component gui, Component target) {
+        if (target != null && context.getMouseButtonStates()[GLFW_MOUSE_BUTTON_LEFT]) {
+            Vector2f cursorPosition = new Vector2f(context.getCursorPosition());
+            Vector2f cursorPositionPrev = new Vector2f(context.getCursorPositionPrev());
+            MouseDragEvent mouseDragEvent = new MouseDragEvent(cursorPosition, cursorPositionPrev, gui);
+            target.getComponentListenerHolder().getMouseDragEventListeners().forEach(listener -> listener.onMouseDrag(mouseDragEvent));
+        }
 //        List<CursorEnterListener> listeners = gui.getListeners().getCursorEnterListeners();
 //        Vector2f position = Util.calculatePosition(gui);
 //        Vector2f cursorPosition = context.getCursorPosition();

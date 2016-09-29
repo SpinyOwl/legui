@@ -6,13 +6,17 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.liquidengine.legui.component.CheckBox;
-import org.liquidengine.legui.component.Component;
-import org.liquidengine.legui.event.system.LeguiSystemEvent;
-import org.liquidengine.legui.event.system.MouseClickEvent;
-import org.liquidengine.legui.event.system.ScrollEvent;
+import org.liquidengine.legui.component.*;
+import org.liquidengine.legui.event.system.*;
 import org.liquidengine.legui.processor.system.component.checkbox.CheckBoxMouseClickProcessor;
 import org.liquidengine.legui.processor.system.component.def.DefaultGuiScrollProcessor;
+import org.liquidengine.legui.processor.system.component.radiobutton.RadioButtonMouseClickProcessor;
+import org.liquidengine.legui.processor.system.component.slider.SliderCursorPosProcessor;
+import org.liquidengine.legui.processor.system.component.slider.SliderMouseClickProcessor;
+import org.liquidengine.legui.processor.system.component.slider.SliderScrollProcessor;
+import org.liquidengine.legui.processor.system.component.textinput.TextInputCharEventProcessor;
+import org.liquidengine.legui.processor.system.component.textinput.TextInputKeyProcessor;
+import org.liquidengine.legui.processor.system.component.textinput.TextInputMouseClickProcessor;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -36,19 +40,19 @@ public class LeguiComponentEventProcessorProvider extends AbstractGuiProcessorPr
     private void registerProcessors() {
          registerGuiProcessor(CheckBox.class, MouseClickEvent.class, new CheckBoxMouseClickProcessor());
 
-        // registerGuiProcessor(Slider.class, MouseClickEvent.class, new SliderMouseClickProcessor());
-        // registerGuiProcessor(Slider.class, CursorPosEvent.class, new SliderCursorPosProcessor());
-        // registerGuiProcessor(Slider.class, ScrollEvent.class, new SliderScrollProcessor());
+         registerGuiProcessor(Slider.class, MouseClickEvent.class, new SliderMouseClickProcessor());
+         registerGuiProcessor(Slider.class, CursorPosEvent.class, new SliderCursorPosProcessor());
+         registerGuiProcessor(Slider.class, ScrollEvent.class, new SliderScrollProcessor());
 
-        // registerGuiProcessor(RadioButton.class, MouseClickEvent.class, new RadioButtonMouseClickProcessor());
+         registerGuiProcessor(RadioButton.class, MouseClickEvent.class, new RadioButtonMouseClickProcessor());
 
         // registerGuiProcessor(ScrollBar.class, MouseClickEvent.class, new ScrollBarMouseClickProcessor());
         // registerGuiProcessor(ScrollBar.class, CursorPosEvent.class, new ScrollBarCursorPosProcessor());
         // registerGuiProcessor(ScrollBar.class, ScrollEvent.class, new ScrollBarScrollProcessor());
 
-        // registerGuiProcessor(TextInput.class, MouseClickEvent.class, new TextInputMouseClickProcessor());
-        // registerGuiProcessor(TextInput.class, CharEvent.class, new TextInputCharEventProcessor());
-        // registerGuiProcessor(TextInput.class, KeyEvent.class, new TextInputKeyProcessor());
+         registerGuiProcessor(TextInput.class, MouseClickEvent.class, new TextInputMouseClickProcessor());
+         registerGuiProcessor(TextInput.class, CharEvent.class, new TextInputCharEventProcessor());
+         registerGuiProcessor(TextInput.class, KeyEvent.class, new TextInputKeyProcessor());
 
         // registerGuiProcessor(Widget.class, CursorPosEvent.class, new WidgetCursorPosProcessor());
     }

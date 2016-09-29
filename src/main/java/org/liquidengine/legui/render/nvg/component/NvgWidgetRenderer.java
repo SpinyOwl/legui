@@ -11,20 +11,18 @@ import org.liquidengine.legui.component.optional.align.VerticalAlign;
 import org.liquidengine.legui.context.LeguiContext;
 import org.liquidengine.legui.font.FontRegister;
 import org.liquidengine.legui.render.nvg.NvgLeguiComponentRenderer;
-import org.liquidengine.legui.util.ColorConstants;
 import org.lwjgl.nanovg.NVGColor;
 
 import static org.liquidengine.legui.util.NVGUtils.rgba;
 import static org.liquidengine.legui.util.NvgRenderUtils.*;
-import static org.liquidengine.legui.util.Util.calculatePosition;
-import static org.liquidengine.legui.util.Util.negativeColor;
+import static org.liquidengine.legui.util.Util.*;
 import static org.lwjgl.nanovg.NanoVG.*;
 
 /**
  * Created by Shcherbin Alexander on 9/27/2016.
  */
 public class NvgWidgetRenderer extends NvgLeguiComponentRenderer {
-    private static final String CLOSE_ICON = new String(Character.toChars(0xE5CD));
+    private static final String CLOSE_ICON = cpToStr(0xE5CD);
     private NVGColor colorA = NVGColor.calloc();
 
     @Override
@@ -61,7 +59,7 @@ public class NvgWidgetRenderer extends NvgLeguiComponentRenderer {
                     nvgRoundedRect(context, xp, position.y, titleHeight, titleHeight, component.getCornerRadius());
                     nvgFillColor(context, rgba(closeButtonColor, colorA));
                     nvgFill(context);
-                    Vector4f closeColor = getOppositeColor(closeButtonColor);
+                    Vector4f closeColor = blackOrWhite(closeButtonColor);
 
                     renderTextLineToBounds(context, xp + titleHeight * 0.2f, position.y, 0.8f * titleHeight, titleHeight, titleHeight, FontRegister
                                     .MATERIAL_ICONS_REGULAR,
@@ -73,7 +71,7 @@ public class NvgWidgetRenderer extends NvgLeguiComponentRenderer {
                 nvgLineCap(context, NVG_ROUND);
                 nvgLineJoin(context, NVG_ROUND);
                 nvgStrokeWidth(context, 1);
-                nvgStrokeColor(context, rgba(getOppositeColor(titleBackgroundColor), colorA));
+                nvgStrokeColor(context, rgba(blackOrWhite(titleBackgroundColor), colorA));
                 nvgBeginPath(context);
                 nvgMoveTo(context, position.x, y);
                 nvgLineTo(context, rightX, y);
@@ -114,7 +112,7 @@ public class NvgWidgetRenderer extends NvgLeguiComponentRenderer {
             nvgLineCap(context, NVG_ROUND);
             nvgLineJoin(context, NVG_ROUND);
             nvgStrokeWidth(context, 1);
-            nvgStrokeColor(context, rgba(getOppositeColor(backgroundColor), colorA));
+            nvgStrokeColor(context, rgba(blackOrWhite(backgroundColor), colorA));
             nvgBeginPath(context);
             nvgMoveTo(context, position.x, y + 0.5f);
             nvgLineTo(context, rightX, y + 0.5f);
@@ -131,13 +129,5 @@ public class NvgWidgetRenderer extends NvgLeguiComponentRenderer {
         }
         resetScissor(context);
 
-    }
-
-    private Vector4f getOppositeColor(Vector4f color) {
-        if ((color.x * 0.299f + color.y * 0.587f + color.z * 0.114f) > 170f / 255f) {
-            return ColorConstants.black();
-        } else {
-            return ColorConstants.white();
-        }
     }
 }

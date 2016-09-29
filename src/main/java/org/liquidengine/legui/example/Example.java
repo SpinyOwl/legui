@@ -144,7 +144,7 @@ public class Example {
                 exampleGui.setImage(image1);
             }
         }
-        Label label = exampleGui.getLabel();
+        Label label = exampleGui.getMouseTargetLabel();
         label.getTextState().setText(leguiContext.getMouseTargetGui() + "");
 
         Label mouseLabel = exampleGui.getMouseLabel();
