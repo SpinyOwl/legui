@@ -63,7 +63,7 @@ public class Widget extends Component implements ContainerHolder {
         componentListenerHolder.addMouseDragEventListener(event -> {
             if(event.getComponent()==this){
                 Vector2f sub = event.getCursorPosition().sub(event.getCursorPositionPrev());
-                System.out.println(sub);
+//                System.out.println(sub);
                 position.add(sub);
             }
         });

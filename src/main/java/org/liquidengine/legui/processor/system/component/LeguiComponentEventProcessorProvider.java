@@ -2,8 +2,6 @@ package org.liquidengine.legui.processor.system.component;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.liquidengine.legui.component.*;
@@ -17,6 +15,7 @@ import org.liquidengine.legui.processor.system.component.slider.SliderScrollProc
 import org.liquidengine.legui.processor.system.component.textinput.TextInputCharEventProcessor;
 import org.liquidengine.legui.processor.system.component.textinput.TextInputKeyProcessor;
 import org.liquidengine.legui.processor.system.component.textinput.TextInputMouseClickProcessor;
+import org.liquidengine.legui.processor.system.component.widget.WidgetCursorPosProcessor;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -28,6 +27,7 @@ public class LeguiComponentEventProcessorProvider extends AbstractGuiProcessorPr
     private static final Logger LOGGER = LogManager.getLogger();
     private static final String PATTERN = "No specified gui Processor for \"%s\" class and \"%s\" event.";
     private static final LeguiComponentEventProcessor DEFAULT = (gui, event, state) -> {
+//        LOGGER.warn(String.format(PATTERN, gui.getClass(), event.getClass()));
     };
     private static final LeguiComponentEventProcessor<Component, ScrollEvent> DEFAULT_SCROLL_PROCESSOR = new DefaultGuiScrollProcessor();
 
@@ -54,7 +54,7 @@ public class LeguiComponentEventProcessorProvider extends AbstractGuiProcessorPr
          registerGuiProcessor(TextInput.class, CharEvent.class, new TextInputCharEventProcessor());
          registerGuiProcessor(TextInput.class, KeyEvent.class, new TextInputKeyProcessor());
 
-        // registerGuiProcessor(Widget.class, CursorPosEvent.class, new WidgetCursorPosProcessor());
+         registerGuiProcessor(Widget.class, CursorPosEvent.class, new WidgetCursorPosProcessor());
     }
 
     @Override
@@ -78,20 +78,26 @@ public class LeguiComponentEventProcessorProvider extends AbstractGuiProcessorPr
             this.second = second;
         }
 
-
         @Override
-        public String toString() {
-            return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
-        }
+        public boolean equals(Object o) {
+            if (this == o) return true;
 
-        @Override
-        public boolean equals(Object other) {
-            return EqualsBuilder.reflectionEquals(this, other);
+            if (o == null || getClass() != o.getClass()) return false;
+
+            ProviderKey that = (ProviderKey) o;
+
+            return new EqualsBuilder()
+                    .append(first, that.first)
+                    .append(second, that.second)
+                    .isEquals();
         }
 
         @Override
         public int hashCode() {
-            return HashCodeBuilder.reflectionHashCode(this);
+            return new HashCodeBuilder(17, 37)
+                    .append(first)
+                    .append(second)
+                    .toHashCode();
         }
     }
 

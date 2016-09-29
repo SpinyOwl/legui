@@ -55,12 +55,6 @@ public class LeguiCursorPosEventProcessor extends LeguiSystemEventProcessor<Curs
      * @param gui
      */
     private void updateComponentStatesAndCallListeners(CursorPosEvent event, Component gui, Component target) {
-        if (target != null && context.getMouseButtonStates()[GLFW_MOUSE_BUTTON_LEFT]) {
-            Vector2f cursorPosition = new Vector2f(context.getCursorPosition());
-            Vector2f cursorPositionPrev = new Vector2f(context.getCursorPositionPrev());
-            MouseDragEvent mouseDragEvent = new MouseDragEvent(cursorPosition, cursorPositionPrev, gui);
-            target.getComponentListenerHolder().getMouseDragEventListeners().forEach(listener -> listener.onMouseDrag(mouseDragEvent));
-        }
 //        List<CursorEnterListener> listeners = gui.getListeners().getCursorEnterListeners();
 //        Vector2f position = Util.calculatePosition(gui);
 //        Vector2f cursorPosition = context.getCursorPosition();

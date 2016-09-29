@@ -43,7 +43,7 @@ public class NvgImageRenderer extends NvgLeguiComponentRenderer {
     /**
      * Cache of loaded images. If image is reached only by soft reference it will be deleted.
      */
-    private Cache<String, Integer> imageCache = CacheBuilder.<String, Integer>newBuilder()/*.weakKeys()*/.initialCapacity(200)
+    private Cache<String, Integer> imageCache = CacheBuilder.newBuilder().initialCapacity(200)
             .expireAfterAccess(20, TimeUnit.SECONDS).removalListener(removalListener).build();
 
     private ScheduledExecutorService cleanup = Executors.newSingleThreadScheduledExecutor();
@@ -69,19 +69,15 @@ public class NvgImageRenderer extends NvgLeguiComponentRenderer {
 
         createScissor(context, component);
         {
-            {
-                nvgBeginPath(context);
-                nvgImagePattern(context, position.x, position.y, size.x, size.y, 0, imageRef, 1, imagePaint);
-                nvgRoundedRect(context, position.x, position.y, size.x, size.y, component.getCornerRadius());
-                nvgFillPaint(context, imagePaint);
-                nvgFill(context);
-            }
-            {
-                if (border != null) {
-                    border.render(leguiContext);
-                }
-            }
+            nvgBeginPath(context);
+            nvgImagePattern(context, position.x, position.y, size.x, size.y, 0, imageRef, 1, imagePaint);
+            nvgRoundedRect(context, position.x, position.y, size.x, size.y, component.getCornerRadius());
+            nvgFillPaint(context, imagePaint);
+            nvgFill(context);
 
+            if (border != null) {
+                border.render(leguiContext);
+            }
         }
         resetScissor(context);
 
