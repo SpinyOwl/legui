@@ -16,7 +16,7 @@ import static org.liquidengine.legui.util.IOUtil.ioResourceToByteBuffer;
  */
 public class FontRegister {
     public static final String ENTYPO = "entypo";
-    public static final String ROBOTO_BOLD = "roboto-bold";
+    public static final String ROBOTO_BOLD = "roboto italic";
     public static final String ROBOTO_LIGHT = "roboto-light";
     public static final String ROBOTO_REGULAR = "roboto-regular";
     public static final String MATERIAL_ICONS_REGULAR = "MaterialIcons-Regular";

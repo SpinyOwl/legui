@@ -17,7 +17,7 @@ import org.liquidengine.legui.util.Util;
 import org.lwjgl.nanovg.NVGColor;
 
 import static org.liquidengine.legui.util.NvgRenderUtils.*;
-import static org.liquidengine.legui.util.Util.blackOrWhite;
+import static org.liquidengine.legui.util.ColorUtil.blackOrWhite;
 import static org.lwjgl.nanovg.NanoVG.*;
 
 /**

@@ -6,6 +6,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.liquidengine.legui.component.*;
 import org.liquidengine.legui.event.system.*;
+import org.liquidengine.legui.processor.system.component.button.ButtonCursorPosEventProcessor;
+import org.liquidengine.legui.processor.system.component.button.ButtonMouseClickEventProcessor;
 import org.liquidengine.legui.processor.system.component.checkbox.CheckBoxMouseClickProcessor;
 import org.liquidengine.legui.processor.system.component.def.DefaultGuiScrollProcessor;
 import org.liquidengine.legui.processor.system.component.radiobutton.RadioButtonMouseClickProcessor;
@@ -41,23 +43,26 @@ public class LeguiComponentEventProcessorProvider extends AbstractGuiProcessorPr
     }
 
     private void registerProcessors() {
-         registerGuiProcessor(CheckBox.class, MouseClickEvent.class, new CheckBoxMouseClickProcessor());
+        registerGuiProcessor(Button.class, MouseClickEvent.class, new ButtonMouseClickEventProcessor());
+        registerGuiProcessor(Button.class, CursorPosEvent.class, new ButtonCursorPosEventProcessor());
 
-         registerGuiProcessor(Slider.class, MouseClickEvent.class, new SliderMouseClickProcessor());
-         registerGuiProcessor(Slider.class, CursorPosEvent.class, new SliderCursorPosProcessor());
-         registerGuiProcessor(Slider.class, ScrollEvent.class, new SliderScrollProcessor());
+        registerGuiProcessor(CheckBox.class, MouseClickEvent.class, new CheckBoxMouseClickProcessor());
 
-         registerGuiProcessor(RadioButton.class, MouseClickEvent.class, new RadioButtonMouseClickProcessor());
+        registerGuiProcessor(Slider.class, MouseClickEvent.class, new SliderMouseClickProcessor());
+        registerGuiProcessor(Slider.class, CursorPosEvent.class, new SliderCursorPosProcessor());
+        registerGuiProcessor(Slider.class, ScrollEvent.class, new SliderScrollProcessor());
 
-         registerGuiProcessor(ScrollBar.class, MouseClickEvent.class, new ScrollBarMouseClickProcessor());
-         registerGuiProcessor(ScrollBar.class, CursorPosEvent.class, new ScrollBarCursorPosProcessor());
-         registerGuiProcessor(ScrollBar.class, ScrollEvent.class, new ScrollBarScrollProcessor());
+        registerGuiProcessor(RadioButton.class, MouseClickEvent.class, new RadioButtonMouseClickProcessor());
 
-         registerGuiProcessor(TextInput.class, MouseClickEvent.class, new TextInputMouseClickProcessor());
-         registerGuiProcessor(TextInput.class, CharEvent.class, new TextInputCharEventProcessor());
-         registerGuiProcessor(TextInput.class, KeyEvent.class, new TextInputKeyProcessor());
+        registerGuiProcessor(ScrollBar.class, MouseClickEvent.class, new ScrollBarMouseClickProcessor());
+        registerGuiProcessor(ScrollBar.class, CursorPosEvent.class, new ScrollBarCursorPosProcessor());
+        registerGuiProcessor(ScrollBar.class, ScrollEvent.class, new ScrollBarScrollProcessor());
 
-         registerGuiProcessor(Widget.class, CursorPosEvent.class, new WidgetCursorPosProcessor());
+        registerGuiProcessor(TextInput.class, MouseClickEvent.class, new TextInputMouseClickProcessor());
+        registerGuiProcessor(TextInput.class, CharEvent.class, new TextInputCharEventProcessor());
+        registerGuiProcessor(TextInput.class, KeyEvent.class, new TextInputKeyProcessor());
+
+        registerGuiProcessor(Widget.class, CursorPosEvent.class, new WidgetCursorPosProcessor());
     }
 
     @Override

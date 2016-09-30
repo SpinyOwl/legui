@@ -12,7 +12,7 @@ import static org.liquidengine.legui.util.Util.cpToStr;
  */
 public class TextInputCharEventProcessor implements LeguiComponentEventProcessor<TextInput, CharEvent> {
     @Override
-    public void process(TextInput gui, CharEvent event, LeguiContext processorState) {
+    public void process(TextInput gui, CharEvent event, LeguiContext leguiContext) {
         if (gui.isFocused() && gui.isEditable()) {
             String str = cpToStr(event.codepoint);
             int caretPosition = gui.getCaretPosition();

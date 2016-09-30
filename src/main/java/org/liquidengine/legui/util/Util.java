@@ -54,48 +54,4 @@ public final class Util {
         return memUTF8(new String(Character.toChars(cp)), true);
     }
 
-    public static Vector4f negativeColor(Vector4f color) {
-        Vector4f dest = new Vector4f(1).sub(color);
-        dest.w = color.w;
-        return dest;
-    }
-
-    public static void negativeColor(Vector4f color, Vector4f dest) {
-        dest.zero().set(1).sub(color);
-        dest.w = color.w;
-    }
-
-
-    public static Vector4f negativeColorRGB(Vector4f color) {
-        Vector4f dest = new Vector4f(1).sub(color);
-        dest.w = 1;
-        return dest;
-    }
-
-    public static void negativeColorRGB(Vector4f color, Vector4f dest) {
-        dest.zero().set(1).sub(color);
-        dest.w = 1;
-    }
-
-    public static Vector4f half(Vector4f color) {
-        return new Vector4f(color).div(2);
-    }
-
-    public static Vector4f blackOrWhite(Vector4f color) {
-        return blackOrWhite(color, new Vector4f(1));
-    }
-
-    public static Vector4f blackOrWhite(Vector4f color, Vector4f targetColor) {
-        if ((color.x * 0.299f + color.y * 0.587f + color.z * 0.114f) > 170f / 255f) {
-            targetColor.x = 0;
-            targetColor.y = 0;
-            targetColor.z = 0;
-        } else {
-            targetColor.x = 1;
-            targetColor.y = 1;
-            targetColor.z = 1;
-        }
-        return targetColor;
-    }
-
 }

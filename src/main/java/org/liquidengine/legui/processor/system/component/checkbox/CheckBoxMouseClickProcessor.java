@@ -13,8 +13,8 @@ import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
 public class CheckBoxMouseClickProcessor implements LeguiComponentEventProcessor<CheckBox, MouseClickEvent> {
 
     @Override
-    public void process(CheckBox checkBox, MouseClickEvent event, LeguiContext processorState) {
-        if (processorState.getFocusedGui() == checkBox) {
+    public void process(CheckBox checkBox, MouseClickEvent event, LeguiContext leguiContext) {
+        if (leguiContext.getFocusedGui() == checkBox) {
             if (event.action == GLFW_RELEASE) {
                 checkBox.setChecked(!checkBox.isChecked());
             }

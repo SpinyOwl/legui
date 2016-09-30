@@ -1,17 +1,14 @@
 package org.liquidengine.legui.render.nvg.component;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.Button;
 import org.liquidengine.legui.component.Component;
-import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.component.border.Border;
+import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.context.LeguiContext;
 import org.liquidengine.legui.render.nvg.NvgLeguiComponentRenderer;
+import org.liquidengine.legui.util.ColorUtil;
 import org.liquidengine.legui.util.Util;
 import org.lwjgl.nanovg.NVGColor;
 import org.lwjgl.nanovg.NVGPaint;
@@ -41,7 +38,7 @@ public class NvgButtonRenderer extends NvgLeguiComponentRenderer {
             nvgSave(nvgContext);
             // render background
             {
-                Vector4f backgroundColor = component.getBackgroundColor();
+                Vector4f backgroundColor = agui.isPressed()? ColorUtil.randomColor(): component.getBackgroundColor();
                 nvgBeginPath(nvgContext);
                 nvgFillColor(nvgContext, rgba(backgroundColor, colorA));
                 nvgRoundedRect(nvgContext, pos.x, pos.y, size.x, size.y, component.getCornerRadius());

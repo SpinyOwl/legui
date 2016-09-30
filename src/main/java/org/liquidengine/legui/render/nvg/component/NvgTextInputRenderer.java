@@ -23,8 +23,8 @@ import java.nio.ByteBuffer;
 
 import static org.liquidengine.legui.util.NvgRenderUtils.createScissor;
 import static org.liquidengine.legui.util.NvgRenderUtils.resetScissor;
-import static org.liquidengine.legui.util.Util.blackOrWhite;
-import static org.liquidengine.legui.util.Util.half;
+import static org.liquidengine.legui.util.ColorUtil.blackOrWhite;
+import static org.liquidengine.legui.util.ColorUtil.half;
 import static org.lwjgl.nanovg.NanoVG.*;
 import static org.lwjgl.system.MemoryUtil.memAddress;
 

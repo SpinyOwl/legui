@@ -15,14 +15,14 @@ import static org.lwjgl.glfw.GLFW.GLFW_PRESS;
  */
 public class SliderMouseClickProcessor implements LeguiComponentEventProcessor<Slider, MouseClickEvent> {
     @Override
-    public final void process(Slider gui, MouseClickEvent event, LeguiContext processorState) {
+    public final void process(Slider gui, MouseClickEvent event, LeguiContext leguiContext) {
         if (!gui.isVisible()) return;
         if (!gui.isEnabled()) return;
         if (event.action != GLFW_PRESS) return;
 
         Vector2f pos = Util.calculatePosition(gui);
 
-        Vector2f cursorPosition = processorState.getCursorPosition();
+        Vector2f cursorPosition = leguiContext.getCursorPosition();
         if (Orientation.VERTICAL.equals(gui.getOrientation())) {
             float value = (pos.y + gui.getSize().y - cursorPosition.y) / gui.getSize().y;
             gui.setValue(value * 100f);

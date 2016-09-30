@@ -34,6 +34,9 @@ public abstract class Component {
     protected boolean visible = true;
     protected boolean focused = false;
 
+    protected boolean pressed = false;
+    protected boolean hovered = false;
+
     protected float cornerRadius = 0;
 
     protected Component parent;

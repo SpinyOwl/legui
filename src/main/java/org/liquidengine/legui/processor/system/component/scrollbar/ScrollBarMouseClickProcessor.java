@@ -14,13 +14,13 @@ import static org.lwjgl.glfw.GLFW.GLFW_PRESS;
  * Created by Alexander on 25.08.2016.
  */
 public class ScrollBarMouseClickProcessor implements LeguiComponentEventProcessor<ScrollBar, MouseClickEvent> {
-    public void process(ScrollBar gui, MouseClickEvent event, LeguiContext processorState) {
+    public void process(ScrollBar gui, MouseClickEvent event, LeguiContext leguiContext) {
         if (!gui.isVisible()) return;
         if (!gui.isEnabled()) return;
         boolean released = event.action != GLFW_PRESS;
 
         Vector2f pos = Util.calculatePosition(gui);
-        Vector2f cursorPosition = processorState.getCursorPosition();
+        Vector2f cursorPosition = leguiContext.getCursorPosition();
 
         float visibleAmount = gui.getVisibleAmount();
         float curValue = gui.getCurValue();

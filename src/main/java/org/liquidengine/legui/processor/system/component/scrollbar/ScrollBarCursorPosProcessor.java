@@ -16,15 +16,15 @@ import static org.liquidengine.legui.util.Util.calculatePosition;
  * Created by Alexander on 26.08.2016.
  */
 public class ScrollBarCursorPosProcessor implements LeguiComponentEventProcessor<ScrollBar, CursorPosEvent> {
-    public void process(ScrollBar gui, CursorPosEvent event, LeguiContext state) {
+    public void process(ScrollBar gui, CursorPosEvent event, LeguiContext leguiContext) {
         if (!gui.isVisible()) return;
         if (!gui.isEnabled()) return;
-        if (state.getFocusedGui() != gui) return;
-        if (!state.getMouseButtonStates()[GLFW.GLFW_MOUSE_BUTTON_LEFT]) return;
+        if (leguiContext.getFocusedGui() != gui) return;
+        if (!leguiContext.getMouseButtonStates()[GLFW.GLFW_MOUSE_BUTTON_LEFT]) return;
         if (!gui.isScrolling()) return;
 
         Vector2f pos = calculatePosition(gui);
-        Vector2f cursorPosition = state.getCursorPosition();
+        Vector2f cursorPosition = leguiContext.getCursorPosition();
 
         float visibleAmount = gui.getVisibleAmount();
         boolean vertical = Orientation.VERTICAL.equals(gui.getOrientation());

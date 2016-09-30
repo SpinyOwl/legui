@@ -12,13 +12,23 @@ import org.lwjgl.glfw.GLFW;
  */
 public class WidgetCursorPosProcessor implements LeguiComponentEventProcessor<Widget, CursorPosEvent> {
     @Override
-    public void process(Widget gui, CursorPosEvent event, LeguiContext processorState) {
-        Vector2f cursorPosition = processorState.getCursorPosition();
-        Vector2f cursorPositionPrev = processorState.getCursorPositionPrev();
-        if (gui.isVisible() && processorState.getFocusedGui() == gui && processorState.getMouseButtonStates()[GLFW.GLFW_MOUSE_BUTTON_LEFT]) {
-            Vector2f delta = new Vector2f(cursorPosition).sub(cursorPositionPrev);
-            Vector2f widP = gui.getPosition();
-            widP.add(delta);
+    public void process(Widget gui, CursorPosEvent event, LeguiContext leguiContext) {
+        Vector2f cp = leguiContext.getCursorPosition();
+        Vector2f cpp = leguiContext.getCursorPositionPrev();
+        if (gui.isVisible() && leguiContext.getFocusedGui() == gui && leguiContext.getMouseButtonStates()[GLFW.GLFW_MOUSE_BUTTON_LEFT]) {
+
+            Vector2f p = gui.getPosition();
+            Vector2f s = gui.getSize();
+            float h = gui.getTitleHeight();
+
+            if ((cp.x >= p.x && cp.x <= p.x + s.x) || (cpp.x >= p.x && cpp.x <= p.x + s.x)) {
+                if ((cp.y >= p.y && cp.y <= p.y + h) || (cpp.y >= p.y && cpp.y <= p.y + h)) {
+                    Vector2f delta = new Vector2f(cp).sub(cpp);
+                    Vector2f widP = gui.getPosition();
+                    widP.add(delta);
+
+                }
+            }
         }
     }
 }

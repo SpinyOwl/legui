@@ -10,7 +10,7 @@ import org.liquidengine.legui.processor.system.component.LeguiComponentEventProc
  */
 public class DefaultGuiScrollProcessor implements LeguiComponentEventProcessor<Component, ScrollEvent> {
     @Override
-    public void process(Component gui, ScrollEvent event, LeguiContext processorState) {
+    public void process(Component gui, ScrollEvent event, LeguiContext leguiContext) {
 //        ScrollablePanel scrollpanel = null;
 //        if (gui instanceof ScrollablePanel) {
 //            scrollpanel = (ScrollablePanel) gui;
