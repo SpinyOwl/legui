@@ -9,6 +9,9 @@ import org.liquidengine.legui.event.system.*;
 import org.liquidengine.legui.processor.system.component.checkbox.CheckBoxMouseClickProcessor;
 import org.liquidengine.legui.processor.system.component.def.DefaultGuiScrollProcessor;
 import org.liquidengine.legui.processor.system.component.radiobutton.RadioButtonMouseClickProcessor;
+import org.liquidengine.legui.processor.system.component.scrollbar.ScrollBarCursorPosProcessor;
+import org.liquidengine.legui.processor.system.component.scrollbar.ScrollBarMouseClickProcessor;
+import org.liquidengine.legui.processor.system.component.scrollbar.ScrollBarScrollProcessor;
 import org.liquidengine.legui.processor.system.component.slider.SliderCursorPosProcessor;
 import org.liquidengine.legui.processor.system.component.slider.SliderMouseClickProcessor;
 import org.liquidengine.legui.processor.system.component.slider.SliderScrollProcessor;
@@ -46,9 +49,9 @@ public class LeguiComponentEventProcessorProvider extends AbstractGuiProcessorPr
 
          registerGuiProcessor(RadioButton.class, MouseClickEvent.class, new RadioButtonMouseClickProcessor());
 
-        // registerGuiProcessor(ScrollBar.class, MouseClickEvent.class, new ScrollBarMouseClickProcessor());
-        // registerGuiProcessor(ScrollBar.class, CursorPosEvent.class, new ScrollBarCursorPosProcessor());
-        // registerGuiProcessor(ScrollBar.class, ScrollEvent.class, new ScrollBarScrollProcessor());
+         registerGuiProcessor(ScrollBar.class, MouseClickEvent.class, new ScrollBarMouseClickProcessor());
+         registerGuiProcessor(ScrollBar.class, CursorPosEvent.class, new ScrollBarCursorPosProcessor());
+         registerGuiProcessor(ScrollBar.class, ScrollEvent.class, new ScrollBarScrollProcessor());
 
          registerGuiProcessor(TextInput.class, MouseClickEvent.class, new TextInputMouseClickProcessor());
          registerGuiProcessor(TextInput.class, CharEvent.class, new TextInputCharEventProcessor());

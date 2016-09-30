@@ -124,8 +124,8 @@ public class ExampleGui extends Panel {
         scrollBar1.setBorder(new SimpleLineBorder(scrollBar1, ColorConstants.red(), 1));
         this.getContainer().addComponent(scrollBar1);
 
-        ScrollBar scrollBar2 = new ScrollBar(390,170,20,100,20);
-        scrollBar2.setOrientation(Orientation.VERTICAL);
+        ScrollBar scrollBar2 = new ScrollBar(250,280,100,20,20);
+        scrollBar2.setOrientation(Orientation.HORIZONTAL);
         scrollBar2.setVisibleAmount(20);
         scrollBar2.setArrowsEnabled(true);
         scrollBar2.setBackgroundColor(ColorConstants.darkGray());

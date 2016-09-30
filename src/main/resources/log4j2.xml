@@ -15,7 +15,7 @@
             <ThresholdFilter level="ERROR" onMatch="ACCEPT" onMismatch="DENY"/>
         </Console>
         <RollingFile name="RollingFileError" fileName="logs/legui-error.log"
-                     filePattern="target/logs/$${date:yyyy-MM}/legui-%d{MM-dd-yyyy}-%i.log.gz">
+                     filePattern="logs/$${date:yyyy-MM}/legui-%d{MM-dd-yyyy}-%i.log.gz">
             <PatternLayout>
                 <Pattern>%d{HH:mm:ss} %-5p\t[%-7t]\t%-40c{2.}:\t%L\t:\t%m%n</Pattern>
             </PatternLayout>

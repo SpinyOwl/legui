@@ -15,7 +15,7 @@ public class WidgetCursorPosProcessor implements LeguiComponentEventProcessor<Wi
     public void process(Widget gui, CursorPosEvent event, LeguiContext processorState) {
         Vector2f cursorPosition = processorState.getCursorPosition();
         Vector2f cursorPositionPrev = processorState.getCursorPositionPrev();
-        if (gui.isVisible() && processorState.getMouseTargetGui() == gui && processorState.getMouseButtonStates()[GLFW.GLFW_MOUSE_BUTTON_LEFT]) {
+        if (gui.isVisible() && processorState.getFocusedGui() == gui && processorState.getMouseButtonStates()[GLFW.GLFW_MOUSE_BUTTON_LEFT]) {
             Vector2f delta = new Vector2f(cursorPosition).sub(cursorPositionPrev);
             Vector2f widP = gui.getPosition();
             widP.add(delta);
