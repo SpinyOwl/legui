@@ -18,10 +18,10 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class LeguiContext {
 
-    private final Component exampleGui;
-    private final Vector2f cursorPosition = new Vector2f();
-    private final Vector2f cursorPositionPrev = new Vector2f();
-    private final Vector2f[] mouseButtonPressPosition = new Vector2f[GLFW.GLFW_MOUSE_BUTTON_LAST];
+    private Component exampleGui;
+    private Vector2f cursorPosition = new Vector2f();
+    private Vector2f cursorPositionPrev = new Vector2f();
+    private Vector2f[] mouseButtonPressPosition = new Vector2f[GLFW.GLFW_MOUSE_BUTTON_LAST];
     private long targetPointer;
     private Vector2i targetSize;
     private Vector2f framebufferSize;
@@ -139,11 +139,11 @@ public class LeguiContext {
     }
 
     public Vector2f getCursorPosition() {
-        return cursorPosition;
+        return new Vector2f(cursorPosition);
     }
 
     public Vector2f getCursorPositionPrev() {
-        return cursorPositionPrev;
+        return new Vector2f(cursorPositionPrev);
     }
 
     public Vector2f[] getMouseButtonPressPosition() {
@@ -157,7 +157,6 @@ public class LeguiContext {
     public void setMouseButtonStates(boolean[] mouseButtonStates) {
         this.mouseButtonStates = mouseButtonStates;
     }
-
 
     void releaseFocus(Component mainGui, LeguiSystemEvent event) {
         boolean release = false;
@@ -210,5 +209,13 @@ public class LeguiContext {
 
     public void setMouseTargetGui(Component mouseTargetGui) {
         this.mouseTargetGui = mouseTargetGui;
+    }
+
+    public void setCursorPositionPrev(Vector2f cursorPositionPrev) {
+        this.cursorPositionPrev = cursorPositionPrev;
+    }
+
+    public void setCursorPosition(Vector2f cursorPosition) {
+        this.cursorPosition = cursorPosition;
     }
 }

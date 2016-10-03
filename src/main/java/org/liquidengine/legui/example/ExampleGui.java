@@ -104,14 +104,14 @@ public class ExampleGui extends Panel {
 
         Widget widget = new Widget("Hello widget", 250,170,100,100);
         widget.setTitleHeight(20);
-        widget.setCloseButtonColor(ColorConstants.black());
+        widget.setCloseButtonColor(ColorConstants.red());
         widget.setTitleBackgroundColor(ColorConstants.lightGreen());
 
-        Panel component0 = new Panel(-5, -5, 10, 10); component0.getBackgroundColor().set(1,0,0,1); widget.addComponent(component0);
-        Panel component1 = new Panel(-5, 75, 10, 10); component1.getBackgroundColor().set(1,0,0,1); widget.addComponent(component1);
-        Panel component2 = new Panel(95, -5, 10, 10); component2.getBackgroundColor().set(1,0,0,1); widget.addComponent(component2);
-        Panel component3 = new Panel(95, 75, 10, 10); component3.getBackgroundColor().set(1,0,0,1); widget.addComponent(component3);
-        Panel component4 = new Panel(45, 35, 10, 10); component4.getBackgroundColor().set(1,0,0,1); widget.addComponent(component4);
+        Panel component0 = new Panel(-5, -5, 10, 10); component0.getBackgroundColor().set(1,0,0,1); widget.getContainer().addComponent(component0);
+        Panel component1 = new Panel(-5, 75, 10, 10); component1.getBackgroundColor().set(1,0,0,1); widget.getContainer().addComponent(component1);
+        Panel component2 = new Panel(95, -5, 10, 10); component2.getBackgroundColor().set(1,0,0,1); widget.getContainer().addComponent(component2); component2.setVisible(false);
+        Panel component3 = new Panel(95, 75, 10, 10); component3.getBackgroundColor().set(1,0,0,1); widget.getContainer().addComponent(component3);
+        Panel component4 = new Panel(45, 35, 10, 10); component4.getBackgroundColor().set(1,0,0,1); widget.getContainer().addComponent(component4);
         this.addComponent(widget);
 
         ScrollBar scrollBar1 = new ScrollBar(360,170,20,100,20);

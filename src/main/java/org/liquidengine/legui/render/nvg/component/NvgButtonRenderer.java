@@ -38,7 +38,7 @@ public class NvgButtonRenderer extends NvgLeguiComponentRenderer {
             nvgSave(nvgContext);
             // render background
             {
-                Vector4f backgroundColor = agui.isPressed()? ColorUtil.randomColor(): component.getBackgroundColor();
+                Vector4f backgroundColor = component.getBackgroundColor();
                 nvgBeginPath(nvgContext);
                 nvgFillColor(nvgContext, rgba(backgroundColor, colorA));
                 nvgRoundedRect(nvgContext, pos.x, pos.y, size.x, size.y, component.getCornerRadius());

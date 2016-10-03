@@ -4,7 +4,10 @@ import org.joml.Vector2f;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.ComponentContainer;
 import org.liquidengine.legui.context.LeguiContext;
+import org.liquidengine.legui.event.component.MouseDragEvent;
 import org.liquidengine.legui.event.system.CursorPosEvent;
+import org.liquidengine.legui.listener.component.MouseDragEventListener;
+import org.lwjgl.glfw.GLFW;
 
 import java.util.List;
 
@@ -21,15 +24,14 @@ public class LeguiCursorPosEventProcessor extends LeguiSystemEventProcessor<Curs
     @Override
     public void processEvent(CursorPosEvent event, Component mainGui) {
         Component target = context.getMouseTargetGui();
-        Vector2f cursorPosition = context.getCursorPosition();
-        context.getCursorPositionPrev().set(cursorPosition);
-        cursorPosition.set((float) event.xpos, (float) event.ypos);
+        context.setCursorPositionPrev(context.getCursorPosition());
+        context.setCursorPosition(new Vector2f(event.fx, event.fy));
         process(event, mainGui, target);
     }
 
     private void process(CursorPosEvent event, Component gui, Component target) {
-        updateComponentStatesAndCallListeners(event, gui, target);
         gui.getProcessors().getCursorPosEventProcessor().process(gui, event, context);
+        updateComponentStatesAndCallListeners(event, gui, target);
         if (gui instanceof ComponentContainer) {
             processEventOnContainer(event, gui, target);
         }
@@ -51,6 +53,12 @@ public class LeguiCursorPosEventProcessor extends LeguiSystemEventProcessor<Curs
      * @param gui
      */
     private void updateComponentStatesAndCallListeners(CursorPosEvent event, Component gui, Component target) {
+        if (context.getMouseButtonStates()[GLFW.GLFW_MOUSE_BUTTON_LEFT] && gui == context.getFocusedGui()) {
+            List<MouseDragEventListener> mouseDragEventListeners = gui.getComponentListenerHolder().getMouseDragEventListeners();
+            for (MouseDragEventListener mouseDragEventListener : mouseDragEventListeners) {
+                mouseDragEventListener.onMouseDrag(new MouseDragEvent(context.getCursorPosition(), context.getCursorPositionPrev(), gui));
+            }
+        }
 //        List<CursorEnterListener> listeners = gui.getListeners().getCursorEnterListeners();
 //        Vector2f position = Util.calculatePosition(gui);
 //        Vector2f cursorPosition = context.getCursorPosition();

@@ -11,19 +11,19 @@ import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.util.ColorConstants;
 
+import static org.liquidengine.legui.util.Util.cpToStr;
+
 /**
  * Created by Shcherbin Alexander on 9/27/2016.
  */
 public class Widget extends ComponentContainer {
-    protected TextState textState;
-    protected Vector4f closeButtonColor = ColorConstants.red();
+    private static final String CLOSE_ICON = cpToStr(0xE5CD);
 
-    protected float titleHeight = 20;
-    protected boolean titleEnabled = true;
-    protected Vector4f titleBackgroundColor = ColorConstants.lightGray();
-
-    protected boolean closeable = true;
     protected boolean resizable = false;
+
+    protected ComponentContainer container;
+    protected Label title;
+    protected Button closeButton;
 
     public Widget() {
         initialize("Widget");
@@ -54,42 +54,77 @@ public class Widget extends ComponentContainer {
     }
 
     private void initialize(String title) {
-        textState = new TextState(title);
-        textState.setHorizontalAlign(HorizontalAlign.LEFT);
-        textState.getPadding().set(10, 5, 10, 5);
-        backgroundColor.set(1);
-        border = new SimpleLineBorder(this, ColorConstants.black(), 1);
-        componentListenerHolder.addMouseDragEventListener(event -> {
-            if(event.getComponent()==this){
+        SimpleLineBorder simpleLineBorder = new SimpleLineBorder(this, ColorConstants.black(), 1);
+        this.title = new Label(title);
+        this.title.textState.setHorizontalAlign(HorizontalAlign.LEFT);
+        this.title.textState.getPadding().set(10, 5, 10, 5);
+        this.title.setBorder(simpleLineBorder);
+
+        this.title.componentListenerHolder.addMouseDragEventListener(event -> {
+            if (event.getComponent() == this.title) {
                 Vector2f sub = event.getCursorPosition().sub(event.getCursorPositionPrev());
-//                System.out.println(sub);
+                System.out.println(event);
                 position.add(sub);
             }
         });
+
+        this.closeButton = new Button(CLOSE_ICON);
+        this.closeButton.backgroundColor.set(1, 0, 0, 1);
+        this.closeButton.setBorder(simpleLineBorder);
+
+        this.container = new Panel();
+        this.container.setBorder(simpleLineBorder);
+
+        this.backgroundColor.set(1);
+        this.border = simpleLineBorder;
+
+        this.addComponent(this.title);
+        this.addComponent(this.closeButton);
+        this.addComponent(this.container);
+
+        updateWidget();
+    }
+
+    private void updateWidget() {
+        float titHei = title.size.y;
+        if (title.visible) {
+            title.position.set(0);
+            title.size.x = closeButton.visible ? size.x - titHei : size.x;
+            container.position.set(0, titHei);
+            container.size.set(size.x, size.y - titHei);
+            closeButton.size.set(titHei);
+            closeButton.position.set(size.x - titHei, 0);
+        } else {
+            container.position.set(0, 0);
+            container.size.set(size);
+            closeButton.size.set(0);
+        }
     }
 
     public float getTitleHeight() {
-        return titleHeight;
+        return title.size.y;
     }
 
     public void setTitleHeight(float titleHeight) {
-        this.titleHeight = titleHeight;
+        this.title.size.y = titleHeight;
+        updateWidget();
     }
 
     public boolean isTitleEnabled() {
-        return titleEnabled;
+        return title.isVisible();
     }
 
     public void setTitleEnabled(boolean titleEnabled) {
-        this.titleEnabled = titleEnabled;
+        this.title.visible = titleEnabled;
     }
 
     public boolean isCloseable() {
-        return closeable;
+        return closeButton.isVisible();
     }
 
     public void setCloseable(boolean closeable) {
-        this.closeable = closeable;
+        this.closeButton.visible = closeable;
+        updateWidget();
     }
 
     public boolean isResizable() {
@@ -101,69 +136,26 @@ public class Widget extends ComponentContainer {
     }
 
     public Vector4f getTitleBackgroundColor() {
-        return titleBackgroundColor;
+        return title.backgroundColor;
     }
 
     public void setTitleBackgroundColor(Vector4f titleBackgroundColor) {
-        this.titleBackgroundColor = titleBackgroundColor;
+        this.title.backgroundColor = titleBackgroundColor;
     }
 
     public TextState getTitleTextState() {
-        return textState;
+        return title.textState;
     }
 
     public Vector4f getCloseButtonColor() {
-        return closeButtonColor;
+        return closeButton.backgroundColor;
     }
 
     public void setCloseButtonColor(Vector4f closeButtonColor) {
-        this.closeButtonColor = closeButtonColor;
+        this.closeButton.backgroundColor = closeButtonColor;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Widget widget = (Widget) o;
-
-        return new EqualsBuilder()
-                .appendSuper(super.equals(o))
-                .append(titleHeight, widget.titleHeight)
-                .append(titleEnabled, widget.titleEnabled)
-                .append(closeable, widget.closeable)
-                .append(resizable, widget.resizable)
-                .append(textState, widget.textState)
-                .append(titleBackgroundColor, widget.titleBackgroundColor)
-                .append(closeButtonColor, widget.closeButtonColor)
-                .isEquals();
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder(17, 37)
-                .appendSuper(super.hashCode())
-                .append(textState)
-                .append(titleHeight)
-                .append(titleEnabled)
-                .append(titleBackgroundColor)
-                .append(closeButtonColor)
-                .append(closeable)
-                .append(resizable)
-                .toHashCode();
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("textState", textState)
-                .append("titleHeight", titleHeight)
-                .append("titleEnabled", titleEnabled)
-                .append("titleBackgroundColor", titleBackgroundColor)
-                .append("closeButtonColor", closeButtonColor)
-                .append("closeable", closeable)
-                .append("resizable", resizable)
-                .toString();
+    public ComponentContainer getContainer() {
+        return container;
     }
 }
