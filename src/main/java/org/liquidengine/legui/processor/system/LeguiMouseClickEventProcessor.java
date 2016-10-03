@@ -3,7 +3,6 @@ package org.liquidengine.legui.processor.system;
 import org.joml.Vector2f;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.ComponentContainer;
-import org.liquidengine.legui.component.ContainerHolder;
 import org.liquidengine.legui.component.intersector.LeguiIntersector;
 import org.liquidengine.legui.context.LeguiContext;
 import org.liquidengine.legui.event.system.MouseClickEvent;
@@ -48,8 +47,8 @@ public class LeguiMouseClickEventProcessor extends LeguiSystemEventProcessor<Mou
 //            if (push) {
             parent = gui.getParent();
             do {
-                if (parent instanceof ContainerHolder) {
-                    ComponentContainer container = ((ContainerHolder) parent).getContainer();
+                if (parent instanceof ComponentContainer) {
+                    ComponentContainer container = ((ComponentContainer) parent);
                     container.removeComponent(gui);
                     container.addComponent(gui);
                     gui = parent;

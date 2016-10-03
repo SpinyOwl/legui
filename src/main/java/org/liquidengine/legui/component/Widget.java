@@ -14,9 +14,8 @@ import org.liquidengine.legui.util.ColorConstants;
 /**
  * Created by Shcherbin Alexander on 9/27/2016.
  */
-public class Widget extends Component implements ContainerHolder {
+public class Widget extends ComponentContainer {
     protected TextState textState;
-    protected ComponentContainer container = new ComponentContainer(this);
     protected Vector4f closeButtonColor = ColorConstants.red();
 
     protected float titleHeight = 20;
@@ -113,21 +112,6 @@ public class Widget extends Component implements ContainerHolder {
         return textState;
     }
 
-    @Override
-    public ComponentContainer getContainer() {
-        return container;
-    }
-
-    @Override
-    public Vector2f getContainerPosition() {
-        return new Vector2f(0, titleEnabled ? titleHeight : 0);
-    }
-
-    @Override
-    public Vector2f getContainerSize() {
-        return new Vector2f(size).sub(getContainerPosition());
-    }
-
     public Vector4f getCloseButtonColor() {
         return closeButtonColor;
     }
@@ -151,7 +135,6 @@ public class Widget extends Component implements ContainerHolder {
                 .append(closeable, widget.closeable)
                 .append(resizable, widget.resizable)
                 .append(textState, widget.textState)
-                .append(container, widget.container)
                 .append(titleBackgroundColor, widget.titleBackgroundColor)
                 .append(closeButtonColor, widget.closeButtonColor)
                 .isEquals();
@@ -162,7 +145,6 @@ public class Widget extends Component implements ContainerHolder {
         return new HashCodeBuilder(17, 37)
                 .appendSuper(super.hashCode())
                 .append(textState)
-                .append(container)
                 .append(titleHeight)
                 .append(titleEnabled)
                 .append(titleBackgroundColor)
@@ -176,7 +158,6 @@ public class Widget extends Component implements ContainerHolder {
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .append("textState", textState)
-                .append("container", container)
                 .append("titleHeight", titleHeight)
                 .append("titleEnabled", titleEnabled)
                 .append("titleBackgroundColor", titleBackgroundColor)

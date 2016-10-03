@@ -1,14 +1,8 @@
 package org.liquidengine.legui.component;
 
-import org.apache.commons.collections4.list.SetUniqueList;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+import org.joml.Vector2f;
 
 import java.util.*;
-import java.util.concurrent.ConcurrentSkipListSet;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
@@ -16,12 +10,18 @@ import java.util.stream.Stream;
 /**
  * Created by Shcherbin Alexander on 9/14/2016.
  */
-public final class ComponentContainer {
+public abstract class ComponentContainer extends Component {
     protected final Set<Component> components = new java.util.concurrent.CopyOnWriteArraySet<>();
-    private Component containerHolder;
 
-    public ComponentContainer(Component containerHolder) {
-        this.containerHolder = containerHolder;
+    public ComponentContainer() {
+    }
+
+    public ComponentContainer(float x, float y, float width, float height) {
+        super(x, y, width, height);
+    }
+
+    public ComponentContainer(Vector2f position, Vector2f size) {
+        super(position, size);
     }
 
     public int containerSize() {
@@ -41,29 +41,29 @@ public final class ComponentContainer {
     }
 
     public boolean addComponent(Component component) {
-        if (component == containerHolder) return false;
+        if (component == this) return false;
         changeParent(component);
         return components.add(component);
     }
 
     public boolean addAllComponents(Collection<? extends Component> c) {
         c.forEach(abstractGui -> {
-            if (abstractGui != containerHolder) changeParent(abstractGui);
+            if (abstractGui != this) changeParent(abstractGui);
         });
         return components.addAll(c);
     }
 
     private void changeParent(Component element) {
         Component parent = element.parent;
-        if (parent != null && (parent instanceof ContainerHolder)) {
-            ComponentContainer container = ((ContainerHolder) parent).getContainer();
+        if (parent != null && (parent instanceof ComponentContainer)) {
+            ComponentContainer container = ((ComponentContainer) parent);
             container.removeComponent(element);
         }
-        element.parent = containerHolder;
+        element.parent = this;
     }
 
     public boolean removeComponent(Component component) {
-        if (component.parent != null && component.parent == containerHolder && components.contains(component)) {
+        if (component.parent != null && component.parent == this && components.contains(component)) {
             component.parent = null;
             return components.remove(component);
         }

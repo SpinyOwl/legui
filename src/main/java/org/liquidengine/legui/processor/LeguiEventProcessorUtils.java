@@ -2,7 +2,6 @@ package org.liquidengine.legui.processor;
 
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.ComponentContainer;
-import org.liquidengine.legui.component.ContainerHolder;
 
 import java.util.List;
 
@@ -15,8 +14,8 @@ public class LeguiEventProcessorUtils {
         if (gui != focused) {
             gui.setFocused(false);
         }
-        if (gui instanceof ContainerHolder) {
-            ComponentContainer container = ((ContainerHolder) gui).getContainer();
+        if (gui instanceof ComponentContainer) {
+            ComponentContainer container = ((ComponentContainer) gui);
             List<Component> all = container.getComponents();
             for (Component element : all) {
                 release(element, focused);

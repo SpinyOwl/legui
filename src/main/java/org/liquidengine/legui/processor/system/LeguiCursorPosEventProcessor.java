@@ -3,14 +3,10 @@ package org.liquidengine.legui.processor.system;
 import org.joml.Vector2f;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.ComponentContainer;
-import org.liquidengine.legui.component.ContainerHolder;
 import org.liquidengine.legui.context.LeguiContext;
-import org.liquidengine.legui.event.component.MouseDragEvent;
 import org.liquidengine.legui.event.system.CursorPosEvent;
 
 import java.util.List;
-
-import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_LEFT;
 
 /**
  * Event processor for cursor events. Updates GUI element depending on cursor position. Calls CursorEventListeners of GUI element
@@ -34,14 +30,14 @@ public class LeguiCursorPosEventProcessor extends LeguiSystemEventProcessor<Curs
     private void process(CursorPosEvent event, Component gui, Component target) {
         updateComponentStatesAndCallListeners(event, gui, target);
         gui.getProcessors().getCursorPosEventProcessor().process(gui, event, context);
-        if (gui instanceof ContainerHolder) {
+        if (gui instanceof ComponentContainer) {
             processEventOnContainer(event, gui, target);
         }
     }
 
 
     private void processEventOnContainer(CursorPosEvent event, Component gui, Component target) {
-        ComponentContainer container = ((ContainerHolder) gui).getContainer();
+        ComponentContainer container = ((ComponentContainer) gui);
         List<Component> all = container.getComponents();
         for (Component element : all) {
             process(event, element, target);

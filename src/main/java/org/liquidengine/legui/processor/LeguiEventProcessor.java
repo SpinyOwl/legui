@@ -3,7 +3,6 @@ package org.liquidengine.legui.processor;
 import org.joml.Vector2f;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.ComponentContainer;
-import org.liquidengine.legui.component.ContainerHolder;
 import org.liquidengine.legui.context.LeguiCallbackKeeper;
 import org.liquidengine.legui.context.LeguiContext;
 import org.liquidengine.legui.context.LeguiEventQueue;
@@ -88,9 +87,9 @@ public class LeguiEventProcessor {
     }
 
     private Component getMouseTarget(Component target, Component component, Vector2f cursorPosition) {
-        if (component instanceof ContainerHolder) {
+        if (component instanceof ComponentContainer) {
             if (component.isVisible()) {
-                ComponentContainer container = ((ContainerHolder) component).getContainer();
+                ComponentContainer container = ((ComponentContainer) component);
                 if (component.getIntersector().intersects(component, cursorPosition)) {
                     target = component;
                     for (Component element : container.getComponents()) {

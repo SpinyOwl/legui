@@ -138,9 +138,9 @@ public class Example {
         if (time > 5) {
             Image image = exampleGui.getImage();
             if (image != null && image.getPath().equals("org/liquidengine/legui/example/1.jpg")) {
-                exampleGui.getContainer().removeComponent(image);
+                exampleGui.removeComponent(image);
                 Image image1 = Image.createImage("org/liquidengine/legui/example/2.jpg");
-                exampleGui.getContainer().addComponent(image1);
+                exampleGui.addComponent(image1);
                 exampleGui.setImage(image1);
             }
         }

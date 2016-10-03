@@ -1,9 +1,7 @@
 package org.liquidengine.legui.util;
 
 import org.joml.Vector2f;
-import org.joml.Vector4f;
 import org.liquidengine.legui.component.Component;
-import org.liquidengine.legui.component.ContainerHolder;
 
 import java.nio.ByteBuffer;
 
@@ -34,9 +32,6 @@ public final class Util {
         Component parent = component.getParent();
         while (parent != null) {
             offset.add(parent.getPosition());
-            if (parent instanceof ContainerHolder) {
-                offset.add(((ContainerHolder) parent).getContainerPosition());
-            }
             parent = parent.getParent();
         }
         return offset;

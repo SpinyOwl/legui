@@ -10,10 +10,9 @@ import org.liquidengine.legui.component.border.SimpleLineBorder;
 /**
  * Created by Shcherbin Alexander on 9/22/2016.
  */
-public class Panel extends Component implements ContainerHolder {
+public class Panel extends ComponentContainer {
 
     private static final Vector2f NULL = new Vector2f(0);
-    protected ComponentContainer container = new ComponentContainer(this);
 
     public Panel() {
         initialize();
@@ -34,21 +33,6 @@ public class Panel extends Component implements ContainerHolder {
     }
 
     @Override
-    public ComponentContainer getContainer() {
-        return container;
-    }
-
-    @Override
-    public Vector2f getContainerPosition() {
-        return NULL;
-    }
-
-    @Override
-    public Vector2f getContainerSize() {
-        return size;
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
 
@@ -58,7 +42,6 @@ public class Panel extends Component implements ContainerHolder {
 
         return new EqualsBuilder()
                 .appendSuper(super.equals(o))
-                .append(container, panel.container)
                 .isEquals();
     }
 
@@ -66,14 +49,12 @@ public class Panel extends Component implements ContainerHolder {
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
                 .appendSuper(super.hashCode())
-                .append(container)
                 .toHashCode();
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("container", container)
                 .toString();
     }
 }

@@ -1,14 +1,9 @@
 package org.liquidengine.legui.render.nvg;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.ComponentContainer;
-import org.liquidengine.legui.component.ContainerHolder;
 import org.liquidengine.legui.component.border.Border;
 import org.liquidengine.legui.context.LeguiContext;
 import org.liquidengine.legui.util.ColorConstants;
@@ -37,7 +32,7 @@ public class NvgDefaultRenderer extends NvgLeguiComponentRenderer {
 
             Vector2f pos = calculatePosition(component);
             Vector2f size = component.getSize();
-            Vector4f backgroundColor =component.getBackgroundColor();
+            Vector4f backgroundColor = component.getBackgroundColor();
 
             // rectangle
             nvgBeginPath(context);
@@ -52,8 +47,8 @@ public class NvgDefaultRenderer extends NvgLeguiComponentRenderer {
         }
         resetScissor(context);
 
-        if (component instanceof ContainerHolder) {
-            ComponentContainer container = ((ContainerHolder) component).getContainer();
+        if (component instanceof ComponentContainer) {
+            ComponentContainer container = ((ComponentContainer) component);
             List<Component> components = container.getComponents();
             components.stream().filter(Component::isVisible).forEach(child -> child.render(leguiContext));
         }
