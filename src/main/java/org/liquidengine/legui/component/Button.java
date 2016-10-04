@@ -20,7 +20,6 @@ import org.liquidengine.legui.util.ColorConstants;
 public class Button extends Component {
 
     protected TextState textState;
-    protected boolean pressed;
 
     /**
      * Creates a button with default text.
@@ -68,6 +67,7 @@ public class Button extends Component {
 
     /**
      * Initialize button with specified text
+     *
      * @param text
      */
     private void initialize(String text) {
@@ -78,16 +78,9 @@ public class Button extends Component {
         textState.setHorizontalAlign(HorizontalAlign.CENTER);
     }
 
-    public boolean isPressed() {
-        return pressed;
-    }
-
-    public void setPressed(boolean pressed) {
-        this.pressed = pressed;
-    }
-
     /**
      * Returns text data of button
+     *
      * @return text state of button
      */
     public TextState getTextState() {

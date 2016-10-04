@@ -8,6 +8,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public class LeguiComponentListenerHolder {
     private List<MouseDragEventListener> mouseDragEventListeners = new CopyOnWriteArrayList<>();
+    private List<CursorEnterListener> cursorEnterListeners = new CopyOnWriteArrayList<>();
 
     public boolean addMouseDragEventListener(MouseDragEventListener listener) {
         return mouseDragEventListeners.add(listener);
@@ -19,5 +20,18 @@ public class LeguiComponentListenerHolder {
 
     public List<MouseDragEventListener> getMouseDragEventListeners() {
         return mouseDragEventListeners;
+    }
+
+    public boolean addCursorEnterListener(CursorEnterListener listener) {
+        return cursorEnterListeners.add(listener);
+    }
+
+    public boolean removeCursorEnterListener(CursorEnterListener listener) {
+        return cursorEnterListeners.remove(listener);
+    }
+
+
+    public List<CursorEnterListener> getCursorEnterListeners() {
+        return cursorEnterListeners;
     }
 }

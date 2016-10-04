@@ -6,7 +6,9 @@ import org.liquidengine.legui.component.ComponentContainer;
 import org.liquidengine.legui.context.LeguiContext;
 import org.liquidengine.legui.event.component.MouseDragEvent;
 import org.liquidengine.legui.event.system.CursorPosEvent;
+import org.liquidengine.legui.listener.component.CursorEnterListener;
 import org.liquidengine.legui.listener.component.MouseDragEventListener;
+import org.liquidengine.legui.util.Util;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.List;
@@ -59,15 +61,18 @@ public class LeguiCursorPosEventProcessor extends LeguiSystemEventProcessor<Curs
                 mouseDragEventListener.onMouseDrag(new MouseDragEvent(context.getCursorPosition(), context.getCursorPositionPrev(), gui));
             }
         }
-//        List<CursorEnterListener> listeners = gui.getListeners().getCursorEnterListeners();
-//        Vector2f position = Util.calculatePosition(gui);
-//        Vector2f cursorPosition = context.getCursorPosition();
-//        boolean intersects = gui.getIntersector().intersects(gui, cursorPosition);
-//        Vector2f mousePosition = position.sub(cursorPosition).negate();
-//        if (gui == target && !intersects) {
-//            listeners.forEach(listener -> listener.onCursorOut(mousePosition));
-//        } else if (gui != target && intersects) {
-//            listeners.forEach(listener -> listener.onCursorIn(mousePosition));
-//        }
+
+        List<CursorEnterListener> listeners = gui.getComponentListenerHolder().getCursorEnterListeners();
+        Vector2f position = Util.calculatePosition(gui);
+        Vector2f cursorPosition = context.getCursorPosition();
+        boolean intersects = gui.getIntersector().intersects(gui, cursorPosition);
+        Vector2f mousePosition = position.sub(cursorPosition).negate();
+        if (gui.isHovered() && !intersects) {
+            gui.setHovered(false);
+            listeners.forEach(listener -> listener.onCursorOut(mousePosition));
+        } else if (!gui.isHovered() && intersects) {
+            gui.setHovered(true);
+            listeners.forEach(listener -> listener.onCursorIn(mousePosition));
+        }
     }
 }

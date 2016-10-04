@@ -154,6 +154,22 @@ public abstract class Component {
         this.cornerRadius = cornerRadius;
     }
 
+    public boolean isPressed() {
+        return pressed;
+    }
+
+    public void setPressed(boolean pressed) {
+        this.pressed = pressed;
+    }
+
+    public boolean isHovered() {
+        return hovered;
+    }
+
+    public void setHovered(boolean hovered) {
+        this.hovered = hovered;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -166,15 +182,17 @@ public abstract class Component {
                 .append(enabled, component.enabled)
                 .append(visible, component.visible)
                 .append(focused, component.focused)
+                .append(pressed, component.pressed)
+                .append(hovered, component.hovered)
                 .append(cornerRadius, component.cornerRadius)
                 .append(processors, component.processors)
                 .append(position, component.position)
                 .append(size, component.size)
                 .append(backgroundColor, component.backgroundColor)
                 .append(border, component.border)
-                .append(parent, component.parent)
                 .append(intersector, component.intersector)
                 .append(renderer, component.renderer)
+                .append(componentListenerHolder, component.componentListenerHolder)
                 .isEquals();
     }
 
@@ -189,16 +207,18 @@ public abstract class Component {
                 .append(enabled)
                 .append(visible)
                 .append(focused)
+                .append(pressed)
+                .append(hovered)
                 .append(cornerRadius)
-                .append(parent)
                 .append(intersector)
                 .append(renderer)
+                .append(componentListenerHolder)
                 .toHashCode();
     }
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+        return new ToStringBuilder(this)
                 .append("processors", processors)
                 .append("position", position)
                 .append("size", size)
@@ -207,10 +227,12 @@ public abstract class Component {
                 .append("enabled", enabled)
                 .append("visible", visible)
                 .append("focused", focused)
+                .append("pressed", pressed)
+                .append("hovered", hovered)
                 .append("cornerRadius", cornerRadius)
-                .append("parent", parent)
                 .append("intersector", intersector)
                 .append("renderer", renderer)
+                .append("componentListenerHolder", componentListenerHolder)
                 .toString();
     }
 }

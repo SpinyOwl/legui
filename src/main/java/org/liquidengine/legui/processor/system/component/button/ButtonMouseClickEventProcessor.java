@@ -4,6 +4,7 @@ import org.liquidengine.legui.component.Button;
 import org.liquidengine.legui.context.LeguiContext;
 import org.liquidengine.legui.event.system.MouseClickEvent;
 import org.liquidengine.legui.processor.system.component.LeguiComponentEventProcessor;
+import org.lwjgl.glfw.GLFW;
 
 /**
  * Created by Shcherbin Alexander on 9/30/2016.
@@ -11,6 +12,5 @@ import org.liquidengine.legui.processor.system.component.LeguiComponentEventProc
 public class ButtonMouseClickEventProcessor implements LeguiComponentEventProcessor<Button,MouseClickEvent> {
     @Override
     public void process(Button button, MouseClickEvent event, LeguiContext leguiContext) {
-
     }
 }
