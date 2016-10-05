@@ -5,23 +5,20 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 /**
  * Created by Shcherbin Alexander on 6/10/2016.
  */
-public class WindowSizeEvent implements LeguiSystemEvent {
+public class SystemWindowFocusEvent implements LeguiSystemEvent {
     public final long window;
-    public final int width;
-    public final int height;
+    public final boolean focused;
 
-    public WindowSizeEvent(long window, int width, int height) {
+    public SystemWindowFocusEvent(long window, boolean focused) {
         this.window = window;
-        this.width = width;
-        this.height = height;
+        this.focused = focused;
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this)
                 .append("window", window)
-                .append("width", width)
-                .append("height", height)
+                .append("focused", focused)
                 .toString();
     }
 

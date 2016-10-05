@@ -5,8 +5,8 @@ import org.liquidengine.legui.event.component.ProgressBarChangeEvent;
 /**
  * Created by Shcherbin Alexander on 9/26/2016.
  */
-public interface ProgressBarChangeEventListener {
-    void beforeUpdate(ProgressBarChangeEvent event);
+public interface ProgressBarChangeEventListener extends LeguiListener<ProgressBarChangeEvent> {
 
-    void afterUpdate(ProgressBarChangeEvent event);
+    void update(ProgressBarChangeEvent event);
+
 }

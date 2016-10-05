@@ -1,12 +1,12 @@
 package org.liquidengine.legui.listener.component;
 
-import org.joml.Vector2f;
+import org.liquidengine.legui.event.component.CursorEnterEvent;
 
 /**
  * Created by Alexander on 05.10.2016.
  */
-public interface CursorEnterListener {
-    void onCursorOut(Vector2f mousePosition);
+public interface CursorEnterListener extends LeguiListener<CursorEnterEvent> {
 
-    void onCursorIn(Vector2f mousePosition);
+    void update(CursorEnterEvent event);
+
 }

@@ -4,6 +4,7 @@ import org.joml.Vector4f;
 import org.liquidengine.legui.component.*;
 import org.liquidengine.legui.component.border.SimpleLineBorder;
 import org.liquidengine.legui.component.optional.Orientation;
+import org.liquidengine.legui.event.component.CursorEnterEvent;
 import org.liquidengine.legui.util.ColorConstants;
 
 
@@ -133,7 +134,8 @@ public class ExampleGui extends Panel {
         scrollBar2.setArrowColor(ColorConstants.white());
         this.addComponent(scrollBar2);
 
-        Panel panel1 = new Panel(420,170,100,100); panel1.setBackgroundColor(ColorConstants.blue()); this.addComponent(panel1);
+        Panel panel1 = new Panel(420,170,100,100); panel1.setBackgroundColor(ColorConstants.blue()); this.addComponent(panel1); panel1.getListenerList()
+                .addListener(CursorEnterEvent.class, event -> System.out.println(event));
         Panel panel2 = new Panel(450,170,100,100); panel2.setBackgroundColor(ColorConstants.green()); this.addComponent(panel2);
     }
 

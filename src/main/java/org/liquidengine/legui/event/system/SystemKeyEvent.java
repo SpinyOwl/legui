@@ -5,14 +5,14 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 /**
  * Created by Shcherbin Alexander on 6/10/2016.
  */
-public class KeyEvent implements LeguiSystemEvent {
+public class SystemKeyEvent implements LeguiSystemEvent {
     public final long window;
     public final int key;
     public final int scancode;
     public final int action;
     public final int mods;
 
-    public KeyEvent(long window, int key, int scancode, int action, int mods) {
+    public SystemKeyEvent(long window, int key, int scancode, int action, int mods) {
         this.window = window;
         this.key = key;
         this.scancode = scancode;

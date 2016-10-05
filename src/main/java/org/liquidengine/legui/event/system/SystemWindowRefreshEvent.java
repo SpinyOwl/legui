@@ -5,15 +5,11 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 /**
  * Created by Shcherbin Alexander on 6/10/2016.
  */
-public class WindowCloseEvent implements LeguiSystemEvent {
+public class SystemWindowRefreshEvent implements LeguiSystemEvent {
     public final long window;
 
-    public WindowCloseEvent(long window) {
+    public SystemWindowRefreshEvent(long window) {
         this.window = window;
-    }
-
-    public long getWindow() {
-        return window;
     }
 
     @Override

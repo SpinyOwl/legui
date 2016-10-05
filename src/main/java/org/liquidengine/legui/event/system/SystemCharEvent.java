@@ -5,17 +5,21 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 /**
  * Created by Shcherbin Alexander on 6/10/2016.
  */
-public class WindowRefreshEvent implements LeguiSystemEvent {
-    public final long window;
+public class SystemCharEvent implements LeguiSystemEvent {
 
-    public WindowRefreshEvent(long window) {
+    public final long window;
+    public final int codepoint;
+
+    public SystemCharEvent(long window, int codepoint) {
         this.window = window;
+        this.codepoint = codepoint;
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this)
                 .append("window", window)
+                .append("codepoint", codepoint)
                 .toString();
     }
 }

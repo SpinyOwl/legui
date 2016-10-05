@@ -34,7 +34,7 @@ public class LeguiComponentEventProcessorProvider extends AbstractGuiProcessorPr
     private static final LeguiComponentEventProcessor DEFAULT = (gui, event, state) -> {
 //        LOGGER.warn(String.format(PATTERN, gui.getClass(), event.getClass()));
     };
-    private static final LeguiComponentEventProcessor<Component, ScrollEvent> DEFAULT_SCROLL_PROCESSOR = new DefaultGuiScrollProcessor();
+    private static final LeguiComponentEventProcessor<Component, SystemScrollEvent> DEFAULT_SCROLL_PROCESSOR = new DefaultGuiScrollProcessor();
 
     private Map<ProviderKey, LeguiComponentEventProcessor> guiProcessorMap = new ConcurrentHashMap<>();
 
@@ -43,32 +43,32 @@ public class LeguiComponentEventProcessorProvider extends AbstractGuiProcessorPr
     }
 
     private void registerProcessors() {
-        registerGuiProcessor(Button.class, MouseClickEvent.class, new ButtonMouseClickEventProcessor());
-        registerGuiProcessor(Button.class, CursorPosEvent.class, new ButtonCursorPosEventProcessor());
+        registerGuiProcessor(Button.class, SystemMouseClickEvent.class, new ButtonMouseClickEventProcessor());
+        registerGuiProcessor(Button.class, SystemCursorPosEvent.class, new ButtonCursorPosEventProcessor());
 
-        registerGuiProcessor(CheckBox.class, MouseClickEvent.class, new CheckBoxMouseClickProcessor());
+        registerGuiProcessor(CheckBox.class, SystemMouseClickEvent.class, new CheckBoxMouseClickProcessor());
 
-        registerGuiProcessor(Slider.class, MouseClickEvent.class, new SliderMouseClickProcessor());
-        registerGuiProcessor(Slider.class, CursorPosEvent.class, new SliderCursorPosProcessor());
-        registerGuiProcessor(Slider.class, ScrollEvent.class, new SliderScrollProcessor());
+        registerGuiProcessor(Slider.class, SystemMouseClickEvent.class, new SliderMouseClickProcessor());
+        registerGuiProcessor(Slider.class, SystemCursorPosEvent.class, new SliderCursorPosProcessor());
+        registerGuiProcessor(Slider.class, SystemScrollEvent.class, new SliderScrollProcessor());
 
-        registerGuiProcessor(RadioButton.class, MouseClickEvent.class, new RadioButtonMouseClickProcessor());
+        registerGuiProcessor(RadioButton.class, SystemMouseClickEvent.class, new RadioButtonMouseClickProcessor());
 
-        registerGuiProcessor(ScrollBar.class, MouseClickEvent.class, new ScrollBarMouseClickProcessor());
-        registerGuiProcessor(ScrollBar.class, CursorPosEvent.class, new ScrollBarCursorPosProcessor());
-        registerGuiProcessor(ScrollBar.class, ScrollEvent.class, new ScrollBarScrollProcessor());
+        registerGuiProcessor(ScrollBar.class, SystemMouseClickEvent.class, new ScrollBarMouseClickProcessor());
+        registerGuiProcessor(ScrollBar.class, SystemCursorPosEvent.class, new ScrollBarCursorPosProcessor());
+        registerGuiProcessor(ScrollBar.class, SystemScrollEvent.class, new ScrollBarScrollProcessor());
 
-        registerGuiProcessor(TextInput.class, MouseClickEvent.class, new TextInputMouseClickProcessor());
-        registerGuiProcessor(TextInput.class, CharEvent.class, new TextInputCharEventProcessor());
-        registerGuiProcessor(TextInput.class, KeyEvent.class, new TextInputKeyProcessor());
+        registerGuiProcessor(TextInput.class, SystemMouseClickEvent.class, new TextInputMouseClickProcessor());
+        registerGuiProcessor(TextInput.class, SystemCharEvent.class, new TextInputCharEventProcessor());
+        registerGuiProcessor(TextInput.class, SystemKeyEvent.class, new TextInputKeyProcessor());
 
-        registerGuiProcessor(Widget.class, CursorPosEvent.class, new WidgetCursorPosProcessor());
+        registerGuiProcessor(Widget.class, SystemCursorPosEvent.class, new WidgetCursorPosProcessor());
     }
 
     @Override
     public LeguiComponentEventProcessor getGuiProcessor(Class<? extends Component> guiClass, Class<? extends LeguiSystemEvent> eventClass) {
         ProviderKey key = new ProviderKey(guiClass, eventClass);
-        LeguiComponentEventProcessor defaultValue = eventClass.equals(ScrollEvent.class) ? DEFAULT_SCROLL_PROCESSOR : DEFAULT;
+        LeguiComponentEventProcessor defaultValue = eventClass.equals(SystemScrollEvent.class) ? DEFAULT_SCROLL_PROCESSOR : DEFAULT;
         return guiProcessorMap.getOrDefault(key, defaultValue);
     }
 

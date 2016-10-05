@@ -5,12 +5,12 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 /**
  * Created by Shcherbin Alexander on 6/10/2016.
  */
-public class ScrollEvent implements LeguiSystemEvent {
+public class SystemScrollEvent implements LeguiSystemEvent {
     public final long window;
     public final double xoffset;
     public final double yoffset;
 
-    public ScrollEvent(long window, double xoffset, double yoffset) {
+    public SystemScrollEvent(long window, double xoffset, double yoffset) {
         this.window = window;
         this.xoffset = xoffset;
         this.yoffset = yoffset;

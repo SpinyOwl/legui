@@ -4,9 +4,9 @@ import org.joml.Vector2f;
 import org.joml.Vector2i;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.ComponentContainer;
-import org.liquidengine.legui.component.ComponentContainer;
 import org.liquidengine.legui.event.system.LeguiSystemEvent;
-import org.liquidengine.legui.event.system.MouseClickEvent;
+import org.liquidengine.legui.event.system.SystemMouseClickEvent;
+import org.liquidengine.legui.processor.LeguiEventProcessor;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.List;
@@ -18,41 +18,49 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class LeguiContext {
 
-    private Component exampleGui;
-    private Vector2f cursorPosition = new Vector2f();
-    private Vector2f cursorPositionPrev = new Vector2f();
-    private Vector2f[] mouseButtonPressPosition = new Vector2f[GLFW.GLFW_MOUSE_BUTTON_LAST];
-    private long targetPointer;
-    private Vector2i targetSize;
+    private long glfwWindow;
+
+    private Vector2f windowMousePosition;
+    private Vector2f windowPosition;
+    private Vector2i windowSize;
     private Vector2f framebufferSize;
     private float pixelRatio;
-    private Vector2f mousePosition;
-    private Vector2f targetMousePosition;
-    private Vector2f targetPosition;
-    private Component focusedGui;
+
+    private Component mainGuiComponent;
     private Component mouseTargetGui;
-    private boolean[] mouseButtonStates = new boolean[GLFW.GLFW_MOUSE_BUTTON_LAST];
-    private boolean transferToChild;
+    private Component focusedGui;
 
     private boolean debug = false;
 
+    private boolean[] mouseButtonStates = new boolean[GLFW.GLFW_MOUSE_BUTTON_LAST];
+    private Vector2f mousePosition;
+    private Vector2f cursorPosition = new Vector2f();
+    private Vector2f cursorPositionPrev = new Vector2f();
+    private Vector2f[] mouseButtonPressPosition = new Vector2f[GLFW.GLFW_MOUSE_BUTTON_LAST];
+
     private Map<String, Object> contextData = new ConcurrentHashMap<>();
+    private LeguiEventProcessor leguiEventProcessor;
 
 
-    public LeguiContext(long targetPointer, Component exampleGui) {
-        this.targetPointer = targetPointer;
-        this.exampleGui = exampleGui;
+    public LeguiContext(long glfwWindow, Component mainGuiComponent) {
+        this.glfwWindow = glfwWindow;
+        this.mainGuiComponent = mainGuiComponent;
+        initialize();
+    }
+
+    private void initialize() {
+
     }
 
     public void updateGlfwWindow() {
         int[] windowWidth = {0}, windowHeight = {0};
-        GLFW.glfwGetWindowSize(targetPointer, windowWidth, windowHeight);
+        GLFW.glfwGetWindowSize(glfwWindow, windowWidth, windowHeight);
         int[] frameBufferWidth = {0}, frameBufferHeight = {0};
-        GLFW.glfwGetFramebufferSize(targetPointer, frameBufferWidth, frameBufferHeight);
+        GLFW.glfwGetFramebufferSize(glfwWindow, frameBufferWidth, frameBufferHeight);
         int[] xpos = {0}, ypos = {0};
-        GLFW.glfwGetWindowPos(targetPointer, xpos, ypos);
+        GLFW.glfwGetWindowPos(glfwWindow, xpos, ypos);
         double[] mx = {0}, my = {0};
-        GLFW.glfwGetCursorPos(targetPointer, mx, my);
+        GLFW.glfwGetCursorPos(glfwWindow, mx, my);
 
         update(windowWidth[0], windowHeight[0],
                 frameBufferWidth[0], frameBufferHeight[0],
@@ -63,10 +71,10 @@ public class LeguiContext {
 
     public void update(int targetWidth, int targetHeight, int framebufferWidth, int framebufferHeight,
                        int targetPosX, int targetPosY, double mousePosX, double mousePosY) {
-        setTargetSize(new Vector2i(targetWidth, targetHeight));
+        setWindowSize(new Vector2i(targetWidth, targetHeight));
         setFramebufferSize(new Vector2f(framebufferWidth, framebufferHeight));
         setPixelRatio((float) framebufferWidth / (float) targetWidth);
-        setTargetPosition(new Vector2f(targetPosX, targetPosY));
+        setWindowPosition(new Vector2f(targetPosX, targetPosY));
         setMousePosition(new Vector2f((float) mousePosX, (float) mousePosY));
     }
 
@@ -78,16 +86,16 @@ public class LeguiContext {
         this.pixelRatio = pixelRatio;
     }
 
-    public Component getExampleGui() {
-        return exampleGui;
+    public Component getMainGuiComponent() {
+        return mainGuiComponent;
     }
 
-    public long getTargetPointer() {
-        return targetPointer;
+    public long getGlfwWindow() {
+        return glfwWindow;
     }
 
-    public void setTargetPointer(long targetPointer) {
-        this.targetPointer = targetPointer;
+    public void setGlfwWindow(long glfwWindow) {
+        this.glfwWindow = glfwWindow;
     }
 
     public Vector2f getMousePosition() {
@@ -98,28 +106,28 @@ public class LeguiContext {
         this.mousePosition = mousePosition;
     }
 
-    public Vector2f getTargetMousePosition() {
-        return targetMousePosition;
+    public Vector2f getWindowMousePosition() {
+        return windowMousePosition;
     }
 
-    public void setTargetMousePosition(Vector2f targetMousePosition) {
-        this.targetMousePosition = targetMousePosition;
+    public void setWindowMousePosition(Vector2f windowMousePosition) {
+        this.windowMousePosition = windowMousePosition;
     }
 
-    public Vector2f getTargetPosition() {
-        return targetPosition;
+    public Vector2f getWindowPosition() {
+        return windowPosition;
     }
 
-    public void setTargetPosition(Vector2f targetPosition) {
-        this.targetPosition = targetPosition;
+    public void setWindowPosition(Vector2f windowPosition) {
+        this.windowPosition = windowPosition;
     }
 
-    public Vector2i getTargetSize() {
-        return targetSize;
+    public Vector2i getWindowSize() {
+        return windowSize;
     }
 
-    public void setTargetSize(Vector2i targetSize) {
-        this.targetSize = targetSize;
+    public void setWindowSize(Vector2i windowSize) {
+        this.windowSize = windowSize;
     }
 
     public Vector2f getFramebufferSize() {
@@ -142,8 +150,16 @@ public class LeguiContext {
         return new Vector2f(cursorPosition);
     }
 
+    public void setCursorPosition(Vector2f cursorPosition) {
+        this.cursorPosition = cursorPosition;
+    }
+
     public Vector2f getCursorPositionPrev() {
         return new Vector2f(cursorPositionPrev);
+    }
+
+    public void setCursorPositionPrev(Vector2f cursorPositionPrev) {
+        this.cursorPositionPrev = cursorPositionPrev;
     }
 
     public Vector2f[] getMouseButtonPressPosition() {
@@ -160,7 +176,7 @@ public class LeguiContext {
 
     void releaseFocus(Component mainGui, LeguiSystemEvent event) {
         boolean release = false;
-        if (event instanceof MouseClickEvent && ((MouseClickEvent) event).action == GLFW.GLFW_RELEASE) {
+        if (event instanceof SystemMouseClickEvent && ((SystemMouseClickEvent) event).action == GLFW.GLFW_RELEASE) {
             release = true;
         }
 
@@ -180,15 +196,6 @@ public class LeguiContext {
                 release(element, focused);
             }
         }
-    }
-
-
-    public boolean isTransferToChild() {
-        return transferToChild;
-    }
-
-    public void setTransferToChild(boolean transferToChild) {
-        this.transferToChild = transferToChild;
     }
 
     public Map<String, Object> getContextData() {
@@ -211,11 +218,12 @@ public class LeguiContext {
         this.mouseTargetGui = mouseTargetGui;
     }
 
-    public void setCursorPositionPrev(Vector2f cursorPositionPrev) {
-        this.cursorPositionPrev = cursorPositionPrev;
+
+    public void setLeguiEventProcessor(LeguiEventProcessor leguiEventProcessor) {
+        this.leguiEventProcessor = leguiEventProcessor;
     }
 
-    public void setCursorPosition(Vector2f cursorPosition) {
-        this.cursorPosition = cursorPosition;
+    public LeguiEventProcessor getLeguiEventProcessor() {
+        return leguiEventProcessor;
     }
 }

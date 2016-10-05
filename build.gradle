@@ -35,6 +35,7 @@ def commons_collections = '4.1'
 def junit_version = '4.12'
 def le_cbchain = '0.1.0'
 def guava_version = '19.0'
+def reflections_version = '0.9.10'
 
 repositories {
     jcenter()
@@ -51,6 +52,8 @@ dependencies {
     compile group: 'org.apache.commons', name: 'commons-lang3', version: commons_version
     compile group: 'org.apache.commons', name: 'commons-collections4', version: commons_collections
     compile group: 'com.google.guava', name: 'guava', version: guava_version
+    // https://mvnrepository.com/artifact/org.reflections/reflections
+    compile group: 'org.reflections', name: 'reflections', version: reflections_version
 
     compile group: 'org.liquidengine', name: 'cbchain', version: le_cbchain, changing: true
 

@@ -8,6 +8,7 @@ import org.liquidengine.legui.component.Label;
 import org.liquidengine.legui.context.LeguiCallbackKeeper;
 import org.liquidengine.legui.context.LeguiContext;
 import org.liquidengine.legui.processor.LeguiEventProcessor;
+import org.liquidengine.legui.processor.LeguiSystemEventProcessor;
 import org.liquidengine.legui.render.LeguiRenderer;
 import org.liquidengine.legui.render.nvg.NvgLeguiRenderer;
 import org.lwjgl.glfw.GLFW;
@@ -40,14 +41,15 @@ public class Example {
 
     private LeguiContext leguiContext;
     private LeguiRenderer renderer;
-    private LeguiEventProcessor eventProcessor;
-    private LeguiCallbackKeeper callbackKeeper;
+    private LeguiSystemEventProcessor systemEventProcessor;
+    private LeguiEventProcessor uieventEventProcessor;
 
     private int updates;
     private int currentUps;
-    private int time = 0;
 
+    private int time = 0;
     private boolean gcing;
+    private LeguiCallbackKeeper callbackKeeper;
 
 
     public Example(int width, int height, String title) {
@@ -64,7 +66,8 @@ public class Example {
     private void run() {
         initialize();
         startRenderer();
-        startEventProcessor();
+        startSystemEventProcessor();
+        startLeguiEventProcessor();
         handleSystemEvents();
         destroy();
     }
@@ -78,21 +81,41 @@ public class Example {
 //        glfwSwapInterval(1);
         glfwShowWindow(windowPointer);
 
+        // create main gui component - for example it can be panel
         exampleGui = new ExampleGui(width, height);
+
+        // create UI context. It holds main gui components and UI system states
         leguiContext = new LeguiContext(windowPointer, exampleGui);
+
+        // enable debugging
         leguiContext.setDebug(true);
 
-        eventProcessor = new LeguiEventProcessor(exampleGui, leguiContext);
+        // create callback keeper
+        callbackKeeper = new LeguiCallbackKeeper(windowPointer);
+
+        // Create event processor for system events (obtained from callbacks) Constructor automatically creates Callbacks and binds them to window
+        systemEventProcessor = new LeguiSystemEventProcessor(exampleGui, leguiContext, callbackKeeper);
+        // Create event processor for ui events
+        uieventEventProcessor = new LeguiEventProcessor(exampleGui, leguiContext);
+        // Set this processor to context, so generated ui events in system event processor will go to it.
+        leguiContext.setLeguiEventProcessor(uieventEventProcessor);
+
+        // create renderer (NanoVG renderer implementation). You can create your own implementation.
         renderer = new NvgLeguiRenderer(leguiContext);
 
-        callbackKeeper = eventProcessor.getCallbacks();
-        GLFWWindowCloseCallbackI closeCallback = window1 -> running = false;
-        GLFWKeyCallbackI keyCloseCallback = (window, key, code, action, mods) -> {
-            if (key == GLFW_KEY_ESCAPE && action != GLFW_RELEASE) running = !running;
-            if (key == GLFW_KEY_G && action != GLFW_RELEASE) gcing = !gcing;
-        };
-        callbackKeeper.getChainWindowCloseCallback().add(closeCallback);
-        callbackKeeper.getChainKeyCallback().add(keyCloseCallback);
+//        callbackKeeper = systemEventProcessor.getCallbackKeeper(); //
+
+        // create custom callbacks
+        {
+            GLFWWindowCloseCallbackI closeCallback = window1 -> running = false;
+            GLFWKeyCallbackI keyCloseCallback = (window, key, code, action, mods) -> {
+                if (key == GLFW_KEY_ESCAPE && action != GLFW_RELEASE) running = !running;
+                if (key == GLFW_KEY_G && action != GLFW_RELEASE) gcing = !gcing;
+            };
+            callbackKeeper.getChainWindowCloseCallback().add(closeCallback);
+            callbackKeeper.getChainKeyCallback().add(keyCloseCallback);
+        }
+
         running = true;
     }
 
@@ -109,13 +132,15 @@ public class Example {
         long timer = System.currentTimeMillis();
 
         while (running) {
+            // update gui context
             leguiContext.updateGlfwWindow();
+            Vector2i windowSize = leguiContext.getWindowSize();
 
             glClearColor(clearColor.x, clearColor.y, clearColor.z, 1);
-            Vector2i windowSize = leguiContext.getTargetSize();
             glViewport(0, 0, windowSize.x, windowSize.y);
             glClear(GL_COLOR_BUFFER_BIT);
 
+            // render gui
             renderer.render(exampleGui);
 
             glfwSwapBuffers(windowPointer);
@@ -140,6 +165,8 @@ public class Example {
             if (image != null && image.getPath().equals("org/liquidengine/legui/example/1.jpg")) {
                 exampleGui.removeComponent(image);
                 Image image1 = Image.createImage("org/liquidengine/legui/example/2.jpg");
+                image1.setSize(image.getSize());
+                image1.setPosition(image.getPosition());
                 exampleGui.addComponent(image1);
                 exampleGui.setImage(image1);
             }
@@ -155,9 +182,16 @@ public class Example {
         upsLabel.getTextState().setText("UPS: " + currentUps);
     }
 
-    private void startEventProcessor() {
+    private void startSystemEventProcessor() {
         eventProcessorThread = new Thread(() -> {
-            while (running) eventProcessor.processEvent();
+            while (running) systemEventProcessor.processEvent();
+        }, "GUI_SYSTEM_EVENT_PROCESSOR");
+        eventProcessorThread.start();
+    }
+
+    private void startLeguiEventProcessor() {
+        eventProcessorThread = new Thread(() -> {
+            while (running) uieventEventProcessor.processEvent();
         }, "GUI_EVENT_PROCESSOR");
         eventProcessorThread.start();
     }

@@ -6,13 +6,13 @@ import org.lwjgl.PointerBuffer;
 /**
  * Created by Shcherbin Alexander on 6/10/2016.
  */
-public class DropEvent implements LeguiSystemEvent {
+public class SystemDropEvent implements LeguiSystemEvent {
     public final long window;
     public final int count;
     public final long names;
     public final String[] strings;
 
-    public DropEvent(long window, int count, long names) {
+    public SystemDropEvent(long window, int count, long names) {
         this.window = window;
         this.count = count;
         this.names = names;

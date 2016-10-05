@@ -5,21 +5,20 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 /**
  * Created by Shcherbin Alexander on 6/10/2016.
  */
-public class WindowIconifyEvent implements LeguiSystemEvent {
+public class SystemCursorEnterEvent implements LeguiSystemEvent {
     public final long window;
-    public final boolean iconified;
+    public final boolean entered;
 
-    public WindowIconifyEvent(long window, boolean iconified) {
+    public SystemCursorEnterEvent(long window, boolean entered) {
         this.window = window;
-        this.iconified = iconified;
+        this.entered = entered;
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this)
-                .append("iconified", iconified)
                 .append("window", window)
+                .append("entered", entered)
                 .toString();
     }
-
 }

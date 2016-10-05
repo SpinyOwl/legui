@@ -4,7 +4,7 @@ import org.joml.Vector2f;
 import org.liquidengine.legui.component.ScrollBar;
 import org.liquidengine.legui.component.optional.Orientation;
 import org.liquidengine.legui.context.LeguiContext;
-import org.liquidengine.legui.event.system.MouseClickEvent;
+import org.liquidengine.legui.event.system.SystemMouseClickEvent;
 import org.liquidengine.legui.processor.system.component.LeguiComponentEventProcessor;
 import org.liquidengine.legui.util.Util;
 
@@ -13,8 +13,8 @@ import static org.lwjgl.glfw.GLFW.GLFW_PRESS;
 /**
  * Created by Alexander on 25.08.2016.
  */
-public class ScrollBarMouseClickProcessor implements LeguiComponentEventProcessor<ScrollBar, MouseClickEvent> {
-    public void process(ScrollBar gui, MouseClickEvent event, LeguiContext leguiContext) {
+public class ScrollBarMouseClickProcessor implements LeguiComponentEventProcessor<ScrollBar, SystemMouseClickEvent> {
+    public void process(ScrollBar gui, SystemMouseClickEvent event, LeguiContext leguiContext) {
         if (!gui.isVisible()) return;
         if (!gui.isEnabled()) return;
         boolean released = event.action != GLFW_PRESS;

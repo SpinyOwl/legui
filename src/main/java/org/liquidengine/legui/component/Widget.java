@@ -1,14 +1,11 @@
 package org.liquidengine.legui.component;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.border.SimpleLineBorder;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
+import org.liquidengine.legui.event.component.MouseDragEvent;
 import org.liquidengine.legui.util.ColorConstants;
 
 import static org.liquidengine.legui.util.Util.cpToStr;
@@ -60,7 +57,7 @@ public class Widget extends ComponentContainer {
         this.title.textState.getPadding().set(10, 5, 10, 5);
         this.title.setBorder(simpleLineBorder);
 
-        this.title.componentListenerHolder.addMouseDragEventListener(event -> {
+        this.title.listenerList.addListener(MouseDragEvent.class, event -> {
             if (event.getComponent() == this.title) {
                 Vector2f sub = event.getCursorPosition().sub(event.getCursorPositionPrev());
                 position.add(sub);

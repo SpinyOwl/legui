@@ -3,7 +3,6 @@ package org.liquidengine.legui.component;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.border.Border;
@@ -11,8 +10,8 @@ import org.liquidengine.legui.component.border.SimpleLineBorder;
 import org.liquidengine.legui.component.intersector.LeguiIntersector;
 import org.liquidengine.legui.component.intersector.RectangleIntersector;
 import org.liquidengine.legui.context.LeguiContext;
-import org.liquidengine.legui.listener.component.LeguiComponentListenerHolder;
-import org.liquidengine.legui.processor.system.component.LeguiEventProcessorContainer;
+import org.liquidengine.legui.listener.component.LeguiListenerList;
+import org.liquidengine.legui.processor.system.component.LeguiEventProcessorList;
 import org.liquidengine.legui.render.LeguiComponentRenderer;
 import org.liquidengine.legui.render.LeguiRendererProvider;
 import org.liquidengine.legui.util.ColorConstants;
@@ -23,7 +22,7 @@ import org.liquidengine.legui.util.ColorConstants;
  * Created by Shcherbin Alexander on 9/14/2016.
  */
 public abstract class Component {
-    private final LeguiEventProcessorContainer processors = new LeguiEventProcessorContainer(this);
+    private final LeguiEventProcessorList processors = new LeguiEventProcessorList(this);
     protected Vector2f position;
     protected Vector2f size;
     protected Vector4f backgroundColor = ColorConstants.lightGray();
@@ -43,7 +42,7 @@ public abstract class Component {
     protected LeguiIntersector intersector = new RectangleIntersector();
     protected LeguiComponentRenderer renderer = LeguiRendererProvider.getProvider().getRenderer(this);
 
-    protected LeguiComponentListenerHolder componentListenerHolder = new LeguiComponentListenerHolder();
+    protected LeguiListenerList listenerList = new LeguiListenerList();
 
     public Component() {
         this(10, 10, 10, 10);
@@ -66,7 +65,7 @@ public abstract class Component {
         return parent;
     }
 
-    public LeguiEventProcessorContainer getProcessors() {
+    public LeguiEventProcessorList getProcessors() {
         return processors;
     }
 
@@ -94,8 +93,8 @@ public abstract class Component {
         this.size.set(width, height);
     }
 
-    public LeguiComponentListenerHolder getComponentListenerHolder() {
-        return componentListenerHolder;
+    public LeguiListenerList getListenerList() {
+        return listenerList;
     }
 
     public Vector4f getBackgroundColor() {
@@ -192,7 +191,7 @@ public abstract class Component {
                 .append(border, component.border)
                 .append(intersector, component.intersector)
                 .append(renderer, component.renderer)
-                .append(componentListenerHolder, component.componentListenerHolder)
+                .append(listenerList, component.listenerList)
                 .isEquals();
     }
 
@@ -212,7 +211,7 @@ public abstract class Component {
                 .append(cornerRadius)
                 .append(intersector)
                 .append(renderer)
-                .append(componentListenerHolder)
+                .append(listenerList)
                 .toHashCode();
     }
 
@@ -232,7 +231,7 @@ public abstract class Component {
                 .append("cornerRadius", cornerRadius)
                 .append("intersector", intersector)
                 .append("renderer", renderer)
-                .append("componentListenerHolder", componentListenerHolder)
+                .append("listenerList", listenerList)
                 .toString();
     }
 }

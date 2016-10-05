@@ -3,7 +3,7 @@ package org.liquidengine.legui.processor.system.component.textinput;
 import org.liquidengine.legui.component.TextInput;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.context.LeguiContext;
-import org.liquidengine.legui.event.system.KeyEvent;
+import org.liquidengine.legui.event.system.SystemKeyEvent;
 import org.liquidengine.legui.processor.system.component.LeguiComponentEventProcessor;
 
 import static org.lwjgl.glfw.GLFW.*;
@@ -11,9 +11,9 @@ import static org.lwjgl.glfw.GLFW.*;
 /**
  * Created by Alexander on 28.08.2016.
  */
-public class TextInputKeyProcessor implements LeguiComponentEventProcessor<TextInput, KeyEvent> {
+public class TextInputKeyProcessor implements LeguiComponentEventProcessor<TextInput, SystemKeyEvent> {
     @Override
-    public void process(TextInput gui, KeyEvent event, LeguiContext leguiContext) {
+    public void process(TextInput gui, SystemKeyEvent event, LeguiContext leguiContext) {
         if (gui.isFocused() && gui.isEditable()) {
             int key = event.key;
             int caretPosition = gui.getCaretPosition();

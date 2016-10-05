@@ -4,7 +4,7 @@ import org.joml.Vector2f;
 import org.liquidengine.legui.component.ScrollBar;
 import org.liquidengine.legui.component.optional.Orientation;
 import org.liquidengine.legui.context.LeguiContext;
-import org.liquidengine.legui.event.system.CursorPosEvent;
+import org.liquidengine.legui.event.system.SystemCursorPosEvent;
 import org.liquidengine.legui.processor.system.component.LeguiComponentEventProcessor;
 import org.lwjgl.glfw.GLFW;
 
@@ -15,8 +15,8 @@ import static org.liquidengine.legui.util.Util.calculatePosition;
 /**
  * Created by Alexander on 26.08.2016.
  */
-public class ScrollBarCursorPosProcessor implements LeguiComponentEventProcessor<ScrollBar, CursorPosEvent> {
-    public void process(ScrollBar gui, CursorPosEvent event, LeguiContext leguiContext) {
+public class ScrollBarCursorPosProcessor implements LeguiComponentEventProcessor<ScrollBar, SystemCursorPosEvent> {
+    public void process(ScrollBar gui, SystemCursorPosEvent event, LeguiContext leguiContext) {
         if (!gui.isVisible()) return;
         if (!gui.isEnabled()) return;
         if (leguiContext.getFocusedGui() != gui) return;

@@ -6,7 +6,7 @@ import org.liquidengine.legui.component.ComponentContainer;
 import org.liquidengine.legui.component.Widget;
 import org.liquidengine.legui.component.intersector.LeguiIntersector;
 import org.liquidengine.legui.context.LeguiContext;
-import org.liquidengine.legui.event.system.MouseClickEvent;
+import org.liquidengine.legui.event.system.SystemMouseClickEvent;
 import org.liquidengine.legui.processor.LeguiEventProcessorUtils;
 import org.liquidengine.legui.util.Util;
 
@@ -17,14 +17,14 @@ import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
  * Processor for mouse click events
  * Created by Alexander on 16.06.2016.
  */
-public class LeguiMouseClickEventProcessor extends LeguiSystemEventProcessor<MouseClickEvent> {
+public class LeguiMouseClickEventProcessor extends LeguiSystemEventProcessor<SystemMouseClickEvent> {
 
     public LeguiMouseClickEventProcessor(LeguiContext context) {
         super(context);
     }
 
     @Override
-    public void processEvent(MouseClickEvent event, Component mainGui) {
+    public void processEvent(SystemMouseClickEvent event, Component mainGui) {
         Vector2f cursorPosition = context.getCursorPosition();
         context.getMouseButtonStates()[event.button] = event.action == GLFW_PRESS;
         context.getMouseButtonPressPosition()[event.button] = event.action == GLFW_PRESS ? new Vector2f(cursorPosition) : null;
@@ -61,7 +61,7 @@ public class LeguiMouseClickEventProcessor extends LeguiSystemEventProcessor<Mou
         }
     }
 
-    private void process(MouseClickEvent event, Component mainGui, Component gui) {
+    private void process(SystemMouseClickEvent event, Component mainGui, Component gui) {
         Component focusedGui = context.getFocusedGui();
         if (!gui.equals(focusedGui)) gui.setFocused(false);
 

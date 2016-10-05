@@ -5,8 +5,8 @@ import org.liquidengine.legui.event.component.MouseDragEvent;
 /**
  * Created by Shcherbin Alexander on 9/29/2016.
  */
-public interface MouseDragEventListener {
+public interface MouseDragEventListener extends LeguiListener<MouseDragEvent> {
 
-    void onMouseDrag(MouseDragEvent event);
+    void update(MouseDragEvent event);
 
 }
