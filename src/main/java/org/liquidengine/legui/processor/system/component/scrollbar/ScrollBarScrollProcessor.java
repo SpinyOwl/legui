@@ -14,7 +14,7 @@ public class ScrollBarScrollProcessor implements LeguiComponentEventProcessor<Sc
     public void process(ScrollBar gui, SystemScrollEvent event, LeguiContext leguiContext) {
         if (!gui.isVisible()) return;
         if (!gui.isEnabled()) return;
-        if (leguiContext.getFocusedGui() != gui) return;
+        
         float maxValue = gui.getMaxValue();
         float minValue = gui.getMinValue();
         float curValue = gui.getCurValue();
