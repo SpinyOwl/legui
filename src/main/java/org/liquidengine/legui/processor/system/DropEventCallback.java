@@ -7,8 +7,8 @@ import org.liquidengine.legui.event.system.SystemDropEvent;
 /**
  * Created by Shcherbin Alexander on 7/13/2016.
  */
-public class LeguiDropEventCallback extends LeguiSystemEventProcessor<SystemDropEvent> {
-    public LeguiDropEventCallback(LeguiContext context) {
+public class DropEventCallback extends SystemEventProcessor<SystemDropEvent> {
+    public DropEventCallback(LeguiContext context) {
         super(context);
     }
 

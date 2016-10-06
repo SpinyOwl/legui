@@ -41,7 +41,7 @@ public class NvgLabelRenderer extends NvgLeguiComponentRenderer {
 
             // draw text into box
             TextState textState = ((Label) component).getTextState();
-            renderTextStateToBounds(nvgContext, pos, size, textState);
+            renderTextStateToBounds(nvgContext, pos, size, textState, false);
 
             Border border = component.getBorder();
             if (border != null) {

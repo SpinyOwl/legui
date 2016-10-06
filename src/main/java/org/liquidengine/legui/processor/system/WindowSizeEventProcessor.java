@@ -8,9 +8,9 @@ import org.liquidengine.legui.event.system.SystemWindowSizeEvent;
 /**
  * Created by Alexander on 01.07.2016.
  */
-public class LeguiWindowSizeEventProcessor extends LeguiSystemEventProcessor<SystemWindowSizeEvent> {
+public class WindowSizeEventProcessor extends SystemEventProcessor<SystemWindowSizeEvent> {
 
-    public LeguiWindowSizeEventProcessor(LeguiContext context) {
+    public WindowSizeEventProcessor(LeguiContext context) {
         super(context);
     }
 

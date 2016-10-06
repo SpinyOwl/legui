@@ -6,10 +6,12 @@ import org.liquidengine.legui.component.ComponentContainer;
 import org.liquidengine.legui.component.Widget;
 import org.liquidengine.legui.component.intersector.LeguiIntersector;
 import org.liquidengine.legui.context.LeguiContext;
+import org.liquidengine.legui.event.component.MouseClickEvent;
 import org.liquidengine.legui.event.system.SystemMouseClickEvent;
-import org.liquidengine.legui.processor.LeguiEventProcessorUtils;
+import org.liquidengine.legui.processor.EventProcessorUtils;
 import org.liquidengine.legui.util.Util;
 
+import static org.liquidengine.legui.event.component.MouseClickEvent.MouseClickAction.*;
 import static org.lwjgl.glfw.GLFW.GLFW_PRESS;
 import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
 
@@ -17,9 +19,9 @@ import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
  * Processor for mouse click events
  * Created by Alexander on 16.06.2016.
  */
-public class LeguiMouseClickEventProcessor extends LeguiSystemEventProcessor<SystemMouseClickEvent> {
+public class MouseClickEventProcessor extends SystemEventProcessor<SystemMouseClickEvent> {
 
-    public LeguiMouseClickEventProcessor(LeguiContext context) {
+    public MouseClickEventProcessor(LeguiContext context) {
         super(context);
     }
 
@@ -77,19 +79,30 @@ public class LeguiMouseClickEventProcessor extends LeguiSystemEventProcessor<Sys
                 context.setFocusedGui(gui);
                 gui.setFocused(true);
                 gui.setPressed(true);
-                LeguiEventProcessorUtils.release(mainGui, gui);
-//                gui.getListeners().getMouseActionListeners().forEach(listener -> listener.onPress(event.button, cursorPosition));
+                EventProcessorUtils.release(mainGui, gui);
+
+                Vector2f position = Util.calculatePosition(gui).sub(cursorPosition).negate();
+                MouseClickEvent mouseClickEvent = new MouseClickEvent(gui, position, PRESS);
+
+                gui.getListenerList().getListeners(MouseClickEvent.class).forEach(listener -> listener.update(mouseClickEvent));
             } else {
                 gui.setPressed(false);
             }
         } else if (event.action == GLFW_RELEASE && intersects) {
-            if (focusedGui == null) return;
-            gui.setPressed(false);
-            LeguiEventProcessorUtils.release(mainGui, gui);
-            if (focusedGui.getIntersector().intersects(focusedGui, cursorPosition)) {
-//                focusedGui.getListeners().getMouseActionListeners().forEach(listener -> listener.onClick(event.button, cursorPosition));
+            if (focusedGui != null) {
+                gui.setPressed(false);
+                EventProcessorUtils.release(mainGui, gui);
+
+                Vector2f position = Util.calculatePosition(gui).sub(cursorPosition).negate();
+                if (focusedGui == gui) {
+                    MouseClickEvent mouseClickEvent = new MouseClickEvent(gui, position, CLICK);
+                    focusedGui.getListenerList().getListeners(MouseClickEvent.class).forEach(listener -> listener.update(mouseClickEvent));
+                }
+
+                MouseClickEvent mouseClickEvent = new MouseClickEvent(gui, position, RELEASE);
+                focusedGui.getListenerList().getListeners(MouseClickEvent.class).forEach(listener -> listener.update(mouseClickEvent));
+                focusedGui.setPressed(false);
             }
-//            focusedGui.getListeners().getMouseActionListeners().forEach(listener -> listener.onRelease(event.button, cursorPosition));
         }
     }
 

@@ -2,9 +2,9 @@ package org.liquidengine.legui.processor;
 
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.context.LeguiContext;
-import org.liquidengine.legui.event.component.LeguiComponentEvent;
+import org.liquidengine.legui.event.component.AbstractComponentEvent;
 import org.liquidengine.legui.example.ExampleGui;
-import org.liquidengine.legui.listener.component.LeguiListener;
+import org.liquidengine.legui.listener.component.IEventListener;
 
 import java.util.List;
 import java.util.Queue;
@@ -15,7 +15,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  */
 public class LeguiEventProcessor {
 
-    private Queue<LeguiComponentEvent> componentEvents = new ConcurrentLinkedQueue<>();
+    private Queue<AbstractComponentEvent> componentEvents = new ConcurrentLinkedQueue<>();
 
     public LeguiEventProcessor(ExampleGui exampleGui, LeguiContext leguiContext) {
         initialize();
@@ -25,17 +25,17 @@ public class LeguiEventProcessor {
     }
 
     public void processEvent() {
-        LeguiComponentEvent event = componentEvents.poll();
+        AbstractComponentEvent event = componentEvents.poll();
         if (event != null) {
             Component component = event.getComponent();
-            List<? extends LeguiListener> listenersByEvent = component.getListenerList().getListeners(event.getClass());
-            for (LeguiListener leguiListener : listenersByEvent) {
-                leguiListener.update(event);
+            List<? extends IEventListener> listenersByEvent = component.getListenerList().getListeners(event.getClass());
+            for (IEventListener IEventListener : listenersByEvent) {
+                IEventListener.update(event);
             }
         }
     }
 
-    public void pushEvent(LeguiComponentEvent event) {
+    public void pushEvent(AbstractComponentEvent event) {
         componentEvents.add(event);
     }
 }

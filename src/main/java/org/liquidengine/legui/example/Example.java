@@ -4,11 +4,10 @@ import org.joml.Vector2f;
 import org.joml.Vector2i;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.Image;
-import org.liquidengine.legui.component.Label;
 import org.liquidengine.legui.context.LeguiCallbackKeeper;
 import org.liquidengine.legui.context.LeguiContext;
 import org.liquidengine.legui.processor.LeguiEventProcessor;
-import org.liquidengine.legui.processor.LeguiSystemEventProcessor;
+import org.liquidengine.legui.processor.SystemEventProcessor;
 import org.liquidengine.legui.render.LeguiRenderer;
 import org.liquidengine.legui.render.nvg.NvgLeguiRenderer;
 import org.lwjgl.glfw.GLFW;
@@ -41,8 +40,8 @@ public class Example {
 
     private LeguiContext leguiContext;
     private LeguiRenderer renderer;
-    private LeguiSystemEventProcessor systemEventProcessor;
-    private LeguiEventProcessor uieventEventProcessor;
+    private SystemEventProcessor systemEventProcessor;
+    private LeguiEventProcessor uieventLeguiEventProcessor;
 
     private int updates;
     private int currentUps;
@@ -94,11 +93,11 @@ public class Example {
         callbackKeeper = new LeguiCallbackKeeper(windowPointer);
 
         // Create event processor for system events (obtained from callbacks) Constructor automatically creates Callbacks and binds them to window
-        systemEventProcessor = new LeguiSystemEventProcessor(exampleGui, leguiContext, callbackKeeper);
+        systemEventProcessor = new SystemEventProcessor(exampleGui, leguiContext, callbackKeeper);
         // Create event processor for ui events
-        uieventEventProcessor = new LeguiEventProcessor(exampleGui, leguiContext);
+        uieventLeguiEventProcessor = new LeguiEventProcessor(exampleGui, leguiContext);
         // Set this processor to context, so generated ui events in system event processor will go to it.
-        leguiContext.setLeguiEventProcessor(uieventEventProcessor);
+        leguiContext.setLeguiEventProcessor(uieventLeguiEventProcessor);
 
         // create renderer (NanoVG renderer implementation). You can create your own implementation.
         renderer = new NvgLeguiRenderer(leguiContext);
@@ -171,15 +170,14 @@ public class Example {
                 exampleGui.setImage(image1);
             }
         }
-        Label label = exampleGui.getMouseTargetLabel();
-        label.getTextState().setText(leguiContext.getMouseTargetGui() + "");
+        exampleGui.getMouseTargetLabel().getTextState().setText("M.TARGET: "+leguiContext.getMouseTargetGui());
 
-        Label mouseLabel = exampleGui.getMouseLabel();
         Vector2f mousePosition = leguiContext.getMousePosition();
-        mouseLabel.getTextState().setText(String.format("X:%4s, Y:%4s", mousePosition.x, mousePosition.y));
+        exampleGui.getMouseLabel().getTextState().setText(String.format("X:%4s, Y:%4s", mousePosition.x, mousePosition.y));
 
-        Label upsLabel = exampleGui.getUpsLabel();
-        upsLabel.getTextState().setText("UPS: " + currentUps);
+        exampleGui.getUpsLabel().getTextState().setText("UPS: " + currentUps);
+
+        exampleGui.getFocusedGuiLabel().getTextState().setText("FOCUSED: " + leguiContext.getFocusedGui());
     }
 
     private void startSystemEventProcessor() {
@@ -191,7 +189,7 @@ public class Example {
 
     private void startLeguiEventProcessor() {
         eventProcessorThread = new Thread(() -> {
-            while (running) uieventEventProcessor.processEvent();
+            while (running) uieventLeguiEventProcessor.processEvent();
         }, "GUI_EVENT_PROCESSOR");
         eventProcessorThread.start();
     }

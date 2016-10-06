@@ -7,9 +7,9 @@ import org.liquidengine.legui.event.system.SystemKeyEvent;
 /**
  * Created by Shcherbin Alexander on 7/5/2016.
  */
-public class LeguiKeyEventProcessor extends LeguiSystemEventProcessor<SystemKeyEvent> {
+public class KeyEventProcessor extends SystemEventProcessor<SystemKeyEvent> {
 
-    public LeguiKeyEventProcessor(LeguiContext context) {
+    public KeyEventProcessor(LeguiContext context) {
         super(context);
     }
 

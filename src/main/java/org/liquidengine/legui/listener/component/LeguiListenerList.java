@@ -1,6 +1,6 @@
 package org.liquidengine.legui.listener.component;
 
-import org.liquidengine.legui.event.component.LeguiComponentEvent;
+import org.liquidengine.legui.event.component.AbstractComponentEvent;
 
 import java.util.List;
 import java.util.Map;
@@ -15,25 +15,25 @@ import java.util.concurrent.locks.ReentrantLock;
 public class LeguiListenerList {
 
     private final Lock lock = new ReentrantLock();
-    private final Map<Class<? extends LeguiComponentEvent>, List<? extends LeguiListener>> listeners = new ConcurrentHashMap<>();
+    private final Map<Class<? extends AbstractComponentEvent>, List<? extends IEventListener>> listeners = new ConcurrentHashMap<>();
 
     public LeguiListenerList() {
     }
 
-    public <T extends LeguiComponentEvent> void addListener(Class<T> eventClass, LeguiListener<T> listener) {
+    public <T extends AbstractComponentEvent> void addListener(Class<T> eventClass, IEventListener<T> listener) {
         getListeners(eventClass).add(listener);
     }
 
-    public <T extends LeguiComponentEvent> void removeListener(Class<T> eventClass, LeguiListener<T> listener) {
+    public <T extends AbstractComponentEvent> void removeListener(Class<T> eventClass, IEventListener<T> listener) {
         getListeners(eventClass).remove(listener);
     }
 
-    public <T extends LeguiComponentEvent> List<LeguiListener<T>> getListeners(Class<T> eventClass) {
+    public <T extends AbstractComponentEvent> List<IEventListener<T>> getListeners(Class<T> eventClass) {
         lock.lock();
-        List<LeguiListener<T>> leguiListeners = (List<LeguiListener<T>>) listeners.get(eventClass);
-        if (leguiListeners == null) listeners.put(eventClass, leguiListeners = new CopyOnWriteArrayList<>());
+        List<IEventListener<T>> IEventListeners = (List<IEventListener<T>>) listeners.get(eventClass);
+        if (IEventListeners == null) listeners.put(eventClass, IEventListeners = new CopyOnWriteArrayList<>());
         lock.unlock();
-        return leguiListeners;
+        return IEventListeners;
     }
 
 }

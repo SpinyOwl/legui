@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by Shcherbin Alexander on 9/29/2016.
  */
-public class LeguiEventProcessorUtils {
+public class EventProcessorUtils {
 
     public static void release(Component gui, Component focused) {
         if (gui != focused) {

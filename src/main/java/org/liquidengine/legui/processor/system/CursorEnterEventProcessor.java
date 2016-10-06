@@ -7,9 +7,9 @@ import org.liquidengine.legui.event.system.SystemCursorEnterEvent;
 /**
  * Created by Alexander on 05.09.2016.
  */
-public class LeguiCursorEnterEventProcessor extends LeguiSystemEventProcessor<SystemCursorEnterEvent> {
+public class CursorEnterEventProcessor extends SystemEventProcessor<SystemCursorEnterEvent> {
 
-    public LeguiCursorEnterEventProcessor(LeguiContext context) {
+    public CursorEnterEventProcessor(LeguiContext context) {
         super(context);
     }
 

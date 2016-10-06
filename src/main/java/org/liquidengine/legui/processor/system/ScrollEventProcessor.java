@@ -7,9 +7,9 @@ import org.liquidengine.legui.event.system.SystemScrollEvent;
 /**
  * Created by Shcherbin Alexander on 8/30/2016.
  */
-public class LeguiScrollEventProcessor extends LeguiSystemEventProcessor<SystemScrollEvent> {
+public class ScrollEventProcessor extends SystemEventProcessor<SystemScrollEvent> {
 
-    public LeguiScrollEventProcessor(LeguiContext context) {
+    public ScrollEventProcessor(LeguiContext context) {
         super(context);
     }
 

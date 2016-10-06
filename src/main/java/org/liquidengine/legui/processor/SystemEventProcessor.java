@@ -15,15 +15,15 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * Created by Shcherbin Alexander on 9/19/2016.
  */
-public class LeguiSystemEventProcessor {
+public class SystemEventProcessor {
 
     private final Component mainGuiComponent;
     private final LeguiContext context;
     private final LeguiSystemEventQueue leguiEventQueue;
     private final LeguiCallbackKeeper callbackKeeper;
-    private final Map<Class<? extends LeguiSystemEvent>, org.liquidengine.legui.processor.system.LeguiSystemEventProcessor> processorMap = new ConcurrentHashMap<>();
+    private final Map<Class<? extends LeguiSystemEvent>, org.liquidengine.legui.processor.system.SystemEventProcessor> processorMap = new ConcurrentHashMap<>();
 
-    public LeguiSystemEventProcessor(Component mainGuiComponent, LeguiContext context, LeguiCallbackKeeper callbackKeeper) {
+    public SystemEventProcessor(Component mainGuiComponent, LeguiContext context, LeguiCallbackKeeper callbackKeeper) {
         this.mainGuiComponent = mainGuiComponent;
         this.context = context;
         this.callbackKeeper = callbackKeeper;
@@ -32,31 +32,31 @@ public class LeguiSystemEventProcessor {
     }
 
     private void initialize() {
-        LeguiCharModsEventProcessor guiCharModsEventProcessor = new LeguiCharModsEventProcessor(context);
+        CharModsEventProcessor guiCharModsEventProcessor = new CharModsEventProcessor(context);
         registerProcessor(SystemCharModsEvent.class, guiCharModsEventProcessor);
 
-        LeguiCursorEnterEventProcessor guiCursorEnterEventProcessor = new LeguiCursorEnterEventProcessor(context);
+        CursorEnterEventProcessor guiCursorEnterEventProcessor = new CursorEnterEventProcessor(context);
         registerProcessor(SystemCursorEnterEvent.class, guiCursorEnterEventProcessor);
 
-        LeguiCursorPosEventProcessor cursorPosEventProcessor = new LeguiCursorPosEventProcessor(context);
+        CursorPosEventProcessor cursorPosEventProcessor = new CursorPosEventProcessor(context);
         registerProcessor(SystemCursorPosEvent.class, cursorPosEventProcessor);
 
-        LeguiMouseClickEventProcessor mouseClickEventProcessor = new LeguiMouseClickEventProcessor(context);
+        MouseClickEventProcessor mouseClickEventProcessor = new MouseClickEventProcessor(context);
         registerProcessor(SystemMouseClickEvent.class, mouseClickEventProcessor);
 
-        LeguiCharEventProcessor charEventProcessor = new LeguiCharEventProcessor(context);
+        CharEventProcessor charEventProcessor = new CharEventProcessor(context);
         registerProcessor(SystemCharEvent.class, charEventProcessor);
 
-        LeguiWindowSizeEventProcessor windowSizeEventProcessor = new LeguiWindowSizeEventProcessor(context);
+        WindowSizeEventProcessor windowSizeEventProcessor = new WindowSizeEventProcessor(context);
         registerProcessor(SystemWindowSizeEvent.class, windowSizeEventProcessor);
 
-        LeguiKeyEventProcessor keyEventProcessor = new LeguiKeyEventProcessor(context);
+        KeyEventProcessor keyEventProcessor = new KeyEventProcessor(context);
         registerProcessor(SystemKeyEvent.class, keyEventProcessor);
 
-        LeguiDropEventCallback dropEventCallback = new LeguiDropEventCallback(context);
+        DropEventCallback dropEventCallback = new DropEventCallback(context);
         registerProcessor(SystemDropEvent.class, dropEventCallback);
 
-        LeguiScrollEventProcessor scrollEventProcessor = new LeguiScrollEventProcessor(context);
+        ScrollEventProcessor scrollEventProcessor = new ScrollEventProcessor(context);
         registerProcessor(SystemScrollEvent.class, scrollEventProcessor);
     }
 
@@ -78,7 +78,7 @@ public class LeguiSystemEventProcessor {
     public void processEvent() {
         LeguiSystemEvent event = leguiEventQueue.poll();
         if (event != null) {
-            org.liquidengine.legui.processor.system.LeguiSystemEventProcessor concreteEventProcessor = processorMap.get(event.getClass());
+            org.liquidengine.legui.processor.system.SystemEventProcessor concreteEventProcessor = processorMap.get(event.getClass());
             if (concreteEventProcessor != null) {
                 context.setMouseTargetGui(getMouseTarget(null, mainGuiComponent, context.getCursorPosition()));
                 concreteEventProcessor.processEvent(event, mainGuiComponent);
@@ -111,7 +111,7 @@ public class LeguiSystemEventProcessor {
      * @param eventClass
      * @param processor
      */
-    public void registerProcessor(Class<? extends LeguiSystemEvent> eventClass, org.liquidengine.legui.processor.system.LeguiSystemEventProcessor processor) {
+    public void registerProcessor(Class<? extends LeguiSystemEvent> eventClass, org.liquidengine.legui.processor.system.SystemEventProcessor processor) {
         processorMap.put(eventClass, processor);
     }
 

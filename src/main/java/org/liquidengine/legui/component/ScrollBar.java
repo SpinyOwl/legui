@@ -2,6 +2,7 @@ package org.liquidengine.legui.component;
 
 import com.google.common.base.Objects;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.optional.Orientation;
 
@@ -186,7 +187,7 @@ public class ScrollBar extends Component {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this)
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .append("orientation", orientation)
                 .append("minValue", minValue)
                 .append("maxValue", maxValue)

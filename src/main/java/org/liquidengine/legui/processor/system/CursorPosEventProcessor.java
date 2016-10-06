@@ -7,7 +7,7 @@ import org.liquidengine.legui.context.LeguiContext;
 import org.liquidengine.legui.event.component.CursorEnterEvent;
 import org.liquidengine.legui.event.component.MouseDragEvent;
 import org.liquidengine.legui.event.system.SystemCursorPosEvent;
-import org.liquidengine.legui.listener.component.LeguiListener;
+import org.liquidengine.legui.listener.component.IEventListener;
 import org.liquidengine.legui.processor.LeguiEventProcessor;
 import org.liquidengine.legui.util.Util;
 import org.lwjgl.glfw.GLFW;
@@ -18,9 +18,9 @@ import java.util.List;
  * Event processor for cursor events. Updates GUI element depending on cursor position. Calls CursorEventListeners of GUI element
  * Created by Shcherbin Alexander on 6/16/2016.
  */
-public class LeguiCursorPosEventProcessor extends LeguiSystemEventProcessor<SystemCursorPosEvent> {
+public class CursorPosEventProcessor extends SystemEventProcessor<SystemCursorPosEvent> {
 
-    public LeguiCursorPosEventProcessor(LeguiContext context) {
+    public CursorPosEventProcessor(LeguiContext context) {
         super(context);
     }
 
@@ -56,10 +56,10 @@ public class LeguiCursorPosEventProcessor extends LeguiSystemEventProcessor<Syst
      * @param gui
      */
     private void updateComponentStatesAndCallListeners(SystemCursorPosEvent event, Component gui, Component target) {
+        LeguiEventProcessor leguiEventProcessor = context.getLeguiEventProcessor();
         if (context.getMouseButtonStates()[GLFW.GLFW_MOUSE_BUTTON_LEFT] && gui == context.getFocusedGui()) {
-            List<LeguiListener<MouseDragEvent>> mouseDragEventListeners = gui.getListenerList().getListeners(MouseDragEvent.class);
+            List<IEventListener<MouseDragEvent>> mouseDragEventListeners = gui.getListenerList().getListeners(MouseDragEvent.class);
             MouseDragEvent mouseDragEvent = new MouseDragEvent(context.getCursorPosition(), context.getCursorPositionPrev(), gui);
-            LeguiEventProcessor leguiEventProcessor = context.getLeguiEventProcessor();
             if (leguiEventProcessor == null) {
                 mouseDragEventListeners.forEach(l -> l.update(mouseDragEvent));
             } else {
@@ -67,19 +67,31 @@ public class LeguiCursorPosEventProcessor extends LeguiSystemEventProcessor<Syst
             }
         }
 
-        List<LeguiListener<CursorEnterEvent>> listeners = gui.getListenerList().getListeners(CursorEnterEvent.class);
+        List<IEventListener<CursorEnterEvent>> listeners = gui.getListenerList().getListeners(CursorEnterEvent.class);
         Vector2f position = Util.calculatePosition(gui);
         Vector2f cursorPosition = context.getCursorPosition();
         boolean intersects = gui.getIntersector().intersects(gui, cursorPosition);
         Vector2f mousePosition = position.sub(cursorPosition).negate();
+        boolean update = false;
+        CursorEnterEvent cursorEnterEvent = null;
         if (gui.isHovered()) {
             if (!intersects || gui != target) {
                 gui.setHovered(false);
-                listeners.forEach(listener -> listener.update(new CursorEnterEvent(gui, CursorEnterEvent.Action.EXIT, mousePosition)));
+                cursorEnterEvent = new CursorEnterEvent(gui, CursorEnterEvent.CursorEnterAction.EXIT, mousePosition);
+                update = true;
             }
         } else if (!gui.isHovered() && intersects && gui == target) {
             gui.setHovered(true);
-            listeners.forEach(listener -> listener.update(new CursorEnterEvent(gui, CursorEnterEvent.Action.ENTER, mousePosition)));
+            cursorEnterEvent = new CursorEnterEvent(gui, CursorEnterEvent.CursorEnterAction.ENTER, mousePosition);
+            update = true;
+        }
+        if (update) {
+            if (leguiEventProcessor == null) {
+                CursorEnterEvent finalCursorEnterEvent = cursorEnterEvent;
+                listeners.forEach(listener -> listener.update(finalCursorEnterEvent));
+            } else {
+                leguiEventProcessor.pushEvent(cursorEnterEvent);
+            }
         }
     }
 }

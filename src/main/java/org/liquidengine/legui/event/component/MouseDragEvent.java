@@ -9,15 +9,14 @@ import org.liquidengine.legui.component.Component;
 /**
  * Created by Shcherbin Alexander on 9/29/2016.
  */
-public class MouseDragEvent implements LeguiComponentEvent {
+public class MouseDragEvent extends AbstractComponentEvent {
     private final Vector2f cursorPosition;
     private final Vector2f cursorPositionPrev;
-    private final Component component;
 
     public MouseDragEvent(Vector2f cursorPosition, Vector2f cursorPositionPrev, Component component) {
+        super(component);
         this.cursorPosition = cursorPosition;
         this.cursorPositionPrev = cursorPositionPrev;
-        this.component = component;
     }
 
     public Vector2f getCursorPosition() {
@@ -28,31 +27,26 @@ public class MouseDragEvent implements LeguiComponentEvent {
         return cursorPositionPrev;
     }
 
-    public Component getComponent() {
-        return component;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof MouseDragEvent)) return false;
+        if (!super.equals(o)) return false;
         MouseDragEvent that = (MouseDragEvent) o;
         return Objects.equal(cursorPosition, that.cursorPosition) &&
-                Objects.equal(cursorPositionPrev, that.cursorPositionPrev) &&
-                Objects.equal(component, that.component);
+                Objects.equal(cursorPositionPrev, that.cursorPositionPrev);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(cursorPosition, cursorPositionPrev, component);
+        return Objects.hashCode(super.hashCode(), cursorPosition, cursorPositionPrev);
     }
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.SIMPLE_STYLE)
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .append("cursorPosition", cursorPosition)
                 .append("cursorPositionPrev", cursorPositionPrev)
-                .append("component", component.getClass().getSimpleName())
                 .toString();
     }
 }

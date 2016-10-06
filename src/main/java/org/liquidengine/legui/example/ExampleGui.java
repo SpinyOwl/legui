@@ -5,7 +5,13 @@ import org.liquidengine.legui.component.*;
 import org.liquidengine.legui.component.border.SimpleLineBorder;
 import org.liquidengine.legui.component.optional.Orientation;
 import org.liquidengine.legui.event.component.CursorEnterEvent;
+import org.liquidengine.legui.event.component.MouseClickEvent;
+import org.liquidengine.legui.listener.component.MouseClickListener;
 import org.liquidengine.legui.util.ColorConstants;
+
+import static org.liquidengine.legui.event.component.MouseClickEvent.MouseClickAction.CLICK;
+import static org.liquidengine.legui.event.component.MouseClickEvent.MouseClickAction.PRESS;
+import static org.liquidengine.legui.event.component.MouseClickEvent.MouseClickAction.RELEASE;
 
 
 /**
@@ -15,6 +21,7 @@ public class ExampleGui extends Panel {
     private final Label mouseTargetLabel;
     private final Label mouseLabel;
     private final Label upsLabel;
+    private final Label focusedGuiLabel;
     private Image image;
 
     public ExampleGui(int width, int height) {
@@ -56,6 +63,9 @@ public class ExampleGui extends Panel {
         mouseTargetLabel = new Label(400, 10, 390, 20, "Hello Label");
         this.addComponent(mouseTargetLabel);
 
+        focusedGuiLabel = new Label(400, 30, 390, 20, "Hello Label");
+        this.addComponent(focusedGuiLabel);
+
         mouseLabel = new Label(130, 30, 100, 20, "Hello Label");
         this.addComponent(mouseLabel);
 
@@ -63,7 +73,7 @@ public class ExampleGui extends Panel {
         this.addComponent(upsLabel);
 
         image = Image.createImage("org/liquidengine/legui/example/1.jpg");
-        image.setPosition(20, 60);
+        image.setPosition(20, 30);
         image.setSize(100, 100);
         this.addComponent(image);
 
@@ -103,19 +113,30 @@ public class ExampleGui extends Panel {
         TextInput textInput = new TextInput(250, 130, 100, 30);
         this.addComponent(textInput);
 
-        Widget widget = new Widget("Hello widget", 250,170,100,100);
+        Widget widget = new Widget("Hello widget", 250, 170, 100, 100);
         widget.setTitleHeight(20);
         widget.setCloseButtonColor(ColorConstants.red());
         widget.setTitleBackgroundColor(ColorConstants.lightGreen());
 
-        Panel component0 = new Panel(-5, -5, 10, 10); component0.getBackgroundColor().set(1,0,0,1); widget.getContainer().addComponent(component0);
-        Panel component1 = new Panel(-5, 75, 10, 10); component1.getBackgroundColor().set(1,0,0,1); widget.getContainer().addComponent(component1);
-        Panel component2 = new Panel(95, -5, 10, 10); component2.getBackgroundColor().set(1,0,0,1); widget.getContainer().addComponent(component2); component2.setVisible(false);
-        Panel component3 = new Panel(95, 75, 10, 10); component3.getBackgroundColor().set(1,0,0,1); widget.getContainer().addComponent(component3);
-        Panel component4 = new Panel(45, 35, 10, 10); component4.getBackgroundColor().set(1,0,0,1); widget.getContainer().addComponent(component4);
+        Panel component0 = new Panel(-5, -5, 10, 10);
+        component0.getBackgroundColor().set(1, 0, 0, 1);
+        widget.getContainer().addComponent(component0);
+        Panel component1 = new Panel(-5, 75, 10, 10);
+        component1.getBackgroundColor().set(1, 0, 0, 1);
+        widget.getContainer().addComponent(component1);
+        Panel component2 = new Panel(95, -5, 10, 10);
+        component2.getBackgroundColor().set(1, 0, 0, 1);
+        widget.getContainer().addComponent(component2);
+        component2.setVisible(false);
+        Panel component3 = new Panel(95, 75, 10, 10);
+        component3.getBackgroundColor().set(1, 0, 0, 1);
+        widget.getContainer().addComponent(component3);
+        Panel component4 = new Panel(45, 35, 10, 10);
+        component4.getBackgroundColor().set(1, 0, 0, 1);
+        widget.getContainer().addComponent(component4);
         this.addComponent(widget);
 
-        ScrollBar scrollBar1 = new ScrollBar(360,170,20,100,20);
+        ScrollBar scrollBar1 = new ScrollBar(360, 170, 20, 100, 20);
         scrollBar1.setOrientation(Orientation.VERTICAL);
         scrollBar1.setVisibleAmount(20);
         scrollBar1.setArrowsEnabled(true);
@@ -125,7 +146,7 @@ public class ExampleGui extends Panel {
         scrollBar1.setBorder(new SimpleLineBorder(scrollBar1, ColorConstants.red(), 1));
         this.addComponent(scrollBar1);
 
-        ScrollBar scrollBar2 = new ScrollBar(250,280,100,20,20);
+        ScrollBar scrollBar2 = new ScrollBar(250, 280, 100, 20, 20);
         scrollBar2.setOrientation(Orientation.HORIZONTAL);
         scrollBar2.setVisibleAmount(20);
         scrollBar2.setArrowsEnabled(true);
@@ -134,9 +155,21 @@ public class ExampleGui extends Panel {
         scrollBar2.setArrowColor(ColorConstants.white());
         this.addComponent(scrollBar2);
 
-        Panel panel1 = new Panel(420,170,100,100); panel1.setBackgroundColor(ColorConstants.blue()); this.addComponent(panel1); panel1.getListenerList()
+        Panel panel1 = new Panel(420, 170, 100, 100);
+        panel1.setBackgroundColor(ColorConstants.blue());
+        this.addComponent(panel1);
+        panel1.getListenerList()
                 .addListener(CursorEnterEvent.class, event -> System.out.println(event));
-        Panel panel2 = new Panel(450,170,100,100); panel2.setBackgroundColor(ColorConstants.green()); this.addComponent(panel2);
+        Panel panel2 = new Panel(450, 170, 100, 100);
+        panel2.setBackgroundColor(ColorConstants.green());
+        this.addComponent(panel2);
+
+        button.getListenerList().addListener(MouseClickEvent.class, (MouseClickListener) event -> {
+            MouseClickEvent.MouseClickAction action = event.getAction();
+            if (CLICK.equals(action)) mouseTargetLabel.setVisible(!mouseTargetLabel.isVisible());
+            if (RELEASE.equals(action)) System.out.println("RELEASE");
+            if (PRESS.equals(action)) System.out.println("PRESS");
+        });
     }
 
     public Image getImage() {
@@ -157,5 +190,9 @@ public class ExampleGui extends Panel {
 
     public Label getUpsLabel() {
         return upsLabel;
+    }
+
+    public Label getFocusedGuiLabel() {
+        return focusedGuiLabel;
     }
 }

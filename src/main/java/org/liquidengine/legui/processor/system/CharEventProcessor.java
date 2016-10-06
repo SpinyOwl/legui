@@ -7,9 +7,9 @@ import org.liquidengine.legui.event.system.SystemCharEvent;
 /**
  * Created by Alexander on 01.07.2016.
  */
-public class LeguiCharEventProcessor extends LeguiSystemEventProcessor<SystemCharEvent> {
+public class CharEventProcessor extends SystemEventProcessor<SystemCharEvent> {
 
-    public LeguiCharEventProcessor(LeguiContext context) {
+    public CharEventProcessor(LeguiContext context) {
         super(context);
     }
 

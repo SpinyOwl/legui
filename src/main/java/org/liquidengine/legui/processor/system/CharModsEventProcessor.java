@@ -7,9 +7,9 @@ import org.liquidengine.legui.event.system.SystemCharModsEvent;
 /**
  * Created by Alexander on 05.09.2016.
  */
-public class LeguiCharModsEventProcessor extends LeguiSystemEventProcessor<SystemCharModsEvent> {
+public class CharModsEventProcessor extends SystemEventProcessor<SystemCharModsEvent> {
 
-    public LeguiCharModsEventProcessor(LeguiContext context) {
+    public CharModsEventProcessor(LeguiContext context) {
         super(context);
     }
 

@@ -5,7 +5,8 @@ import org.liquidengine.legui.event.component.SliderChangeEvent;
 /**
  * Created by Shcherbin Alexander on 9/26/2016.
  */
-public interface SliderChangeEventListener extends LeguiListener{
+public interface SliderChangeEventListener extends IEventListener<SliderChangeEvent> {
 
-    void beforeUpdate(SliderChangeEvent event);
+    void update(SliderChangeEvent event);
+    
 }

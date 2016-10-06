@@ -8,11 +8,11 @@ import org.liquidengine.legui.event.system.LeguiSystemEvent;
  * Event processor interface.
  * Created by Shcherbin Alexander on 6/14/2016.
  */
-public abstract class LeguiSystemEventProcessor<T extends LeguiSystemEvent> {
+public abstract class SystemEventProcessor<T extends LeguiSystemEvent> {
 
     protected LeguiContext context;
 
-    public LeguiSystemEventProcessor(LeguiContext context) {
+    public SystemEventProcessor(LeguiContext context) {
         this.context = context;
     }
 
