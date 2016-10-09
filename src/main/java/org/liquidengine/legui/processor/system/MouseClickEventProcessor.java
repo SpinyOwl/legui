@@ -82,7 +82,7 @@ public class MouseClickEventProcessor extends SystemEventProcessor<SystemMouseCl
                 EventProcessorUtils.release(mainGui, gui);
 
                 Vector2f position = Util.calculatePosition(gui).sub(cursorPosition).negate();
-                MouseClickEvent mouseClickEvent = new MouseClickEvent(gui, position, PRESS);
+                MouseClickEvent mouseClickEvent = new MouseClickEvent(gui, position, PRESS, event.button);
 
                 gui.getListenerList().getListeners(MouseClickEvent.class).forEach(listener -> listener.update(mouseClickEvent));
             } else {
@@ -95,11 +95,11 @@ public class MouseClickEventProcessor extends SystemEventProcessor<SystemMouseCl
 
                 Vector2f position = Util.calculatePosition(gui).sub(cursorPosition).negate();
                 if (focusedGui == gui) {
-                    MouseClickEvent mouseClickEvent = new MouseClickEvent(gui, position, CLICK);
+                    MouseClickEvent mouseClickEvent = new MouseClickEvent(gui, position, CLICK, event.button);
                     focusedGui.getListenerList().getListeners(MouseClickEvent.class).forEach(listener -> listener.update(mouseClickEvent));
                 }
 
-                MouseClickEvent mouseClickEvent = new MouseClickEvent(gui, position, RELEASE);
+                MouseClickEvent mouseClickEvent = new MouseClickEvent(gui, position, RELEASE, event.button);
                 focusedGui.getListenerList().getListeners(MouseClickEvent.class).forEach(listener -> listener.update(mouseClickEvent));
                 focusedGui.setPressed(false);
             }

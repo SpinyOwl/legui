@@ -8,7 +8,6 @@ import org.liquidengine.legui.component.border.Border;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.context.LeguiContext;
 import org.liquidengine.legui.render.nvg.NvgLeguiComponentRenderer;
-import org.liquidengine.legui.util.ColorUtil;
 import org.liquidengine.legui.util.Util;
 import org.lwjgl.nanovg.NVGColor;
 import org.lwjgl.nanovg.NVGPaint;
@@ -55,7 +54,7 @@ public class NvgButtonRenderer extends NvgLeguiComponentRenderer {
             // Render text
             {
                 TextState textState = agui.getTextState();
-                renderTextStateToBounds(nvgContext, pos, size, textState);
+                renderTextStateLineToBounds(nvgContext, pos, size, textState);
             }
 
             // Render border

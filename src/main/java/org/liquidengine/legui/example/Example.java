@@ -4,6 +4,7 @@ import org.joml.Vector2f;
 import org.joml.Vector2i;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.Image;
+import org.liquidengine.legui.component.TextArea;
 import org.liquidengine.legui.context.LeguiCallbackKeeper;
 import org.liquidengine.legui.context.LeguiContext;
 import org.liquidengine.legui.processor.LeguiEventProcessor;
@@ -170,7 +171,7 @@ public class Example {
                 exampleGui.setImage(image1);
             }
         }
-        exampleGui.getMouseTargetLabel().getTextState().setText("M.TARGET: "+leguiContext.getMouseTargetGui());
+        exampleGui.getMouseTargetLabel().getTextState().setText("M.TARGET: " + leguiContext.getMouseTargetGui());
 
         Vector2f mousePosition = leguiContext.getMousePosition();
         exampleGui.getMouseLabel().getTextState().setText(String.format("X:%4s, Y:%4s", mousePosition.x, mousePosition.y));
@@ -178,6 +179,11 @@ public class Example {
         exampleGui.getUpsLabel().getTextState().setText("UPS: " + currentUps);
 
         exampleGui.getFocusedGuiLabel().getTextState().setText("FOCUSED: " + leguiContext.getFocusedGui());
+
+        TextArea textArea = exampleGui.getTextArea();
+        int caretPosition = textArea.getCaretPosition();
+        String text = textArea.getTextState().getText();
+        exampleGui.getCaretp().getTextState().setText(text.substring(caretPosition <= 0 ? 0 : caretPosition - 1, caretPosition <= 0 ? 0 : caretPosition));
     }
 
     private void startSystemEventProcessor() {

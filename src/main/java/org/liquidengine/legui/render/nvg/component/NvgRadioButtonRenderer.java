@@ -54,7 +54,7 @@ public class NvgRadioButtonRenderer extends NvgLeguiComponentRenderer {
             float x1 = pos.x - iconOffset + iconWid;
             float w1 = size.x - iconWid - pad.z;
 
-            renderTextStateToBounds(context, new Vector2f(x1, y1), new Vector2f(w1, h1), textState);
+            renderTextStateLineToBounds(context, new Vector2f(x1, y1), new Vector2f(w1, h1), textState);
 
             renderIcon(agui, pos.x, fontSize, textColor, iconWid, y1, h1, context);
 

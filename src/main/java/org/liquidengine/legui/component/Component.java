@@ -105,6 +105,9 @@ public abstract class Component {
     public void setBackgroundColor(Vector4f backgroundColor) {
         this.backgroundColor = backgroundColor;
     }
+    public void setBackgroundColor(float r, float g, float b, float a) {
+        backgroundColor.set(r, g, b, a);
+    }
 
     public Border getBorder() {
         return border;

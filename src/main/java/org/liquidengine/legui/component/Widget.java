@@ -5,9 +5,14 @@ import org.joml.Vector4f;
 import org.liquidengine.legui.component.border.SimpleLineBorder;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
+import org.liquidengine.legui.component.optional.align.VerticalAlign;
+import org.liquidengine.legui.event.component.MouseClickEvent;
 import org.liquidengine.legui.event.component.MouseDragEvent;
+import org.liquidengine.legui.font.FontRegister;
+import org.liquidengine.legui.listener.component.MouseClickEventListener;
 import org.liquidengine.legui.util.ColorConstants;
 
+import static org.liquidengine.legui.event.component.MouseClickEvent.MouseClickAction.CLICK;
 import static org.liquidengine.legui.util.Util.cpToStr;
 
 /**
@@ -67,6 +72,14 @@ public class Widget extends ComponentContainer {
         this.closeButton = new Button(CLOSE_ICON);
         this.closeButton.backgroundColor.set(1, 0, 0, 1);
         this.closeButton.setBorder(simpleLineBorder);
+        this.closeButton.textState.setHorizontalAlign(HorizontalAlign.LEFT);
+        this.closeButton.textState.setVerticalAlign(VerticalAlign.MIDDLE);
+        this.closeButton.textState.setFont(FontRegister.MATERIAL_ICONS_REGULAR);
+        this.closeButton.getListenerList().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
+            if (CLICK.equals(event.getAction())) {
+                this.visible = false;
+            }
+        });
 
         this.container = new Panel();
         this.container.setBorder(simpleLineBorder);
@@ -90,6 +103,9 @@ public class Widget extends ComponentContainer {
             container.size.set(size.x, size.y - titHei);
             closeButton.size.set(titHei);
             closeButton.position.set(size.x - titHei, 0);
+            closeButton.textState.setFontSize(titHei * 2f / 3f);
+            closeButton.textState.getPadding().set(titHei / 6f);
+
         } else {
             container.position.set(0, 0);
             container.size.set(size);

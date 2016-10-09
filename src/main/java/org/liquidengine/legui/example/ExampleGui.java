@@ -4,10 +4,12 @@ import org.joml.Vector4f;
 import org.liquidengine.legui.component.*;
 import org.liquidengine.legui.component.border.SimpleLineBorder;
 import org.liquidengine.legui.component.optional.Orientation;
+import org.liquidengine.legui.component.optional.align.VerticalAlign;
 import org.liquidengine.legui.event.component.CursorEnterEvent;
 import org.liquidengine.legui.event.component.MouseClickEvent;
-import org.liquidengine.legui.listener.component.MouseClickListener;
+import org.liquidengine.legui.listener.component.MouseClickEventListener;
 import org.liquidengine.legui.util.ColorConstants;
+import org.lwjgl.glfw.GLFW;
 
 import static org.liquidengine.legui.event.component.MouseClickEvent.MouseClickAction.CLICK;
 import static org.liquidengine.legui.event.component.MouseClickEvent.MouseClickAction.PRESS;
@@ -23,47 +25,28 @@ public class ExampleGui extends Panel {
     private final Label upsLabel;
     private final Label focusedGuiLabel;
     private Image image;
+    private final TextInput caretp;
+    private final TextArea textArea;
 
     public ExampleGui(int width, int height) {
         super(0, 0, width, height);
 
-        Panel p1 = new Panel(1 * 20, 10, 10, 10);
-        this.addComponent(p1);
+        //@formatter:off
+        Panel p1 = new Panel(1 * 20, 10, 10, 10); this.addComponent(p1);
+        Panel p2 = new Panel(2 * 20, 10, 10, 10); this.addComponent(p2);
+        Panel p3 = new Panel(3 * 20, 10, 10, 10); this.addComponent(p3);
+        Panel p4 = new Panel(4 * 20, 10, 10, 10); this.addComponent(p4);
+        Panel p5 = new Panel(5 * 20, 10, 10, 10); this.addComponent(p5);
+        Panel p6 = new Panel(6 * 20, 10, 10, 10); this.addComponent(p6);
+        Panel p7 = new Panel(7 * 20, 10, 10, 10); this.addComponent(p7);
+        Panel p8 = new Panel(8 * 20, 10, 10, 10); this.addComponent(p8);
+        Panel p9 = new Panel(9 * 20, 10, 10, 10); this.addComponent(p9);
+        //@formatter:on
 
-        Panel p2 = new Panel(2 * 20, 10, 10, 10);
-        this.addComponent(p2);
-
-        Panel p3 = new Panel(3 * 20, 10, 10, 10);
-        this.addComponent(p3);
-
-        Panel p4 = new Panel(4 * 20, 10, 10, 10);
-        this.addComponent(p4);
-
-        Panel p5 = new Panel(5 * 20, 10, 10, 10);
-        this.addComponent(p5);
-
-        Panel p6 = new Panel(6 * 20, 10, 10, 10);
-        this.addComponent(p6);
-
-        Panel p7 = new Panel(7 * 20, 10, 10, 10);
-        this.addComponent(p7);
-
-        Panel p8 = new Panel(8 * 20, 10, 10, 10);
-        this.addComponent(p8);
-
-        Panel p9 = new Panel(9 * 20, 10, 10, 10);
-        this.addComponent(p9);
-
-        Panel p10 = new Panel(10 * 20, 10, 10, 10);
-        this.addComponent(p10);
-
-        Panel p11 = new Panel(11 * 20, 10, 10, 10);
-        this.addComponent(p11);
-
-        mouseTargetLabel = new Label(400, 10, 390, 20, "Hello Label");
+        mouseTargetLabel = new Label(10, height - 30, width - 20, 20, "Hello Label");
         this.addComponent(mouseTargetLabel);
 
-        focusedGuiLabel = new Label(400, 30, 390, 20, "Hello Label");
+        focusedGuiLabel = new Label(10, height - 50, width - 20, 20, "Hello Label");
         this.addComponent(focusedGuiLabel);
 
         mouseLabel = new Label(130, 30, 100, 20, "Hello Label");
@@ -118,33 +101,49 @@ public class ExampleGui extends Panel {
         widget.setCloseButtonColor(ColorConstants.red());
         widget.setTitleBackgroundColor(ColorConstants.lightGreen());
 
-        Panel component0 = new Panel(-5, -5, 10, 10);
-        component0.getBackgroundColor().set(1, 0, 0, 1);
-        widget.getContainer().addComponent(component0);
-        Panel component1 = new Panel(-5, 75, 10, 10);
-        component1.getBackgroundColor().set(1, 0, 0, 1);
-        widget.getContainer().addComponent(component1);
-        Panel component2 = new Panel(95, -5, 10, 10);
-        component2.getBackgroundColor().set(1, 0, 0, 1);
-        widget.getContainer().addComponent(component2);
-        component2.setVisible(false);
-        Panel component3 = new Panel(95, 75, 10, 10);
-        component3.getBackgroundColor().set(1, 0, 0, 1);
-        widget.getContainer().addComponent(component3);
-        Panel component4 = new Panel(45, 35, 10, 10);
-        component4.getBackgroundColor().set(1, 0, 0, 1);
-        widget.getContainer().addComponent(component4);
+        Button turnWidVisible = new Button(360, 280, 20, 20, "");
+        turnWidVisible.getListenerList().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
+            if (CLICK.equals(event.getAction())) widget.setVisible(true);
+        });
+        this.addComponent(turnWidVisible);
+
+        Panel c0 = new Panel(-5, -5, 10, 10);
+        c0.setBackgroundColor(1, 0, 0, 1);
+        widget.getContainer().addComponent(c0);
+        Panel c1 = new Panel(-5, 75, 10, 10);
+        c1.setBackgroundColor(1, 0, 0, 1);
+        widget.getContainer().addComponent(c1);
+        Panel c2 = new Panel(95, -5, 10, 10);
+        c2.setBackgroundColor(1, 0, 0, 1);
+        widget.getContainer().addComponent(c2);
+        c2.setVisible(false);
+        Panel c3 = new Panel(95, 75, 10, 10);
+        c3.setBackgroundColor(1, 0, 0, 1);
+        widget.getContainer().addComponent(c3);
+        Panel c4 = new Panel(45, 35, 10, 10);
+        c4.setBackgroundColor(1, 0, 0, 1);
+        widget.getContainer().addComponent(c4);
         this.addComponent(widget);
 
         ScrollBar scrollBar1 = new ScrollBar(360, 170, 20, 100, 20);
         scrollBar1.setOrientation(Orientation.VERTICAL);
         scrollBar1.setVisibleAmount(20);
         scrollBar1.setArrowsEnabled(true);
-        scrollBar1.setBackgroundColor(ColorConstants.black());
-        scrollBar1.setScrollColor(ColorConstants.white());
-        scrollBar1.setArrowColor(ColorConstants.blue());
+        scrollBar1.setBackgroundColor(ColorConstants.white());
+        scrollBar1.setScrollColor(ColorConstants.darkGray());
+        scrollBar1.setArrowColor(ColorConstants.darkGray());
         scrollBar1.setBorder(new SimpleLineBorder(scrollBar1, ColorConstants.red(), 1));
         this.addComponent(scrollBar1);
+
+        ScrollBar scrollBar11 = new ScrollBar(385, 170, 7, 100, 20);
+        scrollBar11.setOrientation(Orientation.VERTICAL);
+        scrollBar11.setVisibleAmount(20);
+        scrollBar11.setArrowsEnabled(false);
+        scrollBar11.setBackgroundColor(ColorConstants.white());
+        scrollBar11.setScrollColor(ColorConstants.darkGray());
+        scrollBar11.setBorder(new SimpleLineBorder(scrollBar1, ColorConstants.red(), 1));
+        scrollBar11.setCornerRadius(3);
+        this.addComponent(scrollBar11);
 
         ScrollBar scrollBar2 = new ScrollBar(250, 280, 100, 20, 20);
         scrollBar2.setOrientation(Orientation.HORIZONTAL);
@@ -160,16 +159,60 @@ public class ExampleGui extends Panel {
         this.addComponent(panel1);
         panel1.getListenerList()
                 .addListener(CursorEnterEvent.class, event -> System.out.println(event));
-        Panel panel2 = new Panel(450, 170, 100, 100);
+        Panel panel2 = new Panel(470, 170, 100, 100);
         panel2.setBackgroundColor(ColorConstants.green());
         this.addComponent(panel2);
 
-        button.getListenerList().addListener(MouseClickEvent.class, (MouseClickListener) event -> {
+        button.getListenerList().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
             MouseClickEvent.MouseClickAction action = event.getAction();
             if (CLICK.equals(action)) mouseTargetLabel.setVisible(!mouseTargetLabel.isVisible());
             if (RELEASE.equals(action)) System.out.println("RELEASE");
             if (PRESS.equals(action)) System.out.println("PRESS");
         });
+
+        ScrollablePanel panel = new ScrollablePanel(420, 10, 150, 150);
+        panel.setBackgroundColor(1, 1, 1, 1);
+        panel.setBorder(new SimpleLineBorder(panel, ColorConstants.red(), 1));
+        panel.getContainer().setSize(200, 200);
+        panel.resize();
+        panel.getContainer().addComponent(new TextInput("Hello Scrollable", 10, 10, 150, 20));
+        this.addComponent(panel);
+
+        textArea = new TextArea(420, 280, 150, 100);
+        textArea.getTextState().setText("ABCDEFGHIJKLMNOPQR\nSTUVWXYZAB\nCDEFGHIJKLMNOPQR\nSTUVWXYZABCDEFGHI\nJKLMNOPQRSTUVWXYZABC\nDEFGHIJKLMNOPQR\nSTUVWXYZABC\nDEFGHIJKLM\nNOPQRSTUVWXYZ");
+        textArea.getListenerList().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
+            if (CLICK.equals(event.getAction()) && event.getButton() == GLFW.GLFW_MOUSE_BUTTON_LEFT)
+                textArea.getTextState().setVerticalAlign(VerticalAlign.BOTTOM);
+            if (CLICK.equals(event.getAction()) && event.getButton() == GLFW.GLFW_MOUSE_BUTTON_MIDDLE)
+                textArea.getTextState().setVerticalAlign(VerticalAlign.MIDDLE);
+            if (CLICK.equals(event.getAction()) && event.getButton() == GLFW.GLFW_MOUSE_BUTTON_RIGHT)
+                textArea.getTextState().setVerticalAlign(VerticalAlign.TOP);
+        });
+        textArea.setCaretPosition(12);
+        this.addComponent(textArea);
+
+        caretp = new TextInput(420, 400, 50, 20);
+        this.addComponent(caretp);
+
+        Button plus = new Button(475, 400, 20, 20, "+");
+        plus.getListenerList().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
+            if (event.getAction().equals(CLICK)) textArea.setCaretPosition(textArea.getCaretPosition()+1);
+        });
+        Button minus = new Button(500, 400, 20, 20, "-");
+        minus.getListenerList().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
+            if (event.getAction().equals(CLICK)) textArea.setCaretPosition(textArea.getCaretPosition()-1);
+        });
+        this.addComponent(plus);
+        this.addComponent(minus);
+
+    }
+
+    public TextArea getTextArea() {
+        return textArea;
+    }
+
+    public TextInput getCaretp() {
+        return caretp;
     }
 
     public Image getImage() {

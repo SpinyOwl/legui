@@ -1,5 +1,7 @@
 package org.liquidengine.legui.render.nvg.component;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.Component;
@@ -32,6 +34,7 @@ import static org.lwjgl.system.MemoryUtil.memAddress;
  * Created by Shcherbin Alexander on 5/20/2016.
  */
 public class NvgTextInputRenderer extends NvgLeguiComponentRenderer {
+    private static final Logger LOGGER = LogManager.getLogger();
     private final Vector4f caretColor = new Vector4f(0, 0, 0, 0.5f);
     private final int maxGlyphCount = 1024;
     private NVGGlyphPosition.Buffer glyphs = NVGGlyphPosition.create(maxGlyphCount);
@@ -98,7 +101,7 @@ public class NvgTextInputRenderer extends NvgLeguiComponentRenderer {
                 text = updateRenderedText(agui, context, tw, renderBounds);
                 textToDraw = text.substring(renderBounds[0], renderBounds[1]);
             } catch (Throwable e) {
-                System.err.println("ERROR");
+                LOGGER.warn(e);
             }
             if (textToDraw == null) return;
             ByteBuffer byteText = MemoryUtil.memUTF8(textToDraw);
@@ -185,7 +188,6 @@ public class NvgTextInputRenderer extends NvgLeguiComponentRenderer {
     }
 
 
-
     private void calcMouseCaretPos(LeguiContext renderContext, float[] bounds, int ng, TextInput gui, int[] textBounds, long context) {
 //        float mouseCaretx = 0;
         Vector2f cursorPosition = renderContext.getCursorPosition();
@@ -267,7 +269,8 @@ public class NvgTextInputRenderer extends NvgLeguiComponentRenderer {
             }
         }
         int r;
-        if (glyphs.get(mid).maxx() > tw) r = low;
+
+        if (nGlypths > 0 && glyphs.get(mid).maxx() > tw) r = low;
         else r = high;
         return r;
     }

@@ -27,7 +27,7 @@ public class NvgLeguiRenderer extends LeguiRenderer {
     @Override
     public void initialize() {
         int flags = NanoVGGL3.NVG_STENCIL_STROKES | NanoVGGL3.NVG_ANTIALIAS | (context.isDebug() ? NanoVGGL3.NVG_DEBUG : 1);
-        nvgContext = NanoVGGL3.nvgCreateGL3(flags);
+        nvgContext = NanoVGGL3.nvgCreate(flags);
         Map<String, FontRegister.FontData> fontRegister = FontRegister.getFontRegister();
 
         for (Map.Entry<String, FontRegister.FontData> fontDataEntry : fontRegister.entrySet()) {

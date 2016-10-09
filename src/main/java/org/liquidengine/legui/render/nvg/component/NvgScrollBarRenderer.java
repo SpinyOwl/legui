@@ -83,29 +83,15 @@ public class NvgScrollBarRenderer extends NvgLeguiComponentRenderer {
                     hy = h;
                 }
 
-                NvgRenderUtils.drawRectangle(context, scrollBarBackgroundColor, lx, ly, wx, hy);
+                nvgBeginPath(context);
+                nvgRoundedRect(context, lx, ly, wx, hy, arrowsEnabled ? 0 : cornerRadius);
+                nvgFillColor(context, NVGUtils.rgba(scrollBarBackgroundColor, colorA));
+                nvgFill(context);
+
                 if (arrowsEnabled) {
                     Vector4f arrowColor = scrollBar.getArrowColor();
                     Vector4f blackOrWhite = blackOrWhite(arrowColor);
-                    if (vertical) {
-                        float y1 = ly - arrowSize;
-                        float y2 = ly + hy;
-                        drawRectangle(context, arrowColor, lx, y1, wx, arrowSize);
-                        drawRectangle(context, arrowColor, lx, y2, wx, arrowSize);
-                        NvgRenderUtils.renderTextLineToBounds(context, lx + 2.5f, y1, wx, arrowSize, arrowSize > wx ? wx : arrowSize, FontRegister
-                                .MATERIAL_ICONS_REGULAR, blackOrWhite, T, HorizontalAlign.CENTER, VerticalAlign.MIDDLE, false);
-                        NvgRenderUtils.renderTextLineToBounds(context, lx + 2.5f, y2, wx, arrowSize, arrowSize > wx ? wx : arrowSize, FontRegister
-                                .MATERIAL_ICONS_REGULAR, blackOrWhite, B, HorizontalAlign.CENTER, VerticalAlign.MIDDLE, false);
-                    } else {
-                        float x1 = lx - arrowSize;
-                        float x2 = lx + wx;
-                        drawRectangle(context, arrowColor, x1, ly, arrowSize, hy);
-                        drawRectangle(context, arrowColor, x2, ly, arrowSize, hy);
-                        NvgRenderUtils.renderTextLineToBounds(context, x1 + 2.5f, ly, arrowSize, hy, arrowSize > hy ? hy : arrowSize, FontRegister
-                                .MATERIAL_ICONS_REGULAR, blackOrWhite, L, HorizontalAlign.CENTER, VerticalAlign.MIDDLE, false);
-                        NvgRenderUtils.renderTextLineToBounds(context, x2 + 2.5f, ly, arrowSize, hy, arrowSize > hy ? hy : arrowSize, FontRegister
-                                .MATERIAL_ICONS_REGULAR, blackOrWhite, R, HorizontalAlign.CENTER, VerticalAlign.MIDDLE, false);
-                    }
+                    drawArrows(context, arrowSize, vertical, lx, ly, wx, hy, arrowColor, blackOrWhite);
                 }
             }
 
@@ -145,6 +131,28 @@ public class NvgScrollBarRenderer extends NvgLeguiComponentRenderer {
 
         }
         resetScissor(context);
+    }
+
+    private void drawArrows(long context, float arrowSize, boolean vertical, float lx, float ly, float wx, float hy, Vector4f arrowColor, Vector4f blackOrWhite) {
+        if (vertical) {
+            float y1 = ly - arrowSize;
+            float y2 = ly + hy;
+            drawRectangle(context, arrowColor, lx, y1, wx, arrowSize);
+            drawRectangle(context, arrowColor, lx, y2, wx, arrowSize);
+            NvgRenderUtils.renderTextLineToBounds(context, lx + 2.5f, y1, wx, arrowSize, arrowSize > wx ? wx : arrowSize, FontRegister
+                    .MATERIAL_ICONS_REGULAR, blackOrWhite, T, HorizontalAlign.CENTER, VerticalAlign.MIDDLE, false);
+            NvgRenderUtils.renderTextLineToBounds(context, lx + 2.5f, y2, wx, arrowSize, arrowSize > wx ? wx : arrowSize, FontRegister
+                    .MATERIAL_ICONS_REGULAR, blackOrWhite, B, HorizontalAlign.CENTER, VerticalAlign.MIDDLE, false);
+        } else {
+            float x1 = lx - arrowSize;
+            float x2 = lx + wx;
+            drawRectangle(context, arrowColor, x1, ly, arrowSize, hy);
+            drawRectangle(context, arrowColor, x2, ly, arrowSize, hy);
+            NvgRenderUtils.renderTextLineToBounds(context, x1 + 2.5f, ly, arrowSize, hy, arrowSize > hy ? hy : arrowSize, FontRegister
+                    .MATERIAL_ICONS_REGULAR, blackOrWhite, L, HorizontalAlign.CENTER, VerticalAlign.MIDDLE, false);
+            NvgRenderUtils.renderTextLineToBounds(context, x2 + 2.5f, ly, arrowSize, hy, arrowSize > hy ? hy : arrowSize, FontRegister
+                    .MATERIAL_ICONS_REGULAR, blackOrWhite, R, HorizontalAlign.CENTER, VerticalAlign.MIDDLE, false);
+        }
     }
 
 }
