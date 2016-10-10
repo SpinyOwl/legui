@@ -96,6 +96,7 @@ public class NvgTextInputRenderer extends NvgLeguiComponentRenderer {
             nvgFontSize(context, fontSize);
             int renderBounds[] = new int[2];
 
+            // get visible text to draw
             String textToDraw = null;
             try {
                 text = updateRenderedText(agui, context, tw, renderBounds);
@@ -137,7 +138,6 @@ public class NvgTextInputRenderer extends NvgLeguiComponentRenderer {
         int leftPos = 0, rightPos = nGlypths > 0 ? nGlypths : -1;
 
         // get text to render depending on cursor position
-        int textBounds[] = new int[2];
         if (agui.isFocused()) {
 
             if (nGlypths == 0) {
@@ -160,9 +160,8 @@ public class NvgTextInputRenderer extends NvgLeguiComponentRenderer {
             renderBounds[0] = leftBound;
             renderBounds[1] = rightBound;
         } else {
-            getTextToDrawBounds(targetTextWidth, nGlypths, rightPos, textBounds);
-            renderBounds[0] = textBounds[0];
-            renderBounds[1] = textBounds[1] + 1;
+            renderBounds[0] = 0;
+            renderBounds[1] = getR(targetTextWidth, nGlypths) + 1;
         }
         return text;
     }
@@ -251,11 +250,6 @@ public class NvgTextInputRenderer extends NvgLeguiComponentRenderer {
     @Override
     public void destroy() {
 
-    }
-
-    private void getTextToDrawBounds(float tw, int nGlypths, int r, int[] textBounds) {
-        textBounds[0] = 0;
-        textBounds[1] = getR(tw, nGlypths);
     }
 
     private int getR(float tw, int nGlypths) {

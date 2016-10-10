@@ -95,7 +95,9 @@ public class NvgImageRenderer extends NvgLeguiComponentRenderer {
         if (path == null) return;
         LOGGER.debug("Removing image data from memory: " + path);
         Integer imageRef = imageAssociationMap.remove(path);
-        NanoVG.nvgDeleteImage(context, imageRef);
+        if (imageRef != null) {
+            NanoVG.nvgDeleteImage(context, imageRef);
+        }
     }
 
     private int getImageRef(Image image, long context) {

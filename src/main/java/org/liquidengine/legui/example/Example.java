@@ -183,7 +183,7 @@ public class Example {
         TextArea textArea = exampleGui.getTextArea();
         int caretPosition = textArea.getCaretPosition();
         String text = textArea.getTextState().getText();
-        exampleGui.getCaretp().getTextState().setText(text.substring(caretPosition <= 0 ? 0 : caretPosition - 1, caretPosition <= 0 ? 0 : caretPosition));
+        exampleGui.getCaretp().getTextState().setText(caretPosition + "");
     }
 
     private void startSystemEventProcessor() {

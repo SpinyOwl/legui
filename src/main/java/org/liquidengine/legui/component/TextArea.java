@@ -12,6 +12,8 @@ public class TextArea extends Component {
     protected TextState textState;
 
     protected int caretPosition;
+    protected int mouseCaretPosition;
+    protected boolean editable = true;
 
     public TextArea() {
         initialize("");
@@ -45,5 +47,21 @@ public class TextArea extends Component {
     public void setCaretPosition(int caretPosition) {
         if (caretPosition >= 0 && caretPosition <= getTextState().getText().length())
             this.caretPosition = caretPosition;
+    }
+
+    public boolean isEditable() {
+        return editable;
+    }
+
+    public void setEditable(boolean editable) {
+        this.editable = editable;
+    }
+
+    public int getMouseCaretPosition() {
+        return mouseCaretPosition;
+    }
+
+    public void setMouseCaretPosition(int mouseCaretPosition) {
+        this.mouseCaretPosition = mouseCaretPosition;
     }
 }

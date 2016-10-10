@@ -4,16 +4,13 @@ import org.joml.Vector4f;
 import org.liquidengine.legui.component.*;
 import org.liquidengine.legui.component.border.SimpleLineBorder;
 import org.liquidengine.legui.component.optional.Orientation;
-import org.liquidengine.legui.component.optional.align.VerticalAlign;
+import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.event.component.CursorEnterEvent;
 import org.liquidengine.legui.event.component.MouseClickEvent;
 import org.liquidengine.legui.listener.component.MouseClickEventListener;
 import org.liquidengine.legui.util.ColorConstants;
-import org.lwjgl.glfw.GLFW;
 
-import static org.liquidengine.legui.event.component.MouseClickEvent.MouseClickAction.CLICK;
-import static org.liquidengine.legui.event.component.MouseClickEvent.MouseClickAction.PRESS;
-import static org.liquidengine.legui.event.component.MouseClickEvent.MouseClickAction.RELEASE;
+import static org.liquidengine.legui.event.component.MouseClickEvent.MouseClickAction.*;
 
 
 /**
@@ -94,6 +91,7 @@ public class ExampleGui extends Panel {
         this.addComponent(slider2);
 
         TextInput textInput = new TextInput(250, 130, 100, 30);
+        textInput.getTextState().setHorizontalAlign(HorizontalAlign.RIGHT);
         this.addComponent(textInput);
 
         Widget widget = new Widget("Hello widget", 250, 170, 100, 100);
@@ -179,16 +177,9 @@ public class ExampleGui extends Panel {
         this.addComponent(panel);
 
         textArea = new TextArea(420, 280, 150, 100);
-        textArea.getTextState().setText("ABCDEFGHIJKLMNOPQR\nSTUVWXYZAB\nCDEFGHIJKLMNOPQR\nSTUVWXYZABCDEFGHI\nJKLMNOPQRSTUVWXYZABC\nDEFGHIJKLMNOPQR\nSTUVWXYZABC\nDEFGHIJKLM\nNOPQRSTUVWXYZ");
-        textArea.getListenerList().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
-            if (CLICK.equals(event.getAction()) && event.getButton() == GLFW.GLFW_MOUSE_BUTTON_LEFT)
-                textArea.getTextState().setVerticalAlign(VerticalAlign.BOTTOM);
-            if (CLICK.equals(event.getAction()) && event.getButton() == GLFW.GLFW_MOUSE_BUTTON_MIDDLE)
-                textArea.getTextState().setVerticalAlign(VerticalAlign.MIDDLE);
-            if (CLICK.equals(event.getAction()) && event.getButton() == GLFW.GLFW_MOUSE_BUTTON_RIGHT)
-                textArea.getTextState().setVerticalAlign(VerticalAlign.TOP);
-        });
+        textArea.getTextState().setText("ABC DEF GHI JKL MNO PQR\nSTU VWXYZ");
         textArea.setCaretPosition(12);
+        textArea.getTextState().setHorizontalAlign(HorizontalAlign.CENTER);
         this.addComponent(textArea);
 
         caretp = new TextInput(420, 400, 50, 20);

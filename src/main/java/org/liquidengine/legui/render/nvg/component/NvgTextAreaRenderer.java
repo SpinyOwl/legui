@@ -23,7 +23,6 @@ import java.nio.ByteBuffer;
 import static org.liquidengine.legui.util.NVGUtils.rgba;
 import static org.liquidengine.legui.util.NvgRenderUtils.*;
 import static org.lwjgl.nanovg.NanoVG.*;
-import static org.lwjgl.nanovg.NanoVG.nvgFill;
 import static org.lwjgl.system.MemoryUtil.memAddress;
 
 /**
@@ -33,9 +32,10 @@ public class NvgTextAreaRenderer extends NvgLeguiComponentRenderer {
     public static final Vector4f BLUE = ColorConstants.lightBlue();
     public static final Vector4f BLACK = ColorConstants.black();
     public static final Vector4f RED = ColorConstants.red();
-    private NVGColor colorA = NVGColor.calloc();
     private final int maxGlyphCount = 2048;
+    private NVGColor colorA = NVGColor.calloc();
     private NVGGlyphPosition.Buffer glyphs = NVGGlyphPosition.create(maxGlyphCount);
+    private NVGColor color = NVGColor.calloc();
 
     @Override
     public void render(Component component, LeguiContext leguiContext, long context) {
@@ -50,15 +50,9 @@ public class NvgTextAreaRenderer extends NvgLeguiComponentRenderer {
             drawBackground(context, pos.x, pos.y, size.x, size.y, br, bc);
 
             TextState textState = agui.getTextState();
-            renderTextMultilineToBounds(context,
-                    pos.x, pos.y, size.x, size.y,
-                    textState.getFontSize(),
-                    textState.getFont(),
-                    textState.getTextColor(),
-                    NVGColor.calloc(),
-                    textState.getText(),
-                    textState.getHorizontalAlign(),
-                    textState.getVerticalAlign(), agui.getCaretPosition());
+
+            renaderTextMultilineToBounds(context, pos.x, pos.y, size.x, size.y, textState.getFontSize(), textState.getFont(),
+                    textState.getTextColor(), color, textState.getText(), textState.getHorizontalAlign(), textState.getVerticalAlign(), agui.getCaretPosition());
 
             Border border = agui.getBorder();
             if (border != null) {
@@ -68,14 +62,9 @@ public class NvgTextAreaRenderer extends NvgLeguiComponentRenderer {
         resetScissor(context);
     }
 
-    private void renderTextMultilineToBounds(long context,
-                                             float x, float y, float w, float h,
-                                             float fontSize,
-                                             String font,
-                                             Vector4f textColor,
-                                             NVGColor nvgColor,
-                                             String text,
-                                             HorizontalAlign horizontalAlign, VerticalAlign verticalAlign, int caretPosition) {
+    private void renaderTextMultilineToBounds(long context, float x, float y, float w, float h,
+                                              float fontSize, String font, Vector4f textColor, NVGColor nvgColor,
+                                              String text, HorizontalAlign horizontalAlign, VerticalAlign verticalAlign, int caretPosition) {
         nvgFontSize(context, fontSize);
         nvgFontFace(context, font);
 
@@ -93,55 +82,67 @@ public class NvgTextAreaRenderer extends NvgLeguiComponentRenderer {
         NVGTextRow.Buffer buffer = NVGTextRow.create(maxRows);
         int nrows = 0;
         long glyphAddress = memAddress(glyphs);
-        int cnt = 0;
+        int caretOffset = 0;
         int rownum = 0;
-        int glyphCount = 0;
+        int rowGlyphCount = 0;
         NVGTextRow nvgTextRow = null;
-
-        while (cnt < caretPosition && (nrows = nnvgTextBreakLines(context, start, end, w, memAddress(buffer), maxRows)) != 0) {
-            for (int i = 0; i < nrows && cnt < caretPosition; i++) {
+        float[] bounds = new float[8];
+        long diffBetweenRows = 0;
+//        NvgRenderUtils.alignTextInBox(context, HorizontalAlign.LEFT, VerticalAlign.MIDDLE);
+        while (caretOffset < caretPosition && (nrows = nnvgTextBreakLines(context, start, end, w, memAddress(buffer), maxRows)) != 0) {
+            for (int i = 0; i < nrows && caretOffset < caretPosition; i++) {
                 nvgTextRow = buffer.get(i);
-                glyphCount = nnvgTextGlyphPositions(context, 0, 0, nvgTextRow.start(), nvgTextRow.end(), glyphAddress, maxGlyphCount);
-                cnt += glyphCount;
-                if (cnt < caretPosition) rownum++;
+                bounds = createBounds(x, y, w, h, horizontalAlign, verticalAlign, nvgTextRow.width(), fontSize);
+                rowGlyphCount = nnvgTextGlyphPositions(context, bounds[0], bounds[1], nvgTextRow.start(), nvgTextRow.end(), glyphAddress, maxGlyphCount);
+                diffBetweenRows = i < nrows - 1 ? buffer.get(i + 1).start() - buffer.get(i).end() : 0;
+                caretOffset += rowGlyphCount + diffBetweenRows;
+                if (caretOffset <= caretPosition) {
+                    rownum++;
+                }
             }
             start = buffer.get(nrows - 1).next();
         }
 
-        float caretx;
 
-        int cpos = caretPosition + glyphCount - cnt;
-        if (cpos < glyphCount) {
-            caretx = glyphs.get(cpos).x();
-        } else {
-            if (glyphCount > 0) caretx = glyphs.get(glyphCount - 1).maxx();
-            else caretx = x + horizontalAlign.index * w / 2;
-        }
-
-        int rowNum = 0;
         NVGColor textColorN = textColor.w == 0 ? rgba(0.0f, 0.0f, 0.0f, 1f, nvgColor) : rgba(textColor, nvgColor);
         start = memAddress(byteText);
         end = start + byteText.remaining();
         nrows = nnvgTextBreakLines(context, start, end, w, memAddress(buffer), maxRows);
         for (int i = 0; i < nrows; i++) {
             NVGTextRow row = buffer.get(i);
-            float[] bounds = createBounds(x, y, w, h, horizontalAlign, verticalAlign, row.width(), fontSize, rowNum, nrows);
-            if (rowNum == rownum) {
+            bounds = createBounds(x, y, w, h, horizontalAlign, verticalAlign, row.width(), fontSize, i, nrows);
+            if (i == rownum) {
                 drawRectangle(context, BLUE, bounds[4], bounds[5], bounds[6], bounds[7]);
             }
             nvgBeginPath(context);
             nvgFillColor(context, textColorN);
             nnvgText(context, bounds[0], bounds[1], row.start(), row.end());
+            diffBetweenRows = i < nrows - 1 ? buffer.get(i + 1).start() - buffer.get(i).end() : 0;
 
 
             // draw caret
-            if (rowNum == rownum) {
+            if (i == rownum) {
+                float caretx;
+                int cpos = caretPosition + rowGlyphCount + (int) diffBetweenRows - caretOffset;
+                if (cpos < rowGlyphCount) {
+                    caretx = glyphs.get(cpos).x();
+                } else if (cpos < rowGlyphCount + diffBetweenRows) {
+                    caretx = bounds[4] + bounds[6];
+                } else if (cpos == rowGlyphCount + diffBetweenRows) {
+                    caretx = bounds[4];
+                } else {
+                    if (rowGlyphCount > 0) caretx = glyphs.get(rowGlyphCount - 1).maxx();
+                    else caretx = x + horizontalAlign.index * w / 2;
+                }
                 if (nvgTextRow != null) {
-                    drawRectangle(context, RED, x + caretx, bounds[5], 1, bounds[7]);
+                    drawRectangle(context, RED, caretx, bounds[5], 1, bounds[7]);
                 }
             }
-            rowNum++;
         }
+
+//        nvgBeginPath(context);
+//        nvgFillColor(context, textColorN);
+//        nvgTextBox(context, x, y, w, text, 0);
 
 
     }
