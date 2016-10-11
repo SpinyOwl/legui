@@ -182,20 +182,9 @@ public class ExampleGui extends Panel {
         textArea.getTextState().setHorizontalAlign(HorizontalAlign.CENTER);
         this.addComponent(textArea);
 
-        caretp = new TextInput(420, 400, 50, 20);
+        caretp = new TextInput(420, 400, 150, 20);
+        caretp.getTextState().setHorizontalAlign(HorizontalAlign.CENTER);
         this.addComponent(caretp);
-
-        Button plus = new Button(475, 400, 20, 20, "+");
-        plus.getListenerList().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
-            if (event.getAction().equals(CLICK)) textArea.setCaretPosition(textArea.getCaretPosition()+1);
-        });
-        Button minus = new Button(500, 400, 20, 20, "-");
-        minus.getListenerList().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
-            if (event.getAction().equals(CLICK)) textArea.setCaretPosition(textArea.getCaretPosition()-1);
-        });
-        this.addComponent(plus);
-        this.addComponent(minus);
-
     }
 
     public TextArea getTextArea() {

@@ -183,7 +183,10 @@ public class Example {
         TextArea textArea = exampleGui.getTextArea();
         int caretPosition = textArea.getCaretPosition();
         String text = textArea.getTextState().getText();
-        exampleGui.getCaretp().getTextState().setText(caretPosition + "");
+        int left = caretPosition > 0 ? caretPosition - 1 : 0;
+        int right = text.length() > 0 ? (caretPosition < text.length() - 1 ? caretPosition + 1 : text.length() - 1) : 0;
+        String t = text.substring(left, right);
+        exampleGui.getCaretp().getTextState().setText(caretPosition + " " + t);
     }
 
     private void startSystemEventProcessor() {

@@ -17,27 +17,33 @@ public class TextAreaKeyProcessor implements LeguiComponentEventProcessor<TextAr
         if (gui.isFocused() && gui.isEditable()) {
             int key = event.key;
             int caretPosition = gui.getCaretPosition();
-            if (key == GLFW_KEY_LEFT && event.action != GLFW_RELEASE) {
+            boolean PRESS = event.action != GLFW_RELEASE;
+            if (key == GLFW_KEY_LEFT && PRESS) {
                 if (caretPosition > 0) {
                     gui.setCaretPosition(caretPosition - 1);
                 }
             } else {
                 TextState textState = gui.getTextState();
-                if (key == GLFW_KEY_RIGHT && event.action != GLFW_RELEASE) {
+                if (key == GLFW_KEY_RIGHT && PRESS) {
                     if (caretPosition < textState.length()) {
                         gui.setCaretPosition(caretPosition + 1);
                     }
-                } else if ((key == GLFW_KEY_UP || key == GLFW_KEY_HOME) && event.action != GLFW_RELEASE) {
+                } else if (key == GLFW_KEY_HOME && PRESS) {
                     gui.setCaretPosition(0);
-                } else if ((key == GLFW_KEY_DOWN || key == GLFW_KEY_END) && event.action != GLFW_RELEASE) {
+                } else if (key == GLFW_KEY_END && PRESS) {
                     gui.setCaretPosition(gui.getTextState().length());
-                } else if (key == GLFW_KEY_BACKSPACE && event.action != GLFW_RELEASE) {
-                    if (caretPosition != 0) {
+                } else if (key == GLFW_KEY_ENTER && PRESS) {
+                    if (gui.isEditable()) {
+                        gui.getTextState().insert(caretPosition, "\n");
+                        gui.setCaretPosition(caretPosition + 1);
+                    }
+                } else if (key == GLFW_KEY_BACKSPACE && PRESS) {
+                    if (gui.isEditable() && caretPosition != 0) {
                         textState.deleteCharAt(caretPosition - 1);
                         gui.setCaretPosition(caretPosition - 1);
                     }
-                } else if (key == GLFW_KEY_DELETE && event.action != GLFW_RELEASE) {
-                    if (caretPosition != textState.length()) {
+                } else if (key == GLFW_KEY_DELETE && PRESS) {
+                    if (gui.isEditable() && caretPosition != textState.length()) {
                         textState.deleteCharAt(caretPosition);
                     }
                 }
