@@ -99,9 +99,11 @@ public class NvgTextAreaRenderer extends NvgLeguiComponentRenderer {
         int botIndex = caretLine;
         int diff = 0;
 
+        float offsetX = calculateOffsetX(x, y, w, h, lineCaretPosition, lines[caretLine]);
+
         while (diff < maxLines - 1 && !(topIndex == 0 && botIndex == lineCount)) {
             if (topIndex > 0) topIndex--;
-            if (botIndex < lineCount-1) botIndex++;
+            if (botIndex < lineCount - 1) botIndex++;
             diff = botIndex - topIndex;
         }
 
@@ -112,7 +114,7 @@ public class NvgTextAreaRenderer extends NvgLeguiComponentRenderer {
         alignTextInBox(context, horizontalAlign, verticalAlign);
         for (int i = topIndex; i <= botIndex; i++) {
             String line = lines[i];
-            float y1 = y + (i-topIndex) * fontSize;
+            float y1 = y + (i - topIndex) * fontSize;
 
             if (i == caretLine) {
                 float caretx = 0;
@@ -139,9 +141,16 @@ public class NvgTextAreaRenderer extends NvgLeguiComponentRenderer {
             }
 
 
-            renderTextLineToBounds(context, x, y1, w, fontSize, fontSize, font, textColor, line, horizontalAlign, verticalAlign, false);
+            renderTextLineToBounds(context, x - offsetX, y1, w + offsetX, fontSize, fontSize, font, textColor, line, horizontalAlign, verticalAlign, false);
         }
 
+    }
+
+    private float calculateOffsetX(float x, float y, float w, float h, int lineCaretPosition, String line) {
+        float offsetX = 0;
+
+
+        return offsetX;
     }
 
     private void renaderTextMultilineToBounds(long context, float x, float y, float w, float h,
