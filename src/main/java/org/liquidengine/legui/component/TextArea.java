@@ -34,7 +34,7 @@ public class TextArea extends Component {
         cornerRadius = 3;
         border = new SimpleLineBorder(this, ColorConstants.darkGray(), 1);
         textState = new TextState(s);
-        textState.getPadding().set(5,10,5,10);
+        textState.getPadding().set(5, 10, 5, 10);
     }
 
     public TextState getTextState() {
@@ -46,8 +46,8 @@ public class TextArea extends Component {
     }
 
     public void setCaretPosition(int caretPosition) {
-        if (caretPosition >= 0 && caretPosition <= getTextState().getText().length())
-            this.caretPosition = caretPosition;
+        int length = getTextState().getText().length();
+        this.caretPosition = caretPosition < 0 ? 0 : caretPosition > length ? length : caretPosition;
     }
 
     public boolean isEditable() {

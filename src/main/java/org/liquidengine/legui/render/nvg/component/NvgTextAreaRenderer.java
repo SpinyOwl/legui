@@ -52,10 +52,11 @@ public class NvgTextAreaRenderer extends NvgLeguiComponentRenderer {
             drawBackground(context, pos.x, pos.y, size.x, size.y, br, bc);
 
             TextState textState = agui.getTextState();
-            Vector4f p = textState.getPadding();
-
-//            renaderTextMultilineToBounds(context, pos.x, pos.y, size.x, size.y, textState.getFontSize(), textState.getFont(),
-//                    textState.getTextColor(), color, textState.getText(), textState.getHorizontalAlign(), textState.getVerticalAlign(), agui.getCaretPosition());
+            Vector4f p = new Vector4f(textState.getPadding());
+            p.x = p.x > 0 ? p.x - 1 : 0;
+            p.y = p.y > 0 ? p.y - 1 : 0;
+            p.z = p.z > 0 ? p.z - 1 : 0;
+            p.w = p.w > 0 ? p.w - 1 : 0;
 
             Border border = agui.getBorder();
             if (border != null) {
@@ -64,7 +65,6 @@ public class NvgTextAreaRenderer extends NvgLeguiComponentRenderer {
 
             nvgIntersectScissor(context, pos.x + p.x, pos.y + p.y, size.x - (p.x + p.z), size.y - (p.y + p.w));
             renderText(context, agui, pos, size, textState, agui.getCaretPosition());
-
 
         }
         resetScissor(context);
@@ -99,9 +99,7 @@ public class NvgTextAreaRenderer extends NvgLeguiComponentRenderer {
         int botIndex = caretLine;
         int diff = 0;
 
-        float offsetX = calculateOffsetX(x, y, w, h, lineCaretPosition, lines[caretLine]);
-
-        while (diff < maxLines - 1 && !(topIndex == 0 && botIndex == lineCount)) {
+        while (diff < maxLines - 1 && !(topIndex == 0 && botIndex == lineCount - 1)) {
             if (topIndex > 0) topIndex--;
             if (botIndex < lineCount - 1) botIndex++;
             diff = botIndex - topIndex;
@@ -112,129 +110,46 @@ public class NvgTextAreaRenderer extends NvgLeguiComponentRenderer {
         HorizontalAlign horizontalAlign = textState.getHorizontalAlign();
         VerticalAlign verticalAlign = textState.getVerticalAlign();
         alignTextInBox(context, horizontalAlign, verticalAlign);
-        for (int i = topIndex; i <= botIndex; i++) {
-            String line = lines[i];
-            float y1 = y + (i - topIndex) * fontSize;
 
-            if (i == caretLine) {
-                float caretx = 0;
-                float bounds[] = NvgRenderUtils.calculateTextBoundsRect(context, x, y1, w, fontSize, line, 0, horizontalAlign, verticalAlign);
-                ByteBuffer textBytes = MemoryUtil.memUTF8(line);
-                int ng = nnvgTextGlyphPositions(context, bounds[0], bounds[1], memAddress(textBytes), 0, memAddress(glyphs), maxGlyphCount);
-                if (lineCaretPosition < ng) {
-                    try {
-                        caretx = glyphs.get(lineCaretPosition).x();
-                    } catch (IndexOutOfBoundsException e) {
-                        System.out.println(lineCaretPosition);
-                        e.printStackTrace();
-                    }
-                } else {
-                    if (ng > 0)
-                        caretx = glyphs.get(ng - 1).maxx();
-                    else {
-                        caretx = x + horizontalAlign.index * w / 2f;
-                    }
-                }
 
-                drawRectangle(context, BLUE, x, y1, w, fontSize);
-                drawRectangle(context, RED, caretx, y1, 1, fontSize);
+        String line = lines[caretLine];
+        float bounds[] = NvgRenderUtils.calculateTextBoundsRect(context, x, 0, w, fontSize, line, 0, horizontalAlign, verticalAlign);
+        ByteBuffer textBytes = MemoryUtil.memUTF8(line);
+        int ng = nnvgTextGlyphPositions(context, bounds[0], bounds[1], memAddress(textBytes), 0, memAddress(glyphs), maxGlyphCount);
+        float caretx = 0;
+        if (lineCaretPosition < ng) {
+            try {
+                caretx = glyphs.get(lineCaretPosition).x();
+            } catch (IndexOutOfBoundsException e) {
+                System.out.println(lineCaretPosition);
+                e.printStackTrace();
             }
-
-
-            renderTextLineToBounds(context, x - offsetX, y1, w + offsetX, fontSize, fontSize, font, textColor, line, horizontalAlign, verticalAlign, false);
+        } else {
+            if (ng > 0) {
+                caretx = glyphs.get(ng - 1).maxx();
+            } else {
+                caretx = x + horizontalAlign.index * w / 2f;
+            }
         }
 
-    }
-
-    private float calculateOffsetX(float x, float y, float w, float h, int lineCaretPosition, String line) {
         float offsetX = 0;
-
-
-        return offsetX;
-    }
-
-    private void renaderTextMultilineToBounds(long context, float x, float y, float w, float h,
-                                              float fontSize, String font, Vector4f textColor, NVGColor nvgColor,
-                                              String text, HorizontalAlign horizontalAlign, VerticalAlign verticalAlign, int caretPosition) {
-        nvgFontSize(context, fontSize);
-        nvgFontFace(context, font);
-        alignTextInBox(context, horizontalAlign, verticalAlign);
-
-        ByteBuffer byteText = MemoryUtil.memUTF8(text);
-
-        float[] lineh = {0};
-        nvgTextMetrics(context, null, null, lineh);
-
-        long start = memAddress(byteText);
-        long end = start + byteText.remaining();
-
-        int maxRows = (int) Math.floor((double) h / lineh[0]);
-
-        NVGTextRow.Buffer buffer = NVGTextRow.create(maxRows);
-        int nrows = 0;
-        long glyphAddress = memAddress(glyphs);
-        int caretOffset = 0;
-        int rownum = 0;
-        int rowGlyphCount = 0;
-        NVGTextRow nvgTextRow = null;
-        float[] bounds = new float[8];
-        long diffBetweenRows = 0;
-//        NvgRenderUtils.alignTextInBox(context, HorizontalAlign.LEFT, VerticalAlign.MIDDLE);
-        while (caretOffset < caretPosition && (nrows = nnvgTextBreakLines(context, start, end, w, memAddress(buffer), maxRows)) != 0) {
-            for (int i = 0; i < nrows && caretOffset < caretPosition; i++) {
-                nvgTextRow = buffer.get(i);
-                bounds = createBounds(x, y, w, h, horizontalAlign, verticalAlign, nvgTextRow.width(), fontSize);
-                rowGlyphCount = nnvgTextGlyphPositions(context, bounds[0], bounds[1], nvgTextRow.start(), nvgTextRow.end(), glyphAddress, maxGlyphCount);
-                diffBetweenRows = i < nrows - 1 ? buffer.get(i + 1).start() - buffer.get(i).end() : 0;
-                caretOffset += rowGlyphCount + diffBetweenRows;
-                if (caretOffset <= caretPosition) {
-                    rownum++;
-                }
-            }
-            start = buffer.get(nrows - 1).next();
+        if (caretx - x > w) {
+            offsetX = caretx - x - w;
+        } else if (caretx < x) {
+            offsetX = caretx - x;
         }
 
-
-        NVGColor textColorN = textColor.w == 0 ? rgba(0.0f, 0.0f, 0.0f, 1f, nvgColor) : rgba(textColor, nvgColor);
-        start = memAddress(byteText);
-        end = start + byteText.remaining();
-        nrows = nnvgTextBreakLines(context, start, end, w, memAddress(buffer), maxRows);
-        for (int i = 0; i < nrows; i++) {
-            NVGTextRow row = buffer.get(i);
-            bounds = createBounds(x, y, w, h, horizontalAlign, verticalAlign, row.width(), fontSize, i, nrows);
-            if (i == rownum) {
-                drawRectangle(context, BLUE, bounds[4], bounds[5], bounds[6], bounds[7]);
-            }
-            nvgBeginPath(context);
-            nvgFillColor(context, textColorN);
-            nnvgText(context, bounds[0], bounds[1], row.start(), row.end());
-            diffBetweenRows = i < nrows - 1 ? buffer.get(i + 1).start() - buffer.get(i).end() : 0;
-
-
-            // draw caret
-            if (i == rownum) {
-                float caretx;
-                int cpos = caretPosition + rowGlyphCount + (int) diffBetweenRows - caretOffset;
-                if (cpos < rowGlyphCount) {
-                    caretx = glyphs.get(cpos).x();
-                } else if (cpos < rowGlyphCount + diffBetweenRows) {
-                    caretx = bounds[4] + bounds[6];
-                } else if (cpos == rowGlyphCount + diffBetweenRows) {
-                    caretx = bounds[4];
-                } else {
-                    if (rowGlyphCount > 0) caretx = glyphs.get(rowGlyphCount - 1).maxx();
-                    else caretx = x + horizontalAlign.index * w / 2;
-                }
-                if (nvgTextRow != null) {
-                    drawRectangle(context, RED, caretx, bounds[5], 1, bounds[7]);
-                }
+        for (int i = topIndex; i <= botIndex; i++) {
+            line = lines[i];
+            float y1 = y + (i - topIndex) * fontSize;
+            if (i == caretLine) {
+                drawRectangle(context, BLUE, x, y1, w, fontSize);
+                renderTextLineToBounds(context, x - offsetX * (1 + horizontalAlign.index), y1, w + offsetX * 2, fontSize, fontSize, font, textColor, line, horizontalAlign, verticalAlign, false);
+                drawRectangle(context, RED, caretx - offsetX, y1, 1, fontSize);
+            } else {
+                renderTextLineToBounds(context, x - offsetX * (1 + horizontalAlign.index), y1, w + offsetX * 2, fontSize, fontSize, font, textColor, line, horizontalAlign, verticalAlign, false);
             }
         }
-
-//        nvgBeginPath(context);
-//        nvgFillColor(context, textColorN);
-//        nvgTextBox(context, x, y, w, text, 0);
-
 
     }
 

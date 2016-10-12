@@ -9,6 +9,7 @@ import org.liquidengine.legui.context.LeguiContext;
 import org.liquidengine.legui.event.component.MouseClickEvent;
 import org.liquidengine.legui.event.system.SystemMouseClickEvent;
 import org.liquidengine.legui.processor.EventProcessorUtils;
+import org.liquidengine.legui.processor.LeguiEventProcessor;
 import org.liquidengine.legui.util.Util;
 
 import static org.liquidengine.legui.event.component.MouseClickEvent.MouseClickAction.*;
@@ -63,46 +64,50 @@ public class MouseClickEventProcessor extends SystemEventProcessor<SystemMouseCl
         }
     }
 
-    private void process(SystemMouseClickEvent event, Component mainGui, Component gui) {
+    private void process(SystemMouseClickEvent event, Component mainComponent, Component component) {
         Component focusedGui = context.getFocusedGui();
-        if (!gui.equals(focusedGui)) gui.setFocused(false);
+        if (!component.equals(focusedGui)) component.setFocused(false);
 
 
-        gui.getProcessors().getMouseClickEventProcessor().process(gui, event, context);
+        component.getProcessors().getMouseClickEventProcessor().process(component, event, context);
 
 
-        boolean intersects = intersects(gui);
+        boolean intersects = intersects(component);
         Vector2f cursorPosition = context.getCursorPosition();
         if (event.action == GLFW_PRESS) {
             if (intersects) {
-                pushUp(gui);
-                context.setFocusedGui(gui);
-                gui.setFocused(true);
-                gui.setPressed(true);
-                EventProcessorUtils.release(mainGui, gui);
-
-                Vector2f position = Util.calculatePosition(gui).sub(cursorPosition).negate();
-                MouseClickEvent mouseClickEvent = new MouseClickEvent(gui, position, PRESS, event.button);
-
-                gui.getListenerList().getListeners(MouseClickEvent.class).forEach(listener -> listener.update(mouseClickEvent));
+                pushUp(component);
+                context.setFocusedGui(component);
+                component.setFocused(true);
+                component.setPressed(true);
+                EventProcessorUtils.release(mainComponent, component);
+                Vector2f position = Util.calculatePosition(component).sub(cursorPosition).negate();
+                processEvent(component, new MouseClickEvent(component, position, PRESS, event.button));
             } else {
-                gui.setPressed(false);
+                component.setPressed(false);
             }
         } else if (event.action == GLFW_RELEASE && intersects) {
             if (focusedGui != null) {
-                gui.setPressed(false);
-                EventProcessorUtils.release(mainGui, gui);
+                component.setPressed(false);
+                EventProcessorUtils.release(mainComponent, component);
 
-                Vector2f position = Util.calculatePosition(gui).sub(cursorPosition).negate();
-                if (focusedGui == gui) {
-                    MouseClickEvent mouseClickEvent = new MouseClickEvent(gui, position, CLICK, event.button);
-                    focusedGui.getListenerList().getListeners(MouseClickEvent.class).forEach(listener -> listener.update(mouseClickEvent));
+                Vector2f position = Util.calculatePosition(component).sub(cursorPosition).negate();
+                if (focusedGui == component) {
+                    processEvent(focusedGui, new MouseClickEvent(component, position, CLICK, event.button));
                 }
 
-                MouseClickEvent mouseClickEvent = new MouseClickEvent(gui, position, RELEASE, event.button);
-                focusedGui.getListenerList().getListeners(MouseClickEvent.class).forEach(listener -> listener.update(mouseClickEvent));
+                processEvent(focusedGui, new MouseClickEvent(component, position, RELEASE, event.button));
                 focusedGui.setPressed(false);
             }
+        }
+    }
+
+    private void processEvent(Component component, MouseClickEvent mouseClickEvent) {
+        LeguiEventProcessor leguiEventProcessor = context.getLeguiEventProcessor();
+        if (leguiEventProcessor != null) {
+            leguiEventProcessor.pushEvent(mouseClickEvent);
+        } else {
+            component.getListenerList().getListeners(MouseClickEvent.class).forEach(listener -> listener.update(mouseClickEvent));
         }
     }
 

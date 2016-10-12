@@ -6,9 +6,12 @@ import org.liquidengine.legui.component.border.SimpleLineBorder;
 import org.liquidengine.legui.component.optional.Orientation;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.event.component.CursorEnterEvent;
+import org.liquidengine.legui.event.component.KeyboardKeyEvent;
 import org.liquidengine.legui.event.component.MouseClickEvent;
+import org.liquidengine.legui.listener.component.KeyboardKeyEventListener;
 import org.liquidengine.legui.listener.component.MouseClickEventListener;
 import org.liquidengine.legui.util.ColorConstants;
+import org.lwjgl.glfw.GLFW;
 
 import static org.liquidengine.legui.event.component.MouseClickEvent.MouseClickAction.*;
 
@@ -181,6 +184,15 @@ public class ExampleGui extends Panel {
         textArea.setCaretPosition(12);
         textArea.getTextState().setHorizontalAlign(HorizontalAlign.CENTER);
         this.addComponent(textArea);
+
+        textArea.getListenerList().addListener(KeyboardKeyEvent.class, (KeyboardKeyEventListener) event -> {
+            if (event.getKey() == GLFW.GLFW_KEY_F1 && event.getAction() == GLFW.GLFW_RELEASE)
+                textArea.getTextState().setHorizontalAlign(HorizontalAlign.LEFT);
+            else if (event.getKey() == GLFW.GLFW_KEY_F2 && event.getAction() == GLFW.GLFW_RELEASE)
+                textArea.getTextState().setHorizontalAlign(HorizontalAlign.CENTER);
+            else if (event.getKey() == GLFW.GLFW_KEY_F3 && event.getAction() == GLFW.GLFW_RELEASE)
+                textArea.getTextState().setHorizontalAlign(HorizontalAlign.RIGHT);
+        });
 
         caretp = new TextInput(420, 400, 150, 20);
         caretp.getTextState().setHorizontalAlign(HorizontalAlign.CENTER);
