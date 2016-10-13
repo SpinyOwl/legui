@@ -40,10 +40,9 @@ public class NvgTextAreaRenderer extends NvgLeguiComponentRenderer {
 
     @Override
     public void render(Component component, LeguiContext leguiContext, long context) {
+        TextArea agui = (TextArea) component;
         createScissor(context, component);
         {
-
-            TextArea agui = (TextArea) component;
             Vector2f pos = Util.calculatePosition(component);
             Vector2f size = component.getSize();
             float br = agui.getCornerRadius();
@@ -58,14 +57,17 @@ public class NvgTextAreaRenderer extends NvgLeguiComponentRenderer {
             p.z = p.z > 0 ? p.z - 1 : 0;
             p.w = p.w > 0 ? p.w - 1 : 0;
 
+            nvgIntersectScissor(context, pos.x, pos.y, size.x, size.y);
+            renderText(context, agui, pos, size, textState, agui.getCaretPosition());
+        }
+        resetScissor(context);
+
+        createScissor(context, component);
+        {
             Border border = agui.getBorder();
             if (border != null) {
                 border.render(leguiContext);
             }
-
-            nvgIntersectScissor(context, pos.x + p.x, pos.y + p.y, size.x - (p.x + p.z), size.y - (p.y + p.w));
-            renderText(context, agui, pos, size, textState, agui.getCaretPosition());
-
         }
         resetScissor(context);
     }
@@ -143,7 +145,7 @@ public class NvgTextAreaRenderer extends NvgLeguiComponentRenderer {
             line = lines[i];
             float y1 = y + (i - topIndex) * fontSize;
             if (i == caretLine) {
-                drawRectangle(context, BLUE, x, y1, w, fontSize);
+                drawRectangle(context, BLUE, pos.x, y1, size.x, fontSize);
                 renderTextLineToBounds(context, x - offsetX * (1 + horizontalAlign.index), y1, w + offsetX * 2, fontSize, fontSize, font, textColor, line, horizontalAlign, verticalAlign, false);
                 drawRectangle(context, RED, caretx - offsetX, y1, 1, fontSize);
             } else {
