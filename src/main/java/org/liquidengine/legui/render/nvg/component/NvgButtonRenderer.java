@@ -25,46 +25,42 @@ public class NvgButtonRenderer extends NvgLeguiComponentRenderer {
     private NVGPaint paintA = NVGPaint.calloc();
 
     @Override
-    public void render(Component component, LeguiContext context, long nvgContext) {
-        createScissor(nvgContext, component);
+    public void render(Component component, LeguiContext leguiContext, long context) {
+        createScissor(context, component);
         {
             Button agui = (Button) component;
             Vector2f pos = Util.calculatePosition(component);
             Vector2f size = component.getSize();
 
-            Border border = agui.getBorder();
-
-            nvgSave(nvgContext);
+            nvgSave(context);
             // render background
             {
                 Vector4f backgroundColor = new Vector4f(component.getBackgroundColor());
                 if (agui.isHovered()) backgroundColor.w *= 0.5f;
                 if (agui.isPressed()) {backgroundColor.mul(0.5f); backgroundColor.w = 1; }
 
-                nvgBeginPath(nvgContext);
-                nvgFillColor(nvgContext, rgba(backgroundColor, colorA));
-                nvgRoundedRect(nvgContext, pos.x, pos.y, size.x, size.y, component.getCornerRadius());
-                nvgFill(nvgContext);
+                nvgBeginPath(context);
+                nvgFillColor(context, rgba(backgroundColor, colorA));
+                nvgRoundedRect(context, pos.x, pos.y, size.x, size.y, component.getCornerRadius());
+                nvgFill(context);
 
-                nvgLinearGradient(nvgContext, pos.x, pos.y, pos.x, pos.y + size.y, rgba(1f, 1f, 1f, 0.2f, colorA), rgba(0f, 0f, 0f, 0.2f, colorB), paintA);
-                nvgFillPaint(nvgContext, paintA);
-                nvgFill(nvgContext);
+                nvgLinearGradient(context, pos.x, pos.y, pos.x, pos.y + size.y, rgba(1f, 1f, 1f, 0.2f, colorA), rgba(0f, 0f, 0f, 0.2f, colorB), paintA);
+                nvgFillPaint(context, paintA);
+                nvgFill(context);
             }
 
             // Render text
             {
                 TextState textState = agui.getTextState();
-                renderTextStateLineToBounds(nvgContext, pos, size, textState);
+                renderTextStateLineToBounds(context, pos, size, textState);
             }
 
             // Render border
-            if (border != null) {
-                border.render(context);
-            }
+            renderBorder(component, leguiContext);
 
-            nvgRestore(nvgContext);
+            nvgRestore(context);
 
         }
-        resetScissor(nvgContext);
+        resetScissor(context);
     }
 }

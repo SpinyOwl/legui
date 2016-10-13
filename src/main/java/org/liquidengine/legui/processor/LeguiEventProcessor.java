@@ -1,9 +1,7 @@
 package org.liquidengine.legui.processor;
 
 import org.liquidengine.legui.component.Component;
-import org.liquidengine.legui.context.LeguiContext;
 import org.liquidengine.legui.event.component.AbstractComponentEvent;
-import org.liquidengine.legui.example.ExampleGui;
 import org.liquidengine.legui.listener.component.IEventListener;
 
 import java.util.List;
@@ -17,11 +15,7 @@ public class LeguiEventProcessor {
 
     private Queue<AbstractComponentEvent> componentEvents = new ConcurrentLinkedQueue<>();
 
-    public LeguiEventProcessor(ExampleGui exampleGui, LeguiContext leguiContext) {
-        initialize();
-    }
-
-    private void initialize() {
+    public LeguiEventProcessor() {
     }
 
     public void processEvent() {

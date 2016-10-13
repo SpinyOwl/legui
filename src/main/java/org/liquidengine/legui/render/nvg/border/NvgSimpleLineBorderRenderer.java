@@ -23,10 +23,9 @@ public class NvgSimpleLineBorderRenderer extends NvgLeguiBorderRenderer {
     private NVGColor colorA = NVGColor.calloc();
 
     @Override
-    public void render(Border border, LeguiContext context, long nvgContext) {
+    public void render(Border border, LeguiContext context, Component component, long nvgContext) {
         if (border.isEnabled()) {
             SimpleLineBorder simpleLineBorder = (SimpleLineBorder) border;
-            Component component = border.getComponent();
 
             Vector2f pos = calculatePosition(component);
             Vector2f size = component.getSize();

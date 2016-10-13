@@ -34,7 +34,7 @@ public class ProgressBar extends Component {
     }
 
     private void initialize() {
-        border = new SimpleLineBorder(this, ColorConstants.darkGray(), 1);
+        border = new SimpleLineBorder(ColorConstants.darkGray(), 1);
         backgroundColor = ColorConstants.white();
         cornerRadius = 2;
     }

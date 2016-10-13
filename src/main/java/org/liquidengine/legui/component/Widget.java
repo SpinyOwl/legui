@@ -56,7 +56,7 @@ public class Widget extends ComponentContainer {
     }
 
     private void initialize(String title) {
-        SimpleLineBorder simpleLineBorder = new SimpleLineBorder(this, ColorConstants.black(), 1);
+        SimpleLineBorder simpleLineBorder = new SimpleLineBorder(ColorConstants.black(), 1);
         this.title = new Label(title);
         this.title.textState.setHorizontalAlign(HorizontalAlign.LEFT);
         this.title.textState.getPadding().set(10, 5, 10, 5);

@@ -8,7 +8,7 @@ import org.liquidengine.legui.util.ColorConstants;
 /**
  * Created by Alexander on 09.10.2016.
  */
-public class ScrollablePanel extends ComponentContainer implements Viewport {
+public class ScrollablePanel extends Panel implements Viewport {
     protected ScrollBar verticalScrollBar;
     protected ScrollBar horizontalScrollBar;
     protected ComponentContainer viewport;
@@ -21,15 +21,15 @@ public class ScrollablePanel extends ComponentContainer implements Viewport {
 
     public ScrollablePanel(float x, float y, float width, float height) {
         super(x, y, width, height);
-        initialize(x, y, width, height);
+        initialize(width, height);
     }
 
     public ScrollablePanel(Vector2f position, Vector2f size) {
         super(position, size);
-        initialize(position.x, position.y, size.x, size.y);
+        initialize(size.x, size.y);
     }
 
-    private void initialize(float x, float y, float width, float height) {
+    private void initialize(float width, float height) {
         float viewportWidth = width - INITIAL_SCROLL_SIZE;
         float viewportHeight = height - INITIAL_SCROLL_SIZE;
 
@@ -41,7 +41,7 @@ public class ScrollablePanel extends ComponentContainer implements Viewport {
         verticalScrollBar.setScrollColor(ColorConstants.white());
         verticalScrollBar.setArrowsEnabled(true);
         verticalScrollBar.setOrientation(Orientation.VERTICAL);
-        verticalScrollBar.setBorder(new SimpleLineBorder(verticalScrollBar, ColorConstants.darkGray(), 1));
+        verticalScrollBar.setBorder(new SimpleLineBorder(ColorConstants.darkGray(), 0.5f));
         verticalScrollBar.setArrowSize(INITIAL_SCROLL_SIZE);
         verticalScrollBar.setViewport(this);
 
@@ -53,20 +53,24 @@ public class ScrollablePanel extends ComponentContainer implements Viewport {
         horizontalScrollBar.setScrollColor(ColorConstants.white());
         horizontalScrollBar.setArrowsEnabled(true);
         horizontalScrollBar.setOrientation(Orientation.HORIZONTAL);
-        horizontalScrollBar.setBorder(new SimpleLineBorder(horizontalScrollBar, ColorConstants.darkGray(), 1));
+        horizontalScrollBar.setBorder(new SimpleLineBorder(ColorConstants.darkGray(), 0.5f));
         horizontalScrollBar.setArrowSize(INITIAL_SCROLL_SIZE);
         horizontalScrollBar.setViewport(this);
 
         viewport = new Panel(0, 0, viewportWidth, viewportHeight);
         viewport.setBackgroundColor(1, 1, 1, 0);
-        viewport.setBorder(new SimpleLineBorder(viewport, ColorConstants.darkGray(), 1));
+        viewport.setBorder(null);
 
-        container = new Panel(0, 0, viewportHeight, viewportWidth);
+
+        container = new Panel(0, 0, viewportWidth, viewportHeight);
+        container.setBorder(null);
         viewport.addComponent(container);
 
         this.addComponent(verticalScrollBar);
         this.addComponent(horizontalScrollBar);
         this.addComponent(viewport);
+        this.setBackgroundColor(ColorConstants.transparent());
+        this.setBorder(new SimpleLineBorder(ColorConstants.darkGray(), 0.5f));
 
         resize();
     }
@@ -79,12 +83,18 @@ public class ScrollablePanel extends ComponentContainer implements Viewport {
         Vector2f containerSize = new Vector2f(container.size);
         Vector2f viewportSize = new Vector2f(size);
 
-        if (horizontalScrollBarVisible) viewportSize.y = scrollablePanelSize.y - horizontalScrollBar.size.y;
-        if (verticalScrollBarVisible) viewportSize.x = scrollablePanelSize.x - verticalScrollBar.size.x;
+        if (horizontalScrollBarVisible) {
+            horizontalScrollBar.position.y = viewportSize.y = scrollablePanelSize.y - horizontalScrollBar.size.y;
+        }
+        if (verticalScrollBarVisible) {
+            verticalScrollBar.position.x = viewportSize.x = scrollablePanelSize.x - verticalScrollBar.size.x;
+        }
         viewport.size = viewportSize;
-
+        horizontalScrollBar.size.x = viewportSize.x;
+        verticalScrollBar.size.y = viewportSize.y;
         float horizontalRange = horizontalScrollBar.getMaxValue() - horizontalScrollBar.getMinValue();
         horizontalScrollBar.setVisibleAmount(containerSize.x >= viewportSize.x ? (horizontalRange * viewportSize.x / containerSize.x) : horizontalRange);
+
 
         float verticalRange = verticalScrollBar.getMaxValue() - verticalScrollBar.getMinValue();
         verticalScrollBar.setVisibleAmount(containerSize.x >= viewportSize.x ? (verticalRange * viewportSize.y / containerSize.y) : verticalRange);

@@ -32,7 +32,7 @@ public abstract class ComponentContainer extends Component {
         return components.isEmpty();
     }
 
-    public boolean containerContains(Object o) {
+    public boolean containerContains(Component o) {
         return components.contains(o);
     }
 

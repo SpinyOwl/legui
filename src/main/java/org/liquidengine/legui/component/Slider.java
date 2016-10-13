@@ -85,7 +85,7 @@ public class Slider extends Component {
         return sliderChangeEventListeners.add(sliderUpdateListener);
     }
 
-    public boolean removeSliderChangeEventListener(Object o) {
+    public boolean removeSliderChangeEventListener(SliderChangeEventListener o) {
         return sliderChangeEventListeners.remove(o);
     }
 

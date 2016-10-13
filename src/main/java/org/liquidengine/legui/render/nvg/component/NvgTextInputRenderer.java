@@ -6,7 +6,6 @@ import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.TextInput;
-import org.liquidengine.legui.component.border.Border;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
@@ -24,6 +23,7 @@ import org.lwjgl.system.MemoryUtil;
 import java.nio.ByteBuffer;
 
 import static org.liquidengine.legui.util.NvgRenderUtils.createScissor;
+import static org.liquidengine.legui.util.NvgRenderUtils.renderBorder;
 import static org.liquidengine.legui.util.NvgRenderUtils.resetScissor;
 import static org.liquidengine.legui.util.ColorUtil.blackOrWhite;
 import static org.liquidengine.legui.util.ColorUtil.half;
@@ -85,10 +85,7 @@ public class NvgTextInputRenderer extends NvgLeguiComponentRenderer {
 
             drawBackground(context, x, y, w, h, br, bc);
 
-            Border border = agui.getBorder();
-            if (border != null) {
-                border.render(leguiContext);
-            }
+            renderBorder(component, leguiContext);
 
             String text;
             int caretPos = agui.getCaretPosition();
@@ -119,7 +116,7 @@ public class NvgTextInputRenderer extends NvgLeguiComponentRenderer {
             // draw caret
             if (agui.isFocused()) {
                 calcMouseCaretPos(leguiContext, bounds, ng, agui, renderBounds, context);
-                drawCaret(context, horizontalAlign, bc, tx, tw, bounds, byteText, caretPos - renderBounds[0], ng);
+                drawCaret(context, horizontalAlign, bc, tx, tw, bounds, caretPos - renderBounds[0], ng);
             }
         }
         resetScissor(context);
@@ -134,8 +131,6 @@ public class NvgTextInputRenderer extends NvgLeguiComponentRenderer {
         NvgRenderUtils.alignTextInBox(context, HorizontalAlign.LEFT, VerticalAlign.MIDDLE);
         int nGlypths = nnvgTextGlyphPositions(context, 0, 0, memAddress(byteText), 0, glyphAddress, maxGlyphCount);
         int caretPos = agui.getCaretPosition();
-
-        int leftPos = 0, rightPos = nGlypths > 0 ? nGlypths : -1;
 
         // get text to render depending on cursor position
         if (agui.isFocused()) {
@@ -167,7 +162,7 @@ public class NvgTextInputRenderer extends NvgLeguiComponentRenderer {
     }
 
 
-    private void drawCaret(long context, HorizontalAlign horizontalAlign, Vector4f bc, float tx, float tw, float[] bounds, ByteBuffer byteText,
+    private void drawCaret(long context, HorizontalAlign horizontalAlign, Vector4f bc, float tx, float tw, float[] bounds,
                            int currCaretPos, int ng) {
         float caretx;
 

@@ -133,7 +133,7 @@ public class ExampleGui extends Panel {
         scrollBar1.setBackgroundColor(ColorConstants.white());
         scrollBar1.setScrollColor(ColorConstants.darkGray());
         scrollBar1.setArrowColor(ColorConstants.darkGray());
-        scrollBar1.setBorder(new SimpleLineBorder(scrollBar1, ColorConstants.red(), 1));
+        scrollBar1.setBorder(new SimpleLineBorder(ColorConstants.red(), 1));
         this.addComponent(scrollBar1);
 
         ScrollBar scrollBar11 = new ScrollBar(385, 170, 7, 100, 20);
@@ -142,7 +142,7 @@ public class ExampleGui extends Panel {
         scrollBar11.setArrowsEnabled(false);
         scrollBar11.setBackgroundColor(ColorConstants.white());
         scrollBar11.setScrollColor(ColorConstants.darkGray());
-        scrollBar11.setBorder(new SimpleLineBorder(scrollBar1, ColorConstants.red(), 1));
+        scrollBar11.setBorder(new SimpleLineBorder(ColorConstants.red(), 1));
         scrollBar11.setCornerRadius(3);
         this.addComponent(scrollBar11);
 
@@ -158,8 +158,7 @@ public class ExampleGui extends Panel {
         Panel panel1 = new Panel(420, 170, 100, 100);
         panel1.setBackgroundColor(ColorConstants.blue());
         this.addComponent(panel1);
-        panel1.getListenerList()
-                .addListener(CursorEnterEvent.class, event -> System.out.println(event));
+        panel1.getListenerList().addListener(CursorEnterEvent.class, System.out::println);
         Panel panel2 = new Panel(470, 170, 100, 100);
         panel2.setBackgroundColor(ColorConstants.green());
         this.addComponent(panel2);
@@ -173,7 +172,7 @@ public class ExampleGui extends Panel {
 
         ScrollablePanel panel = new ScrollablePanel(420, 10, 150, 150);
         panel.setBackgroundColor(1, 1, 1, 1);
-        panel.setBorder(new SimpleLineBorder(panel, ColorConstants.red(), 1));
+//        panel.setBorder(null);
         panel.getContainer().setSize(200, 200);
         panel.resize();
         panel.getContainer().addComponent(new TextInput("Hello Scrollable", 10, 10, 150, 20));

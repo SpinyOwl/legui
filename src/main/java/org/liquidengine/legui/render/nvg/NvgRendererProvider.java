@@ -6,10 +6,6 @@ import org.liquidengine.legui.component.border.SimpleLineBorder;
 import org.liquidengine.legui.render.LeguiBorderRenderer;
 import org.liquidengine.legui.render.LeguiComponentRenderer;
 import org.liquidengine.legui.render.LeguiRendererProvider;
-import org.liquidengine.legui.render.nvg.component.NvgButtonRenderer;
-import org.liquidengine.legui.render.nvg.component.NvgCheckBoxRenderer;
-import org.liquidengine.legui.render.nvg.component.NvgImageRenderer;
-import org.liquidengine.legui.render.nvg.component.NvgLabelRenderer;
 import org.liquidengine.legui.render.nvg.border.NvgSimpleLineBorderRenderer;
 import org.liquidengine.legui.render.nvg.component.*;
 

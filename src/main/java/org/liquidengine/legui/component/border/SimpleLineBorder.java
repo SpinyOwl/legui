@@ -5,7 +5,6 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector4f;
-import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.util.ColorConstants;
 
 /**
@@ -15,14 +14,13 @@ public class SimpleLineBorder extends Border {
     private Vector4f borderColor;
     private float thickness;
 
-    public SimpleLineBorder(Component component, Vector4f borderColor, float thickness) {
-        super(component);
+    public SimpleLineBorder(Vector4f borderColor, float thickness) {
         this.borderColor = borderColor;
         this.thickness = thickness;
     }
 
-    public SimpleLineBorder(Component component) {
-        this(component, ColorConstants.black(), 1);
+    public SimpleLineBorder() {
+        this(ColorConstants.black(), 1);
     }
 
     public Vector4f getBorderColor() {

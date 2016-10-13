@@ -4,7 +4,6 @@ import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.ScrollBar;
-import org.liquidengine.legui.component.border.Border;
 import org.liquidengine.legui.component.optional.Orientation;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
@@ -16,8 +15,8 @@ import org.liquidengine.legui.util.NvgRenderUtils;
 import org.liquidengine.legui.util.Util;
 import org.lwjgl.nanovg.NVGColor;
 
-import static org.liquidengine.legui.util.NvgRenderUtils.*;
 import static org.liquidengine.legui.util.ColorUtil.blackOrWhite;
+import static org.liquidengine.legui.util.NvgRenderUtils.*;
 import static org.lwjgl.nanovg.NanoVG.*;
 
 /**
@@ -124,10 +123,7 @@ public class NvgScrollBarRenderer extends NvgLeguiComponentRenderer {
             }
 
             // draw border
-            Border border = component.getBorder();
-            if (border != null) {
-                border.render(leguiContext);
-            }
+            renderBorder(component, leguiContext);
 
         }
         resetScissor(context);

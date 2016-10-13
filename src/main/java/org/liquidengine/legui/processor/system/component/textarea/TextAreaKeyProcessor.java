@@ -33,7 +33,6 @@ public class TextAreaKeyProcessor implements LeguiComponentEventProcessor<TextAr
                     String[] lines = text.split("\n", -1);
                     int[] some = some(lines, caretPosition);
                     if (some[1] > 0) {
-                        int cl = lines[some[1]].length() + 1;
                         int nl = lines[some[1] - 1].length() + 1;
                         int delta = nl + some[0];
                         int np = caretPosition - delta + (some[0] > nl ? nl : some[0]);

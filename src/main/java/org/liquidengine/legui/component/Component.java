@@ -28,7 +28,7 @@ public abstract class Component {
     protected Vector2f size;
     protected Vector4f backgroundColor = ColorConstants.lightGray();
 
-    protected Border border = new SimpleLineBorder(this, ColorConstants.transparent(), 0);
+    protected Border border = new SimpleLineBorder(ColorConstants.transparent(), 0);
 
     protected boolean enabled = true;
     protected boolean visible = true;

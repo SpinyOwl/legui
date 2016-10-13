@@ -36,7 +36,7 @@ public class Image extends Component {
     }
 
     private void initialize() {
-        border = new SimpleLineBorder(this, ColorConstants.darkGray(), 1);
+        border = new SimpleLineBorder(ColorConstants.darkGray(), 1);
     }
 
     public ByteBuffer getImageData() {

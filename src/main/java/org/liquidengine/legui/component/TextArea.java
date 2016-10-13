@@ -32,7 +32,7 @@ public class TextArea extends Component {
     private void initialize(String s) {
         backgroundColor.set(1);
         cornerRadius = 3;
-        border = new SimpleLineBorder(this, ColorConstants.darkGray(), 1);
+        border = new SimpleLineBorder(ColorConstants.darkGray(), 1);
         textState = new TextState(s);
         textState.getPadding().set(5, 10, 5, 10);
     }

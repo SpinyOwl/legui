@@ -59,7 +59,7 @@ public class CursorPosEventProcessor extends SystemEventProcessor<SystemCursorPo
         LeguiEventProcessor leguiEventProcessor = context.getLeguiEventProcessor();
         if (context.getMouseButtonStates()[GLFW.GLFW_MOUSE_BUTTON_LEFT] && gui == context.getFocusedGui()) {
             List<IEventListener<MouseDragEvent>> mouseDragEventListeners = gui.getListenerList().getListeners(MouseDragEvent.class);
-            MouseDragEvent mouseDragEvent = new MouseDragEvent(context.getCursorPosition(), context.getCursorPositionPrev(), gui);
+            MouseDragEvent mouseDragEvent = new MouseDragEvent(new Vector2f(event.fx, event.fy), context.getCursorPositionPrev(), gui);
             if (leguiEventProcessor == null) {
                 mouseDragEventListeners.forEach(l -> l.update(mouseDragEvent));
             } else {

@@ -3,9 +3,11 @@ package org.liquidengine.legui.util;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.Component;
+import org.liquidengine.legui.component.border.Border;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
+import org.liquidengine.legui.context.LeguiContext;
 import org.liquidengine.legui.font.FontRegister;
 import org.lwjgl.nanovg.NVGColor;
 import org.lwjgl.nanovg.NVGPaint;
@@ -185,7 +187,7 @@ public final class NvgRenderUtils {
         int maxRows = (int) Math.ceil((double) h / lineh[0]);
 
         NVGTextRow.Buffer buffer = NVGTextRow.create(maxRows);
-        int nrows = 0;
+        int nrows;
         int rowNum = 0;
         while ((nrows = nnvgTextBreakLines(context, start, end, w, memAddress(buffer), maxRows)) != 0) {
             for (int i = 0; i < nrows; i++) {
@@ -234,13 +236,13 @@ public final class NvgRenderUtils {
     public static float[] calculateTextBoundsRect(long context, float x, float y, float w, float h, String text, long end, HorizontalAlign horizontalAlign, VerticalAlign verticalAlign) {
         float bounds[] = new float[4];
         nvgTextBounds(context, x, y, text, end, bounds);
-        return createBounds(x, y, w, h, horizontalAlign, verticalAlign, bounds);
+        return createBounds(w, h, horizontalAlign, verticalAlign, bounds);
     }
 
     public static float[] calculateTextBoundsRect(long context, float x, float y, float w, float h, ByteBuffer text, long end, HorizontalAlign horizontalAlign, VerticalAlign verticalAlign) {
         float bounds[] = new float[4];
         nvgTextBounds(context, x, y, text, end, bounds);
-        return createBounds(x, y, w, h, horizontalAlign, verticalAlign, bounds);
+        return createBounds(w, h, horizontalAlign, verticalAlign, bounds);
     }
 
 
@@ -248,7 +250,7 @@ public final class NvgRenderUtils {
         return createBounds(x, y + rowIndex * fontSize, w, h - (nrows - 1) * fontSize, horizontalAlign, verticalAlign, width, fontSize);
     }
 
-    public static float[] createBounds(float x, float y, float w, float h, HorizontalAlign horizontalAlign, VerticalAlign verticalAlign, float[] bounds) {
+    public static float[] createBounds(float w, float h, HorizontalAlign horizontalAlign, VerticalAlign verticalAlign, float[] bounds) {
         float ww = bounds[2] - bounds[0];
         float hh = bounds[3] - bounds[1];
         return createBounds(w, h, horizontalAlign, verticalAlign, bounds, ww, hh);
@@ -348,5 +350,14 @@ public final class NvgRenderUtils {
      */
     public static void resetScissor(long context) {
         nvgResetScissor(context);
+    }
+
+    public static void renderBorder(Component component, LeguiContext leguiContext) {
+        Border border = component.getBorder();
+        if (border != null) {
+            if (border.isEnabled()) {
+                border.render(leguiContext, component);
+            }
+        }
     }
 }

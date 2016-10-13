@@ -4,7 +4,6 @@ import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.Slider;
-import org.liquidengine.legui.component.border.Border;
 import org.liquidengine.legui.component.optional.Orientation;
 import org.liquidengine.legui.context.LeguiContext;
 import org.liquidengine.legui.render.nvg.NvgLeguiComponentRenderer;
@@ -12,8 +11,7 @@ import org.liquidengine.legui.util.NvgRenderUtils;
 import org.lwjgl.nanovg.NVGColor;
 
 import static org.liquidengine.legui.util.NVGUtils.rgba;
-import static org.liquidengine.legui.util.NvgRenderUtils.createScissor;
-import static org.liquidengine.legui.util.NvgRenderUtils.resetScissor;
+import static org.liquidengine.legui.util.NvgRenderUtils.*;
 import static org.liquidengine.legui.util.Util.calculatePosition;
 import static org.lwjgl.nanovg.NanoVG.*;
 
@@ -97,10 +95,7 @@ public class NvgSliderRenderer extends NvgLeguiComponentRenderer {
             NvgRenderUtils.drawRectStroke(context, xx + 0.5f, yy + 0.5f, sliderSize, sliderSize, sliderInactiveColor, cornerRadius, 1);
 //            NvgRenderUtils.drawRectStroke(context, xx + 1.5f, yy + 1.5f, sliderSize - 1.5f, sliderSize - 1.5f, new Vector4f(0, 0, 0, 0.5f), cornerRadius, 1);
 
-            Border border = component.getBorder();
-            if (border != null) {
-                border.render(leguiContext);
-            }
+            renderBorder(component, leguiContext);
         }
         resetScissor(context);
     }

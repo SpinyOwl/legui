@@ -68,13 +68,13 @@ public class Button extends Component {
     /**
      * Initialize button with specified text
      *
-     * @param text
+     * @param text used to initialize text state
      */
     private void initialize(String text) {
         this.textState = new TextState(text);
         intersector = new RectangleIntersector();
         backgroundColor.set(0.9f, 0.9f, 0.9f, 1.0f);
-        border = new SimpleLineBorder(this, ColorConstants.darkGray(), 1);
+        border = new SimpleLineBorder(ColorConstants.darkGray(), 1);
         textState.setHorizontalAlign(HorizontalAlign.CENTER);
     }
 

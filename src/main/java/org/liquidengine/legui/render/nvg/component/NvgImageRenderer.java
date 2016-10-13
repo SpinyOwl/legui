@@ -8,7 +8,6 @@ import org.apache.logging.log4j.Logger;
 import org.joml.Vector2f;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.Image;
-import org.liquidengine.legui.component.border.Border;
 import org.liquidengine.legui.context.LeguiContext;
 import org.liquidengine.legui.render.nvg.NvgLeguiComponentRenderer;
 import org.liquidengine.legui.util.Util;
@@ -19,8 +18,7 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.concurrent.*;
 
-import static org.liquidengine.legui.util.NvgRenderUtils.createScissor;
-import static org.liquidengine.legui.util.NvgRenderUtils.resetScissor;
+import static org.liquidengine.legui.util.NvgRenderUtils.*;
 import static org.lwjgl.nanovg.NanoVG.*;
 
 /**
@@ -65,7 +63,6 @@ public class NvgImageRenderer extends NvgLeguiComponentRenderer {
         Vector2f position = Util.calculatePosition(component);
 
         int imageRef = getImageRef(image, context);
-        Border border = component.getBorder();
 
         createScissor(context, component);
         {
@@ -75,9 +72,8 @@ public class NvgImageRenderer extends NvgLeguiComponentRenderer {
             nvgFillPaint(context, imagePaint);
             nvgFill(context);
 
-            if (border != null) {
-                border.render(leguiContext);
-            }
+
+            renderBorder(component, leguiContext);
         }
         resetScissor(context);
 

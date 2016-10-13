@@ -4,7 +4,6 @@ import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.TextArea;
-import org.liquidengine.legui.component.border.Border;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
@@ -16,12 +15,10 @@ import org.liquidengine.legui.util.NvgRenderUtils;
 import org.liquidengine.legui.util.Util;
 import org.lwjgl.nanovg.NVGColor;
 import org.lwjgl.nanovg.NVGGlyphPosition;
-import org.lwjgl.nanovg.NVGTextRow;
 import org.lwjgl.system.MemoryUtil;
 
 import java.nio.ByteBuffer;
 
-import static org.liquidengine.legui.util.NVGUtils.rgba;
 import static org.liquidengine.legui.util.NvgRenderUtils.*;
 import static org.lwjgl.nanovg.NanoVG.*;
 import static org.lwjgl.system.MemoryUtil.memAddress;
@@ -58,21 +55,18 @@ public class NvgTextAreaRenderer extends NvgLeguiComponentRenderer {
             p.w = p.w > 0 ? p.w - 1 : 0;
 
             nvgIntersectScissor(context, pos.x, pos.y, size.x, size.y);
-            renderText(context, agui, pos, size, textState, agui.getCaretPosition());
+            renderText(context, pos, size, textState, agui.getCaretPosition());
         }
         resetScissor(context);
 
         createScissor(context, component);
         {
-            Border border = agui.getBorder();
-            if (border != null) {
-                border.render(leguiContext);
-            }
+            renderBorder(component, leguiContext);
         }
         resetScissor(context);
     }
 
-    private void renderText(long context, TextArea agui, Vector2f pos, Vector2f size, TextState textState, int caretPosition) {
+    private void renderText(long context, Vector2f pos, Vector2f size, TextState textState, int caretPosition) {
         String text = textState.getText();
         String[] lines = text.split("\n", -1);
         int caretLine = 0;

@@ -53,7 +53,7 @@ public class TextInput extends Component {
         textState = new TextState(text);
         textState.getPadding().set(10, 5, 10, 5);
         backgroundColor.set(1, 1, 1, 0.8f);
-        border = new SimpleLineBorder(this, ColorConstants.black(), 1);
+        border = new SimpleLineBorder(ColorConstants.black(), 1);
         cornerRadius = 2;
     }
 

@@ -4,7 +4,6 @@ import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.ComponentContainer;
-import org.liquidengine.legui.component.border.Border;
 import org.liquidengine.legui.context.LeguiContext;
 import org.liquidengine.legui.util.ColorConstants;
 import org.lwjgl.nanovg.NVGColor;
@@ -12,8 +11,7 @@ import org.lwjgl.nanovg.NVGColor;
 import java.util.List;
 
 import static org.liquidengine.legui.util.NVGUtils.rgba;
-import static org.liquidengine.legui.util.NvgRenderUtils.createScissor;
-import static org.liquidengine.legui.util.NvgRenderUtils.resetScissor;
+import static org.liquidengine.legui.util.NvgRenderUtils.*;
 import static org.liquidengine.legui.util.Util.calculatePosition;
 import static org.lwjgl.nanovg.NanoVG.*;
 
@@ -40,10 +38,7 @@ public class NvgDefaultRenderer extends NvgLeguiComponentRenderer {
             nvgFillColor(context, rgba(backgroundColor, colorA));
             nvgFill(context);
 
-            Border border = component.getBorder();
-            if (border != null) {
-                border.render(leguiContext);
-            }
+            renderBorder(component, leguiContext);
         }
         resetScissor(context);
 
@@ -53,4 +48,8 @@ public class NvgDefaultRenderer extends NvgLeguiComponentRenderer {
             components.stream().filter(Component::isVisible).forEach(child -> child.render(leguiContext));
         }
     }
+
+
+
+
 }

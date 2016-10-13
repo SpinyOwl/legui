@@ -1,5 +1,6 @@
 package org.liquidengine.legui.render;
 
+import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.border.Border;
 import org.liquidengine.legui.context.LeguiContext;
 
@@ -17,7 +18,7 @@ public interface LeguiBorderRenderer {
      *
      * @param border gui component to render
      */
-    void render(Border border, LeguiContext context);
+    void render(Border border, LeguiContext context, Component component);
 
     /**
      * Destroy renderer

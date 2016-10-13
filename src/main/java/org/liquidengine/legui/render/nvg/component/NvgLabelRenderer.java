@@ -5,7 +5,6 @@ import org.joml.Vector4f;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.Label;
 import org.liquidengine.legui.component.optional.TextState;
-import org.liquidengine.legui.component.border.Border;
 import org.liquidengine.legui.context.LeguiContext;
 import org.liquidengine.legui.render.nvg.NvgLeguiComponentRenderer;
 import org.lwjgl.nanovg.NVGColor;
@@ -23,8 +22,8 @@ public class NvgLabelRenderer extends NvgLeguiComponentRenderer {
     private NVGColor colorA = NVGColor.calloc();
 
     @Override
-    public void render(Component component, LeguiContext context, long nvgContext) {
-        createScissor(nvgContext, component);
+    public void render(Component component, LeguiContext leguiContext, long context) {
+        createScissor(context, component);
         {
 
             Vector2f pos = calculatePosition(component);
@@ -33,21 +32,18 @@ public class NvgLabelRenderer extends NvgLeguiComponentRenderer {
 
             /*Draw background rectangle*/
             {
-                nvgBeginPath(nvgContext);
-                nvgRoundedRect(nvgContext, pos.x, pos.y, size.x, size.y, 0);
-                nvgFillColor(nvgContext, rgba(backgroundColor, colorA));
-                nvgFill(nvgContext);
+                nvgBeginPath(context);
+                nvgRoundedRect(context, pos.x, pos.y, size.x, size.y, 0);
+                nvgFillColor(context, rgba(backgroundColor, colorA));
+                nvgFill(context);
             }
 
             // draw text into box
             TextState textState = ((Label) component).getTextState();
-            renderTextStateLineToBounds(nvgContext, pos, size, textState, false);
+            renderTextStateLineToBounds(context, pos, size, textState, false);
 
-            Border border = component.getBorder();
-            if (border != null) {
-                border.render(context);
-            }
+            renderBorder(component, leguiContext);
         }
-        resetScissor(nvgContext);
+        resetScissor(context);
     }
 }

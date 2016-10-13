@@ -10,20 +10,14 @@ import org.liquidengine.legui.render.LeguiRendererProvider;
  */
 public abstract class Border {
     protected LeguiBorderRenderer renderer;
-    protected Component component;
     protected boolean enabled = true;
 
-    public Border(Component component) {
-        this.component = component;
+    public Border() {
         renderer = LeguiRendererProvider.getProvider().getRenderer(this);
     }
 
-    public void render(LeguiContext context) {
-        renderer.render(this, context);
-    }
-
-    public Component getComponent() {
-        return component;
+    public void render(LeguiContext context, Component component) {
+        renderer.render(this, context, component);
     }
 
     public boolean isEnabled() {

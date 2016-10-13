@@ -20,7 +20,7 @@ public class WindowSizeEventProcessor extends SystemEventProcessor<SystemWindowS
         if (target != null) {
             target.getProcessors().getWindowSizeEventProcessor().process(target, event, context);
         } else {
-            mainGui.getProcessors().getWindowSizeEventProcessor().process(target, event, context);
+            mainGui.getProcessors().getWindowSizeEventProcessor().process(mainGui, event, context);
         }
     }
 }
