@@ -66,7 +66,7 @@ public class NvgCheckBoxRenderer extends NvgDefaultRenderer {
             float x1 = px - iconOffset;
             float x = x1 + iconWid;
             float w = sw - iconWid - pad.z;
-            NvgRenderUtils.renderTextStateToBounds(nvgContext, new Vector2f(x, y), new Vector2f(w, h), checkBox.getTextState());
+            NvgRenderUtils.renderTextStateLineToBounds(nvgContext, new Vector2f(x, y), new Vector2f(w, h), checkBox.getTextState());
 
             Vector4f textColor = textState.getTextColor();
             if (checkBox.isChecked()) {

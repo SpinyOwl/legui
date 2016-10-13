@@ -1,9 +1,5 @@
 package org.liquidengine.legui.render.nvg;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.Component;
@@ -36,7 +32,7 @@ public class NvgDefaultRenderer extends NvgLeguiComponentRenderer {
 
             Vector2f pos = calculatePosition(component);
             Vector2f size = component.getSize();
-            Vector4f backgroundColor = new Vector4f(component.getBackgroundColor());
+            Vector4f backgroundColor = component.getBackgroundColor();
 
             // rectangle
             nvgBeginPath(context);
@@ -52,24 +48,9 @@ public class NvgDefaultRenderer extends NvgLeguiComponentRenderer {
         resetScissor(context);
 
         if (component instanceof ComponentContainer) {
-            ComponentContainer container = (ComponentContainer) component;
-            List<Component> all = container.getComponents();
-            all.stream().filter(Component::isVisible).forEach(child -> child.render(leguiContext));
+            ComponentContainer container = ((ComponentContainer) component);
+            List<Component> components = container.getComponents();
+            components.stream().filter(Component::isVisible).forEach(child -> child.render(leguiContext));
         }
-    }
-
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return EqualsBuilder.reflectionEquals(this, other);
-    }
-
-    @Override
-    public int hashCode() {
-        return HashCodeBuilder.reflectionHashCode(this);
     }
 }

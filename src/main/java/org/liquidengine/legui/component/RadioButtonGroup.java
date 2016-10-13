@@ -61,4 +61,5 @@ public class RadioButtonGroup implements Serializable {
     public SetUniqueList<RadioButton> getRadioButtons() {
         return (SetUniqueList<RadioButton>) Arrays.asList((RadioButton[]) radioButtons.toArray());
     }
+
 }

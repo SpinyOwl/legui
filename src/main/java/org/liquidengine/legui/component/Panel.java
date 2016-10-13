@@ -12,6 +12,8 @@ import org.liquidengine.legui.component.border.SimpleLineBorder;
  */
 public class Panel extends ComponentContainer {
 
+    private static final Vector2f NULL = new Vector2f(0);
+
     public Panel() {
         initialize();
     }
@@ -31,17 +33,28 @@ public class Panel extends ComponentContainer {
     }
 
     @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
-    }
+    public boolean equals(Object o) {
+        if (this == o) return true;
 
-    @Override
-    public boolean equals(Object other) {
-        return EqualsBuilder.reflectionEquals(this, other);
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Panel panel = (Panel) o;
+
+        return new EqualsBuilder()
+                .appendSuper(super.equals(o))
+                .isEquals();
     }
 
     @Override
     public int hashCode() {
-        return HashCodeBuilder.reflectionHashCode(this);
+        return new HashCodeBuilder(17, 37)
+                .appendSuper(super.hashCode())
+                .toHashCode();
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+                .toString();
     }
 }

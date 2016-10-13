@@ -2,15 +2,15 @@ package org.liquidengine.legui.processor.system.component.def;
 
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.context.LeguiContext;
-import org.liquidengine.legui.event.system.ScrollEvent;
+import org.liquidengine.legui.event.system.SystemScrollEvent;
 import org.liquidengine.legui.processor.system.component.LeguiComponentEventProcessor;
 
 /**
  * Created by Shcherbin Alexander on 9/2/2016.
  */
-public class DefaultGuiScrollProcessor implements LeguiComponentEventProcessor<Component, ScrollEvent> {
+public class DefaultGuiScrollProcessor implements LeguiComponentEventProcessor<Component, SystemScrollEvent> {
     @Override
-    public void process(Component gui, ScrollEvent event, LeguiContext processorState) {
+    public void process(Component gui, SystemScrollEvent event, LeguiContext leguiContext) {
 //        ScrollablePanel scrollpanel = null;
 //        if (gui instanceof ScrollablePanel) {
 //            scrollpanel = (ScrollablePanel) gui;

@@ -9,8 +9,10 @@ import org.joml.Vector4f;
 import org.liquidengine.legui.component.border.Border;
 import org.liquidengine.legui.component.border.SimpleLineBorder;
 import org.liquidengine.legui.component.intersector.LeguiIntersector;
+import org.liquidengine.legui.component.intersector.RectangleIntersector;
 import org.liquidengine.legui.context.LeguiContext;
-import org.liquidengine.legui.processor.system.component.LeguiEventProcessorContainer;
+import org.liquidengine.legui.listener.component.LeguiListenerList;
+import org.liquidengine.legui.processor.system.component.LeguiEventProcessorList;
 import org.liquidengine.legui.render.LeguiComponentRenderer;
 import org.liquidengine.legui.render.LeguiRendererProvider;
 import org.liquidengine.legui.util.ColorConstants;
@@ -21,7 +23,7 @@ import org.liquidengine.legui.util.ColorConstants;
  * Created by Shcherbin Alexander on 9/14/2016.
  */
 public abstract class Component {
-    private final LeguiEventProcessorContainer processors = new LeguiEventProcessorContainer(this);
+    private final LeguiEventProcessorList processors = new LeguiEventProcessorList(this);
     protected Vector2f position;
     protected Vector2f size;
     protected Vector4f backgroundColor = ColorConstants.lightGray();
@@ -32,11 +34,16 @@ public abstract class Component {
     protected boolean visible = true;
     protected boolean focused = false;
 
+    protected boolean pressed = false;
+    protected boolean hovered = false;
+
     protected float cornerRadius = 0;
 
-    protected ComponentContainer parent;
-    protected LeguiIntersector intersector;
+    protected Component parent;
+    protected LeguiIntersector intersector = new RectangleIntersector();
     protected LeguiComponentRenderer renderer = LeguiRendererProvider.getProvider().getRenderer(this);
+
+    protected LeguiListenerList listenerList = new LeguiListenerList();
 
     public Component() {
         this(10, 10, 10, 10);
@@ -55,11 +62,11 @@ public abstract class Component {
         renderer.render(this, context);
     }
 
-    public ComponentContainer getParent() {
+    public Component getParent() {
         return parent;
     }
 
-    public LeguiEventProcessorContainer getProcessors() {
+    public LeguiEventProcessorList getProcessors() {
         return processors;
     }
 
@@ -87,12 +94,19 @@ public abstract class Component {
         this.size.set(width, height);
     }
 
+    public LeguiListenerList getListenerList() {
+        return listenerList;
+    }
+
     public Vector4f getBackgroundColor() {
         return backgroundColor;
     }
 
     public void setBackgroundColor(Vector4f backgroundColor) {
         this.backgroundColor = backgroundColor;
+    }
+    public void setBackgroundColor(float r, float g, float b, float a) {
+        backgroundColor.set(r, g, b, a);
     }
 
     public Border getBorder() {
@@ -143,18 +157,85 @@ public abstract class Component {
         this.cornerRadius = cornerRadius;
     }
 
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+    public boolean isPressed() {
+        return pressed;
+    }
+
+    public void setPressed(boolean pressed) {
+        this.pressed = pressed;
+    }
+
+    public boolean isHovered() {
+        return hovered;
+    }
+
+    public void setHovered(boolean hovered) {
+        this.hovered = hovered;
     }
 
     @Override
-    public boolean equals(Object other) {
-        return EqualsBuilder.reflectionEquals(this, other);
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Component component = (Component) o;
+
+        return new EqualsBuilder()
+                .append(enabled, component.enabled)
+                .append(visible, component.visible)
+                .append(focused, component.focused)
+                .append(pressed, component.pressed)
+                .append(hovered, component.hovered)
+                .append(cornerRadius, component.cornerRadius)
+                .append(processors, component.processors)
+                .append(position, component.position)
+                .append(size, component.size)
+                .append(backgroundColor, component.backgroundColor)
+                .append(border, component.border)
+                .append(intersector, component.intersector)
+                .append(renderer, component.renderer)
+                .append(listenerList, component.listenerList)
+                .isEquals();
     }
 
     @Override
     public int hashCode() {
-        return HashCodeBuilder.reflectionHashCode(this);
+        return new HashCodeBuilder(17, 37)
+                .append(processors)
+                .append(position)
+                .append(size)
+                .append(backgroundColor)
+                .append(border)
+                .append(enabled)
+                .append(visible)
+                .append(focused)
+                .append(pressed)
+                .append(hovered)
+                .append(cornerRadius)
+                .append(intersector)
+                .append(renderer)
+                .append(listenerList)
+                .toHashCode();
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+                .append("processors", processors)
+                .append("position", position)
+                .append("size", size)
+                .append("backgroundColor", backgroundColor)
+                .append("border", border)
+                .append("enabled", enabled)
+                .append("visible", visible)
+                .append("focused", focused)
+                .append("pressed", pressed)
+                .append("hovered", hovered)
+                .append("cornerRadius", cornerRadius)
+                .append("intersector", intersector)
+                .append("renderer", renderer)
+                .append("listenerList", listenerList)
+                .toString();
     }
 }

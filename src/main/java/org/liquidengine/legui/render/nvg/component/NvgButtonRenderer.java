@@ -1,15 +1,11 @@
 package org.liquidengine.legui.render.nvg.component;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.Button;
 import org.liquidengine.legui.component.Component;
-import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.component.border.Border;
+import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.context.LeguiContext;
 import org.liquidengine.legui.render.nvg.NvgLeguiComponentRenderer;
 import org.liquidengine.legui.util.Util;
@@ -41,7 +37,10 @@ public class NvgButtonRenderer extends NvgLeguiComponentRenderer {
             nvgSave(nvgContext);
             // render background
             {
-                Vector4f backgroundColor = component.getBackgroundColor();
+                Vector4f backgroundColor = new Vector4f(component.getBackgroundColor());
+                if (agui.isHovered()) backgroundColor.w *= 0.5f;
+                if (agui.isPressed()) {backgroundColor.mul(0.5f); backgroundColor.w = 1; }
+
                 nvgBeginPath(nvgContext);
                 nvgFillColor(nvgContext, rgba(backgroundColor, colorA));
                 nvgRoundedRect(nvgContext, pos.x, pos.y, size.x, size.y, component.getCornerRadius());
@@ -55,7 +54,7 @@ public class NvgButtonRenderer extends NvgLeguiComponentRenderer {
             // Render text
             {
                 TextState textState = agui.getTextState();
-                renderTextStateToBounds(nvgContext, pos, size, textState);
+                renderTextStateLineToBounds(nvgContext, pos, size, textState);
             }
 
             // Render border
@@ -67,19 +66,5 @@ public class NvgButtonRenderer extends NvgLeguiComponentRenderer {
 
         }
         resetScissor(nvgContext);
-    }
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return EqualsBuilder.reflectionEquals(this, other);
-    }
-
-    @Override
-    public int hashCode() {
-        return HashCodeBuilder.reflectionHashCode(this);
     }
 }

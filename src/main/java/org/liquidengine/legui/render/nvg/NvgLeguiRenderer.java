@@ -27,7 +27,7 @@ public class NvgLeguiRenderer extends LeguiRenderer {
     @Override
     public void initialize() {
         int flags = NanoVGGL3.NVG_STENCIL_STROKES | NanoVGGL3.NVG_ANTIALIAS | (context.isDebug() ? NanoVGGL3.NVG_DEBUG : 1);
-        nvgContext = NanoVGGL3.nvgCreateGL3(flags);
+        nvgContext = NanoVGGL3.nvgCreate(flags);
         Map<String, FontRegister.FontData> fontRegister = FontRegister.getFontRegister();
 
         for (Map.Entry<String, FontRegister.FontData> fontDataEntry : fontRegister.entrySet()) {
@@ -46,7 +46,7 @@ public class NvgLeguiRenderer extends LeguiRenderer {
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         {
-            Vector2i windowSize = context.getTargetSize();
+            Vector2i windowSize = context.getWindowSize();
             nvgBeginFrame(nvgContext, windowSize.x, windowSize.y, context.getPixelRatio());
             component.render(context);
             nvgEndFrame(nvgContext);

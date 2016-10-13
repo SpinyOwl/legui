@@ -121,11 +121,8 @@ public final class IOUtil {
      */
     public static ByteBuffer ioResourceToByteBuffer(InputStream resource, int bufferSize) throws IOException {
         ByteBuffer buffer = createByteBuffer(bufferSize);
-        InputStream source = resource;
-        if (source == null) throw new IOException("Input stream resource is null!");
-
-        buffer = readToBuffer(buffer, source);
-
+        if (resource == null) throw new IOException("Input stream resource is null!");
+        buffer = readToBuffer(buffer, resource);
         buffer.flip();
         return buffer;
     }
@@ -145,7 +142,7 @@ public final class IOUtil {
         if (file.exists() && file.isFile()) {
             FileInputStream source = new FileInputStream(file);
             buffer = ioResourceToByteBuffer(source, bufferSize);
-        buffer.flip();
+            buffer.flip();
         } else {
             InputStream source = Thread.currentThread().getContextClassLoader().getResourceAsStream(resource);
             if (source == null) throw new FileNotFoundException(resource);

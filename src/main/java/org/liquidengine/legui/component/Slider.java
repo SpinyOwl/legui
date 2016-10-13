@@ -1,5 +1,9 @@
 package org.liquidengine.legui.component;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.intersector.RectangleIntersector;
 import org.liquidengine.legui.component.optional.Orientation;
@@ -108,4 +112,47 @@ public class Slider extends Component {
         }
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Slider slider = (Slider) o;
+
+        return new EqualsBuilder()
+                .appendSuper(super.equals(o))
+                .append(value, slider.value)
+                .append(sliderSize, slider.sliderSize)
+                .append(orientation, slider.orientation)
+                .append(sliderActiveColor, slider.sliderActiveColor)
+                .append(sliderColor, slider.sliderColor)
+                .append(sliderChangeEventListeners, slider.sliderChangeEventListeners)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37)
+                .appendSuper(super.hashCode())
+                .append(value)
+                .append(orientation)
+                .append(sliderActiveColor)
+                .append(sliderColor)
+                .append(sliderSize)
+                .append(sliderChangeEventListeners)
+                .toHashCode();
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+                .append("value", value)
+                .append("orientation", orientation)
+                .append("sliderActiveColor", sliderActiveColor)
+                .append("sliderColor", sliderColor)
+                .append("sliderSize", sliderSize)
+                .append("sliderChangeEventListeners", sliderChangeEventListeners)
+                .toString();
+    }
 }

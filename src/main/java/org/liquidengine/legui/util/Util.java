@@ -1,7 +1,6 @@
 package org.liquidengine.legui.util;
 
 import org.joml.Vector2f;
-import org.joml.Vector4f;
 import org.liquidengine.legui.component.Component;
 
 import java.nio.ByteBuffer;
@@ -25,16 +24,17 @@ public final class Util {
     }
 
     public static Vector2f calculatePosition(Component gui) {
-        Vector2f pos = new Vector2f();
-        Component current = gui;
-        Component parent = current.getParent();
+        return calculateParentOffset(gui).add(gui.getPosition());
+    }
+
+    public static Vector2f calculateParentOffset(Component component) {
+        Vector2f offset = new Vector2f();
+        Component parent = component.getParent();
         while (parent != null) {
-            pos.add(current.getPosition());
-            current = parent;
-            parent = current.getParent();
+            offset.add(parent.getPosition());
+            parent = parent.getParent();
         }
-        pos.add(current.getPosition());
-        return pos;
+        return offset;
     }
 
     public static ByteBuffer utf8(int cp) {
@@ -47,33 +47,6 @@ public final class Util {
 
     public static ByteBuffer cpToUTF8(int cp) {
         return memUTF8(new String(Character.toChars(cp)), true);
-    }
-
-    public static Vector4f negativeColor(Vector4f color) {
-        Vector4f dest = new Vector4f(1).sub(color);
-        dest.w = color.w;
-        return dest;
-    }
-
-    public static void negativeColor(Vector4f color, Vector4f dest) {
-        dest.zero().set(1).sub(color);
-        dest.w = color.w;
-    }
-
-
-    public static Vector4f negativeColorRGB(Vector4f color) {
-        Vector4f dest = new Vector4f(1).sub(color);
-        dest.w = 1;
-        return dest;
-    }
-
-    public static void negativeColorRGB(Vector4f color, Vector4f dest) {
-        dest.zero().set(1).sub(color);
-        dest.w = 1;
-    }
-
-    public static Vector4f half(Vector4f color){
-        return new Vector4f(color).div(2);
     }
 
 }
