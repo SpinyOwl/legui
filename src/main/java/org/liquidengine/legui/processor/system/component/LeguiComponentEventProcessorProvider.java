@@ -23,7 +23,6 @@ import org.liquidengine.legui.processor.system.component.textarea.TextAreaMouseC
 import org.liquidengine.legui.processor.system.component.textinput.TextInputCharEventProcessor;
 import org.liquidengine.legui.processor.system.component.textinput.TextInputKeyProcessor;
 import org.liquidengine.legui.processor.system.component.textinput.TextInputMouseClickProcessor;
-import org.liquidengine.legui.processor.system.component.widget.WidgetCursorPosProcessor;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -69,7 +68,6 @@ public class LeguiComponentEventProcessorProvider extends AbstractGuiProcessorPr
         registerGuiProcessor(TextArea.class, SystemCharEvent.class, new TextAreaCharEventProcessor());
         registerGuiProcessor(TextArea.class, SystemKeyEvent.class, new TextAreaKeyProcessor());
 
-        registerGuiProcessor(Widget.class, SystemCursorPosEvent.class, new WidgetCursorPosProcessor());
     }
 
     @Override
