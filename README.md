@@ -1,0 +1,12 @@
+# LEGUI
+GUI implementation for using with LWJGL3
+
+To contribute you can add your proposals in [ Trello - LWJGL GUI Library Implementation ](https://trello.com/b/uW7MxIK9/create-gui-implementation)
+
+Current version you can find in [version.properties](version.properties)
+
+#### Links
+-------------------------------
+[LWJGL - Lightweight Java Game Library 3](https://github.com/LWJGL/lwjgl3)
+
+[JOML – Java OpenGL Math Library](https://github.com/JOML-CI/JOML)
