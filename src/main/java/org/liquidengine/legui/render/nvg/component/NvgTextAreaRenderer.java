@@ -55,7 +55,7 @@ public class NvgTextAreaRenderer extends NvgLeguiComponentRenderer {
             p.w = p.w > 0 ? p.w - 1 : 0;
 
             nvgIntersectScissor(context, pos.x, pos.y, size.x, size.y);
-            renderText(context, pos, size, textState, agui.getCaretPosition());
+            renderText(context, pos, size, textState, agui.getCaretPosition(), agui.isFocused());
         }
         resetScissor(context);
 
@@ -66,9 +66,10 @@ public class NvgTextAreaRenderer extends NvgLeguiComponentRenderer {
         resetScissor(context);
     }
 
-    private void renderText(long context, Vector2f pos, Vector2f size, TextState textState, int caretPosition) {
+    private void renderText(long context, Vector2f pos, Vector2f size, TextState textState, int caretPosition, boolean focused) {
         String text = textState.getText();
         String[] lines = text.split("\n", -1);
+        if (!focused) caretPosition = lines[0].length() / 2;
         int caretLine = 0;
         int caretOffset = 0;
         for (String line : lines) {
@@ -138,7 +139,7 @@ public class NvgTextAreaRenderer extends NvgLeguiComponentRenderer {
         for (int i = topIndex; i <= botIndex; i++) {
             line = lines[i];
             float y1 = y + (i - topIndex) * fontSize;
-            if (i == caretLine) {
+            if (i == caretLine && focused) {
                 drawRectangle(context, BLUE, pos.x, y1, size.x, fontSize);
                 renderTextLineToBounds(context, x - offsetX * (1 + horizontalAlign.index), y1, w + offsetX * 2, fontSize, fontSize, font, textColor, line, horizontalAlign, verticalAlign, false);
                 drawRectangle(context, RED, caretx - offsetX, y1, 1, fontSize);

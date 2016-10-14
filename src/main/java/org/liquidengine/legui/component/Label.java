@@ -47,7 +47,7 @@ public class Label extends Component {
         this.textState = new TextState(text);
         intersector = new RectangleIntersector();
         backgroundColor.set(0);
-        border = new SimpleLineBorder(ColorConstants.red(), 1);
+        border = null;
         textState.getPadding().set(2, 0, 2, 0);
     }
 

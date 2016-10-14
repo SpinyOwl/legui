@@ -247,51 +247,55 @@ public class TextState {
     }
 
     public StringBuffer insert(int index, char[] str, int offset, int len) {
-        return text.insert(index, str, offset, len);
+        return text.insert(index, str, getOffset(offset), len);
     }
 
     public StringBuffer insert(int offset, Object obj) {
-        return text.insert(offset, obj);
+        return text.insert(getOffset(offset), obj);
     }
 
     public StringBuffer insert(int offset, String str) {
-        return text.insert(offset, str);
+        return text.insert(getOffset(offset), str);
     }
 
     public StringBuffer insert(int offset, char[] str) {
-        return text.insert(offset, str);
+        return text.insert(getOffset(offset), str);
     }
 
     public StringBuffer insert(int dstOffset, CharSequence s) {
-        return text.insert(dstOffset, s);
+        return text.insert(getOffset(dstOffset), s);
     }
 
     public StringBuffer insert(int dstOffset, CharSequence s, int start, int end) {
-        return text.insert(dstOffset, s, start, end);
+        return text.insert(getOffset(dstOffset), s, start, end);
     }
 
     public StringBuffer insert(int offset, boolean b) {
-        return text.insert(offset, b);
+        return text.insert(getOffset(offset), b);
     }
 
     public StringBuffer insert(int offset, char c) {
-        return text.insert(offset, c);
+        return text.insert(getOffset(offset), c);
     }
 
     public StringBuffer insert(int offset, int i) {
-        return text.insert(offset, i);
+        return text.insert(getOffset(offset), i);
     }
 
     public StringBuffer insert(int offset, long l) {
-        return text.insert(offset, l);
+        return text.insert(getOffset(offset), l);
     }
 
     public StringBuffer insert(int offset, float f) {
-        return text.insert(offset, f);
+        return text.insert(getOffset(offset), f);
     }
 
     public StringBuffer insert(int offset, double d) {
-        return text.insert(offset, d);
+        return text.insert(getOffset(offset), d);
+    }
+
+    private int getOffset(int offset) {
+        return offset > text.length() ? text.length() : offset;
     }
 
     public int indexOf(String str) {

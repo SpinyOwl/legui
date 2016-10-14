@@ -16,11 +16,6 @@ public class WindowSizeEventProcessor extends SystemEventProcessor<SystemWindowS
 
     @Override
     public void processEvent(SystemWindowSizeEvent event, Component mainGui) {
-        Component target = context.getMouseTargetGui();
-        if (target != null) {
-            target.getProcessors().getWindowSizeEventProcessor().process(target, event, context);
-        } else {
-            mainGui.getProcessors().getWindowSizeEventProcessor().process(mainGui, event, context);
-        }
+        mainGui.getProcessors().getWindowSizeEventProcessor().process(mainGui, event, context);
     }
 }

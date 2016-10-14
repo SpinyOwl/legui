@@ -131,6 +131,9 @@ public class NvgTextInputRenderer extends NvgLeguiComponentRenderer {
         NvgRenderUtils.alignTextInBox(context, HorizontalAlign.LEFT, VerticalAlign.MIDDLE);
         int nGlypths = nnvgTextGlyphPositions(context, 0, 0, memAddress(byteText), 0, glyphAddress, maxGlyphCount);
         int caretPos = agui.getCaretPosition();
+        if (caretPos > text.length()) {
+            caretPos = text.length();
+        }
 
         // get text to render depending on cursor position
         if (agui.isFocused()) {

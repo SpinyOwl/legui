@@ -24,13 +24,15 @@ import static org.lwjgl.system.MemoryUtil.NULL;
  */
 public class Demo {
 
+    private final boolean resizable;
     protected int width;
     protected int height;
-    protected boolean running;
+    protected volatile boolean running;
     protected long windowPointer;
 
     protected Vector4f clearColor = new Vector4f(1, 1, 1, 1);
 
+    protected Thread mainThread;
     protected Thread rendererThread;
     protected Thread eventProcessorThread;
 
@@ -51,19 +53,30 @@ public class Demo {
 
 
     public Demo(int width, int height, String title, Component component) {
+        this(width, height, title, component, true);
+    }
+
+    public Demo(int width, int height, String title, Component component, boolean resizable) {
         this.width = width;
         this.height = height;
         this.initialTitle = title;
         this.component = component;
+        this.resizable = resizable;
     }
 
     public void start() {
-        initialize();
-        startRenderer();
-        startSystemEventProcessor();
-        startLeguiEventProcessor();
-        handleSystemEvents();
-        destroy();
+        mainThread = new Thread(() -> {
+            initialize();
+            startRenderer();
+            startSystemEventProcessor();
+            startLeguiEventProcessor();
+            handleSystemEvents();
+            destroy();
+        }, "LEGUI_EXAMPLE");
+
+        mainThread.start();
+        // wait while not initialized
+        while (!running) ;
     }
 
     private void initialize() {
@@ -71,6 +84,7 @@ public class Demo {
             throw new RuntimeException("Can't initialize GLFW");
         }
 
+        glfwWindowHint(GLFW_RESIZABLE, resizable ? GLFW_TRUE : GLFW_FALSE);
         windowPointer = glfwCreateWindow(width, height, initialTitle, NULL, NULL);
 //        glfwSwapInterval(1);
         glfwShowWindow(windowPointer);
