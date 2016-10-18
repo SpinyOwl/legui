@@ -16,13 +16,14 @@ configurations.all {
 // dependencies versions
 //@formatter:off
 def lwjgl_version        = '3.0.1-SNAPSHOT'
-def joml_version         = "1.8.5-SNAPSHOT"
+def joml_version         = "1.9.0-SNAPSHOT"
 def log4j_version        = '2.3'
 def commons_version      = '3.4'
 def commons_collections  = '4.1'
 def junit_version        = '4.12'
 def le_cbchain           = '0.1.0'
 def guava_version        = '19.0'
+def gson_version         = '2.7'
 //@formatter:on
 
 repositories {
@@ -35,39 +36,43 @@ repositories {
 dependencies {
     //@formatter:off
 
-    compile group: "org.joml",                 name: "joml",                 version: joml_version,          changing: true
-    compile group: 'org.apache.logging.log4j', name: 'log4j-core',           version: log4j_version,         changing: false
-    compile group: 'org.apache.commons',       name: 'commons-lang3',        version: commons_version,       changing: false
-    compile group: 'org.apache.commons',       name: 'commons-collections4', version: commons_collections,   changing: false
-    compile group: 'com.google.guava',         name: 'guava',                version: guava_version,         changing: false
+    compile group: "org.joml",                   name: "joml",                 version: joml_version,          changing: true
+    compile group: 'org.apache.logging.log4j',   name: 'log4j-core',           version: log4j_version,         changing: false
+    compile group: 'org.apache.commons',         name: 'commons-lang3',        version: commons_version,       changing: false
+    compile group: 'org.apache.commons',         name: 'commons-collections4', version: commons_collections,   changing: false
+    compile group: 'com.google.guava',           name: 'guava',                version: guava_version,         changing: false
+//    compile group: 'com.google.code.gson',       name: 'gson',                 version: gson_version,          changing: false
+//    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind',     version: '2.8.3',               changing: false
+//    compile group: 'com.fasterxml.jackson.core', name: 'jackson-core',         version: '2.8.3',               changing: false
+//    compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations',  version: '2.8.3',               changing: false
 
-    compile group: 'org.liquidengine',         name: 'cbchain',              version: le_cbchain,            changing: true
+    compile group: 'org.liquidengine',           name: 'cbchain',              version: le_cbchain,            changing: true
 
-    compile group: 'org.lwjgl',                name: 'lwjgl-stb',            version: lwjgl_version,         changing: true
-    compile group: 'org.lwjgl',                name: 'lwjgl-stb',            version: lwjgl_version,         changing: true,  classifier: 'natives-windows'
-    compile group: 'org.lwjgl',                name: 'lwjgl-stb',            version: lwjgl_version,         changing: true,  classifier: 'natives-linux'
-    compile group: 'org.lwjgl',                name: 'lwjgl-stb',            version: lwjgl_version,         changing: true,  classifier: 'natives-macos'
+    compile group: 'org.lwjgl',                  name: 'lwjgl-stb',            version: lwjgl_version,         changing: true
+    compile group: 'org.lwjgl',                  name: 'lwjgl-stb',            version: lwjgl_version,         changing: true,  classifier: 'natives-windows'
+    compile group: 'org.lwjgl',                  name: 'lwjgl-stb',            version: lwjgl_version,         changing: true,  classifier: 'natives-linux'
+    compile group: 'org.lwjgl',                  name: 'lwjgl-stb',            version: lwjgl_version,         changing: true,  classifier: 'natives-macos'
 
-    compile group: 'org.lwjgl',                name: 'lwjgl-glfw',           version: lwjgl_version,         changing: true
-    compile group: 'org.lwjgl',                name: 'lwjgl-glfw',           version: lwjgl_version,         changing: true,  classifier: 'natives-windows'
-    compile group: 'org.lwjgl',                name: 'lwjgl-glfw',           version: lwjgl_version,         changing: true,  classifier: 'natives-linux'
-    compile group: 'org.lwjgl',                name: 'lwjgl-glfw',           version: lwjgl_version,         changing: true,  classifier: 'natives-macos'
+    compile group: 'org.lwjgl',                  name: 'lwjgl-glfw',           version: lwjgl_version,         changing: true
+    compile group: 'org.lwjgl',                  name: 'lwjgl-glfw',           version: lwjgl_version,         changing: true,  classifier: 'natives-windows'
+    compile group: 'org.lwjgl',                  name: 'lwjgl-glfw',           version: lwjgl_version,         changing: true,  classifier: 'natives-linux'
+    compile group: 'org.lwjgl',                  name: 'lwjgl-glfw',           version: lwjgl_version,         changing: true,  classifier: 'natives-macos'
 
-    compile group: 'org.lwjgl',                name: 'lwjgl-nanovg',         version: lwjgl_version,         changing: true
-    compile group: 'org.lwjgl',                name: 'lwjgl-nanovg',         version: lwjgl_version,         changing: true,  classifier: 'natives-windows'
-    compile group: 'org.lwjgl',                name: 'lwjgl-nanovg',         version: lwjgl_version,         changing: true,  classifier: 'natives-linux'
-    compile group: 'org.lwjgl',                name: 'lwjgl-nanovg',         version: lwjgl_version,         changing: true,  classifier: 'natives-macos'
+    compile group: 'org.lwjgl',                  name: 'lwjgl-nanovg',         version: lwjgl_version,         changing: true
+    compile group: 'org.lwjgl',                  name: 'lwjgl-nanovg',         version: lwjgl_version,         changing: true,  classifier: 'natives-windows'
+    compile group: 'org.lwjgl',                  name: 'lwjgl-nanovg',         version: lwjgl_version,         changing: true,  classifier: 'natives-linux'
+    compile group: 'org.lwjgl',                  name: 'lwjgl-nanovg',         version: lwjgl_version,         changing: true,  classifier: 'natives-macos'
 
-    compile group: 'org.lwjgl',                name: 'lwjgl-opengl',         version: lwjgl_version,         changing: true
+    compile group: 'org.lwjgl',                  name: 'lwjgl-opengl',         version: lwjgl_version,         changing: true
 
-    compile group: 'org.lwjgl',                name: 'lwjgl',                version: lwjgl_version,         changing: true
-    compile group: 'org.lwjgl',                name: 'lwjgl',                version: lwjgl_version,         changing: true,  classifier: 'natives-windows'
-    compile group: 'org.lwjgl',                name: 'lwjgl',                version: lwjgl_version,         changing: true,  classifier: 'natives-linux'
-    compile group: 'org.lwjgl',                name: 'lwjgl',                version: lwjgl_version,         changing: true,  classifier: 'natives-macos'
+    compile group: 'org.lwjgl',                  name: 'lwjgl',                version: lwjgl_version,         changing: true
+    compile group: 'org.lwjgl',                  name: 'lwjgl',                version: lwjgl_version,         changing: true,  classifier: 'natives-windows'
+    compile group: 'org.lwjgl',                  name: 'lwjgl',                version: lwjgl_version,         changing: true,  classifier: 'natives-linux'
+    compile group: 'org.lwjgl',                  name: 'lwjgl',                version: lwjgl_version,         changing: true,  classifier: 'natives-macos'
 
-    runtime group: 'org.lwjgl',                name: 'lwjgl-platform',       version: lwjgl_version,         changing: true,  classifier: 'natives-windows'
-    runtime group: 'org.lwjgl',                name: 'lwjgl-platform',       version: lwjgl_version,         changing: true,  classifier: 'natives-linux'
-    runtime group: 'org.lwjgl',                name: 'lwjgl-platform',       version: lwjgl_version,         changing: true,  classifier: 'natives-osx'
+    runtime group: 'org.lwjgl',                  name: 'lwjgl-platform',       version: lwjgl_version,         changing: true,  classifier: 'natives-windows'
+    runtime group: 'org.lwjgl',                  name: 'lwjgl-platform',       version: lwjgl_version,         changing: true,  classifier: 'natives-linux'
+    runtime group: 'org.lwjgl',                  name: 'lwjgl-platform',       version: lwjgl_version,         changing: true,  classifier: 'natives-osx'
 
 
     testCompile group: 'junit', name: 'junit', version: junit_version
@@ -98,9 +103,9 @@ if (build_type == "SNAPSHOT") {
 task publishArchives << {
     def publishUrl;
     def buildType;
-    def publishUsername = System.getenv("publishUsername") ?: publishUsername;
-    def publishPassword = System.getenv("publishPassword") ?: publishPassword;
-    def releasesPublishUrl = System.getenv("releasesPublishUrl") ?: releasesPublishUrl;
+    def publishUsername     = System.getenv("publishUsername"    ) ?: publishUsername;
+    def publishPassword     = System.getenv("publishPassword"    ) ?: publishPassword;
+    def releasesPublishUrl  = System.getenv("releasesPublishUrl" ) ?: releasesPublishUrl;
     def snapshotsPublishUrl = System.getenv("snapshotsPublishUrl") ?: snapshotsPublishUrl;
     println("-------------------------------------")
     println("PUBLISH ARCHIVES TASK " + build_type)

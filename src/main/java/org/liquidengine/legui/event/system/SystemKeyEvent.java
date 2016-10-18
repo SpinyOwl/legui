@@ -23,7 +23,7 @@ public class SystemKeyEvent implements LeguiSystemEvent {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+        return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
                 .append("window", window)
                 .append("key", key)
                 .append("scancode", scancode)

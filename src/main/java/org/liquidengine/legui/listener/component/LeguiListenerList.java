@@ -2,6 +2,7 @@ package org.liquidengine.legui.listener.component;
 
 import org.liquidengine.legui.event.component.AbstractComponentEvent;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -12,7 +13,7 @@ import java.util.concurrent.locks.ReentrantLock;
 /**
  * Created by Shcherbin Alexander on 9/29/2016.
  */
-public class LeguiListenerList {
+public class LeguiListenerList implements Serializable{
 
     private final Lock lock = new ReentrantLock();
     private final Map<Class<? extends AbstractComponentEvent>, List<? extends IEventListener>> listeners = new ConcurrentHashMap<>();

@@ -10,6 +10,7 @@ import org.liquidengine.legui.component.optional.align.VerticalAlign;
 import org.liquidengine.legui.context.LeguiContext;
 import org.liquidengine.legui.font.FontRegister;
 import org.lwjgl.nanovg.NVGColor;
+import org.lwjgl.nanovg.NVGGlyphPosition;
 import org.lwjgl.nanovg.NVGPaint;
 import org.lwjgl.nanovg.NVGTextRow;
 import org.lwjgl.system.MemoryUtil;
@@ -143,6 +144,7 @@ public final class NvgRenderUtils {
 
             NVGColor textColorN = textColor.w == 0 ? rgba(0.0f, 0.0f, 0.0f, 1f, nvgColor) : rgba(textColor, nvgColor);
             nvgFillColor(context, textColorN);
+//            nnvgText(context, bounds[0], bounds[1], memAddress(byteText), 0);
             nvgText(context, bounds[0], bounds[1], byteText, 0);
         }
 
@@ -359,5 +361,36 @@ public final class NvgRenderUtils {
                 border.render(leguiContext, component);
             }
         }
+    }
+
+
+    public static float getCaretX(long context,
+                                  float x, float w,
+                                  String text,
+                                  int caretPosition,
+                                  float fontSize,
+                                  HorizontalAlign horizontalAlign,
+                                  VerticalAlign verticalAlign,
+                                  NVGGlyphPosition.Buffer glyphs, int maxGlyphCount) {
+        float bounds[] = NvgRenderUtils.calculateTextBoundsRect(context, x, 0, w, fontSize, text, 0, horizontalAlign, verticalAlign);
+        ByteBuffer textBytes = MemoryUtil.memUTF8(text);
+        int ng = nnvgTextGlyphPositions(context, bounds[0], bounds[1], memAddress(textBytes), 0, memAddress(glyphs), maxGlyphCount);
+
+        float caretx = 0;
+        if (caretPosition < ng) {
+            try {
+                caretx = glyphs.get(caretPosition).x();
+            } catch (IndexOutOfBoundsException e) {
+                System.out.println(caretPosition);
+                e.printStackTrace();
+            }
+        } else {
+            if (ng > 0) {
+                caretx = glyphs.get(ng - 1).maxx();
+            } else {
+                caretx = x + horizontalAlign.index * w / 2f;
+            }
+        }
+        return caretx;
     }
 }

@@ -17,7 +17,7 @@ public class SystemWindowIconifyEvent implements LeguiSystemEvent {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+        return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
                 .append("iconified", iconified)
                 .append("window", window)
                 .toString();

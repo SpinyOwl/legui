@@ -8,6 +8,7 @@ import org.liquidengine.legui.event.system.SystemMouseClickEvent;
 import org.liquidengine.legui.processor.system.component.LeguiComponentEventProcessor;
 import org.liquidengine.legui.util.Util;
 
+import static org.liquidengine.legui.processor.system.component.slider.SliderUpdateUtil.updateSliderValue;
 import static org.lwjgl.glfw.GLFW.GLFW_PRESS;
 
 /**
@@ -24,11 +25,11 @@ public class SliderMouseClickProcessor implements LeguiComponentEventProcessor<S
 
         Vector2f cursorPosition = leguiContext.getCursorPosition();
         if (Orientation.VERTICAL.equals(gui.getOrientation())) {
-            float value = (pos.y + gui.getSize().y - cursorPosition.y) / gui.getSize().y;
-            gui.setValue(value * 100f);
+            float value = 100f * (pos.y + gui.getSize().y - cursorPosition.y) / gui.getSize().y;
+            updateSliderValue(gui, value, leguiContext);
         } else {
-            float value = (cursorPosition.x - pos.x) / gui.getSize().x;
-            gui.setValue(value * 100f);
+            float value = 100f * (cursorPosition.x - pos.x) / gui.getSize().x;
+            updateSliderValue(gui, value, leguiContext);
         }
     }
 }

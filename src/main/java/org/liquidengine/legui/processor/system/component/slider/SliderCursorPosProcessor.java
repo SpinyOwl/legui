@@ -9,6 +9,8 @@ import org.liquidengine.legui.processor.system.component.LeguiComponentEventProc
 import org.liquidengine.legui.util.Util;
 import org.lwjgl.glfw.GLFW;
 
+import static org.liquidengine.legui.processor.system.component.slider.SliderUpdateUtil.updateSliderValue;
+
 
 /**
  * Created by Alexander on 28.08.2016.
@@ -25,11 +27,11 @@ public class SliderCursorPosProcessor implements LeguiComponentEventProcessor<Sl
 
         Vector2f cursorPosition = leguiContext.getCursorPosition();
         if (Orientation.VERTICAL.equals(slider.getOrientation())) {
-            float value = ((pos.y + slider.getSize().y) - cursorPosition.y) / slider.getSize().y;
-            slider.setValue(value * 100f);
+            float value = 100f * ((pos.y + slider.getSize().y) - cursorPosition.y) / slider.getSize().y;
+            updateSliderValue(slider, value, leguiContext);
         } else {
-            float value = (cursorPosition.x - pos.x) / slider.getSize().x;
-            slider.setValue(value * 100f);
+            float value = 100f * (cursorPosition.x - pos.x) / slider.getSize().x;
+            updateSliderValue(slider, value, leguiContext);
         }
     }
 }

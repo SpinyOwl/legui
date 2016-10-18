@@ -5,10 +5,12 @@ import org.liquidengine.legui.context.LeguiContext;
 import org.liquidengine.legui.render.LeguiBorderRenderer;
 import org.liquidengine.legui.render.LeguiRendererProvider;
 
+import java.io.Serializable;
+
 /**
  * Created by Shcherbin Alexander on 9/14/2016.
  */
-public abstract class Border {
+public abstract class Border implements Serializable {
     protected LeguiBorderRenderer renderer;
     protected boolean enabled = true;
 

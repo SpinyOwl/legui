@@ -25,6 +25,8 @@ import static org.lwjgl.system.MemoryUtil.NULL;
 public class Demo {
 
     private final boolean resizable;
+    private final int x;
+    private final int y;
     protected int width;
     protected int height;
     protected volatile boolean running;
@@ -57,11 +59,17 @@ public class Demo {
     }
 
     public Demo(int width, int height, String title, Component component, boolean resizable) {
+        this(100, 100, width, height, title, component, resizable);
+    }
+
+    public Demo(int x, int y, int width, int height, String title, Component component, boolean resizable) {
         this.width = width;
         this.height = height;
         this.initialTitle = title;
         this.component = component;
         this.resizable = resizable;
+        this.x = x;
+        this.y = y;
     }
 
     public void start() {
@@ -86,6 +94,7 @@ public class Demo {
 
         glfwWindowHint(GLFW_RESIZABLE, resizable ? GLFW_TRUE : GLFW_FALSE);
         windowPointer = glfwCreateWindow(width, height, initialTitle, NULL, NULL);
+        glfwSetWindowPos(windowPointer, x, y);
 //        glfwSwapInterval(1);
         glfwShowWindow(windowPointer);
 

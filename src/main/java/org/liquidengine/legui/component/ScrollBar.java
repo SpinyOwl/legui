@@ -187,7 +187,7 @@ public class ScrollBar extends Component {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+        return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
                 .append("orientation", orientation)
                 .append("minValue", minValue)
                 .append("maxValue", maxValue)

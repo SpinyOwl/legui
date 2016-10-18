@@ -39,11 +39,11 @@ public final class ColorUtil {
         return new Vector4f(color).div(2);
     }
 
-    public static Vector4f blackOrWhite(Vector4f color) {
-        return blackOrWhite(color, new Vector4f(1));
+    public static Vector4f oppositeBlackOrWhite(Vector4f color) {
+        return oppositeBlackOrWhite(color, new Vector4f(1));
     }
 
-    public static Vector4f blackOrWhite(Vector4f color, Vector4f targetColor) {
+    public static Vector4f oppositeBlackOrWhite(Vector4f color, Vector4f targetColor) {
         if ((color.x * 0.299f + color.y * 0.587f + color.z * 0.114f) > 170f / 255f) {
             targetColor.x = 0;
             targetColor.y = 0;

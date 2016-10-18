@@ -2,8 +2,12 @@ package org.liquidengine.legui.processor.system.component.slider;
 
 import org.liquidengine.legui.component.Slider;
 import org.liquidengine.legui.context.LeguiContext;
+import org.liquidengine.legui.event.component.SliderChangeEvent;
 import org.liquidengine.legui.event.system.SystemScrollEvent;
+import org.liquidengine.legui.processor.LeguiEventProcessor;
 import org.liquidengine.legui.processor.system.component.LeguiComponentEventProcessor;
+
+import static org.liquidengine.legui.processor.system.component.slider.SliderUpdateUtil.updateSliderValue;
 
 /**
  * Created by Shcherbin Alexander on 8/30/2016.
@@ -19,6 +23,8 @@ public class SliderScrollProcessor implements LeguiComponentEventProcessor<Slide
         if (newVal > maxValue) newVal = maxValue;
         if (newVal < minValue) newVal = minValue;
 
-        gui.setValue(newVal);
+        updateSliderValue(gui, newVal, leguiContext);
     }
+
+
 }

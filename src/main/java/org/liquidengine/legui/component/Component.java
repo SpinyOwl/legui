@@ -17,12 +17,14 @@ import org.liquidengine.legui.render.LeguiComponentRenderer;
 import org.liquidengine.legui.render.LeguiRendererProvider;
 import org.liquidengine.legui.util.ColorConstants;
 
+import java.io.Serializable;
+
 /**
  * Component is an object that have graphical representation in legui system
  * <p>
  * Created by Shcherbin Alexander on 9/14/2016.
  */
-public abstract class Component {
+public abstract class Component implements Serializable {
     private final LeguiEventProcessorList processors = new LeguiEventProcessorList(this);
     protected Vector2f position;
     protected Vector2f size;
@@ -105,6 +107,7 @@ public abstract class Component {
     public void setBackgroundColor(Vector4f backgroundColor) {
         this.backgroundColor = backgroundColor;
     }
+
     public void setBackgroundColor(float r, float g, float b, float a) {
         backgroundColor.set(r, g, b, a);
     }
@@ -188,13 +191,12 @@ public abstract class Component {
                 .append(pressed, component.pressed)
                 .append(hovered, component.hovered)
                 .append(cornerRadius, component.cornerRadius)
-                .append(processors, component.processors)
                 .append(position, component.position)
                 .append(size, component.size)
                 .append(backgroundColor, component.backgroundColor)
                 .append(border, component.border)
+                .append(parent, component.parent)
                 .append(intersector, component.intersector)
-                .append(renderer, component.renderer)
                 .append(listenerList, component.listenerList)
                 .isEquals();
     }
@@ -202,7 +204,6 @@ public abstract class Component {
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
-                .append(processors)
                 .append(position)
                 .append(size)
                 .append(backgroundColor)
@@ -213,16 +214,15 @@ public abstract class Component {
                 .append(pressed)
                 .append(hovered)
                 .append(cornerRadius)
+                .append(parent)
                 .append(intersector)
-                .append(renderer)
                 .append(listenerList)
                 .toHashCode();
     }
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("processors", processors)
+        return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
                 .append("position", position)
                 .append("size", size)
                 .append("backgroundColor", backgroundColor)
@@ -233,8 +233,8 @@ public abstract class Component {
                 .append("pressed", pressed)
                 .append("hovered", hovered)
                 .append("cornerRadius", cornerRadius)
+                .append("parent", parent)
                 .append("intersector", intersector)
-                .append("renderer", renderer)
                 .append("listenerList", listenerList)
                 .toString();
     }

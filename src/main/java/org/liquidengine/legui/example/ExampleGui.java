@@ -5,11 +5,14 @@ import org.liquidengine.legui.component.*;
 import org.liquidengine.legui.component.border.SimpleLineBorder;
 import org.liquidengine.legui.component.optional.Orientation;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
+import org.liquidengine.legui.component.optional.align.VerticalAlign;
 import org.liquidengine.legui.event.component.CursorEnterEvent;
 import org.liquidengine.legui.event.component.KeyboardKeyEvent;
 import org.liquidengine.legui.event.component.MouseClickEvent;
+import org.liquidengine.legui.event.component.SliderChangeEvent;
 import org.liquidengine.legui.listener.component.KeyboardKeyEventListener;
 import org.liquidengine.legui.listener.component.MouseClickEventListener;
+import org.liquidengine.legui.listener.component.SliderChangeEventListener;
 import org.liquidengine.legui.util.ColorConstants;
 import org.lwjgl.glfw.GLFW;
 
@@ -95,6 +98,7 @@ public class ExampleGui extends Panel {
 
         TextInput textInput = new TextInput(250, 130, 100, 30);
         textInput.getTextState().setHorizontalAlign(HorizontalAlign.RIGHT);
+//        textInput.getTextState().setPadding(new Vector4f(0));
         this.addComponent(textInput);
 
         Widget widget = new Widget("Hello widget", 250, 170, 100, 100);
@@ -170,16 +174,25 @@ public class ExampleGui extends Panel {
             if (PRESS.equals(action)) System.out.println("PRESS");
         });
 
-        ScrollablePanel panel = new ScrollablePanel(420, 10, 150, 150);
+        ScrollablePanel panel = new ScrollablePanel(420, 10, 250, 150);
         panel.setBackgroundColor(1, 1, 1, 1);
 //        panel.setBorder(null);
-        panel.getContainer().setSize(200, 200);
+        panel.getContainer().setSize(300, 200);
         panel.resize();
         panel.getContainer().addComponent(new TextInput("Hello Scrollable", 10, 10, 150, 20));
         this.addComponent(panel);
 
+        slider2.getListenerList().addListener(SliderChangeEvent.class, (SliderChangeEventListener) event -> {
+            panel.getHorizontalScrollBar().getSize().y = event.getSlider().getValue() / 2f + 10;
+            panel.resize();
+        });
+        slider1.getListenerList().addListener(SliderChangeEvent.class, (SliderChangeEventListener) event -> {
+            panel.getHorizontalScrollBar().setArrowSize(event.getSlider().getValue() / 4f + 10);
+            panel.resize();
+        });
+
         textArea = new TextArea(420, 280, 150, 100);
-        textArea.getTextState().setText("ABC DEF GHI JKL MNO PQR\nSTU VWXYZ");
+        textArea.getTextState().setText("ABC DEF GH\r\nI JKL MNO PQR\nSTU VWXYZ");
         textArea.setCaretPosition(12);
         textArea.getTextState().setHorizontalAlign(HorizontalAlign.CENTER);
         this.addComponent(textArea);
@@ -196,6 +209,15 @@ public class ExampleGui extends Panel {
         caretp = new TextInput(420, 400, 150, 20);
         caretp.getTextState().setHorizontalAlign(HorizontalAlign.CENTER);
         this.addComponent(caretp);
+
+        TextInput inpur = new TextInput(420,430,50,35);
+        inpur.getTextState().setText("00");
+        inpur.getTextState().setFontSize(35);
+        inpur.getTextState().setHorizontalAlign(HorizontalAlign.CENTER);
+        inpur.getTextState().setVerticalAlign(VerticalAlign.MIDDLE);
+//        inpur.getTextState().setPadding(new Vector4f(0));
+        inpur.setBackgroundColor(ColorConstants.white());
+        this.addComponent(inpur);
     }
 
     public TextArea getTextArea() {

@@ -4,6 +4,7 @@ import org.liquidengine.legui.component.TextArea;
 import org.liquidengine.legui.context.LeguiContext;
 import org.liquidengine.legui.event.system.SystemCharEvent;
 import org.liquidengine.legui.processor.system.component.LeguiComponentEventProcessor;
+import org.lwjgl.glfw.GLFW;
 
 import static org.liquidengine.legui.util.Util.cpToStr;
 
@@ -13,7 +14,7 @@ import static org.liquidengine.legui.util.Util.cpToStr;
 public class TextAreaCharEventProcessor implements LeguiComponentEventProcessor<TextArea, SystemCharEvent> {
     @Override
     public void process(TextArea gui, SystemCharEvent event, LeguiContext leguiContext) {
-        if (gui.isFocused() && gui.isEditable()) {
+        if (gui.isFocused() && gui.isEditable() && !leguiContext.getMouseButtonStates()[GLFW.GLFW_MOUSE_BUTTON_LEFT]) {
             String str = cpToStr(event.codepoint);
             int caretPosition = gui.getCaretPosition();
             gui.getTextState().insert(caretPosition, str);

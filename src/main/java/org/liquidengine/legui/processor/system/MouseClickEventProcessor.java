@@ -89,7 +89,7 @@ public class MouseClickEventProcessor extends SystemEventProcessor<SystemMouseCl
         } else if (event.action == GLFW_RELEASE && intersects) {
             if (focusedGui != null) {
                 component.setPressed(false);
-                EventProcessorUtils.release(mainComponent, component);
+//                EventProcessorUtils.release(mainComponent, component);
 
                 Vector2f position = Util.calculatePosition(component).sub(cursorPosition).negate();
                 if (focusedGui == component) {

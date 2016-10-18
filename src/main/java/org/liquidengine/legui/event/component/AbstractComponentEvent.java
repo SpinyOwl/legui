@@ -5,10 +5,12 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.liquidengine.legui.component.Component;
 
+import java.io.Serializable;
+
 /**
  * Created by Shcherbin Alexander on 9/26/2016.
  */
-public abstract class AbstractComponentEvent {
+public abstract class AbstractComponentEvent implements Serializable {
     private final Component component;
 
     protected AbstractComponentEvent(Component component) {
@@ -34,7 +36,7 @@ public abstract class AbstractComponentEvent {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+        return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
                 .append("component", component)
                 .toString();
     }

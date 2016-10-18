@@ -9,6 +9,7 @@ import org.liquidengine.legui.event.system.SystemMouseClickEvent;
 import org.liquidengine.legui.processor.LeguiEventProcessor;
 import org.lwjgl.glfw.GLFW;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -16,21 +17,21 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * Created by Shcherbin Alexander on 9/19/2016.
  */
-public class LeguiContext {
+public class LeguiContext implements Serializable {
 
-    private long glfwWindow;
+    private transient long glfwWindow;
 
     private Vector2f windowMousePosition;
     private Vector2f windowPosition;
     private Vector2i windowSize;
     private Vector2f framebufferSize;
-    private float pixelRatio;
+    private transient float pixelRatio;
 
     private Component mainGuiComponent;
     private Component mouseTargetGui;
     private Component focusedGui;
 
-    private boolean debug = false;
+    private transient boolean debug = false;
 
     private boolean[] mouseButtonStates = new boolean[GLFW.GLFW_MOUSE_BUTTON_LAST];
     private Vector2f mousePosition;

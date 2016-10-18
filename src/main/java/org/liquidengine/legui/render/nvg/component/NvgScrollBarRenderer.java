@@ -4,20 +4,24 @@ import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.ScrollBar;
-import org.liquidengine.legui.component.optional.Orientation;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
 import org.liquidengine.legui.context.LeguiContext;
 import org.liquidengine.legui.font.FontRegister;
 import org.liquidengine.legui.render.nvg.NvgLeguiComponentRenderer;
-import org.liquidengine.legui.util.NVGUtils;
-import org.liquidengine.legui.util.NvgRenderUtils;
 import org.liquidengine.legui.util.Util;
 import org.lwjgl.nanovg.NVGColor;
+import org.lwjgl.nanovg.NVGTextRow;
+import org.lwjgl.system.MemoryUtil;
 
-import static org.liquidengine.legui.util.ColorUtil.blackOrWhite;
+import java.nio.ByteBuffer;
+
+import static org.liquidengine.legui.component.optional.Orientation.VERTICAL;
+import static org.liquidengine.legui.util.ColorUtil.oppositeBlackOrWhite;
+import static org.liquidengine.legui.util.NVGUtils.rgba;
 import static org.liquidengine.legui.util.NvgRenderUtils.*;
 import static org.lwjgl.nanovg.NanoVG.*;
+import static org.lwjgl.system.MemoryUtil.memAddress;
 
 /**
  * Created by Shcherbin Alexander on 9/29/2016.
@@ -55,7 +59,7 @@ public class NvgScrollBarRenderer extends NvgLeguiComponentRenderer {
             float offset = 1f;
 
             float curValue = scrollBar.getCurValue();
-            boolean vertical = Orientation.VERTICAL.equals(scrollBar.getOrientation());
+            boolean vertical = VERTICAL.equals(scrollBar.getOrientation());
             Vector4f scrollBarBackgroundColor = scrollBar.getBackgroundColor();
             Vector4f scrollColor = scrollBar.getScrollColor();
 
@@ -64,7 +68,7 @@ public class NvgScrollBarRenderer extends NvgLeguiComponentRenderer {
             // draw background
             nvgBeginPath(context);
             nvgRoundedRect(context, x, y, w, h, cornerRadius);
-            nvgFillColor(context, NVGUtils.rgba(backgroundColor, colorA));
+            nvgFillColor(context, rgba(backgroundColor, colorA));
             nvgFill(context);
 
             // draw scroll bar back
@@ -84,13 +88,14 @@ public class NvgScrollBarRenderer extends NvgLeguiComponentRenderer {
 
                 nvgBeginPath(context);
                 nvgRoundedRect(context, lx, ly, wx, hy, arrowsEnabled ? 0 : cornerRadius);
-                nvgFillColor(context, NVGUtils.rgba(scrollBarBackgroundColor, colorA));
+                nvgFillColor(context, rgba(scrollBarBackgroundColor, colorA));
                 nvgFill(context);
 
                 if (arrowsEnabled) {
                     Vector4f arrowColor = scrollBar.getArrowColor();
-                    Vector4f blackOrWhite = blackOrWhite(arrowColor);
-                    drawArrows(context, arrowSize, vertical, lx, ly, wx, hy, arrowColor, blackOrWhite);
+                    Vector4f blackOrWhite = oppositeBlackOrWhite(arrowColor);
+//                    drawArrows(context, arrowSize, vertical, lx, ly, wx, hy, arrowColor, oppositeBlackOrWhite);
+                    drawArrows(context, scrollBar, pos, size);
                 }
             }
 
@@ -118,7 +123,7 @@ public class NvgScrollBarRenderer extends NvgLeguiComponentRenderer {
 
                 nvgBeginPath(context);
                 nvgRoundedRect(context, xx, yy, ww, hh, cornerRadius);
-                nvgFillColor(context, NVGUtils.rgba(scrollColor, colorA));
+                nvgFillColor(context, rgba(scrollColor, colorA));
                 nvgFill(context);
             }
 
@@ -129,26 +134,69 @@ public class NvgScrollBarRenderer extends NvgLeguiComponentRenderer {
         resetScissor(context);
     }
 
-    private void drawArrows(long context, float arrowSize, boolean vertical, float lx, float ly, float wx, float hy, Vector4f arrowColor, Vector4f blackOrWhite) {
+    private void drawArrows(long context, ScrollBar scrollBar, Vector2f pos, Vector2f size) {
+        boolean vertical = VERTICAL.equals(scrollBar.getOrientation());
+        Vector4f arrowColor = scrollBar.getArrowColor();
+        float arrowSize = scrollBar.getArrowSize();
+        float x1, y1, w1, h1, x2, y2, w2, h2;
+        String first, second;
         if (vertical) {
-            float y1 = ly - arrowSize;
-            float y2 = ly + hy;
-            drawRectangle(context, arrowColor, lx, y1, wx, arrowSize);
-            drawRectangle(context, arrowColor, lx, y2, wx, arrowSize);
-            NvgRenderUtils.renderTextLineToBounds(context, lx + 2.5f, y1, wx, arrowSize, arrowSize > wx ? wx : arrowSize, FontRegister
-                    .MATERIAL_ICONS_REGULAR, blackOrWhite, T, HorizontalAlign.CENTER, VerticalAlign.MIDDLE, false);
-            NvgRenderUtils.renderTextLineToBounds(context, lx + 2.5f, y2, wx, arrowSize, arrowSize > wx ? wx : arrowSize, FontRegister
-                    .MATERIAL_ICONS_REGULAR, blackOrWhite, B, HorizontalAlign.CENTER, VerticalAlign.MIDDLE, false);
+            x1 = pos.x;
+            y1 = pos.y;
+            w1 = size.x;
+            h1 = arrowSize;
+            x2 = pos.x;
+            y2 = pos.y + size.y - arrowSize;
+            w2 = size.x;
+            h2 = arrowSize;
+            first = T;
+            second = B;
         } else {
-            float x1 = lx - arrowSize;
-            float x2 = lx + wx;
-            drawRectangle(context, arrowColor, x1, ly, arrowSize, hy);
-            drawRectangle(context, arrowColor, x2, ly, arrowSize, hy);
-            NvgRenderUtils.renderTextLineToBounds(context, x1 + 2.5f, ly, arrowSize, hy, arrowSize > hy ? hy : arrowSize, FontRegister
-                    .MATERIAL_ICONS_REGULAR, blackOrWhite, L, HorizontalAlign.CENTER, VerticalAlign.MIDDLE, false);
-            NvgRenderUtils.renderTextLineToBounds(context, x2 + 2.5f, ly, arrowSize, hy, arrowSize > hy ? hy : arrowSize, FontRegister
-                    .MATERIAL_ICONS_REGULAR, blackOrWhite, R, HorizontalAlign.CENTER, VerticalAlign.MIDDLE, false);
+            x1 = pos.x;
+            y1 = pos.y;
+            w1 = arrowSize;
+            h1 = size.y;
+            x2 = pos.x + size.x - arrowSize;
+            y2 = pos.y;
+            w2 = arrowSize;
+            h2 = size.y;
+            first = L;
+            second = R;
         }
+        Vector4f blackOrWhite = oppositeBlackOrWhite(arrowColor);
+        // first arrow bg
+        drawRectangle(context, arrowColor, x1, y1, w1, h1);
+        // second arrow bg
+        drawRectangle(context, arrowColor, x2, y2, w2, h2);
+
+
+//        first = "00";
+        float fontSize = arrowSize > h1 ? h1 : arrowSize;
+        String font = FontRegister.MATERIAL_ICONS_REGULAR;
+        HorizontalAlign horizontalAlign = HorizontalAlign.CENTER;
+        VerticalAlign verticalAlign = VerticalAlign.MIDDLE;
+
+        {
+            nvgFontSize(context, fontSize);
+            nvgFontFace(context, font);
+            alignTextInBox(context, horizontalAlign, verticalAlign);
+
+            drawArr(context, x1, y1, w1, h1, first, blackOrWhite, fontSize, horizontalAlign, verticalAlign);
+            drawArr(context, x2, y2, w2, h2, second, blackOrWhite, fontSize, horizontalAlign, verticalAlign);
+        }
+    }
+
+    private void drawArr(long context, float x1, float y1, float w1, float h1, String first, Vector4f blackOrWhite, float fontSize, HorizontalAlign horizontalAlign, VerticalAlign verticalAlign) {
+        ByteBuffer  byteText = MemoryUtil.memUTF8(first);
+        long start = memAddress(byteText);
+        long end = start + byteText.remaining() - 1;
+        NVGTextRow.Buffer buffer = NVGTextRow.create(1);
+        nnvgTextBreakLines(context, start, end, w1, memAddress(buffer), 1);
+        NVGTextRow row = buffer.get(0);
+        float[] bounds = createBounds(x1, y1, w1, h1, horizontalAlign, verticalAlign, row.width(), fontSize);
+        nvgBeginPath(context);
+        nvgFillColor(context, rgba(blackOrWhite, colorA));
+        nnvgText(context, bounds[0], bounds[1], row.start(), row.end());
     }
 
 }

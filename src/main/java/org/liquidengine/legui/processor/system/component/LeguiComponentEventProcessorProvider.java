@@ -21,6 +21,7 @@ import org.liquidengine.legui.processor.system.component.textarea.TextAreaCharEv
 import org.liquidengine.legui.processor.system.component.textarea.TextAreaKeyProcessor;
 import org.liquidengine.legui.processor.system.component.textarea.TextAreaMouseClickProcessor;
 import org.liquidengine.legui.processor.system.component.textinput.TextInputCharEventProcessor;
+import org.liquidengine.legui.processor.system.component.textinput.TextInputCursorPosProcessor;
 import org.liquidengine.legui.processor.system.component.textinput.TextInputKeyProcessor;
 import org.liquidengine.legui.processor.system.component.textinput.TextInputMouseClickProcessor;
 
@@ -63,6 +64,7 @@ public class LeguiComponentEventProcessorProvider extends AbstractGuiProcessorPr
         registerGuiProcessor(TextInput.class, SystemMouseClickEvent.class, new TextInputMouseClickProcessor());
         registerGuiProcessor(TextInput.class, SystemCharEvent.class, new TextInputCharEventProcessor());
         registerGuiProcessor(TextInput.class, SystemKeyEvent.class, new TextInputKeyProcessor());
+        registerGuiProcessor(TextInput.class, SystemCursorPosEvent.class, new TextInputCursorPosProcessor());
 
         registerGuiProcessor(TextArea.class, SystemMouseClickEvent.class, new TextAreaMouseClickProcessor());
         registerGuiProcessor(TextArea.class, SystemCharEvent.class, new TextAreaCharEventProcessor());

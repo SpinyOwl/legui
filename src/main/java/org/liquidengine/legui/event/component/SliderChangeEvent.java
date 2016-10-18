@@ -47,7 +47,7 @@ public class SliderChangeEvent extends AbstractComponentEvent {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+        return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
                 .append("oldValue", oldValue)
                 .append("newValue", newValue)
                 .toString();

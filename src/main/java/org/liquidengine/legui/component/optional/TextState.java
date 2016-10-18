@@ -6,10 +6,12 @@ import org.liquidengine.legui.component.optional.align.VerticalAlign;
 import org.liquidengine.legui.font.FontRegister;
 import org.liquidengine.legui.util.ColorConstants;
 
+import java.io.Serializable;
+
 /**
  * Created by Shcherbin Alexander on 9/22/2016.
  */
-public class TextState {
+public class TextState implements Serializable {
     protected String font = FontRegister.DEFAULT;
     protected float fontSize = 16;
     protected StringBuffer text = new StringBuffer();
