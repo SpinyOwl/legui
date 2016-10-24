@@ -1,5 +1,6 @@
 package org.liquidengine.legui.context;
 
+import org.liquidengine.legui.event.SystemEvent;
 import org.liquidengine.legui.event.system.*;
 import org.lwjgl.glfw.*;
 
@@ -11,7 +12,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  */
 public class LeguiSystemEventQueue {
 
-    private Queue<LeguiSystemEvent> eventQueue = new ConcurrentLinkedQueue<>();
+    private Queue<SystemEvent> eventQueue = new ConcurrentLinkedQueue<>();
 
     public LeguiSystemEventQueue(LeguiCallbackKeeper guiCallbackKeeper) {
         guiCallbackKeeper.getChainCharCallback().add(createCharCallback());
@@ -96,7 +97,7 @@ public class LeguiSystemEventQueue {
         return eventQueue.size();
     }
 
-    public LeguiSystemEvent poll() {
+    public SystemEvent poll() {
         return eventQueue.poll();
     }
 

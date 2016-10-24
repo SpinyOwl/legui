@@ -1,11 +1,12 @@
 package org.liquidengine.legui.event.component;
 
 import org.liquidengine.legui.component.Component;
+import org.liquidengine.legui.event.LeguiEvent;
 
 /**
  * Created by Alexander on 13.10.2016.
  */
-public class KeyboardKeyEvent extends AbstractComponentEvent {
+public class KeyboardKeyEvent extends LeguiEvent {
     private final int key;
     private final int action;
     private final int mods;

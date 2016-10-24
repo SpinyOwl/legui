@@ -4,11 +4,12 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.liquidengine.legui.component.Component;
+import org.liquidengine.legui.event.LeguiEvent;
 
 /**
  * Created by Alexander on 13.10.2016.
  */
-public class MouseScrollEvent extends AbstractComponentEvent {
+public class MouseScrollEvent extends LeguiEvent {
     private final double xoffset;
     private final double yoffset;
 

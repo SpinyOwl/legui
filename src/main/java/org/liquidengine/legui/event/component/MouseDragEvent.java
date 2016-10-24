@@ -5,11 +5,12 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 import org.liquidengine.legui.component.Component;
+import org.liquidengine.legui.event.LeguiEvent;
 
 /**
  * Created by Shcherbin Alexander on 9/29/2016.
  */
-public class MouseDragEvent extends AbstractComponentEvent {
+public class MouseDragEvent extends LeguiEvent {
     private final Vector2f cursorPosition;
     private final Vector2f cursorPositionPrev;
 

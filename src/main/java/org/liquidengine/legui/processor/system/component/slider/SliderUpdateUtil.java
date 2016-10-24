@@ -3,7 +3,7 @@ package org.liquidengine.legui.processor.system.component.slider;
 import org.liquidengine.legui.component.Slider;
 import org.liquidengine.legui.context.LeguiContext;
 import org.liquidengine.legui.event.component.SliderChangeEvent;
-import org.liquidengine.legui.processor.LeguiEventProcessor;
+import org.liquidengine.legui.processor.LeguiEventListenerProcessor;
 
 /**
  * Created by Alexander on 18.10.2016.
@@ -16,7 +16,7 @@ public final class SliderUpdateUtil {
         float value = gui.getValue();
         gui.setValue(newVal);
         SliderChangeEvent event = new SliderChangeEvent(gui, value, newVal);
-        LeguiEventProcessor leguiEventProcessor = context.getLeguiEventProcessor();
+        LeguiEventListenerProcessor leguiEventProcessor = context.getLeguiEventProcessor();
         if (leguiEventProcessor == null) {
             gui.getListenerList().getListeners(SliderChangeEvent.class).forEach(l -> l.update(event));
         } else {

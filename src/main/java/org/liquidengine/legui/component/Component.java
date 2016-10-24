@@ -11,8 +11,8 @@ import org.liquidengine.legui.component.border.SimpleLineBorder;
 import org.liquidengine.legui.component.intersector.LeguiIntersector;
 import org.liquidengine.legui.component.intersector.RectangleIntersector;
 import org.liquidengine.legui.context.LeguiContext;
-import org.liquidengine.legui.listener.component.LeguiListenerList;
-import org.liquidengine.legui.processor.system.component.LeguiEventProcessorList;
+import org.liquidengine.legui.listener.LeguiEventListenerList;
+import org.liquidengine.legui.listener.SystemEventListenerList;
 import org.liquidengine.legui.render.LeguiComponentRenderer;
 import org.liquidengine.legui.render.LeguiRendererProvider;
 import org.liquidengine.legui.util.ColorConstants;
@@ -25,7 +25,6 @@ import java.io.Serializable;
  * Created by Shcherbin Alexander on 9/14/2016.
  */
 public abstract class Component implements Serializable {
-    private final LeguiEventProcessorList processors = new LeguiEventProcessorList(this);
     protected Vector2f position;
     protected Vector2f size;
     protected Vector4f backgroundColor = ColorConstants.lightGray();
@@ -45,7 +44,8 @@ public abstract class Component implements Serializable {
     protected LeguiIntersector intersector = new RectangleIntersector();
     protected LeguiComponentRenderer renderer = LeguiRendererProvider.getProvider().getRenderer(this);
 
-    protected LeguiListenerList listenerList = new LeguiListenerList();
+    protected LeguiEventListenerList listenerList = new LeguiEventListenerList();
+    protected SystemEventListenerList processors = new SystemEventListenerList(this.getClass());
 
     public Component() {
         this(10, 10, 10, 10);
@@ -68,7 +68,7 @@ public abstract class Component implements Serializable {
         return parent;
     }
 
-    public LeguiEventProcessorList getProcessors() {
+    public SystemEventListenerList getProcessors() {
         return processors;
     }
 
@@ -96,7 +96,7 @@ public abstract class Component implements Serializable {
         this.size.set(width, height);
     }
 
-    public LeguiListenerList getListenerList() {
+    public LeguiEventListenerList getListenerList() {
         return listenerList;
     }
 

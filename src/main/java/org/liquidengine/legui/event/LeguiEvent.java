@@ -1,4 +1,4 @@
-package org.liquidengine.legui.event.component;
+package org.liquidengine.legui.event;
 
 import com.google.common.base.Objects;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -10,10 +10,10 @@ import java.io.Serializable;
 /**
  * Created by Shcherbin Alexander on 9/26/2016.
  */
-public abstract class AbstractComponentEvent implements Serializable {
+public abstract class LeguiEvent implements Serializable {
     private final Component component;
 
-    protected AbstractComponentEvent(Component component) {
+    protected LeguiEvent(Component component) {
         this.component = component;
     }
 
@@ -24,8 +24,8 @@ public abstract class AbstractComponentEvent implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof AbstractComponentEvent)) return false;
-        AbstractComponentEvent that = (AbstractComponentEvent) o;
+        if (!(o instanceof LeguiEvent)) return false;
+        LeguiEvent that = (LeguiEvent) o;
         return Objects.equal(component, that.component);
     }
 

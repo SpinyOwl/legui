@@ -1,12 +1,13 @@
 package org.liquidengine.legui.event.system;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.liquidengine.legui.event.SystemEvent;
 import org.lwjgl.PointerBuffer;
 
 /**
  * Created by Shcherbin Alexander on 6/10/2016.
  */
-public class SystemDropEvent implements LeguiSystemEvent {
+public class SystemDropEvent implements SystemEvent {
     public final long window;
     public final int count;
     public final long names;

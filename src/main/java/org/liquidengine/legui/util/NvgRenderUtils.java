@@ -29,20 +29,6 @@ public final class NvgRenderUtils {
     private NvgRenderUtils() {
     }
 
-    public static void renderTextStateMultilineToBounds(long nvgContext, Vector2f pos, Vector2f size, TextState textState) {
-
-        renderTextMultilineToBounds(nvgContext,
-                pos.x, pos.y, size.x, size.y,
-                textState.getFontSize(),
-                textState.getFont(),
-                textState.getTextColor(),
-                NVGColor.calloc(),
-                textState.getText(),
-                textState.getHorizontalAlign(),
-                textState.getVerticalAlign());
-
-    }
-
     public static void renderTextStateLineToBounds(long nvgContext, Vector2f pos, Vector2f size, TextState textState) {
         renderTextStateLineToBounds(nvgContext, pos, size, textState, true);
     }
@@ -150,63 +136,6 @@ public final class NvgRenderUtils {
 
     }
 
-    /**
-     * Used to renderNvg textState to rectangle bounds
-     *
-     * @param context         nanovg context
-     * @param x               x position of rectangle
-     * @param y               y position of rectangle
-     * @param w               width of rectangle
-     * @param h               height of rectangle
-     * @param fontSize        titleFont size
-     * @param font            titleFont name which contains in titleFont register
-     * @param textColor       textState color
-     * @param nvgColor        nvg textState color
-     * @param text            textState
-     * @param horizontalAlign horizontal align
-     * @param verticalAlign   vertical align
-     */
-    public static void renderTextMultilineToBounds(long context,
-                                                   float x, float y, float w, float h,
-                                                   float fontSize,
-                                                   String font,
-                                                   Vector4f textColor,
-                                                   NVGColor nvgColor,
-                                                   String text,
-                                                   HorizontalAlign horizontalAlign, VerticalAlign verticalAlign) {
-        nvgFontSize(context, fontSize);
-        nvgFontFace(context, font);
-
-        ByteBuffer byteText = MemoryUtil.memUTF8(text);
-        alignTextInBox(context, horizontalAlign, verticalAlign);
-
-        float[] lineh = {0};
-        nvgTextMetrics(context, null, null, lineh);
-
-        long start = memAddress(byteText);
-        long end = start + byteText.remaining();
-
-        int maxRows = (int) Math.ceil((double) h / lineh[0]);
-
-        NVGTextRow.Buffer buffer = NVGTextRow.create(maxRows);
-        int nrows;
-        int rowNum = 0;
-        while ((nrows = nnvgTextBreakLines(context, start, end, w, memAddress(buffer), maxRows)) != 0) {
-            for (int i = 0; i < nrows; i++) {
-                NVGTextRow row = buffer.get(i);
-                float[] bounds = createBounds(x, y, w, h, horizontalAlign, verticalAlign, row.width(), fontSize, rowNum, nrows);
-                nvgBeginPath(context);
-                NVGColor textColorN = textColor.w == 0 ? rgba(0.0f, 0.0f, 0.0f, 1f, nvgColor) : rgba(textColor, nvgColor);
-                nvgFillColor(context, textColorN);
-                nnvgText(context, bounds[0], bounds[1], row.start(), row.end());
-
-//                y += lineh[0];
-                rowNum++;
-            }
-            start = buffer.get(nrows - 1).next();
-        }
-    }
-
     public static void drawRectangle(long context, Vector4f color, float x, float y, float w, float h) {
         nvgBeginPath(context);
         nvgFillColor(context, rgba(color, NVGColor.create()));
@@ -247,10 +176,6 @@ public final class NvgRenderUtils {
         return createBounds(w, h, horizontalAlign, verticalAlign, bounds);
     }
 
-
-    public static float[] createBounds(float x, float y, float w, float h, HorizontalAlign horizontalAlign, VerticalAlign verticalAlign, float width, float fontSize, int rowIndex, int nrows) {
-        return createBounds(x, y + rowIndex * fontSize, w, h - (nrows - 1) * fontSize, horizontalAlign, verticalAlign, width, fontSize);
-    }
 
     public static float[] createBounds(float w, float h, HorizontalAlign horizontalAlign, VerticalAlign verticalAlign, float[] bounds) {
         float ww = bounds[2] - bounds[0];

@@ -2,9 +2,7 @@ package org.liquidengine.legui.processor.system.component.slider;
 
 import org.liquidengine.legui.component.Slider;
 import org.liquidengine.legui.context.LeguiContext;
-import org.liquidengine.legui.event.component.SliderChangeEvent;
 import org.liquidengine.legui.event.system.SystemScrollEvent;
-import org.liquidengine.legui.processor.LeguiEventProcessor;
 import org.liquidengine.legui.processor.system.component.LeguiComponentEventProcessor;
 
 import static org.liquidengine.legui.processor.system.component.slider.SliderUpdateUtil.updateSliderValue;
