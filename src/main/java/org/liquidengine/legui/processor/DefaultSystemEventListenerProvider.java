@@ -1,10 +1,21 @@
 package org.liquidengine.legui.processor;
 
 import com.google.common.base.Objects;
+import javafx.scene.layout.Pane;
+import org.liquidengine.legui.component.Button;
 import org.liquidengine.legui.component.Component;
+import org.liquidengine.legui.component.ComponentContainer;
+import org.liquidengine.legui.component.Panel;
 import org.liquidengine.legui.event.SystemEvent;
 import org.liquidengine.legui.event.system.SystemCharEvent;
+import org.liquidengine.legui.event.system.SystemCursorPosEvent;
+import org.liquidengine.legui.event.system.SystemMouseClickEvent;
 import org.liquidengine.legui.listener.SystemEventListener;
+import org.liquidengine.legui.processor.pre.SystemCursorPosEventPreprocessor;
+import org.liquidengine.legui.processor.system.component.button.ButtonMouseClickEventProcessor;
+import org.liquidengine.legui.processor.system.component.container.ContainerSystemMouseClickEventListener;
+import org.liquidengine.legui.processor.system.component.def.DefaultSystemMouseClickEventListener;
+import org.liquidengine.legui.processor.system.component.panel.PanelSystemMouseClickEventListener;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -14,38 +25,88 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class DefaultSystemEventListenerProvider extends SystemEventListenerProvider {
     //@formatter:off
-    private static final SystemEventListener<Component, SystemEvent> EMPTY_EVENT_LISTENER = (event, component, context) -> {
-        System.out.println(event);
-    };
+    private static final SystemEventListener<Component, SystemEvent> EMPTY_EVENT_LISTENER = (event, component, context) -> {};
     //@formatter:on
     private Map<Class<? extends SystemEvent>, SystemEventListener> defaultListenerMap = new ConcurrentHashMap<>();
     private Map<ComponentEventKey, SystemEventListener> listenerMap = new ConcurrentHashMap<>();
+    private Map<Class<? extends SystemEvent>, SystemEventPostprocessor> postprocessorMap = new ConcurrentHashMap<>();
+    private Map<Class<? extends SystemEvent>, SystemEventPreprocessor> preprocessorMap = new ConcurrentHashMap<>();
 
     public DefaultSystemEventListenerProvider() {
+        initializePreprocessors();
+        initializePostprocessors();
         initializeDefaults();
         initializeListeners();
     }
 
+    private void initializePreprocessors() {
+        registerPreprocessor(SystemCursorPosEvent.class, new SystemCursorPosEventPreprocessor());
+    }
+
+    private void initializePostprocessors() {
+
+    }
+
     private void initializeDefaults() {
-        registerDefaultListener(SystemCharEvent.class, ((event, component, context) -> System.out.println(component + " " + Character.toChars(event.codepoint))));
+        registerDefaultListener(SystemCharEvent.class, ((event, component, context) -> System.out.println(component + " event: " + event + " cp: " + Character.toChars(event.codepoint))));
+        registerDefaultListener(SystemMouseClickEvent.class, new DefaultSystemMouseClickEventListener());
     }
 
     private void initializeListeners() {
-
+        registerListener(ComponentContainer.class, SystemMouseClickEvent.class, new ContainerSystemMouseClickEventListener());
+        registerListener(Button.class, SystemMouseClickEvent.class, new ButtonMouseClickEventProcessor());
     }
 
     public <C extends Component, E extends SystemEvent> void registerListener(Class<C> componentClass, Class<E> eventClass, SystemEventListener<C, E> listener) {
-        listenerMap.put(new ComponentEventKey(componentClass, eventClass), listener);
+        if (listener != null && eventClass != null && componentClass != null) {
+            listenerMap.put(new ComponentEventKey(componentClass, eventClass), listener);
+        }
     }
 
     public <E extends SystemEvent> void registerDefaultListener(Class<E> eventClass, SystemEventListener<?, E> listener) {
-        defaultListenerMap.put(eventClass, listener);
+        if (listener != null && eventClass != null) {
+            defaultListenerMap.put(eventClass, listener);
+        }
     }
 
     @Override
-    public <C extends Component, E extends SystemEvent> SystemEventListener getListener(Class<C> componentClass, Class<E> eventcClass) {
-        return listenerMap.getOrDefault(new ComponentEventKey<>(componentClass, eventcClass),
-                defaultListenerMap.getOrDefault(eventcClass, EMPTY_EVENT_LISTENER));
+    public <C extends Component, E extends SystemEvent> SystemEventListener getListener(Class<C> componentClass, Class<E> eventClass) {
+        return cycledSearchOfListener(componentClass, eventClass, defaultListenerMap.getOrDefault(eventClass, EMPTY_EVENT_LISTENER));
+    }
+
+    @Override
+    public <E extends SystemEvent> SystemEventPreprocessor getPreprocessor(Class<E> eventClass) {
+        return preprocessorMap.get(eventClass);
+    }
+
+    public <E extends SystemEvent, P extends SystemEventPreprocessor> void registerPreprocessor(Class<E> eventClass, P preprocessor) {
+        if (preprocessor != null) {
+            preprocessorMap.put(eventClass, preprocessor);
+        }
+    }
+
+    @Override
+    public <E extends SystemEvent> SystemEventPostprocessor getPostprocessor(Class<E> eventClass) {
+        return postprocessorMap.get(eventClass);
+    }
+
+    public <E extends SystemEvent, P extends SystemEventPostprocessor> void registerPostprocessor(Class<E> eventClass, P postprocessor) {
+        if (postprocessor != null) {
+            postprocessorMap.put(eventClass, postprocessor);
+        }
+    }
+
+    private <C extends Component, E extends SystemEvent> SystemEventListener
+    cycledSearchOfListener(Class<C> componentClass, Class<E> eventClass, SystemEventListener defaultListener) {
+        SystemEventListener listener = null;
+        Class cClass = componentClass;
+        while (listener == null) {
+            listener = listenerMap.get(new ComponentEventKey<>(cClass, eventClass));
+            if (cClass.isAssignableFrom(Component.class)) break;
+            cClass = cClass.getSuperclass();
+        }
+        if (listener == null) listener = defaultListener;
+        return listener;
     }
 
     private static class ComponentEventKey<C extends Component, E extends SystemEvent> {

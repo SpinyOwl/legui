@@ -19,6 +19,10 @@ public abstract class SystemEventListenerProvider {
 
     public abstract <C extends Component, E extends SystemEvent> SystemEventListener getListener(Class<C> componentClass, Class<E> eventcClass);
 
+    public abstract <E extends SystemEvent> SystemEventPreprocessor getPreprocessor(Class<E> eventClass);
+
+    public abstract <E extends SystemEvent> SystemEventPostprocessor getPostprocessor(Class<E> eventClass);
+
     private static final class PH {
         private static SystemEventListenerProvider PROVIDER = new DefaultSystemEventListenerProvider();
     }
