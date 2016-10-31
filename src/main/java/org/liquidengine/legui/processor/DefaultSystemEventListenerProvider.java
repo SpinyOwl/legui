@@ -2,6 +2,7 @@ package org.liquidengine.legui.processor;
 
 import com.google.common.base.Objects;
 import org.liquidengine.legui.component.Button;
+import org.liquidengine.legui.component.CheckBox;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.ComponentContainer;
 import org.liquidengine.legui.event.SystemEvent;
@@ -10,8 +11,10 @@ import org.liquidengine.legui.event.system.SystemMouseClickEvent;
 import org.liquidengine.legui.listener.SystemEventListener;
 import org.liquidengine.legui.processor.post.SystemMouseClickEventPostprocessor;
 import org.liquidengine.legui.processor.pre.SystemCursorPosEventPreprocessor;
+import org.liquidengine.legui.processor.pre.SystemMouseClickEventPreprocessor;
 import org.liquidengine.legui.processor.system.component.button.ButtonCursorPosEventProcessor;
 import org.liquidengine.legui.processor.system.component.button.ButtonMouseClickEventListener;
+import org.liquidengine.legui.processor.system.component.checkbox.CheckBoxMouseClickListener;
 import org.liquidengine.legui.processor.system.component.container.ContainerSystemMouseClickEventListener;
 import org.liquidengine.legui.processor.system.component.def.DefaultSystemCursorPosEventListener;
 
@@ -39,6 +42,7 @@ public class DefaultSystemEventListenerProvider extends SystemEventListenerProvi
 
     private void initializePreprocessors() {
         registerPreprocessor(SystemCursorPosEvent.class, new SystemCursorPosEventPreprocessor());
+        registerPreprocessor(SystemMouseClickEvent.class, new SystemMouseClickEventPreprocessor());
     }
 
     private void initializePostprocessors() {
@@ -55,6 +59,7 @@ public class DefaultSystemEventListenerProvider extends SystemEventListenerProvi
         registerListener(Component.class, SystemCursorPosEvent.class, new DefaultSystemCursorPosEventListener());
         registerListener(Button.class, SystemMouseClickEvent.class, new ButtonMouseClickEventListener());
         registerListener(Button.class, SystemCursorPosEvent.class, new ButtonCursorPosEventProcessor());
+        registerListener(CheckBox.class, SystemMouseClickEvent.class, new CheckBoxMouseClickListener());
     }
 
     public <C extends Component, E extends SystemEvent> void registerListener(Class<C> componentClass, Class<E> eventClass, SystemEventListener<C, E> listener) {
