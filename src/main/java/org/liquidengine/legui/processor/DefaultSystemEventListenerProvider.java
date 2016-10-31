@@ -1,21 +1,18 @@
 package org.liquidengine.legui.processor;
 
 import com.google.common.base.Objects;
-import javafx.scene.layout.Pane;
 import org.liquidengine.legui.component.Button;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.ComponentContainer;
-import org.liquidengine.legui.component.Panel;
 import org.liquidengine.legui.event.SystemEvent;
-import org.liquidengine.legui.event.system.SystemCharEvent;
 import org.liquidengine.legui.event.system.SystemCursorPosEvent;
 import org.liquidengine.legui.event.system.SystemMouseClickEvent;
 import org.liquidengine.legui.listener.SystemEventListener;
 import org.liquidengine.legui.processor.pre.SystemCursorPosEventPreprocessor;
-import org.liquidengine.legui.processor.system.component.button.ButtonMouseClickEventProcessor;
+import org.liquidengine.legui.processor.system.component.button.ButtonCursorPosEventProcessor;
+import org.liquidengine.legui.processor.system.component.button.ButtonMouseClickEventListener;
 import org.liquidengine.legui.processor.system.component.container.ContainerSystemMouseClickEventListener;
-import org.liquidengine.legui.processor.system.component.def.DefaultSystemMouseClickEventListener;
-import org.liquidengine.legui.processor.system.component.panel.PanelSystemMouseClickEventListener;
+import org.liquidengine.legui.processor.system.component.def.DefaultSystemCursorPosEventListener;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -48,13 +45,15 @@ public class DefaultSystemEventListenerProvider extends SystemEventListenerProvi
     }
 
     private void initializeDefaults() {
-        registerDefaultListener(SystemCharEvent.class, ((event, component, context) -> System.out.println(component + " event: " + event + " cp: " + Character.toChars(event.codepoint))));
-        registerDefaultListener(SystemMouseClickEvent.class, new DefaultSystemMouseClickEventListener());
+//        registerDefaultListener(SystemCharEvent.class, ((event, component, context) -> System.out.println(component + " event: " + event + " cp: " + Character.toChars(event.codepoint))));
+//        registerDefaultListener(SystemMouseClickEvent.class, new DefaultSystemMouseClickEventListener());
     }
 
     private void initializeListeners() {
         registerListener(ComponentContainer.class, SystemMouseClickEvent.class, new ContainerSystemMouseClickEventListener());
-        registerListener(Button.class, SystemMouseClickEvent.class, new ButtonMouseClickEventProcessor());
+        registerListener(Component.class, SystemCursorPosEvent.class, new DefaultSystemCursorPosEventListener());
+        registerListener(Button.class, SystemMouseClickEvent.class, new ButtonMouseClickEventListener());
+        registerListener(Button.class, SystemCursorPosEvent.class, new ButtonCursorPosEventProcessor());
     }
 
     public <C extends Component, E extends SystemEvent> void registerListener(Class<C> componentClass, Class<E> eventClass, SystemEventListener<C, E> listener) {

@@ -11,7 +11,10 @@ import org.liquidengine.legui.processor.SystemEventPreprocessor;
 public class SystemCursorPosEventPreprocessor implements SystemEventPreprocessor<SystemCursorPosEvent> {
     @Override
     public void process(SystemCursorPosEvent event, LeguiContext context) {
+        Vector2f cursorPosition = new Vector2f(event.fx, event.fy);
         context.setCursorPositionPrev(new Vector2f(context.getCursorPosition()));
-        context.setCursorPosition(new Vector2f(event.fx, event.fy));
+        context.setCursorPosition(cursorPosition);
+        context.setMouseTargetGui(context.getMainGuiComponent().getComponentAt(cursorPosition));
     }
+
 }

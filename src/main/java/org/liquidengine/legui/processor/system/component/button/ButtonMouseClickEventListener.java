@@ -8,21 +8,17 @@ import org.liquidengine.legui.context.LeguiContext;
 import org.liquidengine.legui.event.component.MouseClickEvent;
 import org.liquidengine.legui.event.system.SystemMouseClickEvent;
 import org.liquidengine.legui.listener.SystemEventListener;
-import org.liquidengine.legui.processor.EventProcessorUtils;
 import org.liquidengine.legui.processor.LeguiEventListenerProcessor;
-import org.liquidengine.legui.processor.system.component.LeguiComponentEventProcessor;
 import org.liquidengine.legui.util.Util;
 
-import static org.liquidengine.legui.event.component.MouseClickEvent.MouseClickAction.CLICK;
-import static org.liquidengine.legui.event.component.MouseClickEvent.MouseClickAction.PRESS;
-import static org.liquidengine.legui.event.component.MouseClickEvent.MouseClickAction.RELEASE;
+import static org.liquidengine.legui.event.component.MouseClickEvent.MouseClickAction.*;
 import static org.lwjgl.glfw.GLFW.GLFW_PRESS;
 import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
 
 /**
  * Created by Shcherbin Alexander on 9/30/2016.
  */
-public class ButtonMouseClickEventProcessor implements SystemEventListener<Button, SystemMouseClickEvent> {
+public class ButtonMouseClickEventListener implements SystemEventListener<Button, SystemMouseClickEvent> {
     @Override
     public void update(SystemMouseClickEvent event, Button component, LeguiContext context) {
         Component focusedGui = context.getFocusedGui();

@@ -176,6 +176,14 @@ public abstract class Component implements Serializable {
         this.hovered = hovered;
     }
 
+    public Component getComponentAt(Vector2f cursorPosition) {
+        if (visible && intersector.intersects(this, cursorPosition)) {
+            return this;
+        } else {
+            return null;
+        }
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

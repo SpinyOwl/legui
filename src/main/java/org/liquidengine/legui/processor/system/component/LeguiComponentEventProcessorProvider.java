@@ -8,7 +8,7 @@
 //import org.liquidengine.legui.event.SystemEvent;
 //import org.liquidengine.legui.event.system.*;
 //import org.liquidengine.legui.processor.system.component.button.ButtonCursorPosEventProcessor;
-//import org.liquidengine.legui.processor.system.component.button.ButtonMouseClickEventProcessor;
+//import org.liquidengine.legui.processor.system.component.button.ButtonMouseClickEventListener;
 //import org.liquidengine.legui.processor.system.component.checkbox.CheckBoxMouseClickProcessor;
 //import org.liquidengine.legui.processor.system.component.def.DefaultGuiScrollProcessor;
 //import org.liquidengine.legui.processor.system.component.radiobutton.RadioButtonMouseClickProcessor;
@@ -47,7 +47,7 @@
 //    }
 //
 //    private void registerProcessors() {
-//        registerGuiProcessor(Button.class, SystemMouseClickEvent.class, new ButtonMouseClickEventProcessor());
+//        registerGuiProcessor(Button.class, SystemMouseClickEvent.class, new ButtonMouseClickEventListener());
 //        registerGuiProcessor(Button.class, SystemCursorPosEvent.class, new ButtonCursorPosEventProcessor());
 //
 //        registerGuiProcessor(CheckBox.class, SystemMouseClickEvent.class, new CheckBoxMouseClickProcessor());
