@@ -8,6 +8,7 @@ import org.liquidengine.legui.event.SystemEvent;
 import org.liquidengine.legui.event.system.SystemCursorPosEvent;
 import org.liquidengine.legui.event.system.SystemMouseClickEvent;
 import org.liquidengine.legui.listener.SystemEventListener;
+import org.liquidengine.legui.processor.post.SystemMouseClickEventPostprocessor;
 import org.liquidengine.legui.processor.pre.SystemCursorPosEventPreprocessor;
 import org.liquidengine.legui.processor.system.component.button.ButtonCursorPosEventProcessor;
 import org.liquidengine.legui.processor.system.component.button.ButtonMouseClickEventListener;
@@ -41,7 +42,7 @@ public class DefaultSystemEventListenerProvider extends SystemEventListenerProvi
     }
 
     private void initializePostprocessors() {
-
+        registerPostprocessor(SystemMouseClickEvent.class, new SystemMouseClickEventPostprocessor());
     }
 
     private void initializeDefaults() {
