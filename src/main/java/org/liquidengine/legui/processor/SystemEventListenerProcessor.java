@@ -36,7 +36,6 @@ public class SystemEventListenerProcessor {
         return callbackKeeper;
     }
 
-
     /**
      * Used to translate events to gui. Usually it used to pass event to main UI element (Main Panel).
      * <p>

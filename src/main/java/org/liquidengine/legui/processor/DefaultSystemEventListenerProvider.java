@@ -1,10 +1,7 @@
 package org.liquidengine.legui.processor;
 
 import com.google.common.base.Objects;
-import org.liquidengine.legui.component.Button;
-import org.liquidengine.legui.component.CheckBox;
-import org.liquidengine.legui.component.Component;
-import org.liquidengine.legui.component.ComponentContainer;
+import org.liquidengine.legui.component.*;
 import org.liquidengine.legui.event.SystemEvent;
 import org.liquidengine.legui.event.system.SystemCursorPosEvent;
 import org.liquidengine.legui.event.system.SystemMouseClickEvent;
@@ -17,6 +14,8 @@ import org.liquidengine.legui.processor.system.component.button.ButtonMouseClick
 import org.liquidengine.legui.processor.system.component.checkbox.CheckBoxMouseClickListener;
 import org.liquidengine.legui.processor.system.component.container.ContainerSystemMouseClickEventListener;
 import org.liquidengine.legui.processor.system.component.def.DefaultSystemCursorPosEventListener;
+import org.liquidengine.legui.processor.system.component.radiobutton.RadioButtonMouseClickProcessor;
+import org.liquidengine.legui.processor.system.component.scrollbar.ScrollBarMouseClickProcessor;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -60,6 +59,8 @@ public class DefaultSystemEventListenerProvider extends SystemEventListenerProvi
         registerListener(Button.class, SystemMouseClickEvent.class, new ButtonMouseClickEventListener());
         registerListener(Button.class, SystemCursorPosEvent.class, new ButtonCursorPosEventProcessor());
         registerListener(CheckBox.class, SystemMouseClickEvent.class, new CheckBoxMouseClickListener());
+        registerListener(RadioButton.class, SystemMouseClickEvent.class, new RadioButtonMouseClickProcessor());
+        registerListener(ScrollBar.class, SystemMouseClickEvent.class, new ScrollBarMouseClickProcessor());
     }
 
     public <C extends Component, E extends SystemEvent> void registerListener(Class<C> componentClass, Class<E> eventClass, SystemEventListener<C, E> listener) {

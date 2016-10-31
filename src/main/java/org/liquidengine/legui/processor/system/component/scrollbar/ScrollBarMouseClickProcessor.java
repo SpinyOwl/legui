@@ -5,6 +5,7 @@ import org.liquidengine.legui.component.ScrollBar;
 import org.liquidengine.legui.component.optional.Orientation;
 import org.liquidengine.legui.context.LeguiContext;
 import org.liquidengine.legui.event.system.SystemMouseClickEvent;
+import org.liquidengine.legui.listener.SystemEventListener;
 import org.liquidengine.legui.processor.system.component.LeguiComponentEventProcessor;
 import org.liquidengine.legui.util.Util;
 
@@ -13,8 +14,8 @@ import static org.lwjgl.glfw.GLFW.GLFW_PRESS;
 /**
  * Created by Alexander on 25.08.2016.
  */
-public class ScrollBarMouseClickProcessor implements LeguiComponentEventProcessor<ScrollBar, SystemMouseClickEvent> {
-    public void process(ScrollBar gui, SystemMouseClickEvent event, LeguiContext leguiContext) {
+public class ScrollBarMouseClickProcessor implements SystemEventListener<ScrollBar, SystemMouseClickEvent> {
+    public void update(SystemMouseClickEvent event, ScrollBar gui, LeguiContext leguiContext) {
         if (!gui.isVisible()) return;
         if (!gui.isEnabled()) return;
         boolean released = event.action != GLFW_PRESS;
@@ -45,11 +46,11 @@ public class ScrollBarMouseClickProcessor implements LeguiComponentEventProcesso
             curPos = cursorPosition.x;
         }
         if (curPos < left) {
-            newVal = curValue - visibleAmount;
+            newVal = curValue - 0.5f * visibleAmount * valueRange / (valueRange - visibleAmount);
             if (!released) updateViewport(gui, maxValue, minValue, newVal);
             gui.setScrolling(false);
         } else if (curPos > left + barSize) {
-            newVal = curValue + visibleAmount;
+            newVal = curValue + 0.5f * visibleAmount * valueRange / (valueRange - visibleAmount);
             if (!released) updateViewport(gui, maxValue, minValue, newVal);
             gui.setScrolling(false);
         } else {
