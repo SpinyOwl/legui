@@ -5,6 +5,7 @@ import org.liquidengine.legui.context.LeguiCallbackKeeper;
 import org.liquidengine.legui.context.LeguiContext;
 import org.liquidengine.legui.context.LeguiSystemEventQueue;
 import org.liquidengine.legui.event.SystemEvent;
+import org.liquidengine.legui.event.system.SystemCursorPosEvent;
 import org.liquidengine.legui.listener.SystemEventListener;
 
 /**

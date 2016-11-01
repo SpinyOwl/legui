@@ -7,14 +7,14 @@
 //import org.liquidengine.legui.component.*;
 //import org.liquidengine.legui.event.SystemEvent;
 //import org.liquidengine.legui.event.system.*;
-//import org.liquidengine.legui.processor.system.component.button.ButtonCursorPosEventProcessor;
+//import org.liquidengine.legui.processor.system.component.button.ButtonCursorPosEventListener;
 //import org.liquidengine.legui.processor.system.component.button.ButtonMouseClickEventListener;
 //import org.liquidengine.legui.processor.system.component.checkbox.CheckBoxMouseClickListener;
-//import org.liquidengine.legui.processor.system.component.def.DefaultGuiScrollProcessor;
-//import org.liquidengine.legui.processor.system.component.radiobutton.RadioButtonMouseClickProcessor;
-//import org.liquidengine.legui.processor.system.component.scrollbar.ScrollBarCursorPosProcessor;
-//import org.liquidengine.legui.processor.system.component.scrollbar.ScrollBarMouseClickProcessor;
-//import org.liquidengine.legui.processor.system.component.scrollbar.ScrollBarScrollProcessor;
+//import org.liquidengine.legui.processor.system.component.def.DefaultGuiScrollListener;
+//import org.liquidengine.legui.processor.system.component.radiobutton.RadioButtonMouseClickListener;
+//import org.liquidengine.legui.processor.system.component.scrollbar.ScrollBarCursorPosListener;
+//import org.liquidengine.legui.processor.system.component.scrollbar.ScrollBarMouseClickListener;
+//import org.liquidengine.legui.processor.system.component.scrollbar.ScrollBarScrollListener;
 //import org.liquidengine.legui.processor.system.component.slider.SliderCursorPosProcessor;
 //import org.liquidengine.legui.processor.system.component.slider.SliderMouseClickProcessor;
 //import org.liquidengine.legui.processor.system.component.slider.SliderScrollProcessor;
@@ -38,7 +38,7 @@
 //    private static final LeguiComponentEventProcessor DEFAULT = (gui, event, state) -> {
 ////        LOGGER.warn(String.format(PATTERN, gui.getClass(), event.getClass()));
 //    };
-//    private static final LeguiComponentEventProcessor<Component, SystemScrollEvent> DEFAULT_SCROLL_PROCESSOR = new DefaultGuiScrollProcessor();
+//    private static final LeguiComponentEventProcessor<Component, SystemScrollEvent> DEFAULT_SCROLL_PROCESSOR = new DefaultGuiScrollListener();
 //
 //    private Map<ProviderKey, LeguiComponentEventProcessor> guiProcessorMap = new ConcurrentHashMap<>();
 //
@@ -48,7 +48,7 @@
 //
 //    private void registerProcessors() {
 //        registerGuiProcessor(Button.class, SystemMouseClickEvent.class, new ButtonMouseClickEventListener());
-//        registerGuiProcessor(Button.class, SystemCursorPosEvent.class, new ButtonCursorPosEventProcessor());
+//        registerGuiProcessor(Button.class, SystemCursorPosEvent.class, new ButtonCursorPosEventListener());
 //
 //        registerGuiProcessor(CheckBox.class, SystemMouseClickEvent.class, new CheckBoxMouseClickListener());
 //
@@ -56,11 +56,11 @@
 //        registerGuiProcessor(Slider.class, SystemCursorPosEvent.class, new SliderCursorPosProcessor());
 //        registerGuiProcessor(Slider.class, SystemScrollEvent.class, new SliderScrollProcessor());
 //
-//        registerGuiProcessor(RadioButton.class, SystemMouseClickEvent.class, new RadioButtonMouseClickProcessor());
+//        registerGuiProcessor(RadioButton.class, SystemMouseClickEvent.class, new RadioButtonMouseClickListener());
 //
-//        registerGuiProcessor(ScrollBar.class, SystemMouseClickEvent.class, new ScrollBarMouseClickProcessor());
-//        registerGuiProcessor(ScrollBar.class, SystemCursorPosEvent.class, new ScrollBarCursorPosProcessor());
-//        registerGuiProcessor(ScrollBar.class, SystemScrollEvent.class, new ScrollBarScrollProcessor());
+//        registerGuiProcessor(ScrollBar.class, SystemMouseClickEvent.class, new ScrollBarMouseClickListener());
+//        registerGuiProcessor(ScrollBar.class, SystemCursorPosEvent.class, new ScrollBarCursorPosListener());
+//        registerGuiProcessor(ScrollBar.class, SystemScrollEvent.class, new ScrollBarScrollListener());
 //
 //        registerGuiProcessor(TextInput.class, SystemMouseClickEvent.class, new TextInputMouseClickProcessor());
 //        registerGuiProcessor(TextInput.class, SystemCharEvent.class, new TextInputCharEventProcessor());

@@ -9,7 +9,7 @@ import org.lwjgl.glfw.GLFW;
 /**
  * Created by Shcherbin Alexander on 9/30/2016.
  */
-public class ButtonCursorPosEventProcessor implements SystemEventListener<Button, SystemCursorPosEvent> {
+public class ButtonCursorPosEventListener implements SystemEventListener<Button, SystemCursorPosEvent> {
 
     @Override
     public void update(SystemCursorPosEvent event, Button component, LeguiContext context) {

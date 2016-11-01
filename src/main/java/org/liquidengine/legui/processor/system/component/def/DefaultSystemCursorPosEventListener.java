@@ -24,7 +24,6 @@ public class DefaultSystemCursorPosEventListener implements SystemEventListener<
         process(event, component, context);
     }
 
-
     private void process(SystemCursorPosEvent event, Component component, LeguiContext context) {
         updateComponentStatesAndCallListeners(event, component, context);
         if (component instanceof ComponentContainer) {
@@ -32,12 +31,12 @@ public class DefaultSystemCursorPosEventListener implements SystemEventListener<
         }
     }
 
-
     private void processEventOnContainer(SystemCursorPosEvent event, Component component, LeguiContext context) {
         ComponentContainer container = ((ComponentContainer) component);
         List<Component> all = container.getComponents();
         for (Component child : all) {
-            process(event, child, context);
+            child.getProcessors().getListener(event.getClass()).update(event, child, context);
+//            process(event, child, context);
         }
     }
 

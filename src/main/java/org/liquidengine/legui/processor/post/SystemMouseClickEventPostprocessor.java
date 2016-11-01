@@ -13,12 +13,7 @@ public class SystemMouseClickEventPostprocessor implements SystemEventPostproces
     @Override
     public void process(SystemMouseClickEvent event, LeguiContext context) {
         Component focusedGui = context.getFocusedGui();
-        if (event.action == GLFW.GLFW_RELEASE && focusedGui != null) {
-            if (focusedGui != context.getMouseTargetGui()) {
-                focusedGui.setFocused(false);
-                focusedGui.setPressed(false);
-            }
-        }
+
     }
 
 }

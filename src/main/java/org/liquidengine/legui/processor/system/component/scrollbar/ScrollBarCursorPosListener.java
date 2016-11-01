@@ -5,6 +5,7 @@ import org.liquidengine.legui.component.ScrollBar;
 import org.liquidengine.legui.component.optional.Orientation;
 import org.liquidengine.legui.context.LeguiContext;
 import org.liquidengine.legui.event.system.SystemCursorPosEvent;
+import org.liquidengine.legui.listener.SystemEventListener;
 import org.liquidengine.legui.processor.system.component.LeguiComponentEventProcessor;
 import org.lwjgl.glfw.GLFW;
 
@@ -15,8 +16,8 @@ import static org.liquidengine.legui.util.Util.calculatePosition;
 /**
  * Created by Alexander on 26.08.2016.
  */
-public class ScrollBarCursorPosProcessor implements LeguiComponentEventProcessor<ScrollBar, SystemCursorPosEvent> {
-    public void process(ScrollBar gui, SystemCursorPosEvent event, LeguiContext leguiContext) {
+public class ScrollBarCursorPosListener implements SystemEventListener<ScrollBar, SystemCursorPosEvent> {
+    public void update(SystemCursorPosEvent event, ScrollBar gui, LeguiContext leguiContext) {
         if (!gui.isVisible()) return;
         if (!gui.isEnabled()) return;
         if (leguiContext.getFocusedGui() != gui) return;
@@ -51,17 +52,5 @@ public class ScrollBarCursorPosProcessor implements LeguiComponentEventProcessor
         else if (newVal < minValue) newVal = minValue;
         gui.setCurValue(newVal);
         updateViewport(gui, newVal);
-
-//        update if mod shift
-//        {
-//            float delta = Orientation.VERTICAL.equals(gui.getOrientation()) ? (cp.y - cpp.y) : (cp.x - cpp.x);
-//            float newVal = gui.getCurValue() + delta;
-//
-//            if (newVal > gui.getMaxValue()) newVal = gui.getMaxValue();
-//            if (newVal < gui.getMinValue()) newVal = gui.getMinValue();
-//
-//            gui.setCurValue(newVal);
-//            ScrollBartUtil.updateViewport(gui, newVal);
-//        }
     }
 }

@@ -14,7 +14,7 @@ import static org.lwjgl.glfw.GLFW.GLFW_PRESS;
 /**
  * Created by Alexander on 25.08.2016.
  */
-public class ScrollBarMouseClickProcessor implements SystemEventListener<ScrollBar, SystemMouseClickEvent> {
+public class ScrollBarMouseClickListener implements SystemEventListener<ScrollBar, SystemMouseClickEvent> {
     public void update(SystemMouseClickEvent event, ScrollBar gui, LeguiContext leguiContext) {
         if (!gui.isVisible()) return;
         if (!gui.isEnabled()) return;

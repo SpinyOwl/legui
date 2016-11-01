@@ -130,6 +130,13 @@ public class ExampleGui extends Panel {
         widget.getContainer().addComponent(c4);
         this.addComponent(widget);
 
+        Widget widget2 = new Widget("Hello 2 widget", 250, 300, 100, 100);
+        widget2.setTitleHeight(20);
+        widget2.setCloseButtonColor(ColorConstants.red());
+        widget2.setTitleBackgroundColor(ColorConstants.lightGreen());
+//        widget2.setCloseable(false);
+        this.addComponent(widget2);
+
         ScrollBar scrollBar1 = new ScrollBar(360, 170, 20, 100, 20);
         scrollBar1.setOrientation(Orientation.VERTICAL);
         scrollBar1.setVisibleAmount(20);
@@ -211,7 +218,7 @@ public class ExampleGui extends Panel {
         caretp.getTextState().setHorizontalAlign(HorizontalAlign.CENTER);
         this.addComponent(caretp);
 
-        TextInput inpur = new TextInput(420,430,50,35);
+        TextInput inpur = new TextInput(420, 430, 50, 35);
         inpur.getTextState().setText("00");
         inpur.getTextState().setFontSize(35);
         inpur.getTextState().setHorizontalAlign(HorizontalAlign.CENTER);
