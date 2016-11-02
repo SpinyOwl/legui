@@ -110,8 +110,10 @@ public abstract class ComponentContainer extends Component {
         Component componentAt = super.getComponentAt(cursorPosition);
         if (componentAt != null) {
             for (Component child : components) {
-                Component childComponentAt = child.getComponentAt(cursorPosition);
-                componentAt = childComponentAt == null ? componentAt : childComponentAt;
+                if (child.isVisible()) {
+                    Component childComponentAt = child.getComponentAt(cursorPosition);
+                    componentAt = childComponentAt == null ? componentAt : childComponentAt;
+                }
             }
         }
         return componentAt;

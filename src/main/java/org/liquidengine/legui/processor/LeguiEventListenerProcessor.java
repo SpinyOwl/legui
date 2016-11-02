@@ -22,7 +22,7 @@ public class LeguiEventListenerProcessor {
         LeguiEvent event = componentEvents.poll();
         if (event != null) {
             Component component = event.getComponent();
-            List<? extends LeguiEventListener> listenersByEvent = component.getListenerList().getListeners(event.getClass());
+            List<? extends LeguiEventListener> listenersByEvent = component.getEventListeners().getListeners(event.getClass());
             for (LeguiEventListener LeguiEventListener : listenersByEvent) {
                 LeguiEventListener.update(event);
             }

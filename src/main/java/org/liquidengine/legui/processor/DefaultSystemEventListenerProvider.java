@@ -8,28 +8,29 @@ import org.liquidengine.legui.listener.SystemEventListener;
 import org.liquidengine.legui.processor.post.SystemMouseClickEventPostprocessor;
 import org.liquidengine.legui.processor.pre.SystemCursorPosEventPreprocessor;
 import org.liquidengine.legui.processor.pre.SystemMouseClickEventPreprocessor;
-import org.liquidengine.legui.processor.system.component.button.ButtonCursorPosEventListener;
-import org.liquidengine.legui.processor.system.component.button.ButtonMouseClickEventListener;
-import org.liquidengine.legui.processor.system.component.checkbox.CheckBoxMouseClickListener;
-import org.liquidengine.legui.processor.system.component.container.ContainerSystemMouseClickEventListener;
-import org.liquidengine.legui.processor.system.component.def.DefaultSystemCharEventListener;
-import org.liquidengine.legui.processor.system.component.def.DefaultSystemCursorPosEventListener;
-import org.liquidengine.legui.processor.system.component.def.DefaultSystemKeyEventListener;
-import org.liquidengine.legui.processor.system.component.def.DefaultSystemScrollEventListener;
-import org.liquidengine.legui.processor.system.component.radiobutton.RadioButtonMouseClickListener;
-import org.liquidengine.legui.processor.system.component.scrollbar.ScrollBarSystemCursorPosEventListener;
-import org.liquidengine.legui.processor.system.component.scrollbar.ScrollBarSystemMouseClickEventListener;
-import org.liquidengine.legui.processor.system.component.scrollbar.ScrollBarSystemScrollEventListener;
-import org.liquidengine.legui.processor.system.component.slider.SliderSystemCursorPosEventListener;
-import org.liquidengine.legui.processor.system.component.slider.SliderSystemMouseClickEventListener;
-import org.liquidengine.legui.processor.system.component.slider.SliderSystemScrollEventListener;
-import org.liquidengine.legui.processor.system.component.textarea.TextAreaSystemCharEventListener;
-import org.liquidengine.legui.processor.system.component.textarea.TextAreaSystemKeyEventListener;
-import org.liquidengine.legui.processor.system.component.textarea.TextAreaSystemMouseClickEventListener;
-import org.liquidengine.legui.processor.system.component.textinput.TextInputSystemCharEventListener;
-import org.liquidengine.legui.processor.system.component.textinput.TextInputSystemCursorPosEventListener;
-import org.liquidengine.legui.processor.system.component.textinput.TextInputSystemKeyEventProcessor;
-import org.liquidengine.legui.processor.system.component.textinput.TextInputSystemMouseClickEventListener;
+import org.liquidengine.legui.listener.system.button.ButtonSystemCursorPosEventListener;
+import org.liquidengine.legui.listener.system.button.ButtonSystemMouseClickEventListener;
+import org.liquidengine.legui.listener.system.checkbox.CheckBoxSystemMouseClickEventListener;
+import org.liquidengine.legui.listener.system.container.ContainerSystemMouseClickEventListener;
+import org.liquidengine.legui.listener.system.def.DefaultSystemCharEventListener;
+import org.liquidengine.legui.listener.system.def.DefaultSystemCursorPosEventListener;
+import org.liquidengine.legui.listener.system.def.DefaultSystemKeyEventListener;
+import org.liquidengine.legui.listener.system.def.DefaultSystemScrollEventListener;
+import org.liquidengine.legui.listener.system.radiobutton.RadioButtonSystemMouseClickListener;
+import org.liquidengine.legui.listener.system.scrollbar.ScrollBarSystemCursorPosEventListener;
+import org.liquidengine.legui.listener.system.scrollbar.ScrollBarSystemMouseClickEventListener;
+import org.liquidengine.legui.listener.system.scrollbar.ScrollBarSystemScrollEventListener;
+import org.liquidengine.legui.listener.system.slider.SliderSystemCursorPosEventListener;
+import org.liquidengine.legui.listener.system.slider.SliderSystemMouseClickEventListener;
+import org.liquidengine.legui.listener.system.slider.SliderSystemScrollEventListener;
+import org.liquidengine.legui.listener.system.textarea.TextAreaSystemCharEventListener;
+import org.liquidengine.legui.listener.system.textarea.TextAreaSystemCursorPosEventListener;
+import org.liquidengine.legui.listener.system.textarea.TextAreaSystemKeyEventListener;
+import org.liquidengine.legui.listener.system.textarea.TextAreaSystemMouseClickEventListener;
+import org.liquidengine.legui.listener.system.textinput.TextInputSystemCharEventListener;
+import org.liquidengine.legui.listener.system.textinput.TextInputSystemCursorPosEventListener;
+import org.liquidengine.legui.listener.system.textinput.TextInputSystemKeyEventProcessor;
+import org.liquidengine.legui.listener.system.textinput.TextInputSystemMouseClickEventListener;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -41,7 +42,7 @@ public class DefaultSystemEventListenerProvider extends SystemEventListenerProvi
     private static final SystemEventListener<Component, SystemEvent> DEFAULT_EVENT_LISTENER = (event, component, context) -> {
         Component child = component.getComponentAt(context.getCursorPosition());
         if (child != component && child != null) {
-            child.getProcessors().getListener(event.getClass()).update(event, child, context);
+            child.getSystemEventListeners().getListener(event.getClass()).update(event, child, context);
         }
     };
     private Map<Class<? extends SystemEvent>, SystemEventListener> defaultListenerMap = new ConcurrentHashMap<>();
@@ -78,12 +79,12 @@ public class DefaultSystemEventListenerProvider extends SystemEventListenerProvi
 
         registerListener(Component.class, SystemCursorPosEvent.class, new DefaultSystemCursorPosEventListener());
 
-        registerListener(Button.class, SystemCursorPosEvent.class, new ButtonCursorPosEventListener());
-        registerListener(Button.class, SystemMouseClickEvent.class, new ButtonMouseClickEventListener());
+        registerListener(Button.class, SystemCursorPosEvent.class, new ButtonSystemCursorPosEventListener());
+        registerListener(Button.class, SystemMouseClickEvent.class, new ButtonSystemMouseClickEventListener());
 
-        registerListener(CheckBox.class, SystemMouseClickEvent.class, new CheckBoxMouseClickListener());
+        registerListener(CheckBox.class, SystemMouseClickEvent.class, new CheckBoxSystemMouseClickEventListener());
 
-        registerListener(RadioButton.class, SystemMouseClickEvent.class, new RadioButtonMouseClickListener());
+        registerListener(RadioButton.class, SystemMouseClickEvent.class, new RadioButtonSystemMouseClickListener());
 
         registerListener(ScrollBar.class, SystemCursorPosEvent.class, new ScrollBarSystemCursorPosEventListener());
         registerListener(ScrollBar.class, SystemMouseClickEvent.class, new ScrollBarSystemMouseClickEventListener());
@@ -99,6 +100,7 @@ public class DefaultSystemEventListenerProvider extends SystemEventListenerProvi
         registerListener(TextInput.class, SystemMouseClickEvent.class, new TextInputSystemMouseClickEventListener());
 
         registerListener(TextArea.class, SystemCharEvent.class, new TextAreaSystemCharEventListener());
+        registerListener(TextArea.class, SystemCursorPosEvent.class, new TextAreaSystemCursorPosEventListener());
         registerListener(TextArea.class, SystemKeyEvent.class, new TextAreaSystemKeyEventListener());
         registerListener(TextArea.class, SystemMouseClickEvent.class, new TextAreaSystemMouseClickEventListener());
     }

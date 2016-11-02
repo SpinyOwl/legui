@@ -5,7 +5,6 @@ import org.liquidengine.legui.context.LeguiCallbackKeeper;
 import org.liquidengine.legui.context.LeguiContext;
 import org.liquidengine.legui.context.LeguiSystemEventQueue;
 import org.liquidengine.legui.event.SystemEvent;
-import org.liquidengine.legui.event.system.SystemCursorPosEvent;
 import org.liquidengine.legui.listener.SystemEventListener;
 
 /**
@@ -51,7 +50,7 @@ public class SystemEventListenerProcessor {
             SystemEventPreprocessor preprocessor = provider.getPreprocessor(event.getClass());
             if (preprocessor != null) preprocessor.process(event, context);
 
-            SystemEventListener listener = mainGuiComponent.getProcessors().getListener(event.getClass());
+            SystemEventListener listener = mainGuiComponent.getSystemEventListeners().getListener(event.getClass());
             if (listener != null) listener.update(event, mainGuiComponent, context);
 
             SystemEventPostprocessor postprocessor = provider.getPostprocessor(event.getClass());
