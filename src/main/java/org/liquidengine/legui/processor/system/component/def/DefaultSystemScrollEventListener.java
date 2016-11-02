@@ -12,7 +12,7 @@ import org.liquidengine.legui.listener.SystemEventListener;
 /**
  * Created by Shcherbin Alexander on 9/2/2016.
  */
-public class DefaultGuiScrollListener implements SystemEventListener<Component, SystemScrollEvent> {
+public class DefaultSystemScrollEventListener implements SystemEventListener<Component, SystemScrollEvent> {
     @Override
     public void update(SystemScrollEvent event, Component gui, LeguiContext context) {
         ScrollablePanel scrollpanel = null;

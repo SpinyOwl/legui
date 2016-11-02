@@ -4,16 +4,16 @@ import org.liquidengine.legui.component.TextInput;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.context.LeguiContext;
 import org.liquidengine.legui.event.system.SystemKeyEvent;
-import org.liquidengine.legui.processor.system.component.LeguiComponentEventProcessor;
+import org.liquidengine.legui.listener.SystemEventListener;
 
 import static org.lwjgl.glfw.GLFW.*;
 
 /**
  * Created by Alexander on 28.08.2016.
  */
-public class TextInputKeyProcessor implements LeguiComponentEventProcessor<TextInput, SystemKeyEvent> {
+public class TextInputSystemKeyEventProcessor implements SystemEventListener<TextInput, SystemKeyEvent> {
     @Override
-    public void process(TextInput gui, SystemKeyEvent event, LeguiContext leguiContext) {
+    public void update(SystemKeyEvent event, TextInput gui, LeguiContext leguiContext) {
         if (gui.isFocused() && gui.isEditable()) {
             int key = event.key;
             int caretPosition = gui.getCaretPosition();

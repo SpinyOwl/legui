@@ -4,16 +4,16 @@ import org.liquidengine.legui.component.TextArea;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.context.LeguiContext;
 import org.liquidengine.legui.event.system.SystemKeyEvent;
-import org.liquidengine.legui.processor.system.component.LeguiComponentEventProcessor;
+import org.liquidengine.legui.listener.SystemEventListener;
 
 import static org.lwjgl.glfw.GLFW.*;
 
 /**
  * Created by Alexander on 28.08.2016.
  */
-public class TextAreaKeyProcessor implements LeguiComponentEventProcessor<TextArea, SystemKeyEvent> {
+public class TextAreaSystemKeyEventListener implements SystemEventListener<TextArea, SystemKeyEvent> {
     @Override
-    public void process(TextArea gui, SystemKeyEvent event, LeguiContext leguiContext) {
+    public void update(SystemKeyEvent event, TextArea gui, LeguiContext leguiContext) {
         if (gui.isFocused() && gui.isEditable()) {
             int key = event.key;
             int caretPosition = gui.getCaretPosition();
@@ -31,11 +31,10 @@ public class TextAreaKeyProcessor implements LeguiComponentEventProcessor<TextAr
                 if (caretPosition > 0) {
                     String text = textState.getText();
                     String[] lines = text.split("\n", -1);
-                    int[] some = some(lines, caretPosition);
-                    if (some[1] > 0) {
-                        int nl = lines[some[1] - 1].length() + 1;
-                        int delta = nl + some[0];
-                        int np = caretPosition - delta + (some[0] > nl ? nl : some[0]);
+                    LineData some = getStartLineIndexAndLineNumber(lines, caretPosition);
+                    if (some.lineCaretIndex > 0) {
+                        int nl = lines[some.lineCaretIndex - 1].length() + 1;
+                        int np = caretPosition - (some.caretPositionInLine >= nl - 1 ? some.caretPositionInLine + 1 : nl);
                         gui.setCaretPosition(np);
                     } else {
                         gui.setCaretPosition(0);
@@ -45,12 +44,16 @@ public class TextAreaKeyProcessor implements LeguiComponentEventProcessor<TextAr
                 if (caretPosition < textState.length()) {
                     String text = textState.getText();
                     String[] lines = text.split("\n", -1);
-                    int[] some = some(lines, caretPosition);
-                    if (some[1] < lines.length - 1) {
-                        int cl = lines[some[1]].length() + 1;
-                        int nl = lines[some[1] + 1].length() + 1;
-                        int delta = cl - some[0];
-                        int np = caretPosition + delta + (some[0] > nl ? nl : some[0]);
+                    LineData some = getStartLineIndexAndLineNumber(lines, caretPosition);
+                    if (some.lineCaretIndex < lines.length - 1) {
+                        int nl = lines[some.lineCaretIndex + 1].length() + 1;
+                        int cl = lines[some.lineCaretIndex].length() + 1;
+                        int np = 0;
+                        if (some.caretPositionInLine >= nl - 1) {
+                            np = caretPosition + nl + cl - 1 - some.caretPositionInLine;
+                        } else {
+                            np = caretPosition + cl;
+                        }
                         gui.setCaretPosition(np);
                     } else {
                         gui.setCaretPosition(text.length());
@@ -59,14 +62,14 @@ public class TextAreaKeyProcessor implements LeguiComponentEventProcessor<TextAr
             } else if (key == GLFW_KEY_HOME && PRESS) {
                 String text = textState.getText();
                 String[] lines = text.split("\n", -1);
-                int[] some = some(lines, caretPosition);
-                gui.setCaretPosition(caretPosition - some[0]);
+                LineData some = getStartLineIndexAndLineNumber(lines, caretPosition);
+                gui.setCaretPosition(caretPosition - some.caretPositionInLine);
             } else if (key == GLFW_KEY_END && PRESS) {
                 String text = textState.getText();
                 String[] lines = text.split("\n", -1);
-                int[] some = some(lines, caretPosition);
-                int cl = lines[some[1]].length();
-                int delta = cl - some[0];
+                LineData some = getStartLineIndexAndLineNumber(lines, caretPosition);
+                int cl = lines[some.lineCaretIndex].length();
+                int delta = cl - some.caretPositionInLine;
                 int np = caretPosition + delta;
                 gui.setCaretPosition(np);
             } else if (key == GLFW_KEY_ENTER && PRESS) {
@@ -89,7 +92,7 @@ public class TextAreaKeyProcessor implements LeguiComponentEventProcessor<TextAr
 
     }
 
-    public int[] some(String[] lines, int caretPosition) {
+    private LineData getStartLineIndexAndLineNumber(String[] lines, int caretPosition) {
         int caretLine = 0;
         int caretOffset = 0;
         for (String line : lines) {
@@ -100,6 +103,16 @@ public class TextAreaKeyProcessor implements LeguiComponentEventProcessor<TextAr
             caretLine++;
             caretOffset = newOffset + 1;
         }
-        return new int[]{caretPosition - caretOffset, caretLine};
+        return new LineData(caretPosition - caretOffset, caretLine);
+    }
+
+    private static class LineData {
+        private int caretPositionInLine;
+        private int lineCaretIndex;
+
+        public LineData(int caretPositionInLine, int lineCaretIndex) {
+            this.caretPositionInLine = caretPositionInLine;
+            this.lineCaretIndex = lineCaretIndex;
+        }
     }
 }

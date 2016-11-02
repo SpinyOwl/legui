@@ -3,9 +3,7 @@ package org.liquidengine.legui.processor;
 import com.google.common.base.Objects;
 import org.liquidengine.legui.component.*;
 import org.liquidengine.legui.event.SystemEvent;
-import org.liquidengine.legui.event.system.SystemCursorPosEvent;
-import org.liquidengine.legui.event.system.SystemMouseClickEvent;
-import org.liquidengine.legui.event.system.SystemScrollEvent;
+import org.liquidengine.legui.event.system.*;
 import org.liquidengine.legui.listener.SystemEventListener;
 import org.liquidengine.legui.processor.post.SystemMouseClickEventPostprocessor;
 import org.liquidengine.legui.processor.pre.SystemCursorPosEventPreprocessor;
@@ -14,15 +12,24 @@ import org.liquidengine.legui.processor.system.component.button.ButtonCursorPosE
 import org.liquidengine.legui.processor.system.component.button.ButtonMouseClickEventListener;
 import org.liquidengine.legui.processor.system.component.checkbox.CheckBoxMouseClickListener;
 import org.liquidengine.legui.processor.system.component.container.ContainerSystemMouseClickEventListener;
-import org.liquidengine.legui.processor.system.component.def.DefaultGuiScrollListener;
+import org.liquidengine.legui.processor.system.component.def.DefaultSystemCharEventListener;
 import org.liquidengine.legui.processor.system.component.def.DefaultSystemCursorPosEventListener;
+import org.liquidengine.legui.processor.system.component.def.DefaultSystemKeyEventListener;
+import org.liquidengine.legui.processor.system.component.def.DefaultSystemScrollEventListener;
 import org.liquidengine.legui.processor.system.component.radiobutton.RadioButtonMouseClickListener;
-import org.liquidengine.legui.processor.system.component.scrollbar.ScrollBarCursorPosListener;
-import org.liquidengine.legui.processor.system.component.scrollbar.ScrollBarMouseClickListener;
-import org.liquidengine.legui.processor.system.component.scrollbar.ScrollBarScrollListener;
+import org.liquidengine.legui.processor.system.component.scrollbar.ScrollBarSystemCursorPosEventListener;
+import org.liquidengine.legui.processor.system.component.scrollbar.ScrollBarSystemMouseClickEventListener;
+import org.liquidengine.legui.processor.system.component.scrollbar.ScrollBarSystemScrollEventListener;
 import org.liquidengine.legui.processor.system.component.slider.SliderSystemCursorPosEventListener;
 import org.liquidengine.legui.processor.system.component.slider.SliderSystemMouseClickEventListener;
 import org.liquidengine.legui.processor.system.component.slider.SliderSystemScrollEventListener;
+import org.liquidengine.legui.processor.system.component.textarea.TextAreaSystemCharEventListener;
+import org.liquidengine.legui.processor.system.component.textarea.TextAreaSystemKeyEventListener;
+import org.liquidengine.legui.processor.system.component.textarea.TextAreaSystemMouseClickEventListener;
+import org.liquidengine.legui.processor.system.component.textinput.TextInputSystemCharEventListener;
+import org.liquidengine.legui.processor.system.component.textinput.TextInputSystemCursorPosEventListener;
+import org.liquidengine.legui.processor.system.component.textinput.TextInputSystemKeyEventProcessor;
+import org.liquidengine.legui.processor.system.component.textinput.TextInputSystemMouseClickEventListener;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -32,10 +39,10 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class DefaultSystemEventListenerProvider extends SystemEventListenerProvider {
     private static final SystemEventListener<Component, SystemEvent> DEFAULT_EVENT_LISTENER = (event, component, context) -> {
-//        Component child = component.getComponentAt(context.getCursorPosition());
-//        if (child != component && child != null) {
-//            child.getProcessors().getListener(event.getClass()).update(event, child, context);
-//        }
+        Component child = component.getComponentAt(context.getCursorPosition());
+        if (child != component && child != null) {
+            child.getProcessors().getListener(event.getClass()).update(event, child, context);
+        }
     };
     private Map<Class<? extends SystemEvent>, SystemEventListener> defaultListenerMap = new ConcurrentHashMap<>();
     private Map<ComponentEventKey, SystemEventListener> listenerMap = new ConcurrentHashMap<>();
@@ -59,7 +66,9 @@ public class DefaultSystemEventListenerProvider extends SystemEventListenerProvi
     }
 
     private void initializeDefaults() {
-        registerDefaultListener(SystemScrollEvent.class, new DefaultGuiScrollListener());
+        registerDefaultListener(SystemScrollEvent.class, new DefaultSystemScrollEventListener());
+        registerDefaultListener(SystemKeyEvent.class, new DefaultSystemKeyEventListener());
+        registerDefaultListener(SystemCharEvent.class, new DefaultSystemCharEventListener());
 //        registerDefaultListener(SystemCharEvent.class, ((event, component, context) -> System.out.println(component + " event: " + event + " cp: " + Character.toChars(event.codepoint))));
 //        registerDefaultListener(SystemMouseClickEvent.class, new DefaultSystemMouseClickEventListener());
     }
@@ -69,20 +78,29 @@ public class DefaultSystemEventListenerProvider extends SystemEventListenerProvi
 
         registerListener(Component.class, SystemCursorPosEvent.class, new DefaultSystemCursorPosEventListener());
 
-        registerListener(Button.class, SystemMouseClickEvent.class, new ButtonMouseClickEventListener());
         registerListener(Button.class, SystemCursorPosEvent.class, new ButtonCursorPosEventListener());
+        registerListener(Button.class, SystemMouseClickEvent.class, new ButtonMouseClickEventListener());
 
         registerListener(CheckBox.class, SystemMouseClickEvent.class, new CheckBoxMouseClickListener());
 
         registerListener(RadioButton.class, SystemMouseClickEvent.class, new RadioButtonMouseClickListener());
 
-        registerListener(ScrollBar.class, SystemMouseClickEvent.class, new ScrollBarMouseClickListener());
-        registerListener(ScrollBar.class, SystemScrollEvent.class, new ScrollBarScrollListener());
-        registerListener(ScrollBar.class, SystemCursorPosEvent.class, new ScrollBarCursorPosListener());
+        registerListener(ScrollBar.class, SystemCursorPosEvent.class, new ScrollBarSystemCursorPosEventListener());
+        registerListener(ScrollBar.class, SystemMouseClickEvent.class, new ScrollBarSystemMouseClickEventListener());
+        registerListener(ScrollBar.class, SystemScrollEvent.class, new ScrollBarSystemScrollEventListener());
 
         registerListener(Slider.class, SystemCursorPosEvent.class, new SliderSystemCursorPosEventListener());
-        registerListener(Slider.class, SystemScrollEvent.class, new SliderSystemScrollEventListener());
         registerListener(Slider.class, SystemMouseClickEvent.class, new SliderSystemMouseClickEventListener());
+        registerListener(Slider.class, SystemScrollEvent.class, new SliderSystemScrollEventListener());
+
+        registerListener(TextInput.class, SystemCharEvent.class, new TextInputSystemCharEventListener());
+        registerListener(TextInput.class, SystemCursorPosEvent.class, new TextInputSystemCursorPosEventListener());
+        registerListener(TextInput.class, SystemKeyEvent.class, new TextInputSystemKeyEventProcessor());
+        registerListener(TextInput.class, SystemMouseClickEvent.class, new TextInputSystemMouseClickEventListener());
+
+        registerListener(TextArea.class, SystemCharEvent.class, new TextAreaSystemCharEventListener());
+        registerListener(TextArea.class, SystemKeyEvent.class, new TextAreaSystemKeyEventListener());
+        registerListener(TextArea.class, SystemMouseClickEvent.class, new TextAreaSystemMouseClickEventListener());
     }
 
     public <C extends Component, E extends SystemEvent> void registerListener(Class<C> componentClass, Class<E> eventClass, SystemEventListener<C, E> listener) {

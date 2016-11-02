@@ -9,7 +9,7 @@ import org.liquidengine.legui.listener.SystemEventListener;
 /**
  * Created by Shcherbin Alexander on 8/30/2016.
  */
-public class ScrollBarScrollListener implements SystemEventListener<ScrollBar, SystemScrollEvent> {
+public class ScrollBarSystemScrollEventListener implements SystemEventListener<ScrollBar, SystemScrollEvent> {
 
     @Override
     public void update(SystemScrollEvent event, ScrollBar gui, LeguiContext leguiContext) {

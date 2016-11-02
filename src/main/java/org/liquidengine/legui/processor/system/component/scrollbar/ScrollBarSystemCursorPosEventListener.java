@@ -15,7 +15,7 @@ import static org.liquidengine.legui.util.Util.calculatePosition;
 /**
  * Created by Alexander on 26.08.2016.
  */
-public class ScrollBarCursorPosListener implements SystemEventListener<ScrollBar, SystemCursorPosEvent> {
+public class ScrollBarSystemCursorPosEventListener implements SystemEventListener<ScrollBar, SystemCursorPosEvent> {
     public void update(SystemCursorPosEvent event, ScrollBar gui, LeguiContext leguiContext) {
         if (!gui.isVisible()) return;
         if (!gui.isEnabled()) return;
