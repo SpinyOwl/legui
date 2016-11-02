@@ -9,11 +9,11 @@ import org.liquidengine.legui.util.ColorConstants;
  * Created by Alexander on 09.10.2016.
  */
 public class ScrollablePanel extends Panel implements Viewport {
+    public static final float INITIAL_SCROLL_SIZE = 12f;
     protected ScrollBar verticalScrollBar;
     protected ScrollBar horizontalScrollBar;
     protected ComponentContainer viewport;
     protected ComponentContainer container;
-    public static final float INITIAL_SCROLL_SIZE = 12f;
 
     public ScrollablePanel() {
         this(10, 10, 100, 100);
@@ -95,29 +95,31 @@ public class ScrollablePanel extends Panel implements Viewport {
         float horizontalRange = horizontalScrollBar.getMaxValue() - horizontalScrollBar.getMinValue();
         horizontalScrollBar.setVisibleAmount(containerSize.x >= viewportSize.x ? (horizontalRange * viewportSize.x / containerSize.x) : horizontalRange);
 
-
         float verticalRange = verticalScrollBar.getMaxValue() - verticalScrollBar.getMinValue();
         verticalScrollBar.setVisibleAmount(containerSize.x >= viewportSize.x ? (verticalRange * viewportSize.y / containerSize.y) : verticalRange);
+
+        updateViewport();
     }
 
-    @Override
-    public Vector2f getVisibleSize() {
-        return viewport.size;
-    }
+    public void updateViewport() {
+        float vh = viewport.size.y;
+        float ch = container.size.y;
+        float newPosY;
+        if (vh > ch) {
+            newPosY = 0;
+        } else {
+            newPosY = (vh - ch) * verticalScrollBar.getCurValue() / (verticalScrollBar.getMaxValue() - verticalScrollBar.getMinValue());
+        }
 
-    @Override
-    public Vector2f getWholeSize() {
-        return container.size;
-    }
-
-    @Override
-    public Vector2f getCurrentPosition() {
-        return container.position;
-    }
-
-    @Override
-    public void moveTo(Vector2f inViewportPosition) {
-        container.position = inViewportPosition;
+        float vw = viewport.size.x;
+        float cw = container.size.x;
+        float newPosX;
+        if (vw > cw) {
+            newPosX = 0;
+        } else {
+            newPosX = (vw - cw) * horizontalScrollBar.getCurValue() / (horizontalScrollBar.getMaxValue() - horizontalScrollBar.getMinValue());
+        }
+        container.position = new Vector2f(newPosX, newPosY);
     }
 
     public ScrollBar getVerticalScrollBar() {

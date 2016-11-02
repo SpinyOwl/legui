@@ -20,6 +20,9 @@ import org.liquidengine.legui.processor.system.component.radiobutton.RadioButton
 import org.liquidengine.legui.processor.system.component.scrollbar.ScrollBarCursorPosListener;
 import org.liquidengine.legui.processor.system.component.scrollbar.ScrollBarMouseClickListener;
 import org.liquidengine.legui.processor.system.component.scrollbar.ScrollBarScrollListener;
+import org.liquidengine.legui.processor.system.component.slider.SliderSystemCursorPosEventListener;
+import org.liquidengine.legui.processor.system.component.slider.SliderSystemMouseClickEventListener;
+import org.liquidengine.legui.processor.system.component.slider.SliderSystemScrollEventListener;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -63,14 +66,23 @@ public class DefaultSystemEventListenerProvider extends SystemEventListenerProvi
 
     private void initializeListeners() {
         registerListener(ComponentContainer.class, SystemMouseClickEvent.class, new ContainerSystemMouseClickEventListener());
+
         registerListener(Component.class, SystemCursorPosEvent.class, new DefaultSystemCursorPosEventListener());
+
         registerListener(Button.class, SystemMouseClickEvent.class, new ButtonMouseClickEventListener());
         registerListener(Button.class, SystemCursorPosEvent.class, new ButtonCursorPosEventListener());
+
         registerListener(CheckBox.class, SystemMouseClickEvent.class, new CheckBoxMouseClickListener());
+
         registerListener(RadioButton.class, SystemMouseClickEvent.class, new RadioButtonMouseClickListener());
+
         registerListener(ScrollBar.class, SystemMouseClickEvent.class, new ScrollBarMouseClickListener());
         registerListener(ScrollBar.class, SystemScrollEvent.class, new ScrollBarScrollListener());
         registerListener(ScrollBar.class, SystemCursorPosEvent.class, new ScrollBarCursorPosListener());
+
+        registerListener(Slider.class, SystemCursorPosEvent.class, new SliderSystemCursorPosEventListener());
+        registerListener(Slider.class, SystemScrollEvent.class, new SliderSystemScrollEventListener());
+        registerListener(Slider.class, SystemMouseClickEvent.class, new SliderSystemMouseClickEventListener());
     }
 
     public <C extends Component, E extends SystemEvent> void registerListener(Class<C> componentClass, Class<E> eventClass, SystemEventListener<C, E> listener) {

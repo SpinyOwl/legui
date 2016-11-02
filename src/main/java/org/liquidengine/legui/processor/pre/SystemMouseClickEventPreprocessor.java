@@ -31,7 +31,9 @@ public class SystemMouseClickEventPreprocessor implements SystemEventPreprocesso
                 focusedGui.setPressed(false);
             }
         }
-        pushContainersUp(mouseTargetGui);
+        if (mouseTargetGui != null) {
+            pushContainersUp(mouseTargetGui);
+        }
     }
 
     private void pushContainersUp(Component gui) {

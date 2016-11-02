@@ -2,15 +2,14 @@ package org.liquidengine.legui.processor.system.component.scrollbar;
 
 import org.joml.Vector2f;
 import org.liquidengine.legui.component.ScrollBar;
+import org.liquidengine.legui.component.Viewport;
 import org.liquidengine.legui.component.optional.Orientation;
 import org.liquidengine.legui.context.LeguiContext;
 import org.liquidengine.legui.event.system.SystemCursorPosEvent;
 import org.liquidengine.legui.listener.SystemEventListener;
-import org.liquidengine.legui.processor.system.component.LeguiComponentEventProcessor;
 import org.lwjgl.glfw.GLFW;
 
 import static org.liquidengine.legui.component.ScrollBar.MIN_SCROLL_SIZE;
-import static org.liquidengine.legui.processor.system.component.scrollbar.ScrollBartUtil.updateViewport;
 import static org.liquidengine.legui.util.Util.calculatePosition;
 
 /**
@@ -51,6 +50,10 @@ public class ScrollBarCursorPosListener implements SystemEventListener<ScrollBar
         if (newVal > maxValue) newVal = maxValue;
         else if (newVal < minValue) newVal = minValue;
         gui.setCurValue(newVal);
-        updateViewport(gui, newVal);
+
+        Viewport viewport = gui.getViewport();
+        if (viewport != null) {
+            viewport.updateViewport();
+        }
     }
 }

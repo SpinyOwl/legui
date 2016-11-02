@@ -5,7 +5,7 @@ import org.liquidengine.legui.component.Slider;
 import org.liquidengine.legui.component.optional.Orientation;
 import org.liquidengine.legui.context.LeguiContext;
 import org.liquidengine.legui.event.system.SystemCursorPosEvent;
-import org.liquidengine.legui.processor.system.component.LeguiComponentEventProcessor;
+import org.liquidengine.legui.listener.SystemEventListener;
 import org.liquidengine.legui.util.Util;
 import org.lwjgl.glfw.GLFW;
 
@@ -15,9 +15,8 @@ import static org.liquidengine.legui.processor.system.component.slider.SliderUpd
 /**
  * Created by Alexander on 28.08.2016.
  */
-public class SliderCursorPosProcessor implements LeguiComponentEventProcessor<Slider, SystemCursorPosEvent> {
-    @Override
-    public void process(Slider slider, SystemCursorPosEvent event, LeguiContext leguiContext) {
+public class SliderSystemCursorPosEventListener implements SystemEventListener<Slider, SystemCursorPosEvent> {
+    public void update(SystemCursorPosEvent event, Slider slider, LeguiContext leguiContext) {
         if (!slider.isVisible()) return;
         if (!slider.isEnabled()) return;
         if (leguiContext.getFocusedGui() != slider) return;

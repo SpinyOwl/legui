@@ -2,11 +2,11 @@ package org.liquidengine.legui.processor.system.component.scrollbar;
 
 import org.joml.Vector2f;
 import org.liquidengine.legui.component.ScrollBar;
+import org.liquidengine.legui.component.Viewport;
 import org.liquidengine.legui.component.optional.Orientation;
 import org.liquidengine.legui.context.LeguiContext;
 import org.liquidengine.legui.event.system.SystemMouseClickEvent;
 import org.liquidengine.legui.listener.SystemEventListener;
-import org.liquidengine.legui.processor.system.component.LeguiComponentEventProcessor;
 import org.liquidengine.legui.util.Util;
 
 import static org.lwjgl.glfw.GLFW.GLFW_PRESS;
@@ -65,7 +65,11 @@ public class ScrollBarMouseClickListener implements SystemEventListener<ScrollBa
         if (newVal > maxValue) newVal = maxValue;
         else if (newVal < minValue) newVal = minValue;
         gui.setCurValue(newVal);
-        ScrollBartUtil.updateViewport(gui, newVal);
+
+        Viewport viewport = gui.getViewport();
+        if (viewport != null) {
+            viewport.updateViewport();
+        }
     }
 
 }

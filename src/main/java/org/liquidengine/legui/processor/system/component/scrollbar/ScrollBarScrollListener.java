@@ -1,10 +1,10 @@
 package org.liquidengine.legui.processor.system.component.scrollbar;
 
 import org.liquidengine.legui.component.ScrollBar;
+import org.liquidengine.legui.component.Viewport;
 import org.liquidengine.legui.context.LeguiContext;
 import org.liquidengine.legui.event.system.SystemScrollEvent;
 import org.liquidengine.legui.listener.SystemEventListener;
-import org.liquidengine.legui.processor.system.component.LeguiComponentEventProcessor;
 
 /**
  * Created by Shcherbin Alexander on 8/30/2016.
@@ -27,7 +27,11 @@ public class ScrollBarScrollListener implements SystemEventListener<ScrollBar, S
         if (newVal < minValue) newVal = minValue;
 
         gui.setCurValue(newVal);
-        ScrollBartUtil.updateViewport(gui, newVal);
+
+        Viewport viewport = gui.getViewport();
+        if (viewport != null) {
+            viewport.updateViewport();
+        }
     }
 
 }

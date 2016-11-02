@@ -5,7 +5,7 @@ import org.liquidengine.legui.component.Slider;
 import org.liquidengine.legui.component.optional.Orientation;
 import org.liquidengine.legui.context.LeguiContext;
 import org.liquidengine.legui.event.system.SystemMouseClickEvent;
-import org.liquidengine.legui.processor.system.component.LeguiComponentEventProcessor;
+import org.liquidengine.legui.listener.SystemEventListener;
 import org.liquidengine.legui.util.Util;
 
 import static org.liquidengine.legui.processor.system.component.slider.SliderUpdateUtil.updateSliderValue;
@@ -14,9 +14,9 @@ import static org.lwjgl.glfw.GLFW.GLFW_PRESS;
 /**
  * Created by Shcherbin Alexander on 8/25/2016.
  */
-public class SliderMouseClickProcessor implements LeguiComponentEventProcessor<Slider, SystemMouseClickEvent> {
+public class SliderSystemMouseClickEventListener implements SystemEventListener<Slider, SystemMouseClickEvent> {
     @Override
-    public final void process(Slider gui, SystemMouseClickEvent event, LeguiContext leguiContext) {
+    public final void update(SystemMouseClickEvent event, Slider gui, LeguiContext leguiContext) {
         if (!gui.isVisible()) return;
         if (!gui.isEnabled()) return;
         if (event.action != GLFW_PRESS) return;

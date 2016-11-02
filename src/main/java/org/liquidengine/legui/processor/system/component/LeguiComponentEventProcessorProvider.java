@@ -15,9 +15,9 @@
 //import org.liquidengine.legui.processor.system.component.scrollbar.ScrollBarCursorPosListener;
 //import org.liquidengine.legui.processor.system.component.scrollbar.ScrollBarMouseClickListener;
 //import org.liquidengine.legui.processor.system.component.scrollbar.ScrollBarScrollListener;
-//import org.liquidengine.legui.processor.system.component.slider.SliderCursorPosProcessor;
-//import org.liquidengine.legui.processor.system.component.slider.SliderMouseClickProcessor;
-//import org.liquidengine.legui.processor.system.component.slider.SliderScrollProcessor;
+//import org.liquidengine.legui.processor.system.component.slider.SliderSystemCursorPosEventListener;
+//import org.liquidengine.legui.processor.system.component.slider.SliderSystemMouseClickEventListener;
+//import org.liquidengine.legui.processor.system.component.slider.SliderSystemScrollEventListener;
 //import org.liquidengine.legui.processor.system.component.textarea.TextAreaCharEventProcessor;
 //import org.liquidengine.legui.processor.system.component.textarea.TextAreaKeyProcessor;
 //import org.liquidengine.legui.processor.system.component.textarea.TextAreaMouseClickProcessor;
@@ -52,9 +52,9 @@
 //
 //        registerGuiProcessor(CheckBox.class, SystemMouseClickEvent.class, new CheckBoxMouseClickListener());
 //
-//        registerGuiProcessor(Slider.class, SystemMouseClickEvent.class, new SliderMouseClickProcessor());
-//        registerGuiProcessor(Slider.class, SystemCursorPosEvent.class, new SliderCursorPosProcessor());
-//        registerGuiProcessor(Slider.class, SystemScrollEvent.class, new SliderScrollProcessor());
+//        registerGuiProcessor(Slider.class, SystemMouseClickEvent.class, new SliderSystemMouseClickEventListener());
+//        registerGuiProcessor(Slider.class, SystemCursorPosEvent.class, new SliderSystemCursorPosEventListener());
+//        registerGuiProcessor(Slider.class, SystemScrollEvent.class, new SliderSystemScrollEventListener());
 //
 //        registerGuiProcessor(RadioButton.class, SystemMouseClickEvent.class, new RadioButtonMouseClickListener());
 //

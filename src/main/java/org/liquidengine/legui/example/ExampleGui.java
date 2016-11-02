@@ -181,24 +181,31 @@ public class ExampleGui extends Panel {
             if (PRESS.equals(action)) System.out.println("PRESS");
         });
 
-        ScrollablePanel panel = new ScrollablePanel(420, 10, 250, 150);
-        panel.setBackgroundColor(1, 1, 1, 1);
-//        panel.setBorder(null);
-        panel.getContainer().setSize(300, 200);
-        panel.resize();
-        panel.getContainer().addComponent(new TextInput("Hello Scrollable", 10, 10, 150, 20));
-        this.addComponent(panel);
+        ScrollablePanel scrollablePanel = new ScrollablePanel(420, 10, 250, 150);
+        scrollablePanel.setBackgroundColor(1, 1, 1, 1);
+//        scrollablePanel.setBorder(null);
+        scrollablePanel.getContainer().setSize(300, 200);
+        scrollablePanel.resize();
+
+        ScrollablePanel scp = new ScrollablePanel(10, 10, 150, 100);
+        scp.getContainer().setSize(300,300);
+        scp.resize();
+
+        scp.getContainer().addComponent(new TextInput("Hello Scrollable", 10, 10, 150, 20));
+
+        scrollablePanel.getContainer().addComponent(scp);
+        this.addComponent(scrollablePanel);
 
         slider2.getListenerList().addListener(SliderChangeEvent.class, (SliderChangeEventListener) event -> {
-            panel.getHorizontalScrollBar().getSize().y = event.getSlider().getValue() / 2f + 10;
-            panel.resize();
+            scrollablePanel.getHorizontalScrollBar().getSize().y = event.getSlider().getValue() / 2f + 10;
+            scrollablePanel.resize();
         });
         slider1.getListenerList().addListener(SliderChangeEvent.class, (SliderChangeEventListener) event -> {
-            panel.getHorizontalScrollBar().setArrowSize(event.getSlider().getValue() / 4f + 10);
-            panel.resize();
+            scrollablePanel.getHorizontalScrollBar().setArrowSize(event.getSlider().getValue() / 4f + 10);
+            scrollablePanel.resize();
         });
 
-        System.out.println("SA " + panel.getHorizontalScrollBar().getVisibleAmount() + " " + panel.getSize().x + " " + panel.getContainer().getSize().x + " " + panel.getHorizontalScrollBar().getArrowSize() + " " + panel.getVerticalScrollBar().getSize().x);
+        System.out.println("SA " + scrollablePanel.getHorizontalScrollBar().getVisibleAmount() + " " + scrollablePanel.getSize().x + " " + scrollablePanel.getContainer().getSize().x + " " + scrollablePanel.getHorizontalScrollBar().getArrowSize() + " " + scrollablePanel.getVerticalScrollBar().getSize().x);
         textArea = new TextArea(420, 280, 150, 100);
         textArea.getTextState().setText("ABC DEF GH\r\nI JKL MNO PQR\nSTU VWXYZ");
         textArea.setCaretPosition(12);

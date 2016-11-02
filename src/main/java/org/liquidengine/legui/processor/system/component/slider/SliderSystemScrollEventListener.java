@@ -3,16 +3,16 @@ package org.liquidengine.legui.processor.system.component.slider;
 import org.liquidengine.legui.component.Slider;
 import org.liquidengine.legui.context.LeguiContext;
 import org.liquidengine.legui.event.system.SystemScrollEvent;
-import org.liquidengine.legui.processor.system.component.LeguiComponentEventProcessor;
+import org.liquidengine.legui.listener.SystemEventListener;
 
 import static org.liquidengine.legui.processor.system.component.slider.SliderUpdateUtil.updateSliderValue;
 
 /**
  * Created by Shcherbin Alexander on 8/30/2016.
  */
-public class SliderScrollProcessor implements LeguiComponentEventProcessor<Slider, SystemScrollEvent> {
+public class SliderSystemScrollEventListener implements SystemEventListener<Slider, SystemScrollEvent> {
     @Override
-    public void process(Slider gui, SystemScrollEvent event, LeguiContext leguiContext) {
+    public void update(SystemScrollEvent event, Slider gui, LeguiContext leguiContext) {
         float maxValue = 100f;
         float minValue = 0f;
         float curValue = gui.getValue();
