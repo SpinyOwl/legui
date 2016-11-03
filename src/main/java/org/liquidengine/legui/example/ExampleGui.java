@@ -107,7 +107,7 @@ public class ExampleGui extends Panel {
         widget.setTitleBackgroundColor(ColorConstants.lightGreen());
 
         Button turnWidVisible = new Button(360, 280, 20, 20, "");
-        turnWidVisible.getListenerList().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
+        turnWidVisible.getEventListeners().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
             if (CLICK.equals(event.getAction())) widget.setVisible(true);
         });
         this.addComponent(turnWidVisible);
@@ -129,6 +129,13 @@ public class ExampleGui extends Panel {
         c4.setBackgroundColor(1, 0, 0, 1);
         widget.getContainer().addComponent(c4);
         this.addComponent(widget);
+
+        Widget widget2 = new Widget("Hello 2 widget", 250, 300, 100, 100);
+        widget2.setTitleHeight(20);
+        widget2.setCloseButtonColor(ColorConstants.red());
+        widget2.setTitleBackgroundColor(ColorConstants.lightGreen());
+//        widget2.setCloseable(false);
+        this.addComponent(widget2);
 
         ScrollBar scrollBar1 = new ScrollBar(360, 170, 20, 100, 20);
         scrollBar1.setOrientation(Orientation.VERTICAL);
@@ -162,42 +169,50 @@ public class ExampleGui extends Panel {
         Panel panel1 = new Panel(420, 170, 100, 100);
         panel1.setBackgroundColor(ColorConstants.blue());
         this.addComponent(panel1);
-        panel1.getListenerList().addListener(CursorEnterEvent.class, System.out::println);
+        panel1.getEventListeners().addListener(CursorEnterEvent.class, System.out::println);
         Panel panel2 = new Panel(470, 170, 100, 100);
         panel2.setBackgroundColor(ColorConstants.green());
         this.addComponent(panel2);
 
-        button.getListenerList().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
+        button.getEventListeners().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
             MouseClickEvent.MouseClickAction action = event.getAction();
             if (CLICK.equals(action)) mouseTargetLabel.setVisible(!mouseTargetLabel.isVisible());
             if (RELEASE.equals(action)) System.out.println("RELEASE");
             if (PRESS.equals(action)) System.out.println("PRESS");
         });
 
-        ScrollablePanel panel = new ScrollablePanel(420, 10, 250, 150);
-        panel.setBackgroundColor(1, 1, 1, 1);
-//        panel.setBorder(null);
-        panel.getContainer().setSize(300, 200);
-        panel.resize();
-        panel.getContainer().addComponent(new TextInput("Hello Scrollable", 10, 10, 150, 20));
-        this.addComponent(panel);
+        ScrollablePanel scrollablePanel = new ScrollablePanel(420, 10, 250, 150);
+        scrollablePanel.setBackgroundColor(1, 1, 1, 1);
+//        scrollablePanel.setBorder(null);
+        scrollablePanel.getContainer().setSize(300, 200);
+        scrollablePanel.resize();
 
-        slider2.getListenerList().addListener(SliderChangeEvent.class, (SliderChangeEventListener) event -> {
-            panel.getHorizontalScrollBar().getSize().y = event.getSlider().getValue() / 2f + 10;
-            panel.resize();
+        ScrollablePanel scp = new ScrollablePanel(10, 10, 150, 100);
+        scp.getContainer().setSize(300,300);
+        scp.resize();
+
+        scp.getContainer().addComponent(new TextInput("Hello Scrollable", 10, 10, 150, 20));
+
+        scrollablePanel.getContainer().addComponent(scp);
+        this.addComponent(scrollablePanel);
+
+        slider2.getEventListeners().addListener(SliderChangeEvent.class, (SliderChangeEventListener) event -> {
+            scrollablePanel.getHorizontalScrollBar().getSize().y = event.getSlider().getValue() / 2f + 10;
+            scrollablePanel.resize();
         });
-        slider1.getListenerList().addListener(SliderChangeEvent.class, (SliderChangeEventListener) event -> {
-            panel.getHorizontalScrollBar().setArrowSize(event.getSlider().getValue() / 4f + 10);
-            panel.resize();
+        slider1.getEventListeners().addListener(SliderChangeEvent.class, (SliderChangeEventListener) event -> {
+            scrollablePanel.getHorizontalScrollBar().setArrowSize(event.getSlider().getValue() / 4f + 10);
+            scrollablePanel.resize();
         });
 
+        System.out.println("SA " + scrollablePanel.getHorizontalScrollBar().getVisibleAmount() + " " + scrollablePanel.getSize().x + " " + scrollablePanel.getContainer().getSize().x + " " + scrollablePanel.getHorizontalScrollBar().getArrowSize() + " " + scrollablePanel.getVerticalScrollBar().getSize().x);
         textArea = new TextArea(420, 280, 150, 100);
         textArea.getTextState().setText("ABC DEF GH\r\nI JKL MNO PQR\nSTU VWXYZ");
         textArea.setCaretPosition(12);
         textArea.getTextState().setHorizontalAlign(HorizontalAlign.CENTER);
         this.addComponent(textArea);
 
-        textArea.getListenerList().addListener(KeyboardKeyEvent.class, (KeyboardKeyEventListener) event -> {
+        textArea.getEventListeners().addListener(KeyboardKeyEvent.class, (KeyboardKeyEventListener) event -> {
             if (event.getKey() == GLFW.GLFW_KEY_F1 && event.getAction() == GLFW.GLFW_RELEASE)
                 textArea.getTextState().setHorizontalAlign(HorizontalAlign.LEFT);
             else if (event.getKey() == GLFW.GLFW_KEY_F2 && event.getAction() == GLFW.GLFW_RELEASE)
@@ -210,7 +225,7 @@ public class ExampleGui extends Panel {
         caretp.getTextState().setHorizontalAlign(HorizontalAlign.CENTER);
         this.addComponent(caretp);
 
-        TextInput inpur = new TextInput(420,430,50,35);
+        TextInput inpur = new TextInput(420, 430, 50, 35);
         inpur.getTextState().setText("00");
         inpur.getTextState().setFontSize(35);
         inpur.getTextState().setHorizontalAlign(HorizontalAlign.CENTER);

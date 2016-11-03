@@ -5,15 +5,14 @@ import org.joml.Vector4f;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.context.LeguiCallbackKeeper;
 import org.liquidengine.legui.context.LeguiContext;
-import org.liquidengine.legui.processor.LeguiEventProcessor;
-import org.liquidengine.legui.processor.SystemEventProcessor;
+import org.liquidengine.legui.processor.LeguiEventListenerProcessor;
+import org.liquidengine.legui.processor.SystemEventListenerProcessor;
 import org.liquidengine.legui.render.LeguiRenderer;
 import org.liquidengine.legui.render.nvg.NvgLeguiRenderer;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWKeyCallbackI;
 import org.lwjgl.glfw.GLFWWindowCloseCallbackI;
 import org.lwjgl.opengl.GL;
-import org.lwjgl.opengl.GLCapabilities;
 
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
@@ -43,8 +42,8 @@ public class Demo {
 
     protected LeguiContext leguiContext;
     protected LeguiRenderer renderer;
-    protected SystemEventProcessor systemEventProcessor;
-    protected LeguiEventProcessor uiEventLeguiEventProcessor;
+    protected SystemEventListenerProcessor systemEventProcessor;
+    protected LeguiEventListenerProcessor uiEventLeguiEventProcessor;
 
     protected int updates;
     protected int currentUps;
@@ -108,9 +107,9 @@ public class Demo {
         callbackKeeper = new LeguiCallbackKeeper(windowPointer);
 
         // Create event processor for system events (obtained from callbacks) Constructor automatically creates Callbacks and binds them to window
-        systemEventProcessor = new SystemEventProcessor(component, leguiContext, callbackKeeper);
+        systemEventProcessor = new SystemEventListenerProcessor(component, leguiContext, callbackKeeper);
         // Create event processor for ui events
-        uiEventLeguiEventProcessor = new LeguiEventProcessor();
+        uiEventLeguiEventProcessor = new LeguiEventListenerProcessor();
         // Set this processor to context, so generated ui events in system event processor will go to it.
         leguiContext.setLeguiEventProcessor(uiEventLeguiEventProcessor);
 

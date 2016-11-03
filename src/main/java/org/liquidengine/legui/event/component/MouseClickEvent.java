@@ -5,11 +5,12 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.joml.Vector2f;
 import org.liquidengine.legui.component.Component;
+import org.liquidengine.legui.event.LeguiEvent;
 
 /**
  * Created by Shcherbin Alexander on 10/6/2016.
  */
-public class MouseClickEvent extends AbstractComponentEvent {
+public class MouseClickEvent extends LeguiEvent {
     private final Vector2f position;
     private final MouseClickAction action;
     private final int button;

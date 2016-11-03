@@ -105,4 +105,17 @@ public abstract class ComponentContainer extends Component {
         return new ArrayList<>(components);
     }
 
+    @Override
+    public Component getComponentAt(Vector2f cursorPosition) {
+        Component componentAt = super.getComponentAt(cursorPosition);
+        if (componentAt != null) {
+            for (Component child : components) {
+                if (child.isVisible()) {
+                    Component childComponentAt = child.getComponentAt(cursorPosition);
+                    componentAt = childComponentAt == null ? componentAt : childComponentAt;
+                }
+            }
+        }
+        return componentAt;
+    }
 }

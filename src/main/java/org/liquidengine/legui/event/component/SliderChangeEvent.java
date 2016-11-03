@@ -4,11 +4,12 @@ import com.google.common.base.Objects;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.liquidengine.legui.component.Slider;
+import org.liquidengine.legui.event.LeguiEvent;
 
 /**
  * Created by Shcherbin Alexander on 9/26/2016.
  */
-public class SliderChangeEvent extends AbstractComponentEvent {
+public class SliderChangeEvent extends LeguiEvent {
     private final float oldValue;
     private final float newValue;
 

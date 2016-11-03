@@ -62,7 +62,7 @@ public class Widget extends ComponentContainer {
         this.title.textState.getPadding().set(10, 5, 10, 5);
         this.title.setBorder(simpleLineBorder);
 
-        this.title.listenerList.addListener(MouseDragEvent.class, event -> {
+        this.title.eventListeners.addListener(MouseDragEvent.class, event -> {
             if (event.getComponent() == this.title) {
                 Vector2f sub = event.getCursorPosition().sub(event.getCursorPositionPrev());
                 position.add(sub);
@@ -75,7 +75,7 @@ public class Widget extends ComponentContainer {
         this.closeButton.textState.setHorizontalAlign(HorizontalAlign.LEFT);
         this.closeButton.textState.setVerticalAlign(VerticalAlign.MIDDLE);
         this.closeButton.textState.setFont(FontRegister.MATERIAL_ICONS_REGULAR);
-        this.closeButton.getListenerList().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
+        this.closeButton.getEventListeners().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
             if (CLICK.equals(event.getAction())) {
                 this.visible = false;
             }

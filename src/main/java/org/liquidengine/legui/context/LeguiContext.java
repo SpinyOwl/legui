@@ -4,9 +4,9 @@ import org.joml.Vector2f;
 import org.joml.Vector2i;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.ComponentContainer;
-import org.liquidengine.legui.event.system.LeguiSystemEvent;
+import org.liquidengine.legui.event.SystemEvent;
 import org.liquidengine.legui.event.system.SystemMouseClickEvent;
-import org.liquidengine.legui.processor.LeguiEventProcessor;
+import org.liquidengine.legui.processor.LeguiEventListenerProcessor;
 import org.lwjgl.glfw.GLFW;
 
 import java.io.Serializable;
@@ -40,7 +40,7 @@ public class LeguiContext implements Serializable {
     private Vector2f[] mouseButtonPressPosition = new Vector2f[GLFW.GLFW_MOUSE_BUTTON_LAST];
 
     private Map<String, Object> contextData = new ConcurrentHashMap<>();
-    private LeguiEventProcessor leguiEventProcessor;
+    private LeguiEventListenerProcessor leguiEventProcessor;
 
 
     public LeguiContext(long glfwWindow, Component mainGuiComponent) {
@@ -175,7 +175,7 @@ public class LeguiContext implements Serializable {
         this.mouseButtonStates = mouseButtonStates;
     }
 
-    void releaseFocus(Component mainGui, LeguiSystemEvent event) {
+    void releaseFocus(Component mainGui, SystemEvent event) {
         boolean release = false;
         if (event instanceof SystemMouseClickEvent && ((SystemMouseClickEvent) event).action == GLFW.GLFW_RELEASE) {
             release = true;
@@ -220,11 +220,11 @@ public class LeguiContext implements Serializable {
     }
 
 
-    public void setLeguiEventProcessor(LeguiEventProcessor leguiEventProcessor) {
+    public void setLeguiEventProcessor(LeguiEventListenerProcessor leguiEventProcessor) {
         this.leguiEventProcessor = leguiEventProcessor;
     }
 
-    public LeguiEventProcessor getLeguiEventProcessor() {
+    public LeguiEventListenerProcessor getLeguiEventProcessor() {
         return leguiEventProcessor;
     }
 }

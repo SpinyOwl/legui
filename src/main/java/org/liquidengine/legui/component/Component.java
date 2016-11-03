@@ -11,8 +11,8 @@ import org.liquidengine.legui.component.border.SimpleLineBorder;
 import org.liquidengine.legui.component.intersector.LeguiIntersector;
 import org.liquidengine.legui.component.intersector.RectangleIntersector;
 import org.liquidengine.legui.context.LeguiContext;
-import org.liquidengine.legui.listener.component.LeguiListenerList;
-import org.liquidengine.legui.processor.system.component.LeguiEventProcessorList;
+import org.liquidengine.legui.listener.LeguiEventListenerList;
+import org.liquidengine.legui.listener.SystemEventListenerList;
 import org.liquidengine.legui.render.LeguiComponentRenderer;
 import org.liquidengine.legui.render.LeguiRendererProvider;
 import org.liquidengine.legui.util.ColorConstants;
@@ -25,7 +25,6 @@ import java.io.Serializable;
  * Created by Shcherbin Alexander on 9/14/2016.
  */
 public abstract class Component implements Serializable {
-    private final LeguiEventProcessorList processors = new LeguiEventProcessorList(this);
     protected Vector2f position;
     protected Vector2f size;
     protected Vector4f backgroundColor = ColorConstants.lightGray();
@@ -45,7 +44,8 @@ public abstract class Component implements Serializable {
     protected LeguiIntersector intersector = new RectangleIntersector();
     protected LeguiComponentRenderer renderer = LeguiRendererProvider.getProvider().getRenderer(this);
 
-    protected LeguiListenerList listenerList = new LeguiListenerList();
+    protected LeguiEventListenerList eventListeners = new LeguiEventListenerList();
+    protected SystemEventListenerList systemEventListeners = new SystemEventListenerList(this.getClass());
 
     public Component() {
         this(10, 10, 10, 10);
@@ -68,8 +68,8 @@ public abstract class Component implements Serializable {
         return parent;
     }
 
-    public LeguiEventProcessorList getProcessors() {
-        return processors;
+    public SystemEventListenerList getSystemEventListeners() {
+        return systemEventListeners;
     }
 
     public Vector2f getPosition() {
@@ -96,8 +96,8 @@ public abstract class Component implements Serializable {
         this.size.set(width, height);
     }
 
-    public LeguiListenerList getListenerList() {
-        return listenerList;
+    public LeguiEventListenerList getEventListeners() {
+        return eventListeners;
     }
 
     public Vector4f getBackgroundColor() {
@@ -176,6 +176,14 @@ public abstract class Component implements Serializable {
         this.hovered = hovered;
     }
 
+    public Component getComponentAt(Vector2f cursorPosition) {
+        if (visible && intersector.intersects(this, cursorPosition)) {
+            return this;
+        } else {
+            return null;
+        }
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -197,7 +205,7 @@ public abstract class Component implements Serializable {
                 .append(border, component.border)
                 .append(parent, component.parent)
                 .append(intersector, component.intersector)
-                .append(listenerList, component.listenerList)
+                .append(eventListeners, component.eventListeners)
                 .isEquals();
     }
 
@@ -216,7 +224,7 @@ public abstract class Component implements Serializable {
                 .append(cornerRadius)
                 .append(parent)
                 .append(intersector)
-                .append(listenerList)
+                .append(eventListeners)
                 .toHashCode();
     }
 
@@ -235,7 +243,7 @@ public abstract class Component implements Serializable {
                 .append("cornerRadius", cornerRadius)
                 .append("parent", parent)
                 .append("intersector", intersector)
-                .append("listenerList", listenerList)
+                .append("eventListeners", eventListeners)
                 .toString();
     }
 }
