@@ -17,17 +17,17 @@ public class TextAreaSystemKeyEventListener implements SystemEventListener<TextA
         if (gui.isFocused() && gui.isEditable()) {
             int key = event.key;
             int caretPosition = gui.getCaretPosition();
-            boolean PRESS = event.action != GLFW_RELEASE;
+            boolean pressed = event.action != GLFW_RELEASE;
             TextState textState = gui.getTextState();
-            if (key == GLFW_KEY_LEFT && PRESS) {
+            if (key == GLFW_KEY_LEFT && pressed) {
                 if (caretPosition > 0) {
                     gui.setCaretPosition(caretPosition - 1);
                 }
-            } else if (key == GLFW_KEY_RIGHT && PRESS) {
+            } else if (key == GLFW_KEY_RIGHT && pressed) {
                 if (caretPosition < textState.length()) {
                     gui.setCaretPosition(caretPosition + 1);
                 }
-            } else if (key == GLFW_KEY_UP && PRESS) {
+            } else if (key == GLFW_KEY_UP && pressed) {
                 if (caretPosition > 0) {
                     String text = textState.getText();
                     String[] lines = text.split("\n", -1);
@@ -40,7 +40,7 @@ public class TextAreaSystemKeyEventListener implements SystemEventListener<TextA
                         gui.setCaretPosition(0);
                     }
                 }
-            } else if (key == GLFW_KEY_DOWN && PRESS) {
+            } else if (key == GLFW_KEY_DOWN && pressed) {
                 if (caretPosition < textState.length()) {
                     String text = textState.getText();
                     String[] lines = text.split("\n", -1);
@@ -59,12 +59,12 @@ public class TextAreaSystemKeyEventListener implements SystemEventListener<TextA
                         gui.setCaretPosition(text.length());
                     }
                 }
-            } else if (key == GLFW_KEY_HOME && PRESS) {
+            } else if (key == GLFW_KEY_HOME && pressed) {
                 String text = textState.getText();
                 String[] lines = text.split("\n", -1);
                 LineData some = getStartLineIndexAndLineNumber(lines, caretPosition);
                 gui.setCaretPosition(caretPosition - some.caretPositionInLine);
-            } else if (key == GLFW_KEY_END && PRESS) {
+            } else if (key == GLFW_KEY_END && pressed) {
                 String text = textState.getText();
                 String[] lines = text.split("\n", -1);
                 LineData some = getStartLineIndexAndLineNumber(lines, caretPosition);
@@ -72,24 +72,28 @@ public class TextAreaSystemKeyEventListener implements SystemEventListener<TextA
                 int delta = cl - some.caretPositionInLine;
                 int np = caretPosition + delta;
                 gui.setCaretPosition(np);
-            } else if (key == GLFW_KEY_ENTER && PRESS) {
+            } else if (key == GLFW_KEY_ENTER || key==GLFW_KEY_KP_ENTER && pressed) {
                 if (gui.isEditable()) {
                     gui.getTextState().insert(caretPosition, "\n");
                     gui.setCaretPosition(caretPosition + 1);
                 }
-            } else if (key == GLFW_KEY_BACKSPACE && PRESS) {
+            } else if (key == GLFW_KEY_BACKSPACE && pressed) {
                 if (gui.isEditable() && caretPosition != 0) {
                     textState.deleteCharAt(caretPosition - 1);
                     gui.setCaretPosition(caretPosition - 1);
                 }
-            } else if (key == GLFW_KEY_DELETE && PRESS) {
+            } else if (key == GLFW_KEY_DELETE && pressed) {
                 if (gui.isEditable() && caretPosition != textState.length()) {
                     textState.deleteCharAt(caretPosition);
                 }
+            } else if (key == GLFW_KEY_V && pressed && event.mods == GLFW_MOD_CONTROL) {
+                String s = glfwGetClipboardString(leguiContext.getGlfwWindow());
+                if (s != null) {
+                    textState.insert(caretPosition, s);
+                    gui.setCaretPosition(caretPosition + s.length());
+                }
             }
         }
-
-
     }
 
     private LineData getStartLineIndexAndLineNumber(String[] lines, int caretPosition) {

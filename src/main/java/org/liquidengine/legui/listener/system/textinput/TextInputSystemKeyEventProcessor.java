@@ -5,9 +5,6 @@ import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.context.LeguiContext;
 import org.liquidengine.legui.event.system.SystemKeyEvent;
 import org.liquidengine.legui.listener.SystemEventListener;
-import org.lwjgl.system.MemoryUtil;
-
-import java.nio.ByteBuffer;
 
 import static org.lwjgl.glfw.GLFW.*;
 
@@ -49,13 +46,6 @@ public class TextInputSystemKeyEventProcessor implements SystemEventListener<Tex
                     if (s != null) {
                         textState.insert(caretPosition, s);
                         gui.setCaretPosition(caretPosition + s.length());
-                    } else {
-                        long l = nglfwGetClipboardString(leguiContext.getGlfwWindow());
-                        ByteBuffer byteBuffer = MemoryUtil.memByteBufferNT1(l);
-                        System.out.println(l + " " + (byteBuffer==null));
-                        if(byteBuffer!=null){
-                            System.out.println(byteBuffer.capacity());
-                        }
                     }
                 }
             }
