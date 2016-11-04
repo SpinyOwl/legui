@@ -12,6 +12,7 @@ import java.util.concurrent.locks.ReentrantLock;
 import static org.liquidengine.legui.util.Util.cpToStr;
 
 /**
+ * Creates drop-down list with select options
  * Created by Shcherbin Alexander on 10/21/2016.
  */
 public class SelectBox<T> extends ComponentContainer {
