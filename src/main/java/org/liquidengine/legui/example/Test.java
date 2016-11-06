@@ -41,7 +41,6 @@ public class Test {
                 System.out.println("`frame - mouseExited");
             }
         });
-//        frame.addComponentListener();
         JButton button = new JButton();
         button.setBounds(100, 100, 200, 200);
         button.addMouseListener(new MouseListener() {

@@ -36,7 +36,6 @@ public class DefaultSystemCursorPosEventListener implements SystemEventListener<
         List<Component> all = container.getComponents();
         for (Component child : all) {
             child.getSystemEventListeners().getListener(event.getClass()).update(event, child, context);
-//            process(event, child, context);
         }
     }
 

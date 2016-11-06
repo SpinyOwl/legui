@@ -21,7 +21,7 @@ public class SystemMouseClickEventPreprocessor implements SystemEventPreprocesso
             focusedGui.setFocused(false);
             context.setFocusedGui(null);
         }
-        if (mouseTargetGui != null) {
+        if (mouseTargetGui != null && event.action == GLFW.GLFW_PRESS) {
             mouseTargetGui.setFocused(true);
             context.setFocusedGui(mouseTargetGui);
         }
@@ -49,13 +49,11 @@ public class SystemMouseClickEventPreprocessor implements SystemEventPreprocesso
             }
             if (push) {
                 do {
-                    if (parent instanceof ComponentContainer) {
-                        ComponentContainer container = ((ComponentContainer) parent);
-                        container.removeComponent(current);
-                        container.addComponent(current);
-                        current = parent;
-                        parent = current.getParent();
-                    }
+                    ComponentContainer container = ((ComponentContainer) parent);
+                    container.removeComponent(current);
+                    container.addComponent(current);
+                    current = parent;
+                    parent = current.getParent();
                 } while (parent != null);
             }
         }

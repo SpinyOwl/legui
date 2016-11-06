@@ -92,9 +92,6 @@ public class NvgScrollBarRenderer extends NvgLeguiComponentRenderer {
                 nvgFill(context);
 
                 if (arrowsEnabled) {
-                    Vector4f arrowColor = scrollBar.getArrowColor();
-                    Vector4f blackOrWhite = oppositeBlackOrWhite(arrowColor);
-//                    drawArrows(context, arrowSize, vertical, lx, ly, wx, hy, arrowColor, oppositeBlackOrWhite);
                     drawArrows(context, scrollBar, pos, size);
                 }
             }
@@ -170,7 +167,6 @@ public class NvgScrollBarRenderer extends NvgLeguiComponentRenderer {
         drawRectangle(context, arrowColor, x2, y2, w2, h2);
 
 
-//        first = "00";
         float fontSize = arrowSize > h1 ? h1 : arrowSize;
         String font = FontRegister.MATERIAL_ICONS_REGULAR;
         HorizontalAlign horizontalAlign = HorizontalAlign.CENTER;

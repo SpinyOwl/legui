@@ -24,7 +24,7 @@ public abstract class ComponentContainer extends Component {
         super(position, size);
     }
 
-    public int containerSize() {
+    public int componentsCount() {
         return components.size();
     }
 
@@ -55,7 +55,7 @@ public abstract class ComponentContainer extends Component {
 
     private void changeParent(Component element) {
         Component parent = element.parent;
-        if (parent != null && (parent instanceof ComponentContainer)) {
+        if (parent != null) {
             ComponentContainer container = ((ComponentContainer) parent);
             container.removeComponent(element);
         }

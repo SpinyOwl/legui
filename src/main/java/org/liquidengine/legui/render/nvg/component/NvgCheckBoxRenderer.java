@@ -31,11 +31,6 @@ public class NvgCheckBoxRenderer extends NvgDefaultRenderer {
     private NVGColor colorA = NVGColor.create();
 
     @Override
-    public void initialize() {
-
-    }
-
-    @Override
     public void render(Component component, LeguiContext leguiContext, long nvgContext) {
         createScissor(nvgContext, component);
         {
@@ -88,10 +83,6 @@ public class NvgCheckBoxRenderer extends NvgDefaultRenderer {
             }
         }
         resetScissor(nvgContext);
-    }
-
-    @Override
-    public void destroy() {
     }
 
 }

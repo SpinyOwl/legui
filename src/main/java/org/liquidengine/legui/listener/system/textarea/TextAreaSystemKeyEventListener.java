@@ -48,7 +48,7 @@ public class TextAreaSystemKeyEventListener implements SystemEventListener<TextA
                     if (some.lineCaretIndex < lines.length - 1) {
                         int nl = lines[some.lineCaretIndex + 1].length() + 1;
                         int cl = lines[some.lineCaretIndex].length() + 1;
-                        int np = 0;
+                        int np;
                         if (some.caretPositionInLine >= nl - 1) {
                             np = caretPosition + nl + cl - 1 - some.caretPositionInLine;
                         } else {

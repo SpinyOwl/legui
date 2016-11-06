@@ -32,12 +32,9 @@ public class LiquidEngineGuiExample extends Demo {
             leguiLabel.getTextState().setFontSize(hei);
         };
         example.callbackKeeper.getChainWindowSizeCallback().add(windowSizeCallbackI);
-        System.out.println(example.callbackKeeper.getChainWindowSizeCallback());
     }
 
     private static Component createGui(int width, int height) {
-//        Panel main = new Panel(0, 0, width, height);
-
         leguiLabel = new Label(0, 0, width, height);
         leguiLabel.setBackgroundColor(ColorConstants.transparent());
         leguiLabel.getTextState().setTextColor(ColorConstants.darkGray());
@@ -45,8 +42,6 @@ public class LiquidEngineGuiExample extends Demo {
         leguiLabel.getTextState().setFontSize(height);
         leguiLabel.getTextState().setHorizontalAlign(HorizontalAlign.CENTER);
         leguiLabel.getTextState().setVerticalAlign(VerticalAlign.MIDDLE);
-//        main.addComponent(leguiLabel);
-
         return leguiLabel;
     }
 

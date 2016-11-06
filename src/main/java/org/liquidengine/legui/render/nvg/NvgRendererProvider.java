@@ -48,7 +48,20 @@ public class NvgRendererProvider extends LeguiRendererProvider {
 
     @Override
     public LeguiComponentRenderer getRenderer(Component component) {
-        return rendererMap.getOrDefault(component.getClass(), renderer);
+        return cycledSearchOfRenderer(component.getClass(), renderer);
+    }
+
+
+    private LeguiComponentRenderer cycledSearchOfRenderer(Class<? extends Component> componentClass, LeguiComponentRenderer defaultListener) {
+        LeguiComponentRenderer renderer = null;
+        Class cClass = componentClass;
+        while (renderer == null) {
+            renderer = rendererMap.get(cClass);
+            if (cClass.isAssignableFrom(Component.class)) break;
+            cClass = cClass.getSuperclass();
+        }
+        if (renderer == null) renderer = defaultListener;
+        return renderer;
     }
 
     @Override

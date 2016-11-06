@@ -93,7 +93,6 @@ public class NvgSliderRenderer extends NvgLeguiComponentRenderer {
             nvgFill(context);
 
             NvgRenderUtils.drawRectStroke(context, xx + 0.5f, yy + 0.5f, sliderSize, sliderSize, sliderInactiveColor, cornerRadius, 1);
-//            NvgRenderUtils.drawRectStroke(context, xx + 1.5f, yy + 1.5f, sliderSize - 1.5f, sliderSize - 1.5f, new Vector4f(0, 0, 0, 0.5f), cornerRadius, 1);
 
             renderBorder(component, leguiContext);
         }

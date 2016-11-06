@@ -22,10 +22,6 @@ public class SystemEventListenerProcessor {
         this.context = context;
         this.callbackKeeper = callbackKeeper;
         leguiEventQueue = new LeguiSystemEventQueue(callbackKeeper);
-        initialize();
-    }
-
-    private void initialize() {
     }
 
     public LeguiContext getContext() {

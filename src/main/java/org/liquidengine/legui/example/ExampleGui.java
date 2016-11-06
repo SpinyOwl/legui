@@ -27,9 +27,9 @@ public class ExampleGui extends Panel {
     private final Label mouseLabel;
     private final Label upsLabel;
     private final Label focusedGuiLabel;
-    private Image image;
     private final TextInput caretp;
     private final TextArea textArea;
+    private Image image;
 
     public ExampleGui(int width, int height) {
         super(0, 0, width, height);
@@ -98,7 +98,6 @@ public class ExampleGui extends Panel {
 
         TextInput textInput = new TextInput(250, 130, 100, 30);
         textInput.getTextState().setHorizontalAlign(HorizontalAlign.RIGHT);
-//        textInput.getTextState().setPadding(new Vector4f(0));
         this.addComponent(textInput);
 
         Widget widget = new Widget("Hello widget", 250, 170, 100, 100);
@@ -130,12 +129,32 @@ public class ExampleGui extends Panel {
         widget.getContainer().addComponent(c4);
         this.addComponent(widget);
 
-        Widget widget2 = new Widget("Hello 2 widget", 250, 300, 100, 100);
+        Widget widget2 = new Widget("Hello 2 widget", 250, 310, 100, 100);
         widget2.setTitleHeight(20);
         widget2.setCloseButtonColor(ColorConstants.red());
         widget2.setTitleBackgroundColor(ColorConstants.lightGreen());
-//        widget2.setCloseable(false);
         this.addComponent(widget2);
+
+        Widget widget3 = new Widget("Hello 2 widget", 250, 420, 100, 100);
+        widget3.setTitleHeight(20);
+        widget3.setCloseButtonColor(ColorConstants.red());
+        widget3.setTitleBackgroundColor(ColorConstants.lightGreen());
+        widget3.setTitleEnabled(false);
+        widget3.setCloseable(false);
+        this.addComponent(widget3);
+
+        widget3.getContainer().addComponent(new Panel(10, 10, 20, 20));
+        widget3.getContainer().addComponent(new Panel(40, 10, 20, 20));
+        widget3.getContainer().addComponent(new Panel(40, 40, 20, 20));
+        widget3.getContainer().addComponent(new Panel(10, 40, 20, 20));
+        widget3.getContainer().addComponent(new Panel(10, 40, 20, 20));
+        Button b = new Button(70, 10, 20, 20);
+        b.getEventListeners().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
+            if (event.getAction() == CLICK) {
+                widget3.setTitleEnabled(!widget3.isTitleEnabled());
+            }
+        });
+        widget3.getContainer().addComponent(b);
 
         ScrollBar scrollBar1 = new ScrollBar(360, 170, 20, 100, 20);
         scrollBar1.setOrientation(Orientation.VERTICAL);
@@ -183,12 +202,11 @@ public class ExampleGui extends Panel {
 
         ScrollablePanel scrollablePanel = new ScrollablePanel(420, 10, 250, 150);
         scrollablePanel.setBackgroundColor(1, 1, 1, 1);
-//        scrollablePanel.setBorder(null);
         scrollablePanel.getContainer().setSize(300, 200);
         scrollablePanel.resize();
 
         ScrollablePanel scp = new ScrollablePanel(10, 10, 150, 100);
-        scp.getContainer().setSize(300,300);
+        scp.getContainer().setSize(300, 300);
         scp.resize();
 
         scp.getContainer().addComponent(new TextInput("Hello Scrollable", 10, 10, 150, 20));
@@ -205,7 +223,6 @@ public class ExampleGui extends Panel {
             scrollablePanel.resize();
         });
 
-        System.out.println("SA " + scrollablePanel.getHorizontalScrollBar().getVisibleAmount() + " " + scrollablePanel.getSize().x + " " + scrollablePanel.getContainer().getSize().x + " " + scrollablePanel.getHorizontalScrollBar().getArrowSize() + " " + scrollablePanel.getVerticalScrollBar().getSize().x);
         textArea = new TextArea(420, 280, 150, 100);
         textArea.getTextState().setText("ABC DEF GH\r\nI JKL MNO PQR\nSTU VWXYZ");
         textArea.setCaretPosition(12);
@@ -230,9 +247,36 @@ public class ExampleGui extends Panel {
         inpur.getTextState().setFontSize(35);
         inpur.getTextState().setHorizontalAlign(HorizontalAlign.CENTER);
         inpur.getTextState().setVerticalAlign(VerticalAlign.MIDDLE);
-//        inpur.getTextState().setPadding(new Vector4f(0));
         inpur.setBackgroundColor(ColorConstants.white());
         this.addComponent(inpur);
+
+        SelectBox<String> selectBox = new SelectBox<>(20, 260, 100, 20);
+        selectBox.addElement("Just");
+        selectBox.addElement("Hello");
+        selectBox.addElement("World");
+        final int[] i = {1};
+        selectBox.addElement("World" + i[0]++);
+        selectBox.addElement("World" + i[0]++);
+        selectBox.addElement("World" + i[0]++);
+        selectBox.addElement("World" + i[0]++);
+        selectBox.addElement("World" + i[0]++);
+        selectBox.addElement("World" + i[0]++);
+        selectBox.addElement("World" + i[0]++);
+        selectBox.addElement("World" + i[0]++);
+        selectBox.addElement("World" + i[0]++);
+        selectBox.addElement("World" + i[0]++);
+        selectBox.addElement("World" + i[0]++);
+        selectBox.addElement("World" + i[0]++);
+        selectBox.setVisibleCount(5);
+        selectBox.setElementHeight(20);
+        this.addComponent(selectBox);
+
+        Button sbb = new Button(130, 260, 70, 20, "Add element");
+        sbb.getEventListeners().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
+            if(event.getAction()==CLICK){selectBox.addElement("WorlD " + i[0]++);}
+        });
+        this.addComponent(sbb);
+
     }
 
     public TextArea getTextArea() {

@@ -17,15 +17,6 @@ public class DefaultSystemCharEventListener implements SystemEventListener<Compo
         if (listener != this) {
             listener.update(event, focusedGui, context);
         }
-//        processEvent(focusedGui, new KeyboardKeyEvent(focusedGui, event.key, event.action, event.mods, event.scancode), context);
     }
 
-//    private void processEvent(Component focusedGui, KeyboardKeyEvent keyboardKeyEvent, LeguiContext context) {
-//        LeguiEventListenerProcessor leguiEventProcessor = context.getLeguiEventProcessor();
-//        if (leguiEventProcessor != null) {
-//            leguiEventProcessor.pushEvent(keyboardKeyEvent);
-//        } else {
-//            focusedGui.getEventListeners().getListeners(KeyboardKeyEvent.class).forEach(l -> l.update(keyboardKeyEvent));
-//        }
-//    }
 }

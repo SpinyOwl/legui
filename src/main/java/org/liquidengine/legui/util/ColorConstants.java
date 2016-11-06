@@ -41,19 +41,19 @@ public final class ColorConstants {
     public static final Vector4fc lightGray = LIGHT_GRAY;
     public static final Vector4fc darkGray = DARK_GRAY;
 
-    public static final Vector4f red() { return new Vector4f(red); }
-    public static final Vector4f green() { return new Vector4f(green); }
-    public static final Vector4f blue() { return new Vector4f(blue); }
-    public static final Vector4f darkRed() { return new Vector4f(darkRed); }
-    public static final Vector4f darkGreen() { return new Vector4f(darkGreen); }
-    public static final Vector4f darkBlue() { return new Vector4f(darkBlue); }
-    public static final Vector4f lightRed() { return new Vector4f(lightRed); }
-    public static final Vector4f lightGreen() { return new Vector4f(lightGreen); }
-    public static final Vector4f lightBlue() { return new Vector4f(lightBlue); }
-    public static final Vector4f black() { return new Vector4f(black); }
-    public static final Vector4f white() { return new Vector4f(white); }
-    public static final Vector4f transparent() { return new Vector4f(transparent); }
-    public static final Vector4f lightGray() { return new Vector4f(lightGray); }
-    public static final Vector4f darkGray() { return new Vector4f(darkGray); }
+    public static Vector4f red() { return new Vector4f(red); }
+    public static Vector4f green() { return new Vector4f(green); }
+    public static Vector4f blue() { return new Vector4f(blue); }
+    public static Vector4f darkRed() { return new Vector4f(darkRed); }
+    public static Vector4f darkGreen() { return new Vector4f(darkGreen); }
+    public static Vector4f darkBlue() { return new Vector4f(darkBlue); }
+    public static Vector4f lightRed() { return new Vector4f(lightRed); }
+    public static Vector4f lightGreen() { return new Vector4f(lightGreen); }
+    public static Vector4f lightBlue() { return new Vector4f(lightBlue); }
+    public static Vector4f black() { return new Vector4f(black); }
+    public static Vector4f white() { return new Vector4f(white); }
+    public static Vector4f transparent() { return new Vector4f(transparent); }
+    public static Vector4f lightGray() { return new Vector4f(lightGray); }
+    public static Vector4f darkGray() { return new Vector4f(darkGray); }
     //@formatter:on
 }

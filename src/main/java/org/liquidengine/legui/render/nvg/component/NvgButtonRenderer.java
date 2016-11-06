@@ -43,9 +43,9 @@ public class NvgButtonRenderer extends NvgLeguiComponentRenderer {
                 nvgRoundedRect(context, pos.x, pos.y, size.x, size.y, component.getCornerRadius());
                 nvgFill(context);
 
-                nvgLinearGradient(context, pos.x, pos.y, pos.x, pos.y + size.y, rgba(1f, 1f, 1f, 0.2f, colorA), rgba(0f, 0f, 0f, 0.2f, colorB), paintA);
-                nvgFillPaint(context, paintA);
-                nvgFill(context);
+//                nvgLinearGradient(context, pos.x, pos.y, pos.x, pos.y + size.y, rgba(1f, 1f, 1f, 0.2f, colorA), rgba(0f, 0f, 0f, 0.2f, colorB), paintA);
+//                nvgFillPaint(context, paintA);
+//                nvgFill(context);
             }
 
             // Render text

@@ -46,11 +46,6 @@ public class LeguiContext implements Serializable {
     public LeguiContext(long glfwWindow, Component mainGuiComponent) {
         this.glfwWindow = glfwWindow;
         this.mainGuiComponent = mainGuiComponent;
-        initialize();
-    }
-
-    private void initialize() {
-
     }
 
     public void updateGlfwWindow() {
