@@ -11,6 +11,5 @@ import org.liquidengine.legui.listener.SystemEventListener;
 public class DefaultSystemMouseClickEventListener implements SystemEventListener<Component, SystemMouseClickEvent> {
     @Override
     public void update(SystemMouseClickEvent event, Component component, LeguiContext context) {
-        System.out.println("DEF CLICK");
     }
 }

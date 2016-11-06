@@ -45,14 +45,4 @@ public class NvgProgressBarRenderer extends NvgLeguiComponentRenderer {
         resetScissor(context);
     }
 
-
-    @Override
-    public void initialize() {
-
-    }
-
-    @Override
-    public void destroy() {
-
-    }
 }

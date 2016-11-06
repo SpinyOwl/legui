@@ -73,7 +73,7 @@ public class Button extends Component {
     private void initialize(String text) {
         this.textState = new TextState(text);
         intersector = new RectangleIntersector();
-        backgroundColor.set(0.9f, 0.9f, 0.9f, 1.0f);
+        backgroundColor.set(ColorConstants.white());
         border = new SimpleLineBorder(ColorConstants.darkGray(), 1);
         textState.setHorizontalAlign(HorizontalAlign.CENTER);
     }

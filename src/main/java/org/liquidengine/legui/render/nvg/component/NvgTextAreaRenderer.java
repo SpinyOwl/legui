@@ -4,13 +4,14 @@ import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.TextArea;
-import org.liquidengine.legui.component.TextInput;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
 import org.liquidengine.legui.context.LeguiContext;
 import org.liquidengine.legui.render.nvg.NvgLeguiComponentRenderer;
-import org.liquidengine.legui.util.*;
+import org.liquidengine.legui.util.NVGUtils;
+import org.liquidengine.legui.util.NvgRenderUtils;
+import org.liquidengine.legui.util.Util;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.nanovg.NVGColor;
 import org.lwjgl.nanovg.NVGGlyphPosition;
@@ -52,7 +53,6 @@ public class NvgTextAreaRenderer extends NvgLeguiComponentRenderer {
             p.z = p.z > 0 ? p.z - 1 : 0;
             p.w = p.w > 0 ? p.w - 1 : 0;
 
-//            nvgIntersectScissor(context, pos.x, pos.y, size.x, size.y);
             renderText(context, leguiContext, agui, pos, size, textState, agui.getCaretPosition(), agui.isFocused(), bc);
         }
         resetScissor(context);
@@ -162,7 +162,8 @@ public class NvgTextAreaRenderer extends NvgLeguiComponentRenderer {
         float cx = 0;
         int newCPos = 0;
         int upper = ng - 1;
-        if (upper > 0) {
+        if (upper <= 0) {
+        } else {
             float px = glyphs.get(0).x() - offsetX;
             float mpx = glyphs.get(upper).maxx() - offsetX;
             if (mx <= px) {

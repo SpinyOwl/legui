@@ -38,11 +38,6 @@ public class NvgTextInputRenderer extends NvgLeguiComponentRenderer {
     private NVGColor colorA = NVGColor.create();
 
     @Override
-    public void initialize() {
-
-    }
-
-    @Override
     public void render(Component component, LeguiContext leguiContext, long context) {
         createScissor(context, component);
         {
@@ -179,11 +174,6 @@ public class NvgTextInputRenderer extends NvgLeguiComponentRenderer {
             nvgFillColor(context, rgba(bc, colorA));
             nvgFill(context);
         }
-    }
-
-    @Override
-    public void destroy() {
-
     }
 
 }

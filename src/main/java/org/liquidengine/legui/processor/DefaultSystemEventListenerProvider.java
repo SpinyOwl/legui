@@ -70,8 +70,6 @@ public class DefaultSystemEventListenerProvider extends SystemEventListenerProvi
         registerDefaultListener(SystemScrollEvent.class, new DefaultSystemScrollEventListener());
         registerDefaultListener(SystemKeyEvent.class, new DefaultSystemKeyEventListener());
         registerDefaultListener(SystemCharEvent.class, new DefaultSystemCharEventListener());
-//        registerDefaultListener(SystemCharEvent.class, ((event, component, context) -> System.out.println(component + " event: " + event + " cp: " + Character.toChars(event.codepoint))));
-//        registerDefaultListener(SystemMouseClickEvent.class, new DefaultSystemMouseClickEventListener());
     }
 
     private void initializeListeners() {

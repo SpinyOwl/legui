@@ -104,9 +104,6 @@ public class TextState implements Serializable {
         this.padding = new Vector4f(left, top, right, bottom);
     }
 
-    // textState component methods
-
-
     public void append(Character c) {
         text.append(c);
     }

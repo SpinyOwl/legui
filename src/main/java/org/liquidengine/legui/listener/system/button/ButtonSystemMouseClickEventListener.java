@@ -24,19 +24,13 @@ public class ButtonSystemMouseClickEventListener implements SystemEventListener<
         Component focusedGui = context.getFocusedGui();
         if (!component.equals(focusedGui)) component.setFocused(false);
 
-
-//        component.getSystemEventListeners().getMouseClickEventProcessor().process(component, event, context);
-
-
         boolean intersects = intersects(component, context);
         Vector2f cursorPosition = context.getCursorPosition();
         if (event.action == GLFW_PRESS) {
             if (intersects) {
-//                pushUp(component);
                 context.setFocusedGui(component);
                 component.setFocused(true);
                 component.setPressed(true);
-//                EventProcessorUtils.release(mainComponent, component);
                 Vector2f position = Util.calculatePosition(component).sub(cursorPosition).negate();
                 processEvent(component, new MouseClickEvent(component, position, PRESS, event.button), context);
             } else {
@@ -45,13 +39,10 @@ public class ButtonSystemMouseClickEventListener implements SystemEventListener<
         } else if (event.action == GLFW_RELEASE && intersects) {
             if (focusedGui != null) {
                 component.setPressed(false);
-//                EventProcessorUtils.release(mainComponent, component);
-
                 Vector2f position = Util.calculatePosition(component).sub(cursorPosition).negate();
                 if (focusedGui == component) {
                     processEvent(focusedGui, new MouseClickEvent(component, position, CLICK, event.button), context);
                 }
-
                 processEvent(focusedGui, new MouseClickEvent(component, position, RELEASE, event.button), context);
                 focusedGui.setPressed(false);
             }

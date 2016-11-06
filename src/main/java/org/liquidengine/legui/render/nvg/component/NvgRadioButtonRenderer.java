@@ -28,11 +28,6 @@ public class NvgRadioButtonRenderer extends NvgLeguiComponentRenderer {
     private NVGColor colorA = NVGColor.create();
 
     @Override
-    public void initialize() {
-
-    }
-
-    @Override
     public void render(Component component, LeguiContext leguiContext, long context) {
         createScissor(context, component);
         {
@@ -75,10 +70,5 @@ public class NvgRadioButtonRenderer extends NvgLeguiComponentRenderer {
         float x1 = x - iconOffset;
         NvgRenderUtils.renderTextLineToBounds(context, x1, y1, iconWid, h1, fontSize, FontRegister.MATERIAL_ICONS_REGULAR,
                 textColor, colorA, icon, HorizontalAlign.CENTER, VerticalAlign.MIDDLE, false);
-    }
-
-    @Override
-    public void destroy() {
-
     }
 }

@@ -27,7 +27,7 @@ import java.io.Serializable;
 public abstract class Component implements Serializable {
     protected Vector2f position;
     protected Vector2f size;
-    protected Vector4f backgroundColor = ColorConstants.lightGray();
+    protected Vector4f backgroundColor = ColorConstants.white();
 
     protected Border border = new SimpleLineBorder(ColorConstants.transparent(), 0);
 
@@ -40,7 +40,7 @@ public abstract class Component implements Serializable {
 
     protected float cornerRadius = 0;
 
-    protected Component parent;
+    protected ComponentContainer parent;
     protected LeguiIntersector intersector = new RectangleIntersector();
     protected LeguiComponentRenderer renderer = LeguiRendererProvider.getProvider().getRenderer(this);
 
@@ -64,7 +64,7 @@ public abstract class Component implements Serializable {
         renderer.render(this, context);
     }
 
-    public Component getParent() {
+    public ComponentContainer getParent() {
         return parent;
     }
 

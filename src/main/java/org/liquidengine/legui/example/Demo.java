@@ -116,8 +116,6 @@ public class Demo {
         // create renderer (NanoVG renderer implementation). You can create your own implementation.
         renderer = new NvgLeguiRenderer(leguiContext);
 
-//        callbackKeeper = systemEventProcessor.getCallbackKeeper(); //
-
         // create custom callbacks
         {
             GLFWWindowCloseCallbackI closeCallback = window1 -> running = false;

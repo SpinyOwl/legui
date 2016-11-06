@@ -18,9 +18,7 @@ public class ContainerSystemMouseClickEventListener implements SystemEventListen
 
         Component target = null;
         List<Component> components = component.getComponents();
-        if (components.isEmpty()) {
-
-        } else {
+        if (!components.isEmpty()) {
             for (Component child : components) {
                 if (child.isVisible() && child.getIntersector().intersects(child, context.getCursorPosition())) {
                     target = child;
@@ -32,22 +30,4 @@ public class ContainerSystemMouseClickEventListener implements SystemEventListen
         }
     }
 
-//    public static Component getMouseTarget(Component target, Component component, Vector2f cursorPosition) {
-//        if (component instanceof ComponentContainer) {
-//            if (component.isVisible()) {
-//                ComponentContainer container = ((ComponentContainer) component);
-//                if (component.getIntersector().intersects(component, cursorPosition)) {
-//                    target = component;
-//                    for (Component element : container.getComponents()) {
-//                        target = getMouseTarget(target, element, cursorPosition);
-//                    }
-//                }
-//            }
-//        } else {
-//            if (component.isVisible() && component.isEnabled() && component.getIntersector().intersects(component, cursorPosition)) {
-//                target = component;
-//            }
-//        }
-//        return target;
-//    }
 }

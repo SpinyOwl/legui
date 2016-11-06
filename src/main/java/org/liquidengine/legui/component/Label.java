@@ -5,10 +5,8 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
-import org.liquidengine.legui.component.border.SimpleLineBorder;
 import org.liquidengine.legui.component.intersector.RectangleIntersector;
 import org.liquidengine.legui.component.optional.TextState;
-import org.liquidengine.legui.util.ColorConstants;
 
 /**
  * Created by Shcherbin Alexander on 9/22/2016.

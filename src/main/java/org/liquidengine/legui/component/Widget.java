@@ -91,10 +91,10 @@ public class Widget extends ComponentContainer {
         this.addComponent(this.closeButton);
         this.addComponent(this.container);
 
-        updateWidget();
+        resize();
     }
 
-    private void updateWidget() {
+    public void resize() {
         float titHei = title.size.y;
         if (title.visible) {
             title.position.set(0);
@@ -119,7 +119,7 @@ public class Widget extends ComponentContainer {
 
     public void setTitleHeight(float titleHeight) {
         this.title.size.y = titleHeight;
-        updateWidget();
+        resize();
     }
 
     public boolean isTitleEnabled() {
@@ -128,6 +128,8 @@ public class Widget extends ComponentContainer {
 
     public void setTitleEnabled(boolean titleEnabled) {
         this.title.visible = titleEnabled;
+//        this.closeButton.visible = titleEnabled;
+        resize();
     }
 
     public boolean isCloseable() {
@@ -136,7 +138,7 @@ public class Widget extends ComponentContainer {
 
     public void setCloseable(boolean closeable) {
         this.closeButton.visible = closeable;
-        updateWidget();
+        resize();
     }
 
     public boolean isResizable() {
@@ -171,5 +173,9 @@ public class Widget extends ComponentContainer {
         return container;
     }
 
-
+    public void setContainer(ComponentContainer container) {
+        this.removeComponent(this.container);
+        this.container = container;
+        this.addComponent(this.container);
+    }
 }

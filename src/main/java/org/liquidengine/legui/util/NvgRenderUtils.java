@@ -130,7 +130,6 @@ public final class NvgRenderUtils {
 
             NVGColor textColorN = textColor.w == 0 ? rgba(0.0f, 0.0f, 0.0f, 1f, nvgColor) : rgba(textColor, nvgColor);
             nvgFillColor(context, textColorN);
-//            nnvgText(context, bounds[0], bounds[1], memAddress(byteText), 0);
             nvgText(context, bounds[0], bounds[1], byteText, 0);
         }
 
@@ -306,7 +305,6 @@ public final class NvgRenderUtils {
             try {
                 caretx = glyphs.get(caretPosition).x();
             } catch (IndexOutOfBoundsException e) {
-                System.out.println(caretPosition);
                 e.printStackTrace();
             }
         } else {
