@@ -72,7 +72,7 @@ public class TextAreaSystemKeyEventListener implements SystemEventListener<TextA
                 int delta = cl - some.caretPositionInLine;
                 int np = caretPosition + delta;
                 gui.setCaretPosition(np);
-            } else if (key == GLFW_KEY_ENTER || key==GLFW_KEY_KP_ENTER && pressed) {
+            } else if ((key == GLFW_KEY_ENTER || key==GLFW_KEY_KP_ENTER) && pressed) {
                 if (gui.isEditable()) {
                     gui.getTextState().insert(caretPosition, "\n");
                     gui.setCaretPosition(caretPosition + 1);
