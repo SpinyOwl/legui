@@ -1,7 +1,7 @@
 package org.liquidengine.legui.component;
 
 import org.joml.Vector2f;
-import org.liquidengine.legui.component.border.SimpleLineBorder;
+import org.liquidengine.legui.component.border.SimpleRectangleLineBorder;
 import org.liquidengine.legui.component.optional.Orientation;
 import org.liquidengine.legui.util.ColorConstants;
 
@@ -41,7 +41,7 @@ public class ScrollablePanel extends Panel implements Viewport {
         verticalScrollBar.setScrollColor(ColorConstants.white());
         verticalScrollBar.setArrowsEnabled(true);
         verticalScrollBar.setOrientation(Orientation.VERTICAL);
-        verticalScrollBar.setBorder(new SimpleLineBorder(ColorConstants.darkGray(), 0.5f));
+        verticalScrollBar.setBorder(new SimpleRectangleLineBorder(ColorConstants.darkGray(), 0.5f));
         verticalScrollBar.setArrowSize(INITIAL_SCROLL_SIZE);
         verticalScrollBar.setViewport(this);
 
@@ -53,7 +53,7 @@ public class ScrollablePanel extends Panel implements Viewport {
         horizontalScrollBar.setScrollColor(ColorConstants.white());
         horizontalScrollBar.setArrowsEnabled(true);
         horizontalScrollBar.setOrientation(Orientation.HORIZONTAL);
-        horizontalScrollBar.setBorder(new SimpleLineBorder(ColorConstants.darkGray(), 0.5f));
+        horizontalScrollBar.setBorder(new SimpleRectangleLineBorder(ColorConstants.darkGray(), 0.5f));
         horizontalScrollBar.setArrowSize(INITIAL_SCROLL_SIZE);
         horizontalScrollBar.setViewport(this);
 
@@ -70,7 +70,7 @@ public class ScrollablePanel extends Panel implements Viewport {
         this.addComponent(horizontalScrollBar);
         this.addComponent(viewport);
         this.setBackgroundColor(ColorConstants.transparent());
-        this.setBorder(new SimpleLineBorder(ColorConstants.darkGray(), 0.5f));
+        this.setBorder(new SimpleRectangleLineBorder(ColorConstants.darkGray(), 0.5f));
 
         resize();
     }

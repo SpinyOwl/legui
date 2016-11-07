@@ -2,7 +2,7 @@ package org.liquidengine.legui.component;
 
 import org.joml.Vector2f;
 import org.joml.Vector4f;
-import org.liquidengine.legui.component.border.SimpleLineBorder;
+import org.liquidengine.legui.component.border.SimpleRectangleLineBorder;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
@@ -56,11 +56,11 @@ public class Widget extends ComponentContainer {
     }
 
     private void initialize(String title) {
-        SimpleLineBorder simpleLineBorder = new SimpleLineBorder(ColorConstants.black(), 1);
+        SimpleRectangleLineBorder simpleRectangleLineBorder = new SimpleRectangleLineBorder(ColorConstants.black(), 1);
         this.title = new Label(title);
         this.title.textState.setHorizontalAlign(HorizontalAlign.LEFT);
         this.title.textState.getPadding().set(10, 5, 10, 5);
-        this.title.setBorder(simpleLineBorder);
+        this.title.setBorder(simpleRectangleLineBorder);
 
         this.title.eventListeners.addListener(MouseDragEvent.class, event -> {
             if (event.getComponent() == this.title) {
@@ -71,7 +71,7 @@ public class Widget extends ComponentContainer {
 
         this.closeButton = new Button(CLOSE_ICON);
         this.closeButton.backgroundColor.set(1, 0, 0, 1);
-        this.closeButton.setBorder(simpleLineBorder);
+        this.closeButton.setBorder(simpleRectangleLineBorder);
         this.closeButton.textState.setHorizontalAlign(HorizontalAlign.LEFT);
         this.closeButton.textState.setVerticalAlign(VerticalAlign.MIDDLE);
         this.closeButton.textState.setFont(FontRegister.MATERIAL_ICONS_REGULAR);
@@ -82,10 +82,10 @@ public class Widget extends ComponentContainer {
         });
 
         this.container = new Panel();
-        this.container.setBorder(simpleLineBorder);
+        this.container.setBorder(simpleRectangleLineBorder);
 
         this.backgroundColor.set(1);
-        this.border = simpleLineBorder;
+        this.border = simpleRectangleLineBorder;
 
         this.addComponent(this.title);
         this.addComponent(this.closeButton);

@@ -1,6 +1,7 @@
 package org.liquidengine.legui.util;
 
 import org.joml.Vector4f;
+import org.joml.Vector4fc;
 import org.lwjgl.nanovg.NVGColor;
 
 /**
@@ -24,11 +25,11 @@ public final class NVGUtils {
         return color;
     }
 
-    public static NVGColor rgba(Vector4f rgba, NVGColor color) {
-        color.r(rgba.x);
-        color.g(rgba.y);
-        color.b(rgba.z);
-        color.a(rgba.w);
+    public static NVGColor rgba(Vector4fc rgba, NVGColor color) {
+        color.r(rgba.x());
+        color.g(rgba.y());
+        color.b(rgba.z());
+        color.a(rgba.w());
         return color;
     }
 

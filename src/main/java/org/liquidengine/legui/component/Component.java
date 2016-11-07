@@ -7,7 +7,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.border.Border;
-import org.liquidengine.legui.component.border.SimpleLineBorder;
+import org.liquidengine.legui.component.border.SimpleRectangleLineBorder;
 import org.liquidengine.legui.component.intersector.LeguiIntersector;
 import org.liquidengine.legui.component.intersector.RectangleIntersector;
 import org.liquidengine.legui.context.LeguiContext;
@@ -29,7 +29,7 @@ public abstract class Component implements Serializable {
     protected Vector2f size;
     protected Vector4f backgroundColor = ColorConstants.white();
 
-    protected Border border = new SimpleLineBorder(ColorConstants.transparent(), 0);
+    protected Border border = new SimpleRectangleLineBorder(ColorConstants.transparent(), 0);
 
     protected boolean enabled = true;
     protected boolean visible = true;

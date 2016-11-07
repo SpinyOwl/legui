@@ -2,7 +2,7 @@ package org.liquidengine.legui.example;
 
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.*;
-import org.liquidengine.legui.component.border.SimpleLineBorder;
+import org.liquidengine.legui.component.border.SimpleRectangleLineBorder;
 import org.liquidengine.legui.component.optional.Orientation;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
@@ -163,7 +163,7 @@ public class ExampleGui extends Panel {
         scrollBar1.setBackgroundColor(ColorConstants.white());
         scrollBar1.setScrollColor(ColorConstants.darkGray());
         scrollBar1.setArrowColor(ColorConstants.darkGray());
-        scrollBar1.setBorder(new SimpleLineBorder(ColorConstants.red(), 1));
+        scrollBar1.setBorder(new SimpleRectangleLineBorder(ColorConstants.red(), 1));
         this.addComponent(scrollBar1);
 
         ScrollBar scrollBar11 = new ScrollBar(385, 170, 7, 100, 20);
@@ -172,7 +172,7 @@ public class ExampleGui extends Panel {
         scrollBar11.setArrowsEnabled(false);
         scrollBar11.setBackgroundColor(ColorConstants.white());
         scrollBar11.setScrollColor(ColorConstants.darkGray());
-        scrollBar11.setBorder(new SimpleLineBorder(ColorConstants.red(), 1));
+        scrollBar11.setBorder(new SimpleRectangleLineBorder(ColorConstants.red(), 1));
         scrollBar11.setCornerRadius(3);
         this.addComponent(scrollBar11);
 
@@ -180,7 +180,7 @@ public class ExampleGui extends Panel {
         scrollBar2.setOrientation(Orientation.HORIZONTAL);
         scrollBar2.setVisibleAmount(20);
         scrollBar2.setArrowsEnabled(true);
-        scrollBar2.setBorder(new SimpleLineBorder(ColorConstants.black(), 1));
+        scrollBar2.setBorder(new SimpleRectangleLineBorder(ColorConstants.black(), 1));
         scrollBar2.setBackgroundColor(ColorConstants.darkGray());
         scrollBar2.setScrollColor(ColorConstants.white());
         scrollBar2.setArrowColor(ColorConstants.white());

@@ -13,7 +13,9 @@ public class TextAreaSystemCursorPosEventListener implements SystemEventListener
     @Override
     public void update(SystemCursorPosEvent event, TextArea textArea, LeguiContext leguiContext) {
         if (textArea == leguiContext.getFocusedGui() && leguiContext.getMouseButtonStates()[GLFW.GLFW_MOUSE_BUTTON_LEFT]) {
-            textArea.setCaretPosition(textArea.getMouseCaretPosition());
+            int mouseCaretPosition = textArea.getMouseCaretPosition();
+            textArea.setCaretPosition(mouseCaretPosition);
+            textArea.setEndSelectionIndex(mouseCaretPosition);
         }
     }
 }

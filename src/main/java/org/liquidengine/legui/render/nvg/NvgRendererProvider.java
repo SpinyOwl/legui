@@ -2,7 +2,7 @@ package org.liquidengine.legui.render.nvg;
 
 import org.liquidengine.legui.component.*;
 import org.liquidengine.legui.component.border.Border;
-import org.liquidengine.legui.component.border.SimpleLineBorder;
+import org.liquidengine.legui.component.border.SimpleRectangleLineBorder;
 import org.liquidengine.legui.render.LeguiBorderRenderer;
 import org.liquidengine.legui.render.LeguiComponentRenderer;
 import org.liquidengine.legui.render.LeguiRendererProvider;
@@ -42,7 +42,7 @@ public class NvgRendererProvider extends LeguiRendererProvider {
         registerRenderer(TextArea.class, new NvgTextAreaRenderer());
 
         // borders
-        registerRenderer(SimpleLineBorder.class, new NvgSimpleLineBorderRenderer());
+        registerRenderer(SimpleRectangleLineBorder.class, new NvgSimpleLineBorderRenderer());
 
     }
 

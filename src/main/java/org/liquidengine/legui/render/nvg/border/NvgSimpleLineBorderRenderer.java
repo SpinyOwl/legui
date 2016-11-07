@@ -6,7 +6,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.joml.Vector2f;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.border.Border;
-import org.liquidengine.legui.component.border.SimpleLineBorder;
+import org.liquidengine.legui.component.border.SimpleRectangleLineBorder;
 import org.liquidengine.legui.context.LeguiContext;
 import org.liquidengine.legui.render.nvg.NvgLeguiBorderRenderer;
 import org.lwjgl.nanovg.NVGColor;
@@ -24,14 +24,14 @@ public class NvgSimpleLineBorderRenderer extends NvgLeguiBorderRenderer {
     @Override
     public void render(Border border, LeguiContext context, Component component, long nvgContext) {
         if (border.isEnabled()) {
-            SimpleLineBorder simpleLineBorder = (SimpleLineBorder) border;
+            SimpleRectangleLineBorder simpleRectangleLineBorder = (SimpleRectangleLineBorder) border;
 
             Vector2f pos = calculatePosition(component);
             Vector2f size = component.getSize();
 
             nvgBeginPath(nvgContext);
-            nvgStrokeWidth(nvgContext, simpleLineBorder.getThickness());
-            nvgStrokeColor(nvgContext, rgba(simpleLineBorder.getBorderColor(), colorA));
+            nvgStrokeWidth(nvgContext, simpleRectangleLineBorder.getThickness());
+            nvgStrokeColor(nvgContext, rgba(simpleRectangleLineBorder.getBorderColor(), colorA));
             nvgRoundedRect(nvgContext, pos.x, pos.y, size.x, size.y, component.getCornerRadius());
             nvgStroke(nvgContext);
         }

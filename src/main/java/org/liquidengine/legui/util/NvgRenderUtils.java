@@ -2,6 +2,7 @@ package org.liquidengine.legui.util;
 
 import org.joml.Vector2f;
 import org.joml.Vector4f;
+import org.joml.Vector4fc;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.border.Border;
 import org.liquidengine.legui.component.optional.TextState;
@@ -135,7 +136,7 @@ public final class NvgRenderUtils {
 
     }
 
-    public static void drawRectangle(long context, Vector4f color, float x, float y, float w, float h) {
+    public static void drawRectangle(long context, Vector4fc color, float x, float y, float w, float h) {
         nvgBeginPath(context);
         nvgFillColor(context, rgba(color, NVGColor.create()));
         nvgRect(context, x, y, w, h);

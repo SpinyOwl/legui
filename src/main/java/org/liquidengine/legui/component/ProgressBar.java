@@ -5,7 +5,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector4f;
-import org.liquidengine.legui.component.border.SimpleLineBorder;
+import org.liquidengine.legui.component.border.SimpleRectangleLineBorder;
 import org.liquidengine.legui.listener.component.ProgressBarChangeEventListener;
 import org.liquidengine.legui.util.ColorConstants;
 
@@ -34,7 +34,7 @@ public class ProgressBar extends Component {
     }
 
     private void initialize() {
-        border = new SimpleLineBorder(ColorConstants.darkGray(), 1);
+        border = new SimpleRectangleLineBorder(ColorConstants.darkGray(), 1);
         backgroundColor = ColorConstants.white();
         cornerRadius = 2;
     }

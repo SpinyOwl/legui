@@ -10,16 +10,16 @@ import org.liquidengine.legui.util.ColorConstants;
 /**
  * Created by Shcherbin Alexander on 9/22/2016.
  */
-public class SimpleLineBorder extends Border {
+public class SimpleRectangleLineBorder extends Border {
     private Vector4f borderColor;
     private float thickness;
 
-    public SimpleLineBorder(Vector4f borderColor, float thickness) {
+    public SimpleRectangleLineBorder(Vector4f borderColor, float thickness) {
         this.borderColor = borderColor;
         this.thickness = thickness;
     }
 
-    public SimpleLineBorder() {
+    public SimpleRectangleLineBorder() {
         this(ColorConstants.black(), 1);
     }
 
@@ -46,7 +46,7 @@ public class SimpleLineBorder extends Border {
 
         if (o == null || getClass() != o.getClass()) return false;
 
-        SimpleLineBorder that = (SimpleLineBorder) o;
+        SimpleRectangleLineBorder that = (SimpleRectangleLineBorder) o;
 
         return new EqualsBuilder()
                 .append(thickness, that.thickness)

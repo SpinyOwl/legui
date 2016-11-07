@@ -13,10 +13,11 @@ import static org.lwjgl.glfw.GLFW.GLFW_PRESS;
 public class TextInputSystemMouseClickEventListener implements SystemEventListener<TextInput, SystemMouseClickEvent> {
     @Override
     public void update(SystemMouseClickEvent event, TextInput gui, LeguiContext leguiContext) {
-        if (gui != leguiContext.getFocusedGui()) {
-            gui.setCaretPosition(gui.getTextState().length());
-        } else if (event.action == GLFW_PRESS) {
-            gui.setCaretPosition(gui.getMouseCaretPosition());
+        int mouseCaretPosition = gui.getMouseCaretPosition();
+        if (event.action == GLFW_PRESS) {
+            gui.setCaretPosition(mouseCaretPosition);
+            gui.setStartSelectionIndex(mouseCaretPosition);
+            gui.setEndSelectionIndex(mouseCaretPosition);
         }
     }
 }

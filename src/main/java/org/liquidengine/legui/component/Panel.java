@@ -1,7 +1,7 @@
 package org.liquidengine.legui.component;
 
 import org.joml.Vector2f;
-import org.liquidengine.legui.component.border.SimpleLineBorder;
+import org.liquidengine.legui.component.border.SimpleRectangleLineBorder;
 
 /**
  * Created by Shcherbin Alexander on 9/22/2016.
@@ -23,7 +23,7 @@ public class Panel extends ComponentContainer {
     }
 
     private void initialize() {
-        border = new SimpleLineBorder();
+        border = new SimpleRectangleLineBorder();
     }
 
 }

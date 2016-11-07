@@ -3,7 +3,7 @@ package org.liquidengine.legui.component;
 import com.google.common.base.Objects;
 import org.apache.commons.collections4.list.SetUniqueList;
 import org.joml.Vector2f;
-import org.liquidengine.legui.component.border.SimpleLineBorder;
+import org.liquidengine.legui.component.border.SimpleRectangleLineBorder;
 import org.liquidengine.legui.event.component.FocusEvent;
 import org.liquidengine.legui.event.component.MouseClickEvent;
 import org.liquidengine.legui.font.FontRegister;
@@ -79,7 +79,7 @@ public class SelectBox<T> extends ComponentContainer {
         selectionListPanel.getHorizontalScrollBar().setVisible(false);
 
         this.setBackgroundColor(ColorConstants.white());
-        this.setBorder(new SimpleLineBorder(ColorConstants.darkGray(), 1));
+        this.setBorder(new SimpleRectangleLineBorder(ColorConstants.darkGray(), 1));
 
         this.addComponent(expandButton);
         this.addComponent(selectionButton);
