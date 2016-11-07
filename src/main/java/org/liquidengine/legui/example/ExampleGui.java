@@ -180,6 +180,7 @@ public class ExampleGui extends Panel {
         scrollBar2.setOrientation(Orientation.HORIZONTAL);
         scrollBar2.setVisibleAmount(20);
         scrollBar2.setArrowsEnabled(true);
+        scrollBar2.setBorder(new SimpleLineBorder(ColorConstants.black(), 1));
         scrollBar2.setBackgroundColor(ColorConstants.darkGray());
         scrollBar2.setScrollColor(ColorConstants.white());
         scrollBar2.setArrowColor(ColorConstants.white());

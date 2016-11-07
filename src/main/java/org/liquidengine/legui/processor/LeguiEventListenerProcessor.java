@@ -2,6 +2,7 @@ package org.liquidengine.legui.processor;
 
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.event.LeguiEvent;
+import org.liquidengine.legui.event.component.FocusEvent;
 import org.liquidengine.legui.listener.LeguiEventListener;
 
 import java.util.List;
@@ -20,6 +21,9 @@ public class LeguiEventListenerProcessor {
 
     public void processEvent() {
         LeguiEvent event = componentEvents.poll();
+        if(event instanceof FocusEvent){
+            System.out.println("C: " + event.getComponent().getClass().getSimpleName() + "@" + event.getComponent().hashCode() + " " + ((FocusEvent) event).focusGained);
+        }
         if (event != null) {
             Component component = event.getComponent();
             List<? extends LeguiEventListener> listenersByEvent = component.getEventListeners().getListeners(event.getClass());

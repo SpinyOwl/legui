@@ -4,8 +4,10 @@ import com.google.common.base.Objects;
 import org.apache.commons.collections4.list.SetUniqueList;
 import org.joml.Vector2f;
 import org.liquidengine.legui.component.border.SimpleLineBorder;
+import org.liquidengine.legui.event.component.FocusEvent;
 import org.liquidengine.legui.event.component.MouseClickEvent;
 import org.liquidengine.legui.font.FontRegister;
+import org.liquidengine.legui.listener.component.FocusEventListener;
 import org.liquidengine.legui.listener.component.MouseClickEventListener;
 import org.liquidengine.legui.util.ColorConstants;
 import org.lwjgl.glfw.GLFW;
@@ -91,6 +93,27 @@ public class SelectBox<T> extends ComponentContainer {
         selectionButton.getEventListeners().addListener(MouseClickEvent.class, mouseClickEventListener);
         expandButton.getEventListeners().addListener(MouseClickEvent.class, mouseClickEventListener);
 
+        FocusEventListener focusEventListener = event -> {
+            if (!event.focusGained && !collapsed) {
+                boolean collapse = true;
+                for (ListBoxElement<T> listBoxElement : listBoxElements) {
+                    if (event.focusTarget == listBoxElement) {
+                        collapse = false;
+                    }
+                }
+                if (event.focusTarget == selectionListWidget ||
+                        event.focusTarget == expandButton ||
+                        event.focusTarget == selectionButton ||
+                        event.focusTarget == selectionListPanel ||
+                        event.focusTarget == selectionListPanel.getVerticalScrollBar()
+                        ) collapse = false;
+                if (collapse) setCollapsed(true);
+            }
+        };
+        selectionListPanel.getVerticalScrollBar().getEventListeners().getListeners(FocusEvent.class).add(focusEventListener);
+        selectionButton.getEventListeners().getListeners(FocusEvent.class).add(focusEventListener);
+        expandButton.getEventListeners().getListeners(FocusEvent.class).add(focusEventListener);
+
         resize();
     }
 
@@ -112,6 +135,7 @@ public class SelectBox<T> extends ComponentContainer {
             parent.removeComponent(selectionListWidget);
         } else {
             parent.addComponent(selectionListWidget);
+            selectionListPanel.getVerticalScrollBar().setCurValue(0);
         }
         resize();
     }
