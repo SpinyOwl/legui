@@ -30,8 +30,8 @@ repositories {
     jcenter()
     mavenCentral()
     maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
-    maven { url "https://gitlab.com/LiquidEngine/repo/raw/snapshots" }
-    maven { url "https://gitlab.com/LiquidEngine/repo/raw/releases" }
+    maven { url "https://raw.github.com/LiquidEngine/repo/snapshots" }
+    maven { url "https://raw.github.com/LiquidEngine/repo/releases" }
 }
 dependencies {
     //@formatter:off
