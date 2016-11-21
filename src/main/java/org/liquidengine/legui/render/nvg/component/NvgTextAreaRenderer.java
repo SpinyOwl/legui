@@ -29,8 +29,10 @@ import static org.lwjgl.system.MemoryUtil.memAddress;
  * Created by Alexander on 09.10.2016.
  */
 public class NvgTextAreaRenderer extends NvgLeguiComponentRenderer {
+
     private final Vector4f caretColor = new Vector4f(0, 0, 0, 0.5f);
     private final int maxGlyphCount = 2048;
+
     private NVGColor colorA = NVGColor.calloc();
     private NVGGlyphPosition.Buffer glyphs = NVGGlyphPosition.create(maxGlyphCount);
 
@@ -53,7 +55,8 @@ public class NvgTextAreaRenderer extends NvgLeguiComponentRenderer {
             p.z = p.z > 0 ? p.z - 1 : 0;
             p.w = p.w > 0 ? p.w - 1 : 0;
 
-            renderText(context, leguiContext, agui, pos, size, textState, agui.getCaretPosition(), agui.isFocused(), bc);
+            nvgIntersectScissor(context, pos.x + p.x, pos.y + p.y, size.x - p.x - p.z, size.y - p.y - p.w);
+            renderText(context, leguiContext, agui, pos, size, textState, agui.getCaretPosition(), agui.getState().isFocused(), bc);
         }
         resetScissor(context);
 
@@ -68,7 +71,7 @@ public class NvgTextAreaRenderer extends NvgLeguiComponentRenderer {
         String text = textState.getText();
         String[] lines = text.split("\n", -1);
         int[] offsets = new int[lines.length];
-        if (!focused) caretPosition = lines[0].length() /** textState.getHorizontalAlign().index*/ / 2;
+        if (!focused) caretPosition = lines[0].length() * textState.getHorizontalAlign().index / 2;
         int caretLine = 0;
         int caretOffset = 0;
 
@@ -79,7 +82,6 @@ public class NvgTextAreaRenderer extends NvgLeguiComponentRenderer {
         float h = size.y - p.y - p.w;
         float fontSize = textState.getFontSize();
         int lineCount = lines.length;
-
 
         // calculate offset and line caret position
         for (int i = 0; i < lineCount - 1; i++) {
@@ -103,7 +105,6 @@ public class NvgTextAreaRenderer extends NvgLeguiComponentRenderer {
             diff = botIndex - topIndex;
         }
 
-
         String font = textState.getFont();
         Vector4f textColor = textState.getTextColor();
         HorizontalAlign horizontalAlign = textState.getHorizontalAlign();
@@ -126,9 +127,9 @@ public class NvgTextAreaRenderer extends NvgLeguiComponentRenderer {
 
         oppositeBlackOrWhite(bc, caretColor);
         caretColor.w = (float) Math.abs(GLFW.glfwGetTime() % 1 * 2 - 1);
-
-        drawSelectionBackground(context, gui, lines, x, y, w, h, fontSize, topIndex, botIndex, horizontalAlign, verticalAlign, offsetX);
-
+        if (focused) {
+            drawSelectionBackground(context, gui, lines, x, y, w, h, fontSize, topIndex, botIndex, horizontalAlign, verticalAlign, offsetX);
+        }
         Vector4f lineColor = oppositeBlackOrWhite(bc).mul(1, 1, 1, 0.1f);
 
         // calculate new caret position based on mouse position
@@ -180,7 +181,6 @@ public class NvgTextAreaRenderer extends NvgLeguiComponentRenderer {
         ByteBuffer textBytes = MemoryUtil.memUTF8(line);
         int ng = nnvgTextGlyphPositions(context, bounds[0], bounds[1], memAddress(textBytes), 0, memAddress(glyphs), maxGlyphCount);
         float mx = leguiContext.getCursorPosition().x;
-        float cx = 0;
         int newCPos = 0;
         int upper = ng - 1;
         if (upper <= 0) {
@@ -188,10 +188,8 @@ public class NvgTextAreaRenderer extends NvgLeguiComponentRenderer {
             float px = glyphs.get(0).x() - offsetX;
             float mpx = glyphs.get(upper).maxx() - offsetX;
             if (mx <= px) {
-                cx = px;
                 newCPos = 0;
             } else if (mx >= mpx) {
-                cx = mpx;
                 newCPos = upper + 1;
             } else {
                 for (int i = 0; i < upper; newCPos = i++) {
@@ -199,10 +197,8 @@ public class NvgTextAreaRenderer extends NvgLeguiComponentRenderer {
                     mpx = glyphs.get(i + 1).x() - offsetX;
                     if (mx >= px && mx <= mpx) {
                         if (mx - px < mpx - mx) {
-                            cx = px;
                             newCPos = i;
                         } else {
-                            cx = mpx;
                             newCPos = i + 1;
                         }
                         break;
@@ -212,10 +208,8 @@ public class NvgTextAreaRenderer extends NvgLeguiComponentRenderer {
                 mpx = glyphs.get(upper).maxx() - offsetX;
                 if (mx >= px && mx <= mpx) {
                     if (mpx - mx > mx - px) {
-                        cx = px;
                         newCPos = upper;
                     } else {
-                        cx = mpx;
                         newCPos = upper + 1;
                     }
                 }

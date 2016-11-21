@@ -61,7 +61,7 @@ public class NvgRadioButtonRenderer extends NvgLeguiComponentRenderer {
     private void renderIcon(RadioButton agui, float x, float fontSize, Vector4f textColor, float iconWid, float y1, float h1, long context) {
         // renderNvg check symbol
         String icon = agui.isSelected() ? ICON_CHECKED : ICON_UNCHECKED;
-        if (agui.isFocused()) {
+        if (agui.getState().isFocused()) {
             float x1 = x - iconOffset + hoff;
             float y = y1 + hoff;
             NvgRenderUtils.renderTextLineToBounds(context, x1, y, iconWid, h1, fontSize, FontRegister.MATERIAL_ICONS_REGULAR,

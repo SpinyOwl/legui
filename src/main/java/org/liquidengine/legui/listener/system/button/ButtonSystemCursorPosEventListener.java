@@ -14,7 +14,7 @@ public class ButtonSystemCursorPosEventListener implements SystemEventListener<B
     @Override
     public void update(SystemCursorPosEvent event, Button component, LeguiContext context) {
         if (context.getMouseButtonStates()[GLFW.GLFW_MOUSE_BUTTON_LEFT] && context.getFocusedGui() == component) {
-            component.setPressed(true);
+            component.getState().setPressed(true);
         }
     }
 }

@@ -27,7 +27,7 @@ public class DefaultSystemScrollEventListener implements SystemEventListener<Com
                 }
             }
             if ((!(gui instanceof ComponentContainer) || target == null || target == gui) &&
-                    (!gui.isFocused() || gui.getEventListeners().getListeners(MouseScrollEvent.class).isEmpty())) {
+                    (!gui.getState().isFocused() || gui.getLeguiEventListeners().getListeners(MouseScrollEvent.class).isEmpty())) {
                 Component parent = gui.getParent();
                 while (parent != null) {
                     if (parent instanceof ScrollablePanel) {

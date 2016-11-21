@@ -183,7 +183,7 @@ public class LeguiContext implements Serializable {
 
     private void release(Component gui, Component focused) {
         if (gui != focused) {
-            gui.setFocused(false);
+            gui.getState().setFocused(false);
         }
         if (gui instanceof ComponentContainer) {
             ComponentContainer container = ((ComponentContainer) gui);

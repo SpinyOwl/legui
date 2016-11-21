@@ -13,10 +13,10 @@ import java.util.concurrent.locks.ReentrantLock;
 /**
  * Created by Shcherbin Alexander on 9/29/2016.
  */
-public class LeguiEventListenerList implements Serializable{
+public class LeguiEventListenerList implements Serializable {
 
     private final Lock lock = new ReentrantLock();
-    private final Map<Class<? extends LeguiEvent>, List<? extends LeguiEventListener>> listeners = new ConcurrentHashMap<>();
+    private Map<Class<? extends LeguiEvent>, List<? extends LeguiEventListener>> listeners = new ConcurrentHashMap<>();
 
     public LeguiEventListenerList() {
     }
@@ -37,4 +37,11 @@ public class LeguiEventListenerList implements Serializable{
         return LeguiEventListeners;
     }
 
+    public Map<Class<? extends LeguiEvent>, List<? extends LeguiEventListener>> getListeners() {
+        return listeners;
+    }
+
+    public void setListeners(Map<Class<? extends LeguiEvent>, List<? extends LeguiEventListener>> listeners) {
+        this.listeners = listeners;
+    }
 }

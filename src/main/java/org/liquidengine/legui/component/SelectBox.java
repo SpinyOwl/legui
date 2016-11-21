@@ -90,8 +90,8 @@ public class SelectBox<T> extends ComponentContainer {
                 setCollapsed(!isCollapsed());
             }
         };
-        selectionButton.getEventListeners().addListener(MouseClickEvent.class, mouseClickEventListener);
-        expandButton.getEventListeners().addListener(MouseClickEvent.class, mouseClickEventListener);
+        selectionButton.getLeguiEventListeners().addListener(MouseClickEvent.class, mouseClickEventListener);
+        expandButton.getLeguiEventListeners().addListener(MouseClickEvent.class, mouseClickEventListener);
 
         FocusEventListener focusEventListener = event -> {
             if (!event.focusGained && !collapsed) {
@@ -110,9 +110,9 @@ public class SelectBox<T> extends ComponentContainer {
                 if (collapse) setCollapsed(true);
             }
         };
-        selectionListPanel.getVerticalScrollBar().getEventListeners().getListeners(FocusEvent.class).add(focusEventListener);
-        selectionButton.getEventListeners().getListeners(FocusEvent.class).add(focusEventListener);
-        expandButton.getEventListeners().getListeners(FocusEvent.class).add(focusEventListener);
+        selectionListPanel.getVerticalScrollBar().getLeguiEventListeners().getListeners(FocusEvent.class).add(focusEventListener);
+        selectionButton.getLeguiEventListeners().getListeners(FocusEvent.class).add(focusEventListener);
+        expandButton.getLeguiEventListeners().getListeners(FocusEvent.class).add(focusEventListener);
 
         resize();
     }
@@ -193,7 +193,7 @@ public class SelectBox<T> extends ComponentContainer {
         ListBoxElement<T> boxElement = new ListBoxElement<>(element, false);
         boxElement.setSize(new Vector2f(selectionListPanel.getContainer().getSize().x, elementHeight));
         boxElement.setPosition(0, selectionListPanel.getContainer().componentsCount() * elementHeight);
-        boxElement.getEventListeners().getListeners(MouseClickEvent.class).add((MouseClickEventListener) event -> {
+        boxElement.getLeguiEventListeners().getListeners(MouseClickEvent.class).add((MouseClickEventListener) event -> {
             if (event.getAction() == CLICK && event.getButton() == GLFW.GLFW_MOUSE_BUTTON_LEFT) {
                 setSelected(element, true);
                 setCollapsed(true);

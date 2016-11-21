@@ -29,4 +29,12 @@ public abstract class Border implements Serializable {
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
+
+    public LeguiBorderRenderer getRenderer() {
+        return renderer;
+    }
+
+    public void setRenderer(LeguiBorderRenderer renderer) {
+        this.renderer = renderer;
+    }
 }

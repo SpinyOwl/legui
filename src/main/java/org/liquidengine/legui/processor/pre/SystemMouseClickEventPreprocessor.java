@@ -25,32 +25,32 @@ public class SystemMouseClickEventPreprocessor implements SystemEventPreprocesso
             if (mouseTargetGui != null && focusedGui != mouseTargetGui) {
 
                 if (focusedGui != null) {
-                    focusedGui.setFocused(false);
-                    focusedGui.setPressed(false);
+                    focusedGui.getState().setFocused(false);
+                    focusedGui.getState().setPressed(false);
                     processFocusEvent(context, focusedGui, mouseTargetGui, false);
                 }
 
-                mouseTargetGui.setFocused(true);
+                mouseTargetGui.getState().setFocused(true);
                 context.setFocusedGui(mouseTargetGui);
                 processFocusEvent(context, mouseTargetGui, mouseTargetGui, true);
             }
         } else {
             if (focusedGui != null && focusedGui != mouseTargetGui) {
-                focusedGui.setPressed(false);
+                focusedGui.getState().setPressed(false);
             }
 
 //        } else {
 //            if (focusedGui != null && focusedGui != mouseTargetGui) {
 //                boolean focused = false;
-//                focusedGui.setFocused(false);
-//                focusedGui.setPressed(false);
+//                focusedGui.getState().setFocused(false);
+//                focusedGui.getState().setPressed(false);
 //                processFocusEvent(context, focusedGui, focused);
 //            }
         }
 
 //        if (focusedGui != null && focusedGui != mouseTargetGui) {
 //            boolean focused = false;
-//            focusedGui.setFocused(focused);
+//            focusedGui.getState().setFocused(focused);
 //            processFocusEvent(context, focusedGui, focused);
 //            context.setFocusedGui(null);
 //        }
@@ -63,7 +63,7 @@ public class SystemMouseClickEventPreprocessor implements SystemEventPreprocesso
         FocusEvent focusEvent = new FocusEvent(focusedGui, focused, focusTarget);
         LeguiEventListenerProcessor leguiEventProcessor = context.getLeguiEventProcessor();
         if (leguiEventProcessor != null) leguiEventProcessor.pushEvent(focusEvent);
-        else focusedGui.getEventListeners().getListeners(FocusEvent.class).forEach(l -> l.update(focusEvent));
+        else focusedGui.getLeguiEventListeners().getListeners(FocusEvent.class).forEach(l -> l.update(focusEvent));
     }
 
     private void pushContainersUp(Component gui) {

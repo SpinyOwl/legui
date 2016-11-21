@@ -27,7 +27,7 @@ public class DefaultSystemKeyEventListener implements SystemEventListener<Compon
         if (leguiEventProcessor != null) {
             leguiEventProcessor.pushEvent(keyboardKeyEvent);
         } else {
-            focusedGui.getEventListeners().getListeners(KeyboardKeyEvent.class).forEach(l -> l.update(keyboardKeyEvent));
+            focusedGui.getLeguiEventListeners().getListeners(KeyboardKeyEvent.class).forEach(l -> l.update(keyboardKeyEvent));
         }
     }
 }

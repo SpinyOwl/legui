@@ -66,7 +66,7 @@ public class NvgCheckBoxRenderer extends NvgDefaultRenderer {
             Vector4f textColor = textState.getTextColor();
             if (checkBox.isChecked()) {
                 // renderNvg check symbol
-                if (component.isFocused()) {
+                if (component.getState().isFocused()) {
                     NvgRenderUtils.renderTextLineToBounds(nvgContext, x1 + hoff, y + hoff, iconWid, h, fontSize, FontRegister.MATERIAL_ICONS_REGULAR,
                             DEFAULT_THEME.getFocusedStrokeColorLight(), colorA, ICON_CHECKED, HorizontalAlign.CENTER, VerticalAlign.MIDDLE, false);
                 }
@@ -74,7 +74,7 @@ public class NvgCheckBoxRenderer extends NvgDefaultRenderer {
                         textColor, colorA, ICON_CHECKED, HorizontalAlign.CENTER, VerticalAlign.MIDDLE, false);
             } else {
                 // renderNvg box
-                if (component.isFocused()) {
+                if (component.getState().isFocused()) {
                     NvgRenderUtils.renderTextLineToBounds(nvgContext, x1 + hoff, y + hoff, iconWid, h, fontSize, FontRegister.MATERIAL_ICONS_REGULAR,
                             DEFAULT_THEME.getFocusedStrokeColorLight(), colorA, ICON_UNCHECKED, HorizontalAlign.CENTER, VerticalAlign.MIDDLE, false);
                 }

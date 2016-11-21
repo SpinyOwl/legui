@@ -14,7 +14,7 @@ import static org.lwjgl.glfw.GLFW.*;
 public class TextInputSystemKeyEventProcessor implements SystemEventListener<TextInput, SystemKeyEvent> {
     @Override
     public void update(SystemKeyEvent event, TextInput gui, LeguiContext leguiContext) {
-        if (!gui.isFocused() || !gui.isEditable()) return;
+        if (!gui.getState().isFocused() || !gui.isEditable()) return;
 
         int key = event.key;
         int caretPosition = gui.getCaretPosition();
