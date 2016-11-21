@@ -1,13 +1,9 @@
-package org.liquidengine.legui.processor;
+package org.liquidengine.legui.listener;
 
 import com.google.common.base.Objects;
 import org.liquidengine.legui.component.*;
 import org.liquidengine.legui.event.SystemEvent;
 import org.liquidengine.legui.event.system.*;
-import org.liquidengine.legui.listener.SystemEventListener;
-import org.liquidengine.legui.processor.post.SystemMouseClickEventPostprocessor;
-import org.liquidengine.legui.processor.pre.SystemCursorPosEventPreprocessor;
-import org.liquidengine.legui.processor.pre.SystemMouseClickEventPreprocessor;
 import org.liquidengine.legui.listener.system.button.ButtonSystemCursorPosEventListener;
 import org.liquidengine.legui.listener.system.button.ButtonSystemMouseClickEventListener;
 import org.liquidengine.legui.listener.system.checkbox.CheckBoxSystemMouseClickEventListener;
@@ -31,6 +27,11 @@ import org.liquidengine.legui.listener.system.textinput.TextInputSystemCharEvent
 import org.liquidengine.legui.listener.system.textinput.TextInputSystemCursorPosEventListener;
 import org.liquidengine.legui.listener.system.textinput.TextInputSystemKeyEventProcessor;
 import org.liquidengine.legui.listener.system.textinput.TextInputSystemMouseClickEventListener;
+import org.liquidengine.legui.processor.SystemEventPostprocessor;
+import org.liquidengine.legui.processor.SystemEventPreprocessor;
+import org.liquidengine.legui.processor.post.SystemMouseClickEventPostprocessor;
+import org.liquidengine.legui.processor.pre.SystemCursorPosEventPreprocessor;
+import org.liquidengine.legui.processor.pre.SystemMouseClickEventPreprocessor;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -45,7 +46,8 @@ public class DefaultSystemEventListenerProvider extends SystemEventListenerProvi
             child.getSystemEventListeners().getListener(event.getClass()).update(event, child, context);
         }
     };
-    private Map<Class<? extends SystemEvent>, SystemEventListener> defaultListenerMap = new ConcurrentHashMap<>();
+    private Map<Class<? extends SystemEvent>, SystemEventListener> defaultListenersPerEvent = new ConcurrentHashMap<>();
+    private Map<Class<? extends Component>, SystemEventListener> defaultListenersPerComponent = new ConcurrentHashMap<>();
     private Map<ComponentEventKey, SystemEventListener> listenerMap = new ConcurrentHashMap<>();
     private Map<Class<? extends SystemEvent>, SystemEventPostprocessor> postprocessorMap = new ConcurrentHashMap<>();
     private Map<Class<? extends SystemEvent>, SystemEventPreprocessor> preprocessorMap = new ConcurrentHashMap<>();
@@ -67,9 +69,17 @@ public class DefaultSystemEventListenerProvider extends SystemEventListenerProvi
     }
 
     private void initializeDefaults() {
-        registerDefaultListener(SystemScrollEvent.class, new DefaultSystemScrollEventListener());
-        registerDefaultListener(SystemKeyEvent.class, new DefaultSystemKeyEventListener());
-        registerDefaultListener(SystemCharEvent.class, new DefaultSystemCharEventListener());
+        registerDefaultListenerPerEvent(SystemScrollEvent.class, new DefaultSystemScrollEventListener());
+        registerDefaultListenerPerEvent(SystemKeyEvent.class, new DefaultSystemKeyEventListener());
+        registerDefaultListenerPerEvent(SystemCharEvent.class, new DefaultSystemCharEventListener());
+
+//        registerDefaultListenerPerComponent(WidgetComponent.class, new WidgetComponentSysMouseClickEventListener());
+    }
+
+    public <C extends Component> void registerDefaultListenerPerComponent(Class<C> componentClass, SystemEventListener<C, SystemEvent> systemEventListener) {
+        if (componentClass != null && systemEventListener != null) {
+            defaultListenersPerComponent.put(componentClass, systemEventListener);
+        }
     }
 
     private void initializeListeners() {
@@ -109,15 +119,15 @@ public class DefaultSystemEventListenerProvider extends SystemEventListenerProvi
         }
     }
 
-    public <E extends SystemEvent> void registerDefaultListener(Class<E> eventClass, SystemEventListener<?, E> listener) {
+    public <E extends SystemEvent> void registerDefaultListenerPerEvent(Class<E> eventClass, SystemEventListener<?, E> listener) {
         if (listener != null && eventClass != null) {
-            defaultListenerMap.put(eventClass, listener);
+            defaultListenersPerEvent.put(eventClass, listener);
         }
     }
 
     @Override
     public <C extends Component, E extends SystemEvent> SystemEventListener getListener(Class<C> componentClass, Class<E> eventClass) {
-        return cycledSearchOfListener(componentClass, eventClass, defaultListenerMap.getOrDefault(eventClass, DEFAULT_EVENT_LISTENER));
+        return cycledSearchOfListener(componentClass, eventClass, defaultListenersPerEvent.getOrDefault(eventClass, DEFAULT_EVENT_LISTENER));
     }
 
     @Override
@@ -126,7 +136,7 @@ public class DefaultSystemEventListenerProvider extends SystemEventListenerProvi
     }
 
     public <E extends SystemEvent, P extends SystemEventPreprocessor> void registerPreprocessor(Class<E> eventClass, P preprocessor) {
-        if (preprocessor != null) {
+        if (eventClass != null && preprocessor != null) {
             preprocessorMap.put(eventClass, preprocessor);
         }
     }
@@ -137,17 +147,17 @@ public class DefaultSystemEventListenerProvider extends SystemEventListenerProvi
     }
 
     public <E extends SystemEvent, P extends SystemEventPostprocessor> void registerPostprocessor(Class<E> eventClass, P postprocessor) {
-        if (postprocessor != null) {
+        if (eventClass != null && postprocessor != null) {
             postprocessorMap.put(eventClass, postprocessor);
         }
     }
 
     private <C extends Component, E extends SystemEvent> SystemEventListener
     cycledSearchOfListener(Class<C> componentClass, Class<E> eventClass, SystemEventListener defaultListener) {
-        SystemEventListener listener = null;
+        SystemEventListener listener = listenerMap.getOrDefault(new ComponentEventKey<>(componentClass, eventClass), defaultListenersPerComponent.get(componentClass));
         Class cClass = componentClass;
         while (listener == null) {
-            listener = listenerMap.get(new ComponentEventKey<>(cClass, eventClass));
+            listener = listenerMap.getOrDefault(new ComponentEventKey<>(cClass, eventClass), defaultListenersPerComponent.get(cClass));
             if (cClass.isAssignableFrom(Component.class)) break;
             cClass = cClass.getSuperclass();
         }

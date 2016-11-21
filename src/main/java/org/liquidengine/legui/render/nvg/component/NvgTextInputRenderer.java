@@ -48,7 +48,7 @@ public class NvgTextInputRenderer extends NvgLeguiComponentRenderer {
             boolean enabled = agui.isEnabled();
             Vector4f bc = new Vector4f(agui.getBackgroundColor());
 
-            if (enabled && agui.isFocused()) {
+            if (enabled && agui.getState().isFocused()) {
                 bc.w *= 1.1f;
             } else if (!enabled) {
                 bc.w *= 0.5f;
@@ -66,7 +66,7 @@ public class NvgTextInputRenderer extends NvgLeguiComponentRenderer {
             p.w = p.w > 0 ? p.w - 1 : 0;
 
             nvgIntersectScissor(context, pos.x, pos.y, size.x, size.y);
-            renderText(leguiContext, context, agui, pos, size, textState, agui.getCaretPosition(), agui.isFocused(), bc);
+            renderText(leguiContext, context, agui, pos, size, textState, agui.getCaretPosition(), agui.getState().isFocused(), bc);
         }
         resetScissor(context);
 

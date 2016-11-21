@@ -49,7 +49,7 @@ public class DefaultSystemCursorPosEventListener implements SystemEventListener<
     private void updateComponentStatesAndCallListeners(SystemCursorPosEvent event, Component component, LeguiContext context) {
         LeguiEventListenerProcessor leguiEventProcessor = context.getLeguiEventProcessor();
         if (context.getMouseButtonStates()[GLFW.GLFW_MOUSE_BUTTON_LEFT] && component == context.getFocusedGui()) {
-            List<LeguiEventListener<MouseDragEvent>> mouseDragEventListeners = component.getEventListeners().getListeners(MouseDragEvent.class);
+            List<LeguiEventListener<MouseDragEvent>> mouseDragEventListeners = component.getLeguiEventListeners().getListeners(MouseDragEvent.class);
             MouseDragEvent mouseDragEvent = new MouseDragEvent(new Vector2f(event.fx, event.fy), context.getCursorPositionPrev(), component);
             if (leguiEventProcessor == null) {
                 mouseDragEventListeners.forEach(l -> l.update(mouseDragEvent));
@@ -58,21 +58,21 @@ public class DefaultSystemCursorPosEventListener implements SystemEventListener<
             }
         }
 
-        List<LeguiEventListener<CursorEnterEvent>> listeners = component.getEventListeners().getListeners(CursorEnterEvent.class);
+        List<LeguiEventListener<CursorEnterEvent>> listeners = component.getLeguiEventListeners().getListeners(CursorEnterEvent.class);
         Vector2f position = Util.calculatePosition(component);
         Vector2f cursorPosition = context.getCursorPosition();
         boolean intersects = component.getIntersector().intersects(component, cursorPosition);
         Vector2f mousePosition = position.sub(cursorPosition).negate();
         boolean update = false;
         CursorEnterEvent cursorEnterEvent = null;
-        if (component.isHovered()) {
+        if (component.getState().isHovered()) {
             if (!intersects || component != context.getMouseTargetGui()) {
-                component.setHovered(false);
+                component.getState().setHovered(false);
                 cursorEnterEvent = new CursorEnterEvent(component, CursorEnterEvent.CursorEnterAction.EXIT, mousePosition);
                 update = true;
             }
-        } else if (!component.isHovered() && intersects && component == context.getMouseTargetGui()) {
-            component.setHovered(true);
+        } else if (!component.getState().isHovered() && intersects && component == context.getMouseTargetGui()) {
+            component.getState().setHovered(true);
             cursorEnterEvent = new CursorEnterEvent(component, CursorEnterEvent.CursorEnterAction.ENTER, mousePosition);
             update = true;
         }

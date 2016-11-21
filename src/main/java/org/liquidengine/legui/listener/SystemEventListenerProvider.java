@@ -1,8 +1,9 @@
-package org.liquidengine.legui.processor;
+package org.liquidengine.legui.listener;
 
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.event.SystemEvent;
-import org.liquidengine.legui.listener.SystemEventListener;
+import org.liquidengine.legui.processor.SystemEventPostprocessor;
+import org.liquidengine.legui.processor.SystemEventPreprocessor;
 
 /**
  * Created by Shcherbin Alexander on 10/24/2016.

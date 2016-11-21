@@ -14,7 +14,7 @@ import static org.lwjgl.glfw.GLFW.*;
 public class TextAreaSystemKeyEventListener implements SystemEventListener<TextArea, SystemKeyEvent> {
     @Override
     public void update(SystemKeyEvent event, TextArea gui, LeguiContext leguiContext) {
-        if (gui.isFocused() && gui.isEditable()) {
+        if (gui.getState().isFocused() && gui.isEditable()) {
             int key = event.key;
             int caretPosition = gui.getCaretPosition();
             boolean pressed = event.action != GLFW_RELEASE;

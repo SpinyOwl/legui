@@ -2,7 +2,6 @@ package org.liquidengine.legui.listener;
 
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.event.SystemEvent;
-import org.liquidengine.legui.processor.SystemEventListenerProvider;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -15,7 +14,7 @@ import java.util.concurrent.locks.ReentrantLock;
 public class SystemEventListenerList<C extends Component> {
 
     private final Lock lock = new ReentrantLock();
-    private final Map<Class<? extends SystemEvent>, SystemEventListener<C, ? extends SystemEvent>> listeners = new ConcurrentHashMap<>();
+    private Map<Class<? extends SystemEvent>, SystemEventListener<C, ? extends SystemEvent>> listeners = new ConcurrentHashMap<>();
     private Class<C> componentClass;
 
     public SystemEventListenerList(Class<C> componentClass) {
@@ -36,5 +35,21 @@ public class SystemEventListenerList<C extends Component> {
             listeners.put(eventClass, listener = SystemEventListenerProvider.getProvider().getListener(componentClass, eventClass));
         }
         return listener;
+    }
+
+    public Map<Class<? extends SystemEvent>, SystemEventListener<C, ? extends SystemEvent>> getListeners() {
+        return listeners;
+    }
+
+    public void setListeners(Map<Class<? extends SystemEvent>, SystemEventListener<C, ? extends SystemEvent>> listeners) {
+        this.listeners = listeners;
+    }
+
+    public Class<C> getComponentClass() {
+        return componentClass;
+    }
+
+    public void setComponentClass(Class<C> componentClass) {
+        this.componentClass = componentClass;
     }
 }

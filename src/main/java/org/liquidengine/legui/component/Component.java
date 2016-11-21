@@ -33,10 +33,8 @@ public abstract class Component implements Serializable {
 
     protected boolean enabled = true;
     protected boolean visible = true;
-    protected boolean focused = false;
 
-    protected boolean pressed = false;
-    protected boolean hovered = false;
+    protected ComponentState state = new ComponentState();
 
     protected float cornerRadius = 0;
 
@@ -44,7 +42,7 @@ public abstract class Component implements Serializable {
     protected LeguiIntersector intersector = new RectangleIntersector();
     protected LeguiComponentRenderer renderer = LeguiRendererProvider.getProvider().getRenderer(this);
 
-    protected LeguiEventListenerList eventListeners = new LeguiEventListenerList();
+    protected LeguiEventListenerList leguiEventListeners = new LeguiEventListenerList();
     protected SystemEventListenerList systemEventListeners = new SystemEventListenerList(this.getClass());
 
     public Component() {
@@ -66,6 +64,10 @@ public abstract class Component implements Serializable {
 
     public ComponentContainer getParent() {
         return parent;
+    }
+
+    public void setParent(ComponentContainer parent) {
+        this.parent = parent;
     }
 
     public SystemEventListenerList getSystemEventListeners() {
@@ -96,8 +98,12 @@ public abstract class Component implements Serializable {
         this.size.set(width, height);
     }
 
-    public LeguiEventListenerList getEventListeners() {
-        return eventListeners;
+    public LeguiEventListenerList getLeguiEventListeners() {
+        return leguiEventListeners;
+    }
+
+    public void setLeguiEventListeners(LeguiEventListenerList leguiEventListeners) {
+        this.leguiEventListeners = leguiEventListeners;
     }
 
     public Vector4f getBackgroundColor() {
@@ -136,14 +142,6 @@ public abstract class Component implements Serializable {
         this.visible = visible;
     }
 
-    public boolean isFocused() {
-        return focused;
-    }
-
-    public void setFocused(boolean focused) {
-        this.focused = focused;
-    }
-
     public LeguiIntersector getIntersector() {
         return intersector;
     }
@@ -160,28 +158,28 @@ public abstract class Component implements Serializable {
         this.cornerRadius = cornerRadius;
     }
 
-    public boolean isPressed() {
-        return pressed;
-    }
-
-    public void setPressed(boolean pressed) {
-        this.pressed = pressed;
-    }
-
-    public boolean isHovered() {
-        return hovered;
-    }
-
-    public void setHovered(boolean hovered) {
-        this.hovered = hovered;
-    }
-
     public Component getComponentAt(Vector2f cursorPosition) {
         if (visible && intersector.intersects(this, cursorPosition)) {
             return this;
         } else {
             return null;
         }
+    }
+
+    public LeguiComponentRenderer getRenderer() {
+        return renderer;
+    }
+
+    public void setRenderer(LeguiComponentRenderer renderer) {
+        this.renderer = renderer;
+    }
+
+    public ComponentState getState() {
+        return state;
+    }
+
+    public void setState(ComponentState state) {
+        this.state = state;
     }
 
     @Override
@@ -195,9 +193,6 @@ public abstract class Component implements Serializable {
         return new EqualsBuilder()
                 .append(enabled, component.enabled)
                 .append(visible, component.visible)
-                .append(focused, component.focused)
-                .append(pressed, component.pressed)
-                .append(hovered, component.hovered)
                 .append(cornerRadius, component.cornerRadius)
                 .append(position, component.position)
                 .append(size, component.size)
@@ -205,7 +200,7 @@ public abstract class Component implements Serializable {
                 .append(border, component.border)
                 .append(parent, component.parent)
                 .append(intersector, component.intersector)
-                .append(eventListeners, component.eventListeners)
+                .append(leguiEventListeners, component.leguiEventListeners)
                 .isEquals();
     }
 
@@ -218,13 +213,10 @@ public abstract class Component implements Serializable {
                 .append(border)
                 .append(enabled)
                 .append(visible)
-                .append(focused)
-                .append(pressed)
-                .append(hovered)
                 .append(cornerRadius)
                 .append(parent)
                 .append(intersector)
-                .append(eventListeners)
+                .append(leguiEventListeners)
                 .toHashCode();
     }
 
@@ -237,13 +229,10 @@ public abstract class Component implements Serializable {
                 .append("border", border)
                 .append("enabled", enabled)
                 .append("visible", visible)
-                .append("focused", focused)
-                .append("pressed", pressed)
-                .append("hovered", hovered)
                 .append("cornerRadius", cornerRadius)
                 .append("parent", parent)
                 .append("intersector", intersector)
-                .append("eventListeners", eventListeners)
+                .append("leguiEventListeners", leguiEventListeners)
                 .toString();
     }
 }

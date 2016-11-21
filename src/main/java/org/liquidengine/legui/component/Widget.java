@@ -10,6 +10,7 @@ import org.liquidengine.legui.event.component.MouseClickEvent;
 import org.liquidengine.legui.event.component.MouseDragEvent;
 import org.liquidengine.legui.font.FontRegister;
 import org.liquidengine.legui.listener.component.MouseClickEventListener;
+import org.liquidengine.legui.listener.component.MouseDragEventListener;
 import org.liquidengine.legui.util.ColorConstants;
 
 import static org.liquidengine.legui.event.component.MouseClickEvent.MouseClickAction.CLICK;
@@ -62,12 +63,8 @@ public class Widget extends ComponentContainer {
         this.title.textState.getPadding().set(10, 5, 10, 5);
         this.title.setBorder(simpleRectangleLineBorder);
 
-        this.title.eventListeners.addListener(MouseDragEvent.class, event -> {
-            if (event.getComponent() == this.title) {
-                Vector2f sub = event.getCursorPosition().sub(event.getCursorPositionPrev());
-                position.add(sub);
-            }
-        });
+        MouseDragEventListener mouseDragEventLeguiEventListener = new WidgetDragListener();
+        this.title.leguiEventListeners.addListener(MouseDragEvent.class, mouseDragEventLeguiEventListener);
 
         this.closeButton = new Button(CLOSE_ICON);
         this.closeButton.backgroundColor.set(1, 0, 0, 1);
@@ -75,11 +72,8 @@ public class Widget extends ComponentContainer {
         this.closeButton.textState.setHorizontalAlign(HorizontalAlign.LEFT);
         this.closeButton.textState.setVerticalAlign(VerticalAlign.MIDDLE);
         this.closeButton.textState.setFont(FontRegister.MATERIAL_ICONS_REGULAR);
-        this.closeButton.getEventListeners().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
-            if (CLICK.equals(event.getAction())) {
-                this.visible = false;
-            }
-        });
+        MouseClickEventListener listener = new WidgetCloseButMouseClickEventListener();
+        this.closeButton.getLeguiEventListeners().addListener(MouseClickEvent.class, listener);
 
         this.container = new Panel();
         this.container.setBorder(simpleRectangleLineBorder);
@@ -175,7 +169,23 @@ public class Widget extends ComponentContainer {
 
     public void setContainer(ComponentContainer container) {
         this.removeComponent(this.container);
-        this.container = container;
-        this.addComponent(this.container);
+        this.addComponent(this.container = container);
+    }
+
+    public static class WidgetDragListener implements MouseDragEventListener {
+        @Override
+        public void update(MouseDragEvent event) {
+            Vector2f sub = event.getCursorPosition().sub(event.getCursorPositionPrev());
+            event.getComponent().getParent().position.add(sub);
+        }
+    }
+
+    public static class WidgetCloseButMouseClickEventListener implements MouseClickEventListener {
+        @Override
+        public void update(MouseClickEvent event) {
+            if (CLICK.equals(event.getAction())) {
+                event.getComponent().getParent().visible = false;
+            }
+        }
     }
 }

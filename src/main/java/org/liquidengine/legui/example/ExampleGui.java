@@ -106,7 +106,7 @@ public class ExampleGui extends Panel {
         widget.setTitleBackgroundColor(ColorConstants.lightGreen());
 
         Button turnWidVisible = new Button(360, 280, 20, 20, "");
-        turnWidVisible.getEventListeners().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
+        turnWidVisible.getLeguiEventListeners().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
             if (CLICK.equals(event.getAction())) widget.setVisible(true);
         });
         this.addComponent(turnWidVisible);
@@ -149,7 +149,7 @@ public class ExampleGui extends Panel {
         widget3.getContainer().addComponent(new Panel(10, 40, 20, 20));
         widget3.getContainer().addComponent(new Panel(10, 40, 20, 20));
         Button b = new Button(70, 10, 20, 20);
-        b.getEventListeners().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
+        b.getLeguiEventListeners().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
             if (event.getAction() == CLICK) {
                 widget3.setTitleEnabled(!widget3.isTitleEnabled());
             }
@@ -189,12 +189,12 @@ public class ExampleGui extends Panel {
         Panel panel1 = new Panel(420, 170, 100, 100);
         panel1.setBackgroundColor(ColorConstants.blue());
         this.addComponent(panel1);
-        panel1.getEventListeners().addListener(CursorEnterEvent.class, System.out::println);
+        panel1.getLeguiEventListeners().addListener(CursorEnterEvent.class, System.out::println);
         Panel panel2 = new Panel(470, 170, 100, 100);
         panel2.setBackgroundColor(ColorConstants.green());
         this.addComponent(panel2);
 
-        button.getEventListeners().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
+        button.getLeguiEventListeners().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
             MouseClickEvent.MouseClickAction action = event.getAction();
             if (CLICK.equals(action)) mouseTargetLabel.setVisible(!mouseTargetLabel.isVisible());
             if (RELEASE.equals(action)) System.out.println("RELEASE");
@@ -215,11 +215,11 @@ public class ExampleGui extends Panel {
         scrollablePanel.getContainer().addComponent(scp);
         this.addComponent(scrollablePanel);
 
-        slider2.getEventListeners().addListener(SliderChangeEvent.class, (SliderChangeEventListener) event -> {
+        slider2.getLeguiEventListeners().addListener(SliderChangeEvent.class, (SliderChangeEventListener) event -> {
             scrollablePanel.getHorizontalScrollBar().getSize().y = event.getSlider().getValue() / 2f + 10;
             scrollablePanel.resize();
         });
-        slider1.getEventListeners().addListener(SliderChangeEvent.class, (SliderChangeEventListener) event -> {
+        slider1.getLeguiEventListeners().addListener(SliderChangeEvent.class, (SliderChangeEventListener) event -> {
             scrollablePanel.getHorizontalScrollBar().setArrowSize(event.getSlider().getValue() / 4f + 10);
             scrollablePanel.resize();
         });
@@ -230,7 +230,7 @@ public class ExampleGui extends Panel {
         textArea.getTextState().setHorizontalAlign(HorizontalAlign.CENTER);
         this.addComponent(textArea);
 
-        textArea.getEventListeners().addListener(KeyboardKeyEvent.class, (KeyboardKeyEventListener) event -> {
+        textArea.getLeguiEventListeners().addListener(KeyboardKeyEvent.class, (KeyboardKeyEventListener) event -> {
             if (event.getKey() == GLFW.GLFW_KEY_F1 && event.getAction() == GLFW.GLFW_RELEASE)
                 textArea.getTextState().setHorizontalAlign(HorizontalAlign.LEFT);
             else if (event.getKey() == GLFW.GLFW_KEY_F2 && event.getAction() == GLFW.GLFW_RELEASE)
@@ -273,7 +273,7 @@ public class ExampleGui extends Panel {
         this.addComponent(selectBox);
 
         Button sbb = new Button(130, 260, 70, 20, "Add element");
-        sbb.getEventListeners().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
+        sbb.getLeguiEventListeners().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
             if(event.getAction()==CLICK){selectBox.addElement("WorlD " + i[0]++);}
         });
         this.addComponent(sbb);

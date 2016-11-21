@@ -3,10 +3,12 @@ package org.liquidengine.legui.render;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.context.LeguiContext;
 
+import java.io.Serializable;
+
 /**
  * Created by Shcherbin Alexander on 9/20/2016.
  */
-public interface LeguiComponentRenderer {
+public interface LeguiComponentRenderer extends Serializable {
 
     /**
      * Initialize renderer

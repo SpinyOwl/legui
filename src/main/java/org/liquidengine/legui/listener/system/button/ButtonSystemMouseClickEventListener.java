@@ -22,29 +22,29 @@ public class ButtonSystemMouseClickEventListener implements SystemEventListener<
     @Override
     public void update(SystemMouseClickEvent event, Button component, LeguiContext context) {
         Component focusedGui = context.getFocusedGui();
-        if (!component.equals(focusedGui)) component.setFocused(false);
+        if (!component.equals(focusedGui)) component.getState().setFocused(false);
 
         boolean intersects = intersects(component, context);
         Vector2f cursorPosition = context.getCursorPosition();
         if (event.action == GLFW_PRESS) {
             if (intersects) {
                 context.setFocusedGui(component);
-                component.setFocused(true);
-                component.setPressed(true);
+                component.getState().setFocused(true);
+                component.getState().setPressed(true);
                 Vector2f position = Util.calculatePosition(component).sub(cursorPosition).negate();
                 processEvent(component, new MouseClickEvent(component, position, PRESS, event.button), context);
             } else {
-                component.setPressed(false);
+                component.getState().setPressed(false);
             }
         } else if (event.action == GLFW_RELEASE && intersects) {
             if (focusedGui != null) {
-                component.setPressed(false);
+                component.getState().setPressed(false);
                 Vector2f position = Util.calculatePosition(component).sub(cursorPosition).negate();
                 if (focusedGui == component) {
                     processEvent(focusedGui, new MouseClickEvent(component, position, CLICK, event.button), context);
                 }
                 processEvent(focusedGui, new MouseClickEvent(component, position, RELEASE, event.button), context);
-                focusedGui.setPressed(false);
+                focusedGui.getState().setPressed(false);
             }
         }
 
@@ -55,7 +55,7 @@ public class ButtonSystemMouseClickEventListener implements SystemEventListener<
         if (leguiEventProcessor != null) {
             leguiEventProcessor.pushEvent(mouseClickEvent);
         } else {
-            component.getEventListeners().getListeners(MouseClickEvent.class).forEach(listener -> listener.update(mouseClickEvent));
+            component.getLeguiEventListeners().getListeners(MouseClickEvent.class).forEach(listener -> listener.update(mouseClickEvent));
         }
     }
 
