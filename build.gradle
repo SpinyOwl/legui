@@ -41,10 +41,7 @@ dependencies {
     compile group: 'org.apache.commons',         name: 'commons-lang3',        version: commons_version,       changing: false
     compile group: 'org.apache.commons',         name: 'commons-collections4', version: commons_collections,   changing: false
     compile group: 'com.google.guava',           name: 'guava',                version: guava_version,         changing: false
-//    compile group: 'com.google.code.gson',       name: 'gson',                 version: gson_version,          changing: false
-//    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind',     version: '2.8.3',               changing: false
-//    compile group: 'com.fasterxml.jackson.core', name: 'jackson-core',         version: '2.8.3',               changing: false
-//    compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations',  version: '2.8.3',               changing: false
+    compile group: 'com.google.code.gson',       name: 'gson',                 version: gson_version,          changing: false
 
     compile group: 'org.liquidengine',           name: 'cbchain',              version: le_cbchain,            changing: true
 

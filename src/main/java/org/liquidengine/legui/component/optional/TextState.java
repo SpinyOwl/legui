@@ -1,5 +1,8 @@
 package org.liquidengine.legui.component.optional;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
@@ -315,5 +318,65 @@ public class TextState implements Serializable {
 
     public StringBuffer reverse() {
         return text.reverse();
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append("font", font)
+                .append("fontSize", fontSize)
+                .append("text", text)
+                .append("horizontalAlign", horizontalAlign)
+                .append("verticalAlign", verticalAlign)
+                .append("textColor", textColor)
+                .append("highlightColor", highlightColor)
+                .append("padding", padding)
+                .toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (o == null || getClass() != o.getClass()) return false;
+
+        TextState textState = (TextState) o;
+
+        return new EqualsBuilder()
+                .append(fontSize, textState.fontSize)
+                .append(font, textState.font)
+                .append(text.toString(), textState.text.toString())
+                .append(horizontalAlign, textState.horizontalAlign)
+                .append(verticalAlign, textState.verticalAlign)
+                .append(textColor, textState.textColor)
+                .append(highlightColor, textState.highlightColor)
+                .append(padding, textState.padding)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37)
+                .append(font)
+                .append(fontSize)
+                .append(text)
+                .append(horizontalAlign)
+                .append(verticalAlign)
+                .append(textColor)
+                .append(highlightColor)
+                .append(padding)
+                .toHashCode();
+    }
+
+    public void copy(TextState state) {
+        this.setText(state.getText());
+        this.font = state.font;
+        this.fontSize = state.fontSize;
+        this.setText(state.text.toString());
+        this.horizontalAlign = state.horizontalAlign;
+        this.verticalAlign = state.verticalAlign;
+        this.textColor.set(state.textColor);
+        this.highlightColor.set(state.highlightColor);
+        this.padding.set(state.padding);
     }
 }

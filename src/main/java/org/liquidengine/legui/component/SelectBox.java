@@ -32,7 +32,7 @@ public class SelectBox<T> extends ComponentContainer {
     protected List<T> elements = SetUniqueList.setUniqueList(new CopyOnWriteArrayList<>());
 
     protected SBWidget selectionListWidget = new SBWidget();
-    protected ScrollablePanel selectionListPanel = new ScrollablePanel();
+    protected SelectBoxScrollablePanel selectionListPanel = new SelectBoxScrollablePanel();
     protected Button selectionButton = new Button(NULL);
     protected T selectedElement = null;
     protected float elementHeight = 16;
@@ -315,5 +315,17 @@ public class SelectBox<T> extends ComponentContainer {
         }
     }
 
+    public class SelectBoxScrollablePanel extends ScrollablePanel {
+        public SelectBoxScrollablePanel() {
+        }
+
+        public SelectBoxScrollablePanel(float x, float y, float width, float height) {
+            super(x, y, width, height);
+        }
+
+        public SelectBoxScrollablePanel(Vector2f position, Vector2f size) {
+            super(position, size);
+        }
+    }
 
 }

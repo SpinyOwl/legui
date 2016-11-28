@@ -10,10 +10,13 @@ import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.Image;
 import org.liquidengine.legui.context.LeguiContext;
 import org.liquidengine.legui.render.nvg.NvgLeguiComponentRenderer;
+import org.liquidengine.legui.util.IOUtil;
 import org.liquidengine.legui.util.Util;
 import org.lwjgl.nanovg.NVGPaint;
 import org.lwjgl.nanovg.NanoVG;
 
+import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.util.Map;
 import java.util.Queue;
 import java.util.concurrent.*;
@@ -72,7 +75,6 @@ public class NvgImageRenderer extends NvgLeguiComponentRenderer {
             nvgFillPaint(context, imagePaint);
             nvgFill(context);
 
-
             renderBorder(component, leguiContext);
         }
         resetScissor(context);
@@ -99,11 +101,20 @@ public class NvgImageRenderer extends NvgLeguiComponentRenderer {
     private int getImageRef(Image image, long context) {
         String path = image.getPath();
         Integer imageRef = imageCache.getIfPresent(path);
-        if (imageRef == null || imageRef == 0) {
+        if (imageRef == null) {
             LOGGER.debug("Loading image data to memory: " + path);
-            imageRef = NanoVG.nvgCreateImageMem(context, 0, image.getImageData());
-            imageCache.put(path, imageRef);
-            imageAssociationMap.put(path, imageRef);
+            if (path == null) {
+                imageRef = new Integer(0);
+            } else {
+                try {
+                    ByteBuffer data = IOUtil.ioResourceToByteBuffer(path, 32 * 1024);
+                    imageRef = NanoVG.nvgCreateImageMem(context, 0, data);
+                } catch (IOException e) {
+                    imageRef = new Integer(0);
+                }
+                imageCache.put(path, imageRef);
+                imageAssociationMap.put(path, imageRef);
+            }
         } else {
             LOGGER.debug("Obtaining image from cache: " + path);
         }

@@ -19,7 +19,6 @@ import org.lwjgl.system.MemoryUtil;
 import java.nio.ByteBuffer;
 
 import static org.liquidengine.legui.util.NVGUtils.rgba;
-import static org.liquidengine.legui.util.Util.calculatePosition;
 import static org.lwjgl.nanovg.NanoVG.*;
 import static org.lwjgl.system.MemoryUtil.memAddress;
 
@@ -123,13 +122,13 @@ public final class NvgRenderUtils {
             float[] bounds = createBounds(x, y, w, h, horizontalAlign, verticalAlign, row.width(), fontSize);
 
             nvgBeginPath(context);
-            NVGColor textColorN = textColor.w == 0 ? rgba(0.0f, 0.0f, 0.0f, 1f, nvgColor) : rgba(textColor, nvgColor);
+            NVGColor textColorN = textColor.w == 0 ? NVGUtils.rgba(0.0f, 0.0f, 0.0f, 1f, nvgColor) : NVGUtils.rgba(textColor, nvgColor);
             nvgFillColor(context, textColorN);
             nnvgText(context, bounds[0], bounds[1], row.start(), row.end());
         } else {
             float[] bounds = calculateTextBoundsRect(context, x, y, w, h, text, 0, horizontalAlign, verticalAlign);
 
-            NVGColor textColorN = textColor.w == 0 ? rgba(0.0f, 0.0f, 0.0f, 1f, nvgColor) : rgba(textColor, nvgColor);
+            NVGColor textColorN = textColor.w == 0 ? NVGUtils.rgba(0.0f, 0.0f, 0.0f, 1f, nvgColor) : NVGUtils.rgba(textColor, nvgColor);
             nvgFillColor(context, textColorN);
             nvgText(context, bounds[0], bounds[1], byteText, 0);
         }
@@ -138,7 +137,7 @@ public final class NvgRenderUtils {
 
     public static void drawRectangle(long context, Vector4fc color, float x, float y, float w, float h) {
         nvgBeginPath(context);
-        nvgFillColor(context, rgba(color, NVGColor.create()));
+        nvgFillColor(context, NVGUtils.rgba(color, NVGColor.create()));
         nvgRect(context, x, y, w, h);
         nvgFill(context);
     }
@@ -221,7 +220,7 @@ public final class NvgRenderUtils {
         nvgStrokeWidth(context, strokeWidth);
         nvgRoundedRect(context, x, y, w, h, borderRadius);
         NVGColor color = NVGColor.create();
-        nvgStrokeColor(context, rgba(strokeColor, color));
+        nvgStrokeColor(context, NVGUtils.rgba(strokeColor, color));
         nvgStroke(context);
     }
 
@@ -230,7 +229,7 @@ public final class NvgRenderUtils {
         NVGColor colorA = NVGColor.create();
         NVGColor colorB = NVGColor.create();
 
-        nvgBoxGradient(context, x, y + 2, w, h, cornerRadius * 2, 10, rgba(shadowColor, colorA), rgba(0, 0, 0, 0, colorB), shadowPaint);
+        nvgBoxGradient(context, x, y + 2, w, h, cornerRadius * 2, 10, NVGUtils.rgba(shadowColor, colorA), NVGUtils.rgba(0, 0, 0, 0, colorB), shadowPaint);
         nvgBeginPath(context);
         nvgRect(context, x - 10, y - 10, w + 20, h + 30);
         nvgRoundedRect(context, x, y, w, h, cornerRadius);
@@ -258,12 +257,12 @@ public final class NvgRenderUtils {
      */
     public static void createScissorByParent(long context, Component parent) {
         if (parent != null) {
-            Vector2f p = calculatePosition(parent);
+            Vector2f p = Util.calculatePosition(parent);
             Vector2f s = new Vector2f(parent.getSize());
             nvgScissor(context, p.x, p.y, s.x, s.y);
 
             while ((parent = parent.getParent()) != null) {
-                p = calculatePosition(parent);
+                p = Util.calculatePosition(parent);
                 s = parent.getSize();
                 nvgIntersectScissor(context, p.x, p.y, s.x, s.y);
             }

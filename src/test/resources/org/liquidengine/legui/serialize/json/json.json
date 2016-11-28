@@ -1,0 +1,610 @@
+{
+  "@class": "org.liquidengine.legui.component.Panel",
+  "position": {
+    "x": 10.0,
+    "y": 20.0
+  },
+  "size": {
+    "x": 300.0,
+    "y": 400.0
+  },
+  "backgroundColor": {
+    "x": 1.0,
+    "y": 1.0,
+    "z": 1.0,
+    "w": 1.0
+  },
+  "border": {
+    "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+    "renderer": {
+      "@class": "org.liquidengine.legui.render.nvg.border.NvgSimpleLineBorderRenderer"
+    },
+    "enabled": true,
+    "borderColor": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 1.0
+    },
+    "thickness": 1.0
+  },
+  "enabled": true,
+  "visible": true,
+  "focused": false,
+  "pressed": false,
+  "hovered": false,
+  "cornerRadius": 0.0,
+  "intersector": {
+    "@class": "org.liquidengine.legui.component.intersector.RectangleIntersector",
+    "paddingLeft": 0.0,
+    "paddingRight": 0.0,
+    "paddingTop": 0.0,
+    "paddingBottom": 0.0
+  },
+  "renderer": {
+    "@class": "org.liquidengine.legui.render.nvg.NvgDefaultRenderer"
+  },
+  "components": [
+    {
+      "@class": "org.liquidengine.legui.component.Widget",
+      "position": {
+        "x": 10.0,
+        "y": 10.0
+      },
+      "size": {
+        "x": 100.0,
+        "y": 100.0
+      },
+      "backgroundColor": {
+        "x": 1.0,
+        "y": 1.0,
+        "z": 1.0,
+        "w": 1.0
+      },
+      "border": {
+        "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+        "renderer": {
+          "@class": "org.liquidengine.legui.render.nvg.border.NvgSimpleLineBorderRenderer"
+        },
+        "enabled": true,
+        "borderColor": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 1.0
+        },
+        "thickness": 1.0
+      },
+      "enabled": true,
+      "visible": true,
+      "focused": false,
+      "pressed": false,
+      "hovered": false,
+      "cornerRadius": 0.0,
+      "intersector": {
+        "@class": "org.liquidengine.legui.component.intersector.RectangleIntersector",
+        "paddingLeft": 0.0,
+        "paddingRight": 0.0,
+        "paddingTop": 0.0,
+        "paddingBottom": 0.0
+      },
+      "renderer": {
+        "@class": "org.liquidengine.legui.render.nvg.NvgDefaultRenderer"
+      },
+      "components": [
+        {
+          "@class": "org.liquidengine.legui.component.Label",
+          "position": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "size": {
+            "x": 90.0,
+            "y": 10.0
+          },
+          "backgroundColor": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0,
+            "w": 0.0
+          },
+          "border": {
+            "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+            "renderer": {
+              "@class": "org.liquidengine.legui.render.nvg.border.NvgSimpleLineBorderRenderer"
+            },
+            "enabled": true,
+            "borderColor": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0,
+              "w": 1.0
+            },
+            "thickness": 1.0
+          },
+          "enabled": true,
+          "visible": true,
+          "focused": false,
+          "pressed": false,
+          "hovered": false,
+          "cornerRadius": 0.0,
+          "intersector": {
+            "@class": "org.liquidengine.legui.component.intersector.RectangleIntersector",
+            "paddingLeft": 0.0,
+            "paddingRight": 0.0,
+            "paddingTop": 0.0,
+            "paddingBottom": 0.0
+          },
+          "renderer": {
+            "@class": "org.liquidengine.legui.render.nvg.component.NvgLabelRenderer"
+          },
+          "textState": {
+            "@class": "org.liquidengine.legui.component.optional.TextState",
+            "font": "roboto italic",
+            "fontSize": 16.0,
+            "text": "Hello",
+            "horizontalAlign": [
+              "org.liquidengine.legui.component.optional.align.HorizontalAlign",
+              "LEFT"
+            ],
+            "verticalAlign": [
+              "org.liquidengine.legui.component.optional.align.VerticalAlign",
+              "MIDDLE"
+            ],
+            "textColor": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0,
+              "w": 1.0
+            },
+            "highlightColor": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0,
+              "w": 0.0
+            },
+            "padding": {
+              "x": 10.0,
+              "y": 5.0,
+              "z": 10.0,
+              "w": 5.0
+            }
+          },
+          "eventListeners": {
+            "@class": "org.liquidengine.legui.listener.LeguiEventListenerList",
+            "listeners": {
+              "org.liquidengine.legui.event.component.MouseDragEvent": [
+                {
+                  "@class": "org.liquidengine.legui.component.Widget$WidgetDragListener"
+                }
+              ]
+            }
+          },
+          "eventListenerList": {
+            "org.liquidengine.legui.event.component.MouseDragEvent": [
+              {
+                "@class": "org.liquidengine.legui.component.Widget$WidgetDragListener"
+              }
+            ]
+          },
+          "systemEventListenerList": {}
+        },
+        {
+          "@class": "org.liquidengine.legui.component.Button",
+          "position": {
+            "x": 90.0,
+            "y": 0.0
+          },
+          "size": {
+            "x": 10.0,
+            "y": 10.0
+          },
+          "backgroundColor": {
+            "x": 1.0,
+            "y": 0.0,
+            "z": 0.0,
+            "w": 1.0
+          },
+          "border": {
+            "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+            "renderer": {
+              "@class": "org.liquidengine.legui.render.nvg.border.NvgSimpleLineBorderRenderer"
+            },
+            "enabled": true,
+            "borderColor": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0,
+              "w": 1.0
+            },
+            "thickness": 1.0
+          },
+          "enabled": true,
+          "visible": true,
+          "focused": false,
+          "pressed": false,
+          "hovered": false,
+          "cornerRadius": 0.0,
+          "intersector": {
+            "@class": "org.liquidengine.legui.component.intersector.RectangleIntersector",
+            "paddingLeft": 0.0,
+            "paddingRight": 0.0,
+            "paddingTop": 0.0,
+            "paddingBottom": 0.0
+          },
+          "renderer": {
+            "@class": "org.liquidengine.legui.render.nvg.component.NvgButtonRenderer"
+          },
+          "textState": {
+            "@class": "org.liquidengine.legui.component.optional.TextState",
+            "font": "MaterialIcons-Regular",
+            "fontSize": 6.6666665,
+            "text": "",
+            "horizontalAlign": [
+              "org.liquidengine.legui.component.optional.align.HorizontalAlign",
+              "LEFT"
+            ],
+            "verticalAlign": [
+              "org.liquidengine.legui.component.optional.align.VerticalAlign",
+              "MIDDLE"
+            ],
+            "textColor": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0,
+              "w": 1.0
+            },
+            "highlightColor": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0,
+              "w": 0.0
+            },
+            "padding": {
+              "x": 1.6666666,
+              "y": 1.6666666,
+              "z": 1.6666666,
+              "w": 1.6666666
+            }
+          },
+          "eventListeners": {
+            "@class": "org.liquidengine.legui.listener.LeguiEventListenerList",
+            "listeners": {
+              "org.liquidengine.legui.event.component.MouseClickEvent": [
+                {
+                  "@class": "org.liquidengine.legui.component.Widget$WidgetCloseButMouseClickEventListener"
+                }
+              ]
+            }
+          },
+          "eventListenerList": {
+            "org.liquidengine.legui.event.component.MouseClickEvent": [
+              {
+                "@class": "org.liquidengine.legui.component.Widget$WidgetCloseButMouseClickEventListener"
+              }
+            ]
+          },
+          "systemEventListenerList": {}
+        },
+        {
+          "@class": "org.liquidengine.legui.component.Panel",
+          "position": {
+            "x": 0.0,
+            "y": 10.0
+          },
+          "size": {
+            "x": 100.0,
+            "y": 90.0
+          },
+          "backgroundColor": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "border": {
+            "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+            "renderer": {
+              "@class": "org.liquidengine.legui.render.nvg.border.NvgSimpleLineBorderRenderer"
+            },
+            "enabled": true,
+            "borderColor": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0,
+              "w": 1.0
+            },
+            "thickness": 1.0
+          },
+          "enabled": true,
+          "visible": true,
+          "focused": false,
+          "pressed": false,
+          "hovered": false,
+          "cornerRadius": 0.0,
+          "intersector": {
+            "@class": "org.liquidengine.legui.component.intersector.RectangleIntersector",
+            "paddingLeft": 0.0,
+            "paddingRight": 0.0,
+            "paddingTop": 0.0,
+            "paddingBottom": 0.0
+          },
+          "renderer": {
+            "@class": "org.liquidengine.legui.render.nvg.NvgDefaultRenderer"
+          },
+          "components": [
+            {
+              "@class": "org.liquidengine.legui.component.Label",
+              "position": {
+                "x": 10.0,
+                "y": 10.0
+              },
+              "size": {
+                "x": 50.0,
+                "y": 20.0
+              },
+              "backgroundColor": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 0.0
+              },
+              "border": null,
+              "enabled": true,
+              "visible": true,
+              "focused": false,
+              "pressed": false,
+              "hovered": false,
+              "cornerRadius": 0.0,
+              "intersector": {
+                "@class": "org.liquidengine.legui.component.intersector.RectangleIntersector",
+                "paddingLeft": 0.0,
+                "paddingRight": 0.0,
+                "paddingTop": 0.0,
+                "paddingBottom": 0.0
+              },
+              "renderer": {
+                "@class": "org.liquidengine.legui.render.nvg.component.NvgLabelRenderer"
+              },
+              "textState": {
+                "@class": "org.liquidengine.legui.component.optional.TextState",
+                "font": "roboto italic",
+                "fontSize": 16.0,
+                "text": "Hello label",
+                "horizontalAlign": [
+                  "org.liquidengine.legui.component.optional.align.HorizontalAlign",
+                  "LEFT"
+                ],
+                "verticalAlign": [
+                  "org.liquidengine.legui.component.optional.align.VerticalAlign",
+                  "MIDDLE"
+                ],
+                "textColor": {
+                  "x": 0.0,
+                  "y": 0.0,
+                  "z": 0.0,
+                  "w": 1.0
+                },
+                "highlightColor": {
+                  "x": 0.0,
+                  "y": 0.0,
+                  "z": 0.0,
+                  "w": 0.0
+                },
+                "padding": {
+                  "x": 2.0,
+                  "y": 0.0,
+                  "z": 2.0,
+                  "w": 0.0
+                }
+              },
+              "eventListeners": {
+                "@class": "org.liquidengine.legui.listener.LeguiEventListenerList",
+                "listeners": {}
+              },
+              "eventListenerList": {},
+              "systemEventListenerList": {}
+            }
+          ],
+          "containerEmpty": false,
+          "eventListeners": {
+            "@class": "org.liquidengine.legui.listener.LeguiEventListenerList",
+            "listeners": {}
+          },
+          "eventListenerList": {},
+          "systemEventListenerList": {}
+        }
+      ],
+      "resizable": false,
+      "container": {
+        "@class": "org.liquidengine.legui.component.Panel",
+        "position": {
+          "x": 0.0,
+          "y": 10.0
+        },
+        "size": {
+          "x": 100.0,
+          "y": 90.0
+        },
+        "backgroundColor": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0,
+          "w": 1.0
+        },
+        "border": {
+          "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+          "renderer": {
+            "@class": "org.liquidengine.legui.render.nvg.border.NvgSimpleLineBorderRenderer"
+          },
+          "enabled": true,
+          "borderColor": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0,
+            "w": 1.0
+          },
+          "thickness": 1.0
+        },
+        "enabled": true,
+        "visible": true,
+        "focused": false,
+        "pressed": false,
+        "hovered": false,
+        "cornerRadius": 0.0,
+        "intersector": {
+          "@class": "org.liquidengine.legui.component.intersector.RectangleIntersector",
+          "paddingLeft": 0.0,
+          "paddingRight": 0.0,
+          "paddingTop": 0.0,
+          "paddingBottom": 0.0
+        },
+        "renderer": {
+          "@class": "org.liquidengine.legui.render.nvg.NvgDefaultRenderer"
+        },
+        "components": [
+          {
+            "@class": "org.liquidengine.legui.component.Label",
+            "position": {
+              "x": 10.0,
+              "y": 10.0
+            },
+            "size": {
+              "x": 50.0,
+              "y": 20.0
+            },
+            "backgroundColor": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0,
+              "w": 0.0
+            },
+            "border": null,
+            "enabled": true,
+            "visible": true,
+            "focused": false,
+            "pressed": false,
+            "hovered": false,
+            "cornerRadius": 0.0,
+            "intersector": {
+              "@class": "org.liquidengine.legui.component.intersector.RectangleIntersector",
+              "paddingLeft": 0.0,
+              "paddingRight": 0.0,
+              "paddingTop": 0.0,
+              "paddingBottom": 0.0
+            },
+            "renderer": {
+              "@class": "org.liquidengine.legui.render.nvg.component.NvgLabelRenderer"
+            },
+            "textState": {
+              "@class": "org.liquidengine.legui.component.optional.TextState",
+              "font": "roboto italic",
+              "fontSize": 16.0,
+              "text": "Hello label",
+              "horizontalAlign": [
+                "org.liquidengine.legui.component.optional.align.HorizontalAlign",
+                "LEFT"
+              ],
+              "verticalAlign": [
+                "org.liquidengine.legui.component.optional.align.VerticalAlign",
+                "MIDDLE"
+              ],
+              "textColor": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+              },
+              "highlightColor": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 0.0
+              },
+              "padding": {
+                "x": 2.0,
+                "y": 0.0,
+                "z": 2.0,
+                "w": 0.0
+              }
+            },
+            "eventListeners": {
+              "@class": "org.liquidengine.legui.listener.LeguiEventListenerList",
+              "listeners": {}
+            },
+            "eventListenerList": {},
+            "systemEventListenerList": {}
+          }
+        ],
+        "containerEmpty": false,
+        "eventListeners": {
+          "@class": "org.liquidengine.legui.listener.LeguiEventListenerList",
+          "listeners": {}
+        },
+        "eventListenerList": {},
+        "systemEventListenerList": {}
+      },
+      "titleTextState": {
+        "@class": "org.liquidengine.legui.component.optional.TextState",
+        "font": "roboto italic",
+        "fontSize": 16.0,
+        "text": "Hello",
+        "horizontalAlign": [
+          "org.liquidengine.legui.component.optional.align.HorizontalAlign",
+          "LEFT"
+        ],
+        "verticalAlign": [
+          "org.liquidengine.legui.component.optional.align.VerticalAlign",
+          "MIDDLE"
+        ],
+        "textColor": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 1.0
+        },
+        "highlightColor": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "padding": {
+          "x": 10.0,
+          "y": 5.0,
+          "z": 10.0,
+          "w": 5.0
+        }
+      },
+      "closeButtonColor": {
+        "x": 1.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 1.0
+      },
+      "titleBackgroundColor": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+      },
+      "titleHeight": 10.0,
+      "closeable": true,
+      "titleEnabled": true,
+      "containerEmpty": false,
+      "eventListeners": {
+        "@class": "org.liquidengine.legui.listener.LeguiEventListenerList",
+        "listeners": {}
+      },
+      "eventListenerList": {},
+      "systemEventListenerList": {}
+    }
+  ],
+  "containerEmpty": false,
+  "eventListeners": {
+    "@class": "org.liquidengine.legui.listener.LeguiEventListenerList",
+    "listeners": {}
+  },
+  "eventListenerList": {},
+  "systemEventListenerList": {}
+}

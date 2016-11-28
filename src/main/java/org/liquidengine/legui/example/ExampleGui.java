@@ -58,7 +58,7 @@ public class ExampleGui extends Panel {
         upsLabel = new Label(130, 60, 100, 20, "Hello Label");
         this.addComponent(upsLabel);
 
-        image = Image.createImage("org/liquidengine/legui/example/1.jpg");
+        image = new Image("org/liquidengine/legui/example/11.jpg");
         image.setPosition(20, 30);
         image.setSize(100, 100);
         this.addComponent(image);
