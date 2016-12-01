@@ -69,15 +69,19 @@ public final class GsonSerializeRegistry {
 
             I.registerSerializer(Button.class, new GsonButtonSerializer());
             I.registerSerializer(CheckBox.class, new GsonCheckboxSerializer());
+            I.registerSerializer(ComponentContainer.class, new GsonComponentContainerSerializer());
             I.registerSerializer(Component.class, new GsonComponentSerializer());
             I.registerSerializer(Image.class, new GsonImageSerializer());
             I.registerSerializer(Label.class, new GsonLabelSerializer());
+            I.registerSerializer(Panel.class, new GsonPanelSerializer());
             I.registerSerializer(ProgressBar.class, new GsonProgressBarSerializer());
             I.registerSerializer(RadioButton.class, new GsonRadioButtonSerializer());
+            I.registerSerializer(ScrollablePanel.class, new GsonScrollablePanelSerializer());
             I.registerSerializer(ScrollBar.class, new GsonScrollBarSerializer());
             I.registerSerializer(SelectBox.class, new GsonSelectBoxSerializer());
             I.registerSerializer(Slider.class, new GsonSliderSerializer());
             I.registerSerializer(TextArea.class, new GsonTextAreaSerializer());
+            I.registerSerializer(TextInput.class, new GsonTextInputSerializer());
 
         }
     }

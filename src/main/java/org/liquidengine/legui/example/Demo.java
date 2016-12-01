@@ -3,6 +3,8 @@ package org.liquidengine.legui.example;
 import org.joml.Vector2i;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.Component;
+import org.liquidengine.legui.component.ScrollablePanel;
+import org.liquidengine.legui.component.Viewport;
 import org.liquidengine.legui.context.LeguiCallbackKeeper;
 import org.liquidengine.legui.context.LeguiContext;
 import org.liquidengine.legui.processor.LeguiEventListenerProcessor;
@@ -163,6 +165,9 @@ public class Demo {
                         leguiContext.updateGlfwWindow();
                         Vector2i windowSize = leguiContext.getWindowSize();
                         component.setSize(windowSize.x, windowSize.y);
+                        if(component instanceof Viewport){
+                            ((ScrollablePanel) component).resize();
+                        }
 
                         glClearColor(clearColor.x, clearColor.y, clearColor.z, 1);
                         glViewport(0, 0, windowSize.x, windowSize.y);

@@ -25,7 +25,7 @@ public final class GsonConstants {
 
     public static final String CORNER_RADIUS = "cornerRadius";
 
-    // TEXT STATE
+    // TEXT_STATE
     public static final String TEXT_STATE = "textState";
     public static final String FONT = "font";
     public static final String TEXT = "text";
@@ -88,6 +88,21 @@ public final class GsonConstants {
     public static final String TEXT_AREA = "textArea";
     public static final String EDITABLE = "editable";
     public static final String SELECTION_COLOR = "selectionColor";
+
+    // TEXT_INPUT
+    public static final String TEXT_INPUT = "textInput";
+
+    // COMPONENT_CONTAINER
+    public static final String COMPONENT_CONTAINER = "componentContainer";
+    public static final String COMPONENTS = "components";
+
+    // PANEL
+    public static final String PANEL = "panel";
+    // SCROLLABLE_PANEL
+    public static final String SCROLLABLE_PANEL = "scrollablePanel";
+    public static final String CONTAINER = "container";
+    public static final String HORIZONTAL_SCROLL_BAR = "horizontalScrollBar";
+    public static final String VERTICAL_SCROLL_BAR = "verticalScrollBar";
 
     private GsonConstants() {
     }

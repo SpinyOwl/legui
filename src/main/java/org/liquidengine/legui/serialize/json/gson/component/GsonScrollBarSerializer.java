@@ -65,8 +65,8 @@ public class GsonScrollBarSerializer extends GsonComponentSerializer<ScrollBar> 
         if (isNotNull(visibleAmount)) object.setVisibleAmount(visibleAmount.getAsFloat());
         if (isNotNull(arrowsEnabled)) object.setArrowsEnabled(arrowsEnabled.getAsBoolean());
         if (isNotNull(arrowSize)) object.setArrowSize(arrowSize.getAsFloat());
-        if (isNotNull(arrowColor)) object.setBackgroundColor(readColor(arrowColor.getAsJsonObject()));
-        if (isNotNull(scrollColor)) object.setBackgroundColor(readColor(scrollColor.getAsJsonObject()));
+        if (isNotNull(arrowColor)) object.setArrowColor(readColor(arrowColor.getAsJsonObject()));
+        if (isNotNull(scrollColor)) object.setScrollColor(readColor(scrollColor.getAsJsonObject()));
     }
 
 

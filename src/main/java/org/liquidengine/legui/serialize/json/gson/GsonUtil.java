@@ -37,22 +37,17 @@ public final class GsonUtil {
     public static Vector4f readColor(JsonObject color) {
         if (color == null || color.isJsonNull()) return null;
         Vector4f bgc = new Vector4f();
+
         JsonElement r = color.get(R);
-        if (r != null && !r.isJsonNull()) {
-            bgc.x = r.getAsFloat();
-        }
         JsonElement g = color.get(G);
-        if (g != null && !g.isJsonNull()) {
-            bgc.y = g.getAsFloat();
-        }
         JsonElement b = color.get(B);
-        if (b != null && !b.isJsonNull()) {
-            bgc.z = b.getAsFloat();
-        }
         JsonElement a = color.get(A);
-        if (a != null && !a.isJsonNull()) {
-            bgc.w = a.getAsFloat();
-        }
+
+        if (isNotNull(r)) bgc.x = r.getAsFloat();
+        if (isNotNull(g)) bgc.y = g.getAsFloat();
+        if (isNotNull(b)) bgc.z = b.getAsFloat();
+        if (isNotNull(a)) bgc.w = a.getAsFloat();
+
         return bgc;
     }
 

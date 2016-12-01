@@ -165,8 +165,7 @@ public class ScrollBar extends Component {
                 scrolling == scrollBar.scrolling &&
                 orientation == scrollBar.orientation &&
                 Objects.equal(arrowColor, scrollBar.arrowColor) &&
-                Objects.equal(scrollColor, scrollBar.scrollColor) &&
-                Objects.equal(viewport, scrollBar.viewport);
+                Objects.equal(scrollColor, scrollBar.scrollColor);
     }
 
     @Override
@@ -181,8 +180,7 @@ public class ScrollBar extends Component {
                 arrowSize,
                 arrowColor,
                 scrolling,
-                scrollColor,
-                viewport);
+                scrollColor);
     }
 
     @Override
@@ -198,7 +196,6 @@ public class ScrollBar extends Component {
                 .append("arrowColor", arrowColor)
                 .append("scrolling", scrolling)
                 .append("scrollColor", scrollColor)
-                .append("viewport", viewport)
                 .toString();
     }
 }
