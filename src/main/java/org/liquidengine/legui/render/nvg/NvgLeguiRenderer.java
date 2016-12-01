@@ -48,7 +48,11 @@ public class NvgLeguiRenderer extends LeguiRenderer {
         {
             Vector2i windowSize = context.getWindowSize();
             nvgBeginFrame(nvgContext, windowSize.x, windowSize.y, context.getPixelRatio());
-            component.render(context);
+            try {
+                component.render(context);
+            } catch (Throwable e) {
+                e.printStackTrace();
+            }
             nvgEndFrame(nvgContext);
         }
         glDisable(GL_BLEND);

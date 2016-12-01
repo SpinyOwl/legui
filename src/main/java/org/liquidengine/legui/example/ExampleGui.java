@@ -251,7 +251,7 @@ public class ExampleGui extends Panel {
         inpur.setBackgroundColor(ColorConstants.white());
         this.addComponent(inpur);
 
-        SelectBox<String> selectBox = new SelectBox<>(20, 260, 100, 20);
+        SelectBox selectBox = new SelectBox(20, 260, 100, 20);
         selectBox.addElement("Just");
         selectBox.addElement("Hello");
         selectBox.addElement("World");

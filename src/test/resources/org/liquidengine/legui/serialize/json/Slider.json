@@ -1,0 +1,35 @@
+{
+  "@class": "org.liquidengine.legui.component.Slider",
+  "position": {
+    "x": 10.0,
+    "y": 20.0
+  },
+  "size": {
+    "width": 30.0,
+    "height": 40.0
+  },
+  "backgroundColor": {
+    "r": 0.0,
+    "g": 0.0,
+    "b": 0.0,
+    "a": 0.0
+  },
+  "enabled": true,
+  "visible": true,
+  "cornerRadius": 0.0,
+  "sliderActiveColor": {
+    "r": 0.0,
+    "g": 0.0,
+    "b": 1.0,
+    "a": 1.0
+  },
+  "sliderColor": {
+    "r": 0.7,
+    "g": 0.7,
+    "b": 0.7,
+    "a": 0.4
+  },
+  "orientation": "HORIZONTAL",
+  "sliderSize": 10.0,
+  "value": 0.0
+}

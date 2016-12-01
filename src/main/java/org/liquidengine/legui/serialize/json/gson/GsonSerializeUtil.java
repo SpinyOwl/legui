@@ -15,27 +15,37 @@ public final class GsonSerializeUtil {
     public static <T> String serialize(T component) {
         AbstractGsonSerializer serializer = GsonSerializeRegistry.getRegistry().getSerializer(component.getClass());
         if (serializer == null) throw new LeguiException(LeguiExceptions.SERIALIZER_IS_NOT_EXIST.message(component.getClass().getName()));
-        return serializer.serialize(component);
+        GsonSerializeContext context = new GsonSerializeContext();
+        return serializer.serialize(component, context);
     }
 
-    public static <T>T deserialize(String json) {
+    public static <T> T deserialize(String json) {
         String type = getType(json);
         AbstractGsonSerializer<T> serializer = GsonSerializeRegistry.getRegistry().getSerializer(type);
         if (serializer == null) throw new LeguiException(LeguiExceptions.DESERIALIZER_IS_NOT_EXIST.message(type));
-        return serializer.deserialize(json);
+        GsonSerializeContext context = new GsonSerializeContext();
+        return serializer.deserialize(json, context);
     }
 
     public static <T> JsonObject serializeToJson(T component) {
+        return serializeToJson(component, new GsonSerializeContext());
+    }
+
+    public static <T> JsonObject serializeToJson(T component, GsonSerializeContext context) {
         AbstractGsonSerializer serializer = GsonSerializeRegistry.getRegistry().getSerializer(component.getClass());
         if (serializer == null) throw new LeguiException(LeguiExceptions.SERIALIZER_IS_NOT_EXIST.message(component.getClass().getName()));
-        return serializer.jsonSerialize(component);
+        return serializer.jsonSerialize(component, context);
     }
 
     public static Object deserializeFromJson(JsonObject json) {
+        return deserializeFromJson(json, new GsonSerializeContext());
+    }
+
+    public static Object deserializeFromJson(JsonObject json, GsonSerializeContext context) {
         String type = getType(json);
         AbstractGsonSerializer serializer = GsonSerializeRegistry.getRegistry().getSerializer(type);
         if (serializer == null) throw new LeguiException(LeguiExceptions.DESERIALIZER_IS_NOT_EXIST.message(type));
-        return serializer.jsonDeserialize(json);
+        return serializer.jsonDeserialize(json, context);
     }
 
     private static String getType(String json) {

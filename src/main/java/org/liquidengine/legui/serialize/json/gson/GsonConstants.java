@@ -53,6 +53,42 @@ public final class GsonConstants {
     public static final String VALUE = "value";
     public static final String PROGRESS_COLOR = "progressColor";
 
+    // RADIO_BUTTON
+    public static final String RADIO_BUTTON = "radioButton";
+    public static final String SELECTED = "selected";
+    public static final String GROUP = "group";
+
+    // SCROLL_BAR
+    public static final String SCROLL_BAR = "scrollBar";
+    public static final String ORIENTATION = "orientation";
+    public static final String MIN_VALUE = "minValue";
+    public static final String MAX_VALUE = "maxValue";
+    public static final String CUR_VALUE = "curValue";
+    public static final String VISIBLE_AMOUNT = "visibleAmount";
+    public static final String ARROWS_ENABLED = "arrowsEnabled";
+    public static final String ARROW_SIZE = "arrowSize";
+    public static final String ARROW_COLOR = "arrowColor";
+    public static final String SCROLL_COLOR = "scrollColor";
+
+    // SELECT_BOX
+    public static final String SELECT_BOX = "selectBox";
+    public static final String SELECTED_ELEMENT = "selectedElement";
+    public static final String ELEMENTS = "elements";
+    public static final String ELEMENT_HEIGHT = "elementHeight";
+    public static final String BUTTON_WIDTH = "buttonWidth";
+    public static final String VISIBLE_COUNT = "visibleCount";
+
+    // SLIDER
+    public static final String SLIDER = "slider";
+    public static final String SLIDER_ACTIVE_COLOR = "sliderActiveColor";
+    public static final String SLIDER_COLOR = "sliderColor";
+    public static final String SLIDER_SIZE = "sliderSize";
+
+    // TEXT_AREA
+    public static final String TEXT_AREA = "textArea";
+    public static final String EDITABLE = "editable";
+    public static final String SELECTION_COLOR = "selectionColor";
+
     private GsonConstants() {
     }
 

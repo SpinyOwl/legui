@@ -1,10 +1,8 @@
 package org.liquidengine.legui.serialize.json.gson;
 
-import org.liquidengine.legui.component.Component;
-import org.liquidengine.legui.component.Label;
+import org.liquidengine.legui.component.*;
 import org.liquidengine.legui.component.optional.TextState;
-import org.liquidengine.legui.serialize.json.gson.component.GsonComponentSerializer;
-import org.liquidengine.legui.serialize.json.gson.component.GsonLabelSerializer;
+import org.liquidengine.legui.serialize.json.gson.component.*;
 import org.liquidengine.legui.serialize.json.gson.component.optional.GsonTextStateSerializer;
 
 import java.util.Map;
@@ -67,9 +65,20 @@ public final class GsonSerializeRegistry {
         private static final GsonSerializeRegistry I = new GsonSerializeRegistry();
 
         static {
-            I.registerSerializer(Label.class, new GsonLabelSerializer());
-            I.registerSerializer(Component.class, new GsonComponentSerializer());
             I.registerSerializer(TextState.class, new GsonTextStateSerializer());
+
+            I.registerSerializer(Button.class, new GsonButtonSerializer());
+            I.registerSerializer(CheckBox.class, new GsonCheckboxSerializer());
+            I.registerSerializer(Component.class, new GsonComponentSerializer());
+            I.registerSerializer(Image.class, new GsonImageSerializer());
+            I.registerSerializer(Label.class, new GsonLabelSerializer());
+            I.registerSerializer(ProgressBar.class, new GsonProgressBarSerializer());
+            I.registerSerializer(RadioButton.class, new GsonRadioButtonSerializer());
+            I.registerSerializer(ScrollBar.class, new GsonScrollBarSerializer());
+            I.registerSerializer(SelectBox.class, new GsonSelectBoxSerializer());
+            I.registerSerializer(Slider.class, new GsonSliderSerializer());
+            I.registerSerializer(TextArea.class, new GsonTextAreaSerializer());
+
         }
     }
 

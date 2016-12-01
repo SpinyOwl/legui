@@ -21,7 +21,7 @@ def log4j_version        = '2.3'
 def commons_version      = '3.4'
 def commons_collections  = '4.1'
 def junit_version        = '4.12'
-def le_cbchain           = '0.1.0'
+def le_cbchain           = '0.1.1'
 def guava_version        = '19.0'
 def gson_version         = '2.7'
 //@formatter:on
@@ -96,9 +96,9 @@ if (build_type == "SNAPSHOT") {
 task publishArchives << {
     def publishUrl;
     def buildType;
-    def publishUsername     = System.getenv("publishUsername"    ) ?: publishUsername;
-    def publishPassword     = System.getenv("publishPassword"    ) ?: publishPassword;
-    def releasesPublishUrl  = System.getenv("releasesPublishUrl" ) ?: releasesPublishUrl;
+    def publishUsername = System.getenv("publishUsername") ?: publishUsername;
+    def publishPassword = System.getenv("publishPassword") ?: publishPassword;
+    def releasesPublishUrl = System.getenv("releasesPublishUrl") ?: releasesPublishUrl;
     def snapshotsPublishUrl = System.getenv("snapshotsPublishUrl") ?: snapshotsPublishUrl;
     println("-------------------------------------")
     println("PUBLISH ARCHIVES TASK " + build_type)
@@ -126,4 +126,28 @@ task publishArchives << {
     } else {
         println("NOT UPLOADED")
     }
+    dependsOn jar;
+    dependsOn sourcesJar;
+    dependsOn javadocJar;
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource;
+    dependsOn classes;
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir;
+}
+
+javadocJar.dependsOn javadoc
+publishArchives.dependsOn jar;
+publishArchives.dependsOn sourcesJar;
+publishArchives.dependsOn javadocJar;
+
+artifacts {
+    archives sourcesJar
+    archives javadocJar
 }

@@ -1,6 +1,7 @@
 package org.liquidengine.legui.context;
 
 import org.liquidengine.cbchain.*;
+import org.liquidengine.cbchain.impl.*;
 
 import static org.lwjgl.glfw.GLFW.*;
 
@@ -9,23 +10,23 @@ import static org.lwjgl.glfw.GLFW.*;
  */
 public class LeguiCallbackKeeper {
 
-    private final ChainCharCallback chainCharCallback = new ChainCharCallback();
-    private final ChainDropCallback chainDropCallback = new ChainDropCallback();
-    private final ChainKeyCallback chainKeyCallback = new ChainKeyCallback();
-    private final ChainScrollCallback chainScrollCallback = new ChainScrollCallback();
-    private final ChainCharModsCallback chainCharModsCallback = new ChainCharModsCallback();
-    private final ChainCursorEnterCallback chainCursorEnterCallback = new ChainCursorEnterCallback();
-    private final ChainFramebufferSizeCallback chainFramebufferSizeCallback = new ChainFramebufferSizeCallback();
-    private final ChainMouseButtonCallback chainMouseButtonCallback = new ChainMouseButtonCallback();
-    private final ChainCursorPosCallback chainCursorPosCallback = new ChainCursorPosCallback();
-    private final ChainWindowCloseCallback chainWindowCloseCallback = new ChainWindowCloseCallback();
-    private final ChainWindowFocusCallback chainWindowFocusCallback = new ChainWindowFocusCallback();
-    private final ChainWindowIconifyCallback chainWindowIconifyCallback = new ChainWindowIconifyCallback();
-    private final ChainWindowPosCallback chainWindowPosCallback = new ChainWindowPosCallback();
-    private final ChainWindowRefreshCallback chainWindowRefreshCallback = new ChainWindowRefreshCallback();
-    private final ChainWindowSizeCallback chainWindowSizeCallback = new ChainWindowSizeCallback();
+    private IChainCharCallback chainCharCallback = new ChainCharCallback();
+    private IChainDropCallback chainDropCallback = new ChainDropCallback();
+    private IChainKeyCallback chainKeyCallback = new ChainKeyCallback();
+    private IChainScrollCallback chainScrollCallback = new ChainScrollCallback();
+    private IChainCharModsCallback chainCharModsCallback = new ChainCharModsCallback();
+    private IChainCursorEnterCallback chainCursorEnterCallback = new ChainCursorEnterCallback();
+    private IChainFramebufferSizeCallback chainFramebufferSizeCallback = new ChainFramebufferSizeCallback();
+    private IChainMouseButtonCallback chainMouseButtonCallback = new ChainMouseButtonCallback();
+    private IChainCursorPosCallback chainCursorPosCallback = new ChainCursorPosCallback();
+    private IChainWindowCloseCallback chainWindowCloseCallback = new ChainWindowCloseCallback();
+    private IChainWindowFocusCallback chainWindowFocusCallback = new ChainWindowFocusCallback();
+    private IChainWindowIconifyCallback chainWindowIconifyCallback = new ChainWindowIconifyCallback();
+    private IChainWindowPosCallback chainWindowPosCallback = new ChainWindowPosCallback();
+    private IChainWindowRefreshCallback chainWindowRefreshCallback = new ChainWindowRefreshCallback();
+    private IChainWindowSizeCallback chainWindowSizeCallback = new ChainWindowSizeCallback();
 
-    public LeguiCallbackKeeper(long window) {
+    public void registerCallbacks(long window) {
         glfwSetCharCallback(window, chainCharCallback);
         glfwSetDropCallback(window, chainDropCallback);
         glfwSetKeyCallback(window, chainKeyCallback);
@@ -43,64 +44,123 @@ public class LeguiCallbackKeeper {
         glfwSetWindowSizeCallback(window, chainWindowSizeCallback);
     }
 
-    public ChainCharCallback getChainCharCallback() {
+    public IChainCharCallback getChainCharCallback() {
         return chainCharCallback;
     }
 
-    public ChainDropCallback getChainDropCallback() {
+    public void setChainCharCallback(IChainCharCallback chainCharCallback) {
+        this.chainCharCallback = chainCharCallback;
+    }
+
+    public IChainDropCallback getChainDropCallback() {
         return chainDropCallback;
     }
 
-    public ChainKeyCallback getChainKeyCallback() {
+    public void setChainDropCallback(IChainDropCallback chainDropCallback) {
+        this.chainDropCallback = chainDropCallback;
+    }
+
+    public IChainKeyCallback getChainKeyCallback() {
         return chainKeyCallback;
     }
 
-    public ChainScrollCallback getChainScrollCallback() {
+    public void setChainKeyCallback(IChainKeyCallback chainKeyCallback) {
+        this.chainKeyCallback = chainKeyCallback;
+    }
+
+    public IChainScrollCallback getChainScrollCallback() {
         return chainScrollCallback;
     }
 
-    public ChainCharModsCallback getChainCharModsCallback() {
+    public void setChainScrollCallback(IChainScrollCallback chainScrollCallback) {
+        this.chainScrollCallback = chainScrollCallback;
+    }
+
+    public IChainCharModsCallback getChainCharModsCallback() {
         return chainCharModsCallback;
     }
 
-    public ChainCursorEnterCallback getChainCursorEnterCallback() {
+    public void setChainCharModsCallback(IChainCharModsCallback chainCharModsCallback) {
+        this.chainCharModsCallback = chainCharModsCallback;
+    }
+
+    public IChainCursorEnterCallback getChainCursorEnterCallback() {
         return chainCursorEnterCallback;
     }
 
-    public ChainFramebufferSizeCallback getChainFramebufferSizeCallback() {
+    public void setChainCursorEnterCallback(IChainCursorEnterCallback chainCursorEnterCallback) {
+        this.chainCursorEnterCallback = chainCursorEnterCallback;
+    }
+
+    public IChainFramebufferSizeCallback getChainFramebufferSizeCallback() {
         return chainFramebufferSizeCallback;
     }
 
-    public ChainMouseButtonCallback getChainMouseButtonCallback() {
+    public void setChainFramebufferSizeCallback(IChainFramebufferSizeCallback chainFramebufferSizeCallback) {
+        this.chainFramebufferSizeCallback = chainFramebufferSizeCallback;
+    }
+
+    public IChainMouseButtonCallback getChainMouseButtonCallback() {
         return chainMouseButtonCallback;
     }
 
-    public ChainCursorPosCallback getChainCursorPosCallback() {
+    public void setChainMouseButtonCallback(IChainMouseButtonCallback chainMouseButtonCallback) {
+        this.chainMouseButtonCallback = chainMouseButtonCallback;
+    }
+
+    public IChainCursorPosCallback getChainCursorPosCallback() {
         return chainCursorPosCallback;
     }
 
-    public ChainWindowCloseCallback getChainWindowCloseCallback() {
+    public void setChainCursorPosCallback(IChainCursorPosCallback chainCursorPosCallback) {
+        this.chainCursorPosCallback = chainCursorPosCallback;
+    }
+
+    public IChainWindowCloseCallback getChainWindowCloseCallback() {
         return chainWindowCloseCallback;
     }
 
-    public ChainWindowFocusCallback getChainWindowFocusCallback() {
+    public void setChainWindowCloseCallback(IChainWindowCloseCallback chainWindowCloseCallback) {
+        this.chainWindowCloseCallback = chainWindowCloseCallback;
+    }
+
+    public IChainWindowFocusCallback getChainWindowFocusCallback() {
         return chainWindowFocusCallback;
     }
 
-    public ChainWindowIconifyCallback getChainWindowIconifyCallback() {
+    public void setChainWindowFocusCallback(IChainWindowFocusCallback chainWindowFocusCallback) {
+        this.chainWindowFocusCallback = chainWindowFocusCallback;
+    }
+
+    public IChainWindowIconifyCallback getChainWindowIconifyCallback() {
         return chainWindowIconifyCallback;
     }
 
-    public ChainWindowPosCallback getChainWindowPosCallback() {
+    public void setChainWindowIconifyCallback(IChainWindowIconifyCallback chainWindowIconifyCallback) {
+        this.chainWindowIconifyCallback = chainWindowIconifyCallback;
+    }
+
+    public IChainWindowPosCallback getChainWindowPosCallback() {
         return chainWindowPosCallback;
     }
 
-    public ChainWindowRefreshCallback getChainWindowRefreshCallback() {
+    public void setChainWindowPosCallback(IChainWindowPosCallback chainWindowPosCallback) {
+        this.chainWindowPosCallback = chainWindowPosCallback;
+    }
+
+    public IChainWindowRefreshCallback getChainWindowRefreshCallback() {
         return chainWindowRefreshCallback;
     }
 
-    public ChainWindowSizeCallback getChainWindowSizeCallback() {
+    public void setChainWindowRefreshCallback(IChainWindowRefreshCallback chainWindowRefreshCallback) {
+        this.chainWindowRefreshCallback = chainWindowRefreshCallback;
+    }
+
+    public IChainWindowSizeCallback getChainWindowSizeCallback() {
         return chainWindowSizeCallback;
     }
 
+    public void setChainWindowSizeCallback(IChainWindowSizeCallback chainWindowSizeCallback) {
+        this.chainWindowSizeCallback = chainWindowSizeCallback;
+    }
 }

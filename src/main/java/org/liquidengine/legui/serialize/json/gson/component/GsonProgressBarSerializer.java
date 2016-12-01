@@ -1,12 +1,15 @@
 package org.liquidengine.legui.serialize.json.gson.component;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.liquidengine.legui.component.ProgressBar;
-import org.liquidengine.legui.serialize.json.gson.GsonBuilder;
+import org.liquidengine.legui.serialize.json.gson.GsonUtil;
+import org.liquidengine.legui.serialize.json.gson.GsonSerializeContext;
 
 import static org.liquidengine.legui.serialize.json.gson.GsonConstants.*;
 import static org.liquidengine.legui.serialize.json.gson.GsonConstants.A;
 import static org.liquidengine.legui.serialize.json.gson.GsonConstants.B;
+import static org.liquidengine.legui.serialize.json.gson.GsonUtil.isNotNull;
 
 /**
  * Created by Alexander on 27.11.2016.
@@ -14,12 +17,12 @@ import static org.liquidengine.legui.serialize.json.gson.GsonConstants.B;
 public class GsonProgressBarSerializer extends GsonComponentSerializer<ProgressBar> {
 
     @Override
-    protected void jsonSerialize(ProgressBar object, JsonObject json) {
-        super.jsonSerialize(object, json);
+    protected void jsonSerialize(ProgressBar object, JsonObject json, GsonSerializeContext context) {
+        super.jsonSerialize(object, json, context);
 
-        GsonBuilder.fill(json)
+        GsonUtil.fill(json)
                 .add(VALUE, object.getValue())
-                .add(PROGRESS_COLOR, GsonBuilder.create()
+                .add(PROGRESS_COLOR, GsonUtil.create()
                         .add(R, object.getBackgroundColor().x)
                         .add(G, object.getBackgroundColor().y)
                         .add(B, object.getBackgroundColor().z)
@@ -30,11 +33,13 @@ public class GsonProgressBarSerializer extends GsonComponentSerializer<ProgressB
     }
 
     @Override
-    protected void jsonDeserialize(JsonObject json, ProgressBar object) {
-        super.jsonDeserialize(json, object);
+    protected void jsonDeserialize(JsonObject json, ProgressBar object, GsonSerializeContext context) {
+        super.jsonDeserialize(json, object, context);
 
-        object.setValue(json.get(VALUE).getAsFloat());
+        JsonElement value = json.get(VALUE);
         JsonObject pc = json.getAsJsonObject(PROGRESS_COLOR);
-        object.setBackgroundColor(pc.get(R).getAsFloat(), pc.get(G).getAsFloat(), pc.get(B).getAsFloat(), pc.get(A).getAsFloat());
+
+        if (isNotNull(value)) object.setValue(value.getAsFloat());
+        if (isNotNull(pc)) object.setBackgroundColor(GsonUtil.readColor(pc));
     }
 }

@@ -14,6 +14,8 @@ import org.lwjgl.glfw.GLFWKeyCallbackI;
 import org.lwjgl.glfw.GLFWWindowCloseCallbackI;
 import org.lwjgl.opengl.GL;
 
+import java.util.concurrent.TimeUnit;
+
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.system.MemoryUtil.NULL;
@@ -30,7 +32,6 @@ public class Demo {
     protected int height;
     protected volatile boolean running;
     protected long windowPointer;
-
     protected Vector4f clearColor = new Vector4f(1, 1, 1, 1);
 
     protected Thread mainThread;
@@ -104,7 +105,8 @@ public class Demo {
         leguiContext.setDebug(true);
 
         // create callback keeper
-        callbackKeeper = new LeguiCallbackKeeper(windowPointer);
+        callbackKeeper = new LeguiCallbackKeeper();
+        callbackKeeper.registerCallbacks(windowPointer);
 
         // Create event processor for system events (obtained from callbacks) Constructor automatically creates Callbacks and binds them to window
         systemEventProcessor = new SystemEventListenerProcessor(component, leguiContext, callbackKeeper);
@@ -142,23 +144,42 @@ public class Demo {
 
         long timer = System.currentTimeMillis();
 
+
+//        long timer = System.currentTimeMillis();
+        long last = System.nanoTime();
+        long delta = 0;
+        double nanosPerUpdate = 1_000_000_000 / 60;
+
         while (running) {
-            // update gui context
-            leguiContext.updateGlfwWindow();
-            Vector2i windowSize = leguiContext.getWindowSize();
 
-            glClearColor(clearColor.x, clearColor.y, clearColor.z, 1);
-            glViewport(0, 0, windowSize.x, windowSize.y);
-            glClear(GL_COLOR_BUFFER_BIT);
+            long now = System.nanoTime();
+            delta += now - last;
+            last = now;
 
-            // render gui
-            renderer.render(component);
+            if (running) {
+                if (delta >= nanosPerUpdate) {
+                    do {
+                        // update gui context
+                        leguiContext.updateGlfwWindow();
+                        Vector2i windowSize = leguiContext.getWindowSize();
+                        component.setSize(windowSize.x, windowSize.y);
 
-            glfwSwapBuffers(windowPointer);
+                        glClearColor(clearColor.x, clearColor.y, clearColor.z, 1);
+                        glViewport(0, 0, windowSize.x, windowSize.y);
+                        glClear(GL_COLOR_BUFFER_BIT);
 
-            update();
+                        // render gui
+                        renderer.render(component);
+                        glfwSwapBuffers(windowPointer);
+                        update();
 
-            updates++;
+                        delta -= nanosPerUpdate;
+                        updates++;
+                    } while (running && delta >= nanosPerUpdate);
+                } else {
+                    sleep(1);
+                }
+            }
             if (System.currentTimeMillis() - timer >= 1000) {
                 secondsFromStart++;
                 timer += 1000;
@@ -170,25 +191,39 @@ public class Demo {
         renderer.destroy();
     }
 
+    private void sleep(long sleepTime) {
+        try {
+            TimeUnit.NANOSECONDS.sleep(sleepTime);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void update() {
     }
 
     private void startSystemEventProcessor() {
         eventProcessorThread = new Thread(() -> {
-            while (running) systemEventProcessor.processEvent();
+            while (running) {
+                systemEventProcessor.processEvent();
+                sleep(1);
+            }
         }, "GUI_SYSTEM_EVENT_PROCESSOR");
         eventProcessorThread.start();
     }
 
     private void startLeguiEventProcessor() {
         eventProcessorThread = new Thread(() -> {
-            while (running) uiEventLeguiEventProcessor.processEvent();
+            while (running) {
+                uiEventLeguiEventProcessor.processEvent();
+                sleep(1);
+            }
         }, "GUI_EVENT_PROCESSOR");
         eventProcessorThread.start();
     }
 
     // @formatter:off
-    private void handleSystemEvents() { while (running) { glfwPollEvents(); if(gcing) { System.gc(); } } }
+    private void handleSystemEvents() { while (running) { glfwWaitEvents(); if(gcing) { System.gc(); } } }
     // @formatter:on
 
     private void destroy() {

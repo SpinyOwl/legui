@@ -1,11 +1,13 @@
 package org.liquidengine.legui.serialize.json.gson.component;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.liquidengine.legui.component.Image;
-import org.liquidengine.legui.serialize.json.gson.GsonBuilder;
+import org.liquidengine.legui.serialize.json.gson.GsonUtil;
+import org.liquidengine.legui.serialize.json.gson.GsonSerializeContext;
 
 import static org.liquidengine.legui.serialize.json.gson.GsonConstants.PATH;
-import static org.liquidengine.legui.serialize.json.gson.GsonConstants.VISIBLE;
+import static org.liquidengine.legui.serialize.json.gson.GsonUtil.isNotNull;
 
 /**
  * Created by Alexander on 27.11.2016.
@@ -13,16 +15,17 @@ import static org.liquidengine.legui.serialize.json.gson.GsonConstants.VISIBLE;
 public class GsonImageSerializer extends GsonComponentSerializer<Image> {
 
     @Override
-    protected void jsonSerialize(Image object, JsonObject json) {
-        super.jsonSerialize(object, json);
+    protected void jsonSerialize(Image object, JsonObject json, GsonSerializeContext context) {
+        super.jsonSerialize(object, json, context);
 
-        GsonBuilder.fill(json).add(PATH, object.getPath());
+        GsonUtil.fill(json).add(PATH, object.getPath());
     }
 
     @Override
-    protected void jsonDeserialize(JsonObject json, Image object) {
-        super.jsonDeserialize(json, object);
+    protected void jsonDeserialize(JsonObject json, Image object, GsonSerializeContext context) {
+        super.jsonDeserialize(json, object, context);
 
-        object.setPath(json.get(PATH).getAsString());
+        JsonElement path = json.get(PATH);
+        if (isNotNull(path)) object.setPath(path.getAsString());
     }
 }
