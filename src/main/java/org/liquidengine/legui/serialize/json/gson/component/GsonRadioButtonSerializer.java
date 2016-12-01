@@ -5,9 +5,9 @@ import com.google.gson.JsonObject;
 import org.liquidengine.legui.component.RadioButton;
 import org.liquidengine.legui.component.RadioButtonGroup;
 import org.liquidengine.legui.component.optional.TextState;
-import org.liquidengine.legui.serialize.json.gson.GsonUtil;
 import org.liquidengine.legui.serialize.json.gson.GsonSerializeContext;
 import org.liquidengine.legui.serialize.json.gson.GsonSerializeUtil;
+import org.liquidengine.legui.serialize.json.gson.GsonUtil;
 
 import java.util.Map;
 
@@ -43,7 +43,7 @@ public class GsonRadioButtonSerializer extends GsonComponentSerializer<RadioButt
 
         if (isNotNull(textState)) {
             JsonObject asJsonObject = textState.getAsJsonObject();
-            TextState state = (TextState) GsonSerializeUtil.deserializeFromJson(asJsonObject, context);
+            TextState state = GsonSerializeUtil.deserializeFromJson(asJsonObject, context);
             object.getTextState().copy(state);
         }
         if (isNotNull(selected)) object.setSelected(selected.getAsBoolean());

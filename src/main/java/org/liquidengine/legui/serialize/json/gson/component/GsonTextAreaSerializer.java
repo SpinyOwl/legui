@@ -8,9 +8,7 @@ import org.liquidengine.legui.serialize.json.gson.GsonSerializeContext;
 import org.liquidengine.legui.serialize.json.gson.GsonSerializeUtil;
 import org.liquidengine.legui.serialize.json.gson.GsonUtil;
 
-import static org.liquidengine.legui.serialize.json.gson.GsonConstants.EDITABLE;
-import static org.liquidengine.legui.serialize.json.gson.GsonConstants.SELECTION_COLOR;
-import static org.liquidengine.legui.serialize.json.gson.GsonConstants.TEXT_STATE;
+import static org.liquidengine.legui.serialize.json.gson.GsonConstants.*;
 import static org.liquidengine.legui.serialize.json.gson.GsonUtil.isNotNull;
 
 /**
@@ -38,11 +36,10 @@ public class GsonTextAreaSerializer extends GsonComponentSerializer<TextArea> {
 
         if (isNotNull(textState)) {
             JsonObject asJsonObject = textState.getAsJsonObject();
-            TextState state = (TextState) GsonSerializeUtil.deserializeFromJson(asJsonObject, context);
+            TextState state = GsonSerializeUtil.deserializeFromJson(asJsonObject, context);
             object.getTextState().copy(state);
         }
         if (isNotNull(editable)) object.setEditable(editable.getAsBoolean());
         if (isNotNull(selectionColor)) object.setSelectionColor(GsonUtil.readColor(selectionColor.getAsJsonObject()));
-
     }
 }

@@ -2,16 +2,13 @@ package org.liquidengine.legui.serialize.json.gson.component;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import org.joml.Vector4f;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.serialize.json.gson.AbstractGsonSerializer;
-import org.liquidengine.legui.serialize.json.gson.GsonUtil;
 import org.liquidengine.legui.serialize.json.gson.GsonSerializeContext;
+import org.liquidengine.legui.serialize.json.gson.GsonUtil;
 
 import static org.liquidengine.legui.serialize.json.gson.GsonConstants.*;
-import static org.liquidengine.legui.serialize.json.gson.GsonUtil.createColor;
-import static org.liquidengine.legui.serialize.json.gson.GsonUtil.isNotNull;
-import static org.liquidengine.legui.serialize.json.gson.GsonUtil.readColor;
+import static org.liquidengine.legui.serialize.json.gson.GsonUtil.*;
 
 /**
  * Created by Alexander on 26.11.2016.

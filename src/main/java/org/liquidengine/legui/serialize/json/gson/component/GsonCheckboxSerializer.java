@@ -4,9 +4,9 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.liquidengine.legui.component.CheckBox;
 import org.liquidengine.legui.component.optional.TextState;
-import org.liquidengine.legui.serialize.json.gson.GsonUtil;
 import org.liquidengine.legui.serialize.json.gson.GsonSerializeContext;
 import org.liquidengine.legui.serialize.json.gson.GsonSerializeUtil;
+import org.liquidengine.legui.serialize.json.gson.GsonUtil;
 
 import static org.liquidengine.legui.serialize.json.gson.GsonConstants.CHECKED;
 import static org.liquidengine.legui.serialize.json.gson.GsonConstants.TEXT_STATE;
@@ -37,7 +37,7 @@ public class GsonCheckboxSerializer extends GsonComponentSerializer<CheckBox> {
 
         if (isNotNull(textState)) {
             JsonObject asJsonObject = textState.getAsJsonObject();
-            TextState state = (TextState) GsonSerializeUtil.deserializeFromJson(asJsonObject, context);
+            TextState state = GsonSerializeUtil.deserializeFromJson(asJsonObject, context);
             object.getTextState().copy(state);
         }
         if (isNotNull(checked)) object.setChecked(checked.getAsBoolean());

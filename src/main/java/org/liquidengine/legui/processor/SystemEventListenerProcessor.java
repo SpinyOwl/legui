@@ -1,7 +1,7 @@
 package org.liquidengine.legui.processor;
 
 import org.liquidengine.legui.component.Component;
-import org.liquidengine.legui.context.LeguiCallbackKeeper;
+import org.liquidengine.legui.context.ILeguiCallbackKeeper;
 import org.liquidengine.legui.context.LeguiContext;
 import org.liquidengine.legui.context.LeguiSystemEventQueue;
 import org.liquidengine.legui.event.SystemEvent;
@@ -16,9 +16,9 @@ public class SystemEventListenerProcessor {
     private final Component mainGuiComponent;
     private final LeguiContext context;
     private final LeguiSystemEventQueue leguiEventQueue;
-    private final LeguiCallbackKeeper callbackKeeper;
+    private final ILeguiCallbackKeeper callbackKeeper;
 
-    public SystemEventListenerProcessor(Component mainGuiComponent, LeguiContext context, LeguiCallbackKeeper callbackKeeper) {
+    public SystemEventListenerProcessor(Component mainGuiComponent, LeguiContext context, ILeguiCallbackKeeper callbackKeeper) {
         this.mainGuiComponent = mainGuiComponent;
         this.context = context;
         this.callbackKeeper = callbackKeeper;
@@ -29,7 +29,7 @@ public class SystemEventListenerProcessor {
         return context;
     }
 
-    public LeguiCallbackKeeper getCallbackKeeper() {
+    public ILeguiCallbackKeeper getCallbackKeeper() {
         return callbackKeeper;
     }
 

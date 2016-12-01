@@ -4,8 +4,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.liquidengine.legui.component.SelectBox;
-import org.liquidengine.legui.serialize.json.gson.GsonUtil;
 import org.liquidengine.legui.serialize.json.gson.GsonSerializeContext;
+import org.liquidengine.legui.serialize.json.gson.GsonUtil;
 
 import java.util.List;
 

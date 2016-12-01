@@ -5,7 +5,8 @@ import org.joml.Vector4f;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.ScrollablePanel;
 import org.liquidengine.legui.component.Viewport;
-import org.liquidengine.legui.context.LeguiCallbackKeeper;
+import org.liquidengine.legui.context.ILeguiCallbackKeeper;
+import org.liquidengine.legui.context.DefaultLeguiCallbackKeeper;
 import org.liquidengine.legui.context.LeguiContext;
 import org.liquidengine.legui.processor.LeguiEventListenerProcessor;
 import org.liquidengine.legui.processor.SystemEventListenerProcessor;
@@ -53,7 +54,7 @@ public class Demo {
 
     protected int secondsFromStart = 0;
     protected boolean gcing;
-    protected LeguiCallbackKeeper callbackKeeper;
+    protected ILeguiCallbackKeeper callbackKeeper;
 
 
     public Demo(int width, int height, String title, Component component) {
@@ -107,8 +108,9 @@ public class Demo {
         leguiContext.setDebug(true);
 
         // create callback keeper
-        callbackKeeper = new LeguiCallbackKeeper();
-        callbackKeeper.registerCallbacks(windowPointer);
+        DefaultLeguiCallbackKeeper leguiCallbackKeeper = new DefaultLeguiCallbackKeeper();
+        callbackKeeper = leguiCallbackKeeper;
+        leguiCallbackKeeper.registerCallbacks(windowPointer);
 
         // Create event processor for system events (obtained from callbacks) Constructor automatically creates Callbacks and binds them to window
         systemEventProcessor = new SystemEventListenerProcessor(component, leguiContext, callbackKeeper);

@@ -3,8 +3,8 @@ package org.liquidengine.legui.serialize.json.gson.component;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.liquidengine.legui.component.Image;
-import org.liquidengine.legui.serialize.json.gson.GsonUtil;
 import org.liquidengine.legui.serialize.json.gson.GsonSerializeContext;
+import org.liquidengine.legui.serialize.json.gson.GsonUtil;
 
 import static org.liquidengine.legui.serialize.json.gson.GsonConstants.PATH;
 import static org.liquidengine.legui.serialize.json.gson.GsonUtil.isNotNull;

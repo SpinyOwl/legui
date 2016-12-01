@@ -3,12 +3,10 @@ package org.liquidengine.legui.serialize.json.gson.component;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.liquidengine.legui.component.ProgressBar;
-import org.liquidengine.legui.serialize.json.gson.GsonUtil;
 import org.liquidengine.legui.serialize.json.gson.GsonSerializeContext;
+import org.liquidengine.legui.serialize.json.gson.GsonUtil;
 
 import static org.liquidengine.legui.serialize.json.gson.GsonConstants.*;
-import static org.liquidengine.legui.serialize.json.gson.GsonConstants.A;
-import static org.liquidengine.legui.serialize.json.gson.GsonConstants.B;
 import static org.liquidengine.legui.serialize.json.gson.GsonUtil.isNotNull;
 
 /**

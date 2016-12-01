@@ -36,7 +36,7 @@ public class GsonTextInputSerializer extends GsonComponentSerializer<TextInput> 
 
         if (isNotNull(textState)) {
             JsonObject asJsonObject = textState.getAsJsonObject();
-            TextState state = (TextState) GsonSerializeUtil.deserializeFromJson(asJsonObject, context);
+            TextState state = GsonSerializeUtil.deserializeFromJson(asJsonObject, context);
             object.getTextState().copy(state);
         }
         if (isNotNull(editable)) object.setEditable(editable.getAsBoolean());

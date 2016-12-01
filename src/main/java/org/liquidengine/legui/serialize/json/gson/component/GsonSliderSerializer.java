@@ -2,11 +2,10 @@ package org.liquidengine.legui.serialize.json.gson.component;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import org.joml.Vector4f;
 import org.liquidengine.legui.component.Slider;
 import org.liquidengine.legui.component.optional.Orientation;
-import org.liquidengine.legui.serialize.json.gson.GsonUtil;
 import org.liquidengine.legui.serialize.json.gson.GsonSerializeContext;
+import org.liquidengine.legui.serialize.json.gson.GsonUtil;
 
 import static org.liquidengine.legui.serialize.json.gson.GsonConstants.*;
 import static org.liquidengine.legui.serialize.json.gson.GsonUtil.isNotNull;
@@ -51,11 +50,11 @@ public class GsonSliderSerializer extends GsonComponentSerializer<Slider> {
         JsonElement sliderSize = json.get(SLIDER_SIZE);
         JsonElement value = json.get(VALUE);
 
-        if(isNotNull(sliderActiveColor)) object.setSliderActiveColor(readColor(sliderActiveColor.getAsJsonObject()));
-        if(isNotNull(sliderColor)) object.setSliderColor(readColor(sliderColor.getAsJsonObject()));
-        if(isNotNull(orientation)) object.setOrientation(Orientation.valueOf(orientation.getAsString()));
-        if(isNotNull(sliderSize)) object.setSliderSize(sliderSize.getAsFloat());
-        if(isNotNull(value)) object.setValue(value.getAsFloat());
+        if (isNotNull(sliderActiveColor)) object.setSliderActiveColor(readColor(sliderActiveColor.getAsJsonObject()));
+        if (isNotNull(sliderColor)) object.setSliderColor(readColor(sliderColor.getAsJsonObject()));
+        if (isNotNull(orientation)) object.setOrientation(Orientation.valueOf(orientation.getAsString()));
+        if (isNotNull(sliderSize)) object.setSliderSize(sliderSize.getAsFloat());
+        if (isNotNull(value)) object.setValue(value.getAsFloat());
 
     }
 }

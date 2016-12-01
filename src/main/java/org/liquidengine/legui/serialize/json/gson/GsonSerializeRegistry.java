@@ -82,6 +82,7 @@ public final class GsonSerializeRegistry {
             I.registerSerializer(Slider.class, new GsonSliderSerializer());
             I.registerSerializer(TextArea.class, new GsonTextAreaSerializer());
             I.registerSerializer(TextInput.class, new GsonTextInputSerializer());
+            I.registerSerializer(Widget.class, new GsonWidgetSerializer());
 
         }
     }

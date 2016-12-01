@@ -43,8 +43,8 @@ public class GsonScrollablePanelSerializer extends GsonComponentSerializer<Scrol
         JsonElement vScrollBar = json.get(VERTICAL_SCROLL_BAR);
         JsonElement container = json.get(CONTAINER);
 
-        if (isNotNull(hScrollBar)) object.setHorizontalScrollBar((ScrollBar) GsonSerializeUtil.deserializeFromJson(hScrollBar.getAsJsonObject(), context));
-        if (isNotNull(vScrollBar)) object.setVerticalScrollBar((ScrollBar) GsonSerializeUtil.deserializeFromJson(vScrollBar.getAsJsonObject(), context));
-        if (isNotNull(container)) object.setContainer((ComponentContainer) GsonSerializeUtil.deserializeFromJson(container.getAsJsonObject(), context));
+        if (isNotNull(hScrollBar)) object.setHorizontalScrollBar(GsonSerializeUtil.deserializeFromJson(hScrollBar.getAsJsonObject(), context));
+        if (isNotNull(vScrollBar)) object.setVerticalScrollBar(GsonSerializeUtil.deserializeFromJson(vScrollBar.getAsJsonObject(), context));
+        if (isNotNull(container)) object.setContainer(GsonSerializeUtil.deserializeFromJson(container.getAsJsonObject(), context));
     }
 }

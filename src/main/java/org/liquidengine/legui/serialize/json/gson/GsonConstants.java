@@ -98,11 +98,22 @@ public final class GsonConstants {
 
     // PANEL
     public static final String PANEL = "panel";
+
     // SCROLLABLE_PANEL
     public static final String SCROLLABLE_PANEL = "scrollablePanel";
     public static final String CONTAINER = "container";
     public static final String HORIZONTAL_SCROLL_BAR = "horizontalScrollBar";
     public static final String VERTICAL_SCROLL_BAR = "verticalScrollBar";
+
+    // WIDGET
+    public static final String WIDGET = "widget";
+    public static final String RESIZABLE = "resizable";
+    public static final String CLOSEABLE = "closeable";
+    public static final String TITLE = "title";
+    public static final String TITLE_ENABLED = "titleEnabled";
+    public static final String TITLE_HEIGHT = "titleHeight";
+    public static final String TITLE_BACKGROUND_COLOR = "titleBackgroundColor";
+    public static final String CLOSE_BUTTON_COLOR = "closeButtonColor";
 
     private GsonConstants() {
     }
