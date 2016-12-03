@@ -87,7 +87,7 @@ public class Demo {
 
         mainThread.start();
         // wait while not initialized
-        while (!running) ;
+        while (!running) Thread.yield();
     }
 
     private void initialize() {
