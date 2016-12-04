@@ -96,6 +96,13 @@ public final class IOUtil {
         }
     }
 
+    public static String loadResourceAsString(String resource, int bufferSize) throws RuntimeException {
+        ByteBuffer byteBuffer = loadResourceToByteBuffer(resource, bufferSize);
+        byte b[] = new byte[byteBuffer.limit()];
+        byteBuffer.get(b);
+        return new String(b);
+    }
+
     /**
      * @param resource   Resource Stream
      * @param bufferSize initial buffer size

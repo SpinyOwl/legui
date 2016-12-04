@@ -137,9 +137,12 @@ public class NvgTextAreaRenderer extends NvgLeguiComponentRenderer {
         for (int i = topIndex; i <= botIndex; i++) {
             line = lines[i];
             float y1 = y + (i - topIndex) * fontSize;
-            if (my >= y1 && my <= y1 + fontSize) {
-                int newCPos = calculateMouseCaretPosition(leguiContext, context, gui, x, y1, w, fontSize, offsetX, line, offsets[i], horizontalAlign, verticalAlign);
-                gui.setMouseCaretPosition(newCPos);
+            if (i == topIndex && my < y1) {
+                gui.setMouseCaretPosition(calculateMouseCaretPosition(leguiContext, context, gui, x, y1, w, fontSize, offsetX, line, offsets[i], horizontalAlign, verticalAlign));
+            } else if (i == botIndex && my > y1 + fontSize) {
+                gui.setMouseCaretPosition(calculateMouseCaretPosition(leguiContext, context, gui, x, y1, w, fontSize, offsetX, line, offsets[i], horizontalAlign, verticalAlign));
+            } else if (my >= y1 && my <= y1 + fontSize) {
+                gui.setMouseCaretPosition(calculateMouseCaretPosition(leguiContext, context, gui, x, y1, w, fontSize, offsetX, line, offsets[i], horizontalAlign, verticalAlign));
             }
         }
 
@@ -161,7 +164,7 @@ public class NvgTextAreaRenderer extends NvgLeguiComponentRenderer {
         }
 
         // draw caret based on mouse position
-        if (focused) {
+        if (leguiContext.isDebugEnabled()) {
             LineData lineData = getStartLineIndexAndLineNumber(lines, gui.getMouseCaretPosition());
             for (int i = topIndex; i <= botIndex; i++) {
                 float y1 = y + (i - topIndex) * fontSize;

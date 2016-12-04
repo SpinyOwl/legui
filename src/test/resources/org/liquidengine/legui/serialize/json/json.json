@@ -1,0 +1,2571 @@
+{
+  "@class": "org.liquidengine.legui.component.Panel",
+  "position": {
+    "x": 0.0,
+    "y": 0.0
+  },
+  "size": {
+    "width": 800.0,
+    "height": 600.0
+  },
+  "backgroundColor": {
+    "r": 1.0,
+    "g": 1.0,
+    "b": 1.0,
+    "a": 1.0
+  },
+  "enabled": true,
+  "visible": true,
+  "cornerRadius": 0.0,
+  "border": {
+    "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+    "THICKNESS": 1.0,
+    "BORDER_COLOR": {
+      "r": 0.0,
+      "g": 0.0,
+      "b": 0.0,
+      "a": 1.0
+    }
+  },
+  "components": [
+    {
+      "@class": "org.liquidengine.legui.component.Panel",
+      "position": {
+        "x": 20.0,
+        "y": 10.0
+      },
+      "size": {
+        "width": 10.0,
+        "height": 10.0
+      },
+      "backgroundColor": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0,
+        "a": 1.0
+      },
+      "enabled": true,
+      "visible": true,
+      "cornerRadius": 0.0,
+      "border": {
+        "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+        "THICKNESS": 1.0,
+        "BORDER_COLOR": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 1.0
+        }
+      },
+      "components": []
+    },
+    {
+      "@class": "org.liquidengine.legui.component.Panel",
+      "position": {
+        "x": 40.0,
+        "y": 10.0
+      },
+      "size": {
+        "width": 10.0,
+        "height": 10.0
+      },
+      "backgroundColor": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0,
+        "a": 1.0
+      },
+      "enabled": true,
+      "visible": true,
+      "cornerRadius": 0.0,
+      "border": {
+        "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+        "THICKNESS": 1.0,
+        "BORDER_COLOR": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 1.0
+        }
+      },
+      "components": []
+    },
+    {
+      "@class": "org.liquidengine.legui.component.Panel",
+      "position": {
+        "x": 60.0,
+        "y": 10.0
+      },
+      "size": {
+        "width": 10.0,
+        "height": 10.0
+      },
+      "backgroundColor": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0,
+        "a": 1.0
+      },
+      "enabled": true,
+      "visible": true,
+      "cornerRadius": 0.0,
+      "border": {
+        "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+        "THICKNESS": 1.0,
+        "BORDER_COLOR": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 1.0
+        }
+      },
+      "components": []
+    },
+    {
+      "@class": "org.liquidengine.legui.component.Panel",
+      "position": {
+        "x": 80.0,
+        "y": 10.0
+      },
+      "size": {
+        "width": 10.0,
+        "height": 10.0
+      },
+      "backgroundColor": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0,
+        "a": 1.0
+      },
+      "enabled": true,
+      "visible": true,
+      "cornerRadius": 0.0,
+      "border": {
+        "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+        "THICKNESS": 1.0,
+        "BORDER_COLOR": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 1.0
+        }
+      },
+      "components": []
+    },
+    {
+      "@class": "org.liquidengine.legui.component.Panel",
+      "position": {
+        "x": 100.0,
+        "y": 10.0
+      },
+      "size": {
+        "width": 10.0,
+        "height": 10.0
+      },
+      "backgroundColor": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0,
+        "a": 1.0
+      },
+      "enabled": true,
+      "visible": true,
+      "cornerRadius": 0.0,
+      "border": {
+        "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+        "THICKNESS": 1.0,
+        "BORDER_COLOR": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 1.0
+        }
+      },
+      "components": []
+    },
+    {
+      "@class": "org.liquidengine.legui.component.Panel",
+      "position": {
+        "x": 120.0,
+        "y": 10.0
+      },
+      "size": {
+        "width": 10.0,
+        "height": 10.0
+      },
+      "backgroundColor": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0,
+        "a": 1.0
+      },
+      "enabled": true,
+      "visible": true,
+      "cornerRadius": 0.0,
+      "border": {
+        "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+        "THICKNESS": 1.0,
+        "BORDER_COLOR": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 1.0
+        }
+      },
+      "components": []
+    },
+    {
+      "@class": "org.liquidengine.legui.component.Panel",
+      "position": {
+        "x": 140.0,
+        "y": 10.0
+      },
+      "size": {
+        "width": 10.0,
+        "height": 10.0
+      },
+      "backgroundColor": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0,
+        "a": 1.0
+      },
+      "enabled": true,
+      "visible": true,
+      "cornerRadius": 0.0,
+      "border": {
+        "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+        "THICKNESS": 1.0,
+        "BORDER_COLOR": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 1.0
+        }
+      },
+      "components": []
+    },
+    {
+      "@class": "org.liquidengine.legui.component.Panel",
+      "position": {
+        "x": 160.0,
+        "y": 10.0
+      },
+      "size": {
+        "width": 10.0,
+        "height": 10.0
+      },
+      "backgroundColor": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0,
+        "a": 1.0
+      },
+      "enabled": true,
+      "visible": true,
+      "cornerRadius": 0.0,
+      "border": {
+        "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+        "THICKNESS": 1.0,
+        "BORDER_COLOR": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 1.0
+        }
+      },
+      "components": []
+    },
+    {
+      "@class": "org.liquidengine.legui.component.Panel",
+      "position": {
+        "x": 180.0,
+        "y": 10.0
+      },
+      "size": {
+        "width": 10.0,
+        "height": 10.0
+      },
+      "backgroundColor": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0,
+        "a": 1.0
+      },
+      "enabled": true,
+      "visible": true,
+      "cornerRadius": 0.0,
+      "border": {
+        "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+        "THICKNESS": 1.0,
+        "BORDER_COLOR": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 1.0
+        }
+      },
+      "components": []
+    },
+    {
+      "@class": "org.liquidengine.legui.component.Label",
+      "position": {
+        "x": 10.0,
+        "y": 570.0
+      },
+      "size": {
+        "width": 780.0,
+        "height": 20.0
+      },
+      "backgroundColor": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0,
+        "a": 0.0
+      },
+      "enabled": true,
+      "visible": true,
+      "cornerRadius": 0.0,
+      "textState": {
+        "@class": "org.liquidengine.legui.component.optional.TextState",
+        "font": "roboto italic",
+        "text": "Hello Label",
+        "fontSize": 16.0,
+        "horizontalAlign": "LEFT",
+        "verticalAlign": "MIDDLE",
+        "textColor": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 1.0
+        },
+        "highlightColor": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "padding": {
+          "left": 2.0,
+          "top": 0.0,
+          "right": 2.0,
+          "bottom": 0.0
+        }
+      }
+    },
+    {
+      "@class": "org.liquidengine.legui.component.Label",
+      "position": {
+        "x": 10.0,
+        "y": 550.0
+      },
+      "size": {
+        "width": 780.0,
+        "height": 20.0
+      },
+      "backgroundColor": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0,
+        "a": 0.0
+      },
+      "enabled": true,
+      "visible": true,
+      "cornerRadius": 0.0,
+      "textState": {
+        "@class": "org.liquidengine.legui.component.optional.TextState",
+        "font": "roboto italic",
+        "text": "Hello Label",
+        "fontSize": 16.0,
+        "horizontalAlign": "LEFT",
+        "verticalAlign": "MIDDLE",
+        "textColor": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 1.0
+        },
+        "highlightColor": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "padding": {
+          "left": 2.0,
+          "top": 0.0,
+          "right": 2.0,
+          "bottom": 0.0
+        }
+      }
+    },
+    {
+      "@class": "org.liquidengine.legui.component.Label",
+      "position": {
+        "x": 130.0,
+        "y": 30.0
+      },
+      "size": {
+        "width": 100.0,
+        "height": 20.0
+      },
+      "backgroundColor": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0,
+        "a": 0.0
+      },
+      "enabled": true,
+      "visible": true,
+      "cornerRadius": 0.0,
+      "textState": {
+        "@class": "org.liquidengine.legui.component.optional.TextState",
+        "font": "roboto italic",
+        "text": "Hello Label",
+        "fontSize": 16.0,
+        "horizontalAlign": "LEFT",
+        "verticalAlign": "MIDDLE",
+        "textColor": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 1.0
+        },
+        "highlightColor": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "padding": {
+          "left": 2.0,
+          "top": 0.0,
+          "right": 2.0,
+          "bottom": 0.0
+        }
+      }
+    },
+    {
+      "@class": "org.liquidengine.legui.component.Label",
+      "position": {
+        "x": 130.0,
+        "y": 60.0
+      },
+      "size": {
+        "width": 100.0,
+        "height": 20.0
+      },
+      "backgroundColor": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0,
+        "a": 0.0
+      },
+      "enabled": true,
+      "visible": true,
+      "cornerRadius": 0.0,
+      "textState": {
+        "@class": "org.liquidengine.legui.component.optional.TextState",
+        "font": "roboto italic",
+        "text": "Hello Label",
+        "fontSize": 16.0,
+        "horizontalAlign": "LEFT",
+        "verticalAlign": "MIDDLE",
+        "textColor": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 1.0
+        },
+        "highlightColor": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "padding": {
+          "left": 2.0,
+          "top": 0.0,
+          "right": 2.0,
+          "bottom": 0.0
+        }
+      }
+    },
+    {
+      "@class": "org.liquidengine.legui.component.Image",
+      "position": {
+        "x": 20.0,
+        "y": 30.0
+      },
+      "size": {
+        "width": 100.0,
+        "height": 100.0
+      },
+      "backgroundColor": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0,
+        "a": 1.0
+      },
+      "enabled": true,
+      "visible": true,
+      "cornerRadius": 0.0,
+      "border": {
+        "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+        "THICKNESS": 1.0,
+        "BORDER_COLOR": {
+          "r": 0.2,
+          "g": 0.2,
+          "b": 0.2,
+          "a": 1.0
+        }
+      },
+      "path": "org/liquidengine/legui/example/11.jpg"
+    },
+    {
+      "@class": "org.liquidengine.legui.component.Button",
+      "position": {
+        "x": 20.0,
+        "y": 170.0
+      },
+      "size": {
+        "width": 50.0,
+        "height": 20.0
+      },
+      "backgroundColor": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0,
+        "a": 1.0
+      },
+      "enabled": true,
+      "visible": true,
+      "cornerRadius": 0.0,
+      "border": {
+        "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+        "THICKNESS": 1.0,
+        "BORDER_COLOR": {
+          "r": 0.2,
+          "g": 0.2,
+          "b": 0.2,
+          "a": 1.0
+        }
+      },
+      "textState": {
+        "@class": "org.liquidengine.legui.component.optional.TextState",
+        "font": "roboto italic",
+        "text": "Button",
+        "fontSize": 16.0,
+        "horizontalAlign": "CENTER",
+        "verticalAlign": "MIDDLE",
+        "textColor": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 1.0
+        },
+        "highlightColor": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "padding": {
+          "left": 1.0,
+          "top": 1.0,
+          "right": 1.0,
+          "bottom": 1.0
+        }
+      }
+    },
+    {
+      "@class": "org.liquidengine.legui.component.CheckBox",
+      "position": {
+        "x": 20.0,
+        "y": 200.0
+      },
+      "size": {
+        "width": 50.0,
+        "height": 20.0
+      },
+      "backgroundColor": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0,
+        "a": 0.0
+      },
+      "enabled": true,
+      "visible": true,
+      "cornerRadius": 0.0,
+      "border": {
+        "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+        "THICKNESS": 0.0,
+        "BORDER_COLOR": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        }
+      },
+      "textState": {
+        "@class": "org.liquidengine.legui.component.optional.TextState",
+        "font": "roboto italic",
+        "text": "CheckBox",
+        "fontSize": 16.0,
+        "horizontalAlign": "CENTER",
+        "verticalAlign": "MIDDLE",
+        "textColor": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 1.0
+        },
+        "highlightColor": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "padding": {
+          "left": 1.0,
+          "top": 1.0,
+          "right": 1.0,
+          "bottom": 1.0
+        }
+      },
+      "checked": false
+    },
+    {
+      "@class": "org.liquidengine.legui.component.CheckBox",
+      "position": {
+        "x": 20.0,
+        "y": 230.0
+      },
+      "size": {
+        "width": 50.0,
+        "height": 20.0
+      },
+      "backgroundColor": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0,
+        "a": 1.0
+      },
+      "enabled": true,
+      "visible": true,
+      "cornerRadius": 0.0,
+      "border": {
+        "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+        "THICKNESS": 0.0,
+        "BORDER_COLOR": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        }
+      },
+      "textState": {
+        "@class": "org.liquidengine.legui.component.optional.TextState",
+        "font": "roboto italic",
+        "text": "CheckBox",
+        "fontSize": 16.0,
+        "horizontalAlign": "CENTER",
+        "verticalAlign": "MIDDLE",
+        "textColor": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 1.0
+        },
+        "highlightColor": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "padding": {
+          "left": 1.0,
+          "top": 1.0,
+          "right": 1.0,
+          "bottom": 1.0
+        }
+      },
+      "checked": true
+    },
+    {
+      "@class": "org.liquidengine.legui.component.ProgressBar",
+      "position": {
+        "x": 250.0,
+        "y": 10.0
+      },
+      "size": {
+        "width": 100.0,
+        "height": 10.0
+      },
+      "backgroundColor": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0,
+        "a": 1.0
+      },
+      "enabled": true,
+      "visible": true,
+      "cornerRadius": 2.0,
+      "border": {
+        "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+        "THICKNESS": 1.0,
+        "BORDER_COLOR": {
+          "r": 0.2,
+          "g": 0.2,
+          "b": 0.2,
+          "a": 1.0
+        }
+      },
+      "value": 50.0,
+      "progressColor": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0,
+        "a": 1.0
+      }
+    },
+    {
+      "@class": "org.liquidengine.legui.component.RadioButton",
+      "position": {
+        "x": 250.0,
+        "y": 30.0
+      },
+      "size": {
+        "width": 100.0,
+        "height": 20.0
+      },
+      "backgroundColor": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0,
+        "a": 0.0
+      },
+      "enabled": true,
+      "visible": true,
+      "cornerRadius": 0.0,
+      "border": {
+        "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+        "THICKNESS": 0.0,
+        "BORDER_COLOR": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        }
+      },
+      "textState": {
+        "@class": "org.liquidengine.legui.component.optional.TextState",
+        "font": "roboto italic",
+        "text": "RadioButton",
+        "fontSize": 16.0,
+        "horizontalAlign": "LEFT",
+        "verticalAlign": "MIDDLE",
+        "textColor": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 1.0
+        },
+        "highlightColor": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "padding": {
+          "left": 0.0,
+          "top": 0.0,
+          "right": 0.0,
+          "bottom": 0.0
+        }
+      },
+      "selected": true,
+      "group": 0
+    },
+    {
+      "@class": "org.liquidengine.legui.component.RadioButton",
+      "position": {
+        "x": 250.0,
+        "y": 60.0
+      },
+      "size": {
+        "width": 100.0,
+        "height": 20.0
+      },
+      "backgroundColor": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0,
+        "a": 0.0
+      },
+      "enabled": true,
+      "visible": true,
+      "cornerRadius": 0.0,
+      "border": {
+        "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+        "THICKNESS": 0.0,
+        "BORDER_COLOR": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        }
+      },
+      "textState": {
+        "@class": "org.liquidengine.legui.component.optional.TextState",
+        "font": "roboto italic",
+        "text": "RadioButton",
+        "fontSize": 16.0,
+        "horizontalAlign": "LEFT",
+        "verticalAlign": "MIDDLE",
+        "textColor": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 1.0
+        },
+        "highlightColor": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "padding": {
+          "left": 0.0,
+          "top": 0.0,
+          "right": 0.0,
+          "bottom": 0.0
+        }
+      },
+      "selected": true,
+      "group": 0
+    },
+    {
+      "@class": "org.liquidengine.legui.component.Slider",
+      "position": {
+        "x": 250.0,
+        "y": 90.0
+      },
+      "size": {
+        "width": 100.0,
+        "height": 20.0
+      },
+      "backgroundColor": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0,
+        "a": 0.0
+      },
+      "enabled": true,
+      "visible": true,
+      "cornerRadius": 0.0,
+      "border": {
+        "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+        "THICKNESS": 0.0,
+        "BORDER_COLOR": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        }
+      },
+      "sliderActiveColor": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 1.0,
+        "a": 1.0
+      },
+      "sliderColor": {
+        "r": 0.7,
+        "g": 0.7,
+        "b": 0.7,
+        "a": 0.4
+      },
+      "orientation": "HORIZONTAL",
+      "sliderSize": 10.0,
+      "value": 30.0
+    },
+    {
+      "@class": "org.liquidengine.legui.component.Slider",
+      "position": {
+        "x": 220.0,
+        "y": 90.0
+      },
+      "size": {
+        "width": 20.0,
+        "height": 100.0
+      },
+      "backgroundColor": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0,
+        "a": 0.0
+      },
+      "enabled": true,
+      "visible": true,
+      "cornerRadius": 0.0,
+      "border": {
+        "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+        "THICKNESS": 0.0,
+        "BORDER_COLOR": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        }
+      },
+      "sliderActiveColor": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 1.0,
+        "a": 1.0
+      },
+      "sliderColor": {
+        "r": 0.7,
+        "g": 0.7,
+        "b": 0.7,
+        "a": 0.4
+      },
+      "orientation": "VERTICAL",
+      "sliderSize": 10.0,
+      "value": 50.0
+    },
+    {
+      "@class": "org.liquidengine.legui.component.TextInput",
+      "position": {
+        "x": 250.0,
+        "y": 130.0
+      },
+      "size": {
+        "width": 100.0,
+        "height": 30.0
+      },
+      "backgroundColor": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0,
+        "a": 0.8
+      },
+      "enabled": true,
+      "visible": true,
+      "cornerRadius": 2.0,
+      "border": {
+        "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+        "THICKNESS": 1.0,
+        "BORDER_COLOR": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 1.0
+        }
+      },
+      "editable": true,
+      "selectionColor": {
+        "r": 0.6,
+        "g": 0.7,
+        "b": 1.0,
+        "a": 1.0
+      },
+      "textState": {
+        "@class": "org.liquidengine.legui.component.optional.TextState",
+        "font": "roboto italic",
+        "text": "TextInput",
+        "fontSize": 16.0,
+        "horizontalAlign": "RIGHT",
+        "verticalAlign": "MIDDLE",
+        "textColor": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 1.0
+        },
+        "highlightColor": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "padding": {
+          "left": 10.0,
+          "top": 5.0,
+          "right": 10.0,
+          "bottom": 5.0
+        }
+      }
+    },
+    {
+      "@class": "org.liquidengine.legui.component.Button",
+      "position": {
+        "x": 360.0,
+        "y": 280.0
+      },
+      "size": {
+        "width": 20.0,
+        "height": 20.0
+      },
+      "backgroundColor": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0,
+        "a": 1.0
+      },
+      "enabled": true,
+      "visible": true,
+      "cornerRadius": 0.0,
+      "border": {
+        "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+        "THICKNESS": 1.0,
+        "BORDER_COLOR": {
+          "r": 0.2,
+          "g": 0.2,
+          "b": 0.2,
+          "a": 1.0
+        }
+      },
+      "textState": {
+        "@class": "org.liquidengine.legui.component.optional.TextState",
+        "font": "roboto italic",
+        "text": "",
+        "fontSize": 16.0,
+        "horizontalAlign": "CENTER",
+        "verticalAlign": "MIDDLE",
+        "textColor": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 1.0
+        },
+        "highlightColor": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "padding": {
+          "left": 1.0,
+          "top": 1.0,
+          "right": 1.0,
+          "bottom": 1.0
+        }
+      }
+    },
+    {
+      "@class": "org.liquidengine.legui.component.Widget",
+      "position": {
+        "x": 250.0,
+        "y": 170.0
+      },
+      "size": {
+        "width": 100.0,
+        "height": 100.0
+      },
+      "backgroundColor": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0,
+        "a": 1.0
+      },
+      "enabled": true,
+      "visible": true,
+      "cornerRadius": 0.0,
+      "border": {
+        "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+        "THICKNESS": 1.0,
+        "BORDER_COLOR": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 1.0
+        }
+      },
+      "container": {
+        "@class": "org.liquidengine.legui.component.Panel",
+        "position": {
+          "x": 0.0,
+          "y": 20.0
+        },
+        "size": {
+          "width": 100.0,
+          "height": 80.0
+        },
+        "backgroundColor": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "enabled": true,
+        "visible": true,
+        "cornerRadius": 0.0,
+        "border": {
+          "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+          "THICKNESS": 1.0,
+          "BORDER_COLOR": {
+            "r": 0.0,
+            "g": 0.0,
+            "b": 0.0,
+            "a": 1.0
+          }
+        },
+        "components": [
+          {
+            "@class": "org.liquidengine.legui.component.Panel",
+            "position": {
+              "x": -5.0,
+              "y": -5.0
+            },
+            "size": {
+              "width": 10.0,
+              "height": 10.0
+            },
+            "backgroundColor": {
+              "r": 1.0,
+              "g": 0.0,
+              "b": 0.0,
+              "a": 1.0
+            },
+            "enabled": true,
+            "visible": true,
+            "cornerRadius": 0.0,
+            "border": {
+              "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+              "THICKNESS": 1.0,
+              "BORDER_COLOR": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 1.0
+              }
+            },
+            "components": []
+          },
+          {
+            "@class": "org.liquidengine.legui.component.Panel",
+            "position": {
+              "x": -5.0,
+              "y": 75.0
+            },
+            "size": {
+              "width": 10.0,
+              "height": 10.0
+            },
+            "backgroundColor": {
+              "r": 1.0,
+              "g": 0.0,
+              "b": 0.0,
+              "a": 1.0
+            },
+            "enabled": true,
+            "visible": true,
+            "cornerRadius": 0.0,
+            "border": {
+              "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+              "THICKNESS": 1.0,
+              "BORDER_COLOR": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 1.0
+              }
+            },
+            "components": []
+          },
+          {
+            "@class": "org.liquidengine.legui.component.Panel",
+            "position": {
+              "x": 95.0,
+              "y": -5.0
+            },
+            "size": {
+              "width": 10.0,
+              "height": 10.0
+            },
+            "backgroundColor": {
+              "r": 1.0,
+              "g": 0.0,
+              "b": 0.0,
+              "a": 1.0
+            },
+            "enabled": true,
+            "visible": false,
+            "cornerRadius": 0.0,
+            "border": {
+              "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+              "THICKNESS": 1.0,
+              "BORDER_COLOR": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 1.0
+              }
+            },
+            "components": []
+          },
+          {
+            "@class": "org.liquidengine.legui.component.Panel",
+            "position": {
+              "x": 95.0,
+              "y": 75.0
+            },
+            "size": {
+              "width": 10.0,
+              "height": 10.0
+            },
+            "backgroundColor": {
+              "r": 1.0,
+              "g": 0.0,
+              "b": 0.0,
+              "a": 1.0
+            },
+            "enabled": true,
+            "visible": true,
+            "cornerRadius": 0.0,
+            "border": {
+              "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+              "THICKNESS": 1.0,
+              "BORDER_COLOR": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 1.0
+              }
+            },
+            "components": []
+          },
+          {
+            "@class": "org.liquidengine.legui.component.Panel",
+            "position": {
+              "x": 45.0,
+              "y": 35.0
+            },
+            "size": {
+              "width": 10.0,
+              "height": 10.0
+            },
+            "backgroundColor": {
+              "r": 1.0,
+              "g": 0.0,
+              "b": 0.0,
+              "a": 1.0
+            },
+            "enabled": true,
+            "visible": true,
+            "cornerRadius": 0.0,
+            "border": {
+              "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+              "THICKNESS": 1.0,
+              "BORDER_COLOR": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 1.0
+              }
+            },
+            "components": []
+          }
+        ]
+      },
+      "resizable": false,
+      "closeable": true,
+      "titleEnabled": true,
+      "titleHeight": 20.0,
+      "titleBackgroundColor": {
+        "r": 0.3,
+        "g": 1.0,
+        "b": 0.3,
+        "a": 1.0
+      },
+      "closeButtonColor": {
+        "r": 1.0,
+        "g": 0.0,
+        "b": 0.0,
+        "a": 1.0
+      },
+      "title": {
+        "@class": "org.liquidengine.legui.component.optional.TextState",
+        "font": "roboto italic",
+        "text": "Hello widget",
+        "fontSize": 16.0,
+        "horizontalAlign": "LEFT",
+        "verticalAlign": "MIDDLE",
+        "textColor": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 1.0
+        },
+        "highlightColor": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "padding": {
+          "left": 10.0,
+          "top": 5.0,
+          "right": 10.0,
+          "bottom": 5.0
+        }
+      }
+    },
+    {
+      "@class": "org.liquidengine.legui.component.Widget",
+      "position": {
+        "x": 250.0,
+        "y": 310.0
+      },
+      "size": {
+        "width": 100.0,
+        "height": 100.0
+      },
+      "backgroundColor": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0,
+        "a": 1.0
+      },
+      "enabled": true,
+      "visible": true,
+      "cornerRadius": 0.0,
+      "border": {
+        "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+        "THICKNESS": 1.0,
+        "BORDER_COLOR": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 1.0
+        }
+      },
+      "container": {
+        "@class": "org.liquidengine.legui.component.Panel",
+        "position": {
+          "x": 0.0,
+          "y": 20.0
+        },
+        "size": {
+          "width": 100.0,
+          "height": 80.0
+        },
+        "backgroundColor": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "enabled": true,
+        "visible": true,
+        "cornerRadius": 0.0,
+        "border": {
+          "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+          "THICKNESS": 1.0,
+          "BORDER_COLOR": {
+            "r": 0.0,
+            "g": 0.0,
+            "b": 0.0,
+            "a": 1.0
+          }
+        },
+        "components": []
+      },
+      "resizable": false,
+      "closeable": true,
+      "titleEnabled": true,
+      "titleHeight": 20.0,
+      "titleBackgroundColor": {
+        "r": 0.3,
+        "g": 1.0,
+        "b": 0.3,
+        "a": 1.0
+      },
+      "closeButtonColor": {
+        "r": 1.0,
+        "g": 0.0,
+        "b": 0.0,
+        "a": 1.0
+      },
+      "title": {
+        "@class": "org.liquidengine.legui.component.optional.TextState",
+        "font": "roboto italic",
+        "text": "Hello 2 widget",
+        "fontSize": 16.0,
+        "horizontalAlign": "LEFT",
+        "verticalAlign": "MIDDLE",
+        "textColor": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 1.0
+        },
+        "highlightColor": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "padding": {
+          "left": 10.0,
+          "top": 5.0,
+          "right": 10.0,
+          "bottom": 5.0
+        }
+      }
+    },
+    {
+      "@class": "org.liquidengine.legui.component.Widget",
+      "position": {
+        "x": 250.0,
+        "y": 420.0
+      },
+      "size": {
+        "width": 100.0,
+        "height": 100.0
+      },
+      "backgroundColor": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0,
+        "a": 1.0
+      },
+      "enabled": true,
+      "visible": true,
+      "cornerRadius": 0.0,
+      "border": {
+        "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+        "THICKNESS": 1.0,
+        "BORDER_COLOR": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 1.0
+        }
+      },
+      "container": {
+        "@class": "org.liquidengine.legui.component.Panel",
+        "position": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "size": {
+          "width": 100.0,
+          "height": 100.0
+        },
+        "backgroundColor": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "enabled": true,
+        "visible": true,
+        "cornerRadius": 0.0,
+        "border": {
+          "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+          "THICKNESS": 1.0,
+          "BORDER_COLOR": {
+            "r": 0.0,
+            "g": 0.0,
+            "b": 0.0,
+            "a": 1.0
+          }
+        },
+        "components": [
+          {
+            "@class": "org.liquidengine.legui.component.Panel",
+            "position": {
+              "x": 10.0,
+              "y": 10.0
+            },
+            "size": {
+              "width": 20.0,
+              "height": 20.0
+            },
+            "backgroundColor": {
+              "r": 1.0,
+              "g": 1.0,
+              "b": 1.0,
+              "a": 1.0
+            },
+            "enabled": true,
+            "visible": true,
+            "cornerRadius": 0.0,
+            "border": {
+              "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+              "THICKNESS": 1.0,
+              "BORDER_COLOR": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 1.0
+              }
+            },
+            "components": []
+          },
+          {
+            "@class": "org.liquidengine.legui.component.Panel",
+            "position": {
+              "x": 40.0,
+              "y": 10.0
+            },
+            "size": {
+              "width": 20.0,
+              "height": 20.0
+            },
+            "backgroundColor": {
+              "r": 1.0,
+              "g": 1.0,
+              "b": 1.0,
+              "a": 1.0
+            },
+            "enabled": true,
+            "visible": true,
+            "cornerRadius": 0.0,
+            "border": {
+              "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+              "THICKNESS": 1.0,
+              "BORDER_COLOR": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 1.0
+              }
+            },
+            "components": []
+          },
+          {
+            "@class": "org.liquidengine.legui.component.Panel",
+            "position": {
+              "x": 40.0,
+              "y": 40.0
+            },
+            "size": {
+              "width": 20.0,
+              "height": 20.0
+            },
+            "backgroundColor": {
+              "r": 1.0,
+              "g": 1.0,
+              "b": 1.0,
+              "a": 1.0
+            },
+            "enabled": true,
+            "visible": true,
+            "cornerRadius": 0.0,
+            "border": {
+              "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+              "THICKNESS": 1.0,
+              "BORDER_COLOR": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 1.0
+              }
+            },
+            "components": []
+          },
+          {
+            "@class": "org.liquidengine.legui.component.Panel",
+            "position": {
+              "x": 10.0,
+              "y": 40.0
+            },
+            "size": {
+              "width": 20.0,
+              "height": 20.0
+            },
+            "backgroundColor": {
+              "r": 1.0,
+              "g": 1.0,
+              "b": 1.0,
+              "a": 1.0
+            },
+            "enabled": true,
+            "visible": true,
+            "cornerRadius": 0.0,
+            "border": {
+              "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+              "THICKNESS": 1.0,
+              "BORDER_COLOR": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 1.0
+              }
+            },
+            "components": []
+          },
+          {
+            "@class": "org.liquidengine.legui.component.Button",
+            "position": {
+              "x": 70.0,
+              "y": 10.0
+            },
+            "size": {
+              "width": 20.0,
+              "height": 20.0
+            },
+            "backgroundColor": {
+              "r": 1.0,
+              "g": 1.0,
+              "b": 1.0,
+              "a": 1.0
+            },
+            "enabled": true,
+            "visible": true,
+            "cornerRadius": 0.0,
+            "border": {
+              "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+              "THICKNESS": 1.0,
+              "BORDER_COLOR": {
+                "r": 0.2,
+                "g": 0.2,
+                "b": 0.2,
+                "a": 1.0
+              }
+            },
+            "textState": {
+              "@class": "org.liquidengine.legui.component.optional.TextState",
+              "font": "roboto italic",
+              "text": "Button",
+              "fontSize": 16.0,
+              "horizontalAlign": "CENTER",
+              "verticalAlign": "MIDDLE",
+              "textColor": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 1.0
+              },
+              "highlightColor": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "padding": {
+                "left": 1.0,
+                "top": 1.0,
+                "right": 1.0,
+                "bottom": 1.0
+              }
+            }
+          }
+        ]
+      },
+      "resizable": false,
+      "closeable": false,
+      "titleEnabled": false,
+      "titleHeight": 20.0,
+      "titleBackgroundColor": {
+        "r": 0.3,
+        "g": 1.0,
+        "b": 0.3,
+        "a": 1.0
+      },
+      "closeButtonColor": {
+        "r": 1.0,
+        "g": 0.0,
+        "b": 0.0,
+        "a": 1.0
+      },
+      "title": {
+        "@class": "org.liquidengine.legui.component.optional.TextState",
+        "font": "roboto italic",
+        "text": "Hello 2 widget",
+        "fontSize": 16.0,
+        "horizontalAlign": "LEFT",
+        "verticalAlign": "MIDDLE",
+        "textColor": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 1.0
+        },
+        "highlightColor": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "padding": {
+          "left": 10.0,
+          "top": 5.0,
+          "right": 10.0,
+          "bottom": 5.0
+        }
+      }
+    },
+    {
+      "@class": "org.liquidengine.legui.component.ScrollBar",
+      "position": {
+        "x": 360.0,
+        "y": 170.0
+      },
+      "size": {
+        "width": 20.0,
+        "height": 100.0
+      },
+      "backgroundColor": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0,
+        "a": 1.0
+      },
+      "enabled": true,
+      "visible": true,
+      "cornerRadius": 0.0,
+      "border": {
+        "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+        "THICKNESS": 1.0,
+        "BORDER_COLOR": {
+          "r": 1.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 1.0
+        }
+      },
+      "orientation": "VERTICAL",
+      "minValue": 0.0,
+      "maxValue": 100.0,
+      "curValue": 20.0,
+      "visibleAmount": 20.0,
+      "arrowsEnabled": true,
+      "arrowSize": 20.0,
+      "arrowColor": {
+        "r": 0.2,
+        "g": 0.2,
+        "b": 0.2,
+        "a": 1.0
+      },
+      "scrollColor": {
+        "r": 0.2,
+        "g": 0.2,
+        "b": 0.2,
+        "a": 1.0
+      }
+    },
+    {
+      "@class": "org.liquidengine.legui.component.ScrollBar",
+      "position": {
+        "x": 385.0,
+        "y": 170.0
+      },
+      "size": {
+        "width": 7.0,
+        "height": 100.0
+      },
+      "backgroundColor": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0,
+        "a": 1.0
+      },
+      "enabled": true,
+      "visible": true,
+      "cornerRadius": 3.0,
+      "border": {
+        "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+        "THICKNESS": 1.0,
+        "BORDER_COLOR": {
+          "r": 1.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 1.0
+        }
+      },
+      "orientation": "VERTICAL",
+      "minValue": 0.0,
+      "maxValue": 100.0,
+      "curValue": 20.0,
+      "visibleAmount": 20.0,
+      "arrowsEnabled": false,
+      "arrowSize": 20.0,
+      "arrowColor": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0,
+        "a": 0.4
+      },
+      "scrollColor": {
+        "r": 0.2,
+        "g": 0.2,
+        "b": 0.2,
+        "a": 1.0
+      }
+    },
+    {
+      "@class": "org.liquidengine.legui.component.ScrollBar",
+      "position": {
+        "x": 250.0,
+        "y": 280.0
+      },
+      "size": {
+        "width": 100.0,
+        "height": 20.0
+      },
+      "backgroundColor": {
+        "r": 0.2,
+        "g": 0.2,
+        "b": 0.2,
+        "a": 1.0
+      },
+      "enabled": true,
+      "visible": true,
+      "cornerRadius": 0.0,
+      "border": {
+        "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+        "THICKNESS": 1.0,
+        "BORDER_COLOR": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 1.0
+        }
+      },
+      "orientation": "HORIZONTAL",
+      "minValue": 0.0,
+      "maxValue": 100.0,
+      "curValue": 20.0,
+      "visibleAmount": 20.0,
+      "arrowsEnabled": true,
+      "arrowSize": 20.0,
+      "arrowColor": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0,
+        "a": 1.0
+      },
+      "scrollColor": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0,
+        "a": 1.0
+      }
+    },
+    {
+      "@class": "org.liquidengine.legui.component.Panel",
+      "position": {
+        "x": 420.0,
+        "y": 170.0
+      },
+      "size": {
+        "width": 100.0,
+        "height": 100.0
+      },
+      "backgroundColor": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 1.0,
+        "a": 1.0
+      },
+      "enabled": true,
+      "visible": true,
+      "cornerRadius": 0.0,
+      "border": {
+        "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+        "THICKNESS": 1.0,
+        "BORDER_COLOR": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 1.0
+        }
+      },
+      "components": []
+    },
+    {
+      "@class": "org.liquidengine.legui.component.Panel",
+      "position": {
+        "x": 470.0,
+        "y": 170.0
+      },
+      "size": {
+        "width": 100.0,
+        "height": 100.0
+      },
+      "backgroundColor": {
+        "r": 0.0,
+        "g": 1.0,
+        "b": 0.0,
+        "a": 1.0
+      },
+      "enabled": true,
+      "visible": true,
+      "cornerRadius": 0.0,
+      "border": {
+        "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+        "THICKNESS": 1.0,
+        "BORDER_COLOR": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 1.0
+        }
+      },
+      "components": []
+    },
+    {
+      "@class": "org.liquidengine.legui.component.ScrollablePanel",
+      "position": {
+        "x": 420.0,
+        "y": 10.0
+      },
+      "size": {
+        "width": 250.0,
+        "height": 150.0
+      },
+      "backgroundColor": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0,
+        "a": 1.0
+      },
+      "enabled": true,
+      "visible": true,
+      "cornerRadius": 0.0,
+      "border": {
+        "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+        "THICKNESS": 0.5,
+        "BORDER_COLOR": {
+          "r": 0.2,
+          "g": 0.2,
+          "b": 0.2,
+          "a": 1.0
+        }
+      },
+      "horizontalScrollBar": {
+        "@class": "org.liquidengine.legui.component.ScrollBar",
+        "position": {
+          "x": 0.0,
+          "y": 138.0
+        },
+        "size": {
+          "width": 238.0,
+          "height": 12.0
+        },
+        "backgroundColor": {
+          "r": 0.2,
+          "g": 0.2,
+          "b": 0.2,
+          "a": 1.0
+        },
+        "enabled": true,
+        "visible": true,
+        "cornerRadius": 0.0,
+        "border": {
+          "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+          "THICKNESS": 0.5,
+          "BORDER_COLOR": {
+            "r": 0.2,
+            "g": 0.2,
+            "b": 0.2,
+            "a": 1.0
+          }
+        },
+        "orientation": "HORIZONTAL",
+        "minValue": 0.0,
+        "maxValue": 100.0,
+        "curValue": 0.0,
+        "visibleAmount": 79.333336,
+        "arrowsEnabled": true,
+        "arrowSize": 12.0,
+        "arrowColor": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "scrollColor": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        }
+      },
+      "verticalScrollBar": {
+        "@class": "org.liquidengine.legui.component.ScrollBar",
+        "position": {
+          "x": 238.0,
+          "y": 0.0
+        },
+        "size": {
+          "width": 12.0,
+          "height": 138.0
+        },
+        "backgroundColor": {
+          "r": 0.2,
+          "g": 0.2,
+          "b": 0.2,
+          "a": 1.0
+        },
+        "enabled": true,
+        "visible": true,
+        "cornerRadius": 0.0,
+        "border": {
+          "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+          "THICKNESS": 0.5,
+          "BORDER_COLOR": {
+            "r": 0.2,
+            "g": 0.2,
+            "b": 0.2,
+            "a": 1.0
+          }
+        },
+        "orientation": "VERTICAL",
+        "minValue": 0.0,
+        "maxValue": 100.0,
+        "curValue": 0.0,
+        "visibleAmount": 69.0,
+        "arrowsEnabled": true,
+        "arrowSize": 12.0,
+        "arrowColor": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "scrollColor": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        }
+      },
+      "container": {
+        "@class": "org.liquidengine.legui.component.Panel",
+        "position": {
+          "x": -0.0,
+          "y": -0.0
+        },
+        "size": {
+          "width": 300.0,
+          "height": 200.0
+        },
+        "backgroundColor": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "enabled": true,
+        "visible": true,
+        "cornerRadius": 0.0,
+        "components": [
+          {
+            "@class": "org.liquidengine.legui.component.ScrollablePanel",
+            "position": {
+              "x": 10.0,
+              "y": 10.0
+            },
+            "size": {
+              "width": 150.0,
+              "height": 100.0
+            },
+            "backgroundColor": {
+              "r": 0.0,
+              "g": 0.0,
+              "b": 0.0,
+              "a": 0.0
+            },
+            "enabled": true,
+            "visible": true,
+            "cornerRadius": 0.0,
+            "border": {
+              "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+              "THICKNESS": 0.5,
+              "BORDER_COLOR": {
+                "r": 0.2,
+                "g": 0.2,
+                "b": 0.2,
+                "a": 1.0
+              }
+            },
+            "horizontalScrollBar": {
+              "@class": "org.liquidengine.legui.component.ScrollBar",
+              "position": {
+                "x": 0.0,
+                "y": 88.0
+              },
+              "size": {
+                "width": 138.0,
+                "height": 12.0
+              },
+              "backgroundColor": {
+                "r": 0.2,
+                "g": 0.2,
+                "b": 0.2,
+                "a": 1.0
+              },
+              "enabled": true,
+              "visible": true,
+              "cornerRadius": 0.0,
+              "border": {
+                "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+                "THICKNESS": 0.5,
+                "BORDER_COLOR": {
+                  "r": 0.2,
+                  "g": 0.2,
+                  "b": 0.2,
+                  "a": 1.0
+                }
+              },
+              "orientation": "HORIZONTAL",
+              "minValue": 0.0,
+              "maxValue": 100.0,
+              "curValue": 0.0,
+              "visibleAmount": 46.0,
+              "arrowsEnabled": true,
+              "arrowSize": 12.0,
+              "arrowColor": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+              },
+              "scrollColor": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+              }
+            },
+            "verticalScrollBar": {
+              "@class": "org.liquidengine.legui.component.ScrollBar",
+              "position": {
+                "x": 138.0,
+                "y": 0.0
+              },
+              "size": {
+                "width": 12.0,
+                "height": 88.0
+              },
+              "backgroundColor": {
+                "r": 0.2,
+                "g": 0.2,
+                "b": 0.2,
+                "a": 1.0
+              },
+              "enabled": true,
+              "visible": true,
+              "cornerRadius": 0.0,
+              "border": {
+                "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+                "THICKNESS": 0.5,
+                "BORDER_COLOR": {
+                  "r": 0.2,
+                  "g": 0.2,
+                  "b": 0.2,
+                  "a": 1.0
+                }
+              },
+              "orientation": "VERTICAL",
+              "minValue": 0.0,
+              "maxValue": 100.0,
+              "curValue": 0.0,
+              "visibleAmount": 29.333334,
+              "arrowsEnabled": true,
+              "arrowSize": 12.0,
+              "arrowColor": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+              },
+              "scrollColor": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+              }
+            },
+            "container": {
+              "@class": "org.liquidengine.legui.component.Panel",
+              "position": {
+                "x": -0.0,
+                "y": -0.0
+              },
+              "size": {
+                "width": 300.0,
+                "height": 300.0
+              },
+              "backgroundColor": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+              },
+              "enabled": true,
+              "visible": true,
+              "cornerRadius": 0.0,
+              "components": [
+                {
+                  "@class": "org.liquidengine.legui.component.TextInput",
+                  "position": {
+                    "x": 10.0,
+                    "y": 10.0
+                  },
+                  "size": {
+                    "width": 150.0,
+                    "height": 20.0
+                  },
+                  "backgroundColor": {
+                    "r": 1.0,
+                    "g": 1.0,
+                    "b": 1.0,
+                    "a": 0.8
+                  },
+                  "enabled": true,
+                  "visible": true,
+                  "cornerRadius": 2.0,
+                  "border": {
+                    "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+                    "THICKNESS": 1.0,
+                    "BORDER_COLOR": {
+                      "r": 0.0,
+                      "g": 0.0,
+                      "b": 0.0,
+                      "a": 1.0
+                    }
+                  },
+                  "editable": true,
+                  "selectionColor": {
+                    "r": 0.6,
+                    "g": 0.7,
+                    "b": 1.0,
+                    "a": 1.0
+                  },
+                  "textState": {
+                    "@class": "org.liquidengine.legui.component.optional.TextState",
+                    "font": "roboto italic",
+                    "text": "Hello Scrollable",
+                    "fontSize": 16.0,
+                    "horizontalAlign": "LEFT",
+                    "verticalAlign": "MIDDLE",
+                    "textColor": {
+                      "r": 0.0,
+                      "g": 0.0,
+                      "b": 0.0,
+                      "a": 1.0
+                    },
+                    "highlightColor": {
+                      "r": 0.0,
+                      "g": 0.0,
+                      "b": 0.0,
+                      "a": 0.0
+                    },
+                    "padding": {
+                      "left": 10.0,
+                      "top": 5.0,
+                      "right": 10.0,
+                      "bottom": 5.0
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "@class": "org.liquidengine.legui.component.TextArea",
+      "position": {
+        "x": 420.0,
+        "y": 280.0
+      },
+      "size": {
+        "width": 150.0,
+        "height": 100.0
+      },
+      "backgroundColor": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0,
+        "a": 1.0
+      },
+      "enabled": true,
+      "visible": true,
+      "cornerRadius": 3.0,
+      "border": {
+        "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+        "THICKNESS": 1.0,
+        "BORDER_COLOR": {
+          "r": 0.2,
+          "g": 0.2,
+          "b": 0.2,
+          "a": 1.0
+        }
+      },
+      "editable": true,
+      "selectionColor": {
+        "r": 0.6,
+        "g": 0.7,
+        "b": 1.0,
+        "a": 1.0
+      },
+      "textState": {
+        "@class": "org.liquidengine.legui.component.optional.TextState",
+        "font": "roboto italic",
+        "text": "ABC DEF GH\r\nI JKL MNO PQR\nSTU VWXYZ",
+        "fontSize": 16.0,
+        "horizontalAlign": "CENTER",
+        "verticalAlign": "MIDDLE",
+        "textColor": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 1.0
+        },
+        "highlightColor": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "padding": {
+          "left": 5.0,
+          "top": 10.0,
+          "right": 5.0,
+          "bottom": 10.0
+        }
+      }
+    },
+    {
+      "@class": "org.liquidengine.legui.component.TextInput",
+      "position": {
+        "x": 420.0,
+        "y": 400.0
+      },
+      "size": {
+        "width": 150.0,
+        "height": 20.0
+      },
+      "backgroundColor": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0,
+        "a": 0.8
+      },
+      "enabled": true,
+      "visible": true,
+      "cornerRadius": 2.0,
+      "border": {
+        "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+        "THICKNESS": 1.0,
+        "BORDER_COLOR": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 1.0
+        }
+      },
+      "editable": true,
+      "selectionColor": {
+        "r": 0.6,
+        "g": 0.7,
+        "b": 1.0,
+        "a": 1.0
+      },
+      "textState": {
+        "@class": "org.liquidengine.legui.component.optional.TextState",
+        "font": "roboto italic",
+        "text": "TextInput",
+        "fontSize": 16.0,
+        "horizontalAlign": "CENTER",
+        "verticalAlign": "MIDDLE",
+        "textColor": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 1.0
+        },
+        "highlightColor": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "padding": {
+          "left": 10.0,
+          "top": 5.0,
+          "right": 10.0,
+          "bottom": 5.0
+        }
+      }
+    },
+    {
+      "@class": "org.liquidengine.legui.component.TextInput",
+      "position": {
+        "x": 420.0,
+        "y": 430.0
+      },
+      "size": {
+        "width": 50.0,
+        "height": 35.0
+      },
+      "backgroundColor": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0,
+        "a": 1.0
+      },
+      "enabled": true,
+      "visible": true,
+      "cornerRadius": 2.0,
+      "border": {
+        "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+        "THICKNESS": 1.0,
+        "BORDER_COLOR": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 1.0
+        }
+      },
+      "editable": true,
+      "selectionColor": {
+        "r": 0.6,
+        "g": 0.7,
+        "b": 1.0,
+        "a": 1.0
+      },
+      "textState": {
+        "@class": "org.liquidengine.legui.component.optional.TextState",
+        "font": "roboto italic",
+        "text": "00",
+        "fontSize": 35.0,
+        "horizontalAlign": "CENTER",
+        "verticalAlign": "MIDDLE",
+        "textColor": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 1.0
+        },
+        "highlightColor": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "padding": {
+          "left": 10.0,
+          "top": 5.0,
+          "right": 10.0,
+          "bottom": 5.0
+        }
+      }
+    },
+    {
+      "@class": "org.liquidengine.legui.component.SelectBox",
+      "position": {
+        "x": 20.0,
+        "y": 260.0
+      },
+      "size": {
+        "width": 100.0,
+        "height": 20.0
+      },
+      "backgroundColor": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0,
+        "a": 1.0
+      },
+      "enabled": true,
+      "visible": true,
+      "cornerRadius": 0.0,
+      "border": {
+        "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+        "THICKNESS": 1.0,
+        "BORDER_COLOR": {
+          "r": 0.2,
+          "g": 0.2,
+          "b": 0.2,
+          "a": 1.0
+        }
+      },
+      "elementHeight": 20.0,
+      "buttonWidth": 15.0,
+      "visibleCount": 5,
+      "elements": [
+        "Just",
+        "Hello",
+        "World",
+        "World1",
+        "World2",
+        "World3",
+        "World4",
+        "World5",
+        "World6",
+        "World7",
+        "World8",
+        "World9",
+        "World10",
+        "World11",
+        "World12"
+      ]
+    },
+    {
+      "@class": "org.liquidengine.legui.component.Button",
+      "position": {
+        "x": 130.0,
+        "y": 260.0
+      },
+      "size": {
+        "width": 70.0,
+        "height": 20.0
+      },
+      "backgroundColor": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0,
+        "a": 1.0
+      },
+      "enabled": true,
+      "visible": true,
+      "cornerRadius": 0.0,
+      "border": {
+        "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+        "THICKNESS": 1.0,
+        "BORDER_COLOR": {
+          "r": 0.2,
+          "g": 0.2,
+          "b": 0.2,
+          "a": 1.0
+        }
+      },
+      "textState": {
+        "@class": "org.liquidengine.legui.component.optional.TextState",
+        "font": "roboto italic",
+        "text": "Add element",
+        "fontSize": 16.0,
+        "horizontalAlign": "CENTER",
+        "verticalAlign": "MIDDLE",
+        "textColor": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 1.0
+        },
+        "highlightColor": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "padding": {
+          "left": 1.0,
+          "top": 1.0,
+          "right": 1.0,
+          "bottom": 1.0
+        }
+      }
+    }
+  ]
+}

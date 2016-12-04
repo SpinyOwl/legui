@@ -1,5 +1,8 @@
 package org.liquidengine.legui.component;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.joml.Vector2f;
 import org.liquidengine.legui.component.border.SimpleRectangleLineBorder;
 import org.liquidengine.legui.component.optional.Orientation;
@@ -128,7 +131,9 @@ public class ScrollablePanel extends Panel implements Viewport {
 
     public void setVerticalScrollBar(ScrollBar verticalScrollBar) {
         this.verticalScrollBar.setViewport(null);
+        this.removeComponent(verticalScrollBar);
         this.verticalScrollBar = verticalScrollBar;
+        this.addComponent(verticalScrollBar);
         this.verticalScrollBar.setViewport(this);
     }
 
@@ -138,11 +143,57 @@ public class ScrollablePanel extends Panel implements Viewport {
 
     public void setHorizontalScrollBar(ScrollBar horizontalScrollBar) {
         this.horizontalScrollBar.setViewport(null);
+        this.removeComponent(horizontalScrollBar);
         this.horizontalScrollBar = horizontalScrollBar;
+        this.addComponent(horizontalScrollBar);
         this.horizontalScrollBar.setViewport(this);
     }
 
     public ComponentContainer getContainer() {
         return container;
+    }
+
+    public void setContainer(ComponentContainer container) {
+        viewport.removeComponent(this.container);
+        this.container = container;
+        viewport.addComponent(this.container);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (!(o instanceof ScrollablePanel)) return false;
+
+        ScrollablePanel panel = (ScrollablePanel) o;
+
+        return new EqualsBuilder()
+                .appendSuper(super.equals(o))
+                .append(verticalScrollBar, panel.verticalScrollBar)
+                .append(horizontalScrollBar, panel.horizontalScrollBar)
+                .append(viewport, panel.viewport)
+                .append(container, panel.container)
+                .isEquals();
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append("verticalScrollBar", verticalScrollBar)
+                .append("horizontalScrollBar", horizontalScrollBar)
+                .append("viewport", viewport)
+                .append("container", container)
+                .toString();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37)
+                .appendSuper(super.hashCode())
+                .append(verticalScrollBar)
+                .append(horizontalScrollBar)
+                .append(viewport)
+                .append(container)
+                .toHashCode();
     }
 }

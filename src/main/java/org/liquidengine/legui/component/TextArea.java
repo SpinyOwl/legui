@@ -17,10 +17,11 @@ public class TextArea extends Component {
 
     protected int caretPosition;
     protected int mouseCaretPosition;
-    protected boolean editable = true;
 
     protected int startSelectionIndex;
     protected int endSelectionIndex;
+
+    protected boolean editable = true;
     protected Vector4f selectionColor = ColorConstants.lightBlue();
 
     public TextArea() {

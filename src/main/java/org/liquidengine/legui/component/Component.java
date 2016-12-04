@@ -198,7 +198,6 @@ public abstract class Component implements Serializable {
                 .append(size, component.size)
                 .append(backgroundColor, component.backgroundColor)
                 .append(border, component.border)
-                .append(parent, component.parent)
                 .append(intersector, component.intersector)
                 .append(leguiEventListeners, component.leguiEventListeners)
                 .isEquals();
@@ -214,7 +213,6 @@ public abstract class Component implements Serializable {
                 .append(enabled)
                 .append(visible)
                 .append(cornerRadius)
-                .append(parent)
                 .append(intersector)
                 .append(leguiEventListeners)
                 .toHashCode();
@@ -230,7 +228,6 @@ public abstract class Component implements Serializable {
                 .append("enabled", enabled)
                 .append("visible", visible)
                 .append("cornerRadius", cornerRadius)
-                .append("parent", parent)
                 .append("intersector", intersector)
                 .append("leguiEventListeners", leguiEventListeners)
                 .toString();

@@ -4,10 +4,10 @@ apply plugin: 'java'
 apply plugin: 'maven-publish'
 apply plugin: 'maven'
 apply plugin: 'idea'
-idea { module { downloadJavadoc = true; downloadSources = true; } }
+idea { module { downloadJavadoc = true; downloadSources = true } }
 
-Properties up = new Properties(); up.load(new FileInputStream("./version.properties"));
-project.version = up["liquidengine.legui.version"];
+Properties up = new Properties(); up.load(new FileInputStream("./version.properties"))
+project.version = up["liquidengine.legui.version"]
 
 configurations.all {
     resolutionStrategy.cacheChangingModulesFor 10, 'seconds'
@@ -21,7 +21,7 @@ def log4j_version        = '2.3'
 def commons_version      = '3.4'
 def commons_collections  = '4.1'
 def junit_version        = '4.12'
-def le_cbchain           = '0.1.0'
+def le_cbchain           = '0.1.1'
 def guava_version        = '19.0'
 def gson_version         = '2.7'
 //@formatter:on
@@ -41,10 +41,7 @@ dependencies {
     compile group: 'org.apache.commons',         name: 'commons-lang3',        version: commons_version,       changing: false
     compile group: 'org.apache.commons',         name: 'commons-collections4', version: commons_collections,   changing: false
     compile group: 'com.google.guava',           name: 'guava',                version: guava_version,         changing: false
-//    compile group: 'com.google.code.gson',       name: 'gson',                 version: gson_version,          changing: false
-//    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind',     version: '2.8.3',               changing: false
-//    compile group: 'com.fasterxml.jackson.core', name: 'jackson-core',         version: '2.8.3',               changing: false
-//    compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations',  version: '2.8.3',               changing: false
+    compile group: 'com.google.code.gson',       name: 'gson',                 version: gson_version,          changing: false
 
     compile group: 'org.liquidengine',           name: 'cbchain',              version: le_cbchain,            changing: true
 
@@ -91,42 +88,63 @@ project.sourceCompatibility = 1.8
 project.targetCompatibility = 1.8
 compileJava.options.encoding = 'UTF-8'
 
-def build_type = System.getProperty("build_type") ?: "";
+def build_type = System.getProperty("build_type") ?: ""
 if (build_type == "SNAPSHOT") {
     project.version += "-SNAPSHOT"
 }
 
 task publishArchives << {
-    def publishUrl;
-    def buildType;
-    def publishUsername     = System.getenv("publishUsername"    ) ?: publishUsername;
-    def publishPassword     = System.getenv("publishPassword"    ) ?: publishPassword;
-    def releasesPublishUrl  = System.getenv("releasesPublishUrl" ) ?: releasesPublishUrl;
-    def snapshotsPublishUrl = System.getenv("snapshotsPublishUrl") ?: snapshotsPublishUrl;
+    def publishUrl
+    def buildType
+    def publishUsername = System.getenv("publishUsername") ?: publishUsername
+    def publishPassword = System.getenv("publishPassword") ?: publishPassword
+    def releasesPublishUrl = System.getenv("releasesPublishUrl") ?: releasesPublishUrl
+    def snapshotsPublishUrl = System.getenv("snapshotsPublishUrl") ?: snapshotsPublishUrl
     println("-------------------------------------")
     println("PUBLISH ARCHIVES TASK " + build_type)
     println("-------------------------------------")
     if (build_type != "") {
         boolean b = false; buildType = "ERROR"
         if (build_type == "RELEASE") {
-            publishUrl = releasesPublishUrl; buildType = "RELEASE"; b = true;
+            publishUrl = releasesPublishUrl; buildType = "RELEASE"; b = true
         }
         if (build_type == "SNAPSHOT") {
-            publishUrl = snapshotsPublishUrl; buildType = "SNAPSHOT"; b = true;
+            publishUrl = snapshotsPublishUrl; buildType = "SNAPSHOT"; b = true
         }
         println("build_type : $buildType; PUBLISHED TO $publishUrl")
         if (b) {
             uploadArchives {
                 repositories.mavenDeployer {
-                    configuration = configurations.deployerJar;
+                    configuration = configurations.deployerJar
                     repository(url: publishUrl) {
                         authentication(userName: publishUsername, password: publishPassword)
                     }
                 }
             }
-            uploadArchives.execute();
+            uploadArchives.execute()
         }
     } else {
         println("NOT UPLOADED")
     }
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+    dependsOn classes
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+javadocJar.dependsOn javadoc
+publishArchives.dependsOn jar
+publishArchives.dependsOn sourcesJar
+publishArchives.dependsOn javadocJar
+
+artifacts {
+    archives sourcesJar
+    archives javadocJar
 }

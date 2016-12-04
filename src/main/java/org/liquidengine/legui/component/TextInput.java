@@ -20,8 +20,8 @@ public class TextInput extends Component {
 
     protected int startSelectionIndex;
     protected int endSelectionIndex;
-    protected Vector4f selectionColor = ColorConstants.lightBlue();
 
+    protected Vector4f selectionColor = ColorConstants.lightBlue();
     protected boolean editable = true;
 
     public TextInput() {

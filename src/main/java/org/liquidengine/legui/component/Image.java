@@ -6,42 +6,30 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.liquidengine.legui.component.border.SimpleRectangleLineBorder;
 import org.liquidengine.legui.util.ColorConstants;
-import org.liquidengine.legui.util.IOUtil;
-
-import java.io.IOException;
-import java.nio.ByteBuffer;
 
 /**
  * Created by Shcherbin Alexander on 9/22/2016.
  */
 public class Image extends Component {
     private String path;
-    private ByteBuffer imageData;
+//    private ByteBuffer imageData;
 
-    public Image(String path, ByteBuffer imageData) {
+    public Image(String path/*, ByteBuffer imageData*/) {
         this.path = path;
-        this.imageData = imageData;
+//        this.imageData = imageData;
         initialize();
     }
-
-    public static Image createImage(String path) {
-        Image image = null;
-        try {
-            ByteBuffer data = IOUtil.ioResourceToByteBuffer(path, 32 * 1024);
-            image = new Image(path, data);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return image;
+    public Image() {
+        initialize();
     }
 
     private void initialize() {
         border = new SimpleRectangleLineBorder(ColorConstants.darkGray(), 1);
     }
 
-    public ByteBuffer getImageData() {
-        return imageData;
-    }
+//    public ByteBuffer getImageData() {
+//        return imageData;
+//    }
 
     public String getPath() {
         return path;
@@ -58,7 +46,7 @@ public class Image extends Component {
         return new EqualsBuilder()
                 .appendSuper(super.equals(o))
                 .append(path, image.path)
-                .append(imageData, image.imageData)
+//                .append(imageData, image.imageData)
                 .isEquals();
     }
 
@@ -67,7 +55,7 @@ public class Image extends Component {
         return new HashCodeBuilder(17, 37)
                 .appendSuper(super.hashCode())
                 .append(path)
-                .append(imageData)
+//                .append(imageData)
                 .toHashCode();
     }
 
@@ -75,7 +63,11 @@ public class Image extends Component {
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
                 .append("path", path)
-                .append("imageData", imageData)
+//                .append("imageData", imageData)
                 .toString();
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 }

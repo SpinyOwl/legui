@@ -29,13 +29,21 @@ public class Example extends Demo {
 
         if (secondsFromStart > 5) {
             Image image = exampleGui.getImage();
-            if (image != null && image.getPath().equals("org/liquidengine/legui/example/1.jpg")) {
+            if (image != null && image.getPath().equals("org/liquidengine/legui/example/11.jpg")) {
                 exampleGui.removeComponent(image);
-                Image image1 = Image.createImage("org/liquidengine/legui/example/2.jpg");
+                System.out.println("update img");
+                Image image1 = new Image("org/liquidengine/legui/example/2.jpg");
                 image1.setSize(image.getSize());
                 image1.setPosition(image.getPosition());
                 exampleGui.addComponent(image1);
                 exampleGui.setImage(image1);
+            }
+        }
+        if (secondsFromStart > 15) {
+            Image image = exampleGui.getImage();
+            if (image != null && image.getPath().equals("org/liquidengine/legui/example/2.jpg")) {
+                System.out.println("update img");
+                image.setPath("org/liquidengine/legui/example/1.jpg");
             }
         }
 

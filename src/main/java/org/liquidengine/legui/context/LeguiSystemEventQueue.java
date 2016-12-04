@@ -14,7 +14,7 @@ public class LeguiSystemEventQueue {
 
     private Queue<SystemEvent> eventQueue = new ConcurrentLinkedQueue<>();
 
-    public LeguiSystemEventQueue(LeguiCallbackKeeper guiCallbackKeeper) {
+    public LeguiSystemEventQueue(ILeguiCallbackKeeper guiCallbackKeeper) {
         guiCallbackKeeper.getChainCharCallback().add(createCharCallback());
         guiCallbackKeeper.getChainDropCallback().add(createDropCallback());
         guiCallbackKeeper.getChainKeyCallback().add(createKeyCallback());

@@ -1,7 +1,9 @@
 package org.liquidengine.legui.component;
 
-import com.google.common.base.Objects;
 import org.apache.commons.collections4.list.SetUniqueList;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.joml.Vector2f;
 import org.liquidengine.legui.component.border.SimpleRectangleLineBorder;
 import org.liquidengine.legui.event.component.FocusEvent;
@@ -24,26 +26,26 @@ import static org.liquidengine.legui.util.Util.cpToStr;
  * Creates drop-down list with select options
  * Created by Shcherbin Alexander on 10/21/2016.
  */
-public class SelectBox<T> extends ComponentContainer {
+public class SelectBox extends ComponentContainer {
     public static final String NULL = "null";
     private static final String EXPANDED = cpToStr(0xE5C7);
     private static final String COLLAPSED = cpToStr(0xE5C5);
-    protected List<ListBoxElement<T>> listBoxElements = SetUniqueList.setUniqueList(new CopyOnWriteArrayList<>());
-    protected List<T> elements = SetUniqueList.setUniqueList(new CopyOnWriteArrayList<>());
+    protected List<ListBoxElement> listBoxElements = SetUniqueList.setUniqueList(new CopyOnWriteArrayList<>());
+    protected List<String> elements = SetUniqueList.setUniqueList(new CopyOnWriteArrayList<>());
 
     protected SBWidget selectionListWidget = new SBWidget();
-    protected ScrollablePanel selectionListPanel = new ScrollablePanel();
+    protected SelectBoxScrollablePanel selectionListPanel = new SelectBoxScrollablePanel();
     protected Button selectionButton = new Button(NULL);
-    protected T selectedElement = null;
+    protected String selectedElement = null;
     protected float elementHeight = 16;
+    protected float buttonWidth = 15f;
+    protected int visibleCount = 3;
 
     protected Button expandButton = new Button(COLLAPSED);
 
-    protected float buttonWidth = 15f;
-    protected Lock lock = new ReentrantLock(false);
     protected boolean collapsed = true;
 
-    protected int visibleCount = 3;
+    protected Lock lock = new ReentrantLock(false);
 
     public SelectBox() {
         initialize();
@@ -59,6 +61,10 @@ public class SelectBox<T> extends ComponentContainer {
         initialize();
     }
 
+    public List<String> getElements() {
+        return elements;
+    }
+
     public float getButtonWidth() {
         return buttonWidth;
     }
@@ -67,7 +73,7 @@ public class SelectBox<T> extends ComponentContainer {
         this.buttonWidth = buttonWidth;
     }
 
-    public T getSelection() {
+    public String getSelection() {
         return selectedElement;
     }
 
@@ -96,7 +102,7 @@ public class SelectBox<T> extends ComponentContainer {
         FocusEventListener focusEventListener = event -> {
             if (!event.focusGained && !collapsed) {
                 boolean collapse = true;
-                for (ListBoxElement<T> listBoxElement : listBoxElements) {
+                for (ListBoxElement listBoxElement : listBoxElements) {
                     if (event.focusTarget == listBoxElement) {
                         collapse = false;
                     }
@@ -149,7 +155,7 @@ public class SelectBox<T> extends ComponentContainer {
         expandButton.setSize(buttonWidth, size.y);
 
         for (int i = 0; i < listBoxElements.size(); i++) {
-            ListBoxElement<T> listBoxElement = listBoxElements.get(i);
+            ListBoxElement listBoxElement = listBoxElements.get(i);
             listBoxElement.setSize(new Vector2f(selectionListPanel.getContainer().getSize().x, elementHeight));
             listBoxElement.setPosition(0, i * elementHeight);
         }
@@ -172,13 +178,13 @@ public class SelectBox<T> extends ComponentContainer {
 
     }
 
-    public void addElement(T element) {
+    public void addElement(String element) {
         if (!elements.contains(element)) {
             lock.lock();
             try {
 
-                ListBoxElement<T> boxElement = createListBoxElement(element);
-                if (elements.isEmpty()) selectionButton.getTextState().setText(element.toString());
+                ListBoxElement boxElement = createListBoxElement(element);
+                if (elements.isEmpty()) selectionButton.getTextState().setText(element);
                 elements.add(element);
                 listBoxElements.add(boxElement);
                 addListBoxComponent(boxElement);
@@ -189,8 +195,8 @@ public class SelectBox<T> extends ComponentContainer {
         resize();
     }
 
-    private ListBoxElement<T> createListBoxElement(T element) {
-        ListBoxElement<T> boxElement = new ListBoxElement<>(element, false);
+    private ListBoxElement createListBoxElement(String element) {
+        ListBoxElement boxElement = new ListBoxElement(element, false);
         boxElement.setSize(new Vector2f(selectionListPanel.getContainer().getSize().x, elementHeight));
         boxElement.setPosition(0, selectionListPanel.getContainer().componentsCount() * elementHeight);
         boxElement.getLeguiEventListeners().getListeners(MouseClickEvent.class).add((MouseClickEventListener) event -> {
@@ -202,17 +208,17 @@ public class SelectBox<T> extends ComponentContainer {
         return boxElement;
     }
 
-    private void addListBoxComponent(ListBoxElement<T> element) {
+    private void addListBoxComponent(ListBoxElement element) {
         selectionListPanel.getContainer().addComponent(element);
         selectionListPanel.getContainer().getSize().y = selectionListPanel.getContainer().componentsCount() * elementHeight;
         selectionListPanel.resize();
     }
 
-    public int getElementIndex(T element) {
+    public int getElementIndex(String element) {
         return elements.indexOf(element);
     }
 
-    public void removeElement(T element) {
+    public void removeElement(String element) {
         elements.remove(element);
     }
 
@@ -226,20 +232,20 @@ public class SelectBox<T> extends ComponentContainer {
         }
     }
 
-    public void setSelected(T element, boolean selected) {
+    public void setSelected(String element, boolean selected) {
         int index = elements.indexOf(element);
         setSelected(element, selected, index);
     }
 
     public void setSelected(int index, boolean selected) {
-        T element = elements.get(index);
+        String element = elements.get(index);
         setSelected(element, selected, index);
     }
 
-    private void setSelected(T element, boolean selected, int index) {
+    private void setSelected(String element, boolean selected, int index) {
         if (selected) {
             if (index != -1) {
-                ListBoxElement<T> tListBoxElement = listBoxElements.get(index);
+                ListBoxElement tListBoxElement = listBoxElements.get(index);
                 tListBoxElement.selected = true;
                 int selectedIndex = elements.indexOf(selectedElement);
                 if (selectedIndex != -1) {
@@ -273,19 +279,13 @@ public class SelectBox<T> extends ComponentContainer {
     public static class SBWidget extends Widget {
     }
 
-    public class ListBoxElement<T> extends Button {
-        private T element;
+    public class ListBoxElement extends Button {
         private boolean selected;
 
-        private ListBoxElement(T element, boolean selected) {
-            super(element == null ? "null" : element.toString());
-            this.element = element;
+        private ListBoxElement(String text, boolean selected) {
+            super(text == null ? "null" : text);
             this.selected = selected;
             this.border = null;
-        }
-
-        public T getElement() {
-            return element;
         }
 
         public boolean isSelected() {
@@ -296,24 +296,47 @@ public class SelectBox<T> extends ComponentContainer {
             this.selected = selected;
         }
 
-        private void set(T element, boolean selected) {
-            this.element = element;
-            this.selected = selected;
+        @Override
+        public String toString() {
+            return new ToStringBuilder(this)
+                    .append("selected", selected)
+                    .toString();
         }
 
         @Override
         public boolean equals(Object o) {
             if (this == o) return true;
-            if (!(o instanceof SelectBox.ListBoxElement)) return false;
-            ListBoxElement that = (SelectBox.ListBoxElement) o;
-            return Objects.equal(element, that.element);
+
+            if (o == null || getClass() != o.getClass()) return false;
+
+            ListBoxElement that = (ListBoxElement) o;
+
+            return new EqualsBuilder()
+                    .appendSuper(super.equals(o))
+                    .append(selected, that.selected)
+                    .isEquals();
         }
 
         @Override
         public int hashCode() {
-            return Objects.hashCode(element);
+            return new HashCodeBuilder(17, 37)
+                    .appendSuper(super.hashCode())
+                    .append(selected)
+                    .toHashCode();
         }
     }
 
+    public class SelectBoxScrollablePanel extends ScrollablePanel {
+        public SelectBoxScrollablePanel() {
+        }
+
+        public SelectBoxScrollablePanel(float x, float y, float width, float height) {
+            super(x, y, width, height);
+        }
+
+        public SelectBoxScrollablePanel(Vector2f position, Vector2f size) {
+            super(position, size);
+        }
+    }
 
 }

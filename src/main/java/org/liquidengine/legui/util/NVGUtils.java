@@ -1,6 +1,5 @@
 package org.liquidengine.legui.util;
 
-import org.joml.Vector4f;
 import org.joml.Vector4fc;
 import org.lwjgl.nanovg.NVGColor;
 

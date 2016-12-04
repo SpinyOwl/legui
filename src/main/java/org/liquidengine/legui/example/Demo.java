@@ -3,7 +3,10 @@ package org.liquidengine.legui.example;
 import org.joml.Vector2i;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.Component;
-import org.liquidengine.legui.context.LeguiCallbackKeeper;
+import org.liquidengine.legui.component.ScrollablePanel;
+import org.liquidengine.legui.component.Viewport;
+import org.liquidengine.legui.context.ILeguiCallbackKeeper;
+import org.liquidengine.legui.context.DefaultLeguiCallbackKeeper;
 import org.liquidengine.legui.context.LeguiContext;
 import org.liquidengine.legui.processor.LeguiEventListenerProcessor;
 import org.liquidengine.legui.processor.SystemEventListenerProcessor;
@@ -13,6 +16,8 @@ import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWKeyCallbackI;
 import org.lwjgl.glfw.GLFWWindowCloseCallbackI;
 import org.lwjgl.opengl.GL;
+
+import java.util.concurrent.TimeUnit;
 
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
@@ -30,7 +35,6 @@ public class Demo {
     protected int height;
     protected volatile boolean running;
     protected long windowPointer;
-
     protected Vector4f clearColor = new Vector4f(1, 1, 1, 1);
 
     protected Thread mainThread;
@@ -50,7 +54,7 @@ public class Demo {
 
     protected int secondsFromStart = 0;
     protected boolean gcing;
-    protected LeguiCallbackKeeper callbackKeeper;
+    protected ILeguiCallbackKeeper callbackKeeper;
 
 
     public Demo(int width, int height, String title, Component component) {
@@ -83,7 +87,7 @@ public class Demo {
 
         mainThread.start();
         // wait while not initialized
-        while (!running) ;
+        while (!running) Thread.yield();
     }
 
     private void initialize() {
@@ -101,10 +105,12 @@ public class Demo {
         leguiContext = new LeguiContext(windowPointer, component);
 
         // enable debugging
-        leguiContext.setDebug(true);
+//        leguiContext.setDebugEnabled(true);
 
         // create callback keeper
-        callbackKeeper = new LeguiCallbackKeeper(windowPointer);
+        DefaultLeguiCallbackKeeper leguiCallbackKeeper = new DefaultLeguiCallbackKeeper();
+        callbackKeeper = leguiCallbackKeeper;
+        leguiCallbackKeeper.registerCallbacks(windowPointer);
 
         // Create event processor for system events (obtained from callbacks) Constructor automatically creates Callbacks and binds them to window
         systemEventProcessor = new SystemEventListenerProcessor(component, leguiContext, callbackKeeper);
@@ -142,23 +148,45 @@ public class Demo {
 
         long timer = System.currentTimeMillis();
 
+
+//        long timer = System.currentTimeMillis();
+        long last = System.nanoTime();
+        long delta = 0;
+        double nanosPerUpdate = 1_000_000_000 / 60;
+
         while (running) {
-            // update gui context
-            leguiContext.updateGlfwWindow();
-            Vector2i windowSize = leguiContext.getWindowSize();
 
-            glClearColor(clearColor.x, clearColor.y, clearColor.z, 1);
-            glViewport(0, 0, windowSize.x, windowSize.y);
-            glClear(GL_COLOR_BUFFER_BIT);
+            long now = System.nanoTime();
+            delta += now - last;
+            last = now;
 
-            // render gui
-            renderer.render(component);
+            if (running) {
+                if (delta >= nanosPerUpdate) {
+                    do {
+                        // update gui context
+                        leguiContext.updateGlfwWindow();
+                        Vector2i windowSize = leguiContext.getWindowSize();
+                        component.setSize(windowSize.x, windowSize.y);
+                        if(component instanceof Viewport){
+                            ((ScrollablePanel) component).resize();
+                        }
 
-            glfwSwapBuffers(windowPointer);
+                        glClearColor(clearColor.x, clearColor.y, clearColor.z, 1);
+                        glViewport(0, 0, windowSize.x, windowSize.y);
+                        glClear(GL_COLOR_BUFFER_BIT);
 
-            update();
+                        // render gui
+                        renderer.render(component);
+                        glfwSwapBuffers(windowPointer);
+                        update();
 
-            updates++;
+                        delta -= nanosPerUpdate;
+                        updates++;
+                    } while (running && delta >= nanosPerUpdate);
+                } else {
+                    sleep(1);
+                }
+            }
             if (System.currentTimeMillis() - timer >= 1000) {
                 secondsFromStart++;
                 timer += 1000;
@@ -170,25 +198,39 @@ public class Demo {
         renderer.destroy();
     }
 
+    private void sleep(long sleepTime) {
+        try {
+            TimeUnit.NANOSECONDS.sleep(sleepTime);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void update() {
     }
 
     private void startSystemEventProcessor() {
         eventProcessorThread = new Thread(() -> {
-            while (running) systemEventProcessor.processEvent();
+            while (running) {
+                systemEventProcessor.processEvent();
+                sleep(1);
+            }
         }, "GUI_SYSTEM_EVENT_PROCESSOR");
         eventProcessorThread.start();
     }
 
     private void startLeguiEventProcessor() {
         eventProcessorThread = new Thread(() -> {
-            while (running) uiEventLeguiEventProcessor.processEvent();
+            while (running) {
+                uiEventLeguiEventProcessor.processEvent();
+                sleep(1);
+            }
         }, "GUI_EVENT_PROCESSOR");
         eventProcessorThread.start();
     }
 
     // @formatter:off
-    private void handleSystemEvents() { while (running) { glfwPollEvents(); if(gcing) { System.gc(); } } }
+    private void handleSystemEvents() { while (running) { glfwWaitEvents(); if(gcing) { System.gc(); } } }
     // @formatter:on
 
     private void destroy() {
