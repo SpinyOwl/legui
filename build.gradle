@@ -88,7 +88,7 @@ project.sourceCompatibility = 1.8
 project.targetCompatibility = 1.8
 compileJava.options.encoding = 'UTF-8'
 
-def build_type = System.getProperty("build_type") ?: ""
+def build_type = System.getProperty("build_type") ?: (System.getenv("build_type") ?: "")
 if (build_type == "SNAPSHOT") {
     project.version += "-SNAPSHOT"
 }
