@@ -31,7 +31,7 @@ public class LeguiContext implements Serializable {
     private Component mouseTargetGui;
     private Component focusedGui;
 
-    private transient boolean debug = false;
+    private transient boolean debugEnabled = false;
 
     private boolean[] mouseButtonStates = new boolean[GLFW.GLFW_MOUSE_BUTTON_LAST];
     private Vector2f mousePosition;
@@ -198,12 +198,12 @@ public class LeguiContext implements Serializable {
         return contextData;
     }
 
-    public boolean isDebug() {
-        return debug;
+    public boolean isDebugEnabled() {
+        return debugEnabled;
     }
 
-    public void setDebug(boolean debug) {
-        this.debug = debug;
+    public void setDebugEnabled(boolean debugEnabled) {
+        this.debugEnabled = debugEnabled;
     }
 
     public Component getMouseTargetGui() {

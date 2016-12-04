@@ -13,6 +13,7 @@ public final class GsonSerializeUtil {
     }
 
     public static <T> String serialize(T component) {
+        if (component == null) return null;
         AbstractGsonSerializer serializer = GsonSerializeRegistry.getRegistry().getSerializer(component.getClass());
         if (serializer == null) throw new LeguiException(LeguiExceptions.SERIALIZER_IS_NOT_EXIST.message(component.getClass().getName()));
         GsonSerializeContext context = new GsonSerializeContext();
@@ -32,6 +33,7 @@ public final class GsonSerializeUtil {
     }
 
     public static <T> JsonObject serializeToJson(T component, GsonSerializeContext context) {
+        if (component == null) return null;
         AbstractGsonSerializer serializer = GsonSerializeRegistry.getRegistry().getSerializer(component.getClass());
         if (serializer == null) throw new LeguiException(LeguiExceptions.SERIALIZER_IS_NOT_EXIST.message(component.getClass().getName()));
         return serializer.jsonSerialize(component, context);

@@ -115,6 +115,11 @@ public final class GsonConstants {
     public static final String TITLE_BACKGROUND_COLOR = "titleBackgroundColor";
     public static final String CLOSE_BUTTON_COLOR = "closeButtonColor";
 
+    // BORDER
+    public static final String BORDER = "border";
+    public static final String THICKNESS = "THICKNESS";
+    public static final String BORDER_COLOR = "BORDER_COLOR";
+
     private GsonConstants() {
     }
 

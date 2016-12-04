@@ -2,12 +2,15 @@ package org.liquidengine.legui.serialize.json.gson.component.optional;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import org.joml.Vector4f;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
+import org.liquidengine.legui.font.FontRegister;
 import org.liquidengine.legui.serialize.json.gson.AbstractGsonSerializer;
 import org.liquidengine.legui.serialize.json.gson.GsonSerializeContext;
 import org.liquidengine.legui.serialize.json.gson.GsonUtil;
+import org.liquidengine.legui.util.ColorConstants;
 
 import static org.liquidengine.legui.serialize.json.gson.GsonConstants.*;
 import static org.liquidengine.legui.serialize.json.gson.GsonUtil.isNotNull;
@@ -63,13 +66,26 @@ public class GsonTextStateSerializer extends AbstractGsonSerializer<TextState> {
         JsonElement padding = json.getAsJsonObject(PADDING);
 
         if (isNotNull(font)) object.setFont(font.getAsString());
+        else if (font.isJsonNull()) object.setFont(FontRegister.DEFAULT);
+
         if (isNotNull(text)) object.setText(text.getAsString());
+        else if (text.isJsonNull()) object.setText("");
+
         if (isNotNull(fontSize)) object.setFontSize(fontSize.getAsFloat());
+        else if (fontSize.isJsonNull()) object.setFontSize(16);
+
         if (isNotNull(horizontalAlign)) object.setHorizontalAlign(HorizontalAlign.valueOf(horizontalAlign.getAsString()));
+        else if (horizontalAlign.isJsonNull()) object.setHorizontalAlign(HorizontalAlign.LEFT);
+
         if (isNotNull(verticalAlign)) object.setVerticalAlign(VerticalAlign.valueOf(verticalAlign.getAsString()));
+        else if (verticalAlign.isJsonNull()) object.setVerticalAlign(VerticalAlign.MIDDLE);
 
         if (isNotNull(textColor)) object.setTextColor(readColor(textColor.getAsJsonObject()));
+        else if (textColor.isJsonNull()) object.setTextColor(ColorConstants.black());
+
         if (isNotNull(highlightColor)) object.setHighlightColor(readColor(highlightColor.getAsJsonObject()));
+        else if (highlightColor.isJsonNull()) object.setHighlightColor(ColorConstants.blue());
+
 
         if (isNotNull(padding)) {
             JsonObject p = padding.getAsJsonObject();
@@ -83,6 +99,8 @@ public class GsonTextStateSerializer extends AbstractGsonSerializer<TextState> {
                     isNotNull(right) ? right.getAsFloat() : 0,
                     isNotNull(bottom) ? bottom.getAsFloat() : 0
             );
+        } else if (padding.isJsonNull()) {
+            object.setPadding(new Vector4f(0));
         }
 
     }

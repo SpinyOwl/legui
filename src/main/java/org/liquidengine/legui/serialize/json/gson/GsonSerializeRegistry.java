@@ -1,8 +1,12 @@
 package org.liquidengine.legui.serialize.json.gson;
 
 import org.liquidengine.legui.component.*;
+import org.liquidengine.legui.component.border.Border;
+import org.liquidengine.legui.component.border.SimpleRectangleLineBorder;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.serialize.json.gson.component.*;
+import org.liquidengine.legui.serialize.json.gson.component.optional.GsonBorderSerializer;
+import org.liquidengine.legui.serialize.json.gson.component.optional.GsonSimpleRectangleLineBorderSerializer;
 import org.liquidengine.legui.serialize.json.gson.component.optional.GsonTextStateSerializer;
 
 import java.util.Map;
@@ -39,7 +43,7 @@ public final class GsonSerializeRegistry {
      * @return json serializer for specified class
      */
     public <T> AbstractGsonSerializer<T> getSerializer(Class<T> tClass) {
-        return (AbstractGsonSerializer<T>) serializerMap.get(tClass);
+        return treeGetSerializer(tClass);
     }
 
     /**
@@ -59,6 +63,23 @@ public final class GsonSerializeRegistry {
     }
 
     /**
+     * Returns serializer for specified class
+     *
+     * @param tClass class
+     * @return json serializer for specified class
+     */
+    private <T> AbstractGsonSerializer<T> treeGetSerializer(Class<T> tClass) {
+        AbstractGsonSerializer<T> serializer = (AbstractGsonSerializer<T>) serializerMap.get(tClass);
+        Class cClass = tClass.getSuperclass();
+        while (serializer == null) {
+            serializer = (AbstractGsonSerializer<T>) serializerMap.get(cClass);
+            if (cClass.isAssignableFrom(Object.class)) break;
+            cClass = cClass.getSuperclass();
+        }
+        return serializer;
+    }
+
+    /**
      * Singleton implementation "On demand holder"
      */
     private static class JSRIH {
@@ -67,10 +88,13 @@ public final class GsonSerializeRegistry {
         static {
             I.registerSerializer(TextState.class, new GsonTextStateSerializer());
 
+            I.registerSerializer(Border.class, new GsonBorderSerializer());
+            I.registerSerializer(SimpleRectangleLineBorder.class, new GsonSimpleRectangleLineBorderSerializer());
+
             I.registerSerializer(Button.class, new GsonButtonSerializer());
             I.registerSerializer(CheckBox.class, new GsonCheckboxSerializer());
-            I.registerSerializer(ComponentContainer.class, new GsonComponentContainerSerializer());
-            I.registerSerializer(Component.class, new GsonComponentSerializer());
+            I.registerSerializer(ComponentContainer.class, new GsonComponentContainerSerializer<>());
+            I.registerSerializer(Component.class, new GsonComponentSerializer<>());
             I.registerSerializer(Image.class, new GsonImageSerializer());
             I.registerSerializer(Label.class, new GsonLabelSerializer());
             I.registerSerializer(Panel.class, new GsonPanelSerializer());

@@ -15,14 +15,8 @@ public class JsonReadExample {
 
     public static void main(String[] args) {
         System.out.println(json);
-        ScrollablePanel deserialize = GsonSerializeUtil.deserialize(json);
+        Component deserialize = GsonSerializeUtil.deserialize(json);
         deserialize.setPosition(0,0);
-
-        ScrollablePanel panel = new ScrollablePanel(0, 0, 200, 200);
-        Slider slider = new Slider(10, 20, 30, 40);
-        panel.getContainer().addComponent(slider);
-
-
 
         Demo demo = new Demo(100, 100, 200, 200, "test", deserialize, true){
             @Override

@@ -26,10 +26,17 @@ public class GsonRadioButtonSerializer extends GsonComponentSerializer<RadioButt
         JsonObject textState = GsonSerializeUtil.serializeToJson(object.getTextState(), context);
         RadioButtonGroup rbg = object.getRadioButtonGroup();
         Map<RadioButtonGroup, Integer> sgm = context.getSerializeRadioGroupMap();
+        Integer group = null;
+        if (sgm.containsKey(rbg)) {
+            group = sgm.get(rbg);
+        } else {
+            group = sgm.size();
+            sgm.put(rbg, group);
+        }
         GsonUtil.fill(json)
                 .add(TEXT_STATE, textState)
                 .add(SELECTED, object.isEnabled())
-                .add(GROUP, sgm.containsKey(rbg) ? sgm.get(rbg) : sgm.put(rbg, sgm.size()))
+                .add(GROUP, group)
         ;
     }
 
@@ -50,7 +57,14 @@ public class GsonRadioButtonSerializer extends GsonComponentSerializer<RadioButt
         if (isNotNull(group)) {
             Map<Integer, RadioButtonGroup> drg = context.getDeserializeRadioGroupMap();
             int groupId = group.getAsInt();
-            object.setRadioButtonGroup(drg.containsKey(groupId) ? drg.get(groupId) : drg.put(groupId, new RadioButtonGroup()));
+            RadioButtonGroup g = null;
+            if (drg.containsKey(groupId)) {
+                g = drg.get(groupId);
+            } else {
+                g = new RadioButtonGroup();
+                drg.put(groupId, g);
+            }
+            object.setRadioButtonGroup(g);
         }
     }
 }

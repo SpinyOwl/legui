@@ -51,8 +51,11 @@ public final class GsonUtil {
         return bgc;
     }
 
-    public static boolean isNotNull(JsonElement orientation) {
-        return orientation != null && !orientation.isJsonNull();
+    public static boolean isNotNull(JsonElement element) {
+        return element != null && !element.isJsonNull();
+    }
+    public static boolean isJsonNull(JsonElement element) {
+        return element != null && element.isJsonNull();
     }
 
     public GsonUtil add(String property, JsonElement value) {
