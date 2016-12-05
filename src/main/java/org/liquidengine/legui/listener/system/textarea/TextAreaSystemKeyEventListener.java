@@ -6,12 +6,17 @@ import org.liquidengine.legui.context.LeguiContext;
 import org.liquidengine.legui.event.system.SystemKeyEvent;
 import org.liquidengine.legui.listener.SystemEventListener;
 
+import java.util.Arrays;
+
+import static org.liquidengine.legui.util.TextUtil.findNextWord;
+import static org.liquidengine.legui.util.TextUtil.findPrevWord;
 import static org.lwjgl.glfw.GLFW.*;
 
 /**
  * Created by Alexander on 28.08.2016.
  */
 public class TextAreaSystemKeyEventListener implements SystemEventListener<TextArea, SystemKeyEvent> {
+
     @Override
     public void update(SystemKeyEvent event, TextArea gui, LeguiContext leguiContext) {
         if (gui.getState().isFocused() && gui.isEditable()) {
@@ -20,23 +25,23 @@ public class TextAreaSystemKeyEventListener implements SystemEventListener<TextA
             boolean pressed = event.action != GLFW_RELEASE;
             TextState textState = gui.getTextState();
             if (key == GLFW_KEY_LEFT && pressed) {
-                keyLeftAction(gui, caretPosition);
+                keyLeftAction(gui, caretPosition, event.mods);
             } else if (key == GLFW_KEY_RIGHT && pressed) {
-                keyRightAction(gui, caretPosition, textState);
+                keyRightAction(gui, caretPosition, textState, event.mods);
             } else if (key == GLFW_KEY_UP && pressed) {
-                keyUpAction(gui, caretPosition, textState);
+                keyUpAction(gui, caretPosition, textState, event.mods);
             } else if (key == GLFW_KEY_DOWN && pressed) {
-                keyDownAction(gui, caretPosition, textState);
+                keyDownAction(gui, caretPosition, textState, event.mods);
             } else if (key == GLFW_KEY_HOME && pressed) {
-                keyHomeAction(gui, caretPosition, textState);
+                keyHomeAction(gui, caretPosition, textState, event.mods);
             } else if (key == GLFW_KEY_END && pressed) {
-                keyEndAction(gui, caretPosition, textState);
+                keyEndAction(gui, caretPosition, textState, event.mods);
             } else if ((key == GLFW_KEY_ENTER || key == GLFW_KEY_KP_ENTER) && pressed) {
                 keyEnterAction(gui, caretPosition);
             } else if (key == GLFW_KEY_BACKSPACE && pressed) {
-                keyBackSpaceAction(gui, caretPosition, textState);
+                keyBackSpaceAction(gui, caretPosition, textState, event.mods);
             } else if (key == GLFW_KEY_DELETE && pressed) {
-                keyDeleteAction(gui, caretPosition, textState);
+                keyDeleteAction(gui, caretPosition, textState, event.mods);
             } else if (key == GLFW_KEY_V && pressed && event.mods == GLFW_MOD_CONTROL) {
                 pasteAction(gui, leguiContext, caretPosition, textState);
             } else if (key == GLFW_KEY_C && pressed && event.mods == GLFW_MOD_CONTROL) {
@@ -82,8 +87,11 @@ public class TextAreaSystemKeyEventListener implements SystemEventListener<TextA
         }
     }
 
-    private void keyDeleteAction(TextArea gui, int caretPosition, TextState textState) {
+    private void keyDeleteAction(TextArea gui, int caretPosition, TextState textState, int mods) {
         if (gui.isEditable() && caretPosition != textState.length()) {
+            if ((mods & GLFW_MOD_CONTROL) != 0) {
+                gui.setEndSelectionIndex(findNextWord(textState.getText(), caretPosition));
+            }
             int start = gui.getStartSelectionIndex();
             int end = gui.getEndSelectionIndex();
             if (start > end) {
@@ -101,8 +109,11 @@ public class TextAreaSystemKeyEventListener implements SystemEventListener<TextA
         }
     }
 
-    private void keyBackSpaceAction(TextArea gui, int caretPosition, TextState textState) {
+    private void keyBackSpaceAction(TextArea gui, int caretPosition, TextState textState, int mods) {
         if (gui.isEditable() && caretPosition != 0) {
+            if ((mods & GLFW_MOD_CONTROL) != 0) {
+                gui.setEndSelectionIndex(findPrevWord(textState.getText(), caretPosition));
+            }
             int start = gui.getStartSelectionIndex();
             int end = gui.getEndSelectionIndex();
             if (start > end) {
@@ -128,68 +139,102 @@ public class TextAreaSystemKeyEventListener implements SystemEventListener<TextA
         }
     }
 
-    private void keyEndAction(TextArea gui, int caretPosition, TextState textState) {
+    private void keyEndAction(TextArea gui, int caretPosition, TextState textState, int mods) {
         String text = textState.getText();
         String[] lines = text.split("\n", -1);
         LineData some = getStartLineIndexAndLineNumber(lines, caretPosition);
         int cl = lines[some.lineIndex].length();
         int delta = cl - some.caretPositionInLine;
-        int np = caretPosition + delta;
-        gui.setCaretPosition(np);
+
+        int newCaretPosition = caretPosition + delta;
+        gui.setEndSelectionIndex(newCaretPosition);
+        if ((mods & GLFW_MOD_SHIFT) == 0) {
+            gui.setStartSelectionIndex(newCaretPosition);
+        }
+        gui.setCaretPosition(newCaretPosition);
     }
 
-    private void keyHomeAction(TextArea gui, int caretPosition, TextState textState) {
+    private void keyHomeAction(TextArea gui, int caretPosition, TextState textState, int mods) {
         String text = textState.getText();
         String[] lines = text.split("\n", -1);
         LineData some = getStartLineIndexAndLineNumber(lines, caretPosition);
-        gui.setCaretPosition(caretPosition - some.caretPositionInLine);
+
+        int newCaretPosition = caretPosition - some.caretPositionInLine;
+        gui.setEndSelectionIndex(newCaretPosition);
+        if ((mods & GLFW_MOD_SHIFT) == 0) {
+            gui.setStartSelectionIndex(newCaretPosition);
+        }
+        gui.setCaretPosition(newCaretPosition);
     }
 
-    private void keyDownAction(TextArea gui, int caretPosition, TextState textState) {
+    private void keyDownAction(TextArea gui, int caretPosition, TextState textState, int mods) {
         if (caretPosition < textState.length()) {
             String text = textState.getText();
             String[] lines = text.split("\n", -1);
             LineData some = getStartLineIndexAndLineNumber(lines, caretPosition);
+            int newCaretPosition = text.length();
+
             if (some.lineIndex < lines.length - 1) {
                 int nl = lines[some.lineIndex + 1].length() + 1;
                 int cl = lines[some.lineIndex].length() + 1;
-                int np;
                 if (some.caretPositionInLine >= nl - 1) {
-                    np = caretPosition + nl + cl - 1 - some.caretPositionInLine;
+                    newCaretPosition = caretPosition + nl + cl - 1 - some.caretPositionInLine;
                 } else {
-                    np = caretPosition + cl;
+                    newCaretPosition = caretPosition + cl;
                 }
-                gui.setCaretPosition(np);
-            } else {
-                gui.setCaretPosition(text.length());
             }
+            gui.setEndSelectionIndex(newCaretPosition);
+            if ((mods & GLFW_MOD_SHIFT) == 0) {
+                gui.setStartSelectionIndex(newCaretPosition);
+            }
+            gui.setCaretPosition(newCaretPosition);
         }
     }
 
-    private void keyUpAction(TextArea gui, int caretPosition, TextState textState) {
+    private void keyUpAction(TextArea gui, int caretPosition, TextState textState, int mods) {
         if (caretPosition > 0) {
             String text = textState.getText();
             String[] lines = text.split("\n", -1);
             LineData some = getStartLineIndexAndLineNumber(lines, caretPosition);
+            int newCaretPosition = 0;
             if (some.lineIndex > 0) {
                 int nl = lines[some.lineIndex - 1].length() + 1;
-                int np = caretPosition - (some.caretPositionInLine >= nl - 1 ? some.caretPositionInLine + 1 : nl);
-                gui.setCaretPosition(np);
-            } else {
-                gui.setCaretPosition(0);
+                newCaretPosition = caretPosition - (some.caretPositionInLine >= nl - 1 ? some.caretPositionInLine + 1 : nl);
             }
+
+            gui.setEndSelectionIndex(newCaretPosition);
+            if ((mods & GLFW_MOD_SHIFT) == 0) {
+                gui.setStartSelectionIndex(newCaretPosition);
+            }
+            gui.setCaretPosition(newCaretPosition);
         }
     }
 
-    private void keyRightAction(TextArea gui, int caretPosition, TextState textState) {
+    private void keyRightAction(TextArea gui, int caretPosition, TextState textState, int mods) {
         if (caretPosition < textState.length()) {
-            gui.setCaretPosition(caretPosition + 1);
+            int newCaretPosition = caretPosition + 1;
+            if ((mods & GLFW_MOD_CONTROL) != 0) {
+                newCaretPosition = findNextWord(gui.getTextState().getText(), caretPosition);
+            }
+            gui.setEndSelectionIndex(newCaretPosition);
+            if ((mods & GLFW_MOD_SHIFT) == 0) {
+                gui.setStartSelectionIndex(newCaretPosition);
+            }
+            gui.setCaretPosition(newCaretPosition);
         }
     }
 
-    private void keyLeftAction(TextArea gui, int caretPosition) {
+    private void keyLeftAction(TextArea gui, int caretPosition, int mods) {
         if (caretPosition > 0) {
-            gui.setCaretPosition(caretPosition - 1);
+            int newCaretPosition = caretPosition - 1;
+            if ((mods & GLFW_MOD_CONTROL) != 0) {
+                newCaretPosition = findPrevWord(gui.getTextState().getText(), caretPosition);
+            }
+            gui.setEndSelectionIndex(newCaretPosition);
+            if ((mods & GLFW_MOD_SHIFT) == 0) {
+                gui.setStartSelectionIndex(newCaretPosition);
+            }
+            gui.setCaretPosition(newCaretPosition);
         }
     }
 

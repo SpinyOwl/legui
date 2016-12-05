@@ -8,6 +8,7 @@ import org.liquidengine.legui.listener.SystemEventListener;
 import org.lwjgl.glfw.GLFW;
 
 import static org.liquidengine.legui.util.Util.cpToStr;
+import static org.lwjgl.glfw.GLFW.GLFW_MOD_SHIFT;
 
 /**
  * Created by Alexander on 28.08.2016.
@@ -32,7 +33,10 @@ public class TextInputSystemCharEventListener implements SystemEventListener<Tex
             }
             int caretPosition = gui.getCaretPosition();
             textState.insert(caretPosition, str);
-            gui.setCaretPosition(caretPosition + str.length());
+            int newCaretPosition = caretPosition + str.length();
+            gui.setCaretPosition(newCaretPosition);
+            gui.setEndSelectionIndex(newCaretPosition);
+            gui.setStartSelectionIndex(newCaretPosition);
         }
     }
 }

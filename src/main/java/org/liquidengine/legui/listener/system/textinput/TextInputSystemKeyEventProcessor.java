@@ -6,12 +6,15 @@ import org.liquidengine.legui.context.LeguiContext;
 import org.liquidengine.legui.event.system.SystemKeyEvent;
 import org.liquidengine.legui.listener.SystemEventListener;
 
+import static org.liquidengine.legui.util.TextUtil.findNextWord;
+import static org.liquidengine.legui.util.TextUtil.findPrevWord;
 import static org.lwjgl.glfw.GLFW.*;
 
 /**
  * Created by Alexander on 28.08.2016.
  */
 public class TextInputSystemKeyEventProcessor implements SystemEventListener<TextInput, SystemKeyEvent> {
+
     @Override
     public void update(SystemKeyEvent event, TextInput gui, LeguiContext leguiContext) {
         if (!gui.getState().isFocused() || !gui.isEditable()) return;
@@ -21,17 +24,17 @@ public class TextInputSystemKeyEventProcessor implements SystemEventListener<Tex
         boolean pressed = event.action != GLFW_RELEASE;
         TextState textState = gui.getTextState();
         if (key == GLFW_KEY_LEFT && pressed) {
-            keyLeftAction(gui, caretPosition);
+            keyLeftAction(gui, caretPosition, event.mods);
         } else if (key == GLFW_KEY_RIGHT && pressed) {
-            keyRightAction(gui, caretPosition, textState);
+            keyRightAction(gui, caretPosition, textState, event.mods);
         } else if ((key == GLFW_KEY_UP || key == GLFW_KEY_HOME) && pressed) {
-            keyUpAndHomeAction(gui);
+            keyUpAndHomeAction(gui, event.mods);
         } else if ((key == GLFW_KEY_DOWN || key == GLFW_KEY_END) && pressed) {
-            keyDownAndEndAction(gui);
+            keyDownAndEndAction(gui, event.mods);
         } else if (key == GLFW_KEY_BACKSPACE && pressed) {
-            keyBackSpaceAction(gui, caretPosition, textState);
+            keyBackSpaceAction(gui, caretPosition, textState, event.mods);
         } else if (key == GLFW_KEY_DELETE && pressed) {
-            keyDeleteAction(gui, caretPosition, textState);
+            keyDeleteAction(gui, caretPosition, textState, event.mods);
         } else if (key == GLFW_KEY_V && pressed && event.mods == GLFW_MOD_CONTROL) {
             pasteAction(gui, leguiContext, caretPosition, textState);
         } else if (key == GLFW_KEY_C && pressed && event.mods == GLFW_MOD_CONTROL) {
@@ -76,8 +79,11 @@ public class TextInputSystemKeyEventProcessor implements SystemEventListener<Tex
         }
     }
 
-    private void keyDeleteAction(TextInput gui, int caretPosition, TextState textState) {
+    private void keyDeleteAction(TextInput gui, int caretPosition, TextState textState, int mods) {
         if (gui.isEditable() && caretPosition != textState.length()) {
+            if ((mods & GLFW_MOD_CONTROL) != 0) {
+                gui.setEndSelectionIndex(findNextWord(textState.getText(), caretPosition));
+            }
             int start = gui.getStartSelectionIndex();
             int end = gui.getEndSelectionIndex();
             if (start > end) {
@@ -95,8 +101,11 @@ public class TextInputSystemKeyEventProcessor implements SystemEventListener<Tex
         }
     }
 
-    private void keyBackSpaceAction(TextInput gui, int caretPosition, TextState textState) {
+    private void keyBackSpaceAction(TextInput gui, int caretPosition, TextState textState, int mods) {
         if (gui.isEditable() && caretPosition != 0) {
+            if ((mods & GLFW_MOD_CONTROL) != 0) {
+                gui.setEndSelectionIndex(findPrevWord(textState.getText(), caretPosition));
+            }
             int start = gui.getStartSelectionIndex();
             int end = gui.getEndSelectionIndex();
             if (start > end) {
@@ -115,23 +124,55 @@ public class TextInputSystemKeyEventProcessor implements SystemEventListener<Tex
         }
     }
 
-    private void keyDownAndEndAction(TextInput gui) {
-        gui.setCaretPosition(gui.getTextState().length());
+    private void keyDownAndEndAction(TextInput gui, int mods) {
+        int newCaretPosition = gui.getTextState().length();
+        gui.setEndSelectionIndex(newCaretPosition);
+        if ((mods & GLFW_MOD_SHIFT) == 0) {
+            gui.setStartSelectionIndex(newCaretPosition);
+        }
+        gui.setCaretPosition(newCaretPosition);
+
     }
 
-    private void keyUpAndHomeAction(TextInput gui) {
-        gui.setCaretPosition(0);
+    private void keyUpAndHomeAction(TextInput gui, int mods) {
+        int newCaretPosition = 0;
+        gui.setEndSelectionIndex(newCaretPosition);
+        if ((mods & GLFW_MOD_SHIFT) == 0) {
+            gui.setStartSelectionIndex(newCaretPosition);
+        }
+        gui.setCaretPosition(newCaretPosition);
     }
 
-    private void keyRightAction(TextInput gui, int caretPosition, TextState textState) {
+    private void keyRightAction(TextInput gui, int caretPosition, TextState textState, int mods) {
         if (caretPosition < textState.length()) {
-            gui.setCaretPosition(caretPosition + 1);
+            int newCaretPosition = caretPosition + 1;
+            if ((mods & GLFW_MOD_CONTROL) != 0) {
+                newCaretPosition = findNextWord(gui.getTextState().getText(), caretPosition);
+            }
+
+            gui.setEndSelectionIndex(newCaretPosition);
+
+            if ((mods & GLFW_MOD_SHIFT) == 0) {
+                gui.setStartSelectionIndex(newCaretPosition);
+            }
+
+            gui.setCaretPosition(newCaretPosition);
         }
     }
 
-    private void keyLeftAction(TextInput gui, int caretPosition) {
+    private void keyLeftAction(TextInput gui, int caretPosition, int mods) {
         if (caretPosition > 0) {
-            gui.setCaretPosition(caretPosition - 1);
+            int newCaretPosition = caretPosition - 1;
+            if ((mods & GLFW_MOD_CONTROL) != 0) {
+                newCaretPosition = findPrevWord(gui.getTextState().getText(), caretPosition);
+            }
+
+            gui.setEndSelectionIndex(newCaretPosition);
+            if ((mods & GLFW_MOD_SHIFT) == 0) {
+                gui.setStartSelectionIndex(newCaretPosition);
+            }
+            gui.setCaretPosition(newCaretPosition);
         }
     }
+
 }
