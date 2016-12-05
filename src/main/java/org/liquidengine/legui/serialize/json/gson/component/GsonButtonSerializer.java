@@ -7,7 +7,7 @@ import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.serialize.json.gson.GsonSerializeContext;
 import org.liquidengine.legui.serialize.json.gson.GsonSerializeUtil;
 
-import static org.liquidengine.legui.serialize.json.gson.GsonConstants.TEXT_STATE;
+import static org.liquidengine.legui.serialize.json.JsonConstants.TEXT_STATE;
 import static org.liquidengine.legui.serialize.json.gson.GsonUtil.isNotNull;
 
 /**
@@ -24,8 +24,8 @@ public class GsonButtonSerializer extends GsonComponentSerializer<Button> {
     }
 
     @Override
-    protected void jsonDeserialize(JsonObject json, Button object, GsonSerializeContext context) {
-        super.jsonDeserialize(json, object, context);
+    protected void deserialize(JsonObject json, Button object, GsonSerializeContext context) {
+        super.deserialize(json, object, context);
 
         JsonElement textState = json.get(TEXT_STATE);
         if (isNotNull(textState)) {

@@ -14,7 +14,7 @@ public class GsonPanelSerializer extends GsonComponentContainerSerializer<Panel>
     }
 
     @Override
-    protected void jsonDeserialize(JsonObject json, Panel object, GsonSerializeContext context) {
-        super.jsonDeserialize(json, object, context);
+    protected void deserialize(JsonObject json, Panel object, GsonSerializeContext context) {
+        super.deserialize(json, object, context);
     }
 }

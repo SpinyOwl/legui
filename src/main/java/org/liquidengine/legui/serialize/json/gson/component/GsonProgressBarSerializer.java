@@ -6,7 +6,7 @@ import org.liquidengine.legui.component.ProgressBar;
 import org.liquidengine.legui.serialize.json.gson.GsonSerializeContext;
 import org.liquidengine.legui.serialize.json.gson.GsonUtil;
 
-import static org.liquidengine.legui.serialize.json.gson.GsonConstants.*;
+import static org.liquidengine.legui.serialize.json.JsonConstants.*;
 import static org.liquidengine.legui.serialize.json.gson.GsonUtil.isNotNull;
 
 /**
@@ -31,8 +31,8 @@ public class GsonProgressBarSerializer extends GsonComponentSerializer<ProgressB
     }
 
     @Override
-    protected void jsonDeserialize(JsonObject json, ProgressBar object, GsonSerializeContext context) {
-        super.jsonDeserialize(json, object, context);
+    protected void deserialize(JsonObject json, ProgressBar object, GsonSerializeContext context) {
+        super.deserialize(json, object, context);
 
         JsonElement value = json.get(VALUE);
         JsonObject pc = json.getAsJsonObject(PROGRESS_COLOR);
