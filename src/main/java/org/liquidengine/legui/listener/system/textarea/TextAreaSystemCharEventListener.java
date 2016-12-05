@@ -32,7 +32,10 @@ public class TextAreaSystemCharEventListener implements SystemEventListener<Text
             }
             int caretPosition = gui.getCaretPosition();
             textState.insert(caretPosition, str);
-            gui.setCaretPosition(caretPosition + str.length());
+            int newCaretPosition = caretPosition + str.length();
+            gui.setCaretPosition(newCaretPosition);
+            gui.setEndSelectionIndex(newCaretPosition);
+            gui.setStartSelectionIndex(newCaretPosition);
         }
     }
 }
