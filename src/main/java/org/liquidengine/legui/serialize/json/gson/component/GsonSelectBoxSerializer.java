@@ -9,7 +9,7 @@ import org.liquidengine.legui.serialize.json.gson.GsonUtil;
 
 import java.util.List;
 
-import static org.liquidengine.legui.serialize.json.gson.GsonConstants.*;
+import static org.liquidengine.legui.serialize.json.JsonConstants.*;
 import static org.liquidengine.legui.serialize.json.gson.GsonUtil.isNotNull;
 
 /**
@@ -37,8 +37,8 @@ public class GsonSelectBoxSerializer extends GsonComponentSerializer<SelectBox> 
     }
 
     @Override
-    protected void jsonDeserialize(JsonObject json, SelectBox object, GsonSerializeContext context) {
-        super.jsonDeserialize(json, object, context);
+    protected void deserialize(JsonObject json, SelectBox object, GsonSerializeContext context) {
+        super.deserialize(json, object, context);
 
         JsonElement elements = json.get(ELEMENTS);
         JsonElement selectedElement = json.get(SELECTED_ELEMENT);

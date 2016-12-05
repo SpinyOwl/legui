@@ -9,7 +9,7 @@ import org.liquidengine.legui.serialize.json.gson.GsonSerializeContext;
 import org.liquidengine.legui.serialize.json.gson.GsonSerializeUtil;
 import org.liquidengine.legui.serialize.json.gson.GsonUtil;
 
-import static org.liquidengine.legui.serialize.json.gson.GsonConstants.*;
+import static org.liquidengine.legui.serialize.json.JsonConstants.*;
 import static org.liquidengine.legui.serialize.json.gson.GsonUtil.isNotNull;
 
 /**
@@ -36,8 +36,8 @@ public class GsonScrollablePanelSerializer extends GsonComponentSerializer<Scrol
     }
 
     @Override
-    protected void jsonDeserialize(JsonObject json, ScrollablePanel object, GsonSerializeContext context) {
-        super.jsonDeserialize(json, object, context);
+    protected void deserialize(JsonObject json, ScrollablePanel object, GsonSerializeContext context) {
+        super.deserialize(json, object, context);
 
         JsonElement hScrollBar = json.get(HORIZONTAL_SCROLL_BAR);
         JsonElement vScrollBar = json.get(VERTICAL_SCROLL_BAR);

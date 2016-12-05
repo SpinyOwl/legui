@@ -11,7 +11,7 @@ import org.liquidengine.legui.serialize.json.gson.GsonUtil;
 
 import java.util.Map;
 
-import static org.liquidengine.legui.serialize.json.gson.GsonConstants.*;
+import static org.liquidengine.legui.serialize.json.JsonConstants.*;
 import static org.liquidengine.legui.serialize.json.gson.GsonUtil.isNotNull;
 
 /**
@@ -41,8 +41,8 @@ public class GsonRadioButtonSerializer extends GsonComponentSerializer<RadioButt
     }
 
     @Override
-    protected void jsonDeserialize(JsonObject json, RadioButton object, GsonSerializeContext context) {
-        super.jsonDeserialize(json, object, context);
+    protected void deserialize(JsonObject json, RadioButton object, GsonSerializeContext context) {
+        super.deserialize(json, object, context);
 
         JsonElement textState = json.get(TEXT_STATE);
         JsonElement selected = json.get(SELECTED);

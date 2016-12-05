@@ -7,7 +7,9 @@ public enum LeguiExceptions {
     SERIALIZE_EXCEPTION("Can't serialize your component"),
     DESERIALIZE_EXCEPTION("Can't deserialize your component"),
     SERIALIZER_IS_NOT_EXIST("Can't find serializer for component type: '%s'"),
-    DESERIALIZER_IS_NOT_EXIST("Can't find deserializer for component type: '%s'");
+    DESERIALIZER_IS_NOT_EXIST("Can't find deserializer for component type: '%s'"),
+    GSON_REGISTRY_TYPE_EXIST("Type '%s' already exist in type registry!"),
+    ;
 
     private final String message;
 

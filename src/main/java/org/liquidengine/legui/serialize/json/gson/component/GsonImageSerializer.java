@@ -6,7 +6,7 @@ import org.liquidengine.legui.component.Image;
 import org.liquidengine.legui.serialize.json.gson.GsonSerializeContext;
 import org.liquidengine.legui.serialize.json.gson.GsonUtil;
 
-import static org.liquidengine.legui.serialize.json.gson.GsonConstants.PATH;
+import static org.liquidengine.legui.serialize.json.JsonConstants.PATH;
 import static org.liquidengine.legui.serialize.json.gson.GsonUtil.isNotNull;
 
 /**
@@ -22,8 +22,8 @@ public class GsonImageSerializer extends GsonComponentSerializer<Image> {
     }
 
     @Override
-    protected void jsonDeserialize(JsonObject json, Image object, GsonSerializeContext context) {
-        super.jsonDeserialize(json, object, context);
+    protected void deserialize(JsonObject json, Image object, GsonSerializeContext context) {
+        super.deserialize(json, object, context);
 
         JsonElement path = json.get(PATH);
         if (isNotNull(path)) object.setPath(path.getAsString());

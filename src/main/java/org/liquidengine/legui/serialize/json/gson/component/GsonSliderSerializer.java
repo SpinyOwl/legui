@@ -7,7 +7,7 @@ import org.liquidengine.legui.component.optional.Orientation;
 import org.liquidengine.legui.serialize.json.gson.GsonSerializeContext;
 import org.liquidengine.legui.serialize.json.gson.GsonUtil;
 
-import static org.liquidengine.legui.serialize.json.gson.GsonConstants.*;
+import static org.liquidengine.legui.serialize.json.JsonConstants.*;
 import static org.liquidengine.legui.serialize.json.gson.GsonUtil.isNotNull;
 import static org.liquidengine.legui.serialize.json.gson.GsonUtil.readColor;
 
@@ -41,8 +41,8 @@ public class GsonSliderSerializer extends GsonComponentSerializer<Slider> {
     }
 
     @Override
-    protected void jsonDeserialize(JsonObject json, Slider object, GsonSerializeContext context) {
-        super.jsonDeserialize(json, object, context);
+    protected void deserialize(JsonObject json, Slider object, GsonSerializeContext context) {
+        super.deserialize(json, object, context);
 
         JsonElement sliderActiveColor = json.get(SLIDER_ACTIVE_COLOR);
         JsonElement sliderColor = json.get(SLIDER_COLOR);

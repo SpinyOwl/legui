@@ -11,7 +11,7 @@ import org.liquidengine.legui.serialize.json.gson.GsonSerializeUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.liquidengine.legui.serialize.json.gson.GsonConstants.COMPONENTS;
+import static org.liquidengine.legui.serialize.json.JsonConstants.COMPONENTS;
 import static org.liquidengine.legui.serialize.json.gson.GsonUtil.isNotNull;
 
 /**
@@ -31,8 +31,8 @@ public class GsonComponentContainerSerializer<T extends ComponentContainer> exte
     }
 
     @Override
-    protected void jsonDeserialize(JsonObject json, T object, GsonSerializeContext context) {
-        super.jsonDeserialize(json, object, context);
+    protected void deserialize(JsonObject json, T object, GsonSerializeContext context) {
+        super.deserialize(json, object, context);
 
         List<Component> componentList = new ArrayList<>();
         JsonElement components = json.get(COMPONENTS);
