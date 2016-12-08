@@ -99,7 +99,6 @@ public class Demo {
         glfwWindowHint(GLFW_RESIZABLE, resizable ? GLFW_TRUE : GLFW_FALSE);
         windowPointer = glfwCreateWindow(width, height, initialTitle, NULL, NULL);
         glfwSetWindowPos(windowPointer, x, y);
-//        glfwSwapInterval(0);
         glfwShowWindow(windowPointer);
 
         // create UI context. It holds main gui components and UI system states
@@ -147,11 +146,10 @@ public class Demo {
         glfwMakeContextCurrent(windowPointer);
         GL.createCapabilities();
         renderer.initialize();
+        glfwSwapInterval(0);
 
         long timer[] = {System.currentTimeMillis()};
 
-
-//        long timer = System.currentTimeMillis();
         long last[] = {System.nanoTime()};
         long delta[] = {0};
         double nanosPerUpdate = 1_000_000_000 / 60;
