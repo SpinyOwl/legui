@@ -13,7 +13,19 @@ public abstract class LeguiRenderer {
         this.context = context;
     }
 
-    public abstract void render(Component component);
+    public abstract void preRender(Component component);
+
+    public abstract void postRender(Component component);
+
+    public void render(Component component) {
+        preRender(component);
+        try {
+            component.render(context);
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+        postRender(component);
+    }
 
     public abstract void initialize();
 

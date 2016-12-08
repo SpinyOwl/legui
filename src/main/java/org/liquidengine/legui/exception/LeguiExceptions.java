@@ -8,7 +8,8 @@ public enum LeguiExceptions {
     DESERIALIZE_EXCEPTION("Can't deserialize your component"),
     SERIALIZER_IS_NOT_EXIST("Can't find serializer for component type: '%s'"),
     DESERIALIZER_IS_NOT_EXIST("Can't find deserializer for component type: '%s'"),
-    GSON_REGISTRY_TYPE_EXIST("Type '%s' already exist in type registry!"),
+    GSON_REGISTRY_TYPE_EXIST("Type '%s' already exist in type registry."),
+    FAILED_TO_LOAD_FONT("Failed to load font. (%s)"),
     ;
 
     private final String message;
