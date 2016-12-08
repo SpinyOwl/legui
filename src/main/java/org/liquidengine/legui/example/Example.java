@@ -4,6 +4,7 @@ import org.joml.Vector2f;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.Image;
 import org.liquidengine.legui.component.TextArea;
+import org.lwjgl.glfw.GLFW;
 
 /**
  * Created by Alexander on 13.10.2016.
@@ -49,11 +50,11 @@ public class Example extends Demo {
 
         exampleGui.getMouseTargetLabel().getTextState().setText("M.TARGET: " + leguiContext.getMouseTargetGui());
 
-        Vector2f mousePosition = leguiContext.getMousePosition();
-        exampleGui.getMouseLabel().getTextState().setText(String.format("X:%4s, Y:%4s", mousePosition.x, mousePosition.y));
+//        Vector2f mousePosition = leguiContext.getMousePosition();
+//        exampleGui.getMouseLabel().getTextState().setText(String.format("X:%4s, Y:%4s", mousePosition.x, mousePosition.y));
 
-        exampleGui.getUpsLabel().getTextState().setText("UPS: " + currentUps);
-
+        exampleGui.getUpsLabel().getTextState().setText("UPS: " + currentUps + "; fixed: " + fixedStep);
+        GLFW.glfwSetWindowTitle(windowPointer, "UPS: " + currentUps + "; fixed: " + fixedStep);
         exampleGui.getFocusedGuiLabel().getTextState().setText("FOCUSED: " + leguiContext.getFocusedGui());
 
         TextArea textArea = exampleGui.getTextArea();

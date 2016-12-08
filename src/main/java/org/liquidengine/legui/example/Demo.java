@@ -54,6 +54,7 @@ public class Demo {
 
     protected int secondsFromStart = 0;
     protected boolean gcing;
+    protected boolean fixedStep;
     protected ILeguiCallbackKeeper callbackKeeper;
 
 
@@ -98,7 +99,7 @@ public class Demo {
         glfwWindowHint(GLFW_RESIZABLE, resizable ? GLFW_TRUE : GLFW_FALSE);
         windowPointer = glfwCreateWindow(width, height, initialTitle, NULL, NULL);
         glfwSetWindowPos(windowPointer, x, y);
-//        glfwSwapInterval(1);
+//        glfwSwapInterval(0);
         glfwShowWindow(windowPointer);
 
         // create UI context. It holds main gui components and UI system states
@@ -128,6 +129,7 @@ public class Demo {
             GLFWKeyCallbackI keyCloseCallback = (window, key, code, action, mods) -> {
                 if (key == GLFW_KEY_ESCAPE && action != GLFW_RELEASE) running = !running;
                 if (key == GLFW_KEY_G && action != GLFW_RELEASE && mods == GLFW_MOD_CONTROL) gcing = !gcing;
+                if (key == GLFW_KEY_F && action != GLFW_RELEASE && mods == GLFW_MOD_CONTROL) fixedStep = !fixedStep;
             };
             callbackKeeper.getChainWindowCloseCallback().add(closeCallback);
             callbackKeeper.getChainKeyCallback().add(keyCloseCallback);
@@ -146,56 +148,94 @@ public class Demo {
         GL.createCapabilities();
         renderer.initialize();
 
-        long timer = System.currentTimeMillis();
+        long timer[] = {System.currentTimeMillis()};
 
 
 //        long timer = System.currentTimeMillis();
-        long last = System.nanoTime();
-        long delta = 0;
+        long last[] = {System.nanoTime()};
+        long delta[] = {0};
         double nanosPerUpdate = 1_000_000_000 / 60;
 
         while (running) {
-
-            long now = System.nanoTime();
-            delta += now - last;
-            last = now;
-
-            if (running) {
-                if (delta >= nanosPerUpdate) {
-                    do {
-                        // update gui context
-                        leguiContext.updateGlfwWindow();
-                        Vector2i windowSize = leguiContext.getWindowSize();
-                        component.setSize(windowSize.x, windowSize.y);
-                        if(component instanceof Viewport){
-                            ((ScrollablePanel) component).resize();
-                        }
-
-                        glClearColor(clearColor.x, clearColor.y, clearColor.z, 1);
-                        glViewport(0, 0, windowSize.x, windowSize.y);
-                        glClear(GL_COLOR_BUFFER_BIT);
-
-                        // render gui
-                        renderer.render(component);
-                        glfwSwapBuffers(windowPointer);
-                        update();
-
-                        delta -= nanosPerUpdate;
-                        updates++;
-                    } while (running && delta >= nanosPerUpdate);
-                } else {
-                    sleep(1);
-                }
-            }
-            if (System.currentTimeMillis() - timer >= 1000) {
-                secondsFromStart++;
-                timer += 1000;
-                currentUps = updates;
-                updates = 0;
+            if (fixedStep) {
+                runWithFixedStep(timer, last, delta, nanosPerUpdate);
+            } else {
+                runWithoutFixedStep(timer, last);
             }
         }
 
         renderer.destroy();
+    }
+
+    private void runWithoutFixedStep(long[] timer, long[] last) {
+        long now = System.nanoTime();
+        last[0] = now;
+
+//        // update gui context
+        leguiContext.updateGlfwWindow();
+        Vector2i windowSize = leguiContext.getWindowSize();
+        component.setSize(windowSize.x, windowSize.y);
+        if (component instanceof Viewport) {
+            ((ScrollablePanel) component).resize();
+        }
+
+        glClearColor(clearColor.x, clearColor.y, clearColor.z, 1);
+        glViewport(0, 0, windowSize.x, windowSize.y);
+        glClear(GL_COLOR_BUFFER_BIT);
+
+        // render gui
+        renderer.render(component);
+        glfwSwapBuffers(windowPointer);
+
+        update();
+        updates++;
+
+        if (System.currentTimeMillis() - timer[0] >= 1000) {
+            secondsFromStart++;
+            timer[0] += 1000;
+            currentUps = updates;
+            updates = 0;
+        }
+    }
+
+    private void runWithFixedStep(long[] timer, long[] last, long[] delta, double nanosPerUpdate) {
+        long now = System.nanoTime();
+        delta[0] += now - last[0];
+        last[0] = now;
+
+        if (running) {
+            if (delta[0] >= nanosPerUpdate) {
+                do {
+                    // update gui context
+                    leguiContext.updateGlfwWindow();
+                    Vector2i windowSize = leguiContext.getWindowSize();
+                    component.setSize(windowSize.x, windowSize.y);
+                    if (component instanceof Viewport) {
+                        ((ScrollablePanel) component).resize();
+                    }
+
+                    glClearColor(clearColor.x, clearColor.y, clearColor.z, 1);
+                    glViewport(0, 0, windowSize.x, windowSize.y);
+                    glClear(GL_COLOR_BUFFER_BIT);
+
+                    // render gui
+                    renderer.render(component);
+                    glfwSwapBuffers(windowPointer);
+                    update();
+
+                    delta[0] -= nanosPerUpdate;
+                    updates++;
+                } while (running && delta[0] >= nanosPerUpdate);
+            } else {
+                sleep(1);
+            }
+        }
+        if (System.currentTimeMillis() - timer[0] >= 1000) {
+            secondsFromStart++;
+            timer[0] += 1000;
+            currentUps = updates;
+            updates = 0;
+        }
     }
 
     private void sleep(long sleepTime) {
