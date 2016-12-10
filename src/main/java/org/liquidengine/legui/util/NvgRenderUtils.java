@@ -14,13 +14,13 @@ import org.lwjgl.nanovg.NVGColor;
 import org.lwjgl.nanovg.NVGGlyphPosition;
 import org.lwjgl.nanovg.NVGPaint;
 import org.lwjgl.nanovg.NVGTextRow;
-import org.lwjgl.system.MemoryUtil;
 
 import java.nio.ByteBuffer;
 
-import static org.liquidengine.legui.util.NVGUtils.rgba;
 import static org.lwjgl.nanovg.NanoVG.*;
 import static org.lwjgl.system.MemoryUtil.memAddress;
+import static org.lwjgl.system.MemoryUtil.memFree;
+import static org.lwjgl.system.MemoryUtil.memUTF8;
 
 /**
  * Created by Shcherbin Alexander on 6/3/2016.
@@ -76,8 +76,16 @@ public final class NvgRenderUtils {
                                               String text,
                                               HorizontalAlign horizontalAlign,
                                               VerticalAlign verticalAlign, boolean hide) {
-        NVGColor colorA = NVGColor.create();
-        renderTextLineToBounds(context, x, y, w, h, fontSize, font, textColor, colorA, text, horizontalAlign, verticalAlign, hide);
+
+        NVGColor colorA = null;
+        try {
+            colorA = NVGColor.calloc();
+            renderTextLineToBounds(context, x, y, w, h, fontSize, font, textColor, colorA, text, horizontalAlign, verticalAlign, hide);
+        } finally {
+            if (colorA != null) {
+                colorA.free();
+            }
+        }
     }
 
 
@@ -109,37 +117,45 @@ public final class NvgRenderUtils {
         nvgFontSize(context, fontSize);
         nvgFontFace(context, font);
 
-        ByteBuffer byteText = MemoryUtil.memUTF8(text);
-        alignTextInBox(context, horizontalAlign, verticalAlign);
-
-        if (hide) {
+        ByteBuffer byteText = null;
+        try {
+            byteText = memUTF8(text);
+            alignTextInBox(context, horizontalAlign, verticalAlign);
             long start = memAddress(byteText);
             long end = start + byteText.remaining();
 
-            NVGTextRow.Buffer buffer = NVGTextRow.create(1);
-            nnvgTextBreakLines(context, start, end, w, memAddress(buffer), 1);
-            NVGTextRow row = buffer.get(0);
-            float[] bounds = createBounds(x, y, w, h, horizontalAlign, verticalAlign, row.width(), fontSize);
+            if (hide) {
 
-            nvgBeginPath(context);
-            NVGColor textColorN = textColor.w == 0 ? NVGUtils.rgba(0.0f, 0.0f, 0.0f, 1f, nvgColor) : NVGUtils.rgba(textColor, nvgColor);
-            nvgFillColor(context, textColorN);
-            nnvgText(context, bounds[0], bounds[1], row.start(), row.end());
-        } else {
-            float[] bounds = calculateTextBoundsRect(context, x, y, w, h, text, 0, horizontalAlign, verticalAlign);
+                NVGTextRow.Buffer buffer = NVGTextRow.calloc(1);
+                nnvgTextBreakLines(context, start, end, w, memAddress(buffer), 1);
+                NVGTextRow row = buffer.get(0);
+                float[] bounds = createBounds(x, y, w, h, horizontalAlign, verticalAlign, row.width(), fontSize);
 
-            NVGColor textColorN = textColor.w == 0 ? NVGUtils.rgba(0.0f, 0.0f, 0.0f, 1f, nvgColor) : NVGUtils.rgba(textColor, nvgColor);
-            nvgFillColor(context, textColorN);
-            nvgText(context, bounds[0], bounds[1], byteText, 0);
+                nvgBeginPath(context);
+                NVGColor textColorN = textColor.w == 0 ? NVGUtils.rgba(0.0f, 0.0f, 0.0f, 1f, nvgColor) : NVGUtils.rgba(textColor, nvgColor);
+                nvgFillColor(context, textColorN);
+                nnvgText(context, bounds[0], bounds[1], row.start(), row.end());
+                buffer.free();
+            } else {
+                float[] bounds = calculateTextBoundsRect(context, x, y, w, h, byteText, 0, horizontalAlign, verticalAlign);
+                NVGColor textColorN = textColor.w == 0 ? NVGUtils.rgba(0.0f, 0.0f, 0.0f, 1f, nvgColor) : NVGUtils.rgba(textColor, nvgColor);
+                nvgFillColor(context, textColorN);
+                nvgText(context, bounds[0], bounds[1], byteText, 0);
+            }
+        } finally {
+            if (byteText != null) {
+                memFree(byteText);
+            }
         }
-
     }
 
     public static void drawRectangle(long context, Vector4fc color, float x, float y, float w, float h) {
+        NVGColor nvgColor = NVGColor.calloc();
         nvgBeginPath(context);
-        nvgFillColor(context, NVGUtils.rgba(color, NVGColor.create()));
+        nvgFillColor(context, NVGUtils.rgba(color, nvgColor));
         nvgRect(context, x, y, w, h);
         nvgFill(context);
+        nvgColor.free();
     }
 
     /**
@@ -165,8 +181,16 @@ public final class NvgRenderUtils {
 
     public static float[] calculateTextBoundsRect(long context, float x, float y, float w, float h, String text, long end, HorizontalAlign horizontalAlign, VerticalAlign verticalAlign) {
         float bounds[] = new float[4];
-        nvgTextBounds(context, x, y, text, end, bounds);
-        return createBounds(w, h, horizontalAlign, verticalAlign, bounds);
+        ByteBuffer byteText = null;
+        try {
+            byteText = memUTF8(text);
+            nvgTextBounds(context, x, y, byteText, end, bounds);
+            return createBounds(w, h, horizontalAlign, verticalAlign, bounds);
+        } finally {
+            if (byteText != null) {
+                memFree(byteText);
+            }
+        }
     }
 
     public static float[] calculateTextBoundsRect(long context, float x, float y, float w, float h, ByteBuffer text, long end, HorizontalAlign horizontalAlign, VerticalAlign verticalAlign) {
@@ -216,18 +240,21 @@ public final class NvgRenderUtils {
     }
 
     public static void drawRectStroke(long context, float x, float y, float w, float h, Vector4f strokeColor, float borderRadius, float strokeWidth) {
+
+        NVGColor nvgColor = NVGColor.calloc();
         nvgBeginPath(context);
         nvgStrokeWidth(context, strokeWidth);
         nvgRoundedRect(context, x, y, w, h, borderRadius);
-        NVGColor color = NVGColor.create();
-        nvgStrokeColor(context, NVGUtils.rgba(strokeColor, color));
+        nvgStrokeColor(context, NVGUtils.rgba(strokeColor, nvgColor));
         nvgStroke(context);
+        nvgColor.free();
+
     }
 
     public static void dropShadow(long context, float x, float y, float w, float h, float cornerRadius, Vector4f shadowColor) {
-        NVGPaint shadowPaint = NVGPaint.create();
-        NVGColor colorA = NVGColor.create();
-        NVGColor colorB = NVGColor.create();
+        NVGPaint shadowPaint = NVGPaint.calloc();
+        NVGColor colorA = NVGColor.calloc();
+        NVGColor colorB = NVGColor.calloc();
 
         nvgBoxGradient(context, x, y + 2, w, h, cornerRadius * 2, 10, NVGUtils.rgba(shadowColor, colorA), NVGUtils.rgba(0, 0, 0, 0, colorB), shadowPaint);
         nvgBeginPath(context);
@@ -236,6 +263,10 @@ public final class NvgRenderUtils {
         nvgPathWinding(context, NVG_HOLE);
         nvgFillPaint(context, shadowPaint);
         nvgFill(context);
+
+        shadowPaint.free();
+        colorA.free();
+        colorB.free();
     }
 
 
@@ -297,23 +328,32 @@ public final class NvgRenderUtils {
                                   VerticalAlign verticalAlign,
                                   NVGGlyphPosition.Buffer glyphs, int maxGlyphCount) {
         float bounds[] = NvgRenderUtils.calculateTextBoundsRect(context, x, 0, w, fontSize, text, 0, horizontalAlign, verticalAlign);
-        ByteBuffer textBytes = MemoryUtil.memUTF8(text);
-        int ng = nnvgTextGlyphPositions(context, bounds[0], bounds[1], memAddress(textBytes), 0, memAddress(glyphs), maxGlyphCount);
+        ByteBuffer textBytes = null;
+        try {
+            textBytes = memUTF8(text);
+            int ng = nnvgTextGlyphPositions(context, bounds[0], bounds[1], memAddress(textBytes), 0, memAddress(glyphs), maxGlyphCount);
 
-        float caretx = 0;
-        if (caretPosition < ng) {
-            try {
-                caretx = glyphs.get(caretPosition).x();
-            } catch (IndexOutOfBoundsException e) {
-                e.printStackTrace();
-            }
-        } else {
-            if (ng > 0) {
-                caretx = glyphs.get(ng - 1).maxx();
+            float caretx = 0;
+            if (caretPosition < ng) {
+                try {
+                    caretx = glyphs.get(caretPosition).x();
+                } catch (IndexOutOfBoundsException e) {
+                    e.printStackTrace();
+                }
             } else {
-                caretx = x + horizontalAlign.index * w / 2f;
+                if (ng > 0) {
+                    caretx = glyphs.get(ng - 1).maxx();
+                } else {
+                    caretx = x + horizontalAlign.index * w / 2f;
+                }
+            }
+            return caretx;
+        } finally {
+            if (textBytes != null) {
+                memFree(textBytes);
             }
         }
-        return caretx;
     }
+
+
 }

@@ -10,7 +10,7 @@ import org.liquidengine.legui.serialize.json.gson.GsonSerializeUtil;
 import org.liquidengine.legui.serialize.json.gson.GsonUtil;
 import org.liquidengine.legui.util.ColorConstants;
 
-import static org.liquidengine.legui.serialize.json.gson.GsonConstants.*;
+import static org.liquidengine.legui.serialize.json.JsonConstants.*;
 import static org.liquidengine.legui.serialize.json.gson.GsonUtil.*;
 
 /**
@@ -39,7 +39,7 @@ public class GsonComponentSerializer<T extends Component> extends AbstractGsonSe
     }
 
     @Override
-    protected void jsonDeserialize(JsonObject json, T object, GsonSerializeContext context) {
+    protected void deserialize(JsonObject json, T object, GsonSerializeContext context) {
         JsonObject position = json.getAsJsonObject(POSITION);
         JsonObject size = json.getAsJsonObject(SIZE);
         JsonObject bg = json.getAsJsonObject(BACKGROUND_COLOR);

@@ -102,21 +102,22 @@ public class NvgImageRenderer extends NvgLeguiComponentRenderer {
         String path = image.getPath();
         Integer imageRef = imageCache.getIfPresent(path);
         if (imageRef == null) {
-            LOGGER.debug("Loading image data to memory: " + path);
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Loading image data to memory: " + path);
+            }
+
             if (path == null) {
-                imageRef = new Integer(0);
+                imageRef = 0;
             } else {
                 try {
                     ByteBuffer data = IOUtil.ioResourceToByteBuffer(path, 32 * 1024);
                     imageRef = NanoVG.nvgCreateImageMem(context, 0, data);
                 } catch (IOException e) {
-                    imageRef = new Integer(0);
+                    imageRef = 0;
                 }
                 imageCache.put(path, imageRef);
                 imageAssociationMap.put(path, imageRef);
             }
-        } else {
-            LOGGER.debug("Obtaining image from cache: " + path);
         }
         return imageRef;
     }

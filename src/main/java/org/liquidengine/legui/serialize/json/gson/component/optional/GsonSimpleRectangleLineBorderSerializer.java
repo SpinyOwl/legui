@@ -7,8 +7,8 @@ import org.liquidengine.legui.serialize.json.gson.AbstractGsonSerializer;
 import org.liquidengine.legui.serialize.json.gson.GsonSerializeContext;
 import org.liquidengine.legui.serialize.json.gson.GsonUtil;
 
-import static org.liquidengine.legui.serialize.json.gson.GsonConstants.BORDER_COLOR;
-import static org.liquidengine.legui.serialize.json.gson.GsonConstants.THICKNESS;
+import static org.liquidengine.legui.serialize.json.JsonConstants.BORDER_COLOR;
+import static org.liquidengine.legui.serialize.json.JsonConstants.THICKNESS;
 import static org.liquidengine.legui.serialize.json.gson.GsonUtil.isNotNull;
 
 /**
@@ -25,7 +25,7 @@ public class GsonSimpleRectangleLineBorderSerializer extends AbstractGsonSeriali
     }
 
     @Override
-    protected void jsonDeserialize(JsonObject json, SimpleRectangleLineBorder object, GsonSerializeContext context) {
+    protected void deserialize(JsonObject json, SimpleRectangleLineBorder object, GsonSerializeContext context) {
         JsonElement thickness = json.get(THICKNESS);
         JsonElement borderColor = json.get(BORDER_COLOR);
         if (isNotNull(thickness)) object.setThickness(thickness.getAsFloat());

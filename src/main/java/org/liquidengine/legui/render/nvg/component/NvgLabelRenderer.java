@@ -19,7 +19,7 @@ import static org.lwjgl.nanovg.NanoVG.*;
  */
 public class NvgLabelRenderer extends NvgLeguiComponentRenderer {
 
-    private NVGColor colorA = NVGColor.calloc();
+    private NVGColor colorA = NVGColor.create();
 
     @Override
     public void render(Component component, LeguiContext leguiContext, long context) {
