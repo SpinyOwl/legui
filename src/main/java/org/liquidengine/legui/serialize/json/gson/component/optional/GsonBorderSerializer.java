@@ -10,7 +10,7 @@ import org.liquidengine.legui.serialize.json.gson.GsonSerializeContext;
  */
 public class GsonBorderSerializer extends AbstractGsonSerializer<Border> {
     @Override
-    protected void jsonDeserialize(JsonObject json, Border object, GsonSerializeContext context) {
+    protected void deserialize(JsonObject json, Border object, GsonSerializeContext context) {
     }
 
     @Override

@@ -8,7 +8,7 @@ import org.liquidengine.legui.serialize.json.gson.GsonSerializeContext;
 import org.liquidengine.legui.serialize.json.gson.GsonSerializeUtil;
 import org.liquidengine.legui.serialize.json.gson.GsonUtil;
 
-import static org.liquidengine.legui.serialize.json.gson.GsonConstants.*;
+import static org.liquidengine.legui.serialize.json.JsonConstants.*;
 import static org.liquidengine.legui.serialize.json.gson.GsonUtil.*;
 
 /**
@@ -34,8 +34,8 @@ public class GsonWidgetSerializer extends GsonComponentSerializer<Widget> {
     }
 
     @Override
-    protected void jsonDeserialize(JsonObject json, Widget object, GsonSerializeContext context) {
-        super.jsonDeserialize(json, object, context);
+    protected void deserialize(JsonObject json, Widget object, GsonSerializeContext context) {
+        super.deserialize(json, object, context);
 
         JsonElement container = json.get(CONTAINER);
         JsonElement resizable = json.get(RESIZABLE);

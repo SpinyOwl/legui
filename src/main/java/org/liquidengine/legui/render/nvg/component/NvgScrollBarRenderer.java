@@ -183,16 +183,26 @@ public class NvgScrollBarRenderer extends NvgLeguiComponentRenderer {
     }
 
     private void drawArr(long context, float x1, float y1, float w1, float h1, String first, Vector4f blackOrWhite, float fontSize, HorizontalAlign horizontalAlign, VerticalAlign verticalAlign) {
-        ByteBuffer  byteText = MemoryUtil.memUTF8(first);
-        long start = memAddress(byteText);
-        long end = start + byteText.remaining() - 1;
-        NVGTextRow.Buffer buffer = NVGTextRow.create(1);
-        nnvgTextBreakLines(context, start, end, w1, memAddress(buffer), 1);
-        NVGTextRow row = buffer.get(0);
-        float[] bounds = createBounds(x1, y1, w1, h1, horizontalAlign, verticalAlign, row.width(), fontSize);
-        nvgBeginPath(context);
-        nvgFillColor(context, rgba(blackOrWhite, colorA));
-        nnvgText(context, bounds[0], bounds[1], row.start(), row.end());
+        ByteBuffer byteText = null;
+        try {
+            byteText = MemoryUtil.memUTF8(first);
+            NVGTextRow.Buffer buffer = NVGTextRow.calloc(1);
+            {
+                long start = memAddress(byteText);
+                long end = start + byteText.remaining() - 1;
+                nnvgTextBreakLines(context, start, end, w1, memAddress(buffer), 1);
+                NVGTextRow row = buffer.get(0);
+                float[] bounds = createBounds(x1, y1, w1, h1, horizontalAlign, verticalAlign, row.width(), fontSize);
+                nvgBeginPath(context);
+                nvgFillColor(context, rgba(blackOrWhite, colorA));
+                nnvgText(context, bounds[0], bounds[1], row.start(), row.end());
+            }
+            buffer.free();
+        } finally {
+            if (byteText != null) {
+                MemoryUtil.memFree(byteText);
+            }
+        }
     }
 
 }

@@ -3,10 +3,6 @@ package org.liquidengine.legui.util;
 import org.joml.Vector2f;
 import org.liquidengine.legui.component.Component;
 
-import java.nio.ByteBuffer;
-
-import static org.lwjgl.system.MemoryUtil.memUTF8;
-
 /**
  * Created by Shcherbin Alexander on 6/16/2016.
  */
@@ -37,16 +33,8 @@ public final class Util {
         return offset;
     }
 
-    public static ByteBuffer utf8(int cp) {
-        return memUTF8(new String(Character.toChars(cp)), true);
-    }
-
     public static String cpToStr(int cp) {
         return new String(Character.toChars(cp));
-    }
-
-    public static ByteBuffer cpToUTF8(int cp) {
-        return memUTF8(new String(Character.toChars(cp)), true);
     }
 
 }

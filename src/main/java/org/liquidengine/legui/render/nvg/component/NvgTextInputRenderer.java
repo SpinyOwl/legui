@@ -147,43 +147,50 @@ public class NvgTextInputRenderer extends NvgLeguiComponentRenderer {
 
     private int calculateMouseCaretPosition(LeguiContext leguiContext, long context, TextInput gui, float x, float y, float w, float h, float offsetX, String text, HorizontalAlign horizontalAlign, VerticalAlign verticalAlign) {
         float bounds[] = NvgRenderUtils.calculateTextBoundsRect(context, x, y, w, h, text, 0, horizontalAlign, verticalAlign);
-        ByteBuffer textBytes = MemoryUtil.memUTF8(text);
-        int ng = nnvgTextGlyphPositions(context, bounds[0], bounds[1], memAddress(textBytes), 0, memAddress(glyphs), maxGlyphCount);
-        float mx = leguiContext.getCursorPosition().x;
-        int newCPos = 0;
-        int upper = ng - 1;
-        if (upper > 0) {
-            float px = glyphs.get(0).x() - offsetX;
-            float mpx = glyphs.get(upper).maxx() - offsetX;
-            if (mx <= px) {
-                newCPos = 0;
-            } else if (mx >= mpx) {
-                newCPos = upper + 1;
-            } else {
-                for (int i = 0; i < upper; newCPos = i++) {
-                    px = glyphs.get(i).x() - offsetX;
-                    mpx = glyphs.get(i + 1).x() - offsetX;
-                    if (mx >= px && mx <= mpx) {
-                        if (mx - px < mpx - mx) {
-                            newCPos = i;
-                        } else {
-                            newCPos = i + 1;
+        ByteBuffer textBytes = null;
+        try {
+            textBytes = MemoryUtil.memUTF8(text);
+            int ng = nnvgTextGlyphPositions(context, bounds[0], bounds[1], memAddress(textBytes), 0, memAddress(glyphs), maxGlyphCount);
+            float mx = leguiContext.getCursorPosition().x;
+            int newCPos = 0;
+            int upper = ng - 1;
+            if (upper > 0) {
+                float px = glyphs.get(0).x() - offsetX;
+                float mpx = glyphs.get(upper).maxx() - offsetX;
+                if (mx <= px) {
+                    newCPos = 0;
+                } else if (mx >= mpx) {
+                    newCPos = upper + 1;
+                } else {
+                    for (int i = 0; i < upper; newCPos = i++) {
+                        px = glyphs.get(i).x() - offsetX;
+                        mpx = glyphs.get(i + 1).x() - offsetX;
+                        if (mx >= px && mx <= mpx) {
+                            if (mx - px < mpx - mx) {
+                                newCPos = i;
+                            } else {
+                                newCPos = i + 1;
+                            }
+                            break;
                         }
-                        break;
                     }
-                }
-                px = glyphs.get(upper).x() - offsetX;
-                mpx = glyphs.get(upper).maxx() - offsetX;
-                if (mx >= px && mx <= mpx) {
-                    if (mpx - mx > mx - px) {
-                        newCPos = upper;
-                    } else {
-                        newCPos = upper + 1;
+                    px = glyphs.get(upper).x() - offsetX;
+                    mpx = glyphs.get(upper).maxx() - offsetX;
+                    if (mx >= px && mx <= mpx) {
+                        if (mpx - mx > mx - px) {
+                            newCPos = upper;
+                        } else {
+                            newCPos = upper + 1;
+                        }
                     }
                 }
             }
+            return newCPos;
+        } finally {
+            if (textBytes != null) {
+                MemoryUtil.memFree(textBytes);
+            }
         }
-        return newCPos;
     }
 
     private void drawBackground(long context, float x, float y, float w, float h, float br, Vector4f bc) {

@@ -8,7 +8,7 @@ import org.liquidengine.legui.serialize.json.gson.GsonSerializeContext;
 import org.liquidengine.legui.serialize.json.gson.GsonSerializeUtil;
 import org.liquidengine.legui.serialize.json.gson.GsonUtil;
 
-import static org.liquidengine.legui.serialize.json.gson.GsonConstants.*;
+import static org.liquidengine.legui.serialize.json.JsonConstants.*;
 import static org.liquidengine.legui.serialize.json.gson.GsonUtil.isNotNull;
 
 /**
@@ -27,8 +27,8 @@ public class GsonTextInputSerializer extends GsonComponentSerializer<TextInput> 
     }
 
     @Override
-    protected void jsonDeserialize(JsonObject json, TextInput object, GsonSerializeContext context) {
-        super.jsonDeserialize(json, object, context);
+    protected void deserialize(JsonObject json, TextInput object, GsonSerializeContext context) {
+        super.deserialize(json, object, context);
 
         JsonElement editable = json.get(EDITABLE);
         JsonElement selectionColor = json.get(SELECTION_COLOR);

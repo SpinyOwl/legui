@@ -4,7 +4,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.joml.Vector4f;
 
-import static org.liquidengine.legui.serialize.json.gson.GsonConstants.*;
+import static org.liquidengine.legui.serialize.json.JsonConstants.*;
 
 /**
  * Created by Alexander on 26.11.2016.
