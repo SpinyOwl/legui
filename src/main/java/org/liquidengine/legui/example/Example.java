@@ -48,14 +48,25 @@ public class Example extends Demo {
             }
         }
 
-        exampleGui.getMouseTargetLabel().getTextState().setText("M.TARGET: " + leguiContext.getMouseTargetGui());
+        Component mouseTargetGui = leguiContext.getMouseTargetGui();
+        if (mouseTargetGui != exampleGui.getMouseTargetLabel() && mouseTargetGui != exampleGui.getFocusedGuiLabel()) {
+            exampleGui.getMouseTargetLabel().getTextState().setText("M.TARGET: " + mouseTargetGui);
+        } else {
+            exampleGui.getMouseTargetLabel().getTextState().setText("M.TARGET: ");
+        }
 
 //        Vector2f mousePosition = leguiContext.getMousePosition();
 //        exampleGui.getMouseLabel().getTextState().setText(String.format("X:%4s, Y:%4s", mousePosition.x, mousePosition.y));
 
         exampleGui.getUpsLabel().getTextState().setText("UPS: " + currentUps + "; fixed: " + fixedStep);
         GLFW.glfwSetWindowTitle(windowPointer, "UPS: " + currentUps + "; fixed: " + fixedStep);
-        exampleGui.getFocusedGuiLabel().getTextState().setText("FOCUSED: " + leguiContext.getFocusedGui());
+
+        Component focusedGui = leguiContext.getFocusedGui();
+        if (focusedGui != exampleGui.getMouseTargetLabel() && focusedGui != exampleGui.getFocusedGuiLabel()) {
+            exampleGui.getFocusedGuiLabel().getTextState().setText("FOCUSED: " + focusedGui);
+        } else {
+            exampleGui.getFocusedGuiLabel().getTextState().setText("FOCUSED: ");
+        }
 
         TextArea textArea = exampleGui.getTextArea();
         int caretPosition = textArea.getCaretPosition();
@@ -65,7 +76,6 @@ public class Example extends Demo {
         String t = text.substring(left, right);
         exampleGui.getCaretp().getTextState().setText(caretPosition + " " + t + " " + textArea.getStartSelectionIndex() + " " + textArea.getEndSelectionIndex());
     }
-
 
 
 }

@@ -6,7 +6,7 @@
                 <Pattern>%d{HH:mm:ss} %-5p\t[%-7t]\t%-40c{2.}:\t%L\t:\t%m%n</Pattern>
             </PatternLayout>
             <!--<ThresholdFilter level="ERROR" onMatch="DENY" onMismatch="ACCEPT"/>-->
-            <ThresholdFilter level="INFO"/>
+            <ThresholdFilter level="debug"/>
         </Console>
         <Console name="STDERR" ignoreExceptions="false" target="SYSTEM_ERR">
             <PatternLayout>

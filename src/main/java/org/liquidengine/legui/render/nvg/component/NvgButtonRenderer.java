@@ -19,9 +19,7 @@ import static org.lwjgl.nanovg.NanoVG.*;
  * Created by Shcherbin Alexander on 9/23/2016.
  */
 public class NvgButtonRenderer extends NvgLeguiComponentRenderer {
-    private NVGColor colorA = NVGColor.calloc();
-    private NVGColor colorB = NVGColor.calloc();
-    private NVGPaint paintA = NVGPaint.calloc();
+    private NVGColor colorA = NVGColor.create();
 
     @Override
     public void render(Component component, LeguiContext leguiContext, long context) {

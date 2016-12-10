@@ -19,7 +19,7 @@ import static org.lwjgl.nanovg.NanoVG.*;
  * Created by Shcherbin Alexander on 9/22/2016.
  */
 public class NvgSimpleLineBorderRenderer extends NvgLeguiBorderRenderer {
-    private NVGColor colorA = NVGColor.calloc();
+    private NVGColor colorA = NVGColor.create();
 
     @Override
     public void render(Border border, LeguiContext context, Component component, long nvgContext) {

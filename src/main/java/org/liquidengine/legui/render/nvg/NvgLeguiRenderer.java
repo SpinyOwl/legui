@@ -38,7 +38,11 @@ public class NvgLeguiRenderer extends LeguiRenderer {
         context.getContextData().put("nvgContext", nvgContext);
 
         NvgRendererProvider.getProvider().getComponentRenderers().forEach(LeguiComponentRenderer::initialize);
+    }
 
+    @Override
+    public void render(Component component) {
+        super.render(component);
     }
 
     @Override

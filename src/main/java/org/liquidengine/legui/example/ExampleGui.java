@@ -50,6 +50,7 @@ public class ExampleGui extends Panel {
         this.addComponent(mouseTargetLabel);
 
         focusedGuiLabel = new Label(10, height - 50, width - 20, 20, "Hello Label");
+        focusedGuiLabel.setBorder(new SimpleRectangleLineBorder(ColorConstants.red(), 1));
         this.addComponent(focusedGuiLabel);
 
         mouseLabel = new Label(130, 30, 100, 20, "Hello Label");

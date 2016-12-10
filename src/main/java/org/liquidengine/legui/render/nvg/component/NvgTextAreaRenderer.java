@@ -33,7 +33,7 @@ public class NvgTextAreaRenderer extends NvgLeguiComponentRenderer {
     private final Vector4f caretColor = new Vector4f(0, 0, 0, 0.5f);
     private final int maxGlyphCount = 2048;
 
-    private NVGColor colorA = NVGColor.calloc();
+    private NVGColor colorA = NVGColor.create();
     private NVGGlyphPosition.Buffer glyphs = NVGGlyphPosition.create(maxGlyphCount);
 
     @Override
@@ -181,44 +181,52 @@ public class NvgTextAreaRenderer extends NvgLeguiComponentRenderer {
                                             float offsetX, String line, int lineOffset,
                                             HorizontalAlign horizontalAlign, VerticalAlign verticalAlign) {
         float bounds[] = NvgRenderUtils.calculateTextBoundsRect(context, x, y, w, h, line, 0, horizontalAlign, verticalAlign);
-        ByteBuffer textBytes = MemoryUtil.memUTF8(line);
-        int ng = nnvgTextGlyphPositions(context, bounds[0], bounds[1], memAddress(textBytes), 0, memAddress(glyphs), maxGlyphCount);
-        float mx = leguiContext.getCursorPosition().x;
-        int newCPos = 0;
-        int upper = ng - 1;
-        if (upper <= 0) {
-        } else {
-            float px = glyphs.get(0).x() - offsetX;
-            float mpx = glyphs.get(upper).maxx() - offsetX;
-            if (mx <= px) {
-                newCPos = 0;
-            } else if (mx >= mpx) {
-                newCPos = upper + 1;
+        ByteBuffer textBytes = null;
+        try {
+            textBytes = MemoryUtil.memUTF8(line);
+
+            int ng = nnvgTextGlyphPositions(context, bounds[0], bounds[1], memAddress(textBytes), 0, memAddress(glyphs), maxGlyphCount);
+            float mx = leguiContext.getCursorPosition().x;
+            int newCPos = 0;
+            int upper = ng - 1;
+            if (upper <= 0) {
             } else {
-                for (int i = 0; i < upper; newCPos = i++) {
-                    px = glyphs.get(i).x() - offsetX;
-                    mpx = glyphs.get(i + 1).x() - offsetX;
-                    if (mx >= px && mx <= mpx) {
-                        if (mx - px < mpx - mx) {
-                            newCPos = i;
-                        } else {
-                            newCPos = i + 1;
+                float px = glyphs.get(0).x() - offsetX;
+                float mpx = glyphs.get(upper).maxx() - offsetX;
+                if (mx <= px) {
+                    newCPos = 0;
+                } else if (mx >= mpx) {
+                    newCPos = upper + 1;
+                } else {
+                    for (int i = 0; i < upper; newCPos = i++) {
+                        px = glyphs.get(i).x() - offsetX;
+                        mpx = glyphs.get(i + 1).x() - offsetX;
+                        if (mx >= px && mx <= mpx) {
+                            if (mx - px < mpx - mx) {
+                                newCPos = i;
+                            } else {
+                                newCPos = i + 1;
+                            }
+                            break;
                         }
-                        break;
                     }
-                }
-                px = glyphs.get(upper).x() - offsetX;
-                mpx = glyphs.get(upper).maxx() - offsetX;
-                if (mx >= px && mx <= mpx) {
-                    if (mpx - mx > mx - px) {
-                        newCPos = upper;
-                    } else {
-                        newCPos = upper + 1;
+                    px = glyphs.get(upper).x() - offsetX;
+                    mpx = glyphs.get(upper).maxx() - offsetX;
+                    if (mx >= px && mx <= mpx) {
+                        if (mpx - mx > mx - px) {
+                            newCPos = upper;
+                        } else {
+                            newCPos = upper + 1;
+                        }
                     }
                 }
             }
+            return newCPos + lineOffset;
+        } finally {
+            if (textBytes != null) {
+                MemoryUtil.memFree(textBytes);
+            }
         }
-        return newCPos + lineOffset;
     }
 
     private void drawSelectionBackground(long context, TextArea gui, String[] lines,
