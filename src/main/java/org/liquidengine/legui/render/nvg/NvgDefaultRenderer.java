@@ -19,7 +19,6 @@ import static org.lwjgl.nanovg.NanoVG.*;
  * Created by Shcherbin Alexander on 9/20/2016.
  */
 public class NvgDefaultRenderer extends NvgLeguiComponentRenderer {
-    private static final Vector4f BLACK = ColorConstants.black();
     private NVGColor colorA = NVGColor.malloc();
 
     @Override

@@ -233,6 +233,7 @@ public class Demo {
             timer[0] += 1000;
             currentUps = updates;
             updates = 0;
+            if(gcing) { System.gc(); }
         }
     }
 
@@ -268,7 +269,7 @@ public class Demo {
     }
 
     // @formatter:off
-    private void handleSystemEvents() { while (running) { glfwWaitEvents(); if(gcing) { System.gc(); } } }
+    private void handleSystemEvents() { while (running) { glfwWaitEvents(); } }
     // @formatter:on
 
     private void destroy() {
