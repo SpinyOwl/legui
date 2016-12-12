@@ -16,8 +16,6 @@ import org.liquidengine.legui.event.component.SliderChangeEvent;
 import org.liquidengine.legui.listener.component.KeyboardKeyEventListener;
 import org.liquidengine.legui.listener.component.MouseClickEventListener;
 import org.liquidengine.legui.listener.component.SliderChangeEventListener;
-import org.liquidengine.legui.serialize.json.gson.AbstractGsonSerializer;
-import org.liquidengine.legui.serialize.json.gson.GsonSerializeRegistry;
 import org.liquidengine.legui.serialize.json.gson.GsonSerializeUtil;
 import org.liquidengine.legui.util.ColorConstants;
 import org.liquidengine.legui.util.IOUtil;
@@ -89,10 +87,10 @@ public class JsonSerializeUtilTest {
         Label upsLabel = new Label(130, 60, 100, 20, "Hello Label");
         toReturn.addComponent(upsLabel);
 
-        Image image = new Image("org/liquidengine/legui/example/11.jpg");
-        image.setPosition(20, 30);
-        image.setSize(100, 100);
-        toReturn.addComponent(image);
+        ImageView imageView = new ImageView("org/liquidengine/legui/example/11.jpg");
+        imageView.setPosition(20, 30);
+        imageView.setSize(100, 100);
+        toReturn.addComponent(imageView);
 
         Button button = new Button(20, 170, 50, 20);
         button.setBackgroundColor(new Vector4f(1));

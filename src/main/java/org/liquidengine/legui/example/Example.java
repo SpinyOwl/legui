@@ -1,8 +1,7 @@
 package org.liquidengine.legui.example;
 
-import org.joml.Vector2f;
 import org.liquidengine.legui.component.Component;
-import org.liquidengine.legui.component.Image;
+import org.liquidengine.legui.component.ImageView;
 import org.liquidengine.legui.component.TextArea;
 import org.lwjgl.glfw.GLFW;
 
@@ -29,22 +28,22 @@ public class Example extends Demo {
     public void update() {
 
         if (secondsFromStart > 5) {
-            Image image = exampleGui.getImage();
-            if (image != null && image.getPath().equals("org/liquidengine/legui/example/11.jpg")) {
-                exampleGui.removeComponent(image);
+            ImageView imageView = exampleGui.getImageView();
+            if (imageView != null && imageView.getPath().equals("org/liquidengine/legui/example/11.jpg")) {
+                exampleGui.removeComponent(imageView);
                 System.out.println("update img");
-                Image image1 = new Image("org/liquidengine/legui/example/2.jpg");
-                image1.setSize(image.getSize());
-                image1.setPosition(image.getPosition());
-                exampleGui.addComponent(image1);
-                exampleGui.setImage(image1);
+                ImageView imageView1 = new ImageView("org/liquidengine/legui/example/2.jpg");
+                imageView1.setSize(imageView.getSize());
+                imageView1.setPosition(imageView.getPosition());
+                exampleGui.addComponent(imageView1);
+                exampleGui.setImageView(imageView1);
             }
         }
         if (secondsFromStart > 15) {
-            Image image = exampleGui.getImage();
-            if (image != null && image.getPath().equals("org/liquidengine/legui/example/2.jpg")) {
+            ImageView imageView = exampleGui.getImageView();
+            if (imageView != null && imageView.getPath().equals("org/liquidengine/legui/example/2.jpg")) {
                 System.out.println("update img");
-                image.setPath("org/liquidengine/legui/example/1.jpg");
+                imageView.setPath("org/liquidengine/legui/example/1.jpg");
             }
         }
 

@@ -10,16 +10,16 @@ import org.liquidengine.legui.util.ColorConstants;
 /**
  * Created by Shcherbin Alexander on 9/22/2016.
  */
-public class Image extends Component {
+public class ImageView extends Component {
     private String path;
 //    private ByteBuffer imageData;
 
-    public Image(String path/*, ByteBuffer imageData*/) {
+    public ImageView(String path/*, ByteBuffer imageData*/) {
         this.path = path;
 //        this.imageData = imageData;
         initialize();
     }
-    public Image() {
+    public ImageView() {
         initialize();
     }
 
@@ -41,12 +41,12 @@ public class Image extends Component {
 
         if (o == null || getClass() != o.getClass()) return false;
 
-        Image image = (Image) o;
+        ImageView imageView = (ImageView) o;
 
         return new EqualsBuilder()
                 .appendSuper(super.equals(o))
-                .append(path, image.path)
-//                .append(imageData, image.imageData)
+                .append(path, imageView.path)
+//                .append(imageData, imageView.imageData)
                 .isEquals();
     }
 

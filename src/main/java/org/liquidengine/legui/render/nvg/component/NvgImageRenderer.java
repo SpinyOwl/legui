@@ -7,7 +7,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.joml.Vector2f;
 import org.liquidengine.legui.component.Component;
-import org.liquidengine.legui.component.Image;
+import org.liquidengine.legui.component.ImageView;
 import org.liquidengine.legui.context.LeguiContext;
 import org.liquidengine.legui.render.nvg.NvgLeguiComponentRenderer;
 import org.liquidengine.legui.util.IOUtil;
@@ -32,7 +32,7 @@ public class NvgImageRenderer extends NvgLeguiComponentRenderer {
     private static final Logger LOGGER = LogManager.getLogger();
 
     /**
-     * Image queue to remove
+     * ImageView queue to remove
      */
     private Queue<String> imagesToRemove = new ConcurrentLinkedQueue<>();
 
@@ -60,17 +60,17 @@ public class NvgImageRenderer extends NvgLeguiComponentRenderer {
 
     @Override
     public void render(Component component, LeguiContext leguiContext, long context) {
-        Image image = (Image) component;
+        ImageView imageView = (ImageView) component;
 
-        Vector2f size = image.getSize();
+        Vector2f size = imageView.getSize();
         Vector2f position = Util.calculatePosition(component);
 
-        int imageRef = getImageRef(image, context);
+        int imageRef = getImageRef(imageView, context);
 
         createScissor(context, component);
         {
             nvgBeginPath(context);
-            nvgImagePattern(context, position.x, position.y, size.x, size.y, 0, imageRef, 1, imagePaint);
+            nvgImagePattern(context, position.x - size.x/4, position.y - size.y/4, size.x * 2 , size.y * 2, 0, imageRef, 1, imagePaint);
             nvgRoundedRect(context, position.x, position.y, size.x, size.y, component.getCornerRadius());
             nvgFillPaint(context, imagePaint);
             nvgFill(context);
@@ -98,12 +98,12 @@ public class NvgImageRenderer extends NvgLeguiComponentRenderer {
         }
     }
 
-    private int getImageRef(Image image, long context) {
-        String path = image.getPath();
+    private int getImageRef(ImageView imageView, long context) {
+        String path = imageView.getPath();
         Integer imageRef = imageCache.getIfPresent(path);
         if (imageRef == null) {
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Loading image data to memory: " + path);
+                LOGGER.debug("Loading imageView data to memory: " + path);
             }
 
             if (path == null) {

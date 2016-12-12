@@ -138,7 +138,7 @@ public final class GsonSerializeRegistry {
             I.registerSerializer("CheckBox", CheckBox.class, new GsonCheckboxSerializer());
             I.registerSerializer("ComponentContainer", ComponentContainer.class, new GsonComponentContainerSerializer<>());
             I.registerSerializer("Component", Component.class, new GsonComponentSerializer<>());
-            I.registerSerializer("Image", Image.class, new GsonImageSerializer());
+            I.registerSerializer("ImageView", ImageView.class, new GsonImageSerializer());
             I.registerSerializer("Label", Label.class, new GsonLabelSerializer());
             I.registerSerializer("Panel", Panel.class, new GsonPanelSerializer());
             I.registerSerializer("ProgressBar", ProgressBar.class, new GsonProgressBarSerializer());
