@@ -5,6 +5,8 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.liquidengine.legui.component.border.SimpleRectangleLineBorder;
+import org.liquidengine.legui.exception.LeguiException;
+import org.liquidengine.legui.image.Image;
 import org.liquidengine.legui.util.ColorConstants;
 
 /**
@@ -12,27 +14,39 @@ import org.liquidengine.legui.util.ColorConstants;
  */
 public class ImageView extends Component {
     private String path;
-//    private ByteBuffer imageData;
+    private Image image;
 
-    public ImageView(String path/*, ByteBuffer imageData*/) {
+    public ImageView(String path) {
         this.path = path;
-//        this.imageData = imageData;
+        image = new Image(path);
         initialize();
     }
+
     public ImageView() {
         initialize();
     }
 
     private void initialize() {
         border = new SimpleRectangleLineBorder(ColorConstants.darkGray(), 1);
+
+        if (image != null) {
+            try {
+                image.load();
+            } catch (LeguiException e) {
+            }
+        }
     }
 
-//    public ByteBuffer getImageData() {
-//        return imageData;
-//    }
+    public Image getImage() {
+        return image;
+    }
 
     public String getPath() {
         return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 
     @Override
@@ -46,7 +60,6 @@ public class ImageView extends Component {
         return new EqualsBuilder()
                 .appendSuper(super.equals(o))
                 .append(path, imageView.path)
-//                .append(imageData, imageView.imageData)
                 .isEquals();
     }
 
@@ -63,11 +76,6 @@ public class ImageView extends Component {
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
                 .append("path", path)
-//                .append("imageData", imageData)
                 .toString();
-    }
-
-    public void setPath(String path) {
-        this.path = path;
     }
 }

@@ -9,6 +9,7 @@ import org.joml.Vector2f;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.ImageView;
 import org.liquidengine.legui.context.LeguiContext;
+import org.liquidengine.legui.image.Image;
 import org.liquidengine.legui.render.nvg.NvgLeguiComponentRenderer;
 import org.liquidengine.legui.util.IOUtil;
 import org.liquidengine.legui.util.Util;
@@ -65,12 +66,12 @@ public class NvgImageRenderer extends NvgLeguiComponentRenderer {
         Vector2f size = imageView.getSize();
         Vector2f position = Util.calculatePosition(component);
 
-        int imageRef = getImageRef(imageView, context);
+        int imageRef = getImageReference(imageView, context);
 
         createScissor(context, component);
         {
             nvgBeginPath(context);
-            nvgImagePattern(context, position.x - size.x/4, position.y - size.y/4, size.x * 2 , size.y * 2, 0, imageRef, 1, imagePaint);
+            nvgImagePattern(context, position.x, position.y, size.x, size.y, 0, imageRef, 1, imagePaint);
             nvgRoundedRect(context, position.x, position.y, size.x, size.y, component.getCornerRadius());
             nvgFillPaint(context, imagePaint);
             nvgFill(context);
@@ -91,7 +92,6 @@ public class NvgImageRenderer extends NvgLeguiComponentRenderer {
     private void removeOldImages(long context) {
         String path = imagesToRemove.poll();
         if (path == null) return;
-        LOGGER.debug("Removing image data from memory: " + path);
         Integer imageRef = imageAssociationMap.remove(path);
         if (imageRef != null) {
             NanoVG.nvgDeleteImage(context, imageRef);
@@ -102,10 +102,6 @@ public class NvgImageRenderer extends NvgLeguiComponentRenderer {
         String path = imageView.getPath();
         Integer imageRef = imageCache.getIfPresent(path);
         if (imageRef == null) {
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Loading imageView data to memory: " + path);
-            }
-
             if (path == null) {
                 imageRef = 0;
             } else {
@@ -117,6 +113,33 @@ public class NvgImageRenderer extends NvgLeguiComponentRenderer {
                 }
                 imageCache.put(path, imageRef);
                 imageAssociationMap.put(path, imageRef);
+            }
+        }
+        return imageRef;
+    }
+
+    private int getImageReference(ImageView imageView, long context) {
+        Integer imageRef = 0;
+        Image image = imageView.getImage();
+        if (image != null) {
+
+            String path = image.getPath();
+            if (path != null) {
+                imageRef = imageCache.getIfPresent(path);
+                if (imageRef == null) {
+                    ByteBuffer imageData = image.getImageData();
+                    if (imageData != null) {
+                        int width = image.getWidth();
+                        int height = image.getHeight();
+                        imageRef = NanoVG.nvgCreateImageRGBA(context, width, height, 0, imageData);
+                    } else {
+                        imageRef = 0;
+                    }
+                    imageCache.put(path, imageRef);
+                    imageAssociationMap.put(path, imageRef);
+                }
+            } else {
+                return 0;
             }
         }
         return imageRef;

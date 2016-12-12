@@ -27,9 +27,9 @@ public class Example extends Demo {
     @Override
     public void update() {
 
-        if (secondsFromStart > 5) {
+        if (secondsFromStart > 5 && secondsFromStart < 7) {
             ImageView imageView = exampleGui.getImageView();
-            if (imageView != null && imageView.getPath().equals("org/liquidengine/legui/example/11.jpg")) {
+            if (imageView != null && imageView.getPath()!= null && imageView.getPath().equals("org/liquidengine/legui/example/11.jpg")) {
                 exampleGui.removeComponent(imageView);
                 System.out.println("update img");
                 ImageView imageView1 = new ImageView("org/liquidengine/legui/example/2.jpg");
@@ -39,11 +39,16 @@ public class Example extends Demo {
                 exampleGui.setImageView(imageView1);
             }
         }
-        if (secondsFromStart > 15) {
+        if (secondsFromStart > 15&& secondsFromStart < 17) {
             ImageView imageView = exampleGui.getImageView();
-            if (imageView != null && imageView.getPath().equals("org/liquidengine/legui/example/2.jpg")) {
+            if (imageView != null && imageView.getPath()!= null && imageView.getPath().equals("org/liquidengine/legui/example/2.jpg")) {
                 System.out.println("update img");
-                imageView.setPath("org/liquidengine/legui/example/1.jpg");
+                ImageView view = new ImageView();
+                view.setSize(imageView.getSize());
+                view.setPosition(imageView.getPosition());
+                exampleGui.removeComponent(imageView);
+                exampleGui.addComponent(view);
+                exampleGui.setImageView(view);
             }
         }
 
