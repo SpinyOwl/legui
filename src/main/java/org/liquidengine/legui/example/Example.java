@@ -1,9 +1,9 @@
 package org.liquidengine.legui.example;
 
-import org.joml.Vector2f;
 import org.liquidengine.legui.component.Component;
-import org.liquidengine.legui.component.Image;
+import org.liquidengine.legui.component.ImageView;
 import org.liquidengine.legui.component.TextArea;
+import org.liquidengine.legui.image.Image;
 import org.lwjgl.glfw.GLFW;
 
 /**
@@ -28,23 +28,30 @@ public class Example extends Demo {
     @Override
     public void update() {
 
-        if (secondsFromStart > 5) {
-            Image image = exampleGui.getImage();
-            if (image != null && image.getPath().equals("org/liquidengine/legui/example/11.jpg")) {
-                exampleGui.removeComponent(image);
+        if (secondsFromStart > 5 && secondsFromStart < 7) {
+            ImageView imageView = exampleGui.getImageView();
+            if (imageView != null && imageView.getImage() != null && imageView.getImage().getPath() != null
+                    && imageView.getImage().getPath().equals("org/liquidengine/legui/example/11.jpg")) {
+                exampleGui.removeComponent(imageView);
                 System.out.println("update img");
-                Image image1 = new Image("org/liquidengine/legui/example/2.jpg");
-                image1.setSize(image.getSize());
-                image1.setPosition(image.getPosition());
-                exampleGui.addComponent(image1);
-                exampleGui.setImage(image1);
+                ImageView imageView1 = new ImageView(new Image("org/liquidengine/legui/example/2.jpg"));
+                imageView1.setSize(imageView.getSize());
+                imageView1.setPosition(imageView.getPosition());
+                exampleGui.addComponent(imageView1);
+                exampleGui.setImageView(imageView1);
             }
         }
-        if (secondsFromStart > 15) {
-            Image image = exampleGui.getImage();
-            if (image != null && image.getPath().equals("org/liquidengine/legui/example/2.jpg")) {
+        if (secondsFromStart > 15 && secondsFromStart < 17) {
+            ImageView imageView = exampleGui.getImageView();
+            if (imageView != null && imageView.getImage() != null && imageView.getImage().getPath() != null
+                    && imageView.getImage().getPath().equals("org/liquidengine/legui/example/2.jpg")) {
                 System.out.println("update img");
-                image.setPath("org/liquidengine/legui/example/1.jpg");
+                ImageView view = new ImageView(new Image("org/liquidengine/legui/example/1.jpg"));
+                view.setSize(imageView.getSize());
+                view.setPosition(imageView.getPosition());
+                exampleGui.removeComponent(imageView);
+                exampleGui.addComponent(view);
+                exampleGui.setImageView(view);
             }
         }
 
@@ -54,9 +61,6 @@ public class Example extends Demo {
         } else {
             exampleGui.getMouseTargetLabel().getTextState().setText("M.TARGET: ");
         }
-
-//        Vector2f mousePosition = leguiContext.getMousePosition();
-//        exampleGui.getMouseLabel().getTextState().setText(String.format("X:%4s, Y:%4s", mousePosition.x, mousePosition.y));
 
         exampleGui.getUpsLabel().getTextState().setText("UPS: " + currentUps + "; fixed: " + fixedStep);
         GLFW.glfwSetWindowTitle(windowPointer, "UPS: " + currentUps + "; fixed: " + fixedStep);

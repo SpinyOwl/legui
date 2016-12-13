@@ -31,7 +31,7 @@ public class NvgRendererProvider extends LeguiRendererProvider {
 
         // components
         registerRenderer(Label.class, new NvgLabelRenderer());
-        registerRenderer(Image.class, new NvgImageRenderer());
+        registerRenderer(ImageView.class, new NvgImageRenderer());
         registerRenderer(Button.class, new NvgButtonRenderer());
         registerRenderer(CheckBox.class, new NvgCheckBoxRenderer());
         registerRenderer(ProgressBar.class, new NvgProgressBarRenderer());

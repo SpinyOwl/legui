@@ -5,21 +5,22 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.liquidengine.legui.component.border.SimpleRectangleLineBorder;
+import org.liquidengine.legui.exception.LeguiException;
+import org.liquidengine.legui.image.Image;
 import org.liquidengine.legui.util.ColorConstants;
 
 /**
  * Created by Shcherbin Alexander on 9/22/2016.
  */
-public class Image extends Component {
-    private String path;
-//    private ByteBuffer imageData;
+public class ImageView extends Component {
+    private Image image;
 
-    public Image(String path/*, ByteBuffer imageData*/) {
-        this.path = path;
-//        this.imageData = imageData;
+    public ImageView(Image image) {
+        this.image = image;
         initialize();
     }
-    public Image() {
+
+    public ImageView() {
         initialize();
     }
 
@@ -27,12 +28,12 @@ public class Image extends Component {
         border = new SimpleRectangleLineBorder(ColorConstants.darkGray(), 1);
     }
 
-//    public ByteBuffer getImageData() {
-//        return imageData;
-//    }
+    public Image getImage() {
+        return image;
+    }
 
-    public String getPath() {
-        return path;
+    public void setImage(Image image) {
+        this.image = image;
     }
 
     @Override
@@ -41,12 +42,11 @@ public class Image extends Component {
 
         if (o == null || getClass() != o.getClass()) return false;
 
-        Image image = (Image) o;
+        ImageView imageView = (ImageView) o;
 
         return new EqualsBuilder()
                 .appendSuper(super.equals(o))
-                .append(path, image.path)
-//                .append(imageData, image.imageData)
+                .append(image, imageView.image)
                 .isEquals();
     }
 
@@ -54,20 +54,14 @@ public class Image extends Component {
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
                 .appendSuper(super.hashCode())
-                .append(path)
-//                .append(imageData)
+                .append(image)
                 .toHashCode();
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
-                .append("path", path)
-//                .append("imageData", imageData)
+                .append("image", image)
                 .toString();
-    }
-
-    public void setPath(String path) {
-        this.path = path;
     }
 }

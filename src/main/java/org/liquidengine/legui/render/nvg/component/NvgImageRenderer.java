@@ -7,8 +7,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.joml.Vector2f;
 import org.liquidengine.legui.component.Component;
-import org.liquidengine.legui.component.Image;
+import org.liquidengine.legui.component.ImageView;
 import org.liquidengine.legui.context.LeguiContext;
+import org.liquidengine.legui.image.Image;
 import org.liquidengine.legui.render.nvg.NvgLeguiComponentRenderer;
 import org.liquidengine.legui.util.IOUtil;
 import org.liquidengine.legui.util.Util;
@@ -32,7 +33,7 @@ public class NvgImageRenderer extends NvgLeguiComponentRenderer {
     private static final Logger LOGGER = LogManager.getLogger();
 
     /**
-     * Image queue to remove
+     * ImageView queue to remove
      */
     private Queue<String> imagesToRemove = new ConcurrentLinkedQueue<>();
 
@@ -60,12 +61,12 @@ public class NvgImageRenderer extends NvgLeguiComponentRenderer {
 
     @Override
     public void render(Component component, LeguiContext leguiContext, long context) {
-        Image image = (Image) component;
+        ImageView imageView = (ImageView) component;
 
-        Vector2f size = image.getSize();
+        Vector2f size = imageView.getSize();
         Vector2f position = Util.calculatePosition(component);
 
-        int imageRef = getImageRef(image, context);
+        int imageRef = getImageReference(imageView, context);
 
         createScissor(context, component);
         {
@@ -91,32 +92,34 @@ public class NvgImageRenderer extends NvgLeguiComponentRenderer {
     private void removeOldImages(long context) {
         String path = imagesToRemove.poll();
         if (path == null) return;
-        LOGGER.debug("Removing image data from memory: " + path);
         Integer imageRef = imageAssociationMap.remove(path);
         if (imageRef != null) {
             NanoVG.nvgDeleteImage(context, imageRef);
         }
     }
 
-    private int getImageRef(Image image, long context) {
-        String path = image.getPath();
-        Integer imageRef = imageCache.getIfPresent(path);
-        if (imageRef == null) {
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Loading image data to memory: " + path);
-            }
+    private int getImageReference(ImageView imageView, long context) {
+        Integer imageRef = 0;
+        Image image = imageView.getImage();
+        if (image != null) {
 
-            if (path == null) {
-                imageRef = 0;
-            } else {
-                try {
-                    ByteBuffer data = IOUtil.ioResourceToByteBuffer(path, 32 * 1024);
-                    imageRef = NanoVG.nvgCreateImageMem(context, 0, data);
-                } catch (IOException e) {
-                    imageRef = 0;
+            String path = image.getPath();
+            if (path != null) {
+                imageRef = imageCache.getIfPresent(path);
+                if (imageRef == null) {
+                    ByteBuffer imageData = image.getImageData();
+                    if (imageData != null) {
+                        int width = image.getWidth();
+                        int height = image.getHeight();
+                        imageRef = NanoVG.nvgCreateImageRGBA(context, width, height, 0, imageData);
+                    } else {
+                        imageRef = 0;
+                    }
+                    imageCache.put(path, imageRef);
+                    imageAssociationMap.put(path, imageRef);
                 }
-                imageCache.put(path, imageRef);
-                imageAssociationMap.put(path, imageRef);
+            } else {
+                return 0;
             }
         }
         return imageRef;

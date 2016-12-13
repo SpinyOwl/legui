@@ -6,10 +6,10 @@ import org.liquidengine.legui.component.border.SimpleRectangleLineBorder;
 import org.liquidengine.legui.component.optional.Orientation;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
-import org.liquidengine.legui.event.component.CursorEnterEvent;
 import org.liquidengine.legui.event.component.KeyboardKeyEvent;
 import org.liquidengine.legui.event.component.MouseClickEvent;
 import org.liquidengine.legui.event.component.SliderChangeEvent;
+import org.liquidengine.legui.image.Image;
 import org.liquidengine.legui.listener.component.KeyboardKeyEventListener;
 import org.liquidengine.legui.listener.component.MouseClickEventListener;
 import org.liquidengine.legui.listener.component.SliderChangeEventListener;
@@ -29,7 +29,7 @@ public class ExampleGui extends Panel {
     private final Label focusedGuiLabel;
     private final TextInput caretp;
     private final TextArea textArea;
-    private Image image;
+    private ImageView imageView;
 
     public ExampleGui(int width, int height) {
         super(0, 0, width, height);
@@ -59,10 +59,10 @@ public class ExampleGui extends Panel {
         upsLabel = new Label(130, 60, 100, 20, "Hello Label");
         this.addComponent(upsLabel);
 
-        image = new Image("org/liquidengine/legui/example/11.jpg");
-        image.setPosition(20, 30);
-        image.setSize(100, 100);
-        this.addComponent(image);
+        imageView = new ImageView(new Image("org/liquidengine/legui/example/11.jpg"));
+        imageView.setPosition(20, 30);
+        imageView.setSize(100, 100);
+        this.addComponent(imageView);
 
         Button button = new Button(20, 170, 50, 20);
         button.setBackgroundColor(new Vector4f(1));
@@ -289,12 +289,12 @@ public class ExampleGui extends Panel {
         return caretp;
     }
 
-    public Image getImage() {
-        return image;
+    public ImageView getImageView() {
+        return imageView;
     }
 
-    public void setImage(Image image) {
-        this.image = image;
+    public void setImageView(ImageView imageView) {
+        this.imageView = imageView;
     }
 
     public Label getMouseTargetLabel() {
