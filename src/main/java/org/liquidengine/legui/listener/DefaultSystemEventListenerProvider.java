@@ -72,8 +72,6 @@ public class DefaultSystemEventListenerProvider extends SystemEventListenerProvi
         registerDefaultListenerPerEvent(SystemScrollEvent.class, new DefaultSystemScrollEventListener());
         registerDefaultListenerPerEvent(SystemKeyEvent.class, new DefaultSystemKeyEventListener());
         registerDefaultListenerPerEvent(SystemCharEvent.class, new DefaultSystemCharEventListener());
-
-//        registerDefaultListenerPerComponent(WidgetComponent.class, new WidgetComponentSysMouseClickEventListener());
     }
 
     public <C extends Component> void registerDefaultListenerPerComponent(Class<C> componentClass, SystemEventListener<C, SystemEvent> systemEventListener) {

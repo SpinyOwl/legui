@@ -44,8 +44,10 @@ public class Frame extends ComponentContainer {
         this.systemEventListeners
                 .setListener(SystemWindowSizeEvent.class,
                         (SystemEventListener<Frame, SystemWindowSizeEvent>)
-                                (event, component, context) ->
-                                        this.size.set(event.width, event.height)
+                                (event, component, context) -> {
+                                    this.size.set(event.width, event.height);
+                                    components.forEach(c -> c.getSystemEventListeners().getListener(event.getClass()).update(event, c, context));
+                                }
                 );
         backgroundColor = ColorConstants.transparent();
         position.set(0);
