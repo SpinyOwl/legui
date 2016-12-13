@@ -14,7 +14,7 @@ public class SystemCursorPosEventPreprocessor implements SystemEventPreprocessor
         Vector2f cursorPosition = new Vector2f(event.fx, event.fy);
         context.setCursorPositionPrev(new Vector2f(context.getCursorPosition()));
         context.setCursorPosition(cursorPosition);
-        context.setMouseTargetGui(context.getMainGuiComponent().getComponentAt(cursorPosition));
+        context.setMouseTargetGui(context.getFrame().getComponentAt(cursorPosition));
     }
 
 }

@@ -2,6 +2,7 @@ package org.liquidengine.legui.example;
 
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.Component;
+import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.component.Label;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
@@ -24,8 +25,10 @@ public class LiquidEngineGuiExample extends Demo {
     public static void main(String[] args) {
         int width = 400;
         int height = 150;
+        Frame frame = new Frame(width, height);
         Component component = createGui(width, height);
-        LiquidEngineGuiExample example = new LiquidEngineGuiExample(width, height, "Liquid Engine GUI", component, true);
+        frame.addComponent(component);
+        LiquidEngineGuiExample example = new LiquidEngineGuiExample(width, height, "Liquid Engine GUI", frame, true);
         example.start();
         windowSizeCallbackI = (window, wid, hei) -> {
             leguiLabel.setSize(wid, hei);
@@ -51,8 +54,8 @@ public class LiquidEngineGuiExample extends Demo {
 
     }
 
-    public LiquidEngineGuiExample(int width, int height, String title, Component component, boolean resizable) {
-        super(width, height, title, component, resizable);
+    public LiquidEngineGuiExample(int width, int height, String title, Frame frame, boolean resizable) {
+        super(width, height, title, frame, resizable);
     }
 }
 

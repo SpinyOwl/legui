@@ -22,7 +22,7 @@ import static org.liquidengine.legui.event.component.MouseClickEvent.MouseClickA
 /**
  * Created by Shcherbin Alexander on 9/19/2016.
  */
-public class ExampleGui extends Panel {
+public class ExampleGui extends Frame {
     private final Label mouseTargetLabel;
     private final Label mouseLabel;
     private final Label upsLabel;
@@ -32,7 +32,7 @@ public class ExampleGui extends Panel {
     private ImageView imageView;
 
     public ExampleGui(int width, int height) {
-        super(0, 0, width, height);
+        super(width, height);
 
         //@formatter:off
         Panel p1 = new Panel(1 * 20, 10, 10, 10); this.addComponent(p1);
