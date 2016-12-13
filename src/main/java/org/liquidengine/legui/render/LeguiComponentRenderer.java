@@ -18,7 +18,7 @@ public interface LeguiComponentRenderer extends Serializable {
     /**
      * Render Gui and fit it to target width and height
      *
-     * @param component gui component to render
+     * @param component gui frame to render
      */
     void render(Component component, LeguiContext context);
 

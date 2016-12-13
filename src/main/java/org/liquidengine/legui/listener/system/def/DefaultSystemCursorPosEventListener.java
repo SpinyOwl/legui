@@ -40,7 +40,7 @@ public class DefaultSystemCursorPosEventListener implements SystemEventListener<
     }
 
     /**
-     * Updates standard context of component element
+     * Updates standard context of frame element
      *
      * @param event
      * @param component

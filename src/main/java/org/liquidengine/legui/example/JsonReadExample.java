@@ -18,13 +18,13 @@ public class JsonReadExample {
         Component deserialize = GsonSerializeUtil.deserialize(json);
         deserialize.setPosition(0,0);
 
-        Demo demo = new Demo(100, 100, 200, 200, "test", deserialize, true){
-            @Override
-            public void update() {
-                Component mouseTargetGui = leguiContext.getMouseTargetGui();
-                GLFW.glfwSetWindowTitle(leguiContext.getGlfwWindow(), mouseTargetGui==null?"null":mouseTargetGui.toString());
-            }
-        };
-        demo.start();
+//        Demo demo = new Demo(100, 100, 200, 200, "test", deserialize, true){
+//            @Override
+//            public void update() {
+//                Component mouseTargetGui = leguiContext.getMouseTargetGui();
+//                GLFW.glfwSetWindowTitle(leguiContext.getGlfwWindow(), mouseTargetGui==null?"null":mouseTargetGui.toString());
+//            }
+//        };
+//        demo.start();
     }
 }

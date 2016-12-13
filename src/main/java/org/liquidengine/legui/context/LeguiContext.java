@@ -4,6 +4,7 @@ import org.joml.Vector2f;
 import org.joml.Vector2i;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.ComponentContainer;
+import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.event.SystemEvent;
 import org.liquidengine.legui.event.system.SystemMouseClickEvent;
 import org.liquidengine.legui.processor.LeguiEventListenerProcessor;
@@ -27,7 +28,7 @@ public class LeguiContext implements Serializable {
     private Vector2f framebufferSize;
     private transient float pixelRatio;
 
-    private Component mainGuiComponent;
+    private Frame frame;
     private Component mouseTargetGui;
     private Component focusedGui;
 
@@ -43,9 +44,9 @@ public class LeguiContext implements Serializable {
     private LeguiEventListenerProcessor leguiEventProcessor;
 
 
-    public LeguiContext(long glfwWindow, Component mainGuiComponent) {
+    public LeguiContext(long glfwWindow, Frame frame) {
         this.glfwWindow = glfwWindow;
-        this.mainGuiComponent = mainGuiComponent;
+        this.frame = frame;
     }
 
     public void updateGlfwWindow() {
@@ -82,8 +83,8 @@ public class LeguiContext implements Serializable {
         this.pixelRatio = pixelRatio;
     }
 
-    public Component getMainGuiComponent() {
-        return mainGuiComponent;
+    public Component getFrame() {
+        return frame;
     }
 
     public long getGlfwWindow() {

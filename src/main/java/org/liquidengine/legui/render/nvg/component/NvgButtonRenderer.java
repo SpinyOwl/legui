@@ -4,6 +4,7 @@ import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.Button;
 import org.liquidengine.legui.component.Component;
+import org.liquidengine.legui.component.ImageView;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.context.LeguiContext;
 import org.liquidengine.legui.render.nvg.NvgLeguiComponentRenderer;
@@ -31,19 +32,15 @@ public class NvgButtonRenderer extends NvgLeguiComponentRenderer {
 
             nvgSave(context);
             // render background
-            {
-                Vector4f backgroundColor = new Vector4f(component.getBackgroundColor());
-                if (agui.getState().isHovered()) backgroundColor.w *= 0.5f;
-                if (agui.getState().isPressed()) {backgroundColor.mul(0.5f); backgroundColor.w = 1; }
-
-                nvgBeginPath(context);
-                nvgFillColor(context, rgba(backgroundColor, colorA));
-                nvgRoundedRect(context, pos.x, pos.y, size.x, size.y, component.getCornerRadius());
-                nvgFill(context);
-
-//                nvgLinearGradient(context, pos.x, pos.y, pos.x, pos.y + size.y, rgba(1f, 1f, 1f, 0.2f, colorA), rgba(0f, 0f, 0f, 0.2f, colorB), paintA);
-//                nvgFillPaint(context, paintA);
-//                nvgFill(context);
+            if (!agui.getState().isFocused() &&
+                    !agui.getState().isHovered() &&
+                    !agui.getState().isPressed()) {
+                ImageView backgroundImage = agui.getBackgroundImage();
+                if(backgroundImage == null) {
+                    drawBackgroundColor(component, context, agui, pos, size);
+                } else {
+                    drawBackgroundImage(backgroundImage, context, pos, size);
+                }
             }
 
             // Render text
@@ -59,5 +56,23 @@ public class NvgButtonRenderer extends NvgLeguiComponentRenderer {
 
         }
         resetScissor(context);
+    }
+
+    private void drawBackgroundImage(ImageView image, long context, Vector2f pos, Vector2f size) {
+
+    }
+
+    private void drawBackgroundColor(Component component, long context, Button agui, Vector2f pos, Vector2f size) {
+        Vector4f backgroundColor = new Vector4f(component.getBackgroundColor());
+        if (agui.getState().isHovered()) backgroundColor.w *= 0.5f;
+        if (agui.getState().isPressed()) {
+            backgroundColor.mul(0.5f);
+            backgroundColor.w = 1;
+        }
+
+        nvgBeginPath(context);
+        nvgFillColor(context, rgba(backgroundColor, colorA));
+        nvgRoundedRect(context, pos.x, pos.y, size.x, size.y, component.getCornerRadius());
+        nvgFill(context);
     }
 }

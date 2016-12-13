@@ -1,6 +1,7 @@
 package org.liquidengine.legui.example;
 
 import org.liquidengine.legui.component.Component;
+import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.component.ImageView;
 import org.liquidengine.legui.component.TextArea;
 import org.liquidengine.legui.image.Image;
@@ -13,8 +14,8 @@ public class Example extends Demo {
 
     private static ExampleGui exampleGui;
 
-    public Example(int width, int height, String title, Component component) {
-        super(width, height, title, component);
+    public Example(int width, int height, String title, Frame frame) {
+        super(width, height, title, frame);
     }
 
     public static void main(String[] args) {
