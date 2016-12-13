@@ -13,6 +13,7 @@ import org.liquidengine.legui.event.component.CursorEnterEvent;
 import org.liquidengine.legui.event.component.KeyboardKeyEvent;
 import org.liquidengine.legui.event.component.MouseClickEvent;
 import org.liquidengine.legui.event.component.SliderChangeEvent;
+import org.liquidengine.legui.image.Image;
 import org.liquidengine.legui.listener.component.KeyboardKeyEventListener;
 import org.liquidengine.legui.listener.component.MouseClickEventListener;
 import org.liquidengine.legui.listener.component.SliderChangeEventListener;
@@ -87,7 +88,7 @@ public class JsonSerializeUtilTest {
         Label upsLabel = new Label(130, 60, 100, 20, "Hello Label");
         toReturn.addComponent(upsLabel);
 
-        ImageView imageView = new ImageView("org/liquidengine/legui/example/11.jpg");
+        ImageView imageView = new ImageView(new Image("org/liquidengine/legui/example/11.jpg"));
         imageView.setPosition(20, 30);
         imageView.setSize(100, 100);
         toReturn.addComponent(imageView);

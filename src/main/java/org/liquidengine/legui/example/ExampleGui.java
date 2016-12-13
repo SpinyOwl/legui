@@ -9,6 +9,7 @@ import org.liquidengine.legui.component.optional.align.VerticalAlign;
 import org.liquidengine.legui.event.component.KeyboardKeyEvent;
 import org.liquidengine.legui.event.component.MouseClickEvent;
 import org.liquidengine.legui.event.component.SliderChangeEvent;
+import org.liquidengine.legui.image.Image;
 import org.liquidengine.legui.listener.component.KeyboardKeyEventListener;
 import org.liquidengine.legui.listener.component.MouseClickEventListener;
 import org.liquidengine.legui.listener.component.SliderChangeEventListener;
@@ -58,7 +59,7 @@ public class ExampleGui extends Panel {
         upsLabel = new Label(130, 60, 100, 20, "Hello Label");
         this.addComponent(upsLabel);
 
-        imageView = new ImageView("org/liquidengine/legui/example/11.jpg");
+        imageView = new ImageView(new Image("org/liquidengine/legui/example/11.jpg"));
         imageView.setPosition(20, 30);
         imageView.setSize(100, 100);
         this.addComponent(imageView);

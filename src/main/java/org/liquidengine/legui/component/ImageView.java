@@ -13,12 +13,10 @@ import org.liquidengine.legui.util.ColorConstants;
  * Created by Shcherbin Alexander on 9/22/2016.
  */
 public class ImageView extends Component {
-    private String path;
     private Image image;
 
-    public ImageView(String path) {
-        this.path = path;
-        image = new Image(path);
+    public ImageView(Image image) {
+        this.image = image;
         initialize();
     }
 
@@ -28,25 +26,14 @@ public class ImageView extends Component {
 
     private void initialize() {
         border = new SimpleRectangleLineBorder(ColorConstants.darkGray(), 1);
-
-        if (image != null) {
-            try {
-                image.load();
-            } catch (LeguiException e) {
-            }
-        }
     }
 
     public Image getImage() {
         return image;
     }
 
-    public String getPath() {
-        return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
+    public void setImage(Image image) {
+        this.image = image;
     }
 
     @Override
@@ -59,7 +46,7 @@ public class ImageView extends Component {
 
         return new EqualsBuilder()
                 .appendSuper(super.equals(o))
-                .append(path, imageView.path)
+                .append(image, imageView.image)
                 .isEquals();
     }
 
@@ -67,15 +54,14 @@ public class ImageView extends Component {
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
                 .appendSuper(super.hashCode())
-                .append(path)
-//                .append(imageData)
+                .append(image)
                 .toHashCode();
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
-                .append("path", path)
+                .append("image", image)
                 .toString();
     }
 }

@@ -1,8 +1,14 @@
 package org.liquidengine.legui.image;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.liquidengine.legui.exception.LeguiException;
 import org.liquidengine.legui.exception.LeguiExceptions;
 import org.liquidengine.legui.util.IOUtil;
+import org.lwjgl.nanovg.NanoVG;
 import org.lwjgl.stb.STBImage;
 
 import java.io.IOException;
@@ -12,7 +18,8 @@ import java.nio.ByteBuffer;
  * Created by Alexander on 12.12.2016.
  */
 public class Image {
-    private String path;
+    private static final Logger LOGGER = LogManager.getLogger();
+    private final String path;
     private int width;
     private int height;
     private ImageChannels channels;
@@ -20,13 +27,14 @@ public class Image {
 
     public Image(String path) {
         this.path = path;
+        try {
+            initialize();
+        } catch (LeguiException e) {
+            if (LOGGER.isErrorEnabled()) LOGGER.error(e);
+        }
     }
 
-
-    public Image() {
-    }
-
-    public void load() {
+    public void initialize() {
         try {
             ByteBuffer byteBuffer = IOUtil.ioResourceToByteBuffer(path, 1024);
             int[] width = {0};
@@ -65,6 +73,44 @@ public class Image {
 
     public String getPath() {
         return path;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append("path", path)
+                .append("width", width)
+                .append("height", height)
+                .append("channels", channels)
+                .toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Image image = (Image) o;
+
+        return new EqualsBuilder()
+                .append(width, image.width)
+                .append(height, image.height)
+                .append(path, image.path)
+                .append(channels, image.channels)
+                .append(imageData, image.imageData)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37)
+                .append(path)
+                .append(width)
+                .append(height)
+                .append(channels)
+                .append(imageData)
+                .toHashCode();
     }
 
     public enum ImageChannels {
