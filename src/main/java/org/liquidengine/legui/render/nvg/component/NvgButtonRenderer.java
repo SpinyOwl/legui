@@ -32,16 +32,7 @@ public class NvgButtonRenderer extends NvgLeguiComponentRenderer {
 
             nvgSave(context);
             // render background
-            if (!agui.getState().isFocused() &&
-                    !agui.getState().isHovered() &&
-                    !agui.getState().isPressed()) {
-                ImageView backgroundImage = agui.getBackgroundImage();
-                if(backgroundImage == null) {
-                    drawBackgroundColor(component, context, agui, pos, size);
-                } else {
-                    drawBackgroundImage(backgroundImage, context, pos, size);
-                }
-            }
+            drawBackgroundColor(component, context, agui, pos, size);
 
             // Render text
             {
