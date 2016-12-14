@@ -15,7 +15,7 @@ public abstract class NvgLeguiComponentRenderer implements LeguiComponentRendere
 
     @Override
     public final void render(Component component, LeguiContext context) {
-        render(component, context, (Long) context.getContextData().get("nvgContext"));
+        render(component, context, (Long) context.getContextData().get(NvgLeguiRenderer.NVG_CONTEXT));
     }
 
     public abstract void render(Component component, LeguiContext context, long nvgContext);

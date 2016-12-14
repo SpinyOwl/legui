@@ -23,9 +23,11 @@ public class NvgDefaultRenderer extends NvgLeguiComponentRenderer {
 
     @Override
     public void render(Component component, LeguiContext leguiContext, long context) {
+        if (!component.isVisible()) return;
+
         createScissor(context, component);
         {
-            nvgSave(context);
+//            nvgSave(context);
 
             Vector2f pos = calculatePosition(component);
             Vector2f size = component.getSize();
@@ -47,8 +49,6 @@ public class NvgDefaultRenderer extends NvgLeguiComponentRenderer {
             components.stream().filter(Component::isVisible).forEach(child -> child.render(leguiContext));
         }
     }
-
-
 
 
 }

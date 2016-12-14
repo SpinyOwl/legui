@@ -21,6 +21,11 @@ public class Button extends Component {
 
     protected TextState textState;
 
+    protected ImageView backgroundImage;
+    protected ImageView focusedBbackgroundImage;
+    protected ImageView pressedBackgroundImage;
+    protected ImageView hoveredBackgroundImage;
+
     /**
      * Creates a button with default text.
      */
@@ -85,6 +90,38 @@ public class Button extends Component {
      */
     public TextState getTextState() {
         return textState;
+    }
+
+    public ImageView getBackgroundImage() {
+        return backgroundImage;
+    }
+
+    public void setBackgroundImage(ImageView backgroundImage) {
+        this.backgroundImage = backgroundImage;
+    }
+
+    public ImageView getFocusedBbackgroundImage() {
+        return focusedBbackgroundImage;
+    }
+
+    public void setFocusedBbackgroundImage(ImageView focusedBbackgroundImage) {
+        this.focusedBbackgroundImage = focusedBbackgroundImage;
+    }
+
+    public ImageView getPressedBackgroundImage() {
+        return pressedBackgroundImage;
+    }
+
+    public void setPressedBackgroundImage(ImageView pressedBackgroundImage) {
+        this.pressedBackgroundImage = pressedBackgroundImage;
+    }
+
+    public ImageView getHoveredBackgroundImage() {
+        return hoveredBackgroundImage;
+    }
+
+    public void setHoveredBackgroundImage(ImageView hoveredBackgroundImage) {
+        this.hoveredBackgroundImage = hoveredBackgroundImage;
     }
 
     @Override

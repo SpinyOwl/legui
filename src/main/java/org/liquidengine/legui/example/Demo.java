@@ -106,7 +106,7 @@ public class Demo {
         leguiContext = new LeguiContext(windowPointer, frame);
 
         // enable debugging
-//        leguiContext.setDebugEnabled(true);
+        leguiContext.setDebugEnabled(true);
 
         // create callback keeper
         DefaultLeguiCallbackKeeper leguiCallbackKeeper = new DefaultLeguiCallbackKeeper();
@@ -131,6 +131,7 @@ public class Demo {
                 if (key == GLFW_KEY_G && action != GLFW_RELEASE && mods == GLFW_MOD_CONTROL) gcing = !gcing;
                 if (key == GLFW_KEY_F && action != GLFW_RELEASE && mods == GLFW_MOD_CONTROL) fixedStep = !fixedStep;
                 if (key == GLFW_KEY_R && action != GLFW_RELEASE && mods == GLFW_MOD_CONTROL) render = !render;
+                if (key == GLFW_KEY_H && action != GLFW_RELEASE && mods == GLFW_MOD_CONTROL) frame.setVisible(!frame.isVisible());
             };
             callbackKeeper.getChainWindowCloseCallback().add(closeCallback);
             callbackKeeper.getChainKeyCallback().add(keyCloseCallback);
@@ -184,6 +185,7 @@ public class Demo {
         leguiContext.updateGlfwWindow();
         Vector2i windowSize = leguiContext.getWindowSize();
         glClearColor(clearColor.x, clearColor.y, clearColor.z, 1);
+        glClear(GL_COLOR_BUFFER_BIT);
         glViewport(0, 0, windowSize.x, windowSize.y);
         glClear(GL_COLOR_BUFFER_BIT);
 

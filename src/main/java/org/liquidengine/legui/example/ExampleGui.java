@@ -107,6 +107,14 @@ public class ExampleGui extends Frame {
         widget.setTitleBackgroundColor(ColorConstants.lightGreen());
 
         Button turnWidVisible = new Button(360, 280, 20, 20, "");
+        ImageView bgIm = new ImageView(new Image("org/liquidengine/legui/example/1.jpg"));
+        ImageView hbgIm = new ImageView(new Image("org/liquidengine/legui/example/2.jpg"));
+        bgIm.setPosition(2,2);
+        hbgIm.setPosition(1,1);
+        bgIm.setSize(16,16);
+        hbgIm.setSize(18,18);
+        turnWidVisible.setBackgroundImage(bgIm);
+        turnWidVisible.setHoveredBackgroundImage(hbgIm);
         turnWidVisible.getLeguiEventListeners().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
             if (CLICK.equals(event.getAction())) widget.setVisible(true);
         });
@@ -275,7 +283,9 @@ public class ExampleGui extends Frame {
 
         Button sbb = new Button(130, 260, 70, 20, "Add element");
         sbb.getLeguiEventListeners().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
-            if(event.getAction()==CLICK){selectBox.addElement("WorlD " + i[0]++);}
+            if (event.getAction() == CLICK) {
+                selectBox.addElement("WorlD " + i[0]++);
+            }
         });
         this.addComponent(sbb);
 

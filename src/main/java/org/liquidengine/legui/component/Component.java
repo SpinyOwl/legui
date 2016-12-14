@@ -46,7 +46,7 @@ public abstract class Component implements Serializable {
     protected SystemEventListenerList systemEventListeners = new SystemEventListenerList(this.getClass());
 
     public Component() {
-        this(10, 10, 10, 10);
+        this(0, 0, 10, 10);
     }
 
     public Component(float x, float y, float width, float height) {

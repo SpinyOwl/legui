@@ -1,8 +1,10 @@
 package org.liquidengine.legui.component;
 
 import org.joml.Vector2f;
+import org.liquidengine.legui.context.LeguiContext;
 import org.liquidengine.legui.event.system.SystemWindowSizeEvent;
 import org.liquidengine.legui.listener.SystemEventListener;
+import org.liquidengine.legui.listener.system.def.DefaultSystemCursorPosEventListener;
 import org.liquidengine.legui.util.ColorConstants;
 
 /**
@@ -41,15 +43,22 @@ public class Frame extends ComponentContainer {
 
     private void initialize() {
         border = null;
+        SystemEventListener<Frame, SystemWindowSizeEvent> frameSystemWindowSizeEventSystemEventListener = (event, component, context) -> {
+            this.size.set(event.width, event.height);
+            components.forEach(c -> c.getSystemEventListeners().getListener(event.getClass()).update(event, c, context));
+        };
+
         this.systemEventListeners
-                .setListener(SystemWindowSizeEvent.class,
-                        (SystemEventListener<Frame, SystemWindowSizeEvent>)
-                                (event, component, context) -> {
-                                    this.size.set(event.width, event.height);
-                                    components.forEach(c -> c.getSystemEventListeners().getListener(event.getClass()).update(event, c, context));
-                                }
-                );
+                .setListener(SystemWindowSizeEvent.class, frameSystemWindowSizeEventSystemEventListener);
         backgroundColor = ColorConstants.transparent();
         position.set(0);
+    }
+
+    private static class Listener implements SystemEventListener<Frame, SystemWindowSizeEvent> {
+        DefaultSystemCursorPosEventListener defaultSystemCursorPosEventListener = new DefaultSystemCursorPosEventListener();
+        @Override
+        public void update(SystemWindowSizeEvent event, Frame component, LeguiContext context) {
+//            defaultSystemCursorPosEventListener.update(event, component, context);
+        }
     }
 }
