@@ -60,7 +60,7 @@ public class ImageView extends Component {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
+        return new ToStringBuilder(this)
                 .append("image", image)
                 .toString();
     }
