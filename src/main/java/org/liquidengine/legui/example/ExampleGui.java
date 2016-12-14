@@ -6,10 +6,10 @@ import org.liquidengine.legui.component.border.SimpleRectangleLineBorder;
 import org.liquidengine.legui.component.optional.Orientation;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
-import org.liquidengine.legui.event.component.CursorEnterEvent;
 import org.liquidengine.legui.event.component.KeyboardKeyEvent;
 import org.liquidengine.legui.event.component.MouseClickEvent;
 import org.liquidengine.legui.event.component.SliderChangeEvent;
+import org.liquidengine.legui.image.Image;
 import org.liquidengine.legui.listener.component.KeyboardKeyEventListener;
 import org.liquidengine.legui.listener.component.MouseClickEventListener;
 import org.liquidengine.legui.listener.component.SliderChangeEventListener;
@@ -22,17 +22,17 @@ import static org.liquidengine.legui.event.component.MouseClickEvent.MouseClickA
 /**
  * Created by Shcherbin Alexander on 9/19/2016.
  */
-public class ExampleGui extends Panel {
+public class ExampleGui extends Frame {
     private final Label mouseTargetLabel;
     private final Label mouseLabel;
     private final Label upsLabel;
     private final Label focusedGuiLabel;
     private final TextInput caretp;
     private final TextArea textArea;
-    private Image image;
+    private ImageView imageView;
 
     public ExampleGui(int width, int height) {
-        super(0, 0, width, height);
+        super(width, height);
 
         //@formatter:off
         Panel p1 = new Panel(1 * 20, 10, 10, 10); this.addComponent(p1);
@@ -59,10 +59,10 @@ public class ExampleGui extends Panel {
         upsLabel = new Label(130, 60, 100, 20, "Hello Label");
         this.addComponent(upsLabel);
 
-        image = new Image("org/liquidengine/legui/example/11.jpg");
-        image.setPosition(20, 30);
-        image.setSize(100, 100);
-        this.addComponent(image);
+        imageView = new ImageView(new Image("org/liquidengine/legui/example/11.jpg"));
+        imageView.setPosition(20, 30);
+        imageView.setSize(100, 100);
+        this.addComponent(imageView);
 
         Button button = new Button(20, 170, 50, 20);
         button.setBackgroundColor(new Vector4f(1));
@@ -107,6 +107,14 @@ public class ExampleGui extends Panel {
         widget.setTitleBackgroundColor(ColorConstants.lightGreen());
 
         Button turnWidVisible = new Button(360, 280, 20, 20, "");
+        ImageView bgIm = new ImageView(new Image("org/liquidengine/legui/example/1.jpg"));
+        ImageView hbgIm = new ImageView(new Image("org/liquidengine/legui/example/2.jpg"));
+        bgIm.setPosition(2,2);
+        hbgIm.setPosition(1,1);
+        bgIm.setSize(16,16);
+        hbgIm.setSize(18,18);
+        turnWidVisible.setBackgroundImage(bgIm);
+        turnWidVisible.setHoveredBackgroundImage(hbgIm);
         turnWidVisible.getLeguiEventListeners().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
             if (CLICK.equals(event.getAction())) widget.setVisible(true);
         });
@@ -275,7 +283,9 @@ public class ExampleGui extends Panel {
 
         Button sbb = new Button(130, 260, 70, 20, "Add element");
         sbb.getLeguiEventListeners().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
-            if(event.getAction()==CLICK){selectBox.addElement("WorlD " + i[0]++);}
+            if (event.getAction() == CLICK) {
+                selectBox.addElement("WorlD " + i[0]++);
+            }
         });
         this.addComponent(sbb);
 
@@ -289,12 +299,12 @@ public class ExampleGui extends Panel {
         return caretp;
     }
 
-    public Image getImage() {
-        return image;
+    public ImageView getImageView() {
+        return imageView;
     }
 
-    public void setImage(Image image) {
-        this.image = image;
+    public void setImageView(ImageView imageView) {
+        this.imageView = imageView;
     }
 
     public Label getMouseTargetLabel() {

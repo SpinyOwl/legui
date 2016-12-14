@@ -82,7 +82,7 @@ public final class IOUtil {
     }
 
     /**
-     * @param resource   path to resource to load
+     * @param resource   path to resource to initialize
      * @param bufferSize initial buffer size
      * @return Created ByteBuffer
      * @throws RuntimeException if any exception occurs

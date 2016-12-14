@@ -2,7 +2,7 @@ package org.liquidengine.legui.example;
 
 import org.joml.Vector2i;
 import org.joml.Vector4f;
-import org.liquidengine.legui.component.Component;
+import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.component.ScrollablePanel;
 import org.liquidengine.legui.component.Viewport;
 import org.liquidengine.legui.context.ILeguiCallbackKeeper;
@@ -42,7 +42,7 @@ public class Demo {
     protected Thread eventProcessorThread;
 
     protected String initialTitle;
-    protected Component component;
+    protected Frame frame;
 
     protected LeguiContext leguiContext;
     protected LeguiRenderer renderer;
@@ -55,22 +55,23 @@ public class Demo {
     protected int secondsFromStart = 0;
     protected boolean gcing;
     protected boolean fixedStep;
+    protected boolean render = true;
     protected ILeguiCallbackKeeper callbackKeeper;
 
 
-    public Demo(int width, int height, String title, Component component) {
-        this(width, height, title, component, true);
+    public Demo(int width, int height, String title, Frame frame) {
+        this(width, height, title, frame, true);
     }
 
-    public Demo(int width, int height, String title, Component component, boolean resizable) {
-        this(100, 100, width, height, title, component, resizable);
+    public Demo(int width, int height, String title, Frame frame, boolean resizable) {
+        this(100, 100, width, height, title, frame, resizable);
     }
 
-    public Demo(int x, int y, int width, int height, String title, Component component, boolean resizable) {
+    public Demo(int x, int y, int width, int height, String title, Frame frame, boolean resizable) {
         this.width = width;
         this.height = height;
         this.initialTitle = title;
-        this.component = component;
+        this.frame = frame;
         this.resizable = resizable;
         this.x = x;
         this.y = y;
@@ -102,10 +103,10 @@ public class Demo {
         glfwShowWindow(windowPointer);
 
         // create UI context. It holds main gui components and UI system states
-        leguiContext = new LeguiContext(windowPointer, component);
+        leguiContext = new LeguiContext(windowPointer, frame);
 
         // enable debugging
-//        leguiContext.setDebugEnabled(true);
+        leguiContext.setDebugEnabled(true);
 
         // create callback keeper
         DefaultLeguiCallbackKeeper leguiCallbackKeeper = new DefaultLeguiCallbackKeeper();
@@ -113,7 +114,7 @@ public class Demo {
         leguiCallbackKeeper.registerCallbacks(windowPointer);
 
         // Create event processor for system events (obtained from callbacks) Constructor automatically creates Callbacks and binds them to window
-        systemEventProcessor = new SystemEventListenerProcessor(component, leguiContext, callbackKeeper);
+        systemEventProcessor = new SystemEventListenerProcessor(frame, leguiContext, callbackKeeper);
         // Create event processor for ui events
         uiEventLeguiEventProcessor = new LeguiEventListenerProcessor();
         // Set this processor to context, so generated ui events in system event processor will go to it.
@@ -129,6 +130,8 @@ public class Demo {
                 if (key == GLFW_KEY_ESCAPE && action != GLFW_RELEASE) running = !running;
                 if (key == GLFW_KEY_G && action != GLFW_RELEASE && mods == GLFW_MOD_CONTROL) gcing = !gcing;
                 if (key == GLFW_KEY_F && action != GLFW_RELEASE && mods == GLFW_MOD_CONTROL) fixedStep = !fixedStep;
+                if (key == GLFW_KEY_R && action != GLFW_RELEASE && mods == GLFW_MOD_CONTROL) render = !render;
+                if (key == GLFW_KEY_H && action != GLFW_RELEASE && mods == GLFW_MOD_CONTROL) frame.setVisible(!frame.isVisible());
             };
             callbackKeeper.getChainWindowCloseCallback().add(closeCallback);
             callbackKeeper.getChainKeyCallback().add(keyCloseCallback);
@@ -155,10 +158,19 @@ public class Demo {
         double nanosPerUpdate = 1_000_000_000 / 60;
 
         while (running) {
-            if (fixedStep) {
-                runWithFixedStep(timer, last, delta, nanosPerUpdate);
+            if (render) {
+                if (fixedStep) {
+                    runWithFixedStep(timer, last, delta, nanosPerUpdate);
+                } else {
+                    runWithoutFixedStep(timer, last);
+                }
             } else {
-                runWithoutFixedStep(timer, last);
+                int[] windowWidth = {0}, windowHeight = {0};
+                GLFW.glfwGetWindowSize(windowPointer, windowWidth, windowHeight);
+                glClearColor(clearColor.x, clearColor.y, clearColor.z, 1);
+                glViewport(0, 0, windowWidth[0], windowHeight[0]);
+                glClear(GL_COLOR_BUFFER_BIT);
+                glfwSwapBuffers(windowPointer);
             }
         }
 
@@ -172,17 +184,13 @@ public class Demo {
 //        // update gui context
         leguiContext.updateGlfwWindow();
         Vector2i windowSize = leguiContext.getWindowSize();
-        component.setSize(windowSize.x, windowSize.y);
-        if (component instanceof Viewport) {
-            ((ScrollablePanel) component).resize();
-        }
-
         glClearColor(clearColor.x, clearColor.y, clearColor.z, 1);
+        glClear(GL_COLOR_BUFFER_BIT);
         glViewport(0, 0, windowSize.x, windowSize.y);
         glClear(GL_COLOR_BUFFER_BIT);
 
         // render gui
-        renderer.render(component);
+        renderer.render(frame);
         glfwSwapBuffers(windowPointer);
 
         update();
@@ -207,17 +215,12 @@ public class Demo {
                     // update gui context
                     leguiContext.updateGlfwWindow();
                     Vector2i windowSize = leguiContext.getWindowSize();
-                    component.setSize(windowSize.x, windowSize.y);
-                    if (component instanceof Viewport) {
-                        ((ScrollablePanel) component).resize();
-                    }
-
                     glClearColor(clearColor.x, clearColor.y, clearColor.z, 1);
                     glViewport(0, 0, windowSize.x, windowSize.y);
                     glClear(GL_COLOR_BUFFER_BIT);
 
                     // render gui
-                    renderer.render(component);
+                    renderer.render(frame);
                     glfwSwapBuffers(windowPointer);
                     update();
 
@@ -233,7 +236,9 @@ public class Demo {
             timer[0] += 1000;
             currentUps = updates;
             updates = 0;
-            if(gcing) { System.gc(); }
+            if (gcing) {
+                System.gc();
+            }
         }
     }
 
@@ -269,7 +274,11 @@ public class Demo {
     }
 
     // @formatter:off
-    private void handleSystemEvents() { while (running) { glfwWaitEvents(); } }
+    private void handleSystemEvents() {
+        while (running) {
+            glfwWaitEvents();
+        }
+    }
     // @formatter:on
 
     private void destroy() {
