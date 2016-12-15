@@ -59,11 +59,11 @@ public class NvgTextInputRenderer extends NvgLeguiComponentRenderer {
             drawBackground(context, pos.x, pos.y, size.x, size.y, agui.getCornerRadius(), bc);
 
             TextState textState = agui.getTextState();
-            Vector4f p = new Vector4f(textState.getPadding());
-            p.x = p.x > 0 ? p.x - 1 : 0;
-            p.y = p.y > 0 ? p.y - 1 : 0;
-            p.z = p.z > 0 ? p.z - 1 : 0;
-            p.w = p.w > 0 ? p.w - 1 : 0;
+//            Vector4f p = new Vector4f(textState.getPadding());
+//            p.x = p.x > 0 ? p.x - 1 : 0;
+//            p.y = p.y > 0 ? p.y - 1 : 0;
+//            p.z = p.z > 0 ? p.z - 1 : 0;
+//            p.w = p.w > 0 ? p.w - 1 : 0;
 
             nvgIntersectScissor(context, pos.x, pos.y, size.x, size.y);
             renderText(leguiContext, context, agui, pos, size, textState, agui.getCaretPosition(), agui.getState().isFocused(), bc);

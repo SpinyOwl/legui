@@ -41,6 +41,7 @@ public class NvgButtonRenderer extends NvgLeguiComponentRenderer {
             // Render text
             {
                 TextState textState = agui.getTextState();
+                nvgIntersectScissor(context, pos.x, pos.y, size.x, size.y);
                 renderTextStateLineToBounds(context, pos, size, textState);
             }
 

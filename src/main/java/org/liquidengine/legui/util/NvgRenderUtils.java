@@ -14,6 +14,7 @@ import org.lwjgl.nanovg.NVGColor;
 import org.lwjgl.nanovg.NVGGlyphPosition;
 import org.lwjgl.nanovg.NVGPaint;
 import org.lwjgl.nanovg.NVGTextRow;
+import org.lwjgl.system.libc.LibCStdlib;
 
 import java.nio.ByteBuffer;
 
@@ -123,7 +124,6 @@ public final class NvgRenderUtils {
             alignTextInBox(context, horizontalAlign, verticalAlign);
             long start = memAddress(byteText);
             long end = start + byteText.remaining();
-
             if (hide) {
 
                 NVGTextRow.Buffer buffer = NVGTextRow.calloc(1);
