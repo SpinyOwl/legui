@@ -14,14 +14,11 @@ import org.lwjgl.nanovg.NVGColor;
 import org.lwjgl.nanovg.NVGGlyphPosition;
 import org.lwjgl.nanovg.NVGPaint;
 import org.lwjgl.nanovg.NVGTextRow;
-import org.lwjgl.system.libc.LibCStdlib;
 
 import java.nio.ByteBuffer;
 
 import static org.lwjgl.nanovg.NanoVG.*;
-import static org.lwjgl.system.MemoryUtil.memAddress;
-import static org.lwjgl.system.MemoryUtil.memFree;
-import static org.lwjgl.system.MemoryUtil.memUTF8;
+import static org.lwjgl.system.MemoryUtil.*;
 
 /**
  * Created by Shcherbin Alexander on 6/3/2016.
@@ -120,23 +117,25 @@ public final class NvgRenderUtils {
 
         ByteBuffer byteText = null;
         try {
-            byteText = memUTF8(text);
             alignTextInBox(context, horizontalAlign, verticalAlign);
-            long start = memAddress(byteText);
-            long end = start + byteText.remaining();
             if (hide) {
-
+                byteText = memUTF8(text, false);
+                long start = memAddress(byteText);
+                long end = start + byteText.remaining();
                 NVGTextRow.Buffer buffer = NVGTextRow.calloc(1);
-                nnvgTextBreakLines(context, start, end, w, memAddress(buffer), 1);
+                int rows = nnvgTextBreakLines(context, start, end, w, memAddress(buffer), 1);
                 NVGTextRow row = buffer.get(0);
                 float[] bounds = createBounds(x, y, w, h, horizontalAlign, verticalAlign, row.width(), fontSize);
 
-                nvgBeginPath(context);
-                NVGColor textColorN = textColor.w == 0 ? NVGUtils.rgba(0.0f, 0.0f, 0.0f, 1f, nvgColor) : NVGUtils.rgba(textColor, nvgColor);
-                nvgFillColor(context, textColorN);
-                nnvgText(context, bounds[0], bounds[1], row.start(), row.end());
+                if (rows != 0) {
+                    nvgBeginPath(context);
+                    NVGColor textColorN = textColor.w == 0 ? NVGUtils.rgba(0.0f, 0.0f, 0.0f, 1f, nvgColor) : NVGUtils.rgba(textColor, nvgColor);
+                    nvgFillColor(context, textColorN);
+                    nnvgText(context, bounds[0], bounds[1], row.start(), row.end());
+                }
                 buffer.free();
             } else {
+                byteText = memUTF8(text);
                 float[] bounds = calculateTextBoundsRect(context, x, y, w, h, byteText, 0, horizontalAlign, verticalAlign);
                 NVGColor textColorN = textColor.w == 0 ? NVGUtils.rgba(0.0f, 0.0f, 0.0f, 1f, nvgColor) : NVGUtils.rgba(textColor, nvgColor);
                 nvgFillColor(context, textColorN);

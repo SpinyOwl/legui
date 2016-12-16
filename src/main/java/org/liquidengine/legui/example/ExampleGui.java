@@ -172,6 +172,8 @@ public class ExampleGui extends Frame {
         b.getTextState().setFont(FontRegister.MATERIAL_ICONS_REGULAR);
         b.getTextState().setVerticalAlign(VerticalAlign.MIDDLE);
         b.getTextState().setHorizontalAlign(HorizontalAlign.CENTER);
+        b.getTextState().setFontSize(20);
+
         String up = Util.cpToStr(0xE5D8);
         String down = Util.cpToStr(0xE5DB);
         b.getTextState().setText(down);

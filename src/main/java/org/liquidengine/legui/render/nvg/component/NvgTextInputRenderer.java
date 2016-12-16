@@ -120,7 +120,7 @@ public class NvgTextInputRenderer extends NvgLeguiComponentRenderer {
             renderTextLineToBounds(context, x - offset, y, w + offsetX * 2, h, fontSize, font, textColor, text, horizontalAlign, verticalAlign, false);
             // draw mouse caret
             if (leguiContext.isDebugEnabled()) {
-                drawRectangle(context, half(caretColor), getCaretX(context, x, w, text, newCPos, fontSize, horizontalAlign, verticalAlign, glyphs, maxGlyphCount), bounds[5], 1, bounds[7]);
+                drawRectangle(context, half(caretColor), getCaretX(context, x, w, text, newCPos, fontSize, horizontalAlign, verticalAlign, glyphs, maxGlyphCount) - offsetX, bounds[5], 1, bounds[7]);
             }
             // draw current caret
             drawRectangle(context, caretColor, caretx - offsetX, bounds[5], 1, fontSize);
