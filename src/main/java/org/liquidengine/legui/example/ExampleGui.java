@@ -117,15 +117,16 @@ public class ExampleGui extends Frame {
         widget.setCloseButtonColor(ColorConstants.red());
         widget.setTitleBackgroundColor(ColorConstants.lightGreen());
 
-        Button turnWidVisible = new Button(360, 280, 20, 20, "");
-        ImageView bgIm = new ImageView(new Image("org/liquidengine/legui/example/1.jpg"));
-        ImageView hbgIm = new ImageView(new Image("org/liquidengine/legui/example/2.jpg"));
-        bgIm.setPosition(2, 2);
-        hbgIm.setPosition(1, 1);
-        bgIm.setSize(16, 16);
-        hbgIm.setSize(18, 18);
+        Button turnWidVisible = new Button(360, 280, 40, 40, "");
+        ImageView bgIm = new ImageView(new Image("org/liquidengine/legui/example/1.png"));
+        ImageView hbgIm = new ImageView(new Image("org/liquidengine/legui/example/2.png"));
+        ImageView pbIm = new ImageView(new Image("org/liquidengine/legui/example/3.png"));
+        bgIm.setSize(40, 40);
+        hbgIm.setSize(40, 40);
+        pbIm.setSize(40, 40);
         turnWidVisible.setBackgroundImage(bgIm);
         turnWidVisible.setHoveredBackgroundImage(hbgIm);
+        turnWidVisible.setPressedBackgroundImage(pbIm);
         turnWidVisible.getLeguiEventListeners().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
             if (CLICK.equals(event.getAction())) widget.setVisible(true);
         });
