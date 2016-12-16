@@ -41,16 +41,20 @@ public class NvgButtonRenderer extends NvgLeguiComponentRenderer {
             // Render text
             {
                 TextState textState = agui.getTextState();
+                nvgIntersectScissor(context, pos.x, pos.y, size.x, size.y);
                 renderTextStateLineToBounds(context, pos, size, textState);
             }
-
-            // Render border
-            renderBorder(component, leguiContext);
-
-            nvgRestore(context);
-
         }
         resetScissor(context);
+
+        createScissor(context, component);
+        {
+            // Render border
+            renderBorder(component, leguiContext);
+        }
+        resetScissor(context);
+
+        nvgRestore(context);
     }
 
     private void renderBackground(long context, Button agui, Vector2f pos, Vector2f size, NvgImageReferenceManager manager) {
@@ -78,9 +82,9 @@ public class NvgButtonRenderer extends NvgLeguiComponentRenderer {
                     image = agui.getBackgroundImage();
                 }
             }
-        } else if(focused){
+        } else if (focused) {
             image = agui.getFocusedBbackgroundImage();
-            if(image==null) {
+            if (image == null) {
                 image = agui.getBackgroundImage();
             }
         }

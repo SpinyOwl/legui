@@ -164,13 +164,13 @@ public class NvgTextAreaRenderer extends NvgLeguiComponentRenderer {
         }
 
         // draw caret based on mouse position
-        if (leguiContext.isDebugEnabled()) {
+        if (leguiContext.isDebugEnabled() && gui.getState().isFocused()) {
             LineData lineData = getStartLineIndexAndLineNumber(lines, gui.getMouseCaretPosition());
             for (int i = topIndex; i <= botIndex; i++) {
                 float y1 = y + (i - topIndex) * fontSize;
                 if (lineData.lineIndex == i) {
                     float mcx = getCaretX(context, x, w, lines[lineData.lineIndex], lineData.caretPositionInLine, fontSize, horizontalAlign, verticalAlign, glyphs, maxGlyphCount);
-                    drawRectangle(context, half(caretColor), mcx, y1, 1, fontSize);
+                    drawRectangle(context, half(caretColor), mcx - offsetX, y1, 1, fontSize);
                 }
             }
         }

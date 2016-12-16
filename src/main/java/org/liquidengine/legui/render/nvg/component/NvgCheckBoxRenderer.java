@@ -26,8 +26,6 @@ import static org.lwjgl.nanovg.NanoVG.*;
 public class NvgCheckBoxRenderer extends NvgDefaultRenderer {
     private static final String ICON_CHECKED = Util.cpToStr(0xE834);
     private static final String ICON_UNCHECKED = Util.cpToStr(0xE835);
-    private final int iconOffset = 2;
-    private final float hoff = 1.5f;
     private NVGColor colorA = NVGColor.create();
 
     @Override
@@ -58,31 +56,25 @@ public class NvgCheckBoxRenderer extends NvgDefaultRenderer {
 
             float h = sh - (pad.y + pad.w);
             float y = py + pad.y;
-            float x1 = px - iconOffset;
+            float x1 = px;
             float x = x1 + iconWid;
             float w = sw - iconWid - pad.z;
             NvgRenderUtils.renderTextStateLineToBounds(nvgContext, new Vector2f(x, y), new Vector2f(w, h), checkBox.getTextState());
 
             Vector4f textColor = textState.getTextColor();
-            if (checkBox.isChecked()) {
-                // renderNvg check symbol
-                if (component.getState().isFocused()) {
-                    NvgRenderUtils.renderTextLineToBounds(nvgContext, x1 + hoff, y + hoff, iconWid, h, fontSize, FontRegister.MATERIAL_ICONS_REGULAR,
-                            DEFAULT_THEME.getFocusedStrokeColorLight(), colorA, ICON_CHECKED, HorizontalAlign.CENTER, VerticalAlign.MIDDLE, false);
-                }
-                NvgRenderUtils.renderTextLineToBounds(nvgContext, x1, y, iconWid, h, fontSize, FontRegister.MATERIAL_ICONS_REGULAR,
-                        textColor, colorA, ICON_CHECKED, HorizontalAlign.CENTER, VerticalAlign.MIDDLE, false);
-            } else {
-                // renderNvg box
-                if (component.getState().isFocused()) {
-                    NvgRenderUtils.renderTextLineToBounds(nvgContext, x1 + hoff, y + hoff, iconWid, h, fontSize, FontRegister.MATERIAL_ICONS_REGULAR,
-                            DEFAULT_THEME.getFocusedStrokeColorLight(), colorA, ICON_UNCHECKED, HorizontalAlign.CENTER, VerticalAlign.MIDDLE, false);
-                }
-                NvgRenderUtils.renderTextLineToBounds(nvgContext, x1, y, iconWid, h, fontSize,
-                        FontRegister.MATERIAL_ICONS_REGULAR, textColor, colorA, ICON_UNCHECKED, HorizontalAlign.CENTER, VerticalAlign.MIDDLE, false);
-            }
+            String icon = checkBox.isChecked() ? ICON_CHECKED : ICON_UNCHECKED;
+            renderIcon(component, nvgContext, fontSize, iconWid, h, y, x1, textColor, icon);
         }
         resetScissor(nvgContext);
+    }
+
+    private void renderIcon(Component component, long nvgContext, float fontSize, float iconWid, float h, float y, float x1, Vector4f textColor, String icon) {
+        if (component.getState().isFocused()) {
+            NvgRenderUtils.renderTextLineToBounds(nvgContext, x1-1, y+1, iconWid, h, fontSize, FontRegister.MATERIAL_ICONS_REGULAR,
+                    DEFAULT_THEME.getFocusedStrokeColorLight(), colorA, icon, HorizontalAlign.CENTER, VerticalAlign.MIDDLE, false);
+        }
+        NvgRenderUtils.renderTextLineToBounds(nvgContext, x1, y, iconWid, h, fontSize, FontRegister.MATERIAL_ICONS_REGULAR,
+                textColor, colorA, icon, HorizontalAlign.CENTER, VerticalAlign.MIDDLE, false);
     }
 
 }

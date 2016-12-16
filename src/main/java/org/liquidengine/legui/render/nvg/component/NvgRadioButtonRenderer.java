@@ -23,8 +23,6 @@ import static org.liquidengine.legui.util.NvgRenderUtils.*;
 public class NvgRadioButtonRenderer extends NvgLeguiComponentRenderer {
     private static final String ICON_CHECKED = Util.cpToStr(0xE837);
     private static final String ICON_UNCHECKED = Util.cpToStr(0xE836);
-    private final int iconOffset = 2;
-    private final float hoff = 1.5f;
     private NVGColor colorA = NVGColor.create();
 
     @Override
@@ -41,12 +39,12 @@ public class NvgRadioButtonRenderer extends NvgLeguiComponentRenderer {
             Vector4f textColor = textState.getTextColor();
             Vector4f pad = textState.getPadding();
 
-            float iconWid = fontSize + 5;
+            float iconWid = fontSize;
 
             // renderNvg text
             float y1 = pos.y + pad.y;
             float h1 = size.y - (pad.y + pad.w);
-            float x1 = pos.x - iconOffset + iconWid;
+            float x1 = pos.x + iconWid;
             float w1 = size.x - iconWid - pad.z;
 
             renderTextStateLineToBounds(context, new Vector2f(x1, y1), new Vector2f(w1, h1), textState);
@@ -62,13 +60,10 @@ public class NvgRadioButtonRenderer extends NvgLeguiComponentRenderer {
         // renderNvg check symbol
         String icon = agui.isSelected() ? ICON_CHECKED : ICON_UNCHECKED;
         if (agui.getState().isFocused()) {
-            float x1 = x - iconOffset + hoff;
-            float y = y1 + hoff;
-            NvgRenderUtils.renderTextLineToBounds(context, x1, y, iconWid, h1, fontSize, FontRegister.MATERIAL_ICONS_REGULAR,
+            NvgRenderUtils.renderTextLineToBounds(context, x-1, y1+1, iconWid, h1, fontSize, FontRegister.MATERIAL_ICONS_REGULAR,
                     DEFAULT_THEME.getFocusedStrokeColorLight(), colorA, icon, HorizontalAlign.CENTER, VerticalAlign.MIDDLE, false);
         }
-        float x1 = x - iconOffset;
-        NvgRenderUtils.renderTextLineToBounds(context, x1, y1, iconWid, h1, fontSize, FontRegister.MATERIAL_ICONS_REGULAR,
+        NvgRenderUtils.renderTextLineToBounds(context, x, y1, iconWid, h1, fontSize, FontRegister.MATERIAL_ICONS_REGULAR,
                 textColor, colorA, icon, HorizontalAlign.CENTER, VerticalAlign.MIDDLE, false);
     }
 }

@@ -9,11 +9,13 @@ import org.liquidengine.legui.component.optional.align.VerticalAlign;
 import org.liquidengine.legui.event.component.KeyboardKeyEvent;
 import org.liquidengine.legui.event.component.MouseClickEvent;
 import org.liquidengine.legui.event.component.SliderChangeEvent;
+import org.liquidengine.legui.font.FontRegister;
 import org.liquidengine.legui.image.Image;
 import org.liquidengine.legui.listener.component.KeyboardKeyEventListener;
 import org.liquidengine.legui.listener.component.MouseClickEventListener;
 import org.liquidengine.legui.listener.component.SliderChangeEventListener;
 import org.liquidengine.legui.util.ColorConstants;
+import org.liquidengine.legui.util.Util;
 import org.lwjgl.glfw.GLFW;
 
 import static org.liquidengine.legui.event.component.MouseClickEvent.MouseClickAction.*;
@@ -35,15 +37,24 @@ public class ExampleGui extends Frame {
         super(width, height);
 
         //@formatter:off
-        Panel p1 = new Panel(1 * 20, 10, 10, 10); this.addComponent(p1);
-        Panel p2 = new Panel(2 * 20, 10, 10, 10); this.addComponent(p2);
-        Panel p3 = new Panel(3 * 20, 10, 10, 10); this.addComponent(p3);
-        Panel p4 = new Panel(4 * 20, 10, 10, 10); this.addComponent(p4);
-        Panel p5 = new Panel(5 * 20, 10, 10, 10); this.addComponent(p5);
-        Panel p6 = new Panel(6 * 20, 10, 10, 10); this.addComponent(p6);
-        Panel p7 = new Panel(7 * 20, 10, 10, 10); this.addComponent(p7);
-        Panel p8 = new Panel(8 * 20, 10, 10, 10); this.addComponent(p8);
-        Panel p9 = new Panel(9 * 20, 10, 10, 10); this.addComponent(p9);
+        Panel p1 = new Panel(1 * 20, 10, 10, 10);
+        this.addComponent(p1);
+        Panel p2 = new Panel(2 * 20, 10, 10, 10);
+        this.addComponent(p2);
+        Panel p3 = new Panel(3 * 20, 10, 10, 10);
+        this.addComponent(p3);
+        Panel p4 = new Panel(4 * 20, 10, 10, 10);
+        this.addComponent(p4);
+        Panel p5 = new Panel(5 * 20, 10, 10, 10);
+        this.addComponent(p5);
+        Panel p6 = new Panel(6 * 20, 10, 10, 10);
+        this.addComponent(p6);
+        Panel p7 = new Panel(7 * 20, 10, 10, 10);
+        this.addComponent(p7);
+        Panel p8 = new Panel(8 * 20, 10, 10, 10);
+        this.addComponent(p8);
+        Panel p9 = new Panel(9 * 20, 10, 10, 10);
+        this.addComponent(p9);
         //@formatter:on
 
         mouseTargetLabel = new Label(10, height - 30, width - 20, 20, "Hello Label");
@@ -109,10 +120,10 @@ public class ExampleGui extends Frame {
         Button turnWidVisible = new Button(360, 280, 20, 20, "");
         ImageView bgIm = new ImageView(new Image("org/liquidengine/legui/example/1.jpg"));
         ImageView hbgIm = new ImageView(new Image("org/liquidengine/legui/example/2.jpg"));
-        bgIm.setPosition(2,2);
-        hbgIm.setPosition(1,1);
-        bgIm.setSize(16,16);
-        hbgIm.setSize(18,18);
+        bgIm.setPosition(2, 2);
+        hbgIm.setPosition(1, 1);
+        bgIm.setSize(16, 16);
+        hbgIm.setSize(18, 18);
         turnWidVisible.setBackgroundImage(bgIm);
         turnWidVisible.setHoveredBackgroundImage(hbgIm);
         turnWidVisible.getLeguiEventListeners().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
@@ -152,15 +163,24 @@ public class ExampleGui extends Frame {
         widget3.setCloseable(false);
         this.addComponent(widget3);
 
-        widget3.getContainer().addComponent(new Panel(10, 10, 20, 20));
-        widget3.getContainer().addComponent(new Panel(40, 10, 20, 20));
-        widget3.getContainer().addComponent(new Panel(40, 40, 20, 20));
-        widget3.getContainer().addComponent(new Panel(10, 40, 20, 20));
-        widget3.getContainer().addComponent(new Panel(10, 40, 20, 20));
-        Button b = new Button(70, 10, 20, 20);
+        widget3.getContainer().addComponent(new Panel(5, 5, 20, 20));
+        widget3.getContainer().addComponent(new Panel(30, 5, 20, 20));
+        widget3.getContainer().addComponent(new Panel(30, 30, 20, 20));
+        widget3.getContainer().addComponent(new Panel(5, 30, 20, 20));
+        widget3.getContainer().addComponent(new Panel(5, 30, 20, 20));
+        Button b = new Button(55, 5, 40, 45);
+        b.getTextState().setFont(FontRegister.MATERIAL_ICONS_REGULAR);
+        b.getTextState().setVerticalAlign(VerticalAlign.MIDDLE);
+        b.getTextState().setHorizontalAlign(HorizontalAlign.CENTER);
+        b.getTextState().setFontSize(20);
+
+        String up = Util.cpToStr(0xE5D8);
+        String down = Util.cpToStr(0xE5DB);
+        b.getTextState().setText(down);
         b.getLeguiEventListeners().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
             if (event.getAction() == CLICK) {
                 widget3.setTitleEnabled(!widget3.isTitleEnabled());
+                b.getTextState().setText(widget3.isTitleEnabled() ? up : down);
             }
         });
         widget3.getContainer().addComponent(b);
