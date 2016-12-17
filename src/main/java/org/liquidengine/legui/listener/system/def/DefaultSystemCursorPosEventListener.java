@@ -9,7 +9,7 @@ import org.liquidengine.legui.event.component.MouseDragEvent;
 import org.liquidengine.legui.event.system.SystemCursorPosEvent;
 import org.liquidengine.legui.listener.LeguiEventListener;
 import org.liquidengine.legui.listener.SystemEventListener;
-import org.liquidengine.legui.processor.LeguiEventListenerProcessor;
+import org.liquidengine.legui.processor.LeguiEventProcessor;
 import org.liquidengine.legui.util.Util;
 import org.lwjgl.glfw.GLFW;
 
@@ -47,7 +47,7 @@ public class DefaultSystemCursorPosEventListener implements SystemEventListener<
      * @param context
      */
     private void updateComponentStatesAndCallListeners(SystemCursorPosEvent event, Component component, LeguiContext context) {
-        LeguiEventListenerProcessor leguiEventProcessor = context.getLeguiEventProcessor();
+        LeguiEventProcessor leguiEventProcessor = context.getLeguiEventProcessor();
         if (context.getMouseButtonStates()[GLFW.GLFW_MOUSE_BUTTON_LEFT] && component == context.getFocusedGui()) {
             List<LeguiEventListener<MouseDragEvent>> mouseDragEventListeners = component.getLeguiEventListeners().getListeners(MouseDragEvent.class);
             MouseDragEvent mouseDragEvent = new MouseDragEvent(new Vector2f(event.fx, event.fy), context.getCursorPositionPrev(), component);

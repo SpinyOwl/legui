@@ -37,4 +37,8 @@ public class FontRegister {
     public static Map<String, Font> getFontRegister() {
         return new HashMap<>(fontRegister);
     }
+
+    public static Font getFont(String name) {
+        return fontRegister.get(name);
+    }
 }

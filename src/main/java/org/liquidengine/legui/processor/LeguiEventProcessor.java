@@ -11,11 +11,11 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 /**
  * Created by Shcherbin Alexander on 10/5/2016.
  */
-public class LeguiEventListenerProcessor {
+public class LeguiEventProcessor {
 
     private Queue<LeguiEvent> componentEvents = new ConcurrentLinkedQueue<>();
 
-    public LeguiEventListenerProcessor() {
+    public LeguiEventProcessor() {
     }
 
     public void processEvent() {

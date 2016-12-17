@@ -1,6 +1,6 @@
 package org.liquidengine.legui.render;
 
-import org.liquidengine.legui.component.Component;
+import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.context.LeguiContext;
 
 /**
@@ -13,11 +13,11 @@ public abstract class LeguiRenderer {
         this.context = context;
     }
 
-    public abstract void preRender(Component component);
+    public abstract void preRender(Frame component);
 
-    public abstract void postRender(Component component);
+    public abstract void postRender(Frame component);
 
-    public void render(Component component) {
+    public void render(Frame component) {
         preRender(component);
         try {
             component.render(context);

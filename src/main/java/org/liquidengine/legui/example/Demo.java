@@ -3,13 +3,11 @@ package org.liquidengine.legui.example;
 import org.joml.Vector2i;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.Frame;
-import org.liquidengine.legui.component.ScrollablePanel;
-import org.liquidengine.legui.component.Viewport;
 import org.liquidengine.legui.context.ILeguiCallbackKeeper;
 import org.liquidengine.legui.context.DefaultLeguiCallbackKeeper;
 import org.liquidengine.legui.context.LeguiContext;
-import org.liquidengine.legui.processor.LeguiEventListenerProcessor;
-import org.liquidengine.legui.processor.SystemEventListenerProcessor;
+import org.liquidengine.legui.processor.LeguiEventProcessor;
+import org.liquidengine.legui.processor.SystemEventProcessor;
 import org.liquidengine.legui.render.LeguiRenderer;
 import org.liquidengine.legui.render.nvg.NvgLeguiRenderer;
 import org.lwjgl.glfw.GLFW;
@@ -40,14 +38,15 @@ public class Demo {
     protected Thread mainThread;
     protected Thread rendererThread;
     protected Thread eventProcessorThread;
+    protected Thread uiEventProcessorThread;
 
     protected String initialTitle;
     protected Frame frame;
 
     protected LeguiContext leguiContext;
     protected LeguiRenderer renderer;
-    protected SystemEventListenerProcessor systemEventProcessor;
-    protected LeguiEventListenerProcessor uiEventLeguiEventProcessor;
+    protected SystemEventProcessor systemEventProcessor;
+    protected LeguiEventProcessor uiEventLeguiEventProcessor;
 
     protected int updates;
     protected int currentUps;
@@ -114,9 +113,9 @@ public class Demo {
         leguiCallbackKeeper.registerCallbacks(windowPointer);
 
         // Create event processor for system events (obtained from callbacks) Constructor automatically creates Callbacks and binds them to window
-        systemEventProcessor = new SystemEventListenerProcessor(frame, leguiContext, callbackKeeper);
+        systemEventProcessor = new SystemEventProcessor(leguiContext, callbackKeeper);
         // Create event processor for ui events
-        uiEventLeguiEventProcessor = new LeguiEventListenerProcessor();
+        uiEventLeguiEventProcessor = new LeguiEventProcessor();
         // Set this processor to context, so generated ui events in system event processor will go to it.
         leguiContext.setLeguiEventProcessor(uiEventLeguiEventProcessor);
 
@@ -264,13 +263,13 @@ public class Demo {
     }
 
     private void startLeguiEventProcessor() {
-        eventProcessorThread = new Thread(() -> {
+        uiEventProcessorThread = new Thread(() -> {
             while (running) {
                 uiEventLeguiEventProcessor.processEvent();
                 sleep(1);
             }
         }, "GUI_EVENT_PROCESSOR");
-        eventProcessorThread.start();
+        uiEventProcessorThread.start();
     }
 
     // @formatter:off

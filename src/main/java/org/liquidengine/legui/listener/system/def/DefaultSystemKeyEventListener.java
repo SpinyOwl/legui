@@ -5,7 +5,7 @@ import org.liquidengine.legui.context.LeguiContext;
 import org.liquidengine.legui.event.component.KeyboardKeyEvent;
 import org.liquidengine.legui.event.system.SystemKeyEvent;
 import org.liquidengine.legui.listener.SystemEventListener;
-import org.liquidengine.legui.processor.LeguiEventListenerProcessor;
+import org.liquidengine.legui.processor.LeguiEventProcessor;
 
 /**
  * Created by Shcherbin Alexander on 11/2/2016.
@@ -23,7 +23,7 @@ public class DefaultSystemKeyEventListener implements SystemEventListener<Compon
     }
 
     private void processEvent(Component focusedGui, KeyboardKeyEvent keyboardKeyEvent, LeguiContext context) {
-        LeguiEventListenerProcessor leguiEventProcessor = context.getLeguiEventProcessor();
+        LeguiEventProcessor leguiEventProcessor = context.getLeguiEventProcessor();
         if (leguiEventProcessor != null) {
             leguiEventProcessor.pushEvent(keyboardKeyEvent);
         } else {

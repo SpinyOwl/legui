@@ -8,7 +8,7 @@ import org.liquidengine.legui.context.LeguiContext;
 import org.liquidengine.legui.event.component.MouseClickEvent;
 import org.liquidengine.legui.event.system.SystemMouseClickEvent;
 import org.liquidengine.legui.listener.SystemEventListener;
-import org.liquidengine.legui.processor.LeguiEventListenerProcessor;
+import org.liquidengine.legui.processor.LeguiEventProcessor;
 import org.liquidengine.legui.util.Util;
 
 import static org.liquidengine.legui.event.component.MouseClickEvent.MouseClickAction.*;
@@ -51,7 +51,7 @@ public class ButtonSystemMouseClickEventListener implements SystemEventListener<
     }
 
     private void processEvent(Component component, MouseClickEvent mouseClickEvent, LeguiContext context) {
-        LeguiEventListenerProcessor leguiEventProcessor = context.getLeguiEventProcessor();
+        LeguiEventProcessor leguiEventProcessor = context.getLeguiEventProcessor();
         if (leguiEventProcessor != null) {
             leguiEventProcessor.pushEvent(mouseClickEvent);
         } else {

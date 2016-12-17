@@ -6,7 +6,7 @@ import org.liquidengine.legui.component.Widget;
 import org.liquidengine.legui.context.LeguiContext;
 import org.liquidengine.legui.event.component.FocusEvent;
 import org.liquidengine.legui.event.system.SystemMouseClickEvent;
-import org.liquidengine.legui.processor.LeguiEventListenerProcessor;
+import org.liquidengine.legui.processor.LeguiEventProcessor;
 import org.liquidengine.legui.processor.SystemEventPreprocessor;
 
 import static org.lwjgl.glfw.GLFW.GLFW_PRESS;
@@ -61,7 +61,7 @@ public class SystemMouseClickEventPreprocessor implements SystemEventPreprocesso
 
     private void processFocusEvent(LeguiContext context, Component focusedGui, Component focusTarget, boolean focused) {
         FocusEvent focusEvent = new FocusEvent(focusedGui, focused, focusTarget);
-        LeguiEventListenerProcessor leguiEventProcessor = context.getLeguiEventProcessor();
+        LeguiEventProcessor leguiEventProcessor = context.getLeguiEventProcessor();
         if (leguiEventProcessor != null) leguiEventProcessor.pushEvent(focusEvent);
         else focusedGui.getLeguiEventListeners().getListeners(FocusEvent.class).forEach(l -> l.update(focusEvent));
     }

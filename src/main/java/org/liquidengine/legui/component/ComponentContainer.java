@@ -41,16 +41,20 @@ public abstract class ComponentContainer extends Component {
     }
 
     public boolean addComponent(Component component) {
-        if (component == this) return false;
+        if (component == null || component == this) return false;
         changeParent(component);
         return components.add(component);
     }
 
     public boolean addAllComponents(Collection<? extends Component> c) {
-        c.forEach(abstractGui -> {
-            if (abstractGui != this) changeParent(abstractGui);
-        });
-        return components.addAll(c);
+        if (c != null) {
+            c.forEach(abstractGui -> {
+                if (abstractGui != this) changeParent(abstractGui);
+            });
+            return components.addAll(c);
+        } else {
+            return false;
+        }
     }
 
     private void changeParent(Component element) {

@@ -1,7 +1,7 @@
 package org.liquidengine.legui.render.nvg;
 
 import org.joml.Vector2i;
-import org.liquidengine.legui.component.Component;
+import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.context.LeguiContext;
 import org.liquidengine.legui.font.Font;
 import org.liquidengine.legui.font.FontRegister;
@@ -46,12 +46,12 @@ public class NvgLeguiRenderer extends LeguiRenderer {
     }
 
     @Override
-    public void render(Component component) {
+    public void render(Frame component) {
         super.render(component);
     }
 
     @Override
-    public void preRender(Component component) {
+    public void preRender(Frame component) {
         glDisable(GL_DEPTH_TEST);
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -61,7 +61,7 @@ public class NvgLeguiRenderer extends LeguiRenderer {
     }
 
     @Override
-    public void postRender(Component component) {
+    public void postRender(Frame component) {
         nvgEndFrame(nvgContext);
 
         glDisable(GL_BLEND);
