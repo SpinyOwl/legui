@@ -1,5 +1,7 @@
-# LEGUI
-GUI implementation for using with LWJGL3
+_**(Work in progress)**_
+___
+# [LEGUI - What is it?](https://liquidengine.github.io/legui/)  
+GUI implementation for using with LWJGL3  
 
 To contribute you can add your proposals in **issues**  
 Current version you can find in [version.properties](version.properties)
