@@ -33,14 +33,6 @@ public class Frame extends ComponentContainer {
     public void setPosition(float x, float y) {
     }
 
-    @Override
-    public void setSize(Vector2f size) {
-    }
-
-    @Override
-    public void setSize(float width, float height) {
-    }
-
     private void initialize() {
         border = null;
         SystemEventListener<Frame, SystemWindowSizeEvent> frameSystemWindowSizeEventSystemEventListener = (event, component, context) -> {
@@ -52,13 +44,5 @@ public class Frame extends ComponentContainer {
                 .setListener(SystemWindowSizeEvent.class, frameSystemWindowSizeEventSystemEventListener);
         backgroundColor = ColorConstants.transparent();
         position.set(0);
-    }
-
-    private static class Listener implements SystemEventListener<Frame, SystemWindowSizeEvent> {
-        DefaultSystemCursorPosEventListener defaultSystemCursorPosEventListener = new DefaultSystemCursorPosEventListener();
-        @Override
-        public void update(SystemWindowSizeEvent event, Frame component, LeguiContext context) {
-//            defaultSystemCursorPosEventListener.update(event, component, context);
-        }
     }
 }

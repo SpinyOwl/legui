@@ -131,7 +131,7 @@ public class ScrollablePanel extends Panel implements Viewport {
 
     public void setVerticalScrollBar(ScrollBar verticalScrollBar) {
         this.verticalScrollBar.setViewport(null);
-        this.removeComponent(verticalScrollBar);
+        this.removeComponent(this.verticalScrollBar);
         this.verticalScrollBar = verticalScrollBar;
         this.addComponent(verticalScrollBar);
         this.verticalScrollBar.setViewport(this);
@@ -143,7 +143,7 @@ public class ScrollablePanel extends Panel implements Viewport {
 
     public void setHorizontalScrollBar(ScrollBar horizontalScrollBar) {
         this.horizontalScrollBar.setViewport(null);
-        this.removeComponent(horizontalScrollBar);
+        this.removeComponent(this.horizontalScrollBar);
         this.horizontalScrollBar = horizontalScrollBar;
         this.addComponent(horizontalScrollBar);
         this.horizontalScrollBar.setViewport(this);

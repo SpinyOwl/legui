@@ -1,5 +1,5 @@
 {
-  "@class": "org.liquidengine.legui.component.Panel",
+  "@class": "org.liquidengine.legui.component.Frame",
   "position": {
     "x": 0.0,
     "y": 0.0
@@ -9,27 +9,17 @@
     "height": 600.0
   },
   "backgroundColor": {
-    "r": 1.0,
-    "g": 1.0,
-    "b": 1.0,
-    "a": 1.0
+    "r": 0.0,
+    "g": 0.0,
+    "b": 0.0,
+    "a": 0.0
   },
   "enabled": true,
   "visible": true,
   "cornerRadius": 0.0,
-  "border": {
-    "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
-    "THICKNESS": 1.0,
-    "BORDER_COLOR": {
-      "r": 0.0,
-      "g": 0.0,
-      "b": 0.0,
-      "a": 1.0
-    }
-  },
   "components": [
     {
-      "@class": "org.liquidengine.legui.component.Panel",
+      "@type": "Panel",
       "position": {
         "x": 20.0,
         "y": 10.0
@@ -48,7 +38,7 @@
       "visible": true,
       "cornerRadius": 0.0,
       "border": {
-        "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+        "@type": "SimpleRectangleLineBorder",
         "THICKNESS": 1.0,
         "BORDER_COLOR": {
           "r": 0.0,
@@ -60,7 +50,7 @@
       "components": []
     },
     {
-      "@class": "org.liquidengine.legui.component.Panel",
+      "@type": "Panel",
       "position": {
         "x": 40.0,
         "y": 10.0
@@ -79,7 +69,7 @@
       "visible": true,
       "cornerRadius": 0.0,
       "border": {
-        "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+        "@type": "SimpleRectangleLineBorder",
         "THICKNESS": 1.0,
         "BORDER_COLOR": {
           "r": 0.0,
@@ -91,7 +81,7 @@
       "components": []
     },
     {
-      "@class": "org.liquidengine.legui.component.Panel",
+      "@type": "Panel",
       "position": {
         "x": 60.0,
         "y": 10.0
@@ -110,7 +100,7 @@
       "visible": true,
       "cornerRadius": 0.0,
       "border": {
-        "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+        "@type": "SimpleRectangleLineBorder",
         "THICKNESS": 1.0,
         "BORDER_COLOR": {
           "r": 0.0,
@@ -122,7 +112,7 @@
       "components": []
     },
     {
-      "@class": "org.liquidengine.legui.component.Panel",
+      "@type": "Panel",
       "position": {
         "x": 80.0,
         "y": 10.0
@@ -141,7 +131,7 @@
       "visible": true,
       "cornerRadius": 0.0,
       "border": {
-        "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+        "@type": "SimpleRectangleLineBorder",
         "THICKNESS": 1.0,
         "BORDER_COLOR": {
           "r": 0.0,
@@ -153,7 +143,7 @@
       "components": []
     },
     {
-      "@class": "org.liquidengine.legui.component.Panel",
+      "@type": "Panel",
       "position": {
         "x": 100.0,
         "y": 10.0
@@ -172,7 +162,7 @@
       "visible": true,
       "cornerRadius": 0.0,
       "border": {
-        "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+        "@type": "SimpleRectangleLineBorder",
         "THICKNESS": 1.0,
         "BORDER_COLOR": {
           "r": 0.0,
@@ -184,7 +174,7 @@
       "components": []
     },
     {
-      "@class": "org.liquidengine.legui.component.Panel",
+      "@type": "Panel",
       "position": {
         "x": 120.0,
         "y": 10.0
@@ -203,7 +193,7 @@
       "visible": true,
       "cornerRadius": 0.0,
       "border": {
-        "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+        "@type": "SimpleRectangleLineBorder",
         "THICKNESS": 1.0,
         "BORDER_COLOR": {
           "r": 0.0,
@@ -215,7 +205,7 @@
       "components": []
     },
     {
-      "@class": "org.liquidengine.legui.component.Panel",
+      "@type": "Panel",
       "position": {
         "x": 140.0,
         "y": 10.0
@@ -234,7 +224,7 @@
       "visible": true,
       "cornerRadius": 0.0,
       "border": {
-        "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+        "@type": "SimpleRectangleLineBorder",
         "THICKNESS": 1.0,
         "BORDER_COLOR": {
           "r": 0.0,
@@ -246,7 +236,7 @@
       "components": []
     },
     {
-      "@class": "org.liquidengine.legui.component.Panel",
+      "@type": "Panel",
       "position": {
         "x": 160.0,
         "y": 10.0
@@ -265,7 +255,7 @@
       "visible": true,
       "cornerRadius": 0.0,
       "border": {
-        "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+        "@type": "SimpleRectangleLineBorder",
         "THICKNESS": 1.0,
         "BORDER_COLOR": {
           "r": 0.0,
@@ -277,7 +267,7 @@
       "components": []
     },
     {
-      "@class": "org.liquidengine.legui.component.Panel",
+      "@type": "Panel",
       "position": {
         "x": 180.0,
         "y": 10.0
@@ -296,7 +286,7 @@
       "visible": true,
       "cornerRadius": 0.0,
       "border": {
-        "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+        "@type": "SimpleRectangleLineBorder",
         "THICKNESS": 1.0,
         "BORDER_COLOR": {
           "r": 0.0,
@@ -308,7 +298,7 @@
       "components": []
     },
     {
-      "@class": "org.liquidengine.legui.component.Label",
+      "@type": "Label",
       "position": {
         "x": 10.0,
         "y": 570.0
@@ -327,7 +317,7 @@
       "visible": true,
       "cornerRadius": 0.0,
       "textState": {
-        "@class": "org.liquidengine.legui.component.optional.TextState",
+        "@type": "TextState",
         "font": "roboto italic",
         "text": "Hello Label",
         "fontSize": 16.0,
@@ -354,7 +344,7 @@
       }
     },
     {
-      "@class": "org.liquidengine.legui.component.Label",
+      "@type": "Label",
       "position": {
         "x": 10.0,
         "y": 550.0
@@ -373,7 +363,7 @@
       "visible": true,
       "cornerRadius": 0.0,
       "textState": {
-        "@class": "org.liquidengine.legui.component.optional.TextState",
+        "@type": "TextState",
         "font": "roboto italic",
         "text": "Hello Label",
         "fontSize": 16.0,
@@ -400,7 +390,7 @@
       }
     },
     {
-      "@class": "org.liquidengine.legui.component.Label",
+      "@type": "Label",
       "position": {
         "x": 130.0,
         "y": 30.0
@@ -419,7 +409,7 @@
       "visible": true,
       "cornerRadius": 0.0,
       "textState": {
-        "@class": "org.liquidengine.legui.component.optional.TextState",
+        "@type": "TextState",
         "font": "roboto italic",
         "text": "Hello Label",
         "fontSize": 16.0,
@@ -446,7 +436,7 @@
       }
     },
     {
-      "@class": "org.liquidengine.legui.component.Label",
+      "@type": "Label",
       "position": {
         "x": 130.0,
         "y": 60.0
@@ -465,7 +455,7 @@
       "visible": true,
       "cornerRadius": 0.0,
       "textState": {
-        "@class": "org.liquidengine.legui.component.optional.TextState",
+        "@type": "TextState",
         "font": "roboto italic",
         "text": "Hello Label",
         "fontSize": 16.0,
@@ -492,7 +482,7 @@
       }
     },
     {
-      "@class": "org.liquidengine.legui.component.Image",
+      "@type": "ImageView",
       "position": {
         "x": 20.0,
         "y": 30.0
@@ -511,7 +501,7 @@
       "visible": true,
       "cornerRadius": 0.0,
       "border": {
-        "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+        "@type": "SimpleRectangleLineBorder",
         "THICKNESS": 1.0,
         "BORDER_COLOR": {
           "r": 0.2,
@@ -523,7 +513,7 @@
       "path": "org/liquidengine/legui/example/11.jpg"
     },
     {
-      "@class": "org.liquidengine.legui.component.Button",
+      "@type": "Button",
       "position": {
         "x": 20.0,
         "y": 170.0
@@ -542,7 +532,7 @@
       "visible": true,
       "cornerRadius": 0.0,
       "border": {
-        "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+        "@type": "SimpleRectangleLineBorder",
         "THICKNESS": 1.0,
         "BORDER_COLOR": {
           "r": 0.2,
@@ -552,7 +542,7 @@
         }
       },
       "textState": {
-        "@class": "org.liquidengine.legui.component.optional.TextState",
+        "@type": "TextState",
         "font": "roboto italic",
         "text": "Button",
         "fontSize": 16.0,
@@ -579,7 +569,7 @@
       }
     },
     {
-      "@class": "org.liquidengine.legui.component.CheckBox",
+      "@type": "CheckBox",
       "position": {
         "x": 20.0,
         "y": 200.0
@@ -598,7 +588,7 @@
       "visible": true,
       "cornerRadius": 0.0,
       "border": {
-        "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+        "@type": "SimpleRectangleLineBorder",
         "THICKNESS": 0.0,
         "BORDER_COLOR": {
           "r": 0.0,
@@ -608,7 +598,7 @@
         }
       },
       "textState": {
-        "@class": "org.liquidengine.legui.component.optional.TextState",
+        "@type": "TextState",
         "font": "roboto italic",
         "text": "CheckBox",
         "fontSize": 16.0,
@@ -636,7 +626,7 @@
       "checked": false
     },
     {
-      "@class": "org.liquidengine.legui.component.CheckBox",
+      "@type": "CheckBox",
       "position": {
         "x": 20.0,
         "y": 230.0
@@ -655,7 +645,7 @@
       "visible": true,
       "cornerRadius": 0.0,
       "border": {
-        "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+        "@type": "SimpleRectangleLineBorder",
         "THICKNESS": 0.0,
         "BORDER_COLOR": {
           "r": 0.0,
@@ -665,7 +655,7 @@
         }
       },
       "textState": {
-        "@class": "org.liquidengine.legui.component.optional.TextState",
+        "@type": "TextState",
         "font": "roboto italic",
         "text": "CheckBox",
         "fontSize": 16.0,
@@ -693,7 +683,7 @@
       "checked": true
     },
     {
-      "@class": "org.liquidengine.legui.component.ProgressBar",
+      "@type": "ProgressBar",
       "position": {
         "x": 250.0,
         "y": 10.0
@@ -712,7 +702,7 @@
       "visible": true,
       "cornerRadius": 2.0,
       "border": {
-        "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+        "@type": "SimpleRectangleLineBorder",
         "THICKNESS": 1.0,
         "BORDER_COLOR": {
           "r": 0.2,
@@ -730,7 +720,7 @@
       }
     },
     {
-      "@class": "org.liquidengine.legui.component.RadioButton",
+      "@type": "RadioButton",
       "position": {
         "x": 250.0,
         "y": 30.0
@@ -749,7 +739,7 @@
       "visible": true,
       "cornerRadius": 0.0,
       "border": {
-        "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+        "@type": "SimpleRectangleLineBorder",
         "THICKNESS": 0.0,
         "BORDER_COLOR": {
           "r": 0.0,
@@ -759,7 +749,7 @@
         }
       },
       "textState": {
-        "@class": "org.liquidengine.legui.component.optional.TextState",
+        "@type": "TextState",
         "font": "roboto italic",
         "text": "RadioButton",
         "fontSize": 16.0,
@@ -788,7 +778,7 @@
       "group": 0
     },
     {
-      "@class": "org.liquidengine.legui.component.RadioButton",
+      "@type": "RadioButton",
       "position": {
         "x": 250.0,
         "y": 60.0
@@ -807,7 +797,7 @@
       "visible": true,
       "cornerRadius": 0.0,
       "border": {
-        "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+        "@type": "SimpleRectangleLineBorder",
         "THICKNESS": 0.0,
         "BORDER_COLOR": {
           "r": 0.0,
@@ -817,7 +807,7 @@
         }
       },
       "textState": {
-        "@class": "org.liquidengine.legui.component.optional.TextState",
+        "@type": "TextState",
         "font": "roboto italic",
         "text": "RadioButton",
         "fontSize": 16.0,
@@ -846,7 +836,7 @@
       "group": 0
     },
     {
-      "@class": "org.liquidengine.legui.component.Slider",
+      "@type": "Slider",
       "position": {
         "x": 250.0,
         "y": 90.0
@@ -865,7 +855,7 @@
       "visible": true,
       "cornerRadius": 0.0,
       "border": {
-        "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+        "@type": "SimpleRectangleLineBorder",
         "THICKNESS": 0.0,
         "BORDER_COLOR": {
           "r": 0.0,
@@ -891,7 +881,7 @@
       "value": 30.0
     },
     {
-      "@class": "org.liquidengine.legui.component.Slider",
+      "@type": "Slider",
       "position": {
         "x": 220.0,
         "y": 90.0
@@ -910,7 +900,7 @@
       "visible": true,
       "cornerRadius": 0.0,
       "border": {
-        "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+        "@type": "SimpleRectangleLineBorder",
         "THICKNESS": 0.0,
         "BORDER_COLOR": {
           "r": 0.0,
@@ -936,7 +926,7 @@
       "value": 50.0
     },
     {
-      "@class": "org.liquidengine.legui.component.TextInput",
+      "@type": "TextInput",
       "position": {
         "x": 250.0,
         "y": 130.0
@@ -955,7 +945,7 @@
       "visible": true,
       "cornerRadius": 2.0,
       "border": {
-        "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+        "@type": "SimpleRectangleLineBorder",
         "THICKNESS": 1.0,
         "BORDER_COLOR": {
           "r": 0.0,
@@ -972,7 +962,7 @@
         "a": 1.0
       },
       "textState": {
-        "@class": "org.liquidengine.legui.component.optional.TextState",
+        "@type": "TextState",
         "font": "roboto italic",
         "text": "TextInput",
         "fontSize": 16.0,
@@ -999,7 +989,7 @@
       }
     },
     {
-      "@class": "org.liquidengine.legui.component.Button",
+      "@type": "Button",
       "position": {
         "x": 360.0,
         "y": 280.0
@@ -1018,7 +1008,7 @@
       "visible": true,
       "cornerRadius": 0.0,
       "border": {
-        "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+        "@type": "SimpleRectangleLineBorder",
         "THICKNESS": 1.0,
         "BORDER_COLOR": {
           "r": 0.2,
@@ -1028,7 +1018,7 @@
         }
       },
       "textState": {
-        "@class": "org.liquidengine.legui.component.optional.TextState",
+        "@type": "TextState",
         "font": "roboto italic",
         "text": "",
         "fontSize": 16.0,
@@ -1055,7 +1045,7 @@
       }
     },
     {
-      "@class": "org.liquidengine.legui.component.Widget",
+      "@type": "Widget",
       "position": {
         "x": 250.0,
         "y": 170.0
@@ -1074,7 +1064,7 @@
       "visible": true,
       "cornerRadius": 0.0,
       "border": {
-        "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+        "@type": "SimpleRectangleLineBorder",
         "THICKNESS": 1.0,
         "BORDER_COLOR": {
           "r": 0.0,
@@ -1084,7 +1074,7 @@
         }
       },
       "container": {
-        "@class": "org.liquidengine.legui.component.Panel",
+        "@type": "Panel",
         "position": {
           "x": 0.0,
           "y": 20.0
@@ -1103,7 +1093,7 @@
         "visible": true,
         "cornerRadius": 0.0,
         "border": {
-          "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+          "@type": "SimpleRectangleLineBorder",
           "THICKNESS": 1.0,
           "BORDER_COLOR": {
             "r": 0.0,
@@ -1114,7 +1104,7 @@
         },
         "components": [
           {
-            "@class": "org.liquidengine.legui.component.Panel",
+            "@type": "Panel",
             "position": {
               "x": -5.0,
               "y": -5.0
@@ -1133,7 +1123,7 @@
             "visible": true,
             "cornerRadius": 0.0,
             "border": {
-              "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+              "@type": "SimpleRectangleLineBorder",
               "THICKNESS": 1.0,
               "BORDER_COLOR": {
                 "r": 0.0,
@@ -1145,7 +1135,7 @@
             "components": []
           },
           {
-            "@class": "org.liquidengine.legui.component.Panel",
+            "@type": "Panel",
             "position": {
               "x": -5.0,
               "y": 75.0
@@ -1164,7 +1154,7 @@
             "visible": true,
             "cornerRadius": 0.0,
             "border": {
-              "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+              "@type": "SimpleRectangleLineBorder",
               "THICKNESS": 1.0,
               "BORDER_COLOR": {
                 "r": 0.0,
@@ -1176,7 +1166,7 @@
             "components": []
           },
           {
-            "@class": "org.liquidengine.legui.component.Panel",
+            "@type": "Panel",
             "position": {
               "x": 95.0,
               "y": -5.0
@@ -1195,7 +1185,7 @@
             "visible": false,
             "cornerRadius": 0.0,
             "border": {
-              "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+              "@type": "SimpleRectangleLineBorder",
               "THICKNESS": 1.0,
               "BORDER_COLOR": {
                 "r": 0.0,
@@ -1207,7 +1197,7 @@
             "components": []
           },
           {
-            "@class": "org.liquidengine.legui.component.Panel",
+            "@type": "Panel",
             "position": {
               "x": 95.0,
               "y": 75.0
@@ -1226,7 +1216,7 @@
             "visible": true,
             "cornerRadius": 0.0,
             "border": {
-              "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+              "@type": "SimpleRectangleLineBorder",
               "THICKNESS": 1.0,
               "BORDER_COLOR": {
                 "r": 0.0,
@@ -1238,7 +1228,7 @@
             "components": []
           },
           {
-            "@class": "org.liquidengine.legui.component.Panel",
+            "@type": "Panel",
             "position": {
               "x": 45.0,
               "y": 35.0
@@ -1257,7 +1247,7 @@
             "visible": true,
             "cornerRadius": 0.0,
             "border": {
-              "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+              "@type": "SimpleRectangleLineBorder",
               "THICKNESS": 1.0,
               "BORDER_COLOR": {
                 "r": 0.0,
@@ -1287,7 +1277,7 @@
         "a": 1.0
       },
       "title": {
-        "@class": "org.liquidengine.legui.component.optional.TextState",
+        "@type": "TextState",
         "font": "roboto italic",
         "text": "Hello widget",
         "fontSize": 16.0,
@@ -1314,7 +1304,7 @@
       }
     },
     {
-      "@class": "org.liquidengine.legui.component.Widget",
+      "@type": "Widget",
       "position": {
         "x": 250.0,
         "y": 310.0
@@ -1333,7 +1323,7 @@
       "visible": true,
       "cornerRadius": 0.0,
       "border": {
-        "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+        "@type": "SimpleRectangleLineBorder",
         "THICKNESS": 1.0,
         "BORDER_COLOR": {
           "r": 0.0,
@@ -1343,7 +1333,7 @@
         }
       },
       "container": {
-        "@class": "org.liquidengine.legui.component.Panel",
+        "@type": "Panel",
         "position": {
           "x": 0.0,
           "y": 20.0
@@ -1362,7 +1352,7 @@
         "visible": true,
         "cornerRadius": 0.0,
         "border": {
-          "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+          "@type": "SimpleRectangleLineBorder",
           "THICKNESS": 1.0,
           "BORDER_COLOR": {
             "r": 0.0,
@@ -1390,7 +1380,7 @@
         "a": 1.0
       },
       "title": {
-        "@class": "org.liquidengine.legui.component.optional.TextState",
+        "@type": "TextState",
         "font": "roboto italic",
         "text": "Hello 2 widget",
         "fontSize": 16.0,
@@ -1417,7 +1407,7 @@
       }
     },
     {
-      "@class": "org.liquidengine.legui.component.Widget",
+      "@type": "Widget",
       "position": {
         "x": 250.0,
         "y": 420.0
@@ -1436,7 +1426,7 @@
       "visible": true,
       "cornerRadius": 0.0,
       "border": {
-        "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+        "@type": "SimpleRectangleLineBorder",
         "THICKNESS": 1.0,
         "BORDER_COLOR": {
           "r": 0.0,
@@ -1446,7 +1436,7 @@
         }
       },
       "container": {
-        "@class": "org.liquidengine.legui.component.Panel",
+        "@type": "Panel",
         "position": {
           "x": 0.0,
           "y": 0.0
@@ -1465,7 +1455,7 @@
         "visible": true,
         "cornerRadius": 0.0,
         "border": {
-          "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+          "@type": "SimpleRectangleLineBorder",
           "THICKNESS": 1.0,
           "BORDER_COLOR": {
             "r": 0.0,
@@ -1476,7 +1466,7 @@
         },
         "components": [
           {
-            "@class": "org.liquidengine.legui.component.Panel",
+            "@type": "Panel",
             "position": {
               "x": 10.0,
               "y": 10.0
@@ -1495,7 +1485,7 @@
             "visible": true,
             "cornerRadius": 0.0,
             "border": {
-              "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+              "@type": "SimpleRectangleLineBorder",
               "THICKNESS": 1.0,
               "BORDER_COLOR": {
                 "r": 0.0,
@@ -1507,7 +1497,7 @@
             "components": []
           },
           {
-            "@class": "org.liquidengine.legui.component.Panel",
+            "@type": "Panel",
             "position": {
               "x": 40.0,
               "y": 10.0
@@ -1526,7 +1516,7 @@
             "visible": true,
             "cornerRadius": 0.0,
             "border": {
-              "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+              "@type": "SimpleRectangleLineBorder",
               "THICKNESS": 1.0,
               "BORDER_COLOR": {
                 "r": 0.0,
@@ -1538,7 +1528,7 @@
             "components": []
           },
           {
-            "@class": "org.liquidengine.legui.component.Panel",
+            "@type": "Panel",
             "position": {
               "x": 40.0,
               "y": 40.0
@@ -1557,7 +1547,7 @@
             "visible": true,
             "cornerRadius": 0.0,
             "border": {
-              "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+              "@type": "SimpleRectangleLineBorder",
               "THICKNESS": 1.0,
               "BORDER_COLOR": {
                 "r": 0.0,
@@ -1569,7 +1559,7 @@
             "components": []
           },
           {
-            "@class": "org.liquidengine.legui.component.Panel",
+            "@type": "Panel",
             "position": {
               "x": 10.0,
               "y": 40.0
@@ -1588,7 +1578,7 @@
             "visible": true,
             "cornerRadius": 0.0,
             "border": {
-              "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+              "@type": "SimpleRectangleLineBorder",
               "THICKNESS": 1.0,
               "BORDER_COLOR": {
                 "r": 0.0,
@@ -1600,7 +1590,7 @@
             "components": []
           },
           {
-            "@class": "org.liquidengine.legui.component.Button",
+            "@type": "Button",
             "position": {
               "x": 70.0,
               "y": 10.0
@@ -1619,7 +1609,7 @@
             "visible": true,
             "cornerRadius": 0.0,
             "border": {
-              "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+              "@type": "SimpleRectangleLineBorder",
               "THICKNESS": 1.0,
               "BORDER_COLOR": {
                 "r": 0.2,
@@ -1629,7 +1619,7 @@
               }
             },
             "textState": {
-              "@class": "org.liquidengine.legui.component.optional.TextState",
+              "@type": "TextState",
               "font": "roboto italic",
               "text": "Button",
               "fontSize": 16.0,
@@ -1674,7 +1664,7 @@
         "a": 1.0
       },
       "title": {
-        "@class": "org.liquidengine.legui.component.optional.TextState",
+        "@type": "TextState",
         "font": "roboto italic",
         "text": "Hello 2 widget",
         "fontSize": 16.0,
@@ -1701,7 +1691,7 @@
       }
     },
     {
-      "@class": "org.liquidengine.legui.component.ScrollBar",
+      "@type": "ScrollBar",
       "position": {
         "x": 360.0,
         "y": 170.0
@@ -1720,7 +1710,7 @@
       "visible": true,
       "cornerRadius": 0.0,
       "border": {
-        "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+        "@type": "SimpleRectangleLineBorder",
         "THICKNESS": 1.0,
         "BORDER_COLOR": {
           "r": 1.0,
@@ -1750,7 +1740,7 @@
       }
     },
     {
-      "@class": "org.liquidengine.legui.component.ScrollBar",
+      "@type": "ScrollBar",
       "position": {
         "x": 385.0,
         "y": 170.0
@@ -1769,7 +1759,7 @@
       "visible": true,
       "cornerRadius": 3.0,
       "border": {
-        "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+        "@type": "SimpleRectangleLineBorder",
         "THICKNESS": 1.0,
         "BORDER_COLOR": {
           "r": 1.0,
@@ -1799,7 +1789,7 @@
       }
     },
     {
-      "@class": "org.liquidengine.legui.component.ScrollBar",
+      "@type": "ScrollBar",
       "position": {
         "x": 250.0,
         "y": 280.0
@@ -1818,7 +1808,7 @@
       "visible": true,
       "cornerRadius": 0.0,
       "border": {
-        "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+        "@type": "SimpleRectangleLineBorder",
         "THICKNESS": 1.0,
         "BORDER_COLOR": {
           "r": 0.0,
@@ -1848,7 +1838,7 @@
       }
     },
     {
-      "@class": "org.liquidengine.legui.component.Panel",
+      "@type": "Panel",
       "position": {
         "x": 420.0,
         "y": 170.0
@@ -1867,7 +1857,7 @@
       "visible": true,
       "cornerRadius": 0.0,
       "border": {
-        "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+        "@type": "SimpleRectangleLineBorder",
         "THICKNESS": 1.0,
         "BORDER_COLOR": {
           "r": 0.0,
@@ -1879,7 +1869,7 @@
       "components": []
     },
     {
-      "@class": "org.liquidengine.legui.component.Panel",
+      "@type": "Panel",
       "position": {
         "x": 470.0,
         "y": 170.0
@@ -1898,7 +1888,7 @@
       "visible": true,
       "cornerRadius": 0.0,
       "border": {
-        "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+        "@type": "SimpleRectangleLineBorder",
         "THICKNESS": 1.0,
         "BORDER_COLOR": {
           "r": 0.0,
@@ -1910,7 +1900,7 @@
       "components": []
     },
     {
-      "@class": "org.liquidengine.legui.component.ScrollablePanel",
+      "@type": "ScrollablePanel",
       "position": {
         "x": 420.0,
         "y": 10.0
@@ -1929,7 +1919,7 @@
       "visible": true,
       "cornerRadius": 0.0,
       "border": {
-        "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+        "@type": "SimpleRectangleLineBorder",
         "THICKNESS": 0.5,
         "BORDER_COLOR": {
           "r": 0.2,
@@ -1939,7 +1929,7 @@
         }
       },
       "horizontalScrollBar": {
-        "@class": "org.liquidengine.legui.component.ScrollBar",
+        "@type": "ScrollBar",
         "position": {
           "x": 0.0,
           "y": 138.0
@@ -1958,7 +1948,7 @@
         "visible": true,
         "cornerRadius": 0.0,
         "border": {
-          "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+          "@type": "SimpleRectangleLineBorder",
           "THICKNESS": 0.5,
           "BORDER_COLOR": {
             "r": 0.2,
@@ -1988,7 +1978,7 @@
         }
       },
       "verticalScrollBar": {
-        "@class": "org.liquidengine.legui.component.ScrollBar",
+        "@type": "ScrollBar",
         "position": {
           "x": 238.0,
           "y": 0.0
@@ -2007,7 +1997,7 @@
         "visible": true,
         "cornerRadius": 0.0,
         "border": {
-          "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+          "@type": "SimpleRectangleLineBorder",
           "THICKNESS": 0.5,
           "BORDER_COLOR": {
             "r": 0.2,
@@ -2037,7 +2027,7 @@
         }
       },
       "container": {
-        "@class": "org.liquidengine.legui.component.Panel",
+        "@type": "Panel",
         "position": {
           "x": -0.0,
           "y": -0.0
@@ -2057,7 +2047,7 @@
         "cornerRadius": 0.0,
         "components": [
           {
-            "@class": "org.liquidengine.legui.component.ScrollablePanel",
+            "@type": "ScrollablePanel",
             "position": {
               "x": 10.0,
               "y": 10.0
@@ -2076,7 +2066,7 @@
             "visible": true,
             "cornerRadius": 0.0,
             "border": {
-              "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+              "@type": "SimpleRectangleLineBorder",
               "THICKNESS": 0.5,
               "BORDER_COLOR": {
                 "r": 0.2,
@@ -2086,7 +2076,7 @@
               }
             },
             "horizontalScrollBar": {
-              "@class": "org.liquidengine.legui.component.ScrollBar",
+              "@type": "ScrollBar",
               "position": {
                 "x": 0.0,
                 "y": 88.0
@@ -2105,7 +2095,7 @@
               "visible": true,
               "cornerRadius": 0.0,
               "border": {
-                "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+                "@type": "SimpleRectangleLineBorder",
                 "THICKNESS": 0.5,
                 "BORDER_COLOR": {
                   "r": 0.2,
@@ -2135,7 +2125,7 @@
               }
             },
             "verticalScrollBar": {
-              "@class": "org.liquidengine.legui.component.ScrollBar",
+              "@type": "ScrollBar",
               "position": {
                 "x": 138.0,
                 "y": 0.0
@@ -2154,7 +2144,7 @@
               "visible": true,
               "cornerRadius": 0.0,
               "border": {
-                "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+                "@type": "SimpleRectangleLineBorder",
                 "THICKNESS": 0.5,
                 "BORDER_COLOR": {
                   "r": 0.2,
@@ -2184,7 +2174,7 @@
               }
             },
             "container": {
-              "@class": "org.liquidengine.legui.component.Panel",
+              "@type": "Panel",
               "position": {
                 "x": -0.0,
                 "y": -0.0
@@ -2204,7 +2194,7 @@
               "cornerRadius": 0.0,
               "components": [
                 {
-                  "@class": "org.liquidengine.legui.component.TextInput",
+                  "@type": "TextInput",
                   "position": {
                     "x": 10.0,
                     "y": 10.0
@@ -2223,7 +2213,7 @@
                   "visible": true,
                   "cornerRadius": 2.0,
                   "border": {
-                    "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+                    "@type": "SimpleRectangleLineBorder",
                     "THICKNESS": 1.0,
                     "BORDER_COLOR": {
                       "r": 0.0,
@@ -2240,7 +2230,7 @@
                     "a": 1.0
                   },
                   "textState": {
-                    "@class": "org.liquidengine.legui.component.optional.TextState",
+                    "@type": "TextState",
                     "font": "roboto italic",
                     "text": "Hello Scrollable",
                     "fontSize": 16.0,
@@ -2273,7 +2263,7 @@
       }
     },
     {
-      "@class": "org.liquidengine.legui.component.TextArea",
+      "@type": "TextArea",
       "position": {
         "x": 420.0,
         "y": 280.0
@@ -2292,7 +2282,7 @@
       "visible": true,
       "cornerRadius": 3.0,
       "border": {
-        "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+        "@type": "SimpleRectangleLineBorder",
         "THICKNESS": 1.0,
         "BORDER_COLOR": {
           "r": 0.2,
@@ -2309,7 +2299,7 @@
         "a": 1.0
       },
       "textState": {
-        "@class": "org.liquidengine.legui.component.optional.TextState",
+        "@type": "TextState",
         "font": "roboto italic",
         "text": "ABC DEF GH\r\nI JKL MNO PQR\nSTU VWXYZ",
         "fontSize": 16.0,
@@ -2336,7 +2326,7 @@
       }
     },
     {
-      "@class": "org.liquidengine.legui.component.TextInput",
+      "@type": "TextInput",
       "position": {
         "x": 420.0,
         "y": 400.0
@@ -2355,7 +2345,7 @@
       "visible": true,
       "cornerRadius": 2.0,
       "border": {
-        "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+        "@type": "SimpleRectangleLineBorder",
         "THICKNESS": 1.0,
         "BORDER_COLOR": {
           "r": 0.0,
@@ -2372,7 +2362,7 @@
         "a": 1.0
       },
       "textState": {
-        "@class": "org.liquidengine.legui.component.optional.TextState",
+        "@type": "TextState",
         "font": "roboto italic",
         "text": "TextInput",
         "fontSize": 16.0,
@@ -2399,7 +2389,7 @@
       }
     },
     {
-      "@class": "org.liquidengine.legui.component.TextInput",
+      "@type": "TextInput",
       "position": {
         "x": 420.0,
         "y": 430.0
@@ -2418,7 +2408,7 @@
       "visible": true,
       "cornerRadius": 2.0,
       "border": {
-        "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+        "@type": "SimpleRectangleLineBorder",
         "THICKNESS": 1.0,
         "BORDER_COLOR": {
           "r": 0.0,
@@ -2435,7 +2425,7 @@
         "a": 1.0
       },
       "textState": {
-        "@class": "org.liquidengine.legui.component.optional.TextState",
+        "@type": "TextState",
         "font": "roboto italic",
         "text": "00",
         "fontSize": 35.0,
@@ -2462,7 +2452,7 @@
       }
     },
     {
-      "@class": "org.liquidengine.legui.component.SelectBox",
+      "@type": "SelectBox",
       "position": {
         "x": 20.0,
         "y": 260.0
@@ -2481,7 +2471,7 @@
       "visible": true,
       "cornerRadius": 0.0,
       "border": {
-        "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+        "@type": "SimpleRectangleLineBorder",
         "THICKNESS": 1.0,
         "BORDER_COLOR": {
           "r": 0.2,
@@ -2512,7 +2502,7 @@
       ]
     },
     {
-      "@class": "org.liquidengine.legui.component.Button",
+      "@type": "Button",
       "position": {
         "x": 130.0,
         "y": 260.0
@@ -2531,7 +2521,7 @@
       "visible": true,
       "cornerRadius": 0.0,
       "border": {
-        "@class": "org.liquidengine.legui.component.border.SimpleRectangleLineBorder",
+        "@type": "SimpleRectangleLineBorder",
         "THICKNESS": 1.0,
         "BORDER_COLOR": {
           "r": 0.2,
@@ -2541,7 +2531,7 @@
         }
       },
       "textState": {
-        "@class": "org.liquidengine.legui.component.optional.TextState",
+        "@type": "TextState",
         "font": "roboto italic",
         "text": "Add element",
         "fontSize": 16.0,

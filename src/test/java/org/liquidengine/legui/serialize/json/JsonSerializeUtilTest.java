@@ -33,36 +33,18 @@ public class JsonSerializeUtilTest {
 
     @Test
     public void serialize() {
-        Panel panel = createPanel();
-        String json = GsonSerializeUtil.serialize(panel);
+        Frame frame = createPanel();
+        String json = GsonSerializeUtil.serialize(frame);
         System.out.println(json);
-        Panel deserialize = GsonSerializeUtil.deserialize(json);
+        Frame deserialize = GsonSerializeUtil.deserialize(json);
 
-        Assert.assertEquals(panel, deserialize);
+        Assert.assertEquals(frame, deserialize);
     }
 
-    @Test
-    public void deserialize() {
-        System.out.println(json);
-        ScrollablePanel deserialize = GsonSerializeUtil.deserialize(json);
-        deserialize.resize();
-        deserialize.setSize(600, 600);
-        deserialize.resize();
-
-        ScrollablePanel panel = new ScrollablePanel(10, 10, 200, 200);
-        panel.resize();
-        panel.setSize(600, 600);
-        panel.resize();
-//        Slider slider = new Slider(10, 20, 30, 40);
-//        panel.getContainer().addComponent(slider);
-
-        Assert.assertEquals(panel, deserialize);
-    }
-
-    private Panel createPanel() {
+    private Frame createPanel() {
         int height = 600;
         int width = 800;
-        Panel toReturn = new Panel(0, 0, width, height);
+        Frame toReturn = new Frame(width, height);
 
         //@formatter:off
         Panel p1 = new Panel(1 * 20, 10, 10, 10); toReturn.addComponent(p1);

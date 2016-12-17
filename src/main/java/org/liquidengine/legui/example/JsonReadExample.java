@@ -1,6 +1,8 @@
 package org.liquidengine.legui.example;
 
+import org.joml.Vector2f;
 import org.liquidengine.legui.component.Component;
+import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.component.ScrollablePanel;
 import org.liquidengine.legui.component.Slider;
 import org.liquidengine.legui.serialize.json.gson.GsonSerializeUtil;
@@ -15,16 +17,16 @@ public class JsonReadExample {
 
     public static void main(String[] args) {
         System.out.println(json);
-        Component deserialize = GsonSerializeUtil.deserialize(json);
-        deserialize.setPosition(0,0);
+        Frame deserialize = GsonSerializeUtil.deserialize(json);
 
-//        Demo demo = new Demo(100, 100, 200, 200, "test", deserialize, true){
-//            @Override
-//            public void update() {
-//                Component mouseTargetGui = leguiContext.getMouseTargetGui();
-//                GLFW.glfwSetWindowTitle(leguiContext.getGlfwWindow(), mouseTargetGui==null?"null":mouseTargetGui.toString());
-//            }
-//        };
-//        demo.start();
+        Vector2f size = deserialize.getSize();
+        Demo demo = new Demo(100, 100, (int)size.x, (int)size.y, "test", deserialize, true){
+            @Override
+            public void update() {
+                Component mouseTargetGui = leguiContext.getMouseTargetGui();
+                GLFW.glfwSetWindowTitle(leguiContext.getGlfwWindow(), mouseTargetGui==null?"null":mouseTargetGui.toString());
+            }
+        };
+        demo.start();
     }
 }

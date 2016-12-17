@@ -19,8 +19,8 @@ public class LeguiEventProcessor {
     }
 
     public void processEvent() {
-        LeguiEvent event = componentEvents.poll();
-        if (event != null) {
+        LeguiEvent event;
+        while ((event = componentEvents.poll()) != null) {
             Component component = event.getComponent();
             List<? extends LeguiEventListener> listenersByEvent = component.getLeguiEventListeners().getListeners(event.getClass());
             for (LeguiEventListener LeguiEventListener : listenersByEvent) {

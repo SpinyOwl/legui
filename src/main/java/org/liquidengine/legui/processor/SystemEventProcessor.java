@@ -40,8 +40,8 @@ public class SystemEventProcessor {
      * to all child element
      */
     public void processEvent() {
-        SystemEvent event = leguiEventQueue.poll();
-        if (event != null) {
+        SystemEvent event;
+        while ((event = leguiEventQueue.poll()) != null) {
             SystemEventListenerProvider provider = SystemEventListenerProvider.getProvider();
 
             SystemEventPreprocessor preprocessor = provider.getPreprocessor(event.getClass());
