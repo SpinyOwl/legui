@@ -135,11 +135,13 @@ public final class NvgRenderUtils {
                 }
                 buffer.free();
             } else {
-                byteText = memUTF8(text);
+                byteText = memUTF8(text, false);
+                long start = memAddress(byteText);
+                long end = start + byteText.remaining();
                 float[] bounds = calculateTextBoundsRect(context, x, y, w, h, byteText, horizontalAlign, verticalAlign);
                 NVGColor textColorN = textColor.w == 0 ? NVGUtils.rgba(0.0f, 0.0f, 0.0f, 1f, nvgColor) : NVGUtils.rgba(textColor, nvgColor);
                 nvgFillColor(context, textColorN);
-                nvgText(context, bounds[0], bounds[1], byteText);
+                nnvgText(context, bounds[0], bounds[1], start, end);
             }
         } finally {
             if (byteText != null) {
@@ -182,7 +184,7 @@ public final class NvgRenderUtils {
         float bounds[] = new float[4];
         ByteBuffer byteText = null;
         try {
-            byteText = memUTF8(text);
+            byteText = memUTF8(text, false);
             nvgTextBounds(context, x, y, byteText, bounds);
             return createBounds(w, h, horizontalAlign, verticalAlign, bounds);
         } finally {

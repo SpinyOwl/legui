@@ -76,8 +76,9 @@ public class Example extends Demo {
         TextArea textArea = exampleGui.getTextArea();
         int caretPosition = textArea.getCaretPosition();
         String text = textArea.getTextState().getText();
+        int length = text.length();
         int left = caretPosition > 0 ? caretPosition - 1 : 0;
-        int right = text.length() > 0 ? (caretPosition < text.length() - 1 ? caretPosition + 1 : text.length() - 1) : 0;
+        int right = length > 0 ? (caretPosition < length - 1 ? caretPosition + 1 : length - 1) : 0;
         String t = text.substring(left, right);
         exampleGui.getCaretp().getTextState().setText(caretPosition + " " + t + " " + textArea.getStartSelectionIndex() + " " + textArea.getEndSelectionIndex());
     }

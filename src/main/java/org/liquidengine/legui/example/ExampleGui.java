@@ -258,6 +258,7 @@ public class ExampleGui extends Frame {
         textArea.getTextState().setText("ABC DEF GH\r\nI JKL MNO PQR\nSTU VWXYZ");
         textArea.setCaretPosition(12);
         textArea.getTextState().setHorizontalAlign(HorizontalAlign.CENTER);
+        textArea.getTextState().setVerticalAlign(VerticalAlign.BOTTOM);
         this.addComponent(textArea);
 
         textArea.getLeguiEventListeners().addListener(KeyboardKeyEvent.class, (KeyboardKeyEventListener) event -> {
