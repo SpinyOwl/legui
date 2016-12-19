@@ -10,7 +10,7 @@ Properties up = new Properties(); up.load(new FileInputStream("./version.propert
 project.version = up["liquidengine.legui.version"]
 
 configurations.all {
-    resolutionStrategy.cacheChangingModulesFor 10, 'seconds'
+	resolutionStrategy.cacheChangingModulesFor 10, 'seconds'
 }
 
 // dependencies versions
@@ -27,11 +27,11 @@ def gson_version         = '2.7'
 //@formatter:on
 
 repositories {
-    jcenter()
-    mavenCentral()
-    maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
-    maven { url "https://raw.github.com/LiquidEngine/repo/snapshots" }
-    maven { url "https://raw.github.com/LiquidEngine/repo/releases" }
+	jcenter()
+	mavenCentral()
+	maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+	maven { url "https://raw.github.com/LiquidEngine/repo/snapshots" }
+	maven { url "https://raw.github.com/LiquidEngine/repo/releases" }
 }
 dependencies {
     //@formatter:off
@@ -78,13 +78,13 @@ dependencies {
 // PUBLISH SECTION
 
 configurations {
-    deployerJar
+	deployerJar
 }
 repositories {
-    maven { url 'https://raw.github.com/synergian/wagon-git/releases' }
+	maven { url 'https://raw.github.com/synergian/wagon-git/releases' }
 }
 dependencies {
-    deployerJar 'ar.com.synergian:wagon-git:0.2.5'
+	deployerJar 'ar.com.synergian:wagon-git:0.2.5'
 }
 
 project.sourceCompatibility = 1.8
@@ -93,53 +93,55 @@ compileJava.options.encoding = 'UTF-8'
 
 def build_type = System.getProperty("build_type") ?: (System.getenv("build_type") ?: "")
 if (build_type == "SNAPSHOT") {
-    project.version += "-SNAPSHOT"
+	project.version += "-SNAPSHOT"
 }
 
-task publishArchives << {
-    def publishUrl
-    def buildType
-    def publishUsername = System.getenv("publishUsername") ?: publishUsername
-    def publishPassword = System.getenv("publishPassword") ?: publishPassword
-    def releasesPublishUrl = System.getenv("releasesPublishUrl") ?: releasesPublishUrl
-    def snapshotsPublishUrl = System.getenv("snapshotsPublishUrl") ?: snapshotsPublishUrl
-    println("-------------------------------------")
-    println("PUBLISH ARCHIVES TASK " + build_type)
-    println("-------------------------------------")
-    if (build_type != "") {
-        boolean b = false; buildType = "ERROR"
-        if (build_type == "RELEASE") {
-            publishUrl = releasesPublishUrl; buildType = "RELEASE"; b = true
-        }
-        if (build_type == "SNAPSHOT") {
-            publishUrl = snapshotsPublishUrl; buildType = "SNAPSHOT"; b = true
-        }
-        println("build_type : $buildType; PUBLISHED TO $publishUrl")
-        if (b) {
-            uploadArchives {
-                repositories.mavenDeployer {
-                    configuration = configurations.deployerJar
-                    repository(url: publishUrl) {
-                        authentication(userName: publishUsername, password: publishPassword)
-                    }
-                }
-            }
-            uploadArchives.execute()
-        }
-    } else {
-        println("NOT UPLOADED")
-    }
+task publishArchives {
+	doLast {
+		def publishUrl
+		def buildType
+		def publishUsername = System.getenv("publishUsername") ?: publishUsername
+		def publishPassword = System.getenv("publishPassword") ?: publishPassword
+		def releasesPublishUrl = System.getenv("releasesPublishUrl") ?: releasesPublishUrl
+		def snapshotsPublishUrl = System.getenv("snapshotsPublishUrl") ?: snapshotsPublishUrl
+		println("-------------------------------------")
+		println("PUBLISH ARCHIVES TASK " + build_type)
+		println("-------------------------------------")
+		if (build_type != "") {
+			boolean b = false; buildType = "ERROR"
+			if (build_type == "RELEASE") {
+				publishUrl = releasesPublishUrl; buildType = "RELEASE"; b = true
+			}
+			if (build_type == "SNAPSHOT") {
+				publishUrl = snapshotsPublishUrl; buildType = "SNAPSHOT"; b = true
+			}
+			println("build_type : $buildType; PUBLISHED TO $publishUrl")
+			if (b) {
+				uploadArchives {
+					repositories.mavenDeployer {
+						configuration = configurations.deployerJar
+						repository(url: publishUrl) {
+							authentication(userName: publishUsername, password: publishPassword)
+						}
+					}
+				}
+				uploadArchives.execute()
+			}
+		} else {
+			println("NOT UPLOADED")
+		}
+	}
 }
 
 task sourcesJar(type: Jar, dependsOn: classes) {
-    classifier = 'sources'
-    from sourceSets.main.allSource
-    dependsOn classes
+	classifier = 'sources'
+	from sourceSets.main.allSource
+	dependsOn classes
 }
 
 task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from javadoc.destinationDir
+	classifier = 'javadoc'
+	from javadoc.destinationDir
 }
 
 javadocJar.dependsOn javadoc
@@ -148,6 +150,6 @@ publishArchives.dependsOn sourcesJar
 publishArchives.dependsOn javadocJar
 
 artifacts {
-    archives sourcesJar
-    archives javadocJar
+	archives sourcesJar
+	archives javadocJar
 }
