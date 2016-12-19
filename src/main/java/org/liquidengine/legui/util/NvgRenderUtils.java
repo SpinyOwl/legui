@@ -136,10 +136,10 @@ public final class NvgRenderUtils {
                 buffer.free();
             } else {
                 byteText = memUTF8(text);
-                float[] bounds = calculateTextBoundsRect(context, x, y, w, h, byteText, 0, horizontalAlign, verticalAlign);
+                float[] bounds = calculateTextBoundsRect(context, x, y, w, h, byteText, horizontalAlign, verticalAlign);
                 NVGColor textColorN = textColor.w == 0 ? NVGUtils.rgba(0.0f, 0.0f, 0.0f, 1f, nvgColor) : NVGUtils.rgba(textColor, nvgColor);
                 nvgFillColor(context, textColorN);
-                nvgText(context, bounds[0], bounds[1], byteText, 0);
+                nvgText(context, bounds[0], bounds[1], byteText);
             }
         } finally {
             if (byteText != null) {
@@ -178,12 +178,12 @@ public final class NvgRenderUtils {
     }
 
 
-    public static float[] calculateTextBoundsRect(long context, float x, float y, float w, float h, String text, long end, HorizontalAlign horizontalAlign, VerticalAlign verticalAlign) {
+    public static float[] calculateTextBoundsRect(long context, float x, float y, float w, float h, String text, HorizontalAlign horizontalAlign, VerticalAlign verticalAlign) {
         float bounds[] = new float[4];
         ByteBuffer byteText = null;
         try {
             byteText = memUTF8(text);
-            nvgTextBounds(context, x, y, byteText, end, bounds);
+            nvgTextBounds(context, x, y, byteText, bounds);
             return createBounds(w, h, horizontalAlign, verticalAlign, bounds);
         } finally {
             if (byteText != null) {
@@ -192,9 +192,9 @@ public final class NvgRenderUtils {
         }
     }
 
-    public static float[] calculateTextBoundsRect(long context, float x, float y, float w, float h, ByteBuffer text, long end, HorizontalAlign horizontalAlign, VerticalAlign verticalAlign) {
+    public static float[] calculateTextBoundsRect(long context, float x, float y, float w, float h, ByteBuffer text, HorizontalAlign horizontalAlign, VerticalAlign verticalAlign) {
         float bounds[] = new float[4];
-        nvgTextBounds(context, x, y, text, end, bounds);
+        nvgTextBounds(context, x, y, text, bounds);
         return createBounds(w, h, horizontalAlign, verticalAlign, bounds);
     }
 
@@ -326,7 +326,7 @@ public final class NvgRenderUtils {
                                   HorizontalAlign horizontalAlign,
                                   VerticalAlign verticalAlign,
                                   NVGGlyphPosition.Buffer glyphs, int maxGlyphCount) {
-        float bounds[] = NvgRenderUtils.calculateTextBoundsRect(context, x, 0, w, fontSize, text, 0, horizontalAlign, verticalAlign);
+        float bounds[] = NvgRenderUtils.calculateTextBoundsRect(context, x, 0, w, fontSize, text, horizontalAlign, verticalAlign);
         ByteBuffer textBytes = null;
         try {
             textBytes = memUTF8(text);

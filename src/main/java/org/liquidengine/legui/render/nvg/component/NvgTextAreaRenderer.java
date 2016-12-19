@@ -180,7 +180,7 @@ public class NvgTextAreaRenderer extends NvgLeguiComponentRenderer {
                                             float x, float y, float w, float h,
                                             float offsetX, String line, int lineOffset,
                                             HorizontalAlign horizontalAlign, VerticalAlign verticalAlign) {
-        float bounds[] = NvgRenderUtils.calculateTextBoundsRect(context, x, y, w, h, line, 0, horizontalAlign, verticalAlign);
+        float bounds[] = NvgRenderUtils.calculateTextBoundsRect(context, x, y, w, h, line, horizontalAlign, verticalAlign);
         ByteBuffer textBytes = null;
         try {
             textBytes = MemoryUtil.memUTF8(line);

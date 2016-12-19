@@ -108,7 +108,7 @@ public class NvgTextInputRenderer extends NvgLeguiComponentRenderer {
 
         oppositeBlackOrWhite(bc, caretColor);
         caretColor.w = (float) Math.abs(GLFW.glfwGetTime() % 1 * 2 - 1);
-        float bounds[] = calculateTextBoundsRect(context, x, y, w, h, text, 0, horizontalAlign, verticalAlign);
+        float bounds[] = calculateTextBoundsRect(context, x, y, w, h, text, horizontalAlign, verticalAlign);
         float offset = offsetX * (1 + horizontalAlign.index);
 
         // calculate mouse cursor position
@@ -146,7 +146,7 @@ public class NvgTextInputRenderer extends NvgLeguiComponentRenderer {
     }
 
     private int calculateMouseCaretPosition(LeguiContext leguiContext, long context, TextInput gui, float x, float y, float w, float h, float offsetX, String text, HorizontalAlign horizontalAlign, VerticalAlign verticalAlign) {
-        float bounds[] = NvgRenderUtils.calculateTextBoundsRect(context, x, y, w, h, text, 0, horizontalAlign, verticalAlign);
+        float bounds[] = NvgRenderUtils.calculateTextBoundsRect(context, x, y, w, h, text, horizontalAlign, verticalAlign);
         ByteBuffer textBytes = null;
         try {
             textBytes = MemoryUtil.memUTF8(text);
