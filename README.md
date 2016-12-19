@@ -12,8 +12,8 @@ For using this library you should add these urls as repositories:
 `https://raw.github.com/LiquidEngine/repo/releases` or  
 `https://raw.github.com/LiquidEngine/repo/snapshots` for **[CBCHAIN](https://github.com/LiquidEngine/cbchain)** dependency
 
-And add this dependency to your build script:
-  maven:
+And add this dependency to your build script:  
+  ### Maven:
  ```xml
 <!-- LEGUI - SNAPSHOT - https://github.com/LiquidEngine/legui -->
 <dependency>
@@ -30,7 +30,7 @@ And add this dependency to your build script:
     <version>${legui_version}</version>
 </dependency>
  ```
-  gradle:
+  ### Gradle:
   ```groovy
 // LEGUI - SNAPSHOT - https://github.com/LiquidEngine/legui
 compile group: 'org.liquidengine', name: 'legui', version: legui_version + '-SNAPSHOT', changing: true;
