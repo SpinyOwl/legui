@@ -1,3 +1,5 @@
+![Size](https://reposs.herokuapp.com/?path=LiquidEngine/legui)
+
 _**(Work in progress)**_
 ___
 # [LEGUI - What is it?](https://liquidengine.github.io/legui/)  
