@@ -13,7 +13,7 @@ For using this library you should add these urls as repositories:
 `https://raw.github.com/LiquidEngine/repo/snapshots` for **[CBCHAIN](https://github.com/LiquidEngine/cbchain)** dependency
 
 And add this dependency to your build script:  
-  ### Maven:
+### Maven:
  ```xml
 <!-- LEGUI - SNAPSHOT - https://github.com/LiquidEngine/legui -->
 <dependency>
@@ -30,7 +30,7 @@ And add this dependency to your build script:
     <version>${legui_version}</version>
 </dependency>
  ```
-  ### Gradle:
+### Gradle:
   ```groovy
 // LEGUI - SNAPSHOT - https://github.com/LiquidEngine/legui
 compile group: 'org.liquidengine', name: 'legui', version: legui_version + '-SNAPSHOT', changing: true;
@@ -43,7 +43,7 @@ compile group: 'org.liquidengine', name: 'legui', version: legui_version, changi
   Current `SNAPSHOT` version you can find in [SNAPSHOT version.properties](https://github.com/LiquidEngine/legui/blob/snapshots/version.properties)  
   Current `RELEASE` version you can find in [RELEASE version.properties](https://github.com/LiquidEngine/legui/blob/releases/version.properties)  
 
-#### Links
+## Links
 -------------------------------
 [LWJGL - Lightweight Java Game Library 3](https://github.com/LWJGL/lwjgl3)
 
