@@ -5,12 +5,14 @@ GUI implementation for using with LWJGL3
 
 To contribute you can add your proposals in **issues**  
 
-#### Dependencies
+## Dependencies
 For using this library you should add these urls as repositories:  
-`https://oss.sonatype.org/content/repositories/snapshots/` - for **[LWJGL](https://github.com/LWJGL/lwjgl3)** and **[JOML](https://github.com/JOML-CI/JOML)** dependencies
+For **[LWJGL](https://github.com/LWJGL/lwjgl3)** and **[JOML](https://github.com/JOML-CI/JOML)** dependencies  
+`https://oss.sonatype.org/content/repositories/snapshots/`
 
+For **LEGUI** and **[CBCHAIN](https://github.com/LiquidEngine/cbchain)** dependency  
 `https://raw.github.com/LiquidEngine/repo/releases` or  
-`https://raw.github.com/LiquidEngine/repo/snapshots` for **[CBCHAIN](https://github.com/LiquidEngine/cbchain)** dependency
+`https://raw.github.com/LiquidEngine/repo/snapshots` 
 
 And add this dependency to your build script:  
 ### Maven:
