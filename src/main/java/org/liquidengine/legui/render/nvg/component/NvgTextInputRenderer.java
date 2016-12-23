@@ -11,7 +11,6 @@ import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
 import org.liquidengine.legui.context.LeguiContext;
 import org.liquidengine.legui.render.nvg.NvgLeguiComponentRenderer;
-import org.liquidengine.legui.util.ColorConstants;
 import org.liquidengine.legui.util.NvgRenderUtils;
 import org.liquidengine.legui.util.Util;
 import org.lwjgl.glfw.GLFW;
@@ -20,6 +19,7 @@ import org.lwjgl.nanovg.NVGGlyphPosition;
 import org.lwjgl.system.MemoryUtil;
 
 import java.nio.ByteBuffer;
+import java.util.Map;
 
 import static org.liquidengine.legui.util.ColorUtil.half;
 import static org.liquidengine.legui.util.ColorUtil.oppositeBlackOrWhite;
@@ -32,6 +32,8 @@ import static org.lwjgl.system.MemoryUtil.*;
  * Created by Shcherbin Alexander on 5/20/2016.
  */
 public class NvgTextInputRenderer extends NvgLeguiComponentRenderer {
+    public static final  String                  PRATIO        = "pratio";
+    public static final  String                  POFFSET       = "poffset";
     private static final Logger                  LOGGER        = LogManager.getLogger();
     private final        Vector4f                caretColor    = new Vector4f(0, 0, 0, 0.5f);
     private final        int                     maxGlyphCount = 1024;
@@ -80,51 +82,38 @@ public class NvgTextInputRenderer extends NvgLeguiComponentRenderer {
         resetScissor(context);
     }
 
-    private void renderTextNew(LeguiContext leguiContext, long context, TextInput agui, Vector2f pos, Vector2f size, Vector4f p, Vector4f rect, Vector4f bc) {
-        TextState       textState      = agui.getTextState();
-        String          text           = textState.getText();
-        String          font           = textState.getFont();
-        float           fontSize       = textState.getFontSize();
-        Vector4f        highlightColor = textState.getHighlightColor();
-        HorizontalAlign halign         = textState.getHorizontalAlign();
-        VerticalAlign   valign         = textState.getVerticalAlign();
-        Vector4f        textColor      = textState.getTextColor();
-        int             caretPosition  = agui.getCaretPosition();
+    private void renderTextNew(LeguiContext leguiContext, long context, TextInput gui, Vector2f pos, Vector2f size, Vector4f p, Vector4f rect, Vector4f bc) {
+        TextState           textState      = gui.getTextState();
+        String              text           = textState.getText();
+        String              font           = textState.getFont();
+        float               fontSize       = textState.getFontSize();
+        Vector4f            highlightColor = gui.getSelectionColor();
+        HorizontalAlign     halign         = textState.getHorizontalAlign();
+        VerticalAlign       valign         = textState.getVerticalAlign();
+        Vector4f            textColor      = textState.getTextColor();
+        int                 caretPosition  = gui.getCaretPosition();
+        Map<String, Object> metadata       = gui.getMetadata();
 
+
+        // initially configure text rendering
         alignTextInBox(context, halign, valign);
         nvgFontSize(context, fontSize);
         nvgFontFace(context, font);
         nvgFillColor(context, rgba(textColor, colorA));
 
-        drawRectangle(context, new Vector4f(1, 0, 0, 0.5f), rect);
-
         float[] textBounds = calculateTextBoundsRect(context, rect.x, rect.y, rect.z, rect.w, text, halign, valign);
 
-        drawRectStroke(context, textBounds[0], textBounds[1], textBounds[2], textBounds[3], ColorConstants.red(), 0, 1);
-        drawRectStroke(context, textBounds[4], textBounds[5], textBounds[6], textBounds[7], ColorConstants.green(), 0, 1);
-
-        float caretx = 0;
-
-        ByteBuffer textBytes = null;
+        // calculate caret coordinate and mouse caret coordinate
+        float      caretx;
+        float      mouseCaretX        = 0;
+        int        mouseCaretPosition = 0;
+        ByteBuffer textBytes          = null;
         try {
+            // allocate ofheap memory and fill it with text
             textBytes = memUTF8(text);
-            int ng = 0;
-
+            // align text for calculations
             alignTextInBox(context, HorizontalAlign.LEFT, VerticalAlign.MIDDLE);
-            ng = nnvgTextGlyphPositions(context, textBounds[4], 0, memAddress(textBytes), 0, memAddress(glyphs), maxGlyphCount);
-
-            for (int i = 0; i < ng; i++) {
-                NVGGlyphPosition gp = glyphs.get(i);
-                drawRectStroke(context,
-                        gp.x(),
-                        textBounds[5],
-                        gp.maxx() - gp.x(),
-                        textBounds[7],
-                        ColorConstants.blue(),
-                        2,
-                        1);
-            }
-
+            int ng = nnvgTextGlyphPositions(context, textBounds[4], 0, memAddress(textBytes), 0, memAddress(glyphs), maxGlyphCount);
 
             caretx = 0;
             if (caretPosition < ng) {
@@ -140,22 +129,116 @@ public class NvgTextInputRenderer extends NvgLeguiComponentRenderer {
                     caretx = textBounds[4];
                 }
             }
+
+
+            float offsetX = 0;
+            if (caretx > rect.z + rect.x) {
+                offsetX = caretx - rect.x - rect.z;
+            } else if (caretx < rect.x) {
+                offsetX = caretx - rect.x;
+            }
+
+            // get previous offset
+            Float poffset = offsetX;
+            if (metadata.containsKey(POFFSET)) poffset = (Float) metadata.get(POFFSET);
+            else metadata.put(POFFSET, poffset);
+
+            // get previous ratio
+            float rat    = size.y * size.x;
+            Float pratio = rat;
+            if (metadata.containsKey(PRATIO)) pratio = (Float) metadata.get(PRATIO);
+            else metadata.put(PRATIO, pratio);
+
+            // we should recalculate offsets if ratio is changed
+            if (pratio != rat) {
+                poffset = offsetX;
+            } else {
+                // and if ratio is the same we should check if we need to update offset
+                if (caretx - poffset > rect.z + rect.x) {
+                    poffset = poffset + (caretx - poffset - rect.z - rect.x);
+                } else if (caretx - poffset < rect.x) {
+                    poffset = poffset + (caretx - poffset - rect.x);
+                }
+            }
+            metadata.put(POFFSET, poffset);
+            metadata.put(PRATIO, rat);
+
+            // calculate mouse caret position
+            float mx = leguiContext.getCursorPosition().x + poffset;
+            if (mx < glyphs.get(0).x()) {
+                mouseCaretPosition = 0;
+                mouseCaretX = glyphs.get(0).x();
+            } else if (mx > glyphs.get(ng - 1).maxx()) {
+                mouseCaretPosition = ng;
+                mouseCaretX = glyphs.get(ng - 1).maxx();
+            } else {
+                // binary search mouse caret position
+                int     upper = ng;
+                int     lower = 0;
+                boolean found = false;
+                do {
+                    int              index = (upper + lower) / 2;
+                    NVGGlyphPosition gp    = glyphs.get(index);
+                    float            left  = gp.x();
+                    float            right = gp.maxx();
+                    float            mid   = (left + right) / 2f;
+                    if (mx >= left && mx < right) {
+                        found = true;
+                        if (mx > mid) {
+                            mouseCaretPosition = index + 1;
+                            mouseCaretX = right;
+                        } else {
+                            mouseCaretPosition = index;
+                            mouseCaretX = left;
+                        }
+                    } else if (mx >= right) {
+                        if (index != ng) {
+                            lower = index + 1;
+                        } else {
+                            found = true;
+                            mouseCaretPosition = ng;
+                            mouseCaretX = right;
+                        }
+                    } else if (mx < left) {
+                        if (index != 0) {
+                            upper = index;
+                        } else {
+                            found = true;
+                            mouseCaretPosition = 0;
+                            mouseCaretX = left;
+                        }
+                    }
+                } while (!found);
+            }
+
+            mouseCaretX -= poffset;
+            float startX  = textBounds[4] - poffset;
+            float nCaretX = caretx - poffset;
+
+            oppositeBlackOrWhite(bc, caretColor);
+            caretColor.w = (float) Math.abs(GLFW.glfwGetTime() % 1 * 2 - 1);
+
+            drawRectangle(context, highlightColor, mouseCaretX, rect.y, nCaretX-mouseCaretX, rect.w);
+
+            // render text
+            renderTextLineToBounds(context, startX, textBounds[5], textBounds[6], textBounds[7], fontSize, font, textColor, text, HorizontalAlign.LEFT, VerticalAlign.MIDDLE, false);
+
+            // render caret
+            drawRectStroke(context, nCaretX, rect.y, 1, rect.w, caretColor, 0, 1);
+
+            // render mouse caret
+            Vector4f cc = new Vector4f(this.caretColor);
+            cc.x = 1;
+            drawRectStroke(context, mouseCaretX, rect.y, 1, rect.w, cc, 0, 1);
+
+
         } finally {
+            // free allocated memory
             if (textBytes != null) {
                 memFree(textBytes);
             }
         }
-
-        float offset = 0;
-        if (caretx > rect.x + rect.z) {
-            offset = caretx - rect.x - rect.z;
-        } else if (caretx < rect.x) {
-            offset = caretx - rect.x;
-        }
-
-        renderTextLineToBounds(context, textBounds[4] - offset, textBounds[5], textBounds[6], textBounds[7], fontSize, font, textColor, text, HorizontalAlign.LEFT, VerticalAlign.MIDDLE, false);
-        drawRectStroke(context, caretx - offset, textBounds[5], 1, textBounds[7], ColorConstants.black(), 0, 1);
-
+        gui.setMouseCaretPosition(mouseCaretPosition);
     }
 
     private void renderText(LeguiContext leguiContext, long context, TextInput gui, Vector2f pos, Vector2f size, TextState textState, int caretPosition, boolean focused, Vector4f bc) {
@@ -213,7 +296,13 @@ public class NvgTextInputRenderer extends NvgLeguiComponentRenderer {
         }
 
         // calculate text x offset
-        float offsetX = getOffsetX(x, w, caretx);
+        float offsetX1 = 0;
+        if (caretx - x > w) {
+            offsetX1 = caretx - x - w;
+        } else if (caretx < x) {
+            offsetX1 = caretx - x;
+        }
+        float offsetX = offsetX1;
         gui.getMetadata().put("coffsetx", offsetX);
         Float loffsetx = (Float) gui.getMetadata().get("loffsetx");
         if (loffsetx != null) {
@@ -272,16 +361,6 @@ public class NvgTextInputRenderer extends NvgLeguiComponentRenderer {
         } else {
             renderTextLineToBounds(context, x - offset, y, w + loffsetx * 2, h, fontSize, font, textColor, text, horizontalAlign, verticalAlign, false);
         }
-    }
-
-    private float getOffsetX(float x, float w, float caretx) {
-        float offsetX = 0;
-        if (caretx - x > w) {
-            offsetX = caretx - x - w;
-        } else if (caretx < x) {
-            offsetX = caretx - x;
-        }
-        return offsetX;
     }
 
     private void drawSelectionBackground(long context, TextInput gui, String text, float fontSize, HorizontalAlign horizontalAlign, VerticalAlign verticalAlign, float x, float w, float offsetX, float[] bounds) {
