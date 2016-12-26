@@ -22,7 +22,7 @@ public class TextState implements Serializable {
     protected VerticalAlign verticalAlign = VerticalAlign.MIDDLE;
     protected Vector4f textColor = ColorConstants.black();
     protected Vector4f highlightColor = ColorConstants.transparent();
-    protected Vector4f padding = new Vector4f(1);
+    protected Vector4f padding = new Vector4f();
 
     public TextState() {
     }

@@ -13,9 +13,6 @@ import org.liquidengine.legui.util.ColorConstants;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWWindowSizeCallbackI;
 
-import java.text.DecimalFormat;
-import java.util.Map;
-
 /**
  * Created by Alexander on 14.10.2016.
  */
@@ -39,9 +36,11 @@ public class LiquidEngineGuiExample extends Demo {
         Frame     frame     = new Frame(width, height);
         Component component = createGui(width, height);
         frame.addComponent(component);
+        frame.getLeguiEventListeners().addListener(KeyboardKeyEvent.class, (KeyboardKeyEventListener) event -> {
 
+        });
         debug = new Label(10, 10, 100, 20);
-        debug.getTextState().setPadding(10,5,10,5);
+        debug.getTextState().setPadding(10, 5, 10, 5);
         debug.getTextState().setTextColor(ColorConstants.white());
         debug.setBackgroundColor(ColorConstants.black());
         frame.addComponent(debug);
@@ -53,6 +52,11 @@ public class LiquidEngineGuiExample extends Demo {
             legui.getTextState().setFontSize(hei);
         };
         example.callbackKeeper.getChainWindowSizeCallback().add(windowSizeCallbackI);
+        example.callbackKeeper.getChainKeyCallback().add((window, key, scancode, action, mods) -> {
+            if (key == GLFW.GLFW_KEY_D && action == GLFW.GLFW_RELEASE) {
+                debug.setVisible(!debug.isVisible());
+            }
+        });
     }
 
     private static Component createGui(int width, int height) {
@@ -81,7 +85,7 @@ public class LiquidEngineGuiExample extends Demo {
         debug.getSize().x = debug.getParent().getSize().x - 20;
         debug.getTextState().setText("" +
                 "mcp : " + legui.getMouseCaretPosition() +
-        "");
+                "");
     }
 }
 

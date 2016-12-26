@@ -251,8 +251,11 @@ public final class NvgRenderUtils {
         nvgTextAlign(context, hAlign | vAlign);
     }
 
-    public static void drawRectStroke(long context, float x, float y, float w, float h, Vector4fc strokeColor, float borderRadius, float strokeWidth) {
+    public static void drawRectStroke(long context, Vector4fc color, Vector4fc rect, float borderRadius, float strokeWidth) {
+        drawRectStroke(context, rect.x(), rect.y(), rect.z(), rect.w(), color, borderRadius, strokeWidth);
+    }
 
+    public static void drawRectStroke(long context, float x, float y, float w, float h, Vector4fc strokeColor, float borderRadius, float strokeWidth) {
         NVGColor nvgColor = NVGColor.calloc();
         nvgBeginPath(context);
         nvgStrokeWidth(context, strokeWidth);
@@ -260,7 +263,6 @@ public final class NvgRenderUtils {
         nvgStrokeColor(context, NVGUtils.rgba(strokeColor, nvgColor));
         nvgStroke(context);
         nvgColor.free();
-
     }
 
     public static void dropShadow(long context, float x, float y, float w, float h, float cornerRadius, Vector4f shadowColor) {

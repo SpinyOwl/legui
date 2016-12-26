@@ -19,10 +19,10 @@ public class TextInputSystemKeyEventProcessor implements SystemEventListener<Tex
     public void update(SystemKeyEvent event, TextInput gui, LeguiContext leguiContext) {
         if (!gui.getState().isFocused() || !gui.isEditable()) return;
 
-        int key = event.key;
-        int caretPosition = gui.getCaretPosition();
-        boolean pressed = event.action != GLFW_RELEASE;
-        TextState textState = gui.getTextState();
+        int       key           = event.key;
+        int       caretPosition = gui.getCaretPosition();
+        boolean   pressed       = event.action != GLFW_RELEASE;
+        TextState textState     = gui.getTextState();
         if (key == GLFW_KEY_LEFT && pressed) {
             keyLeftAction(gui, caretPosition, event.mods);
         } else if (key == GLFW_KEY_RIGHT && pressed) {
@@ -49,7 +49,7 @@ public class TextInputSystemKeyEventProcessor implements SystemEventListener<Tex
             String s = gui.getSelection();
             if (s != null) {
                 int start = gui.getStartSelectionIndex();
-                int end = gui.getEndSelectionIndex();
+                int end   = gui.getEndSelectionIndex();
                 if (start > end) {
                     int swap = start;
                     start = end;
@@ -80,17 +80,17 @@ public class TextInputSystemKeyEventProcessor implements SystemEventListener<Tex
     }
 
     private void keyDeleteAction(TextInput gui, int caretPosition, TextState textState, int mods) {
-        if (gui.isEditable() && caretPosition != textState.length()) {
+        if (gui.isEditable()) {
             if ((mods & GLFW_MOD_CONTROL) != 0) {
                 gui.setEndSelectionIndex(findNextWord(textState.getText(), caretPosition));
             }
             int start = gui.getStartSelectionIndex();
-            int end = gui.getEndSelectionIndex();
+            int end   = gui.getEndSelectionIndex();
             if (start > end) {
                 start = gui.getEndSelectionIndex();
                 end = gui.getStartSelectionIndex();
             }
-            if (start == end) {
+            if (start == end && caretPosition != textState.length()) {
                 textState.deleteCharAt(caretPosition);
             } else {
                 textState.delete(start, end);
@@ -102,17 +102,17 @@ public class TextInputSystemKeyEventProcessor implements SystemEventListener<Tex
     }
 
     private void keyBackSpaceAction(TextInput gui, int caretPosition, TextState textState, int mods) {
-        if (gui.isEditable() && caretPosition != 0) {
+        if (gui.isEditable()) {
             if ((mods & GLFW_MOD_CONTROL) != 0) {
                 gui.setEndSelectionIndex(findPrevWord(textState.getText(), caretPosition));
             }
             int start = gui.getStartSelectionIndex();
-            int end = gui.getEndSelectionIndex();
+            int end   = gui.getEndSelectionIndex();
             if (start > end) {
                 start = gui.getEndSelectionIndex();
                 end = gui.getStartSelectionIndex();
             }
-            if (start == end) {
+            if (start == end && caretPosition != 0) {
                 textState.deleteCharAt(caretPosition - 1);
                 gui.setCaretPosition(caretPosition - 1);
             } else {
