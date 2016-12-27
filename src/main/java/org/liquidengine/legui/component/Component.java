@@ -18,6 +18,8 @@ import org.liquidengine.legui.render.LeguiRendererProvider;
 import org.liquidengine.legui.util.ColorConstants;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Component is an object that have graphical representation in legui system
@@ -25,6 +27,7 @@ import java.io.Serializable;
  * Created by Shcherbin Alexander on 9/14/2016.
  */
 public abstract class Component implements Serializable {
+    protected Map<String, Object> metadata = new HashMap<>();
     protected Vector2f position;
     protected Vector2f size;
     protected Vector4f backgroundColor = ColorConstants.white();
@@ -180,6 +183,10 @@ public abstract class Component implements Serializable {
 
     public void setState(ComponentState state) {
         this.state = state;
+    }
+
+    public Map<String, Object> getMetadata() {
+        return metadata;
     }
 
     @Override

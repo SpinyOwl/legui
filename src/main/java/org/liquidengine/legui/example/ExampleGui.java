@@ -25,13 +25,15 @@ import static org.liquidengine.legui.event.component.MouseClickEvent.MouseClickA
  * Created by Shcherbin Alexander on 9/19/2016.
  */
 public class ExampleGui extends Frame {
-    private final Label mouseTargetLabel;
-    private final Label mouseLabel;
-    private final Label upsLabel;
-    private final Label focusedGuiLabel;
+    private final Label     mouseTargetLabel;
+    private final Label     mouseLabel;
+    private final Label     upsLabel;
+    private final Label     focusedGuiLabel;
     private final TextInput caretp;
-    private final TextArea textArea;
-    private ImageView imageView;
+    private final TextArea  textArea;
+    private final TextInput textInput;
+    private final Label     debugLabel;
+    private       ImageView imageView;
 
     public ExampleGui(int width, int height) {
         super(width, height);
@@ -64,6 +66,9 @@ public class ExampleGui extends Frame {
         focusedGuiLabel.setBorder(new SimpleRectangleLineBorder(ColorConstants.red(), 1));
         this.addComponent(focusedGuiLabel);
 
+        debugLabel = new Label(10, height - 75, width - 20, 20, "Debug Label");
+        this.addComponent(debugLabel);
+
         mouseLabel = new Label(130, 30, 100, 20, "Hello Label");
         this.addComponent(mouseLabel);
 
@@ -92,7 +97,7 @@ public class ExampleGui extends Frame {
         this.addComponent(progressBar);
 
         RadioButtonGroup radioButtonGroup = new RadioButtonGroup();
-        RadioButton radioButton1 = new RadioButton(250, 30, 100, 20);
+        RadioButton      radioButton1     = new RadioButton(250, 30, 100, 20);
         this.addComponent(radioButton1);
         radioButton1.setSelected(true);
         radioButton1.setRadioButtonGroup(radioButtonGroup);
@@ -108,8 +113,16 @@ public class ExampleGui extends Frame {
         slider2.setOrientation(Orientation.VERTICAL);
         this.addComponent(slider2);
 
-        TextInput textInput = new TextInput(250, 130, 100, 30);
+        textInput = new TextInput(250, 130, 100, 30);
         textInput.getTextState().setHorizontalAlign(HorizontalAlign.RIGHT);
+        textInput.getLeguiEventListeners().addListener(KeyboardKeyEvent.class, (KeyboardKeyEventListener) event -> {
+            if (event.getKey() == GLFW.GLFW_KEY_F1 && event.getAction() == GLFW.GLFW_RELEASE)
+                textInput.getTextState().setHorizontalAlign(HorizontalAlign.LEFT);
+            else if (event.getKey() == GLFW.GLFW_KEY_F2 && event.getAction() == GLFW.GLFW_RELEASE)
+                textInput.getTextState().setHorizontalAlign(HorizontalAlign.CENTER);
+            else if (event.getKey() == GLFW.GLFW_KEY_F3 && event.getAction() == GLFW.GLFW_RELEASE)
+                textInput.getTextState().setHorizontalAlign(HorizontalAlign.RIGHT);
+        });
         this.addComponent(textInput);
 
         Widget widget = new Widget("Hello widget", 250, 170, 100, 100);
@@ -117,10 +130,10 @@ public class ExampleGui extends Frame {
         widget.setCloseButtonColor(ColorConstants.red());
         widget.setTitleBackgroundColor(ColorConstants.lightGreen());
 
-        Button turnWidVisible = new Button(360, 280, 40, 40, "");
-        ImageView bgIm = new ImageView(new Image("org/liquidengine/legui/example/1.png"));
-        ImageView hbgIm = new ImageView(new Image("org/liquidengine/legui/example/2.png"));
-        ImageView pbIm = new ImageView(new Image("org/liquidengine/legui/example/3.png"));
+        Button    turnWidVisible = new Button(360, 280, 40, 40, "");
+        ImageView bgIm           = new ImageView(new Image("org/liquidengine/legui/example/1.png"));
+        ImageView hbgIm          = new ImageView(new Image("org/liquidengine/legui/example/2.png"));
+        ImageView pbIm           = new ImageView(new Image("org/liquidengine/legui/example/3.png"));
         bgIm.setSize(40, 40);
         hbgIm.setSize(40, 40);
         pbIm.setSize(40, 40);
@@ -175,7 +188,7 @@ public class ExampleGui extends Frame {
         b.getTextState().setHorizontalAlign(HorizontalAlign.CENTER);
         b.getTextState().setFontSize(20);
 
-        String up = Util.cpToStr(0xE5D8);
+        String up   = Util.cpToStr(0xE5D8);
         String down = Util.cpToStr(0xE5DB);
         b.getTextState().setText(down);
         b.getLeguiEventListeners().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
@@ -343,5 +356,13 @@ public class ExampleGui extends Frame {
 
     public Label getFocusedGuiLabel() {
         return focusedGuiLabel;
+    }
+
+    public TextInput getTextInput() {
+        return textInput;
+    }
+
+    public Label getDebugLabel() {
+        return debugLabel;
     }
 }
