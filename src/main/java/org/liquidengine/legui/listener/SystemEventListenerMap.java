@@ -11,13 +11,13 @@ import java.util.concurrent.locks.ReentrantLock;
 /**
  * Created by Shcherbin Alexander on 10/24/2016.
  */
-public class SystemEventListenerList<C extends Component> {
+public class SystemEventListenerMap<C extends Component> {
 
     private final Lock lock = new ReentrantLock();
     private Map<Class<? extends SystemEvent>, SystemEventListener<C, ? extends SystemEvent>> listeners = new ConcurrentHashMap<>();
     private Class<C> componentClass;
 
-    public SystemEventListenerList(Class<C> componentClass) {
+    public SystemEventListenerMap(Class<C> componentClass) {
         this.componentClass = componentClass;
     }
 
