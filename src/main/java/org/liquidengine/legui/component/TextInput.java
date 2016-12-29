@@ -52,7 +52,7 @@ public class TextInput extends Component {
 
     private void initialize(String text) {
         textState = new TextState(text);
-        textState.getPadding().set(10, 5, 10, 5);
+        textState.getPadding().set(5, 1, 5, 1);
         backgroundColor.set(1, 1, 1, 0.8f);
         border = new SimpleRectangleLineBorder(ColorConstants.black(), 1);
         cornerRadius = 2;
