@@ -42,10 +42,10 @@ public abstract class Component implements Serializable {
     protected float cornerRadius = 0;
 
     protected ComponentContainer parent;
-    protected LeguiIntersector       intersector = new RectangleIntersector();
-    protected LeguiComponentRenderer renderer    = LeguiRendererProvider.getProvider().getRenderer(this);
+    protected LeguiIntersector intersector = new RectangleIntersector();
+    protected LeguiComponentRenderer renderer = LeguiRendererProvider.getProvider().getRenderer(this);
 
-    protected LeguiEventListenerMap  leguiEventListeners  = new LeguiEventListenerMap();
+    protected LeguiEventListenerMap leguiEventListeners = new LeguiEventListenerMap();
     protected SystemEventListenerMap systemEventListeners = new SystemEventListenerMap(this.getClass());
 
     /**
@@ -269,7 +269,7 @@ public abstract class Component implements Serializable {
     /**
      * Returns true if component enabled. By default if component enabled it receives and proceed events
      *
-     * @return true if component enabled. default value is {@link true }
+     * @return true if component enabled. default value is {@link Boolean#TRUE}
      */
     public boolean isEnabled() {
         return enabled;
@@ -288,7 +288,7 @@ public abstract class Component implements Serializable {
      * Returns true if component visible.
      * By default if component visible it will be rendered and will receive events
      *
-     * @return true if component visible. default value is {@link true }
+     * @return true if component visible. default value is {@link Boolean#TRUE}
      */
     public boolean isVisible() {
         return visible;
