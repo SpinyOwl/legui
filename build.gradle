@@ -5,8 +5,7 @@ apply plugin: 'maven-publish'
 apply plugin: 'maven'
 apply plugin: 'idea'
 idea { module { downloadJavadoc = true; downloadSources = true } }
-
-Properties up = new Properties(); up.load(new FileInputStream("./version.properties"))
+Properties up = new Properties(); up.load(new FileInputStream("$project.projectDir/version.properties"))
 project.version = up["liquidengine.legui.version"]
 
 configurations.all {
@@ -15,7 +14,7 @@ configurations.all {
 
 // dependencies versions
 //@formatter:off
-def lwjgl_version        = '3.1.1-SNAPSHOT'
+def lwjgl_version        = '3.1.2-SNAPSHOT'
 def joml_version         = "1.9.1-SNAPSHOT"
 def log4j_version        = '2.3'
 def commons_version      = '3.4'
@@ -64,6 +63,11 @@ dependencies {
     compile group: 'org.lwjgl',                  name: 'lwjgl-opengl',         version: lwjgl_version,         changing: true,  classifier: 'natives-windows'
     compile group: 'org.lwjgl',                  name: 'lwjgl-opengl',         version: lwjgl_version,         changing: true,  classifier: 'natives-linux'
     compile group: 'org.lwjgl',                  name: 'lwjgl-opengl',         version: lwjgl_version,         changing: true,  classifier: 'natives-macos'
+
+    compile group: 'org.lwjgl',                  name: 'lwjgl-yoga',                version: lwjgl_version,         changing: true
+    runtime group: 'org.lwjgl',                  name: 'lwjgl-yoga',                version: lwjgl_version,         changing: true,  classifier: 'natives-windows'
+    runtime group: 'org.lwjgl',                  name: 'lwjgl-yoga',                version: lwjgl_version,         changing: true,  classifier: 'natives-linux'
+    runtime group: 'org.lwjgl',                  name: 'lwjgl-yoga',                version: lwjgl_version,         changing: true,  classifier: 'natives-macos'
 
     compile group: 'org.lwjgl',                  name: 'lwjgl',                version: lwjgl_version,         changing: true
     runtime group: 'org.lwjgl',                  name: 'lwjgl',                version: lwjgl_version,         changing: true,  classifier: 'natives-windows'
