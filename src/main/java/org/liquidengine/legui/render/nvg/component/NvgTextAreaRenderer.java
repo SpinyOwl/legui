@@ -9,6 +9,7 @@ import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
 import org.liquidengine.legui.context.LeguiContext;
 import org.liquidengine.legui.render.nvg.NvgLeguiComponentRenderer;
+import org.liquidengine.legui.util.ColorConstants;
 import org.liquidengine.legui.util.NVGUtils;
 import org.liquidengine.legui.util.NvgRenderUtils;
 import org.liquidengine.legui.util.Util;
@@ -21,19 +22,22 @@ import java.nio.ByteBuffer;
 
 import static org.liquidengine.legui.util.ColorUtil.half;
 import static org.liquidengine.legui.util.ColorUtil.oppositeBlackOrWhite;
+import static org.liquidengine.legui.util.NVGUtils.rgba;
 import static org.liquidengine.legui.util.NvgRenderUtils.*;
 import static org.lwjgl.nanovg.NanoVG.*;
 import static org.lwjgl.system.MemoryUtil.memAddress;
+import static org.lwjgl.system.MemoryUtil.memFree;
+import static org.lwjgl.system.MemoryUtil.memUTF8;
 
 /**
  * Created by Alexander on 09.10.2016.
  */
 public class NvgTextAreaRenderer extends NvgLeguiComponentRenderer {
 
-    private final Vector4f caretColor = new Vector4f(0, 0, 0, 0.5f);
-    private final int maxGlyphCount = 2048;
+    private final Vector4f caretColor    = new Vector4f(0, 0, 0, 0.5f);
+    private final int      maxGlyphCount = 2048;
 
-    private NVGColor colorA = NVGColor.create();
+    private NVGColor                colorA = NVGColor.create();
     private NVGGlyphPosition.Buffer glyphs = NVGGlyphPosition.create(maxGlyphCount);
 
     @Override
@@ -41,22 +45,20 @@ public class NvgTextAreaRenderer extends NvgLeguiComponentRenderer {
         TextArea agui = (TextArea) component;
         createScissor(context, component);
         {
-            Vector2f pos = Util.calculatePosition(component);
+            Vector2f pos  = Util.calculatePosition(component);
             Vector2f size = component.getSize();
-            float br = agui.getCornerRadius();
-            Vector4f bc = new Vector4f(agui.getBackgroundColor());
+            float    br   = agui.getCornerRadius();
+            Vector4f bc   = new Vector4f(agui.getBackgroundColor());
 
             drawBackground(context, pos.x, pos.y, size.x, size.y, br, bc);
 
-            TextState textState = agui.getTextState();
-            Vector4f p = new Vector4f(textState.getPadding());
-            p.x = p.x > 0 ? p.x - 1 : 0;
-            p.y = p.y > 0 ? p.y - 1 : 0;
-            p.z = p.z > 0 ? p.z - 1 : 0;
-            p.w = p.w > 0 ? p.w - 1 : 0;
+            TextState textState     = agui.getTextState();
+            Vector4f  p             = new Vector4f(textState.getPadding()).add(2, 2, 2, 2);
+            Vector4f  intersectRect = new Vector4f(pos.x + p.x, pos.y + p.y, size.x - p.x - p.z, size.y - p.y - p.w);
 
-            nvgIntersectScissor(context, pos.x + p.x, pos.y + p.y, size.x - p.x - p.z, size.y - p.y - p.w);
-            renderText(context, leguiContext, agui, pos, size, textState, agui.getCaretPosition(), agui.getState().isFocused(), bc);
+//            intersectScissor(context, intersectRect);
+//            renderText(context, leguiContext, agui, pos, size, textState, agui.getCaretPosition(), agui.getState().isFocused(), bc);
+            renderTextNew(leguiContext, context, agui, pos, size, intersectRect, bc);
         }
         resetScissor(context);
 
@@ -67,21 +69,84 @@ public class NvgTextAreaRenderer extends NvgLeguiComponentRenderer {
         resetScissor(context);
     }
 
+    private void renderTextNew(LeguiContext leguiContext, long context, TextArea gui, Vector2f pos, Vector2f size, Vector4f rect, Vector4f bc) {
+        TextState       textState     = gui.getTextState();
+        String          text          = textState.getText();
+        String          font          = textState.getFont();
+        float           fontSize      = textState.getFontSize();
+        HorizontalAlign halign        = textState.getHorizontalAlign();
+        VerticalAlign   valign        = textState.getVerticalAlign();
+        Vector4f        textColor     = textState.getTextColor();
+        int             caretPosition = gui.getCaretPosition();
+        boolean         focused       = gui.getState().isFocused();
+        int             caretLine     = 0;
+
+        String[] lines            = text.split("\n", -1);
+        int      lineCount        = lines.length;
+        int[]    lineStartIndeces = new int[lineCount];
+        int      caretOffset      = 0;
+        for (int i = 0; i < lineCount - 1; i++) {
+            lineStartIndeces[i + 1] = lineStartIndeces[i] + lines[i].length() + 1;
+            if (caretPosition >= lineStartIndeces[i + 1]) {
+                caretOffset = lineStartIndeces[i + 1];
+                caretLine = i + 1;
+            }
+        }
+        int lineCaretPosition = caretPosition - caretOffset;
+
+        if (!focused) {
+            caretLine = (valign == VerticalAlign.TOP ? 0 : (valign == VerticalAlign.BOTTOM ? lineCount : lineCount / 2));
+            lineCaretPosition = (halign == HorizontalAlign.LEFT ? 0 : (halign == HorizontalAlign.RIGHT ? lines[0].length() : lines[0].length() / 2));
+        }
+
+        drawRectStroke(context, ColorConstants.red, rect, 0, 1);
+
+        for (int i = 0; i < lineCount; i++) {
+            ByteBuffer lineBytes = null;
+            try {
+                String line = lines[i];
+                lineBytes = memUTF8(line);
+                // initially configure text rendering
+                alignTextInBox(context, halign, valign);
+                nvgFontSize(context, fontSize);
+                nvgFontFace(context, font);
+                nvgFillColor(context, rgba(textColor, colorA));
+                float[] lineBounds = calculateTextBoundsRect(context, rect.x, rect.y, rect.z, rect.w, line, halign, valign);
+                alignTextInBox(context, HorizontalAlign.LEFT, VerticalAlign.MIDDLE);
+                int ng = nnvgTextGlyphPositions(context, lineBounds[4], 0, memAddress(lineBytes), 0, memAddress(glyphs), maxGlyphCount);
+
+                drawRectStroke(context, ColorConstants.red, new Vector4f(lineBounds[0], lineBounds[1], lineBounds[2], lineBounds[3]), 0, 1);
+
+                float poffsetx = 0;
+                float poffsety = 0;
+                int   vp       = valign == VerticalAlign.TOP ? 0 : valign == VerticalAlign.MIDDLE ? 1 : valign == VerticalAlign.BOTTOM ? 2 : 1;
+                float voffset  = (lineCount - 1) * fontSize * vp * -0.5f + (valign == VerticalAlign.BASELINE ? fontSize / 4f : 0);
+                renderTextLineToBounds(context, lineBounds[4] - poffsetx, lineBounds[5] - poffsety + voffset + fontSize * i, lineBounds[6], lineBounds[7], fontSize, font, textColor, line, HorizontalAlign.LEFT, VerticalAlign.MIDDLE, false);
+            } finally {
+                // free allocated memory
+                if (lineBytes != null) {
+                    memFree(lineBytes);
+                }
+            }
+
+        }
+    }
+
     private void renderText(long context, LeguiContext leguiContext, TextArea gui, Vector2f pos, Vector2f size, TextState textState, int caretPosition, boolean focused, Vector4f bc) {
-        String text = textState.getText();
-        String[] lines = text.split("\n", -1);
-        int[] offsets = new int[lines.length];
+        String   text    = textState.getText();
+        String[] lines   = text.split("\n", -1);
+        int[]    offsets = new int[lines.length];
         if (!focused) caretPosition = lines[0].length() * textState.getHorizontalAlign().index / 2;
-        int caretLine = 0;
+        int caretLine   = 0;
         int caretOffset = 0;
 
-        Vector4f p = textState.getPadding();
-        float x = pos.x + p.x;
-        float y = pos.y + p.y;
-        float w = size.x - p.x - p.z;
-        float h = size.y - p.y - p.w;
-        float fontSize = textState.getFontSize();
-        int lineCount = lines.length;
+        Vector4f p         = textState.getPadding();
+        float    x         = pos.x + p.x;
+        float    y         = pos.y + p.y;
+        float    w         = size.x - p.x - p.z;
+        float    h         = size.y - p.y - p.w;
+        float    fontSize  = textState.getFontSize();
+        int      lineCount = lines.length;
 
         // calculate offset and line caret position
         for (int i = 0; i < lineCount - 1; i++) {
@@ -97,7 +162,7 @@ public class NvgTextAreaRenderer extends NvgLeguiComponentRenderer {
         int maxLines = (int) Math.floor(h / fontSize);
         int topIndex = caretLine;
         int botIndex = caretLine;
-        int diff = 0;
+        int diff     = 0;
 
         while (diff < maxLines - 1 && !(topIndex == 0 && botIndex == lineCount - 1)) {
             if (topIndex > 0) topIndex--;
@@ -105,17 +170,17 @@ public class NvgTextAreaRenderer extends NvgLeguiComponentRenderer {
             diff = botIndex - topIndex;
         }
 
-        String font = textState.getFont();
-        Vector4f textColor = textState.getTextColor();
+        String          font            = textState.getFont();
+        Vector4f        textColor       = textState.getTextColor();
         HorizontalAlign horizontalAlign = textState.getHorizontalAlign();
-        VerticalAlign verticalAlign = textState.getVerticalAlign();
+        VerticalAlign   verticalAlign   = textState.getVerticalAlign();
         alignTextInBox(context, horizontalAlign, verticalAlign);
         nvgFontSize(context, fontSize);
         nvgFontFace(context, font);
 
         // calculate caret x position
-        String line = lines[caretLine];
-        float caretx = getCaretX(context, x, w, line, lineCaretPosition, fontSize, horizontalAlign, verticalAlign, glyphs, maxGlyphCount);
+        String line   = lines[caretLine];
+        float  caretx = getCaretX(context, x, w, line, lineCaretPosition, fontSize, horizontalAlign, verticalAlign, glyphs, maxGlyphCount);
 
         // calculate text x offset
         float offsetX = 0;
@@ -180,18 +245,18 @@ public class NvgTextAreaRenderer extends NvgLeguiComponentRenderer {
                                             float x, float y, float w, float h,
                                             float offsetX, String line, int lineOffset,
                                             HorizontalAlign horizontalAlign, VerticalAlign verticalAlign) {
-        float bounds[] = NvgRenderUtils.calculateTextBoundsRect(context, x, y, w, h, line, horizontalAlign, verticalAlign);
+        float      bounds[]  = NvgRenderUtils.calculateTextBoundsRect(context, x, y, w, h, line, horizontalAlign, verticalAlign);
         ByteBuffer textBytes = null;
         try {
-            textBytes = MemoryUtil.memUTF8(line);
+            textBytes = memUTF8(line);
 
-            int ng = nnvgTextGlyphPositions(context, bounds[0], bounds[1], memAddress(textBytes), 0, memAddress(glyphs), maxGlyphCount);
-            float mx = leguiContext.getCursorPosition().x;
-            int newCPos = 0;
-            int upper = ng - 1;
+            int   ng      = nnvgTextGlyphPositions(context, bounds[0], bounds[1], memAddress(textBytes), 0, memAddress(glyphs), maxGlyphCount);
+            float mx      = leguiContext.getCursorPosition().x;
+            int   newCPos = 0;
+            int   upper   = ng - 1;
             if (upper <= 0) {
             } else {
-                float px = glyphs.get(0).x() - offsetX;
+                float px  = glyphs.get(0).x() - offsetX;
                 float mpx = glyphs.get(upper).maxx() - offsetX;
                 if (mx <= px) {
                     newCPos = 0;
@@ -233,8 +298,8 @@ public class NvgTextAreaRenderer extends NvgLeguiComponentRenderer {
                                          float x, float y, float w, float h,
                                          float fontSize, int topIndex, int botIndex, HorizontalAlign horizontalAlign, VerticalAlign verticalAlign, float offsetX) {
         String line;
-        int start = gui.getStartSelectionIndex();
-        int end = gui.getEndSelectionIndex();
+        int    start = gui.getStartSelectionIndex();
+        int    end   = gui.getEndSelectionIndex();
 
 
         if (start >= 0 && end >= 0 && start != end) {
@@ -245,10 +310,10 @@ public class NvgTextAreaRenderer extends NvgLeguiComponentRenderer {
             }
 
             LineData startData = getStartLineIndexAndLineNumber(lines, start);
-            LineData endData = getStartLineIndexAndLineNumber(lines, end);
+            LineData endData   = getStartLineIndexAndLineNumber(lines, end);
 
             float startSelCaretx = getCaretX(context, x, w, lines[startData.lineIndex], startData.caretPositionInLine, fontSize, horizontalAlign, verticalAlign, glyphs, maxGlyphCount);
-            float endSelCaretx = getCaretX(context, x, w, lines[endData.lineIndex], endData.caretPositionInLine, fontSize, horizontalAlign, verticalAlign, glyphs, maxGlyphCount);
+            float endSelCaretx   = getCaretX(context, x, w, lines[endData.lineIndex], endData.caretPositionInLine, fontSize, horizontalAlign, verticalAlign, glyphs, maxGlyphCount);
 
             Vector4f selectionColor = gui.getSelectionColor();
             for (int i = topIndex; i <= botIndex; i++) {
@@ -261,7 +326,7 @@ public class NvgTextAreaRenderer extends NvgLeguiComponentRenderer {
                     drawRectangle(context, selectionColor, startSelCaretx - offsetX, y1, endX - startSelCaretx, fontSize);
                 } else if (i > startData.lineIndex && i < endData.lineIndex) {
                     float startX = getCaretX(context, x, w, line, 0, fontSize, horizontalAlign, verticalAlign, glyphs, maxGlyphCount);
-                    float endX = getCaretX(context, x, w, line, line.length(), fontSize, horizontalAlign, verticalAlign, glyphs, maxGlyphCount);
+                    float endX   = getCaretX(context, x, w, line, line.length(), fontSize, horizontalAlign, verticalAlign, glyphs, maxGlyphCount);
                     drawRectangle(context, selectionColor, startX - offsetX, y1, endX - startX, fontSize);
                 } else if (i == endData.lineIndex) {
                     float startX = getCaretX(context, x, w, line, 0, fontSize, horizontalAlign, verticalAlign, glyphs, maxGlyphCount);
@@ -273,7 +338,7 @@ public class NvgTextAreaRenderer extends NvgLeguiComponentRenderer {
     }
 
     private LineData getStartLineIndexAndLineNumber(String[] lines, int caretPosition) {
-        int caretLine = 0;
+        int caretLine   = 0;
         int caretOffset = 0;
         for (String line : lines) {
             int newOffset = caretOffset + line.length();

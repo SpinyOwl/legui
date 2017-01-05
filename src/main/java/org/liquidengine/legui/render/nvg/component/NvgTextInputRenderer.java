@@ -59,7 +59,7 @@ public class NvgTextInputRenderer extends NvgLeguiComponentRenderer {
             drawBackground(context, pos.x, pos.y, size.x, size.y, agui.getCornerRadius(), bc);
 
             TextState textState = agui.getTextState();
-            Vector4f  p         = new Vector4f(textState.getPadding()).add(2,2,2,2);
+            Vector4f  p         = new Vector4f(textState.getPadding()).add(2, 2, 2, 2);
 
             Vector4f intersectRect = new Vector4f(pos.x + p.x, pos.y + p.y, size.x - p.x - p.z, size.y - p.y - p.w);
 //            drawRectStroke(context, ColorConstants.red(),intersectRect, 0,1);
@@ -98,15 +98,15 @@ public class NvgTextInputRenderer extends NvgLeguiComponentRenderer {
         nvgFillColor(context, rgba(textColor, colorA));
 
         if (!focused) {
-            caretPosition = 0;
+            caretPosition = (halign == HorizontalAlign.LEFT ? 0 : (halign == HorizontalAlign.RIGHT ? text.length() : text.length() / 2));
         }
 
         float[] textBounds = calculateTextBoundsRect(context, rect.x, rect.y, rect.z, rect.w, text, halign, valign);
 
         // calculate caret coordinate and mouse caret coordinate
-        float      caretx             = 0;
-        float      startSelectionX    = 0;
-        float      endSelectionX      = 0;
+        float      caretx;
+        float      startSelectionX;
+        float      endSelectionX;
         float      mouseCaretX        = 0;
         int        mouseCaretPosition = 0;
         ByteBuffer textBytes          = null;
@@ -116,14 +116,6 @@ public class NvgTextInputRenderer extends NvgLeguiComponentRenderer {
             // align text for calculations
             alignTextInBox(context, HorizontalAlign.LEFT, VerticalAlign.MIDDLE);
             int ng = nnvgTextGlyphPositions(context, textBounds[4], 0, memAddress(textBytes), 0, memAddress(glyphs), maxGlyphCount);
-
-//            for (int i = 0; i < ng; i++) {
-//                NVGGlyphPosition g    = glyphs.get(i);
-//                float            x    = g.x();
-//                float            maxx = g.maxx();
-//
-//                drawRectangle(context, new Vector4f(0, 1, 0, 0.5f), x, rect.y, maxx - x, rect.w);
-//            }
 
             // get caret position on screen based on caret position in text
             // and get x position of first and last selection
