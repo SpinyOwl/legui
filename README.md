@@ -1,5 +1,5 @@
 <table>
-  <t>
+  <tr>
     <th align="center">Size</th>
     <th align="center">Develop</th>
     <th align="center">Snapshot</th>
