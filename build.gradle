@@ -109,7 +109,7 @@ task publishArchives {
 		def releasesPublishUrl = System.getenv("releasesPublishUrl") ?: releasesPublishUrl
 		def snapshotsPublishUrl = System.getenv("snapshotsPublishUrl") ?: snapshotsPublishUrl
 		println("-------------------------------------")
-		println("PUBLISH ARCHIVES TASK " + build_type)
+		println("PUBLISH ARCHIVES TASK: " + build_type)
 		println("-------------------------------------")
 		if (build_type != "") {
 			boolean b = false; buildType = "ERROR"
