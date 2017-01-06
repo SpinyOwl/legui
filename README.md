@@ -1,4 +1,17 @@
-![Size](https://reposs.herokuapp.com/?path=LiquidEngine/legui)
+<table>
+  <tr>
+    <th align="center">Size</th>
+    <th align="center">Develop</th>
+    <th align="center">Snapshot</th>
+    <th align="center">Release</th>
+  </tr>
+  <tr>
+    <td align="center"><img src="https://reposs.herokuapp.com/?path=LiquidEngine/legui"/></td>
+    <td align="center"><a href="http://liquidengine.tk:8080/job/legui/job/develop/" target="_blank"><img src="http://liquidengine.tk:8080/job/legui/job/develop/badge/icon"/></a></td>
+    <td align="center"><a href="http://liquidengine.tk:8080/job/legui/job/snapshots/" target="_blank"><img src="http://liquidengine.tk:8080/job/legui/job/snapshots/badge/icon"/></a></td>
+    <td align="center"><a href="http://liquidengine.tk:8080/job/legui/job/releases/" target="_blank"><img src="http://liquidengine.tk:8080/job/legui/job/releases/badge/icon"/></a></td>
+  </tr>
+</table>
 
 _**(Work in progress)**_
 ___
