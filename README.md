@@ -7,9 +7,9 @@
   </tr>
   <tr>
     <td align="center"><img src="https://reposs.herokuapp.com/?path=LiquidEngine/legui"/></td>
-    <td align="center"><a href="http://liquidengine.tk:8080/job/legui_develop/" target="_blank"><img src="http://liquidengine.tk:8080/job/legui_develop/badge/icon"/></a></td>
-    <td align="center"><a href="http://liquidengine.tk:8080/job/legui_snapshots/" target="_blank"><img src="http://liquidengine.tk:8080/job/legui_snapshots/badge/icon"/></a></td>
-    <td align="center"><a href="http://liquidengine.tk:8080/job/legui_releases/" target="_blank"><img src="http://liquidengine.tk:8080/job/legui_releases/badge/icon"/></a></td>
+    <td align="center"><a href="http://liquidengine.tk:8080/job/legui/job/develop/" target="_blank"><img src="http://liquidengine.tk:8080/job/legui/job/develop/badge/icon"/></a></td>
+    <td align="center"><a href="http://liquidengine.tk:8080/job/legui/job/snapshots/" target="_blank"><img src="http://liquidengine.tk:8080/job/legui/job/snapshots/badge/icon"/></a></td>
+    <td align="center"><a href="http://liquidengine.tk:8080/job/legui/job/releases/" target="_blank"><img src="http://liquidengine.tk:8080/job/legui/job/releases/badge/icon"/></a></td>
   </tr>
 </table>
 
