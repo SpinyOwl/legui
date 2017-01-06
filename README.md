@@ -1,4 +1,5 @@
 ![Size](https://reposs.herokuapp.com/?path=LiquidEngine/legui)
+[![Build Status](http://liquidengine.tk:8080/job/legui_develop/badge/icon)](http://liquidengine.tk:8080/job/legui_develop)
 
 _**(Work in progress)**_
 ___
