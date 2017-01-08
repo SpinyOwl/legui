@@ -11,7 +11,6 @@ import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
 import org.liquidengine.legui.context.LeguiContext;
 import org.liquidengine.legui.render.nvg.NvgLeguiComponentRenderer;
-import org.liquidengine.legui.util.ColorConstants;
 import org.liquidengine.legui.util.Util;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.nanovg.NVGColor;
@@ -101,6 +100,7 @@ public class NvgTextInputRenderer extends NvgLeguiComponentRenderer {
             caretPosition = (halign == HorizontalAlign.LEFT ? 0 : (halign == HorizontalAlign.RIGHT ? text.length() : text.length() / 2));
         }
 
+        alignTextInBox(context, HorizontalAlign.LEFT, VerticalAlign.MIDDLE);
         float[] textBounds = calculateTextBoundsRect(context, rect.x, rect.y, rect.z, rect.w, text, halign, valign);
 
         // calculate caret coordinate and mouse caret coordinate
@@ -114,7 +114,6 @@ public class NvgTextInputRenderer extends NvgLeguiComponentRenderer {
             // allocate ofheap memory and fill it with text
             textBytes = memUTF8(text);
             // align text for calculations
-            alignTextInBox(context, HorizontalAlign.LEFT, VerticalAlign.MIDDLE);
             int ng = nnvgTextGlyphPositions(context, textBounds[4], 0, memAddress(textBytes), 0, memAddress(glyphs), maxGlyphCount);
 
             // get caret position on screen based on caret position in text
@@ -170,7 +169,7 @@ public class NvgTextInputRenderer extends NvgLeguiComponentRenderer {
                 } else if (mx >= glyphs.get(ng - 1).maxx()) {
                     mouseCaretPosition = ng;
                     mouseCaretX = glyphs.get(ng - 1).maxx();
-                } else {
+                } else if (!leguiContext.isIconified()) {
                     // binary search mouse caret position
                     int     upper = ng;
                     int     lower = 0;

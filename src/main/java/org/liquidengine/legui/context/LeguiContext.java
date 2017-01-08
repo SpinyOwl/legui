@@ -15,6 +15,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import static org.lwjgl.glfw.GLFW.*;
+
 /**
  * Created by Shcherbin Alexander on 9/19/2016.
  */
@@ -22,22 +24,24 @@ public class LeguiContext implements Serializable {
 
     private transient long glfwWindow;
 
-    private Vector2f windowMousePosition;
-    private Vector2f windowPosition;
-    private Vector2i windowSize;
-    private Vector2f framebufferSize;
-    private transient float pixelRatio;
+    private           Vector2f windowMousePosition;
+    private           Vector2f windowPosition;
+    private           Vector2i windowSize;
+    private           Vector2f framebufferSize;
+    private transient float    pixelRatio;
 
-    private Frame frame;
+    private Frame     frame;
     private Component mouseTargetGui;
     private Component focusedGui;
 
     private transient boolean debugEnabled = false;
 
-    private boolean[] mouseButtonStates = new boolean[GLFW.GLFW_MOUSE_BUTTON_LAST];
+    private boolean  iconified;
     private Vector2f mousePosition;
-    private Vector2f cursorPosition = new Vector2f();
+    private Vector2f cursorPosition     = new Vector2f();
     private Vector2f cursorPositionPrev = new Vector2f();
+
+    private boolean[]  mouseButtonStates        = new boolean[GLFW.GLFW_MOUSE_BUTTON_LAST];
     private Vector2f[] mouseButtonPressPosition = new Vector2f[GLFW.GLFW_MOUSE_BUTTON_LAST];
 
     private Map<String, Object> contextData = new ConcurrentHashMap<>();
@@ -50,34 +54,37 @@ public class LeguiContext implements Serializable {
     }
 
     public LeguiContext(long window, Frame frame, LeguiEventProcessor leguiEventProcessor) {
-        this(window,frame);
+        this(window, frame);
         this.leguiEventProcessor = leguiEventProcessor;
     }
 
     public void updateGlfwWindow() {
         int[] windowWidth = {0}, windowHeight = {0};
-        GLFW.glfwGetWindowSize(glfwWindow, windowWidth, windowHeight);
+        glfwGetWindowSize(glfwWindow, windowWidth, windowHeight);
         int[] frameBufferWidth = {0}, frameBufferHeight = {0};
-        GLFW.glfwGetFramebufferSize(glfwWindow, frameBufferWidth, frameBufferHeight);
+        glfwGetFramebufferSize(glfwWindow, frameBufferWidth, frameBufferHeight);
         int[] xpos = {0}, ypos = {0};
-        GLFW.glfwGetWindowPos(glfwWindow, xpos, ypos);
+        glfwGetWindowPos(glfwWindow, xpos, ypos);
         double[] mx = {0}, my = {0};
-        GLFW.glfwGetCursorPos(glfwWindow, mx, my);
+        glfwGetCursorPos(glfwWindow, mx, my);
 
         update(windowWidth[0], windowHeight[0],
                 frameBufferWidth[0], frameBufferHeight[0],
                 xpos[0], ypos[0],
-                mx[0], my[0]
+                mx[0], my[0],
+                glfwGetWindowAttrib(glfwWindow, GLFW.GLFW_ICONIFIED) == GLFW_TRUE
         );
+
     }
 
     public void update(int targetWidth, int targetHeight, int framebufferWidth, int framebufferHeight,
-                       int targetPosX, int targetPosY, double mousePosX, double mousePosY) {
+                       int targetPosX, int targetPosY, double mousePosX, double mousePosY, boolean iconified) {
         setWindowSize(new Vector2i(targetWidth, targetHeight));
         setFramebufferSize(new Vector2f(framebufferWidth, framebufferHeight));
         setPixelRatio((float) framebufferWidth / (float) targetWidth);
         setWindowPosition(new Vector2f(targetPosX, targetPosY));
         setMousePosition(new Vector2f((float) mousePosX, (float) mousePosY));
+        setIconified(iconified);
     }
 
     public float getPixelRatio() {
@@ -193,7 +200,7 @@ public class LeguiContext implements Serializable {
         }
         if (gui instanceof ComponentContainer) {
             ComponentContainer container = ((ComponentContainer) gui);
-            List<Component> all = container.getComponents();
+            List<Component>    all       = container.getComponents();
             for (Component element : all) {
                 release(element, focused);
             }
@@ -220,12 +227,19 @@ public class LeguiContext implements Serializable {
         this.mouseTargetGui = mouseTargetGui;
     }
 
+    public LeguiEventProcessor getLeguiEventProcessor() {
+        return leguiEventProcessor;
+    }
 
     public void setLeguiEventProcessor(LeguiEventProcessor leguiEventProcessor) {
         this.leguiEventProcessor = leguiEventProcessor;
     }
 
-    public LeguiEventProcessor getLeguiEventProcessor() {
-        return leguiEventProcessor;
+    public boolean isIconified() {
+        return iconified;
+    }
+
+    public void setIconified(boolean iconified) {
+        this.iconified = iconified;
     }
 }

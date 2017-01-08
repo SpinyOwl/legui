@@ -3,8 +3,8 @@ package org.liquidengine.legui.example;
 import org.joml.Vector2i;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.Frame;
-import org.liquidengine.legui.context.ILeguiCallbackKeeper;
 import org.liquidengine.legui.context.DefaultLeguiCallbackKeeper;
+import org.liquidengine.legui.context.ILeguiCallbackKeeper;
 import org.liquidengine.legui.context.LeguiContext;
 import org.liquidengine.legui.processor.LeguiEventProcessor;
 import org.liquidengine.legui.processor.SystemEventProcessor;
@@ -26,13 +26,13 @@ import static org.lwjgl.system.MemoryUtil.NULL;
  */
 public class Demo {
 
-    private final boolean resizable;
-    private final int x;
-    private final int y;
-    protected int width;
-    protected int height;
+    private final      boolean resizable;
+    private final      int     x;
+    private final      int     y;
+    protected          int     width;
+    protected          int     height;
     protected volatile boolean running;
-    protected long windowPointer;
+    protected          long    windowPointer;
     protected Vector4f clearColor = new Vector4f(1, 1, 1, 1);
 
     protected Thread mainThread;
@@ -41,12 +41,12 @@ public class Demo {
     protected Thread uiEventProcessorThread;
 
     protected String initialTitle;
-    protected Frame frame;
+    protected Frame  frame;
 
-    protected LeguiContext leguiContext;
-    protected LeguiRenderer renderer;
+    protected LeguiContext         leguiContext;
+    protected LeguiRenderer        renderer;
     protected SystemEventProcessor systemEventProcessor;
-    protected LeguiEventProcessor uiEventLeguiEventProcessor;
+    protected LeguiEventProcessor  uiEventLeguiEventProcessor;
 
     protected int updates;
     protected int currentUps;
@@ -134,6 +134,15 @@ public class Demo {
             };
             callbackKeeper.getChainWindowCloseCallback().add(closeCallback);
             callbackKeeper.getChainKeyCallback().add(keyCloseCallback);
+            callbackKeeper.getChainWindowIconifyCallback().add((window, iconified) -> {
+                if (iconified) {
+                    GLFW.glfwSetWindowSize(window, 100, 100);
+                    System.out.println("SET SIZE");
+                    int w[]={0},h[]={0};
+                    GLFW.glfwGetWindowSize(window, w, h);
+                    System.out.println("SIZE = " + w[0] + " x " + h[0]);
+                }
+            });
         }
 
         running = true;
@@ -152,8 +161,8 @@ public class Demo {
 
         long timer[] = {System.currentTimeMillis()};
 
-        long last[] = {System.nanoTime()};
-        long delta[] = {0};
+        long   last[]         = {System.nanoTime()};
+        long   delta[]        = {0};
         double nanosPerUpdate = 1_000_000_000 / 60;
 
         while (running) {
