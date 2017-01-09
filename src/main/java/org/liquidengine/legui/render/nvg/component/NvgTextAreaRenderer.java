@@ -33,7 +33,7 @@ import static org.lwjgl.system.MemoryUtil.*;
  */
 public class NvgTextAreaRenderer extends NvgLeguiComponentRenderer {
     public static final String PRATIO   = "pratio";
-    public static final String PLINE   = "pline";
+    public static final String PLINE    = "pline";
     public static final String POFFSETX = "poffsetx";
     public static final String POFFSETY = "poffsety";
 
@@ -147,6 +147,18 @@ public class NvgTextAreaRenderer extends NvgLeguiComponentRenderer {
             offsetY = carety - rect.y;
         }
 
+        if (focused) {
+            nvgBeginPath(context);
+            nvgCircle(context, mouseX, mouseY, 2);
+            nvgFill(context);
+            nvgClosePath(context);
+            nvgSave(context);
+            nvgBeginPath(context);
+            nvgCircle(context, mouseX + poffsetx, mouseY + poffsety, 2);
+            nvgFill(context);
+            nvgClosePath(context);
+            nvgSave(context);
+        }
         // we should recalculate offset y if ratio is changed
         if (pratio != rat) {
             poffsety = offsetY;
@@ -185,7 +197,7 @@ public class NvgTextAreaRenderer extends NvgLeguiComponentRenderer {
                     }
 
                     // we should recalculate offsets if ratio is changed or if changed caret line
-                    if (pratio != rat || pline!=caretLine) {
+                    if (pratio != rat || pline != caretLine) {
                         poffsetx = offsetX;
                     } else {
                         // and if ratio is the same we should check if we need to update offset
@@ -207,57 +219,62 @@ public class NvgTextAreaRenderer extends NvgLeguiComponentRenderer {
                 float lineY = lineBounds[5] - poffsety + voffset + fontSize * i;
 
                 // calculate mouse caret position
-                if (line.length() == 0) {
-                    mouseCaretX = caretx;
-                } else {
-                    float mx = mouseX + poffsetx;
-                    if (mx <= glyphs.get(0).minx()) {
-                        mouseCaretPosition = 0;
-                        mouseCaretX = glyphs.get(0).minx();
-                    } else if (mx >= glyphs.get(ng - 1).maxx()) {
-                        mouseCaretPosition = ng;
-                        mouseCaretX = glyphs.get(ng - 1).maxx();
-                    } else if (!leguiContext.isIconified()) {
-                        // binary search mouse caret position
-                        int     upper = ng;
-                        int     lower = 0;
-                        boolean found = false;
-                        do {
-                            int   index = (upper + lower) / 2;
-                            float left  = index == 0 ? glyphs.get(index).minx() : glyphs.get(index).x();
-                            float right = index == ng ? glyphs.get(index).maxx() : glyphs.get(index + 1).x();
-                            float mid   = (left + right) / 2f;
-                            if (mx >= left && mx < right) {
-                                found = true;
-                                if (mx > mid) {
-                                    mouseCaretPosition = index + 1;
-                                    mouseCaretX = right;
-                                } else {
-                                    mouseCaretPosition = index;
-                                    mouseCaretX = left;
-                                }
-                            } else if (mx >= right) {
-                                if (index != ng) {
-                                    lower = index + 1;
-                                } else {
+                if (i == mouseLineIndex) {
+                    if (line.length() == 0) {
+                        mouseCaretX = caretx;
+                    } else {
+                        float mx = mouseX + poffsetx;
+                        if (mx <= glyphs.get(0).minx()) {
+                            mouseCaretPosition = 0;
+                            mouseCaretX = glyphs.get(0).minx();
+                        } else if (mx >= glyphs.get(ng - 1).maxx()) {
+                            mouseCaretPosition = ng;
+                            mouseCaretX = glyphs.get(ng - 1).maxx();
+                        } else if (!leguiContext.isIconified()) {
+                            // binary search mouse caret position
+                            int     upper = ng;
+                            int     lower = 0;
+                            boolean found = false;
+                            do {
+                                int   index = (upper + lower) / 2;
+                                float left  = index == 0 ? glyphs.get(index).minx() : glyphs.get(index).x();
+                                float right = index >= ng - 1 ? glyphs.get(ng - 1).maxx() : glyphs.get(index + 1).x();
+                                float mid   = (left + right) / 2f;
+                                if (mx >= left && mx < right) {
                                     found = true;
-                                    mouseCaretPosition = ng;
-                                    mouseCaretX = right;
+                                    if (mx > mid) {
+                                        mouseCaretPosition = index + 1;
+                                        mouseCaretX = right;
+                                    } else {
+                                        mouseCaretPosition = index;
+                                        mouseCaretX = left;
+                                    }
+                                } else if (mx >= right) {
+                                    if (index != ng) {
+                                        lower = index + 1;
+                                    } else {
+                                        found = true;
+                                        mouseCaretPosition = ng;
+                                        mouseCaretX = right;
+                                    }
+                                } else if (mx < left) {
+                                    if (index != 0) {
+                                        upper = index;
+                                    } else {
+                                        found = true;
+                                        mouseCaretPosition = 0;
+                                        mouseCaretX = left;
+                                    }
                                 }
-                            } else if (mx < left) {
-                                if (index != 0) {
-                                    upper = index;
-                                } else {
-                                    found = true;
-                                    mouseCaretPosition = 0;
-                                    mouseCaretX = left;
-                                }
-                            }
-                        } while (!found);
+                            } while (!found);
+                        }
                     }
+                    mouseCaretX -= poffsetx;
+
+                    // render mouse caret
+                    drawRectStroke(context, mouseCaretX - 1, lineY, 1, lineBounds[7], new Vector4f(caretColor).div(2), 0, 1);
                 }
 
-                mouseCaretX -= poffsetx;
 
                 renderTextLineToBounds(context, lineX, lineY, lineBounds[6], lineBounds[7], fontSize, font, textColor, line, HorizontalAlign.LEFT, VerticalAlign.MIDDLE, false);
 

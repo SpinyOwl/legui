@@ -105,7 +105,7 @@ public class Demo {
         leguiContext = new LeguiContext(windowPointer, frame);
 
         // enable debugging
-//        leguiContext.setDebugEnabled(true);
+        leguiContext.setDebugEnabled(true);
 
         // create callback keeper
         DefaultLeguiCallbackKeeper leguiCallbackKeeper = new DefaultLeguiCallbackKeeper();

@@ -30,6 +30,7 @@ import static org.lwjgl.system.MemoryUtil.*;
  */
 public class NvgTextInputRenderer extends NvgLeguiComponentRenderer {
     public static final  String                  PRATIO        = "pratio";
+    public static final  String                  PALIGN        = "palign";
     public static final  String                  POFFSET       = "poffset";
     private static final Logger                  LOGGER        = LogManager.getLogger();
     private final        Vector4f                caretColor    = new Vector4f(0, 0, 0, 0.5f);
@@ -109,6 +110,7 @@ public class NvgTextInputRenderer extends NvgLeguiComponentRenderer {
         float      endSelectionX;
         float      mouseCaretX        = 0;
         int        mouseCaretPosition = 0;
+        float      ratio              = size.y * size.x;
         ByteBuffer textBytes          = null;
         try {
             // allocate ofheap memory and fill it with text
@@ -133,18 +135,16 @@ public class NvgTextInputRenderer extends NvgLeguiComponentRenderer {
             }
 
             // get previous offset
-            Float poffset = offsetX;
-            if (metadata.containsKey(POFFSET)) poffset = (Float) metadata.get(POFFSET);
-            else metadata.put(POFFSET, poffset);
+            Float poffset = (Float) metadata.getOrDefault(POFFSET, offsetX);
 
             // get previous ratio
-            float rat    = size.y * size.x;
-            Float pratio = rat;
-            if (metadata.containsKey(PRATIO)) pratio = (Float) metadata.get(PRATIO);
-            else metadata.put(PRATIO, pratio);
+            Float pratio = (Float) metadata.getOrDefault(PRATIO, ratio);
+
+            // get previous align to know if we need to recalculate offset
+            HorizontalAlign palign = (HorizontalAlign) metadata.getOrDefault(PALIGN, halign);
 
             // we should recalculate offsets if ratio is changed
-            if (pratio != rat) {
+            if (pratio != ratio || palign != halign) {
                 poffset = offsetX;
             } else {
                 // and if ratio is the same we should check if we need to update offset
@@ -154,9 +154,6 @@ public class NvgTextInputRenderer extends NvgLeguiComponentRenderer {
                     poffset = poffset + (caretx - poffset - rect.x);
                 }
             }
-            // put last offset and ration to metadata
-            metadata.put(POFFSET, poffset);
-            metadata.put(PRATIO, rat);
 
             // calculate mouse caret position
             if (text.length() == 0) {
@@ -177,7 +174,7 @@ public class NvgTextInputRenderer extends NvgLeguiComponentRenderer {
                     do {
                         int   index = (upper + lower) / 2;
                         float left  = index == 0 ? glyphs.get(index).minx() : glyphs.get(index).x();
-                        float right = index == ng ? glyphs.get(index).maxx() : glyphs.get(index + 1).x();
+                        float right = index >= ng - 1 ? glyphs.get(ng - 1).maxx() : glyphs.get(index + 1).x();
                         float mid   = (left + right) / 2f;
                         if (mx >= left && mx < right) {
                             found = true;
@@ -235,6 +232,10 @@ public class NvgTextInputRenderer extends NvgLeguiComponentRenderer {
                 drawRectStroke(context, mouseCaretX, rect.y, 1, rect.w, cc, 0, 1);
             }
 
+            // put last offset and ration to metadata
+            metadata.put(POFFSET, poffset);
+            metadata.put(PALIGN, halign);
+            metadata.put(PRATIO, ratio);
         } finally {
             // free allocated memory
             if (textBytes != null) {
