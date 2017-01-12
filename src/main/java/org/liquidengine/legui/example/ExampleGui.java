@@ -281,6 +281,14 @@ public class ExampleGui extends Frame {
                 textArea.getTextState().setHorizontalAlign(HorizontalAlign.CENTER);
             else if (event.getKey() == GLFW.GLFW_KEY_F3 && event.getAction() == GLFW.GLFW_RELEASE)
                 textArea.getTextState().setHorizontalAlign(HorizontalAlign.RIGHT);
+            else if (event.getKey() == GLFW.GLFW_KEY_F5 && event.getAction() == GLFW.GLFW_RELEASE)
+                textArea.getTextState().setVerticalAlign(VerticalAlign.TOP);
+            else if (event.getKey() == GLFW.GLFW_KEY_F6 && event.getAction() == GLFW.GLFW_RELEASE)
+                textArea.getTextState().setVerticalAlign(VerticalAlign.MIDDLE);
+            else if (event.getKey() == GLFW.GLFW_KEY_F7 && event.getAction() == GLFW.GLFW_RELEASE)
+                textArea.getTextState().setVerticalAlign(VerticalAlign.BOTTOM);
+            else if (event.getKey() == GLFW.GLFW_KEY_F8 && event.getAction() == GLFW.GLFW_RELEASE)
+                textArea.getTextState().setVerticalAlign(VerticalAlign.BASELINE);
         });
 
         caretp = new TextInput(420, 400, 150, 20);
