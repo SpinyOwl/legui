@@ -332,6 +332,20 @@ public class ExampleGui extends Frame {
         });
         this.addComponent(sbb);
 
+        ToggleButton toggleButton = new ToggleButton(100, 170, 40, 40);
+        ImageView bgImageNormal = new ImageView(new Image("org/liquidengine/legui/example/normal.png"));
+        ImageView bgImageToggled = new ImageView(new Image("org/liquidengine/legui/example/toggled.png"));
+
+        bgImageNormal.setSize(36, 36);
+        bgImageToggled.setSize(36, 36);
+
+        bgImageNormal.setPosition(2, 2);
+        bgImageToggled.setPosition(2, 2);
+
+        toggleButton.setBackgroundImage(bgImageNormal);
+        toggleButton.setTogglededBackgroundImage(bgImageToggled);
+        this.addComponent(toggleButton);
+
     }
 
     public TextArea getTextArea() {

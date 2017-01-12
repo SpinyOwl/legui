@@ -2,6 +2,7 @@ package org.liquidengine.legui.listener;
 
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.event.SystemEvent;
+import org.liquidengine.legui.event.system.SystemMouseClickEvent;
 import org.liquidengine.legui.processor.SystemEventPostprocessor;
 import org.liquidengine.legui.processor.SystemEventPreprocessor;
 
@@ -19,6 +20,8 @@ public abstract class SystemEventListenerProvider {
     }
 
     public abstract <C extends Component, E extends SystemEvent> SystemEventListener getListener(Class<C> componentClass, Class<E> eventcClass);
+
+    public abstract <C extends Component, E extends SystemEvent> SystemEventListener<C, E> getDefaultListener(Class<E> eventcClass);
 
     public abstract <E extends SystemEvent> SystemEventPreprocessor getPreprocessor(Class<E> eventClass);
 

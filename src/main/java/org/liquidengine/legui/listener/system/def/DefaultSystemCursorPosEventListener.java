@@ -1,6 +1,7 @@
 package org.liquidengine.legui.listener.system.def;
 
 import org.joml.Vector2f;
+import org.liquidengine.legui.component.Button;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.ComponentContainer;
 import org.liquidengine.legui.context.LeguiContext;
@@ -28,12 +29,14 @@ public class DefaultSystemCursorPosEventListener implements SystemEventListener<
         updateComponentStatesAndCallListeners(event, component, context);
         if (component instanceof ComponentContainer) {
             processEventOnContainer(event, component, context);
+        } else if (context.getMouseButtonStates()[GLFW.GLFW_MOUSE_BUTTON_LEFT] && context.getFocusedGui() == component) {
+            component.getState().setPressed(true);
         }
     }
 
     private void processEventOnContainer(SystemCursorPosEvent event, Component component, LeguiContext context) {
         ComponentContainer container = ((ComponentContainer) component);
-        List<Component> all = container.getComponents();
+        List<Component>    all       = container.getComponents();
         for (Component child : all) {
             child.getSystemEventListeners().getListener(event.getClass()).update(event, child, context);
         }
@@ -50,7 +53,7 @@ public class DefaultSystemCursorPosEventListener implements SystemEventListener<
         LeguiEventProcessor leguiEventProcessor = context.getLeguiEventProcessor();
         if (context.getMouseButtonStates()[GLFW.GLFW_MOUSE_BUTTON_LEFT] && component == context.getFocusedGui()) {
             List<LeguiEventListener<MouseDragEvent>> mouseDragEventListeners = component.getLeguiEventListeners().getListeners(MouseDragEvent.class);
-            MouseDragEvent mouseDragEvent = new MouseDragEvent(new Vector2f(event.fx, event.fy), context.getCursorPositionPrev(), component);
+            MouseDragEvent                           mouseDragEvent          = new MouseDragEvent(new Vector2f(event.fx, event.fy), context.getCursorPositionPrev(), component);
             if (leguiEventProcessor == null) {
                 mouseDragEventListeners.forEach(l -> l.update(mouseDragEvent));
             } else {
@@ -58,13 +61,13 @@ public class DefaultSystemCursorPosEventListener implements SystemEventListener<
             }
         }
 
-        List<LeguiEventListener<CursorEnterEvent>> listeners = component.getLeguiEventListeners().getListeners(CursorEnterEvent.class);
-        Vector2f position = Util.calculatePosition(component);
-        Vector2f cursorPosition = context.getCursorPosition();
-        boolean intersects = component.getIntersector().intersects(component, cursorPosition);
-        Vector2f mousePosition = position.sub(cursorPosition).negate();
-        boolean update = false;
-        CursorEnterEvent cursorEnterEvent = null;
+        List<LeguiEventListener<CursorEnterEvent>> listeners        = component.getLeguiEventListeners().getListeners(CursorEnterEvent.class);
+        Vector2f                                   position         = Util.calculatePosition(component);
+        Vector2f                                   cursorPosition   = context.getCursorPosition();
+        boolean                                    intersects       = component.getIntersector().intersects(component, cursorPosition);
+        Vector2f                                   mousePosition    = position.sub(cursorPosition).negate();
+        boolean                                    update           = false;
+        CursorEnterEvent                           cursorEnterEvent = null;
         if (component.getState().isHovered()) {
             if (!intersects || component != context.getMouseTargetGui()) {
                 component.getState().setHovered(false);
