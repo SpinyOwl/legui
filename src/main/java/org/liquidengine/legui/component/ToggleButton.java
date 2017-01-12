@@ -5,91 +5,92 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
+import org.joml.Vector4f;
 import org.liquidengine.legui.component.border.SimpleRectangleLineBorder;
-import org.liquidengine.legui.component.optional.TextState;
-import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.util.ColorConstants;
 
-
 /**
- * An implementation of "push" button
- * <p>
- * Created by Shcherbin Alexander on 9/22/2016.
+ * An implementation of "toggle" button.
+ * Behavior the same as checkbox but have not any text
+ * Created by Alexander on 12.01.2017.
  */
-public class Button extends Component {
-
-    protected TextState textState;
-
+public class ToggleButton extends Component {
     protected ImageView backgroundImage;
     protected ImageView focusedBbackgroundImage;
     protected ImageView pressedBackgroundImage;
     protected ImageView hoveredBackgroundImage;
+    protected ImageView togglededBackgroundImage;
+    private boolean  toggled;
+    private Vector4f toggledBackgroundColor;
 
     /**
-     * Creates a button with default text.
+     * Creates toggle button with default bg color and default toggled bg color.
      */
-    public Button() {
-        this("Button");
+    public ToggleButton() {
+        initialize();
     }
 
     /**
-     * Creates a button with default text and specified position and size.
+     * Creates a button with specified position and size and default bg color and default toggled bg color.
      */
-    public Button(float x, float y, float width, float height) {
-        this(x, y, width, height, "Button");
-    }
-
-    /**
-     * Creates a button with default text and specified position and size.
-     */
-    public Button(Vector2f position, Vector2f size) {
-        this(position, size, "Button");
-    }
-
-    /**
-     * Creates a button with specified text.
-     */
-    public Button(String text) {
-        initialize(text);
-    }
-
-    /**
-     * Creates a button with specified text and specified position and size.
-     */
-    public Button(float x, float y, float width, float height, String text) {
+    public ToggleButton(float x, float y, float width, float height) {
         super(x, y, width, height);
-        initialize(text);
+        initialize();
     }
 
     /**
-     * Creates a button with specified text and specified position and size.
+     * Creates a button with specified position and size and default bg color and default toggled bg color.
      */
-    public Button(Vector2f position, Vector2f size, String text) {
+    public ToggleButton(Vector2f position, Vector2f size) {
         super(position, size);
-        initialize(text);
+        initialize();
     }
 
     /**
-     * Initialize button with specified text
-     *
-     * @param text used to initialize text state
+     * Initialize toggle button with default states
      */
-    private void initialize(String text) {
-        this.textState = new TextState(text);
-        backgroundColor.set(ColorConstants.white());
-        border = new SimpleRectangleLineBorder(ColorConstants.darkGray(), 1);
-        textState.setHorizontalAlign(HorizontalAlign.CENTER);
+    private void initialize() {
+        backgroundColor = ColorConstants.red();
+        toggledBackgroundColor = ColorConstants.green();
+        border = new SimpleRectangleLineBorder(ColorConstants.black(), 1);
+        cornerRadius = 0;
     }
 
     /**
-     * Returns text data of button
+     * Returns true if toggle button is toggled.
      *
-     * @return text state of button
+     * @return true if toggle button is toggled.
      */
-    public TextState getTextState() {
-        return textState;
+    public boolean isToggled() {
+        return toggled;
     }
 
+    /**
+     * Used to change toggled state.
+     *
+     * @param toggled new value
+     */
+    public void setToggled(boolean toggled) {
+        this.toggled = toggled;
+    }
+
+    /**
+     * Returns background color which will be used as background color if button toggled
+     *
+     * @return toggled button color
+     */
+    public Vector4f getToggledBackgroundColor() {
+        return toggledBackgroundColor;
+    }
+
+    /**
+     * Used to change background color which will be used as background color if button toggled.
+     *
+     * @param toggledBackgroundColor new value
+     */
+    public void setToggledBackgroundColor(Vector4f toggledBackgroundColor) {
+        this.toggledBackgroundColor = toggledBackgroundColor;
+    }
 
     /**
      * Returns background image
@@ -163,17 +164,36 @@ public class Button extends Component {
         this.hoveredBackgroundImage = hoveredBackgroundImage;
     }
 
+    /**
+     * Returns toggled background image
+     *
+     * @return toggled background image
+     */
+    public ImageView getTogglededBackgroundImage() {
+        return togglededBackgroundImage;
+    }
+
+    /**
+     * Used to change toggled background image
+     *
+     * @param togglededBackgroundImage toggled background image
+     */
+    public void setTogglededBackgroundImage(ImageView togglededBackgroundImage) {
+        this.togglededBackgroundImage = togglededBackgroundImage;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
 
         if (o == null || getClass() != o.getClass()) return false;
 
-        Button button = (Button) o;
+        ToggleButton button = (ToggleButton) o;
 
         return new EqualsBuilder()
                 .appendSuper(super.equals(o))
-                .append(textState, button.textState)
+                .append(toggledBackgroundColor, button.toggledBackgroundColor)
+                .append(toggled, button.toggled)
                 .isEquals();
     }
 
@@ -181,14 +201,16 @@ public class Button extends Component {
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
                 .appendSuper(super.hashCode())
-                .append(textState)
+                .append(toggledBackgroundColor)
+                .append(toggled)
                 .toHashCode();
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
-                .append("textState", textState)
+                .append("toggledBackgroundColor", toggledBackgroundColor)
+                .append("toggled", toggled)
                 .toString();
     }
 }

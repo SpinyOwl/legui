@@ -4,14 +4,9 @@ import com.google.common.base.Objects;
 import org.liquidengine.legui.component.*;
 import org.liquidengine.legui.event.SystemEvent;
 import org.liquidengine.legui.event.system.*;
-import org.liquidengine.legui.listener.system.button.ButtonSystemCursorPosEventListener;
-import org.liquidengine.legui.listener.system.button.ButtonSystemMouseClickEventListener;
 import org.liquidengine.legui.listener.system.checkbox.CheckBoxSystemMouseClickEventListener;
 import org.liquidengine.legui.listener.system.container.ContainerSystemMouseClickEventListener;
-import org.liquidengine.legui.listener.system.def.DefaultSystemCharEventListener;
-import org.liquidengine.legui.listener.system.def.DefaultSystemCursorPosEventListener;
-import org.liquidengine.legui.listener.system.def.DefaultSystemKeyEventListener;
-import org.liquidengine.legui.listener.system.def.DefaultSystemScrollEventListener;
+import org.liquidengine.legui.listener.system.def.*;
 import org.liquidengine.legui.listener.system.radiobutton.RadioButtonSystemMouseClickListener;
 import org.liquidengine.legui.listener.system.scrollbar.ScrollBarSystemCursorPosEventListener;
 import org.liquidengine.legui.listener.system.scrollbar.ScrollBarSystemMouseClickEventListener;
@@ -27,6 +22,7 @@ import org.liquidengine.legui.listener.system.textinput.TextInputSystemCharEvent
 import org.liquidengine.legui.listener.system.textinput.TextInputSystemCursorPosEventListener;
 import org.liquidengine.legui.listener.system.textinput.TextInputSystemKeyEventProcessor;
 import org.liquidengine.legui.listener.system.textinput.TextInputSystemMouseClickEventListener;
+import org.liquidengine.legui.listener.system.toggleButton.ToggleButtonMouseClickEventProcessor;
 import org.liquidengine.legui.processor.SystemEventPostprocessor;
 import org.liquidengine.legui.processor.SystemEventPreprocessor;
 import org.liquidengine.legui.processor.post.SystemMouseClickEventPostprocessor;
@@ -40,17 +36,17 @@ import java.util.concurrent.ConcurrentHashMap;
  * Created by Shcherbin Alexander on 10/24/2016.
  */
 public class DefaultSystemEventListenerProvider extends SystemEventListenerProvider {
-    private static final SystemEventListener<Component, SystemEvent> DEFAULT_EVENT_LISTENER = (event, component, context) -> {
+    private static final SystemEventListener<Component, SystemEvent>                 DEFAULT_EVENT_LISTENER       = (event, component, context) -> {
         Component child = component.getComponentAt(context.getCursorPosition());
         if (child != component && child != null) {
             child.getSystemEventListeners().getListener(event.getClass()).update(event, child, context);
         }
     };
-    private Map<Class<? extends SystemEvent>, SystemEventListener> defaultListenersPerEvent = new ConcurrentHashMap<>();
-    private Map<Class<? extends Component>, SystemEventListener> defaultListenersPerComponent = new ConcurrentHashMap<>();
-    private Map<ComponentEventKey, SystemEventListener> listenerMap = new ConcurrentHashMap<>();
-    private Map<Class<? extends SystemEvent>, SystemEventPostprocessor> postprocessorMap = new ConcurrentHashMap<>();
-    private Map<Class<? extends SystemEvent>, SystemEventPreprocessor> preprocessorMap = new ConcurrentHashMap<>();
+    private              Map<Class<? extends SystemEvent>, SystemEventListener>      defaultListenersPerEvent     = new ConcurrentHashMap<>();
+    private              Map<Class<? extends Component>, SystemEventListener>        defaultListenersPerComponent = new ConcurrentHashMap<>();
+    private              Map<ComponentEventKey, SystemEventListener>                 listenerMap                  = new ConcurrentHashMap<>();
+    private              Map<Class<? extends SystemEvent>, SystemEventPostprocessor> postprocessorMap             = new ConcurrentHashMap<>();
+    private              Map<Class<? extends SystemEvent>, SystemEventPreprocessor>  preprocessorMap              = new ConcurrentHashMap<>();
 
     public DefaultSystemEventListenerProvider() {
         initializePreprocessors();
@@ -69,6 +65,9 @@ public class DefaultSystemEventListenerProvider extends SystemEventListenerProvi
     }
 
     private void initializeDefaults() {
+        registerDefaultListenerPerEvent(SystemCursorPosEvent.class, new DefaultSystemCursorPosEventListener());
+        registerDefaultListenerPerEvent(SystemMouseClickEvent.class, new DefaultSystemMouseClickEventListener());
+        registerDefaultListenerPerEvent(SystemScrollEvent.class, new DefaultSystemScrollEventListener());
         registerDefaultListenerPerEvent(SystemScrollEvent.class, new DefaultSystemScrollEventListener());
         registerDefaultListenerPerEvent(SystemKeyEvent.class, new DefaultSystemKeyEventListener());
         registerDefaultListenerPerEvent(SystemCharEvent.class, new DefaultSystemCharEventListener());
@@ -84,9 +83,6 @@ public class DefaultSystemEventListenerProvider extends SystemEventListenerProvi
         registerListener(ComponentContainer.class, SystemMouseClickEvent.class, new ContainerSystemMouseClickEventListener());
 
         registerListener(Component.class, SystemCursorPosEvent.class, new DefaultSystemCursorPosEventListener());
-
-        registerListener(Button.class, SystemCursorPosEvent.class, new ButtonSystemCursorPosEventListener());
-        registerListener(Button.class, SystemMouseClickEvent.class, new ButtonSystemMouseClickEventListener());
 
         registerListener(CheckBox.class, SystemMouseClickEvent.class, new CheckBoxSystemMouseClickEventListener());
 
@@ -109,6 +105,8 @@ public class DefaultSystemEventListenerProvider extends SystemEventListenerProvi
         registerListener(TextArea.class, SystemCursorPosEvent.class, new TextAreaSystemCursorPosEventListener());
         registerListener(TextArea.class, SystemKeyEvent.class, new TextAreaSystemKeyEventListener());
         registerListener(TextArea.class, SystemMouseClickEvent.class, new TextAreaSystemMouseClickEventListener());
+
+        registerListener(ToggleButton.class, SystemMouseClickEvent.class, new ToggleButtonMouseClickEventProcessor());
     }
 
     public <C extends Component, E extends SystemEvent> void registerListener(Class<C> componentClass, Class<E> eventClass, SystemEventListener<C, E> listener) {
@@ -126,6 +124,11 @@ public class DefaultSystemEventListenerProvider extends SystemEventListenerProvi
     @Override
     public <C extends Component, E extends SystemEvent> SystemEventListener getListener(Class<C> componentClass, Class<E> eventClass) {
         return cycledSearchOfListener(componentClass, eventClass, defaultListenersPerEvent.getOrDefault(eventClass, DEFAULT_EVENT_LISTENER));
+    }
+
+    @Override
+    public <C extends Component, E extends SystemEvent> SystemEventListener<C, E> getDefaultListener(Class<E> eventcClass) {
+        return defaultListenersPerEvent.get(eventcClass);
     }
 
     @Override
@@ -153,7 +156,7 @@ public class DefaultSystemEventListenerProvider extends SystemEventListenerProvi
     private <C extends Component, E extends SystemEvent> SystemEventListener
     cycledSearchOfListener(Class<C> componentClass, Class<E> eventClass, SystemEventListener defaultListener) {
         SystemEventListener listener = listenerMap.getOrDefault(new ComponentEventKey<>(componentClass, eventClass), defaultListenersPerComponent.get(componentClass));
-        Class cClass = componentClass;
+        Class               cClass   = componentClass;
         while (listener == null) {
             listener = listenerMap.getOrDefault(new ComponentEventKey<>(cClass, eventClass), defaultListenersPerComponent.get(cClass));
             if (cClass.isAssignableFrom(Component.class)) break;

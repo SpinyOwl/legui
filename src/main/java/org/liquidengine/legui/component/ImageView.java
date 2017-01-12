@@ -26,6 +26,7 @@ public class ImageView extends Component {
 
     private void initialize() {
         border = new SimpleRectangleLineBorder(ColorConstants.darkGray(), 1);
+        backgroundColor.set(ColorConstants.transparent);
     }
 
     public Image getImage() {

@@ -38,22 +38,7 @@ public class SystemMouseClickEventPreprocessor implements SystemEventPreprocesso
             if (focusedGui != null && focusedGui != mouseTargetGui) {
                 focusedGui.getState().setPressed(false);
             }
-
-//        } else {
-//            if (focusedGui != null && focusedGui != mouseTargetGui) {
-//                boolean focused = false;
-//                focusedGui.getState().setFocused(false);
-//                focusedGui.getState().setPressed(false);
-//                processFocusEvent(context, focusedGui, focused);
-//            }
         }
-
-//        if (focusedGui != null && focusedGui != mouseTargetGui) {
-//            boolean focused = false;
-//            focusedGui.getState().setFocused(focused);
-//            processFocusEvent(context, focusedGui, focused);
-//            context.setFocusedGui(null);
-//        }
         if (mouseTargetGui != null) {
             pushContainersUp(mouseTargetGui);
         }
