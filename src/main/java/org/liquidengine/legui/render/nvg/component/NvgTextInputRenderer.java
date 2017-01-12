@@ -11,7 +11,6 @@ import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
 import org.liquidengine.legui.context.LeguiContext;
 import org.liquidengine.legui.render.nvg.NvgLeguiComponentRenderer;
-import org.liquidengine.legui.util.ColorConstants;
 import org.liquidengine.legui.util.Util;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.nanovg.NVGColor;
@@ -31,6 +30,7 @@ import static org.lwjgl.system.MemoryUtil.*;
  */
 public class NvgTextInputRenderer extends NvgLeguiComponentRenderer {
     public static final  String                  PRATIO        = "pratio";
+    public static final  String                  PALIGN        = "palign";
     public static final  String                  POFFSET       = "poffset";
     private static final Logger                  LOGGER        = LogManager.getLogger();
     private final        Vector4f                caretColor    = new Vector4f(0, 0, 0, 0.5f);
@@ -59,11 +59,11 @@ public class NvgTextInputRenderer extends NvgLeguiComponentRenderer {
             drawBackground(context, pos.x, pos.y, size.x, size.y, agui.getCornerRadius(), bc);
 
             TextState textState = agui.getTextState();
-            Vector4f  p         = new Vector4f(textState.getPadding()).add(2,2,2,2);
+            Vector4f  p         = new Vector4f(textState.getPadding()).add(2, 2, 2, 2);
 
             Vector4f intersectRect = new Vector4f(pos.x + p.x, pos.y + p.y, size.x - p.x - p.z, size.y - p.y - p.w);
 //            drawRectStroke(context, ColorConstants.red(),intersectRect, 0,1);
-            intersectScissor(context, intersectRect);
+            intersectScissor(context, new Vector4f(intersectRect).sub(1, 1, -2, -2));
             renderTextNew(leguiContext, context, agui, size, intersectRect, bc);
         }
         resetScissor(context);
@@ -98,32 +98,26 @@ public class NvgTextInputRenderer extends NvgLeguiComponentRenderer {
         nvgFillColor(context, rgba(textColor, colorA));
 
         if (!focused) {
-            caretPosition = 0;
+            caretPosition = (halign == HorizontalAlign.LEFT ? 0 : (halign == HorizontalAlign.RIGHT ? text.length() : text.length() / 2));
         }
 
-        float[] textBounds = calculateTextBoundsRect(context, rect.x, rect.y, rect.z, rect.w, text, halign, valign);
+        float[] textBounds = calculateTextBoundsRect(context, rect, text, halign, valign);
 
         // calculate caret coordinate and mouse caret coordinate
-        float      caretx             = 0;
-        float      startSelectionX    = 0;
-        float      endSelectionX      = 0;
+        float      caretx;
+        float      startSelectionX;
+        float      endSelectionX;
         float      mouseCaretX        = 0;
         int        mouseCaretPosition = 0;
+        float      ratio              = size.y * size.x;
         ByteBuffer textBytes          = null;
         try {
             // allocate ofheap memory and fill it with text
             textBytes = memUTF8(text);
+
             // align text for calculations
             alignTextInBox(context, HorizontalAlign.LEFT, VerticalAlign.MIDDLE);
             int ng = nnvgTextGlyphPositions(context, textBounds[4], 0, memAddress(textBytes), 0, memAddress(glyphs), maxGlyphCount);
-
-//            for (int i = 0; i < ng; i++) {
-//                NVGGlyphPosition g    = glyphs.get(i);
-//                float            x    = g.x();
-//                float            maxx = g.maxx();
-//
-//                drawRectangle(context, new Vector4f(0, 1, 0, 0.5f), x, rect.y, maxx - x, rect.w);
-//            }
 
             // get caret position on screen based on caret position in text
             // and get x position of first and last selection
@@ -142,18 +136,16 @@ public class NvgTextInputRenderer extends NvgLeguiComponentRenderer {
             }
 
             // get previous offset
-            Float poffset = offsetX;
-            if (metadata.containsKey(POFFSET)) poffset = (Float) metadata.get(POFFSET);
-            else metadata.put(POFFSET, poffset);
+            Float poffset = (Float) metadata.getOrDefault(POFFSET, offsetX);
 
             // get previous ratio
-            float rat    = size.y * size.x;
-            Float pratio = rat;
-            if (metadata.containsKey(PRATIO)) pratio = (Float) metadata.get(PRATIO);
-            else metadata.put(PRATIO, pratio);
+            Float pratio = (Float) metadata.getOrDefault(PRATIO, ratio);
+
+            // get previous align to know if we need to recalculate offset
+            HorizontalAlign palign = (HorizontalAlign) metadata.getOrDefault(PALIGN, halign);
 
             // we should recalculate offsets if ratio is changed
-            if (pratio != rat) {
+            if (pratio != ratio || palign != halign) {
                 poffset = offsetX;
             } else {
                 // and if ratio is the same we should check if we need to update offset
@@ -163,9 +155,6 @@ public class NvgTextInputRenderer extends NvgLeguiComponentRenderer {
                     poffset = poffset + (caretx - poffset - rect.x);
                 }
             }
-            // put last offset and ration to metadata
-            metadata.put(POFFSET, poffset);
-            metadata.put(PRATIO, rat);
 
             // calculate mouse caret position
             if (text.length() == 0) {
@@ -178,7 +167,7 @@ public class NvgTextInputRenderer extends NvgLeguiComponentRenderer {
                 } else if (mx >= glyphs.get(ng - 1).maxx()) {
                     mouseCaretPosition = ng;
                     mouseCaretX = glyphs.get(ng - 1).maxx();
-                } else {
+                } else if (!leguiContext.isIconified()) {
                     // binary search mouse caret position
                     int     upper = ng;
                     int     lower = 0;
@@ -186,7 +175,7 @@ public class NvgTextInputRenderer extends NvgLeguiComponentRenderer {
                     do {
                         int   index = (upper + lower) / 2;
                         float left  = index == 0 ? glyphs.get(index).minx() : glyphs.get(index).x();
-                        float right = index == ng ? glyphs.get(index).maxx() : glyphs.get(index + 1).x();
+                        float right = index >= ng - 1 ? glyphs.get(ng - 1).maxx() : glyphs.get(index + 1).x();
                         float mid   = (left + right) / 2f;
                         if (mx >= left && mx < right) {
                             found = true;
@@ -235,22 +224,36 @@ public class NvgTextInputRenderer extends NvgLeguiComponentRenderer {
 
             if (focused) {
                 // render caret
-                drawRectStroke(context, nCaretX - 1, rect.y, 1, rect.w, caretColor, 0, 1);
+                renderCaret(context, rect, nCaretX, rgba(caretColor, colorA));
             }
             // render mouse caret
             if (leguiContext.isDebugEnabled()) {
                 Vector4f cc = new Vector4f(this.caretColor);
                 cc.x = 1;
-                drawRectStroke(context, mouseCaretX, rect.y, 1, rect.w, cc, 0, 1);
+
+                renderCaret(context, rect, mouseCaretX, rgba(cc, colorA));
             }
 
+            // put last offset and ration to metadata
+            metadata.put(POFFSET, poffset);
+            metadata.put(PALIGN, halign);
+            metadata.put(PRATIO, ratio);
         } finally {
             // free allocated memory
-            if (textBytes != null) {
-                memFree(textBytes);
-            }
+            memFree(textBytes);
         }
         gui.setMouseCaretPosition(mouseCaretPosition);
+    }
+
+    private void renderCaret(long context, Vector4f rect, float nCaretX, NVGColor rgba) {
+        nvgLineCap(context, NVG_ROUND);
+        nvgLineJoin(context, NVG_ROUND);
+        nvgStrokeWidth(context, 1);
+        nvgStrokeColor(context, rgba);
+        nvgBeginPath(context);
+        nvgMoveTo(context, nCaretX, rect.y);
+        nvgLineTo(context, nCaretX, rect.y + rect.w);
+        nvgStroke(context);
     }
 
     private float calculateCaretPos(int caretPosition, float[] textBounds, int ng) {

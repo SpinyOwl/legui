@@ -191,6 +191,10 @@ public final class NvgRenderUtils {
     }
 
 
+    public static float[] calculateTextBoundsRect(long context, Vector4f rect, String text, HorizontalAlign horizontalAlign, VerticalAlign verticalAlign) {
+        return calculateTextBoundsRect(context, rect.x, rect.y, rect.z, rect.w, text, horizontalAlign, verticalAlign);
+    }
+
     public static float[] calculateTextBoundsRect(long context, float x, float y, float w, float h, String text, HorizontalAlign horizontalAlign, VerticalAlign verticalAlign) {
         float      bounds[] = new float[4];
         ByteBuffer byteText = null;
