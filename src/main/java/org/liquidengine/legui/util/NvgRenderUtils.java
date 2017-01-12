@@ -1,6 +1,7 @@
 package org.liquidengine.legui.util;
 
 import org.joml.Vector2f;
+import org.joml.Vector2fc;
 import org.joml.Vector4f;
 import org.joml.Vector4fc;
 import org.liquidengine.legui.component.Component;
@@ -255,8 +256,11 @@ public final class NvgRenderUtils {
         nvgTextAlign(context, hAlign | vAlign);
     }
 
-    public static void drawRectStroke(long context, Vector4fc color, Vector4fc rect, float borderRadius, float strokeWidth) {
+    public static void drawRectStroke(long context, Vector4fc rect, Vector4fc color, float borderRadius, float strokeWidth) {
         drawRectStroke(context, rect.x(), rect.y(), rect.z(), rect.w(), color, borderRadius, strokeWidth);
+    }
+    public static void drawRectStroke(long context, Vector2fc position, Vector2fc size, Vector4fc color, float borderRadius, float strokeWidth) {
+        drawRectStroke(context, position.x(), position.y(), size.x(), size.y(), color, borderRadius, strokeWidth);
     }
 
     public static void drawRectStroke(long context, float x, float y, float w, float h, Vector4fc strokeColor, float borderRadius, float strokeWidth) {

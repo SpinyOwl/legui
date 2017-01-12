@@ -9,11 +9,11 @@ import org.liquidengine.legui.context.LeguiContext;
 import org.liquidengine.legui.render.nvg.NvgLeguiComponentRenderer;
 import org.liquidengine.legui.render.nvg.NvgLeguiRenderer;
 import org.liquidengine.legui.render.nvg.image.NvgImageReferenceManager;
+import org.liquidengine.legui.util.ColorUtil;
 import org.liquidengine.legui.util.Util;
 import org.lwjgl.nanovg.NVGColor;
 import org.lwjgl.nanovg.NVGPaint;
 
-import static org.liquidengine.legui.util.NVGUtils.rgba;
 import static org.liquidengine.legui.util.NvgRenderUtils.*;
 import static org.lwjgl.nanovg.NanoVG.*;
 
@@ -61,14 +61,11 @@ public class NvgToggleButtonRenderer extends NvgLeguiComponentRenderer {
         if (!focused && !hovered && !pressed) {
             image = bgImage;
         } else if (hovered && !pressed) {
-            backgroundColor.w *= 0.5f;
             image = agui.getHoveredBackgroundImage();
             if (image == null) {
                 image = bgImage;
             }
         } else if (pressed) {
-            backgroundColor.mul(0.5f);
-            backgroundColor.w = 1;
             image = agui.getPressedBackgroundImage();
             if (image == null) {
                 image = agui.getHoveredBackgroundImage();
@@ -83,17 +80,21 @@ public class NvgToggleButtonRenderer extends NvgLeguiComponentRenderer {
             }
         }
 
-        drawColoredRect(context, agui, pos, size, backgroundColor);
+        drawRectangle(context, backgroundColor, pos, size);
+        if (hovered) {
+            if (!pressed) {
+                Vector4f opp = ColorUtil.oppositeBlackOrWhite(backgroundColor);
+                opp.w = 0.3f;
+                drawRectangle(context, opp, pos, size);
+            } else if (pressed) {
+                Vector4f opp = ColorUtil.oppositeBlackOrWhite(backgroundColor);
+                opp.w = 0.6f;
+                drawRectangle(context, opp, pos, size);
+            }
+        }
         if (image != null) {
             drawImage(context, pos, manager, image);
         }
-    }
-
-    private void drawColoredRect(long context, ToggleButton agui, Vector2f pos, Vector2f size, Vector4f backgroundColor) {
-        nvgBeginPath(context);
-        nvgFillColor(context, rgba(backgroundColor, colorA));
-        nvgRoundedRect(context, pos.x, pos.y, size.x, size.y, agui.getCornerRadius());
-        nvgFill(context);
     }
 
     private void drawImage(long context, Vector2f pos, NvgImageReferenceManager manager, ImageView image) {
@@ -108,21 +109,6 @@ public class NvgToggleButtonRenderer extends NvgLeguiComponentRenderer {
         nvgRoundedRect(context, ox, oy, bisize.x, bisize.y, image.getCornerRadius());
         nvgFillPaint(context, imagePaint);
         nvgFill(context);
-    }
-
-    private void drawBackgroundImage(ImageView image, long context, Vector2f pos, Vector2f size) {
-
-    }
-
-    private void drawBackgroundColor(long context, ToggleButton agui, Vector2f pos, Vector2f size) {
-        Vector4f backgroundColor = new Vector4f(agui.getBackgroundColor());
-        if (agui.getState().isHovered()) backgroundColor.mul(0.5f);
-        if (agui.getState().isPressed()) {
-            backgroundColor.mul(0.5f);
-            backgroundColor.w = 1;
-        }
-
-        drawColoredRect(context, agui, pos, size, backgroundColor);
     }
 
     @Override

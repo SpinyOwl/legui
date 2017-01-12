@@ -1,7 +1,6 @@
 package org.liquidengine.legui.listener.system.def;
 
 import org.joml.Vector2f;
-import org.liquidengine.legui.component.Button;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.ComponentContainer;
 import org.liquidengine.legui.context.LeguiContext;
@@ -22,7 +21,9 @@ import java.util.List;
 public class DefaultSystemCursorPosEventListener implements SystemEventListener<Component, SystemCursorPosEvent> {
     @Override
     public void update(SystemCursorPosEvent event, Component component, LeguiContext context) {
-        process(event, component, context);
+        if (component.isEnabled() && component.isVisible()) {
+            process(event, component, context);
+        }
     }
 
     private void process(SystemCursorPosEvent event, Component component, LeguiContext context) {
