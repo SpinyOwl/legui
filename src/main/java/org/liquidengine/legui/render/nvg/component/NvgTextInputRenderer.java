@@ -63,7 +63,7 @@ public class NvgTextInputRenderer extends NvgLeguiComponentRenderer {
 
             Vector4f intersectRect = new Vector4f(pos.x + p.x, pos.y + p.y, size.x - p.x - p.z, size.y - p.y - p.w);
 //            drawRectStroke(context, ColorConstants.red(),intersectRect, 0,1);
-            intersectScissor(context, intersectRect);
+            intersectScissor(context, new Vector4f(intersectRect).sub(1, 1, -2, -2));
             renderTextNew(leguiContext, context, agui, size, intersectRect, bc);
         }
         resetScissor(context);
@@ -101,8 +101,7 @@ public class NvgTextInputRenderer extends NvgLeguiComponentRenderer {
             caretPosition = (halign == HorizontalAlign.LEFT ? 0 : (halign == HorizontalAlign.RIGHT ? text.length() : text.length() / 2));
         }
 
-        alignTextInBox(context, HorizontalAlign.LEFT, VerticalAlign.MIDDLE);
-        float[] textBounds = calculateTextBoundsRect(context, rect.x, rect.y, rect.z, rect.w, text, halign, valign);
+        float[] textBounds = calculateTextBoundsRect(context, rect, text, halign, valign);
 
         // calculate caret coordinate and mouse caret coordinate
         float      caretx;
@@ -115,7 +114,9 @@ public class NvgTextInputRenderer extends NvgLeguiComponentRenderer {
         try {
             // allocate ofheap memory and fill it with text
             textBytes = memUTF8(text);
+
             // align text for calculations
+            alignTextInBox(context, HorizontalAlign.LEFT, VerticalAlign.MIDDLE);
             int ng = nnvgTextGlyphPositions(context, textBounds[4], 0, memAddress(textBytes), 0, memAddress(glyphs), maxGlyphCount);
 
             // get caret position on screen based on caret position in text
@@ -223,13 +224,14 @@ public class NvgTextInputRenderer extends NvgLeguiComponentRenderer {
 
             if (focused) {
                 // render caret
-                drawRectStroke(context, nCaretX - 1, rect.y, 1, rect.w, caretColor, 0, 1);
+                renderCaret(context, rect, nCaretX, rgba(caretColor, colorA));
             }
             // render mouse caret
             if (leguiContext.isDebugEnabled()) {
                 Vector4f cc = new Vector4f(this.caretColor);
                 cc.x = 1;
-                drawRectStroke(context, mouseCaretX, rect.y, 1, rect.w, cc, 0, 1);
+
+                renderCaret(context, rect, mouseCaretX, rgba(cc, colorA));
             }
 
             // put last offset and ration to metadata
@@ -238,11 +240,20 @@ public class NvgTextInputRenderer extends NvgLeguiComponentRenderer {
             metadata.put(PRATIO, ratio);
         } finally {
             // free allocated memory
-            if (textBytes != null) {
-                memFree(textBytes);
-            }
+            memFree(textBytes);
         }
         gui.setMouseCaretPosition(mouseCaretPosition);
+    }
+
+    private void renderCaret(long context, Vector4f rect, float nCaretX, NVGColor rgba) {
+        nvgLineCap(context, NVG_ROUND);
+        nvgLineJoin(context, NVG_ROUND);
+        nvgStrokeWidth(context, 1);
+        nvgStrokeColor(context, rgba);
+        nvgBeginPath(context);
+        nvgMoveTo(context, nCaretX, rect.y);
+        nvgLineTo(context, nCaretX, rect.y + rect.w);
+        nvgStroke(context);
     }
 
     private float calculateCaretPos(int caretPosition, float[] textBounds, int ng) {
