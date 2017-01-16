@@ -59,20 +59,20 @@ public class ExampleGui extends Frame {
         this.addComponent(p9);
         //@formatter:on
 
-        mouseTargetLabel = new Label(10, height - 30, width - 20, 20, "Hello Label");
+        mouseTargetLabel = new Label("Hello Label", 10, height - 30, width - 20, 20);
         this.addComponent(mouseTargetLabel);
 
-        focusedGuiLabel = new Label(10, height - 50, width - 20, 20, "Hello Label");
+        focusedGuiLabel = new Label("Hello Label", 10, height - 50, width - 20, 20);
         focusedGuiLabel.setBorder(new SimpleRectangleLineBorder(ColorConstants.red(), 1));
         this.addComponent(focusedGuiLabel);
 
-        debugLabel = new Label(10, height - 75, width - 20, 20, "Debug Label");
+        debugLabel = new Label("Debug Label", 10, height - 75, width - 20, 20);
         this.addComponent(debugLabel);
 
-        mouseLabel = new Label(130, 30, 100, 20, "Hello Label");
+        mouseLabel = new Label("Hello Label", 130, 30, 100, 20);
         this.addComponent(mouseLabel);
 
-        upsLabel = new Label(130, 60, 100, 20, "Hello Label");
+        upsLabel = new Label("Hello Label", 130, 60, 100, 20);
         this.addComponent(upsLabel);
 
         imageView = new ImageView(new Image("org/liquidengine/legui/example/11.jpg"));
@@ -130,7 +130,7 @@ public class ExampleGui extends Frame {
         widget.setCloseButtonColor(ColorConstants.red());
         widget.setTitleBackgroundColor(ColorConstants.lightGreen());
 
-        Button    turnWidVisible = new Button(360, 280, 40, 40, "");
+        Button    turnWidVisible = new Button("", 360, 280, 40, 40);
         ImageView bgIm           = new ImageView(new Image("org/liquidengine/legui/example/1.png"));
         ImageView hbgIm          = new ImageView(new Image("org/liquidengine/legui/example/2.png"));
         ImageView pbIm           = new ImageView(new Image("org/liquidengine/legui/example/3.png"));
@@ -324,7 +324,7 @@ public class ExampleGui extends Frame {
         selectBox.setElementHeight(20);
         this.addComponent(selectBox);
 
-        Button sbb = new Button(130, 260, 70, 20, "Add element");
+        Button sbb = new Button("Add element", 130, 260, 70, 20);
         sbb.getLeguiEventListeners().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
             if (event.getAction() == CLICK) {
                 selectBox.addElement("WorlD " + i[0]++);

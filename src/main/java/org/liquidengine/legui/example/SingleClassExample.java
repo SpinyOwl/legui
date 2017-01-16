@@ -36,6 +36,7 @@ public class SingleClassExample {
 
     public static void main(String[] args) throws IOException {
         System.setProperty("joml.nounsafe", Boolean.TRUE.toString());
+        System.setProperty("java.awt.headless", Boolean.TRUE.toString());
         if (!GLFW.glfwInit()) {
             throw new RuntimeException("Can't initialize GLFW");
         }
@@ -64,7 +65,7 @@ public class SingleClassExample {
         // register callbacks for window. Note: all previously binded callbacks will be unbinded.
         ((DefaultLeguiCallbackKeeper) keeper).registerCallbacks(window);
 
-        GLFWKeyCallbackI glfwKeyCallbackI = (w1, key, code, action, mods) -> running = key == GLFW_KEY_ESCAPE && action != GLFW_RELEASE;
+        GLFWKeyCallbackI glfwKeyCallbackI = (w1, key, code, action, mods) -> running = !(key == GLFW_KEY_ESCAPE && action != GLFW_RELEASE);
         GLFWWindowCloseCallbackI glfwWindowCloseCallbackI = w -> running = false;
 
         // if we want to create some callbacks for system events you should create and put them to keeper
@@ -148,7 +149,7 @@ public class SingleClassExample {
         // Set background color for frame
         frame.setBackgroundColor(ColorConstants.lightBlue());
 
-        Button button = new Button(20, 20, 160, 30, "Add components");
+        Button button = new Button("Add components", 20, 20, 160, 30);
         SimpleRectangleLineBorder border = new SimpleRectangleLineBorder(ColorConstants.black(), 1);
         button.setBorder(border);
 

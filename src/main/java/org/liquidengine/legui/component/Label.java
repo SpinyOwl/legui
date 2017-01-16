@@ -20,23 +20,23 @@ public class Label extends Component {
     }
 
     public Label(float x, float y, float width, float height) {
-        this(x, y, width, height, "Label");
+        this("Label", x, y, width, height);
     }
 
     public Label(Vector2f position, Vector2f size) {
-        this(position, size, "Label");
+        this("Label", position, size);
     }
 
     public Label(String text) {
         initialize(text);
     }
 
-    public Label(float x, float y, float width, float height, String text) {
+    public Label(String text, float x, float y, float width, float height) {
         super(x, y, width, height);
         initialize(text);
     }
 
-    public Label(Vector2f position, Vector2f size, String text) {
+    public Label(String text, Vector2f position, Vector2f size) {
         super(position, size);
         initialize(text);
     }

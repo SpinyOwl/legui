@@ -304,7 +304,16 @@ public class NvgTextAreaRenderer extends NvgLeguiComponentRenderer {
                     mouseCaretX -= poffsetx;
                     mouseLineIndex = i;
                     // render mouse caret
-                    drawRectStroke(context, mouseCaretX - 1, lineY, 1, bounds[i][7], new Vector4f(caretColor).div(2), 0, 1);
+                    if (leguiContext.isDebugEnabled()) {
+                        drawRectStroke(context, mouseCaretX - 1, lineY, 1, bounds[i][7], new Vector4f(caretColor).div(2), 0, 1);
+                    }
+                }
+
+                // render current line background
+                if (i == caretLine && focused) {
+                    Vector4f currentLineBgColor = oppositeBlackOrWhite(bc);
+                    currentLineBgColor.w = 0.1f;
+                    drawRectangle(context, currentLineBgColor, rect.x, lineY, rect.z, fontSize);
                 }
 
                 renderTextLineToBounds(context, lineX, lineY, bounds[i][6], bounds[i][7], fontSize, font, textColor, line, HorizontalAlign.LEFT, VerticalAlign.MIDDLE, false);

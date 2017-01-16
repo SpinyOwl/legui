@@ -36,14 +36,14 @@ public class Button extends Component {
      * Creates a button with default text and specified position and size.
      */
     public Button(float x, float y, float width, float height) {
-        this(x, y, width, height, "Button");
+        this("Button", x, y, width, height);
     }
 
     /**
      * Creates a button with default text and specified position and size.
      */
     public Button(Vector2f position, Vector2f size) {
-        this(position, size, "Button");
+        this("Button", position, size);
     }
 
     /**
@@ -56,7 +56,7 @@ public class Button extends Component {
     /**
      * Creates a button with specified text and specified position and size.
      */
-    public Button(float x, float y, float width, float height, String text) {
+    public Button(String text, float x, float y, float width, float height) {
         super(x, y, width, height);
         initialize(text);
     }
@@ -64,7 +64,7 @@ public class Button extends Component {
     /**
      * Creates a button with specified text and specified position and size.
      */
-    public Button(Vector2f position, Vector2f size, String text) {
+    public Button(String text, Vector2f position, Vector2f size) {
         super(position, size);
         initialize(text);
     }
