@@ -127,22 +127,21 @@ public class ExampleGui extends Frame {
 
         Widget widget = new Widget("Hello widget", 250, 170, 100, 100);
         widget.setTitleHeight(20);
-        widget.setCloseButtonColor(ColorConstants.red());
         widget.setTitleBackgroundColor(ColorConstants.lightGreen());
 
-        Button    turnWidVisible = new Button("", 360, 280, 40, 40);
-        ImageView bgIm           = new ImageView(new Image("org/liquidengine/legui/example/1.png"));
-        ImageView hbgIm          = new ImageView(new Image("org/liquidengine/legui/example/2.png"));
-        ImageView pbIm           = new ImageView(new Image("org/liquidengine/legui/example/3.png"));
-        bgIm.setSize(40, 40);
-        hbgIm.setSize(40, 40);
-        pbIm.setSize(40, 40);
-        turnWidVisible.setBackgroundImage(bgIm);
-        turnWidVisible.setHoveredBackgroundImage(hbgIm);
-        turnWidVisible.setPressedBackgroundImage(pbIm);
+        Button    turnWidVisible = new Button("", 360, 280, 20, 20);
         turnWidVisible.getLeguiEventListeners().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
             if (CLICK.equals(event.getAction())) widget.setVisible(true);
         });
+        ImageView bgIm           = new ImageView(new Image("org/liquidengine/legui/example/1.png"));
+        ImageView hbgIm          = new ImageView(new Image("org/liquidengine/legui/example/2.png"));
+        ImageView pbIm           = new ImageView(new Image("org/liquidengine/legui/example/3.png"));
+        bgIm.setSize(20, 20);
+        hbgIm.setSize(20, 20);
+        pbIm.setSize(20, 20);
+        turnWidVisible.setBackgroundImage(bgIm);
+        turnWidVisible.setHoveredBackgroundImage(hbgIm);
+        turnWidVisible.setPressedBackgroundImage(pbIm);
         this.addComponent(turnWidVisible);
 
         Panel c0 = new Panel(-5, -5, 10, 10);
@@ -165,17 +164,37 @@ public class ExampleGui extends Frame {
 
         Widget widget2 = new Widget("Hello 2 widget", 250, 310, 100, 100);
         widget2.setTitleHeight(20);
-        widget2.setCloseButtonColor(ColorConstants.red());
+        widget2.setCloseButtonColor(ColorConstants.white());
+        widget2.setCloseButtonBackgroundColor(ColorConstants.black());
         widget2.setTitleBackgroundColor(ColorConstants.lightGreen());
+        widget2.setDraggable(false);
+
+        Button    turnDraggable = new Button("Draggable", 10, 10, 80, 20);
+        turnDraggable.getLeguiEventListeners().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
+            if (CLICK.equals(event.getAction())) widget2.setDraggable(!widget2.isDraggable());
+        });
+        widget2.getContainer().addComponent(turnDraggable);
         this.addComponent(widget2);
+
+        Button    turnWidVisible2 = new Button("", 360, 310, 20, 20);
+        turnWidVisible2.getLeguiEventListeners().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
+            if (CLICK.equals(event.getAction())) widget2.setVisible(true);
+        });
+        this.addComponent(turnWidVisible2);
 
         Widget widget3 = new Widget("Hello 2 widget", 250, 420, 100, 100);
         widget3.setTitleHeight(20);
-        widget3.setCloseButtonColor(ColorConstants.red());
-        widget3.setTitleBackgroundColor(ColorConstants.lightGreen());
         widget3.setTitleEnabled(false);
-        widget3.setCloseable(false);
+        widget3.setTitleBackgroundColor(ColorConstants.lightGreen());
+        widget3.setCloseable(true);
+        widget3.setMinimizeable(false);
         this.addComponent(widget3);
+
+        Button    turnWidVisible3 = new Button("", 360, 340, 20, 20);
+        turnWidVisible3.getLeguiEventListeners().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
+            if (CLICK.equals(event.getAction())) widget3.setVisible(true);
+        });
+        this.addComponent(turnWidVisible3);
 
         widget3.getContainer().addComponent(new Panel(5, 5, 20, 20));
         widget3.getContainer().addComponent(new Panel(30, 5, 20, 20));

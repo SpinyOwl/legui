@@ -111,6 +111,8 @@ public final class JsonConstants {
     // WIDGET
     public static final String WIDGET = "widget";
     public static final String RESIZABLE = "resizable";
+    public static final String DRAGGABLE = "draggable";
+    public static final String MINIMIZED = "minimized";
     public static final String CLOSEABLE = "closeable";
     public static final String TITLE = "title";
     public static final String TITLE_ENABLED = "titleEnabled";

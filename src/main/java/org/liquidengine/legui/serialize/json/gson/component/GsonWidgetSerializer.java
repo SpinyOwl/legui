@@ -23,7 +23,9 @@ public class GsonWidgetSerializer extends GsonComponentSerializer<Widget> {
         JsonObject cont = GsonSerializeUtil.serializeToJson(container, context);
         GsonUtil.fill(json)
                 .add(CONTAINER, cont)
-                .add(RESIZABLE, object.isResizable())
+//                .add(RESIZABLE, object.isResizable())
+                .add(DRAGGABLE, object.isDraggable())
+                .add(MINIMIZED, object.isMinimized())
                 .add(CLOSEABLE, object.isCloseable())
                 .add(TITLE_ENABLED, object.isTitleEnabled())
                 .add(TITLE_HEIGHT, object.getTitleHeight())
@@ -38,7 +40,9 @@ public class GsonWidgetSerializer extends GsonComponentSerializer<Widget> {
         super.deserialize(json, object, context);
 
         JsonElement container = json.get(CONTAINER);
-        JsonElement resizable = json.get(RESIZABLE);
+//        JsonElement resizable = json.get(RESIZABLE);
+        JsonElement draggable = json.get(DRAGGABLE);
+        JsonElement minimized = json.get(MINIMIZED);
         JsonElement closeable = json.get(CLOSEABLE);
         JsonElement titleEnabled = json.get(TITLE_ENABLED);
         JsonElement titleHeight = json.get(TITLE_HEIGHT);
@@ -47,12 +51,16 @@ public class GsonWidgetSerializer extends GsonComponentSerializer<Widget> {
         JsonElement title = json.get(TITLE);
 
         if (isNotNull(container)) object.setContainer(GsonSerializeUtil.deserializeFromJson(container.getAsJsonObject(), context));
-        if (isNotNull(resizable)) object.setResizable(resizable.getAsBoolean());
-        if (isNotNull(closeable)) object.setCloseable(closeable.getAsBoolean());
-        if (isNotNull(titleEnabled)) object.setTitleEnabled(titleEnabled.getAsBoolean());
+//        if (isNotNull(resizable)) object.setResizable(resizable.getAsBoolean());
+        if (isNotNull(title)) object.getTitleTextState().copy(GsonSerializeUtil.deserializeFromJson(title.getAsJsonObject(), context));
         if (isNotNull(titleHeight)) object.setTitleHeight(titleHeight.getAsFloat());
         if (isNotNull(titleBackgroundColor)) object.setTitleBackgroundColor(readColor(titleBackgroundColor.getAsJsonObject()));
         if (isNotNull(closeButtonColor)) object.setCloseButtonColor(readColor(closeButtonColor.getAsJsonObject()));
-        if (isNotNull(title)) object.getTitleTextState().copy(GsonSerializeUtil.deserializeFromJson(title.getAsJsonObject(), context));
+        if (isNotNull(draggable)) object.setDraggable(draggable.getAsBoolean());
+        if (isNotNull(closeable)) object.setCloseable(closeable.getAsBoolean());
+        if (isNotNull(titleEnabled)) object.setTitleEnabled(titleEnabled.getAsBoolean());
+        if (isNotNull(minimized)) object.setDraggable(minimized.getAsBoolean());
+
+        object.resize();
     }
 }

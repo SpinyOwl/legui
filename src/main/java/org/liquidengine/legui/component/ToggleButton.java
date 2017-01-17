@@ -14,11 +14,7 @@ import org.liquidengine.legui.util.ColorConstants;
  * Behavior the same as checkbox but have not any text
  * Created by Alexander on 12.01.2017.
  */
-public class ToggleButton extends Component {
-    protected ImageView backgroundImage;
-    protected ImageView focusedBbackgroundImage;
-    protected ImageView pressedBackgroundImage;
-    protected ImageView hoveredBackgroundImage;
+public class ToggleButton extends Button {
     protected ImageView togglededBackgroundImage;
     private boolean  toggled;
     private Vector4f toggledBackgroundColor;
@@ -27,6 +23,10 @@ public class ToggleButton extends Component {
      * Creates toggle button with default bg color and default toggled bg color.
      */
     public ToggleButton() {
+        initialize();
+    }
+    public ToggleButton(String text) {
+        super(text);
         initialize();
     }
 
@@ -90,78 +90,6 @@ public class ToggleButton extends Component {
      */
     public void setToggledBackgroundColor(Vector4f toggledBackgroundColor) {
         this.toggledBackgroundColor = toggledBackgroundColor;
-    }
-
-    /**
-     * Returns background image
-     *
-     * @return background image
-     */
-    public ImageView getBackgroundImage() {
-        return backgroundImage;
-    }
-
-    /**
-     * Used to change background image
-     *
-     * @param backgroundImage background image
-     */
-    public void setBackgroundImage(ImageView backgroundImage) {
-        this.backgroundImage = backgroundImage;
-    }
-
-    /**
-     * Returns focused background image
-     *
-     * @return focused background image
-     */
-    public ImageView getFocusedBbackgroundImage() {
-        return focusedBbackgroundImage;
-    }
-
-    /**
-     * Used to change focused background image
-     *
-     * @param focusedBbackgroundImage focused background image
-     */
-    public void setFocusedBbackgroundImage(ImageView focusedBbackgroundImage) {
-        this.focusedBbackgroundImage = focusedBbackgroundImage;
-    }
-
-    /**
-     * Returns pressed background image
-     *
-     * @return pressed background image
-     */
-    public ImageView getPressedBackgroundImage() {
-        return pressedBackgroundImage;
-    }
-
-    /**
-     * Used to change pressed background image
-     *
-     * @param pressedBackgroundImage pressed background image
-     */
-    public void setPressedBackgroundImage(ImageView pressedBackgroundImage) {
-        this.pressedBackgroundImage = pressedBackgroundImage;
-    }
-
-    /**
-     * Returns hovered background image
-     *
-     * @return hovered background image
-     */
-    public ImageView getHoveredBackgroundImage() {
-        return hoveredBackgroundImage;
-    }
-
-    /**
-     * Used to change hovered background image
-     *
-     * @param hoveredBackgroundImage hovered background image
-     */
-    public void setHoveredBackgroundImage(ImageView hoveredBackgroundImage) {
-        this.hoveredBackgroundImage = hoveredBackgroundImage;
     }
 
     /**

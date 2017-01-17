@@ -33,13 +33,12 @@ public class SelectBox extends ComponentContainer {
     protected List<ListBoxElement> listBoxElements = SetUniqueList.setUniqueList(new CopyOnWriteArrayList<>());
     protected List<String> elements = SetUniqueList.setUniqueList(new CopyOnWriteArrayList<>());
 
-    protected SBWidget selectionListWidget = new SBWidget();
-    protected SelectBoxScrollablePanel selectionListPanel = new SelectBoxScrollablePanel();
-    protected Button selectionButton = new Button(NULL);
-    protected String selectedElement = null;
-    protected float elementHeight = 16;
-    protected float buttonWidth = 15f;
-    protected int visibleCount = 3;
+    protected SelectBoxScrollablePanel selectionListPanel  = new SelectBoxScrollablePanel();
+    protected Button                   selectionButton     = new Button(NULL);
+    protected String                   selectedElement     = null;
+    protected float                    elementHeight       = 16;
+    protected float                    buttonWidth         = 15f;
+    protected int                      visibleCount        = 3;
 
     protected Button expandButton = new Button(COLLAPSED);
 
@@ -78,10 +77,6 @@ public class SelectBox extends ComponentContainer {
     }
 
     private void initialize() {
-        selectionListWidget.setTitleEnabled(false);
-        selectionListWidget.setCloseable(false);
-        selectionListWidget.setContainer(selectionListPanel);
-
         selectionListPanel.getHorizontalScrollBar().setVisible(false);
 
         this.setBackgroundColor(ColorConstants.white());
@@ -107,7 +102,7 @@ public class SelectBox extends ComponentContainer {
                         collapse = false;
                     }
                 }
-                if (event.focusTarget == selectionListWidget ||
+                if (
                         event.focusTarget == expandButton ||
                         event.focusTarget == selectionButton ||
                         event.focusTarget == selectionListPanel ||
@@ -138,9 +133,9 @@ public class SelectBox extends ComponentContainer {
     public void setCollapsed(boolean collapsed) {
         this.collapsed = collapsed;
         if (collapsed) {
-            parent.removeComponent(selectionListWidget);
+            parent.removeComponent(selectionListPanel);
         } else {
-            parent.addComponent(selectionListWidget);
+            parent.addComponent(selectionListPanel);
             selectionListPanel.getVerticalScrollBar().setCurValue(0);
         }
         resize();
@@ -170,9 +165,7 @@ public class SelectBox extends ComponentContainer {
         } else {
             wpos.set(position.x, position.y + size.y);
         }
-        selectionListWidget.setSize(wsize);
-        selectionListWidget.setPosition(wpos);
-        selectionListWidget.resize();
+        selectionListPanel.setPosition(wpos);
         selectionListPanel.getContainer().getSize().y = selectionListPanel.getContainer().componentsCount() * elementHeight;
         selectionListPanel.resize();
 
@@ -274,9 +267,6 @@ public class SelectBox extends ComponentContainer {
     public void setElementHeight(float elementHeight) {
         this.elementHeight = elementHeight;
         resize();
-    }
-
-    public static class SBWidget extends Widget {
     }
 
     public class ListBoxElement extends Button {

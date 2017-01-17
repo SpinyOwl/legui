@@ -20,13 +20,24 @@ import static org.liquidengine.legui.util.Util.cpToStr;
  * Created by Shcherbin Alexander on 9/27/2016.
  */
 public class Widget extends ComponentContainer {
-    private static final String CLOSE_ICON = cpToStr(0xE5CD);
+    private static final String CLOSE_ICON    = cpToStr(0xE5CD);
+    private static final String MINIMIZE_ICON = cpToStr(0xE5D6);
+    private static final String MAXIMIZE_ICON = cpToStr(0xE5D7);
 
-    protected boolean resizable = false;
+    //    protected boolean resizable = false;
+    protected boolean draggable = true;
+    protected boolean minimized = false;
 
-    protected ComponentContainer container;
-    protected Label title;
-    protected Button closeButton;
+    /**
+     * Used to store widget size in maximized state when minimizing widget
+     */
+    protected Vector2f maximizedSize = new Vector2f();
+
+    protected ComponentContainer     container;
+    protected Label                  title;
+    protected Button                 closeButton;
+    protected Button                 minimizeButton;
+    protected MouseDragEventListener mouseDragEventLeguiEventListener;
 
     public Widget() {
         initialize("Widget");
@@ -63,7 +74,7 @@ public class Widget extends ComponentContainer {
         this.title.textState.getPadding().set(10, 5, 10, 5);
         this.title.setBorder(simpleRectangleLineBorder);
 
-        MouseDragEventListener mouseDragEventLeguiEventListener = new WidgetDragListener();
+        mouseDragEventLeguiEventListener = new WidgetDragListener();
         this.title.leguiEventListeners.addListener(MouseDragEvent.class, mouseDragEventLeguiEventListener);
 
         this.closeButton = new Button(CLOSE_ICON);
@@ -72,8 +83,15 @@ public class Widget extends ComponentContainer {
         this.closeButton.textState.setHorizontalAlign(HorizontalAlign.LEFT);
         this.closeButton.textState.setVerticalAlign(VerticalAlign.MIDDLE);
         this.closeButton.textState.setFont(FontRegister.MATERIAL_ICONS_REGULAR);
-        MouseClickEventListener listener = new WidgetCloseButMouseClickEventListener();
-        this.closeButton.getLeguiEventListeners().addListener(MouseClickEvent.class, listener);
+        this.closeButton.getLeguiEventListeners().addListener(MouseClickEvent.class, new WidgetCloseButMouseClickEventListener());
+
+        this.minimizeButton = new Button(MINIMIZE_ICON);
+        this.minimizeButton.backgroundColor.set(1);
+        this.minimizeButton.setBorder(simpleRectangleLineBorder);
+        this.minimizeButton.textState.setHorizontalAlign(HorizontalAlign.LEFT);
+        this.minimizeButton.textState.setVerticalAlign(VerticalAlign.MIDDLE);
+        this.minimizeButton.textState.setFont(FontRegister.MATERIAL_ICONS_REGULAR);
+        this.minimizeButton.getLeguiEventListeners().addListener(MouseClickEvent.class, new WidgetMinimizeButMouseClickEventListener());
 
         this.container = new Panel();
         this.container.setBorder(simpleRectangleLineBorder);
@@ -83,6 +101,7 @@ public class Widget extends ComponentContainer {
 
         this.addComponent(this.title);
         this.addComponent(this.closeButton);
+        this.addComponent(this.minimizeButton);
         this.addComponent(this.container);
 
         resize();
@@ -92,18 +111,51 @@ public class Widget extends ComponentContainer {
         float titHei = title.size.y;
         if (title.visible) {
             title.position.set(0);
-            title.size.x = closeButton.visible ? size.x - titHei : size.x;
+
+            float widgetWidth = size.x;
+            float titleWidth  = widgetWidth;
+            if (closeButton.visible) {
+                titleWidth -= titHei;
+            }
+            if (minimizeButton.visible) {
+                titleWidth -= titHei;
+            }
+
+            title.size.x = titleWidth;
             container.position.set(0, titHei);
-            container.size.set(size.x, size.y - titHei);
+            container.size.set(widgetWidth, size.y - titHei);
+
             closeButton.size.set(titHei);
-            closeButton.position.set(size.x - titHei, 0);
+            closeButton.position.set(widgetWidth - titHei, 0);
             closeButton.textState.setFontSize(titHei * 2f / 3f);
             closeButton.textState.getPadding().set(titHei / 6f);
+
+            minimizeButton.size.set(titHei);
+            minimizeButton.position.set(titleWidth, 0);
+            minimizeButton.textState.setFontSize(titHei * 2f / 3f);
+            minimizeButton.textState.getPadding().set(titHei / 6f);
 
         } else {
             container.position.set(0, 0);
             container.size.set(size);
             closeButton.size.set(0);
+            minimizeButton.size.set(0);
+        }
+    }
+
+    @Override
+    public void setSize(Vector2f size) {
+        if (!minimized) {
+            super.setSize(size);
+            resize();
+        }
+    }
+
+    @Override
+    public void setSize(float width, float height) {
+        if (!minimized) {
+            super.setSize(width, height);
+            resize();
         }
     }
 
@@ -121,8 +173,8 @@ public class Widget extends ComponentContainer {
     }
 
     public void setTitleEnabled(boolean titleEnabled) {
+        if (minimized) return;
         this.title.visible = titleEnabled;
-//        this.closeButton.visible = titleEnabled;
         resize();
     }
 
@@ -133,14 +185,6 @@ public class Widget extends ComponentContainer {
     public void setCloseable(boolean closeable) {
         this.closeButton.visible = closeable;
         resize();
-    }
-
-    public boolean isResizable() {
-        return resizable;
-    }
-
-    public void setResizable(boolean resizable) {
-        this.resizable = resizable;
     }
 
     public Vector4f getTitleBackgroundColor() {
@@ -160,7 +204,11 @@ public class Widget extends ComponentContainer {
     }
 
     public void setCloseButtonColor(Vector4f closeButtonColor) {
-        this.closeButton.backgroundColor = closeButtonColor;
+        this.closeButton.textState.setTextColor(closeButtonColor);
+    }
+
+    public void setCloseButtonBackgroundColor(Vector4f closeButtonBackgroundColor) {
+        this.closeButton.backgroundColor = closeButtonBackgroundColor;
     }
 
     public ComponentContainer getContainer() {
@@ -172,19 +220,92 @@ public class Widget extends ComponentContainer {
         this.addComponent(this.container = container);
     }
 
-    public static class WidgetDragListener implements MouseDragEventListener {
-        @Override
-        public void update(MouseDragEvent event) {
-            Vector2f sub = event.getCursorPosition().sub(event.getCursorPositionPrev());
-            event.getComponent().getParent().position.add(sub);
+    public boolean isDraggable() {
+        return draggable;
+    }
+
+    public void setDraggable(boolean draggable) {
+        if (this.draggable != draggable) {
+            if (draggable) {
+                this.title.leguiEventListeners.addListener(MouseDragEvent.class, mouseDragEventLeguiEventListener);
+            } else {
+                this.title.leguiEventListeners.removeListener(MouseDragEvent.class, mouseDragEventLeguiEventListener);
+            }
+            this.draggable = draggable;
         }
     }
 
-    public static class WidgetCloseButMouseClickEventListener implements MouseClickEventListener {
+    public boolean isMinimizeable() {
+        return minimizeButton.isVisible();
+    }
+
+    public void setMinimizeable(boolean minimizeable) {
+        this.minimizeButton.visible = minimizeable;
+        resize();
+    }
+
+    /**
+     * Returns true if widget minimized
+     *
+     * @return
+     */
+    public boolean isMinimized() {
+        return minimized;
+    }
+
+    /**
+     * @param minimized
+     */
+    public void setMinimized(boolean minimized) {
+        if (this.minimized != minimized) {
+            this.minimized = minimized;
+            if (minimized) {
+                minimize();
+            } else {
+                maximize();
+            }
+        }
+    }
+
+    private void minimize() {
+        if (isTitleEnabled()) {
+            maximizedSize.set(size);
+            size.set(size.x, getTitleHeight());
+            resize();
+        }
+    }
+
+    private void maximize() {
+        if (isTitleEnabled()) {
+            size.set(maximizedSize);
+            resize();
+        }
+    }
+
+    public class WidgetDragListener implements MouseDragEventListener {
+        @Override
+        public void update(MouseDragEvent event) {
+            Vector2f delta = event.getCursorPosition().sub(event.getCursorPositionPrev());
+            Widget.this.position.add(delta);
+        }
+    }
+
+    public class WidgetCloseButMouseClickEventListener implements MouseClickEventListener {
         @Override
         public void update(MouseClickEvent event) {
             if (CLICK.equals(event.getAction())) {
-                event.getComponent().getParent().visible = false;
+                Widget.this.visible = false;
+            }
+        }
+    }
+
+    public class WidgetMinimizeButMouseClickEventListener implements MouseClickEventListener {
+        @Override
+        public void update(MouseClickEvent event) {
+            if (CLICK.equals(event.getAction())) {
+                boolean newValue = !Widget.this.isMinimized();
+                Widget.this.minimizeButton.textState.setText(newValue ? MAXIMIZE_ICON : MINIMIZE_ICON);
+                Widget.this.setMinimized(newValue);
             }
         }
     }
