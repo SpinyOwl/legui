@@ -12,17 +12,36 @@ import org.liquidengine.legui.util.ColorConstants;
 
 
 /**
- * An implementation of "push" button
+ * An implementation of "push" button.
+ * <p>
  * <p>
  * Created by Shcherbin Alexander on 9/22/2016.
  */
 public class Button extends Component {
 
+    /**
+     * Button text state.
+     */
     protected TextState textState;
 
+    /**
+     * Default button background image.
+     */
     protected ImageView backgroundImage;
+
+    /**
+     * Background image for focused state.
+     */
     protected ImageView focusedBbackgroundImage;
+
+    /**
+     * Background image for pressed state.
+     */
     protected ImageView pressedBackgroundImage;
+
+    /**
+     * Background image for hovered state.
+     */
     protected ImageView hoveredBackgroundImage;
 
     /**
@@ -163,6 +182,11 @@ public class Button extends Component {
         this.hoveredBackgroundImage = hoveredBackgroundImage;
     }
 
+    /**
+     * (non-Javadoc)
+     *
+     * @see Object#equals(Object)
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -177,6 +201,11 @@ public class Button extends Component {
                 .isEquals();
     }
 
+    /**
+     * (non-Javadoc)
+     *
+     * @see Object#hashCode()
+     */
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
@@ -185,6 +214,11 @@ public class Button extends Component {
                 .toHashCode();
     }
 
+    /**
+     * (non-Javadoc)
+     *
+     * @see Object#toString()
+     */
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)

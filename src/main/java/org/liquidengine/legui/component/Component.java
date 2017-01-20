@@ -7,7 +7,6 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.border.Border;
-import org.liquidengine.legui.component.border.SimpleRectangleLineBorder;
 import org.liquidengine.legui.component.intersector.LeguiIntersector;
 import org.liquidengine.legui.component.intersector.RectangleIntersector;
 import org.liquidengine.legui.context.LeguiContext;
@@ -22,30 +21,90 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Component is an object that have graphical representation in legui system
+ * Component is an object that have graphical representation in legui system.
  * <p>
  * Created by Shcherbin Alexander on 9/14/2016.
  */
 public abstract class Component implements Serializable {
+    /**
+     * Metadata map, place where renderers or event processors can store state of component.
+     */
     protected Map<String, Object> metadata = new HashMap<>();
+
+    /**
+     * Position of component relative top left corner in parent component.
+     * <p>
+     * If component is the root component then position calculated relative window top left corner.
+     */
     protected Vector2f position;
+
+    /**
+     * Size of component.
+     */
     protected Vector2f size;
+
+    /**
+     * Component background color.
+     * <p>Represented by vector where (x=r,y=g,z=b,w=a).
+     * <p>For example white = {@code new Vector4f(1,1,1,1)}
+     */
     protected Vector4f backgroundColor = ColorConstants.white();
 
-    protected Border border = new SimpleRectangleLineBorder(ColorConstants.transparent(), 0);
+    /**
+     * Component border.
+     */
+    protected Border border;
 
+    /**
+     * Used to enable and disable event processing for this component.
+     * If enabled==false then component won't receive events.
+     */
     protected boolean enabled = true;
+
+    /**
+     * Determines whether this component should be visible when its
+     * parent is visible. Components are initially visible.
+     */
     protected boolean visible = true;
 
+    /**
+     * Used to store component states such as
+     * <ul>
+     * <li>hovered</li>
+     * <li>pressed</li>
+     * <li>focused</li>
+     * </ul>
+     */
     protected ComponentState state = new ComponentState();
 
+    /**
+     * Used to store corner radius of component.
+     */
     protected float cornerRadius = 0;
 
+    /**
+     * Parent component container. For root components it could be null
+     */
     protected ComponentContainer parent;
+
+    /**
+     * Intersector which used to determine for example if cursor intersects component or not. Cannot be null.
+     */
     protected LeguiIntersector intersector = new RectangleIntersector();
+
+    /**
+     * Renderer which used to render component.
+     */
     protected LeguiComponentRenderer renderer = LeguiRendererProvider.getProvider().getRenderer(this);
 
+    /**
+     * Event listener for ui events.
+     */
     protected LeguiEventListenerMap leguiEventListeners = new LeguiEventListenerMap();
+
+    /**
+     * Event listener for system events, which transformed into specific ui events.
+     */
     protected SystemEventListenerMap systemEventListeners = new SystemEventListenerMap(this.getClass());
 
     /**
@@ -403,6 +462,11 @@ public abstract class Component implements Serializable {
         return metadata;
     }
 
+    /**
+     * (non-Javadoc)
+     *
+     * @see Object#equals(Object)
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -424,6 +488,11 @@ public abstract class Component implements Serializable {
                 .isEquals();
     }
 
+    /**
+     * (non-Javadoc)
+     *
+     * @see Object#hashCode()
+     */
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
@@ -439,6 +508,11 @@ public abstract class Component implements Serializable {
                 .toHashCode();
     }
 
+    /**
+     * (non-Javadoc)
+     *
+     * @see Object#toString()
+     */
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)

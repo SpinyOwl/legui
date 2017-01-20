@@ -62,22 +62,10 @@ public class NvgToggleButtonRenderer extends NvgLeguiComponentRenderer {
             image = bgImage;
         } else if (hovered && !pressed) {
             image = agui.getHoveredBackgroundImage();
-            if (image == null) {
-                image = bgImage;
-            }
         } else if (pressed) {
             image = agui.getPressedBackgroundImage();
-            if (image == null) {
-                image = agui.getHoveredBackgroundImage();
-                if (image == null) {
-                    image = bgImage;
-                }
-            }
         } else if (focused) {
             image = agui.getFocusedBbackgroundImage();
-            if (image == null) {
-                image = bgImage;
-            }
         }
 
         drawRectangle(context, backgroundColor, pos, size);

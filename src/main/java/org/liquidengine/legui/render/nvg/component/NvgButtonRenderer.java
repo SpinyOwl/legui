@@ -68,22 +68,10 @@ public class NvgButtonRenderer extends NvgLeguiComponentRenderer {
             image = agui.getBackgroundImage();
         } else if (hovered && !pressed) {
             image = agui.getHoveredBackgroundImage();
-            if (image == null) {
-                image = agui.getBackgroundImage();
-            }
         } else if (pressed) {
             image = agui.getPressedBackgroundImage();
-            if (image == null) {
-                image = agui.getHoveredBackgroundImage();
-                if (image == null) {
-                    image = agui.getBackgroundImage();
-                }
-            }
         } else if (focused) {
             image = agui.getFocusedBbackgroundImage();
-            if (image == null) {
-                image = agui.getBackgroundImage();
-            }
         }
 
         drawRectangle(context, backgroundColor, pos, size);
