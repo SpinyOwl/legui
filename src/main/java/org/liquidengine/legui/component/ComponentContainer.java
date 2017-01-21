@@ -3,6 +3,8 @@ package org.liquidengine.legui.component;
 import org.joml.Vector2f;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentSkipListSet;
+import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
@@ -11,14 +13,14 @@ import java.util.stream.Stream;
  * Basic abstract ComponentContainer object is a component
  * that can contain other components.
  * <p>
- * The base of container is <span style="color:red"><b>{@link Set}</b></span>,
+ * The base of container is <b><span style="color:red">Set</span> created on base of <span style="color:red">IdentityHashMap</span></b>,
  * that's little restriction which determines that child
- * can exist in parent only one time.
+ * can exist in parent only one time. When adding component it compares only <span style="color:red">references</span>.
  * <p>
  * Created by Shcherbin Alexander on 9/14/2016.
  */
 public abstract class ComponentContainer extends Component {
-    protected final Set<Component> components = new java.util.concurrent.CopyOnWriteArraySet<>();
+    protected final Set<Component> components = Collections.synchronizedSet(Collections.newSetFromMap(new IdentityHashMap()));
 
     /**
      * Default constructor. Used to create instance without any parameters.

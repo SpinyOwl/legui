@@ -28,15 +28,15 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public abstract class Component implements Serializable {
 
-    /**
-     * Indexer is integer that store next value for component index.
-     */
-    private static final AtomicInteger indexer = new AtomicInteger();
-
-    /**
-     * Component id.
-     */
-    private final int componentId;
+//    /**
+//     * Indexer is integer that store next value for component index.
+//     */
+//    private static final AtomicInteger indexer = new AtomicInteger();
+//
+//    /**
+//     * Component id.
+//     */
+//    private final int componentId;
 
     /**
      * Metadata map, place where renderers or event processors can store state of component.
@@ -150,7 +150,7 @@ public abstract class Component implements Serializable {
     public Component(Vector2f position, Vector2f size) {
         this.position = position;
         this.size = size;
-        this.componentId = indexer.getAndIncrement();
+//        this.componentId = indexer.getAndIncrement();
     }
 
     /**
@@ -475,12 +475,12 @@ public abstract class Component implements Serializable {
         return metadata;
     }
 
-    /**
-     * Used to return component id
-     */
-    public int getComponentId() {
-        return componentId;
-    }
+//    /**
+//     * Used to return component id
+//     */
+//    public int getComponentId() {
+//        return componentId;
+//    }
 
     /**
      * (non-Javadoc)
@@ -496,7 +496,7 @@ public abstract class Component implements Serializable {
         Component component = (Component) o;
 
         return new EqualsBuilder()
-                .append(componentId, component.componentId)
+//                .append(componentId, component.componentId)
                 .append(enabled, component.enabled)
                 .append(visible, component.visible)
                 .append(cornerRadius, component.cornerRadius)
@@ -517,7 +517,7 @@ public abstract class Component implements Serializable {
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
-                .append(componentId)
+//                .append(componentId)
                 .append(position)
                 .append(size)
                 .append(backgroundColor)
