@@ -496,6 +496,7 @@ public abstract class Component implements Serializable {
         Component component = (Component) o;
 
         return new EqualsBuilder()
+                .append(componentId, component.componentId)
                 .append(enabled, component.enabled)
                 .append(visible, component.visible)
                 .append(cornerRadius, component.cornerRadius)
