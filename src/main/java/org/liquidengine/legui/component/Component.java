@@ -476,6 +476,13 @@ public abstract class Component implements Serializable {
     }
 
     /**
+     * Used to return component id
+     */
+    public int getComponentId() {
+        return componentId;
+    }
+
+    /**
      * (non-Javadoc)
      *
      * @see Object#equals(Object)
