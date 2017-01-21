@@ -19,6 +19,7 @@ import org.liquidengine.legui.util.ColorConstants;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Component is an object that have graphical representation in legui system.
@@ -26,6 +27,17 @@ import java.util.Map;
  * Created by Shcherbin Alexander on 9/14/2016.
  */
 public abstract class Component implements Serializable {
+
+    /**
+     * Indexer is integer that store next value for component index.
+     */
+    private static final AtomicInteger indexer = new AtomicInteger();
+
+    /**
+     * Component id.
+     */
+    private final int componentId;
+
     /**
      * Metadata map, place where renderers or event processors can store state of component.
      */
@@ -138,6 +150,7 @@ public abstract class Component implements Serializable {
     public Component(Vector2f position, Vector2f size) {
         this.position = position;
         this.size = size;
+        this.componentId = indexer.getAndIncrement();
     }
 
     /**
@@ -496,6 +509,7 @@ public abstract class Component implements Serializable {
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
+                .append(componentId)
                 .append(position)
                 .append(size)
                 .append(backgroundColor)
