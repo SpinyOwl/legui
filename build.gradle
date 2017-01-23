@@ -1,0 +1,154 @@
+group 'org.liquidengine'
+
+Properties up = new Properties(); up.load(new FileInputStream("./version.properties"))
+project.version = up["liquidengine.legui.version"]
+
+apply plugin: 'java'
+apply plugin: 'maven-publish'
+apply plugin: 'maven'
+apply plugin: 'idea'
+idea { module { downloadJavadoc = true; downloadSources = true } }
+
+configurations.all {
+    resolutionStrategy.cacheChangingModulesFor 10, 'seconds'
+}
+
+// dependencies versions
+//@formatter:off
+def lwjgl_version        = '3.1.2-SNAPSHOT'
+def joml_version         = "1.9.1-SNAPSHOT"
+def log4j_version        = '2.3'
+def commons_version      = '3.4'
+def commons_collections  = '4.1'
+def junit_version        = '4.12'
+def le_cbchain           = '0.1.1'
+def guava_version        = '19.0'
+def gson_version         = '2.7'
+//@formatter:on
+
+repositories {
+    jcenter()
+    mavenCentral()
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+    maven { url "https://raw.github.com/LiquidEngine/repo/snapshots" }
+    maven { url "https://raw.github.com/LiquidEngine/repo/releases" }
+}
+// include dependencies
+dependencies {
+    //@formatter:off
+
+compile group: "org.joml",                   name: "joml",                 version: joml_version,          changing: true
+compile group: 'org.apache.logging.log4j',   name: 'log4j-core',           version: log4j_version,         changing: false
+compile group: 'org.apache.commons',         name: 'commons-lang3',        version: commons_version,       changing: false
+compile group: 'org.apache.commons',         name: 'commons-collections4', version: commons_collections,   changing: false
+compile group: 'com.google.guava',           name: 'guava',                version: guava_version,         changing: false
+compile group: 'com.google.code.gson',       name: 'gson',                 version: gson_version,          changing: false
+
+compile group: 'org.liquidengine',           name: 'cbchain',              version: le_cbchain,            changing: true
+
+compile group: 'org.lwjgl',                  name: 'lwjgl-stb',            version: lwjgl_version,         changing: true
+runtime group: 'org.lwjgl',                  name: 'lwjgl-stb',            version: lwjgl_version,         changing: true,  classifier: 'natives-windows'
+runtime group: 'org.lwjgl',                  name: 'lwjgl-stb',            version: lwjgl_version,         changing: true,  classifier: 'natives-linux'
+runtime group: 'org.lwjgl',                  name: 'lwjgl-stb',            version: lwjgl_version,         changing: true,  classifier: 'natives-macos'
+
+compile group: 'org.lwjgl',                  name: 'lwjgl-glfw',           version: lwjgl_version,         changing: true
+runtime group: 'org.lwjgl',                  name: 'lwjgl-glfw',           version: lwjgl_version,         changing: true,  classifier: 'natives-windows'
+runtime group: 'org.lwjgl',                  name: 'lwjgl-glfw',           version: lwjgl_version,         changing: true,  classifier: 'natives-linux'
+runtime group: 'org.lwjgl',                  name: 'lwjgl-glfw',           version: lwjgl_version,         changing: true,  classifier: 'natives-macos'
+
+compile group: 'org.lwjgl',                  name: 'lwjgl-nanovg',         version: lwjgl_version,         changing: true
+runtime group: 'org.lwjgl',                  name: 'lwjgl-nanovg',         version: lwjgl_version,         changing: true,  classifier: 'natives-windows'
+runtime group: 'org.lwjgl',                  name: 'lwjgl-nanovg',         version: lwjgl_version,         changing: true,  classifier: 'natives-linux'
+runtime group: 'org.lwjgl',                  name: 'lwjgl-nanovg',         version: lwjgl_version,         changing: true,  classifier: 'natives-macos'
+
+compile group: 'org.lwjgl',                  name: 'lwjgl-opengl',         version: lwjgl_version,         changing: true
+compile group: 'org.lwjgl',                  name: 'lwjgl-opengl',         version: lwjgl_version,         changing: true,  classifier: 'natives-windows'
+compile group: 'org.lwjgl',                  name: 'lwjgl-opengl',         version: lwjgl_version,         changing: true,  classifier: 'natives-linux'
+compile group: 'org.lwjgl',                  name: 'lwjgl-opengl',         version: lwjgl_version,         changing: true,  classifier: 'natives-macos'
+
+compile group: 'org.lwjgl',                  name: 'lwjgl',                version: lwjgl_version,         changing: true
+runtime group: 'org.lwjgl',                  name: 'lwjgl',                version: lwjgl_version,         changing: true,  classifier: 'natives-windows'
+runtime group: 'org.lwjgl',                  name: 'lwjgl',                version: lwjgl_version,         changing: true,  classifier: 'natives-linux'
+runtime group: 'org.lwjgl',                  name: 'lwjgl',                version: lwjgl_version,         changing: true,  classifier: 'natives-macos'
+
+
+testCompile group: 'junit', name: 'junit', version: junit_version
+//@formatter:on
+}
+
+// PUBLISH SECTION
+configurations {
+    deployerJar
+}
+repositories {
+    maven { url 'https://raw.github.com/synergian/wagon-git/releases' }
+}
+dependencies {
+    deployerJar 'ar.com.synergian:wagon-git:0.2.5'
+}
+
+project.sourceCompatibility = 1.8
+project.targetCompatibility = 1.8
+compileJava.options.encoding = 'UTF-8'
+
+def build_type = System.getProperty("build_type") ?: (System.getenv("build_type") ?: "")
+if (build_type == "SNAPSHOT") {
+    project.version += "-SNAPSHOT"
+}
+
+task publishArchives << {
+    def publishUrl
+    def buildType
+    def publishUsername = System.getenv("publishUsername") ?: publishUsername
+    def publishPassword = System.getenv("publishPassword") ?: publishPassword
+    def releasesPublishUrl = System.getenv("releasesPublishUrl") ?: releasesPublishUrl
+    def snapshotsPublishUrl = System.getenv("snapshotsPublishUrl") ?: snapshotsPublishUrl
+    println("-------------------------------------")
+    println("PUBLISH ARCHIVES TASK " + build_type)
+    println("-------------------------------------")
+    if (build_type != "") {
+        boolean b = false; buildType = "ERROR"
+        if (build_type == "RELEASE") {
+            publishUrl = releasesPublishUrl; buildType = "RELEASE"; b = true
+        }
+        if (build_type == "SNAPSHOT") {
+            publishUrl = snapshotsPublishUrl; buildType = "SNAPSHOT"; b = true
+        }
+        println("build_type : $buildType; PUBLISHED TO $publishUrl")
+        if (b) {
+            uploadArchives {
+                repositories.mavenDeployer {
+                    configuration = configurations.deployerJar
+                    repository(url: publishUrl) {
+                        authentication(userName: publishUsername, password: publishPassword)
+                    }
+                }
+            }
+            uploadArchives.execute()
+        }
+    } else {
+        println("NOT UPLOADED")
+    }
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+    dependsOn classes
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+javadocJar.dependsOn javadoc
+publishArchives.dependsOn jar
+publishArchives.dependsOn sourcesJar
+publishArchives.dependsOn javadocJar
+
+artifacts {
+    archives sourcesJar
+    archives javadocJar
+}
+

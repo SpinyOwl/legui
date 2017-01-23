@@ -1,0 +1,10 @@
+/.idea/
+/gradle.properties
+/build/
+/target/
+/.gradle/
+/classes/
+/out/
+hs_err_pid*
+/logs/
+
