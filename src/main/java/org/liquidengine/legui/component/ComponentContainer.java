@@ -1,10 +1,10 @@
 package org.liquidengine.legui.component;
 
+import org.apache.commons.collections4.list.SetUniqueList;
 import org.joml.Vector2f;
 
 import java.util.*;
-import java.util.concurrent.ConcurrentSkipListSet;
-import java.util.concurrent.CopyOnWriteArraySet;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
@@ -20,7 +20,7 @@ import java.util.stream.Stream;
  * Created by Shcherbin Alexander on 9/14/2016.
  */
 public abstract class ComponentContainer extends Component {
-    protected final Set<Component> components = Collections.synchronizedSet(Collections.newSetFromMap(new IdentityHashMap()));
+    protected final List<Component> components = SetUniqueList.setUniqueList(new CopyOnWriteArrayList<>());
 
     /**
      * Default constructor. Used to create instance without any parameters.
