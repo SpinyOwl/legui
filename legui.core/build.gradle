@@ -1,0 +1,26 @@
+group 'org.liquidengine'
+apply plugin: 'java'
+
+//@formatter:off
+def joml_version         = "1.9.2-SNAPSHOT"
+def log4j_version        = '2.3'
+def commons_version      = '3.4'
+def commons_collections  = '4.1'
+def guava_version        = '19.0'
+def gson_version         = '2.7'
+//@formatter:on
+
+dependencies {
+
+    //@formatter:off
+    compile group: "org.joml",                   name: "joml",                 version: joml_version,          changing: true
+    compile group: 'org.apache.logging.log4j',   name: 'log4j-core',           version: log4j_version,         changing: false
+    compile group: 'org.apache.commons',         name: 'commons-lang3',        version: commons_version,       changing: false
+    compile group: 'org.apache.commons',         name: 'commons-collections4', version: commons_collections,   changing: false
+    compile group: 'com.google.guava',           name: 'guava',                version: guava_version,         changing: false
+    compile group: 'com.google.code.gson',       name: 'gson',                 version: gson_version,          changing: false
+    //@formatter:on
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+}
+
+
