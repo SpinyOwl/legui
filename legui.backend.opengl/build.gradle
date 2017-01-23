@@ -1,12 +1,39 @@
-
+group 'org.liquidengine'
 apply plugin: 'java'
-
-sourceCompatibility = 1.5
-
-repositories {
-    mavenCentral()
-}
+//@formatter:off
+def lwjgl_version        = '3.1.2-SNAPSHOT'
+def le_cbchain           = '0.1.1'
+//@formatter:on
 
 dependencies {
+    compile project(':legui.core')
+    //@formatter:off
+    compile group: 'org.liquidengine',           name: 'cbchain',              version: le_cbchain,            changing: true
+
+    compile group: 'org.lwjgl',                  name: 'lwjgl-stb',            version: lwjgl_version,         changing: true
+    runtime group: 'org.lwjgl',                  name: 'lwjgl-stb',            version: lwjgl_version,         changing: true,  classifier: 'natives-windows'
+    runtime group: 'org.lwjgl',                  name: 'lwjgl-stb',            version: lwjgl_version,         changing: true,  classifier: 'natives-linux'
+    runtime group: 'org.lwjgl',                  name: 'lwjgl-stb',            version: lwjgl_version,         changing: true,  classifier: 'natives-macos'
+
+    compile group: 'org.lwjgl',                  name: 'lwjgl-glfw',           version: lwjgl_version,         changing: true
+    runtime group: 'org.lwjgl',                  name: 'lwjgl-glfw',           version: lwjgl_version,         changing: true,  classifier: 'natives-windows'
+    runtime group: 'org.lwjgl',                  name: 'lwjgl-glfw',           version: lwjgl_version,         changing: true,  classifier: 'natives-linux'
+    runtime group: 'org.lwjgl',                  name: 'lwjgl-glfw',           version: lwjgl_version,         changing: true,  classifier: 'natives-macos'
+
+    compile group: 'org.lwjgl',                  name: 'lwjgl-nanovg',         version: lwjgl_version,         changing: true
+    runtime group: 'org.lwjgl',                  name: 'lwjgl-nanovg',         version: lwjgl_version,         changing: true,  classifier: 'natives-windows'
+    runtime group: 'org.lwjgl',                  name: 'lwjgl-nanovg',         version: lwjgl_version,         changing: true,  classifier: 'natives-linux'
+    runtime group: 'org.lwjgl',                  name: 'lwjgl-nanovg',         version: lwjgl_version,         changing: true,  classifier: 'natives-macos'
+
+    compile group: 'org.lwjgl',                  name: 'lwjgl-opengl',         version: lwjgl_version,         changing: true
+    compile group: 'org.lwjgl',                  name: 'lwjgl-opengl',         version: lwjgl_version,         changing: true,  classifier: 'natives-windows'
+    compile group: 'org.lwjgl',                  name: 'lwjgl-opengl',         version: lwjgl_version,         changing: true,  classifier: 'natives-linux'
+    compile group: 'org.lwjgl',                  name: 'lwjgl-opengl',         version: lwjgl_version,         changing: true,  classifier: 'natives-macos'
+
+    compile group: 'org.lwjgl',                  name: 'lwjgl',                version: lwjgl_version,         changing: true
+    runtime group: 'org.lwjgl',                  name: 'lwjgl',                version: lwjgl_version,         changing: true,  classifier: 'natives-windows'
+    runtime group: 'org.lwjgl',                  name: 'lwjgl',                version: lwjgl_version,         changing: true,  classifier: 'natives-linux'
+    runtime group: 'org.lwjgl',                  name: 'lwjgl',                version: lwjgl_version,         changing: true,  classifier: 'natives-macos'
+    //@formatter:on
     testCompile group: 'junit', name: 'junit', version: '4.11'
 }
