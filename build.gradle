@@ -20,7 +20,7 @@ def log4j_version        = '2.3'
 def commons_version      = '3.4'
 def commons_collections  = '4.1'
 def junit_version        = '4.12'
-def le_cbchain           = '0.1.1'
+def le_cbchain           = '0.1.2'
 def guava_version        = '19.0'
 def gson_version         = '2.7'
 //@formatter:on

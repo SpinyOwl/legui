@@ -13,9 +13,9 @@ import java.util.stream.Stream;
  * Basic abstract ComponentContainer object is a component
  * that can contain other components.
  * <p>
- * The base of container is <b><span style="color:red">Set</span> created on base of <span style="color:red">IdentityHashMap</span></b>,
- * that's little restriction which determines that child
- * can exist in parent only one time. When adding component it compares only <span style="color:red">references</span>.
+ * The base of container is <b><span style="color:red">SetUniqueList</span>
+ * created on base of <span style="color:red">CopyOnWriteArrayList</span></b>,
+ * that's little restriction which determines that child can exist in parent only one time.
  * <p>
  * Created by Shcherbin Alexander on 9/14/2016.
  */
