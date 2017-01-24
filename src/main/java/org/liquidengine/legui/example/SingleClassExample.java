@@ -13,8 +13,10 @@ import org.liquidengine.legui.processor.SystemEventProcessor;
 import org.liquidengine.legui.render.LeguiRenderer;
 import org.liquidengine.legui.render.nvg.NvgLeguiRenderer;
 import org.liquidengine.legui.util.ColorConstants;
+import org.lwjgl.PointerBuffer;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWKeyCallbackI;
+import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.glfw.GLFWWindowCloseCallbackI;
 import org.lwjgl.opengl.GL;
 
@@ -30,9 +32,12 @@ import static org.lwjgl.system.MemoryUtil.NULL;
  * Created by Alexander on 17.12.2016.
  */
 public class SingleClassExample {
-    public static final int WIDTH = 400;
-    public static final int HEIGHT = 200;
-    private static volatile boolean running = false;
+    public static final     int     WIDTH            = 400;
+    public static final     int     HEIGHT           = 200;
+    private static volatile boolean running          = false;
+    private static          long[]  monitors         = null;
+    private static          boolean toggleFullscreen = false;
+    private static          boolean fullscreen       = false;
 
     public static void main(String[] args) throws IOException {
         System.setProperty("joml.nounsafe", Boolean.TRUE.toString());
@@ -47,6 +52,14 @@ public class SingleClassExample {
         GL.createCapabilities();
         glfwSwapInterval(0);
 
+        PointerBuffer pointerBuffer = glfwGetMonitors();
+        int           remaining     = pointerBuffer.remaining();
+        System.out.println(remaining);
+        monitors = new long[remaining];
+        for (int i = 0; i < remaining; i++) {
+            monitors[i] = pointerBuffer.get(i);
+        }
+
         // Firstly we need to create frame component for window.
         Frame frame = new Frame(WIDTH, HEIGHT);
         // we can add elements here or on the fly
@@ -55,7 +68,7 @@ public class SingleClassExample {
         // We need to create legui context which shared by renderer and event processor.
         // Also we need to pass event processor for ui events such as click on component, key typing and etc.
         LeguiEventProcessor leguiEventProcessor = new LeguiEventProcessor();
-        LeguiContext context = new LeguiContext(window, frame, leguiEventProcessor);
+        LeguiContext        context             = new LeguiContext(window, frame, leguiEventProcessor);
 
         // We need to create callback keeper which will hold all of callbacks.
         // These callbacks will be used in initialization of system event processor
@@ -65,7 +78,7 @@ public class SingleClassExample {
         // register callbacks for window. Note: all previously binded callbacks will be unbinded.
         ((DefaultLeguiCallbackKeeper) keeper).registerCallbacks(window);
 
-        GLFWKeyCallbackI glfwKeyCallbackI = (w1, key, code, action, mods) -> running = !(key == GLFW_KEY_ESCAPE && action != GLFW_RELEASE);
+        GLFWKeyCallbackI         glfwKeyCallbackI         = (w1, key, code, action, mods) -> running = !(key == GLFW_KEY_ESCAPE && action != GLFW_RELEASE);
         GLFWWindowCloseCallbackI glfwWindowCloseCallbackI = w -> running = false;
 
         // if we want to create some callbacks for system events you should create and put them to keeper
@@ -136,6 +149,16 @@ public class SingleClassExample {
             // When system events are translated to GUI events we need to process them.
             // This event processor calls listeners added to ui components
             leguiEventProcessor.processEvent();
+            if (toggleFullscreen) {
+                if (fullscreen) {
+                    glfwSetWindowMonitor(window, NULL, 100, 100, WIDTH, HEIGHT, GLFW_DONT_CARE);
+                } else {
+                    GLFWVidMode glfwVidMode = glfwGetVideoMode(monitors[0]);
+                    glfwSetWindowMonitor(window, monitors[0], 0, 0, glfwVidMode.width(), glfwVidMode.height(), glfwVidMode.refreshRate());
+                }
+                fullscreen = !fullscreen;
+                toggleFullscreen = false;
+            }
         }
 
         // And when rendering is ended we need to destroy renderer
@@ -149,8 +172,9 @@ public class SingleClassExample {
         // Set background color for frame
         frame.setBackgroundColor(ColorConstants.lightBlue());
 
-        Button button = new Button("Add components", 20, 20, 160, 30);
-        SimpleRectangleLineBorder border = new SimpleRectangleLineBorder(ColorConstants.black(), 1);
+        Button                    button  = new Button("Add components", 20, 20, 160, 30);
+        Button                    button2 = new Button("Toggle fullscreen", 200, 20, 160, 30);
+        SimpleRectangleLineBorder border  = new SimpleRectangleLineBorder(ColorConstants.black(), 1);
         button.setBorder(border);
 
         boolean[] added = {false};
@@ -160,20 +184,26 @@ public class SingleClassExample {
                 frame.addAllComponents(generateOnFly());
             }
         });
+        button2.getLeguiEventListeners().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
+            if (event.getAction().equals(MouseClickEvent.MouseClickAction.CLICK)) {
+                toggleFullscreen = true;
+            }
+        });
 
         frame.addComponent(button);
+        frame.addComponent(button2);
     }
 
     private static List<Component> generateOnFly() {
         List<Component> list = new ArrayList<>();
 
-        Label label = new Label(20,60,200,20);
+        Label label = new Label(20, 60, 200, 20);
         label.getTextState().setText("Generated on fly label");
         label.getTextState().setTextColor(ColorConstants.red());
 
-        RadioButtonGroup group = new RadioButtonGroup();
-        RadioButton radioButtonFirst = new RadioButton("First", 20, 90, 200, 20);
-        RadioButton radioButtonSecond = new RadioButton("Second", 20, 110, 200, 20);
+        RadioButtonGroup group             = new RadioButtonGroup();
+        RadioButton      radioButtonFirst  = new RadioButton("First", 20, 90, 200, 20);
+        RadioButton      radioButtonSecond = new RadioButton("Second", 20, 110, 200, 20);
 
         radioButtonFirst.setRadioButtonGroup(group);
         radioButtonSecond.setRadioButtonGroup(group);
