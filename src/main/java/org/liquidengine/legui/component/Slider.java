@@ -54,7 +54,6 @@ public class Slider extends Component {
         rectangleIntersector.setPaddingLeft(sliderSize / 2f);
         rectangleIntersector.setPaddingRight(sliderSize / 2f);
         this.intersector = rectangleIntersector;
-        border.setEnabled(false);
     }
 
     public float getValue() {

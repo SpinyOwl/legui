@@ -11,7 +11,7 @@ import org.liquidengine.legui.util.ColorConstants;
 /**
  * Created by Alexander on 09.10.2016.
  */
-public class ScrollablePanel extends Panel implements Viewport {
+public class ScrollablePanel extends ComponentContainer implements Viewport {
     public static final float INITIAL_SCROLL_SIZE = 12f;
     protected ScrollBar verticalScrollBar;
     protected ScrollBar horizontalScrollBar;
