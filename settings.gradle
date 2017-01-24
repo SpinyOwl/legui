@@ -1,5 +1,5 @@
 rootProject.name = 'legui'
 include 'legui.core'
-include 'legui.backend.opengl'
-include 'legui.example.opengl'
+include 'legui.opengl'
+include 'legui.opengl.example'
 

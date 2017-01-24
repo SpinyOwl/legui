@@ -6,6 +6,6 @@ repositories {
 }
 
 dependencies {
-    compile project(':legui.backend.opengl'), project(':legui.core')
+    compile project(':legui.opengl'), project(':legui.core')
     testCompile group: 'junit', name: 'junit', version: '4.11'
 }
