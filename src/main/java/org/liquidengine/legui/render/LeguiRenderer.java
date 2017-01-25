@@ -1,6 +1,7 @@
 package org.liquidengine.legui.render;
 
 import org.liquidengine.legui.component.Frame;
+import org.liquidengine.legui.component.Layer;
 import org.liquidengine.legui.context.LeguiContext;
 
 /**
@@ -17,14 +18,17 @@ public abstract class LeguiRenderer {
 
     public abstract void postRender(Frame component);
 
-    public void render(Frame component) {
-        preRender(component);
+    public void render(Frame frame) {
+        preRender(frame);
         try {
-            component.render(context);
+            for (Layer layer : frame.getAllLayers()) {
+                layer.getContainer().render(context);
+            }
+
         } catch (Throwable e) {
             e.printStackTrace();
         }
-        postRender(component);
+        postRender(frame);
     }
 
     public abstract void initialize();

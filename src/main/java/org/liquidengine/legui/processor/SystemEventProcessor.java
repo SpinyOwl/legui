@@ -1,6 +1,7 @@
 package org.liquidengine.legui.processor;
 
 import org.liquidengine.legui.component.Frame;
+import org.liquidengine.legui.component.Layer;
 import org.liquidengine.legui.context.ILeguiCallbackKeeper;
 import org.liquidengine.legui.context.LeguiContext;
 import org.liquidengine.legui.context.LeguiSystemEventQueue;
@@ -47,8 +48,9 @@ public class SystemEventProcessor {
             SystemEventPreprocessor preprocessor = provider.getPreprocessor(event.getClass());
             if (preprocessor != null) preprocessor.process(event, context);
 
-            SystemEventListener listener = frame.getSystemEventListeners().getListener(event.getClass());
-            if (listener != null) listener.update(event, frame, context);
+            Layer.LayerContainer container = frame.getComponentLayer().getContainer();
+            SystemEventListener  listener  = container.getSystemEventListeners().getListener(event.getClass());
+            if (listener != null) listener.update(event, container, context);
 
             SystemEventPostprocessor postprocessor = provider.getPostprocessor(event.getClass());
             if (postprocessor != null) postprocessor.process(event, context);

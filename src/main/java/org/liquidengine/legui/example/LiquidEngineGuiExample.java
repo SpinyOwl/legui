@@ -36,7 +36,7 @@ public class LiquidEngineGuiExample extends Demo {
         Frame     frame     = new Frame(width, height);
         Component component = createGui(width, height);
         frame.addComponent(component);
-        frame.getLeguiEventListeners().addListener(KeyboardKeyEvent.class, (KeyboardKeyEventListener) event -> {
+        frame.getComponentLayer().getContainer().getLeguiEventListeners().addListener(KeyboardKeyEvent.class, (KeyboardKeyEventListener) event -> {
 
         });
         debug = new Label(10, 10, 100, 20);

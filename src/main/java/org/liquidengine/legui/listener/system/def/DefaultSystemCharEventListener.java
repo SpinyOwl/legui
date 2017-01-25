@@ -12,7 +12,7 @@ public class DefaultSystemCharEventListener implements SystemEventListener<Compo
     @Override
     public void update(SystemCharEvent event, Component component, LeguiContext context) {
         Component focusedGui = context.getFocusedGui();
-        if (focusedGui == null) focusedGui = context.getFrame();
+        if (focusedGui == null) focusedGui = context.getFrame().getComponentLayer().getContainer();
         SystemEventListener listener = focusedGui.getSystemEventListeners().getListener(event.getClass());
         if (listener != this) {
             listener.update(event, focusedGui, context);

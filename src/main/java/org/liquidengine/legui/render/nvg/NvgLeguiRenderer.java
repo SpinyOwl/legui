@@ -46,8 +46,8 @@ public class NvgLeguiRenderer extends LeguiRenderer {
     }
 
     @Override
-    public void render(Frame component) {
-        super.render(component);
+    public void render(Frame frame) {
+        super.render(frame);
     }
 
     @Override

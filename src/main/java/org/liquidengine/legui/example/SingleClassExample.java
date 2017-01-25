@@ -170,7 +170,7 @@ public class SingleClassExample {
 
     private static void createGuiElements(Frame frame) {
         // Set background color for frame
-        frame.setBackgroundColor(ColorConstants.lightBlue());
+        frame.getComponentLayer().getContainer().setBackgroundColor(ColorConstants.lightBlue());
 
         Button                    button  = new Button("Add components", 20, 20, 160, 30);
         Button                    button2 = new Button("Toggle fullscreen", 200, 20, 160, 30);

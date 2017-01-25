@@ -8,6 +8,8 @@ import org.joml.Vector2f;
 import org.liquidengine.legui.component.intersector.RectangleIntersector;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
+import org.liquidengine.legui.event.component.MouseClickEvent;
+import org.liquidengine.legui.listener.component.MouseClickEventListener;
 
 /**
  * An implementation of a check box -- an item that can be selected or
@@ -105,6 +107,11 @@ public class CheckBox extends Component {
         intersector = new RectangleIntersector();
         backgroundColor.set(0f);
         textState.setHorizontalAlign(HorizontalAlign.CENTER);
+        leguiEventListeners.addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
+            if (event.getAction().equals(MouseClickEvent.MouseClickAction.CLICK)) {
+               checked = !checked;
+            }
+        });
     }
 
     /**

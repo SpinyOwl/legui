@@ -4,8 +4,7 @@ import com.google.common.base.Objects;
 import org.liquidengine.legui.component.*;
 import org.liquidengine.legui.event.SystemEvent;
 import org.liquidengine.legui.event.system.*;
-import org.liquidengine.legui.listener.system.checkbox.CheckBoxSystemMouseClickEventListener;
-import org.liquidengine.legui.listener.system.container.ContainerSystemMouseClickEventListener;
+//import org.liquidengine.legui.listener.system.container.ContainerSystemMouseClickEventListener;
 import org.liquidengine.legui.listener.system.def.*;
 import org.liquidengine.legui.listener.system.radiobutton.RadioButtonSystemMouseClickListener;
 import org.liquidengine.legui.listener.system.scrollbar.ScrollBarSystemCursorPosEventListener;
@@ -80,11 +79,11 @@ public class DefaultSystemEventListenerProvider extends SystemEventListenerProvi
     }
 
     private void initializeListeners() {
-        registerListener(ComponentContainer.class, SystemMouseClickEvent.class, new ContainerSystemMouseClickEventListener());
+//        registerListener(ComponentContainer.class, SystemMouseClickEvent.class, new ContainerSystemMouseClickEventListener());
 
         registerListener(Component.class, SystemCursorPosEvent.class, new DefaultSystemCursorPosEventListener());
 
-        registerListener(CheckBox.class, SystemMouseClickEvent.class, new CheckBoxSystemMouseClickEventListener());
+//        registerListener(CheckBox.class, SystemMouseClickEvent.class, new CheckBoxSystemMouseClickEventListener());
 
         registerListener(RadioButton.class, SystemMouseClickEvent.class, new RadioButtonSystemMouseClickListener());
 
