@@ -11,6 +11,7 @@ import org.liquidengine.legui.processor.SystemEventProcessor;
 import org.liquidengine.legui.render.LeguiRenderer;
 import org.liquidengine.legui.render.nvg.NvgLeguiRenderer;
 import org.lwjgl.glfw.GLFW;
+import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWKeyCallbackI;
 import org.lwjgl.glfw.GLFWWindowCloseCallbackI;
 import org.lwjgl.opengl.GL;
@@ -95,7 +96,7 @@ public class Demo {
         if (!GLFW.glfwInit()) {
             throw new RuntimeException("Can't initialize GLFW");
         }
-
+        glfwSetErrorCallback(GLFWErrorCallback.createPrint());
         glfwWindowHint(GLFW_RESIZABLE, resizable ? GLFW_TRUE : GLFW_FALSE);
         windowPointer = glfwCreateWindow(width, height, initialTitle, NULL, NULL);
         glfwSetWindowPos(windowPointer, x, y);
@@ -138,7 +139,7 @@ public class Demo {
                 if (iconified) {
                     GLFW.glfwSetWindowSize(window, 100, 100);
                     System.out.println("SET SIZE");
-                    int w[]={0},h[]={0};
+                    int w[] = {0}, h[] = {0};
                     GLFW.glfwGetWindowSize(window, w, h);
                     System.out.println("SIZE = " + w[0] + " x " + h[0]);
                 }

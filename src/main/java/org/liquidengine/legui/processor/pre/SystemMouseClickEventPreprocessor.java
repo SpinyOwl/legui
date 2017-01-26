@@ -39,7 +39,7 @@ public class SystemMouseClickEventPreprocessor implements SystemEventPreprocesso
                 focusedGui.getState().setPressed(false);
             }
         }
-        if (mouseTargetGui != null) {
+        if (context.isReorderEnabled() && mouseTargetGui != null) {
             pushContainersUp(mouseTargetGui);
         }
     }
