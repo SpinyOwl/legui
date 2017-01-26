@@ -1,13 +1,9 @@
 package org.liquidengine.legui.example;
 
 import org.joml.Vector2i;
+import org.liquidengine.legui.Legui;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.Frame;
-import org.liquidengine.legui.listener.LeguiEventProcessor;
-import org.liquidengine.legui.system.context.DefaultLeguiCallbackKeeper;
-import org.liquidengine.legui.system.context.LeguiCallbackKeeper;
-import org.liquidengine.legui.system.context.LeguiContext;
-import org.liquidengine.legui.system.processor.LeguiSystemEventProcessorManager;
 import org.liquidengine.legui.system.renderer.LeguiRenderer;
 import org.lwjgl.PointerBuffer;
 import org.lwjgl.glfw.GLFW;
@@ -59,18 +55,10 @@ public class Example {
         // we can add elements here or on the fly
         createGuiElements(frame);
 
-        // We need to create legui context which shared by renderer and event processor.
-        // Also we need to pass event processor for ui events such as click on component, key typing and etc.
-        LeguiEventProcessor leguiEventProcessor = new LeguiEventProcessor();
-        LeguiContext        context             = null;//new LeguiContext(window, frame, leguiEventProcessor);
-
-        // We need to create callback keeper which will hold all of callbacks.
-        // These callbacks will be used in initialization of system event processor
-        // (will be added callbacks which will push system events to event queue and after that processed by SystemEventProcessor)
-        LeguiCallbackKeeper keeper = new DefaultLeguiCallbackKeeper();
-
-        // register callbacks for window. Note: all previously binded callbacks will be unbinded.
-        ((DefaultLeguiCallbackKeeper) keeper).registerCallbacks(window);
+        // We need to create legui instance one for window
+        // which hold all necessary library components
+        // or if you want some customizations you can do it by yourself.
+        Legui legui = new Legui(window, frame);
 
         GLFWKeyCallbackI         glfwKeyCallbackI         = (w1, key, code, action, mods) -> running = !(key == GLFW_KEY_ESCAPE && action != GLFW_RELEASE);
         GLFWWindowCloseCallbackI glfwWindowCloseCallbackI = w -> running = false;
@@ -82,14 +70,9 @@ public class Example {
         // glfwSetWindowCloseCallback(window, glfwWindowCloseCallbackI);
         //
         // Right:
-        keeper.getChainKeyCallback().add(glfwKeyCallbackI);
-        keeper.getChainWindowCloseCallback().add(glfwWindowCloseCallbackI);
+        legui.getCallbackKeeper().getChainKeyCallback().add(glfwKeyCallbackI);
+        legui.getCallbackKeeper().getChainWindowCloseCallback().add(glfwWindowCloseCallbackI);
 
-        // Event processor for system events. System events should be processed and translated to gui events.
-        LeguiSystemEventProcessorManager systemEventProcessor = new LeguiSystemEventProcessorManager(frame, context, keeper);
-
-        // Also we need to create renderer which will render our ui components.
-        LeguiRenderer renderer = null; //new NvgLeguiRenderer(context);
 
         // Initialization finished, so we can start render loop.
         running = true;
@@ -98,7 +81,7 @@ public class Example {
         // Here is one-thread example.
 
         // before render loop we need to initialize renderer
-        renderer.initialize();
+        legui.getRenderer().initialize();
 
         while (running) {
 
@@ -121,7 +104,7 @@ public class Example {
             //}
 
             // Also we can do it in one line
-//            context.updateGlfwWindow();
+            legui.getContext().updateGlfwWindow();
             Vector2i windowSize = null;//context.getWindowSize();
 
             glClearColor(1, 1, 1, 1);
@@ -131,18 +114,18 @@ public class Example {
             glClear(GL_COLOR_BUFFER_BIT);
 
             // render frame
-            renderer.render(frame);
+            legui.getRenderer().render(frame);
 
             // poll events to callbacks
             glfwPollEvents();
             glfwSwapBuffers(window);
 
             // Now we need to process events. Firstly we need to process system events.
-            systemEventProcessor.processEvent();
+            legui.getSystemEventProcessorManager().processEvent();
 
             // When system events are translated to GUI events we need to process them.
             // This event processor calls listeners added to ui components
-            leguiEventProcessor.processEvent();
+            legui.getGuiEventProcessor().processEvent();
             if (toggleFullscreen) {
                 if (fullscreen) {
                     glfwSetWindowMonitor(window, NULL, 100, 100, WIDTH, HEIGHT, GLFW_DONT_CARE);
@@ -156,7 +139,7 @@ public class Example {
         }
 
         // And when rendering is ended we need to destroy renderer
-        renderer.destroy();
+        legui.getRenderer().destroy();
 
         glfwDestroyWindow(window);
         glfwTerminate();

@@ -2,13 +2,25 @@ package org.liquidengine.legui.system.renderer;
 
 import org.liquidengine.legui.component.Component;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
 /**
  * Created by Aliaksandr_Shcherbin on 1/24/2017.
  */
-public interface LeguiComponentRenderer<C extends Component> {
-    void initialize();
+public abstract class LeguiComponentRenderer<C extends Component> {
+    private AtomicBoolean initialized = new AtomicBoolean(false);
 
-    void render(C component);
+    public abstract void initialize();
 
-    void destroy();
+    public void render(C component) {
+        if (!initialized.getAndSet(true)) {
+            initialize();
+        } else {
+            renderComponent(component);
+        }
+    }
+
+    public abstract void renderComponent(C component);
+
+    public abstract void destroy();
 }
