@@ -2,13 +2,11 @@ package org.liquidengine.legui.image;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.liquidengine.legui.exception.LeguiException;
 import org.liquidengine.legui.exception.LeguiExceptions;
 import org.liquidengine.legui.util.IOUtil;
-import org.lwjgl.nanovg.NanoVG;
 import org.lwjgl.stb.STBImage;
 
 import java.io.IOException;
@@ -19,11 +17,11 @@ import java.nio.ByteBuffer;
  */
 public class Image {
     private static final Logger LOGGER = LogManager.getLogger();
-    private final String path;
-    private int width;
-    private int height;
-    private ImageChannels channels;
-    private ByteBuffer imageData;
+    private final String        path;
+    private       int           width;
+    private       int           height;
+    private       ImageChannels channels;
+    private       ByteBuffer    imageData;
 
     public Image(String path) {
         this.path = path;
@@ -37,10 +35,10 @@ public class Image {
     public void initialize() {
         try {
             ByteBuffer byteBuffer = IOUtil.ioResourceToByteBuffer(path, 1024);
-            int[] width = {0};
-            int[] height = {0};
-            int[] channels = {0};
-            ByteBuffer imageData = STBImage.stbi_load_from_memory(byteBuffer, width, height, channels, 4);
+            int[]      width      = {0};
+            int[]      height     = {0};
+            int[]      channels   = {0};
+            ByteBuffer imageData  = STBImage.stbi_load_from_memory(byteBuffer, width, height, channels, 4);
 
             if (imageData != null) {
                 this.width = width[0];

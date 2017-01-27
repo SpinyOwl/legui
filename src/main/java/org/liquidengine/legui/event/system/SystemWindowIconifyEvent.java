@@ -8,7 +8,7 @@ import org.liquidengine.legui.event.SystemEvent;
  * Created by Shcherbin Alexander on 6/10/2016.
  */
 public class SystemWindowIconifyEvent implements SystemEvent {
-    public final long window;
+    public final long    window;
     public final boolean iconified;
 
     public SystemWindowIconifyEvent(long window, boolean iconified) {

@@ -56,14 +56,14 @@ public class GsonTextStateSerializer extends AbstractGsonSerializer<TextState> {
     @Override
     protected void deserialize(JsonObject json, TextState object, GsonSerializeContext context) {
 
-        JsonElement font = json.get(FONT);
-        JsonElement text = json.get(TEXT);
-        JsonElement fontSize = json.get(FONT_SIZE);
+        JsonElement font            = json.get(FONT);
+        JsonElement text            = json.get(TEXT);
+        JsonElement fontSize        = json.get(FONT_SIZE);
         JsonElement horizontalAlign = json.get(HORIZONTAL_ALIGN);
-        JsonElement verticalAlign = json.get(VERTICAL_ALIGN);
-        JsonElement textColor = json.getAsJsonObject(TEXT_COLOR);
-        JsonElement highlightColor = json.getAsJsonObject(HIGHLIGHT_COLOR);
-        JsonElement padding = json.getAsJsonObject(PADDING);
+        JsonElement verticalAlign   = json.get(VERTICAL_ALIGN);
+        JsonElement textColor       = json.getAsJsonObject(TEXT_COLOR);
+        JsonElement highlightColor  = json.getAsJsonObject(HIGHLIGHT_COLOR);
+        JsonElement padding         = json.getAsJsonObject(PADDING);
 
         if (isNotNull(font)) object.setFont(font.getAsString());
         else if (font.isJsonNull()) object.setFont(FontRegister.DEFAULT);
@@ -88,10 +88,10 @@ public class GsonTextStateSerializer extends AbstractGsonSerializer<TextState> {
 
 
         if (isNotNull(padding)) {
-            JsonObject p = padding.getAsJsonObject();
-            JsonElement left = p.get(LEFT);
-            JsonElement top = p.get(TOP);
-            JsonElement right = p.get(RIGHT);
+            JsonObject  p      = padding.getAsJsonObject();
+            JsonElement left   = p.get(LEFT);
+            JsonElement top    = p.get(TOP);
+            JsonElement right  = p.get(RIGHT);
             JsonElement bottom = p.get(BOTTOM);
             object.setPadding(
                     isNotNull(left) ? left.getAsFloat() : 0,

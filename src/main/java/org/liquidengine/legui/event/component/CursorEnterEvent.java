@@ -12,7 +12,7 @@ import org.liquidengine.legui.event.LeguiEvent;
  */
 public class CursorEnterEvent extends LeguiEvent {
     private final CursorEnterAction action;
-    private final Vector2f cursorComponentPosition;
+    private final Vector2f          cursorComponentPosition;
 
     public CursorEnterEvent(Component component, CursorEnterAction action, Vector2f cursorComponentPosition) {
         super(component);
@@ -26,11 +26,6 @@ public class CursorEnterEvent extends LeguiEvent {
 
     public Vector2f getCursorComponentPosition() {
         return cursorComponentPosition;
-    }
-
-    public enum CursorEnterAction {
-        ENTER,
-        EXIT
     }
 
     @Override
@@ -54,5 +49,10 @@ public class CursorEnterEvent extends LeguiEvent {
                 .append("action", action)
                 .append("cursorComponentPosition", cursorComponentPosition)
                 .toString();
+    }
+
+    public enum CursorEnterAction {
+        ENTER,
+        EXIT
     }
 }

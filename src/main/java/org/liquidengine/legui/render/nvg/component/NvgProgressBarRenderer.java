@@ -24,8 +24,8 @@ public class NvgProgressBarRenderer extends NvgLeguiComponentRenderer {
         {
             nvgSave(context);
             ProgressBar progressBar = (ProgressBar) component;
-            Vector2f pos = calculatePosition(component);
-            Vector2f size = component.getSize();
+            Vector2f    pos         = calculatePosition(component);
+            Vector2f    size        = component.getSize();
 
             float cornerRadius = component.getCornerRadius();
 

@@ -26,7 +26,7 @@ public class GsonSimpleRectangleLineBorderSerializer extends AbstractGsonSeriali
 
     @Override
     protected void deserialize(JsonObject json, SimpleRectangleLineBorder object, GsonSerializeContext context) {
-        JsonElement thickness = json.get(THICKNESS);
+        JsonElement thickness   = json.get(THICKNESS);
         JsonElement borderColor = json.get(BORDER_COLOR);
         if (isNotNull(thickness)) object.setThickness(thickness.getAsFloat());
         if (isNotNull(borderColor)) object.setBorderColor(GsonUtil.readColor(borderColor.getAsJsonObject()));

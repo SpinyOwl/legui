@@ -9,8 +9,8 @@ import org.liquidengine.legui.event.SystemEvent;
  */
 public class SystemWindowSizeEvent implements SystemEvent {
     public final long window;
-    public final int width;
-    public final int height;
+    public final int  width;
+    public final int  height;
 
     public SystemWindowSizeEvent(long window, int width, int height) {
         this.window = window;

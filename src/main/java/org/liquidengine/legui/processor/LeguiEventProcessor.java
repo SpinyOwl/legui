@@ -2,7 +2,6 @@ package org.liquidengine.legui.processor;
 
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.event.LeguiEvent;
-import org.liquidengine.legui.event.system.SystemCursorPosEvent;
 import org.liquidengine.legui.listener.LeguiEventListener;
 
 import java.util.List;
@@ -22,7 +21,7 @@ public class LeguiEventProcessor {
     public void processEvent() {
         LeguiEvent event;
         while ((event = componentEvents.poll()) != null) {
-            Component component = event.getComponent();
+            Component                          component        = event.getComponent();
             List<? extends LeguiEventListener> listenersByEvent = component.getLeguiEventListeners().getListeners(event.getClass());
             for (LeguiEventListener LeguiEventListener : listenersByEvent) {
                 LeguiEventListener.update(event);

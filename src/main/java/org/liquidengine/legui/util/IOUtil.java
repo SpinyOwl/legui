@@ -48,7 +48,7 @@ public final class IOUtil {
     public static String loadAsString(InputStream stream) {
         if (stream == null) throw new NullPointerException();
         LOGGER.debug("loading resource: " + stream);
-        StringBuilder result = new StringBuilder();
+        StringBuilder     result       = new StringBuilder();
         InputStreamReader streamReader = new InputStreamReader(stream);
         try (BufferedReader reader = new BufferedReader(streamReader)) {
             String buffer;
@@ -98,7 +98,7 @@ public final class IOUtil {
 
     public static String loadResourceAsString(String resource, int bufferSize) throws RuntimeException {
         ByteBuffer byteBuffer = loadResourceToByteBuffer(resource, bufferSize);
-        byte b[] = new byte[byteBuffer.limit()];
+        byte       b[]        = new byte[byteBuffer.limit()];
         byteBuffer.get(b);
         return new String(b);
     }
@@ -163,15 +163,15 @@ public final class IOUtil {
     public static String getParentFolder(String path) {
         int delimL = path.lastIndexOf('/');
         int delimR = path.lastIndexOf('\\');
-        int delim = delimL > delimR ? delimL : delimR;
+        int delim  = delimL > delimR ? delimL : delimR;
         return path.substring(0, delim) + "/";
     }
 
     public static String getChildFile(String path) {
-        int delimL = path.lastIndexOf('/');
-        int delimR = path.lastIndexOf('\\');
-        int delim = (delimL > delimR ? delimL : delimR) + 1;
-        String file = path.substring(delim);
+        int    delimL = path.lastIndexOf('/');
+        int    delimR = path.lastIndexOf('\\');
+        int    delim  = (delimL > delimR ? delimL : delimR) + 1;
+        String file   = path.substring(delim);
         if (file.isEmpty()) return null;
         return file;
     }

@@ -1,13 +1,5 @@
 package org.liquidengine.legui.listener.system.container;
 
-import org.liquidengine.legui.component.Component;
-import org.liquidengine.legui.component.ComponentContainer;
-import org.liquidengine.legui.context.LeguiContext;
-import org.liquidengine.legui.event.system.SystemMouseClickEvent;
-import org.liquidengine.legui.listener.SystemEventListener;
-
-import java.util.List;
-
 /**
  * Created by Alexander on 30.10.2016.
  */

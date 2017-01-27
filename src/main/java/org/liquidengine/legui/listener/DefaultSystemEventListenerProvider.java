@@ -4,7 +4,6 @@ import com.google.common.base.Objects;
 import org.liquidengine.legui.component.*;
 import org.liquidengine.legui.event.SystemEvent;
 import org.liquidengine.legui.event.system.*;
-//import org.liquidengine.legui.listener.system.container.ContainerSystemMouseClickEventListener;
 import org.liquidengine.legui.listener.system.def.*;
 import org.liquidengine.legui.listener.system.radiobutton.RadioButtonSystemMouseClickListener;
 import org.liquidengine.legui.listener.system.scrollbar.ScrollBarSystemCursorPosEventListener;
@@ -30,6 +29,8 @@ import org.liquidengine.legui.processor.pre.SystemMouseClickEventPreprocessor;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
+//import org.liquidengine.legui.listener.system.container.ContainerSystemMouseClickEventListener;
 
 /**
  * Created by Shcherbin Alexander on 10/24/2016.

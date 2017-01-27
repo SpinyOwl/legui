@@ -11,6 +11,7 @@ import org.liquidengine.legui.component.optional.Orientation;
  */
 public class ScrollBar extends Component {
     public static final float MIN_SCROLL_SIZE = 1f;
+
     private Orientation orientation = Orientation.VERTICAL;
 
     private float minValue = 0f;

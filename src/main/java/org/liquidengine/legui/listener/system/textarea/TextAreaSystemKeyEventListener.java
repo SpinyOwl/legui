@@ -6,8 +6,6 @@ import org.liquidengine.legui.context.LeguiContext;
 import org.liquidengine.legui.event.system.SystemKeyEvent;
 import org.liquidengine.legui.listener.SystemEventListener;
 
-import java.util.Arrays;
-
 import static org.liquidengine.legui.util.TextUtil.findNextWord;
 import static org.liquidengine.legui.util.TextUtil.findPrevWord;
 import static org.lwjgl.glfw.GLFW.*;
@@ -20,10 +18,10 @@ public class TextAreaSystemKeyEventListener implements SystemEventListener<TextA
     @Override
     public void update(SystemKeyEvent event, TextArea gui, LeguiContext leguiContext) {
         if (gui.getState().isFocused() && gui.isEditable()) {
-            int key = event.key;
-            int caretPosition = gui.getCaretPosition();
-            boolean pressed = event.action != GLFW_RELEASE;
-            TextState textState = gui.getTextState();
+            int       key           = event.key;
+            int       caretPosition = gui.getCaretPosition();
+            boolean   pressed       = event.action != GLFW_RELEASE;
+            TextState textState     = gui.getTextState();
             if (key == GLFW_KEY_LEFT && pressed) {
                 keyLeftAction(gui, caretPosition, event.mods);
             } else if (key == GLFW_KEY_RIGHT && pressed) {
@@ -57,7 +55,7 @@ public class TextAreaSystemKeyEventListener implements SystemEventListener<TextA
             String s = gui.getSelection();
             if (s != null) {
                 int start = gui.getStartSelectionIndex();
-                int end = gui.getEndSelectionIndex();
+                int end   = gui.getEndSelectionIndex();
                 if (start > end) {
                     int swap = start;
                     start = end;
@@ -93,7 +91,7 @@ public class TextAreaSystemKeyEventListener implements SystemEventListener<TextA
                 gui.setEndSelectionIndex(findNextWord(textState.getText(), caretPosition));
             }
             int start = gui.getStartSelectionIndex();
-            int end = gui.getEndSelectionIndex();
+            int end   = gui.getEndSelectionIndex();
             if (start > end) {
                 start = gui.getEndSelectionIndex();
                 end = gui.getStartSelectionIndex();
@@ -115,7 +113,7 @@ public class TextAreaSystemKeyEventListener implements SystemEventListener<TextA
                 gui.setEndSelectionIndex(findPrevWord(textState.getText(), caretPosition));
             }
             int start = gui.getStartSelectionIndex();
-            int end = gui.getEndSelectionIndex();
+            int end   = gui.getEndSelectionIndex();
             if (start > end) {
                 start = gui.getEndSelectionIndex();
                 end = gui.getStartSelectionIndex();
@@ -140,11 +138,11 @@ public class TextAreaSystemKeyEventListener implements SystemEventListener<TextA
     }
 
     private void keyEndAction(TextArea gui, int caretPosition, TextState textState, int mods) {
-        String text = textState.getText();
+        String   text  = textState.getText();
         String[] lines = text.split("\n", -1);
-        LineData some = getStartLineIndexAndLineNumber(lines, caretPosition);
-        int cl = lines[some.lineIndex].length();
-        int delta = cl - some.caretPositionInLine;
+        LineData some  = getStartLineIndexAndLineNumber(lines, caretPosition);
+        int      cl    = lines[some.lineIndex].length();
+        int      delta = cl - some.caretPositionInLine;
 
         int newCaretPosition = caretPosition + delta;
         gui.setEndSelectionIndex(newCaretPosition);
@@ -155,9 +153,9 @@ public class TextAreaSystemKeyEventListener implements SystemEventListener<TextA
     }
 
     private void keyHomeAction(TextArea gui, int caretPosition, TextState textState, int mods) {
-        String text = textState.getText();
+        String   text  = textState.getText();
         String[] lines = text.split("\n", -1);
-        LineData some = getStartLineIndexAndLineNumber(lines, caretPosition);
+        LineData some  = getStartLineIndexAndLineNumber(lines, caretPosition);
 
         int newCaretPosition = caretPosition - some.caretPositionInLine;
         gui.setEndSelectionIndex(newCaretPosition);
@@ -169,10 +167,10 @@ public class TextAreaSystemKeyEventListener implements SystemEventListener<TextA
 
     private void keyDownAction(TextArea gui, int caretPosition, TextState textState, int mods) {
         if (caretPosition < textState.length()) {
-            String text = textState.getText();
-            String[] lines = text.split("\n", -1);
-            LineData some = getStartLineIndexAndLineNumber(lines, caretPosition);
-            int newCaretPosition = text.length();
+            String   text             = textState.getText();
+            String[] lines            = text.split("\n", -1);
+            LineData some             = getStartLineIndexAndLineNumber(lines, caretPosition);
+            int      newCaretPosition = text.length();
 
             if (some.lineIndex < lines.length - 1) {
                 int nl = lines[some.lineIndex + 1].length() + 1;
@@ -193,10 +191,10 @@ public class TextAreaSystemKeyEventListener implements SystemEventListener<TextA
 
     private void keyUpAction(TextArea gui, int caretPosition, TextState textState, int mods) {
         if (caretPosition > 0) {
-            String text = textState.getText();
-            String[] lines = text.split("\n", -1);
-            LineData some = getStartLineIndexAndLineNumber(lines, caretPosition);
-            int newCaretPosition = 0;
+            String   text             = textState.getText();
+            String[] lines            = text.split("\n", -1);
+            LineData some             = getStartLineIndexAndLineNumber(lines, caretPosition);
+            int      newCaretPosition = 0;
             if (some.lineIndex > 0) {
                 int nl = lines[some.lineIndex - 1].length() + 1;
                 newCaretPosition = caretPosition - (some.caretPositionInLine >= nl - 1 ? some.caretPositionInLine + 1 : nl);
@@ -239,7 +237,7 @@ public class TextAreaSystemKeyEventListener implements SystemEventListener<TextA
     }
 
     private LineData getStartLineIndexAndLineNumber(String[] lines, int caretPosition) {
-        int caretLine = 0;
+        int caretLine   = 0;
         int caretOffset = 0;
         for (String line : lines) {
             int newOffset = caretOffset + line.length();

@@ -18,7 +18,7 @@ public class SystemMouseClickEventPreprocessor implements SystemEventPreprocesso
     @Override
     public void process(SystemMouseClickEvent event, LeguiContext context) {
         context.getMouseButtonStates()[event.button] = event.action == GLFW_PRESS;
-        Component focusedGui = context.getFocusedGui();
+        Component focusedGui     = context.getFocusedGui();
         Component mouseTargetGui = context.getMouseTargetGui();
 
         if (event.action == GLFW_PRESS) {
@@ -39,21 +39,21 @@ public class SystemMouseClickEventPreprocessor implements SystemEventPreprocesso
                 focusedGui.getState().setPressed(false);
             }
         }
-        if (context.isReorderEnabled() && mouseTargetGui != null) {
+        if (/*context.isReorderEnabled() && */mouseTargetGui != null) {
             pushContainersUp(mouseTargetGui);
         }
     }
 
     private void processFocusEvent(LeguiContext context, Component focusedGui, Component focusTarget, boolean focused) {
-        FocusEvent focusEvent = new FocusEvent(focusedGui, focused, focusTarget);
+        FocusEvent          focusEvent          = new FocusEvent(focusedGui, focused, focusTarget);
         LeguiEventProcessor leguiEventProcessor = context.getLeguiEventProcessor();
         if (leguiEventProcessor != null) leguiEventProcessor.pushEvent(focusEvent);
         else focusedGui.getLeguiEventListeners().getListeners(FocusEvent.class).forEach(l -> l.update(focusEvent));
     }
 
     private void pushContainersUp(Component gui) {
-        ComponentContainer parent = gui.getParent();
-        Component current = gui;
+        ComponentContainer parent  = gui.getParent();
+        Component          current = gui;
         if (parent != null) {
             boolean push = false;
             while (parent != null) {
@@ -63,15 +63,17 @@ public class SystemMouseClickEventPreprocessor implements SystemEventPreprocesso
                 if (push) break;
             }
             if (push) {
-                do {
-                    ComponentContainer container =  parent;
-                    if (container != null) {
-                        container.removeComponent(current);
-                        container.addComponent(current);
-                        current = parent;
-                        parent = current.getParent();
-                    }
-                } while (parent != null);
+                parent.removeComponent(current);
+                parent.addComponent(current);
+//                do {
+//                    ComponentContainer container =  parent;
+//                    if (container != null) {
+//                        container.removeComponent(current);
+//                        container.addComponent(current);
+//                        current = parent;
+//                        parent = current.getParent();
+//                    }
+//                } while (parent != null);
             }
         }
     }

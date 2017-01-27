@@ -27,18 +27,18 @@ import static org.liquidengine.legui.util.Util.cpToStr;
  * Created by Shcherbin Alexander on 10/21/2016.
  */
 public class SelectBox extends ComponentContainer {
-    public static final String NULL = "null";
-    private static final String EXPANDED = cpToStr(0xE5C7);
-    private static final String COLLAPSED = cpToStr(0xE5C5);
-    protected List<ListBoxElement> listBoxElements = SetUniqueList.setUniqueList(new CopyOnWriteArrayList<>());
-    protected List<String> elements = SetUniqueList.setUniqueList(new CopyOnWriteArrayList<>());
+    public static final  String               NULL            = "null";
+    private static final String               EXPANDED        = cpToStr(0xE5C7);
+    private static final String               COLLAPSED       = cpToStr(0xE5C5);
+    protected            List<ListBoxElement> listBoxElements = SetUniqueList.setUniqueList(new CopyOnWriteArrayList<>());
+    protected            List<String>         elements        = SetUniqueList.setUniqueList(new CopyOnWriteArrayList<>());
 
-    protected SelectBoxScrollablePanel selectionListPanel  = new SelectBoxScrollablePanel();
-    protected Button                   selectionButton     = new Button(NULL);
-    protected String                   selectedElement     = null;
-    protected float                    elementHeight       = 16;
-    protected float                    buttonWidth         = 15f;
-    protected int                      visibleCount        = 3;
+    protected SelectBoxScrollablePanel selectionListPanel = new SelectBoxScrollablePanel();
+    protected Button                   selectionButton    = new Button(NULL);
+    protected String                   selectedElement    = null;
+    protected float                    elementHeight      = 16;
+    protected float                    buttonWidth        = 15f;
+    protected int                      visibleCount       = 3;
 
     protected Button expandButton = new Button(COLLAPSED);
 
@@ -104,9 +104,9 @@ public class SelectBox extends ComponentContainer {
                 }
                 if (
                         event.focusTarget == expandButton ||
-                        event.focusTarget == selectionButton ||
-                        event.focusTarget == selectionListPanel ||
-                        event.focusTarget == selectionListPanel.getVerticalScrollBar()
+                                event.focusTarget == selectionButton ||
+                                event.focusTarget == selectionListPanel ||
+                                event.focusTarget == selectionListPanel.getVerticalScrollBar()
                         ) collapse = false;
                 if (collapse) setCollapsed(true);
             }
@@ -159,7 +159,7 @@ public class SelectBox extends ComponentContainer {
         Vector2f psize = new Vector2f();
         if (parent != null) psize.set(parent.getSize());
         Vector2f wsize = new Vector2f(this.size.x, visibleCount * elementHeight);
-        Vector2f wpos = new Vector2f();
+        Vector2f wpos  = new Vector2f();
         if (parent != null && position.y + wsize.y > psize.y) {
             wpos.set(position.x, position.y - wsize.y);
         } else {

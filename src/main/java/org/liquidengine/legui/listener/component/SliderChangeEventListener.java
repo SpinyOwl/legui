@@ -9,5 +9,5 @@ import org.liquidengine.legui.listener.LeguiEventListener;
 public interface SliderChangeEventListener extends LeguiEventListener<SliderChangeEvent> {
 
     void update(SliderChangeEvent event);
-    
+
 }

@@ -13,9 +13,10 @@ import static org.lwjgl.glfw.GLFW.GLFW_PRESS;
  */
 public class TextAreaSystemMouseClickEventListener implements SystemEventListener<TextArea, SystemMouseClickEvent> {
     private DefaultSystemMouseClickEventListener defaultSystemMouseClickEventListener = new DefaultSystemMouseClickEventListener();
+
     @Override
     public void update(SystemMouseClickEvent event, TextArea gui, LeguiContext leguiContext) {
-        defaultSystemMouseClickEventListener.update(event,gui,leguiContext);
+        defaultSystemMouseClickEventListener.update(event, gui, leguiContext);
         if (event.action == GLFW_PRESS) {
             int mouseCaretPosition = gui.getMouseCaretPosition();
             gui.setCaretPosition(mouseCaretPosition);

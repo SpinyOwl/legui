@@ -24,7 +24,7 @@ public class Theme {
     private Vector4f focusedStrokeColorDark;
     private Vector4f focusedStrokeColorLight;
 
-    private float fontSize;
+    private float  fontSize;
     private String font;
 
     public Vector4f getStrokeColorDark() {

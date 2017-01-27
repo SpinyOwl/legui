@@ -45,10 +45,10 @@ public class GsonSliderSerializer extends GsonComponentSerializer<Slider> {
         super.deserialize(json, object, context);
 
         JsonElement sliderActiveColor = json.get(SLIDER_ACTIVE_COLOR);
-        JsonElement sliderColor = json.get(SLIDER_COLOR);
-        JsonElement orientation = json.get(ORIENTATION);
-        JsonElement sliderSize = json.get(SLIDER_SIZE);
-        JsonElement value = json.get(VALUE);
+        JsonElement sliderColor       = json.get(SLIDER_COLOR);
+        JsonElement orientation       = json.get(ORIENTATION);
+        JsonElement sliderSize        = json.get(SLIDER_SIZE);
+        JsonElement value             = json.get(VALUE);
 
         if (isNotNull(sliderActiveColor)) object.setSliderActiveColor(readColor(sliderActiveColor.getAsJsonObject()));
         if (isNotNull(sliderColor)) object.setSliderColor(readColor(sliderColor.getAsJsonObject()));

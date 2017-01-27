@@ -24,7 +24,7 @@ public class Slider extends Component {
     private Orientation orientation = Orientation.HORIZONTAL;
 
     private Vector4f sliderActiveColor = new Vector4f(0, 0, 1, 1);
-    private Vector4f sliderColor = new Vector4f(0.7f, 0.7f, 0.7f, 0.4f);
+    private Vector4f sliderColor       = new Vector4f(0.7f, 0.7f, 0.7f, 0.4f);
 
     private float sliderSize = 10f;
 

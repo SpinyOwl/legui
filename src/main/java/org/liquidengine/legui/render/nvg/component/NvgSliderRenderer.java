@@ -27,20 +27,20 @@ public class NvgSliderRenderer extends NvgLeguiComponentRenderer {
         createScissor(context, component);
         {
             nvgSave(context);
-            Vector2f pos = calculatePosition(component);
-            Vector2f size = component.getSize();
-            float x = pos.x;
-            float y = pos.y;
-            float w = size.x;
-            float h = size.y;
+            Vector2f pos             = calculatePosition(component);
+            Vector2f size            = component.getSize();
+            float    x               = pos.x;
+            float    y               = pos.y;
+            float    w               = size.x;
+            float    h               = size.y;
             Vector4f backgroundColor = new Vector4f(component.getBackgroundColor());
 
-            Slider slider = (Slider) component;
-            float value = slider.getValue();
-            boolean vertical = Orientation.VERTICAL.equals(slider.getOrientation());
+            Slider   slider              = (Slider) component;
+            float    value               = slider.getValue();
+            boolean  vertical            = Orientation.VERTICAL.equals(slider.getOrientation());
             Vector4f sliderInactiveColor = slider.getSliderColor();
-            Vector4f sliderColor = slider.getSliderActiveColor();
-            float cornerRadius = component.getCornerRadius();
+            Vector4f sliderColor         = slider.getSliderActiveColor();
+            float    cornerRadius        = component.getCornerRadius();
 
             nvgBeginPath(context);
             nvgRoundedRect(context, x, y, w, h, cornerRadius);

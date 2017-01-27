@@ -21,6 +21,7 @@ public final class GsonSerializeUtil {
         GsonSerializeContext context = new GsonSerializeContext();
         return serializer.serialize(component, context);
     }
+
     public static <T> JsonObject serializeToJson(T component) {
         return serializeToJson(component, new GsonSerializeContext());
     }
@@ -48,7 +49,7 @@ public final class GsonSerializeUtil {
 
     public static <T> AbstractGsonSerializer<T> getGsonSerializer(String className, String shortTypeName) {
         AbstractGsonSerializer<T> serializer = null;
-        String type = null;
+        String                    type       = null;
         if (type == null) {
             type = className;
             if (type != null) {

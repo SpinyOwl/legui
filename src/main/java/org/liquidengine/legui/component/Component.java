@@ -19,7 +19,6 @@ import org.liquidengine.legui.util.ColorConstants;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Component is an object that have graphical representation in legui system.
@@ -118,6 +117,13 @@ public abstract class Component implements Serializable {
      * Event listener for system events, which transformed into specific ui events.
      */
     protected SystemEventListenerMap systemEventListeners = new SystemEventListenerMap(this.getClass());
+
+    /**
+     * Tooltip message
+     */
+    protected String tooltip = null;
+
+    protected Tooltip tooltipComponent = null;
 
     /**
      * Default constructor. Used to create component instance without any parameters.
@@ -481,6 +487,46 @@ public abstract class Component implements Serializable {
 //    public int getComponentId() {
 //        return componentId;
 //    }
+
+
+    /**
+     * Returns tooltip text
+     *
+     * @return tooltip text
+     */
+    public String getTooltip() {
+        return tooltip;
+    }
+
+    /**
+     * Used to set tooltip text
+     *
+     * @param tooltip tooltip text
+     */
+    public void setTooltip(String tooltip) {
+        this.tooltip = tooltip;
+        if (tooltipComponent == null) {
+            tooltipComponent = new Tooltip();
+        }
+        tooltipComponent.getTextState().setText(tooltip);
+    }
+
+    /**
+     * Generated tooltip component on base of tooltip text.
+     * <p>
+     * You can use this component to set background, font and other visual effects.
+     * <p>
+     * <span style="color:red">
+     * NOTE: do nat add this component to frame component layer. <br>
+     * It automatically added to tooltip layer by system event processor.
+     * Also tooltip position automatically calculated there.
+     * </span>
+     *
+     * @return generated tooltip component or null if tooltip is empty.
+     */
+    public Tooltip getTooltipComponent() {
+        return tooltipComponent;
+    }
 
     /**
      * (non-Javadoc)

@@ -23,7 +23,7 @@ public class GsonComponentContainerSerializer<T extends ComponentContainer> exte
         super.jsonSerialize(object, json, context);
 
         List<Component> components = object.getComponents();
-        JsonArray comps = new JsonArray();
+        JsonArray       comps      = new JsonArray();
         for (Component component : components) {
             comps.add(GsonSerializeUtil.serializeToJson(component, context));
         }
@@ -35,7 +35,7 @@ public class GsonComponentContainerSerializer<T extends ComponentContainer> exte
         super.deserialize(json, object, context);
 
         List<Component> componentList = new ArrayList<>();
-        JsonElement components = json.get(COMPONENTS);
+        JsonElement     components    = json.get(COMPONENTS);
         if (isNotNull(components) && components.isJsonArray()) {
             JsonArray comps = components.getAsJsonArray();
             for (JsonElement comp : comps) {

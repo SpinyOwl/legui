@@ -8,13 +8,13 @@ import java.util.concurrent.ConcurrentHashMap;
  * Created by Shcherbin Alexander on 5/16/2016.
  */
 public class FontRegister {
-    public static final String ENTYPO = "entypo";
-    public static final String ROBOTO_BOLD = "roboto italic";
-    public static final String ROBOTO_LIGHT = "roboto-light";
-    public static final String ROBOTO_REGULAR = "roboto-regular";
-    public static final String MATERIAL_ICONS_REGULAR = "MaterialIcons-Regular";
-    public static final String DEFAULT = ROBOTO_BOLD;
-    private static final Map<String, Font> fontRegister = new ConcurrentHashMap<>();
+    public static final  String            ENTYPO                 = "entypo";
+    public static final  String            ROBOTO_BOLD            = "roboto italic";
+    public static final  String            ROBOTO_LIGHT           = "roboto-light";
+    public static final  String            ROBOTO_REGULAR         = "roboto-regular";
+    public static final  String            MATERIAL_ICONS_REGULAR = "MaterialIcons-Regular";
+    public static final  String            DEFAULT                = ROBOTO_BOLD;
+    private static final Map<String, Font> fontRegister           = new ConcurrentHashMap<>();
 
     static {
         registerFont(ENTYPO, "org/liquidengine/legui/font/entypo.ttf", true);

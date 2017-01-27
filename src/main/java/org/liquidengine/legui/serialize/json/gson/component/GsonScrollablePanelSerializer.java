@@ -20,13 +20,13 @@ public class GsonScrollablePanelSerializer extends GsonComponentSerializer<Scrol
     protected void jsonSerialize(ScrollablePanel object, JsonObject json, GsonSerializeContext context) {
         super.jsonSerialize(object, json, context);
 
-        ScrollBar verticalScrollBar = object.getVerticalScrollBar();
-        ScrollBar horizontalScrollBar = object.getHorizontalScrollBar();
-        ComponentContainer container = object.getContainer();
+        ScrollBar          verticalScrollBar   = object.getVerticalScrollBar();
+        ScrollBar          horizontalScrollBar = object.getHorizontalScrollBar();
+        ComponentContainer container           = object.getContainer();
 
         JsonObject vScrollBar = GsonSerializeUtil.serializeToJson(verticalScrollBar, context);
         JsonObject hScrollBar = GsonSerializeUtil.serializeToJson(horizontalScrollBar, context);
-        JsonObject cont = GsonSerializeUtil.serializeToJson(container, context);
+        JsonObject cont       = GsonSerializeUtil.serializeToJson(container, context);
 
         GsonUtil.fill(json)
                 .add(HORIZONTAL_SCROLL_BAR, hScrollBar)
@@ -41,7 +41,7 @@ public class GsonScrollablePanelSerializer extends GsonComponentSerializer<Scrol
 
         JsonElement hScrollBar = json.get(HORIZONTAL_SCROLL_BAR);
         JsonElement vScrollBar = json.get(VERTICAL_SCROLL_BAR);
-        JsonElement container = json.get(CONTAINER);
+        JsonElement container  = json.get(CONTAINER);
 
         if (isNotNull(hScrollBar)) object.setHorizontalScrollBar(GsonSerializeUtil.deserializeFromJson(hScrollBar.getAsJsonObject(), context));
         if (isNotNull(vScrollBar)) object.setVerticalScrollBar(GsonSerializeUtil.deserializeFromJson(vScrollBar.getAsJsonObject(), context));

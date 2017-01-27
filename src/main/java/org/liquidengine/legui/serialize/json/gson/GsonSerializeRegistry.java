@@ -23,8 +23,8 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 public final class GsonSerializeRegistry {
     private Map<Class<?>, AbstractGsonSerializer<?>> serializerMap = new ConcurrentHashMap<>();
-    private BidiMap<String, Class<?>> typeMap = new DualHashBidiMap<>();
-    private Lock lock = new ReentrantLock(false);
+    private BidiMap<String, Class<?>>                typeMap       = new DualHashBidiMap<>();
+    private Lock                                     lock          = new ReentrantLock(false);
 
     private GsonSerializeRegistry() {
     }
@@ -113,7 +113,7 @@ public final class GsonSerializeRegistry {
      */
     private <T> AbstractGsonSerializer<T> treeGetSerializer(Class<T> tClass) {
         AbstractGsonSerializer<T> serializer = (AbstractGsonSerializer<T>) serializerMap.get(tClass);
-        Class cClass = tClass.getSuperclass();
+        Class                     cClass     = tClass.getSuperclass();
         while (serializer == null) {
             serializer = (AbstractGsonSerializer<T>) serializerMap.get(cClass);
             if (cClass.isAssignableFrom(Object.class)) break;

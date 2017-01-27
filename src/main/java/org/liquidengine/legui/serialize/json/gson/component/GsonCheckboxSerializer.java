@@ -33,11 +33,11 @@ public class GsonCheckboxSerializer extends GsonComponentSerializer<CheckBox> {
         super.deserialize(json, object, context);
 
         JsonElement textState = json.get(TEXT_STATE);
-        JsonElement checked = json.get(CHECKED);
+        JsonElement checked   = json.get(CHECKED);
 
         if (isNotNull(textState)) {
             JsonObject asJsonObject = textState.getAsJsonObject();
-            TextState state = GsonSerializeUtil.deserializeFromJson(asJsonObject, context);
+            TextState  state        = GsonSerializeUtil.deserializeFromJson(asJsonObject, context);
             object.getTextState().copy(state);
         }
         if (isNotNull(checked)) object.setChecked(checked.getAsBoolean());

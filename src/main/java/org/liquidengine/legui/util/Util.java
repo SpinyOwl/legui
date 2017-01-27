@@ -24,7 +24,7 @@ public final class Util {
     }
 
     public static Vector2f calculateParentOffset(Component component) {
-        Vector2f offset = new Vector2f();
+        Vector2f  offset = new Vector2f();
         Component parent = component.getParent();
         while (parent != null) {
             offset.add(parent.getPosition());

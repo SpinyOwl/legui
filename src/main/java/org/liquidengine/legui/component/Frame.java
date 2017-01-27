@@ -29,7 +29,9 @@ public class Frame {
 
     public Frame(float width, float height) {
         initialize();
-        componentLayer.container.size.set(width, height);
+        for (Layer layer : getAllLayers()) {
+            layer.container.size.set(width, height);
+        }
     }
 
     public Frame(Vector2f size) {

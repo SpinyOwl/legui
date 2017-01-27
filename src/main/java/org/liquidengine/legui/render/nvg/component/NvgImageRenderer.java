@@ -1,28 +1,16 @@
 package org.liquidengine.legui.render.nvg.component;
 
-import com.google.common.cache.Cache;
-import com.google.common.cache.CacheBuilder;
-import com.google.common.cache.RemovalListener;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.joml.Vector2f;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.ImageView;
 import org.liquidengine.legui.context.LeguiContext;
-import org.liquidengine.legui.image.Image;
 import org.liquidengine.legui.render.nvg.NvgLeguiComponentRenderer;
 import org.liquidengine.legui.render.nvg.NvgLeguiRenderer;
 import org.liquidengine.legui.render.nvg.image.NvgImageReferenceManager;
-import org.liquidengine.legui.util.IOUtil;
 import org.liquidengine.legui.util.Util;
 import org.lwjgl.nanovg.NVGPaint;
-import org.lwjgl.nanovg.NanoVG;
-
-import java.io.IOException;
-import java.nio.ByteBuffer;
-import java.util.Map;
-import java.util.Queue;
-import java.util.concurrent.*;
 
 import static org.liquidengine.legui.util.NvgRenderUtils.*;
 import static org.lwjgl.nanovg.NanoVG.*;
@@ -32,8 +20,8 @@ import static org.lwjgl.nanovg.NanoVG.*;
  */
 public class NvgImageRenderer extends NvgLeguiComponentRenderer {
 
-    private static final Logger LOGGER = LogManager.getLogger();
-    private NVGPaint imagePaint = NVGPaint.malloc();
+    private static final Logger   LOGGER     = LogManager.getLogger();
+    private              NVGPaint imagePaint = NVGPaint.malloc();
 
     @Override
     public void initialize() {
@@ -45,11 +33,11 @@ public class NvgImageRenderer extends NvgLeguiComponentRenderer {
     public void render(Component component, LeguiContext leguiContext, long context) {
         ImageView imageView = (ImageView) component;
 
-        Vector2f size = imageView.getSize();
+        Vector2f size     = imageView.getSize();
         Vector2f position = Util.calculatePosition(component);
 
-        NvgImageReferenceManager manager = (NvgImageReferenceManager) leguiContext.getContextData().get(NvgLeguiRenderer.IMAGE_REFERENCE_MANAGER);
-        int imageRef = manager.getImageReference(imageView.getImage(), context);
+        NvgImageReferenceManager manager  = (NvgImageReferenceManager) leguiContext.getContextData().get(NvgLeguiRenderer.IMAGE_REFERENCE_MANAGER);
+        int                      imageRef = manager.getImageReference(imageView.getImage(), context);
 
         createScissor(context, component);
         {

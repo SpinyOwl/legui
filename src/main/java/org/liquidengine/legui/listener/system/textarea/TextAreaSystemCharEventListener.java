@@ -16,10 +16,10 @@ public class TextAreaSystemCharEventListener implements SystemEventListener<Text
     @Override
     public void update(SystemCharEvent event, TextArea gui, LeguiContext leguiContext) {
         if (gui.getState().isFocused() && gui.isEditable() && !leguiContext.getMouseButtonStates()[GLFW.GLFW_MOUSE_BUTTON_LEFT]) {
-            String str = cpToStr(event.codepoint);
+            String    str       = cpToStr(event.codepoint);
             TextState textState = gui.getTextState();
-            int start = gui.getStartSelectionIndex();
-            int end = gui.getEndSelectionIndex();
+            int       start     = gui.getStartSelectionIndex();
+            int       end       = gui.getEndSelectionIndex();
             if (start > end) {
                 start = gui.getEndSelectionIndex();
                 end = gui.getStartSelectionIndex();

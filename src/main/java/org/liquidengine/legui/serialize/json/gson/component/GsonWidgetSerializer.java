@@ -20,7 +20,7 @@ public class GsonWidgetSerializer extends GsonComponentSerializer<Widget> {
         super.jsonSerialize(object, json, context);
 
         ComponentContainer container = object.getContainer();
-        JsonObject cont = GsonSerializeUtil.serializeToJson(container, context);
+        JsonObject         cont      = GsonSerializeUtil.serializeToJson(container, context);
         GsonUtil.fill(json)
                 .add(CONTAINER, cont)
 //                .add(RESIZABLE, object.isResizable())
@@ -41,14 +41,14 @@ public class GsonWidgetSerializer extends GsonComponentSerializer<Widget> {
 
         JsonElement container = json.get(CONTAINER);
 //        JsonElement resizable = json.get(RESIZABLE);
-        JsonElement draggable = json.get(DRAGGABLE);
-        JsonElement minimized = json.get(MINIMIZED);
-        JsonElement closeable = json.get(CLOSEABLE);
-        JsonElement titleEnabled = json.get(TITLE_ENABLED);
-        JsonElement titleHeight = json.get(TITLE_HEIGHT);
+        JsonElement draggable            = json.get(DRAGGABLE);
+        JsonElement minimized            = json.get(MINIMIZED);
+        JsonElement closeable            = json.get(CLOSEABLE);
+        JsonElement titleEnabled         = json.get(TITLE_ENABLED);
+        JsonElement titleHeight          = json.get(TITLE_HEIGHT);
         JsonElement titleBackgroundColor = json.get(TITLE_BACKGROUND_COLOR);
-        JsonElement closeButtonColor = json.get(CLOSE_BUTTON_COLOR);
-        JsonElement title = json.get(TITLE);
+        JsonElement closeButtonColor     = json.get(CLOSE_BUTTON_COLOR);
+        JsonElement title                = json.get(TITLE);
 
         if (isNotNull(container)) object.setContainer(GsonSerializeUtil.deserializeFromJson(container.getAsJsonObject(), context));
 //        if (isNotNull(resizable)) object.setResizable(resizable.getAsBoolean());

@@ -24,17 +24,17 @@ import static org.lwjgl.nanovg.NanoVG.*;
  * Created by Shcherbin Alexander on 5/19/2016.
  */
 public class NvgCheckBoxRenderer extends NvgDefaultRenderer {
-    private static final String ICON_CHECKED = Util.cpToStr(0xE834);
-    private static final String ICON_UNCHECKED = Util.cpToStr(0xE835);
-    private NVGColor colorA = NVGColor.create();
+    private static final String   ICON_CHECKED   = Util.cpToStr(0xE834);
+    private static final String   ICON_UNCHECKED = Util.cpToStr(0xE835);
+    private              NVGColor colorA         = NVGColor.create();
 
     @Override
     public void render(Component component, LeguiContext leguiContext, long nvgContext) {
         createScissor(nvgContext, component);
         {
             CheckBox checkBox = (CheckBox) component;
-            Vector2f pos = Util.calculatePosition(component);
-            Vector2f size = component.getSize();
+            Vector2f pos      = Util.calculatePosition(component);
+            Vector2f size     = component.getSize();
 
             float px = pos.x;
             float py = pos.y;
@@ -49,20 +49,20 @@ public class NvgCheckBoxRenderer extends NvgDefaultRenderer {
             }
 
             TextState textState = checkBox.getTextState();
-            float fontSize = textState.getFontSize();
-            float iconWid = fontSize + 5;
+            float     fontSize  = textState.getFontSize();
+            float     iconWid   = fontSize + 5;
 
             Vector4f pad = textState.getPadding();
 
-            float h = sh - (pad.y + pad.w);
-            float y = py + pad.y;
+            float h  = sh - (pad.y + pad.w);
+            float y  = py + pad.y;
             float x1 = px;
-            float x = x1 + iconWid;
-            float w = sw - iconWid - pad.z;
+            float x  = x1 + iconWid;
+            float w  = sw - iconWid - pad.z;
             NvgRenderUtils.renderTextStateLineToBounds(nvgContext, new Vector2f(x, y), new Vector2f(w, h), checkBox.getTextState());
 
             Vector4f textColor = textState.getTextColor();
-            String icon = checkBox.isChecked() ? ICON_CHECKED : ICON_UNCHECKED;
+            String   icon      = checkBox.isChecked() ? ICON_CHECKED : ICON_UNCHECKED;
             renderIcon(component, nvgContext, fontSize, iconWid, h, y, x1, textColor, icon);
         }
         resetScissor(nvgContext);
@@ -70,7 +70,7 @@ public class NvgCheckBoxRenderer extends NvgDefaultRenderer {
 
     private void renderIcon(Component component, long nvgContext, float fontSize, float iconWid, float h, float y, float x1, Vector4f textColor, String icon) {
         if (component.getState().isFocused()) {
-            NvgRenderUtils.renderTextLineToBounds(nvgContext, x1-1, y+1, iconWid, h, fontSize, FontRegister.MATERIAL_ICONS_REGULAR,
+            NvgRenderUtils.renderTextLineToBounds(nvgContext, x1 - 1, y + 1, iconWid, h, fontSize, FontRegister.MATERIAL_ICONS_REGULAR,
                     DEFAULT_THEME.getFocusedStrokeColorLight(), colorA, icon, HorizontalAlign.CENTER, VerticalAlign.MIDDLE, false);
         }
         NvgRenderUtils.renderTextLineToBounds(nvgContext, x1, y, iconWid, h, fontSize, FontRegister.MATERIAL_ICONS_REGULAR,

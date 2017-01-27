@@ -8,7 +8,7 @@ import org.liquidengine.legui.event.SystemEvent;
  * Created by Shcherbin Alexander on 6/10/2016.
  */
 public class SystemScrollEvent implements SystemEvent {
-    public final long window;
+    public final long   window;
     public final double xoffset;
     public final double yoffset;
 

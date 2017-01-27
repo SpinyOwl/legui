@@ -13,8 +13,8 @@ import org.liquidengine.legui.util.ColorConstants;
  */
 public class ScrollablePanel extends ComponentContainer implements Viewport {
     public static final float INITIAL_SCROLL_SIZE = 12f;
-    protected ScrollBar verticalScrollBar;
-    protected ScrollBar horizontalScrollBar;
+    protected ScrollBar          verticalScrollBar;
+    protected ScrollBar          horizontalScrollBar;
     protected ComponentContainer viewport;
     protected ComponentContainer container;
 
@@ -33,7 +33,7 @@ public class ScrollablePanel extends ComponentContainer implements Viewport {
     }
 
     private void initialize(float width, float height) {
-        float viewportWidth = width - INITIAL_SCROLL_SIZE;
+        float viewportWidth  = width - INITIAL_SCROLL_SIZE;
         float viewportHeight = height - INITIAL_SCROLL_SIZE;
 
         verticalScrollBar = new ScrollBar();
@@ -80,11 +80,11 @@ public class ScrollablePanel extends ComponentContainer implements Viewport {
 
     public void resize() {
         boolean horizontalScrollBarVisible = horizontalScrollBar.isVisible();
-        boolean verticalScrollBarVisible = verticalScrollBar.isVisible();
+        boolean verticalScrollBarVisible   = verticalScrollBar.isVisible();
 
         Vector2f scrollablePanelSize = new Vector2f(size);
-        Vector2f containerSize = new Vector2f(container.size);
-        Vector2f viewportSize = new Vector2f(size);
+        Vector2f containerSize       = new Vector2f(container.size);
+        Vector2f viewportSize        = new Vector2f(size);
 
         if (horizontalScrollBarVisible) {
             horizontalScrollBar.position.y = viewportSize.y = scrollablePanelSize.y - horizontalScrollBar.size.y;

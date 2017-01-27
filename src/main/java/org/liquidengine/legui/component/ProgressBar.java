@@ -21,7 +21,7 @@ public class ProgressBar extends Component {
 
     private float value;
 
-    private Vector4f progressColor = ColorConstants.green();
+    private Vector4f                             progressColor              = ColorConstants.green();
     private List<ProgressBarChangeEventListener> progressBarUpdateListeners = new CopyOnWriteArrayList<>();
 
     public ProgressBar() {

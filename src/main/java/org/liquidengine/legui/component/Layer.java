@@ -1,6 +1,9 @@
 package org.liquidengine.legui.component;
 
 import org.joml.Vector2f;
+import org.liquidengine.legui.event.system.SystemWindowSizeEvent;
+import org.liquidengine.legui.listener.SystemEventListener;
+import org.liquidengine.legui.util.ColorConstants;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -119,10 +122,19 @@ public class Layer {
 
         public LayerContainer(Layer layer) {
             this.layer = layer;
+            backgroundColor.set(ColorConstants.transparent);
+            SystemEventListener<LayerContainer, SystemWindowSizeEvent> frameSystemWindowSizeEventSystemEventListener = (event, component, context) -> {
+                LayerContainer.this.size.set(event.width, event.height);
+                LayerContainer.this.components.forEach(c -> c.getSystemEventListeners().getListener(event.getClass()).update(event, c, context));
+            };
+
+            LayerContainer.this.systemEventListeners
+                    .setListener(SystemWindowSizeEvent.class, frameSystemWindowSizeEventSystemEventListener);
         }
 
         public Layer getLayer() {
             return layer;
         }
+
     }
 }

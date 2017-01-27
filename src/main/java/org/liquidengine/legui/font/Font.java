@@ -13,7 +13,7 @@ import static org.liquidengine.legui.exception.LeguiExceptions.FAILED_TO_LOAD_FO
  */
 public class Font {
     private ByteBuffer data;
-    private String path;
+    private String     path;
 
     public Font() {
 

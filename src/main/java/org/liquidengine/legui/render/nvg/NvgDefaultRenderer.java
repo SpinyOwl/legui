@@ -5,7 +5,6 @@ import org.joml.Vector4f;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.ComponentContainer;
 import org.liquidengine.legui.context.LeguiContext;
-import org.liquidengine.legui.util.ColorConstants;
 import org.lwjgl.nanovg.NVGColor;
 
 import java.util.List;
@@ -29,8 +28,8 @@ public class NvgDefaultRenderer extends NvgLeguiComponentRenderer {
         {
 //            nvgSave(context);
 
-            Vector2f pos = calculatePosition(component);
-            Vector2f size = component.getSize();
+            Vector2f pos             = calculatePosition(component);
+            Vector2f size            = component.getSize();
             Vector4f backgroundColor = component.getBackgroundColor();
 
             // rectangle
@@ -44,8 +43,8 @@ public class NvgDefaultRenderer extends NvgLeguiComponentRenderer {
         resetScissor(context);
 
         if (component instanceof ComponentContainer) {
-            ComponentContainer container = ((ComponentContainer) component);
-            List<Component> components = container.getComponents();
+            ComponentContainer container  = ((ComponentContainer) component);
+            List<Component>    components = container.getComponents();
             components.stream().filter(Component::isVisible).forEach(child -> child.render(leguiContext));
         }
     }

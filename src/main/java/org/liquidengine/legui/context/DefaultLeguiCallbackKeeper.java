@@ -10,21 +10,21 @@ import static org.lwjgl.glfw.GLFW.*;
  */
 public class DefaultLeguiCallbackKeeper implements ILeguiCallbackKeeper {
 
-    private IChainCharCallback chainCharCallback = new ChainCharCallback();
-    private IChainDropCallback chainDropCallback = new ChainDropCallback();
-    private IChainKeyCallback chainKeyCallback = new ChainKeyCallback();
-    private IChainScrollCallback chainScrollCallback = new ChainScrollCallback();
-    private IChainCharModsCallback chainCharModsCallback = new ChainCharModsCallback();
-    private IChainCursorEnterCallback chainCursorEnterCallback = new ChainCursorEnterCallback();
+    private IChainCharCallback            chainCharCallback            = new ChainCharCallback();
+    private IChainDropCallback            chainDropCallback            = new ChainDropCallback();
+    private IChainKeyCallback             chainKeyCallback             = new ChainKeyCallback();
+    private IChainScrollCallback          chainScrollCallback          = new ChainScrollCallback();
+    private IChainCharModsCallback        chainCharModsCallback        = new ChainCharModsCallback();
+    private IChainCursorEnterCallback     chainCursorEnterCallback     = new ChainCursorEnterCallback();
     private IChainFramebufferSizeCallback chainFramebufferSizeCallback = new ChainFramebufferSizeCallback();
-    private IChainMouseButtonCallback chainMouseButtonCallback = new ChainMouseButtonCallback();
-    private IChainCursorPosCallback chainCursorPosCallback = new ChainCursorPosCallback();
-    private IChainWindowCloseCallback chainWindowCloseCallback = new ChainWindowCloseCallback();
-    private IChainWindowFocusCallback chainWindowFocusCallback = new ChainWindowFocusCallback();
-    private IChainWindowIconifyCallback chainWindowIconifyCallback = new ChainWindowIconifyCallback();
-    private IChainWindowPosCallback chainWindowPosCallback = new ChainWindowPosCallback();
-    private IChainWindowRefreshCallback chainWindowRefreshCallback = new ChainWindowRefreshCallback();
-    private IChainWindowSizeCallback chainWindowSizeCallback = new ChainWindowSizeCallback();
+    private IChainMouseButtonCallback     chainMouseButtonCallback     = new ChainMouseButtonCallback();
+    private IChainCursorPosCallback       chainCursorPosCallback       = new ChainCursorPosCallback();
+    private IChainWindowCloseCallback     chainWindowCloseCallback     = new ChainWindowCloseCallback();
+    private IChainWindowFocusCallback     chainWindowFocusCallback     = new ChainWindowFocusCallback();
+    private IChainWindowIconifyCallback   chainWindowIconifyCallback   = new ChainWindowIconifyCallback();
+    private IChainWindowPosCallback       chainWindowPosCallback       = new ChainWindowPosCallback();
+    private IChainWindowRefreshCallback   chainWindowRefreshCallback   = new ChainWindowRefreshCallback();
+    private IChainWindowSizeCallback      chainWindowSizeCallback      = new ChainWindowSizeCallback();
 
     public void registerCallbacks(long window) {
         glfwSetCharCallback(window, chainCharCallback);

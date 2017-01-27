@@ -11,9 +11,9 @@ import org.liquidengine.legui.event.LeguiEvent;
  * Created by Shcherbin Alexander on 10/6/2016.
  */
 public class MouseClickEvent extends LeguiEvent {
-    private final Vector2f position;
+    private final Vector2f         position;
     private final MouseClickAction action;
-    private final int button;
+    private final int              button;
 
     public MouseClickEvent(Component component, Vector2f position, MouseClickAction action, int button) {
         super(component);

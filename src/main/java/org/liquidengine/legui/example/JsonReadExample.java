@@ -1,13 +1,6 @@
 package org.liquidengine.legui.example;
 
-import org.joml.Vector2f;
-import org.liquidengine.legui.component.Component;
-import org.liquidengine.legui.component.Frame;
-import org.liquidengine.legui.component.ScrollablePanel;
-import org.liquidengine.legui.component.Slider;
-import org.liquidengine.legui.serialize.json.gson.GsonSerializeUtil;
 import org.liquidengine.legui.util.IOUtil;
-import org.lwjgl.glfw.GLFW;
 
 /**
  * Created by Shcherbin Alexander on 12/1/2016.

@@ -54,6 +54,7 @@ public final class GsonUtil {
     public static boolean isNotNull(JsonElement element) {
         return element != null && !element.isJsonNull();
     }
+
     public static boolean isJsonNull(JsonElement element) {
         return element != null && element.isJsonNull();
     }

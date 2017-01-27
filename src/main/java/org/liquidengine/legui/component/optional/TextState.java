@@ -15,14 +15,14 @@ import java.io.Serializable;
  * Created by Shcherbin Alexander on 9/22/2016.
  */
 public class TextState implements Serializable {
-    protected String font = FontRegister.DEFAULT;
-    protected float fontSize = 16;
-    protected StringBuffer text = new StringBuffer();
+    protected String          font            = FontRegister.DEFAULT;
+    protected float           fontSize        = 16;
+    protected StringBuffer    text            = new StringBuffer();
     protected HorizontalAlign horizontalAlign = HorizontalAlign.LEFT;
-    protected VerticalAlign verticalAlign = VerticalAlign.MIDDLE;
-    protected Vector4f textColor = ColorConstants.black();
-    protected Vector4f highlightColor = ColorConstants.transparent();
-    protected Vector4f padding = new Vector4f();
+    protected VerticalAlign   verticalAlign   = VerticalAlign.MIDDLE;
+    protected Vector4f        textColor       = ColorConstants.black();
+    protected Vector4f        highlightColor  = ColorConstants.transparent();
+    protected Vector4f        padding         = new Vector4f();
 
     public TextState() {
     }

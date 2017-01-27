@@ -13,8 +13,8 @@ import org.liquidengine.legui.component.optional.align.VerticalAlign;
  */
 public class RadioButton extends Component {
 
-    protected TextState textState;
-    protected boolean selected;
+    protected TextState        textState;
+    protected boolean          selected;
     protected RadioButtonGroup radioButtonGroup;
 
     public RadioButton(float x, float y, float width, float height) {

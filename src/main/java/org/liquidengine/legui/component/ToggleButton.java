@@ -16,8 +16,8 @@ import org.liquidengine.legui.util.ColorConstants;
  */
 public class ToggleButton extends Button {
     protected ImageView togglededBackgroundImage;
-    private boolean  toggled;
-    private Vector4f toggledBackgroundColor;
+    private   boolean   toggled;
+    private   Vector4f  toggledBackgroundColor;
 
     /**
      * Creates toggle button with default bg color and default toggled bg color.
@@ -25,6 +25,7 @@ public class ToggleButton extends Button {
     public ToggleButton() {
         initialize();
     }
+
     public ToggleButton(String text) {
         super(text);
         initialize();

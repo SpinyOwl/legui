@@ -46,16 +46,16 @@ public abstract class AbstractGsonSerializer<T> implements JsonSerializer<T> {
 
     @Override
     public final T deserialize(String jsonString, JsonSerializeContext context) throws LeguiException {
-        JsonParser parser = new JsonParser();
-        T component = deserialize(parser.parse(jsonString), (GsonSerializeContext) context);
+        JsonParser parser    = new JsonParser();
+        T          component = deserialize(parser.parse(jsonString), (GsonSerializeContext) context);
         return component;
     }
 
     public final T deserialize(JsonElement json, GsonSerializeContext context) {
         try {
             JsonObject jsonObject = json.getAsJsonObject();
-            Class<?> aClass = findClass(jsonObject);
-            T component = (T) aClass.newInstance();
+            Class<?>   aClass     = findClass(jsonObject);
+            T          component  = (T) aClass.newInstance();
             deserialize(jsonObject, component, context);
             return component;
         } catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
@@ -85,16 +85,16 @@ public abstract class AbstractGsonSerializer<T> implements JsonSerializer<T> {
 
     @Override
     public final String serialize(T object, JsonSerializeContext context) {
-        Gson gson = new Gson();
+        Gson       gson = new Gson();
         JsonObject json = jsonSerialize(object, (GsonSerializeContext) context);
         return gson.toJson(json);
     }
 
     public final JsonObject jsonSerialize(T object, GsonSerializeContext context) {
         try {
-            JsonObject json = new JsonObject();
-            Class<?> aClass = object.getClass();
-            String shortTypeByClass = GsonSerializeRegistry.getRegistry().getShortTypeByClass(aClass);
+            JsonObject json             = new JsonObject();
+            Class<?>   aClass           = object.getClass();
+            String     shortTypeByClass = GsonSerializeRegistry.getRegistry().getShortTypeByClass(aClass);
             if (shortTypeByClass != null) {
                 json.addProperty(TYPE_PARAMETER, shortTypeByClass);
             } else {

@@ -35,7 +35,7 @@ public class GsonProgressBarSerializer extends GsonComponentSerializer<ProgressB
         super.deserialize(json, object, context);
 
         JsonElement value = json.get(VALUE);
-        JsonObject pc = json.getAsJsonObject(PROGRESS_COLOR);
+        JsonObject  pc    = json.getAsJsonObject(PROGRESS_COLOR);
 
         if (isNotNull(value)) object.setValue(value.getAsFloat());
         if (isNotNull(pc)) object.setBackgroundColor(GsonUtil.readColor(pc));

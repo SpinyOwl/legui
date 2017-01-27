@@ -16,12 +16,12 @@ public class ScrollBarSystemScrollEventListener implements SystemEventListener<S
         if (!gui.isVisible()) return;
         if (!gui.isEnabled()) return;
 
-        float maxValue = gui.getMaxValue();
-        float minValue = gui.getMinValue();
-        float curValue = gui.getCurValue();
+        float maxValue      = gui.getMaxValue();
+        float minValue      = gui.getMinValue();
+        float curValue      = gui.getCurValue();
         float visibleAmount = gui.getVisibleAmount();
-        float valueRange = gui.getMaxValue() - gui.getMinValue();
-        float newVal = (float) (curValue - 0.1f * event.yoffset * visibleAmount * valueRange / (valueRange - visibleAmount));
+        float valueRange    = gui.getMaxValue() - gui.getMinValue();
+        float newVal        = (float) (curValue - 0.1f * event.yoffset * visibleAmount * valueRange / (valueRange - visibleAmount));
 
         if (newVal > maxValue) newVal = maxValue;
         if (newVal < minValue) newVal = minValue;

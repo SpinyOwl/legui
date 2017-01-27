@@ -21,7 +21,7 @@ public class TextArea extends Component {
     protected int startSelectionIndex;
     protected int endSelectionIndex;
 
-    protected boolean editable = true;
+    protected boolean  editable       = true;
     protected Vector4f selectionColor = ColorConstants.lightBlue();
 
     public TextArea() {

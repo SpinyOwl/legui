@@ -30,7 +30,7 @@ public class GsonLabelSerializer extends GsonComponentSerializer<Label> {
         JsonElement textState = json.get(TEXT_STATE);
         if (isNotNull(textState)) {
             JsonObject asJsonObject = textState.getAsJsonObject();
-            TextState state = GsonSerializeUtil.deserializeFromJson(asJsonObject, context);
+            TextState  state        = GsonSerializeUtil.deserializeFromJson(asJsonObject, context);
             object.getTextState().copy(state);
         }
     }

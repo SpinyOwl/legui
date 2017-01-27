@@ -12,7 +12,7 @@ import org.liquidengine.legui.util.ColorConstants;
  */
 public class SimpleRectangleLineBorder extends Border {
     private Vector4f borderColor;
-    private float thickness;
+    private float    thickness;
 
     public SimpleRectangleLineBorder(Vector4f borderColor, float thickness) {
         this.borderColor = borderColor;

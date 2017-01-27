@@ -17,8 +17,8 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 public class LeguiEventListenerMap implements Serializable {
 
-    private final Lock lock = new ReentrantLock();
-    private Map<Class<? extends LeguiEvent>, List<? extends LeguiEventListener>> listeners = new ConcurrentHashMap<>();
+    private final Lock                                                                 lock      = new ReentrantLock();
+    private       Map<Class<? extends LeguiEvent>, List<? extends LeguiEventListener>> listeners = new ConcurrentHashMap<>();
 
     public LeguiEventListenerMap() {
     }

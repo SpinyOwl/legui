@@ -15,7 +15,7 @@ public final class SliderUpdateUtil {
     static void updateSliderValue(Slider gui, float newVal, LeguiContext context) {
         float value = gui.getValue();
         gui.setValue(newVal);
-        SliderChangeEvent event = new SliderChangeEvent(gui, value, newVal);
+        SliderChangeEvent   event               = new SliderChangeEvent(gui, value, newVal);
         LeguiEventProcessor leguiEventProcessor = context.getLeguiEventProcessor();
         if (leguiEventProcessor == null) {
             gui.getLeguiEventListeners().getListeners(SliderChangeEvent.class).forEach(l -> l.update(event));

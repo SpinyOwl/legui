@@ -2,7 +2,6 @@ package org.liquidengine.legui.listener;
 
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.event.SystemEvent;
-import org.liquidengine.legui.event.system.SystemMouseClickEvent;
 import org.liquidengine.legui.processor.SystemEventPostprocessor;
 import org.liquidengine.legui.processor.SystemEventPreprocessor;
 

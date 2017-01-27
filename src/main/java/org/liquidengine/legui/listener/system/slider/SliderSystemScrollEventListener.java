@@ -16,7 +16,7 @@ public class SliderSystemScrollEventListener implements SystemEventListener<Slid
         float maxValue = 100f;
         float minValue = 0f;
         float curValue = gui.getValue();
-        float newVal = (float) (curValue + event.yoffset);
+        float newVal   = (float) (curValue + event.yoffset);
 
         if (newVal > maxValue) newVal = maxValue;
         if (newVal < minValue) newVal = minValue;

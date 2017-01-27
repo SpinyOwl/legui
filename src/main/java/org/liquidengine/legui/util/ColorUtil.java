@@ -44,7 +44,7 @@ public final class ColorUtil {
     }
 
     public static Vector4f oppositeBlackOrWhite(Vector4f color, Vector4f targetColor) {
-        if(color.w==0) {
+        if (color.w == 0) {
             return ColorConstants.black();
         }
         if ((color.x * 0.299f + color.y * 0.587f + color.z * 0.114f) > 170f / 255f) {

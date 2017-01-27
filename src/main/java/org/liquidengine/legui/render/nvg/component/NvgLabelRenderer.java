@@ -26,8 +26,8 @@ public class NvgLabelRenderer extends NvgLeguiComponentRenderer {
         createScissor(context, component);
         {
 
-            Vector2f pos = calculatePosition(component);
-            Vector2f size = component.getSize();
+            Vector2f pos             = calculatePosition(component);
+            Vector2f size            = component.getSize();
             Vector4f backgroundColor = new Vector4f(component.getBackgroundColor());
 
             /*Draw background rectangle*/

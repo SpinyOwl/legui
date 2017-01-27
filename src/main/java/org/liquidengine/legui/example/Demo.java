@@ -131,7 +131,8 @@ public class Demo {
                 if (key == GLFW_KEY_G && action != GLFW_RELEASE && mods == GLFW_MOD_CONTROL) gcing = !gcing;
                 if (key == GLFW_KEY_F && action != GLFW_RELEASE && mods == GLFW_MOD_CONTROL) fixedStep = !fixedStep;
                 if (key == GLFW_KEY_R && action != GLFW_RELEASE && mods == GLFW_MOD_CONTROL) render = !render;
-                if (key == GLFW_KEY_H && action != GLFW_RELEASE && mods == GLFW_MOD_CONTROL) frame.getComponentLayer().getContainer().setVisible(!frame.getComponentLayer().getContainer().isVisible());
+                if (key == GLFW_KEY_H && action != GLFW_RELEASE && mods == GLFW_MOD_CONTROL)
+                    frame.getComponentLayer().getContainer().setVisible(!frame.getComponentLayer().getContainer().isVisible());
             };
             callbackKeeper.getChainWindowCloseCallback().add(closeCallback);
             callbackKeeper.getChainKeyCallback().add(keyCloseCallback);

@@ -18,7 +18,7 @@ public class Example extends Demo {
     }
 
     public static void main(String[] args) {
-        int width = 800;
+        int width  = 800;
         int height = 600;
         exampleGui = new ExampleGui(width, height);
         Example demo = new Example(width, height, "Demo", exampleGui);
@@ -72,25 +72,25 @@ public class Example extends Demo {
             exampleGui.getFocusedGuiLabel().getTextState().setText("FOCUSED: ");
         }
 
-        TextArea textArea = exampleGui.getTextArea();
-        int caretPosition = textArea.getCaretPosition();
-        String text = textArea.getTextState().getText();
-        int length = text.length();
-        int left = caretPosition > 0 ? caretPosition - 1 : 0;
-        int right = length > 0 ? (caretPosition < length - 1 ? caretPosition + 1 : length - 1) : 0;
-        String t = text.substring(left, right);
+        TextArea textArea      = exampleGui.getTextArea();
+        int      caretPosition = textArea.getCaretPosition();
+        String   text          = textArea.getTextState().getText();
+        int      length        = text.length();
+        int      left          = caretPosition > 0 ? caretPosition - 1 : 0;
+        int      right         = length > 0 ? (caretPosition < length - 1 ? caretPosition + 1 : length - 1) : 0;
+        String   t             = text.substring(left, right);
         exampleGui.getCaretp().getTextState().setText(caretPosition + " " + t + " " + textArea.getStartSelectionIndex() + " " + textArea.getEndSelectionIndex());
 
 
-        TextInput textInput = exampleGui.getTextInput();
-        Map<String, Object> metadata = textInput.getMetadata();
-        Float lastcx = (Float) metadata.get("lastcx");
-        Float caretx = (Float) metadata.get("caretx");
-        Float d = (caretx == null ? 0 : caretx) - (lastcx == null ? 0 : lastcx);
-        Float co = (Float) metadata.get("coffsetx");
-        Float lo = (Float) metadata.get("loffsetx");
-        float lb = textInput.getPosition().x+ textInput.getTextState().getPadding().x;
-        float rb = textInput.getPosition().x + textInput.getSize().x - textInput.getTextState().getPadding().z;
+        TextInput           textInput = exampleGui.getTextInput();
+        Map<String, Object> metadata  = textInput.getMetadata();
+        Float               lastcx    = (Float) metadata.get("lastcx");
+        Float               caretx    = (Float) metadata.get("caretx");
+        Float               d         = (caretx == null ? 0 : caretx) - (lastcx == null ? 0 : lastcx);
+        Float               co        = (Float) metadata.get("coffsetx");
+        Float               lo        = (Float) metadata.get("loffsetx");
+        float               lb        = textInput.getPosition().x + textInput.getTextState().getPadding().x;
+        float               rb        = textInput.getPosition().x + textInput.getSize().x - textInput.getTextState().getPadding().z;
         exampleGui.getDebugLabel().getTextState().setText("c: " + caretx + "; l: " + lastcx + "; d: " + d + "; co: " + co + "; lo: " + lo + "; lb: " + lb + "; rb: " + rb);
     }
 

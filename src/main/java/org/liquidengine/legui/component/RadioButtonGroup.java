@@ -1,9 +1,9 @@
 package org.liquidengine.legui.component;
 
-import org.apache.commons.collections4.list.SetUniqueList;
-
 import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 
 /**
@@ -11,7 +11,6 @@ import java.util.concurrent.CopyOnWriteArraySet;
  */
 public class RadioButtonGroup implements Serializable {
 
-//    private SetUniqueList<RadioButton> radioButtons = SetUniqueList.setUniqueList(Collections.emptyList());
     private Set<RadioButton> radioButtons = new CopyOnWriteArraySet<>();
     private RadioButton selection;
 

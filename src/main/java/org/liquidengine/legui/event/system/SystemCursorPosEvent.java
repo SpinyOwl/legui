@@ -8,11 +8,11 @@ import org.liquidengine.legui.event.SystemEvent;
  * Created by Shcherbin Alexander on 6/10/2016.
  */
 public class SystemCursorPosEvent implements SystemEvent {
-    public final long window;
+    public final long   window;
     public final double xpos;
     public final double ypos;
-    public final float fx;
-    public final float fy;
+    public final float  fx;
+    public final float  fy;
 
     public SystemCursorPosEvent(long window, double xpos, double ypos) {
         this.window = window;

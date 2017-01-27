@@ -30,15 +30,15 @@ public class NvgImageReferenceManager {
     /**
      * Cache of loaded images. If image is reached only by soft reference it will be deleted.
      */
-    private Cache<String, Integer> imageCache = CacheBuilder.newBuilder().initialCapacity(200)
+    private Cache<String, Integer>   imageCache          = CacheBuilder.newBuilder().initialCapacity(200)
             .expireAfterAccess(300, TimeUnit.SECONDS).removalListener(removalListener).build();
     /**
      * Cleanup scheduler
      */
-    private ScheduledExecutorService cleanup = Executors.newSingleThreadScheduledExecutor();
-    private Map<String, Integer> imageAssociationMap = new ConcurrentHashMap<>();
+    private ScheduledExecutorService cleanup             = Executors.newSingleThreadScheduledExecutor();
+    private Map<String, Integer>     imageAssociationMap = new ConcurrentHashMap<>();
 
-    public NvgImageReferenceManager(){
+    public NvgImageReferenceManager() {
         cleanup.scheduleAtFixedRate(() -> imageCache.cleanUp(), 1, 1, TimeUnit.SECONDS);
     }
 
@@ -62,7 +62,7 @@ public class NvgImageReferenceManager {
                 if (imageRef == null) {
                     ByteBuffer imageData = image.getImageData();
                     if (imageData != null) {
-                        int width = image.getWidth();
+                        int width  = image.getWidth();
                         int height = image.getHeight();
                         imageRef = NanoVG.nvgCreateImageRGBA(context, width, height, 0, imageData);
                     } else {
@@ -78,7 +78,7 @@ public class NvgImageReferenceManager {
         return imageRef;
     }
 
-    public void destroy(){
+    public void destroy() {
         cleanup.shutdown();
     }
 }

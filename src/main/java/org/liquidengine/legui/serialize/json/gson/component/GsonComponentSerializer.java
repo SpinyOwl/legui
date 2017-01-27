@@ -40,29 +40,29 @@ public class GsonComponentSerializer<T extends Component> extends AbstractGsonSe
 
     @Override
     protected void deserialize(JsonObject json, T object, GsonSerializeContext context) {
-        JsonObject position = json.getAsJsonObject(POSITION);
-        JsonObject size = json.getAsJsonObject(SIZE);
-        JsonObject bg = json.getAsJsonObject(BACKGROUND_COLOR);
-        JsonElement enabled = json.get(ENABLED);
-        JsonElement visible = json.get(VISIBLE);
+        JsonObject  position     = json.getAsJsonObject(POSITION);
+        JsonObject  size         = json.getAsJsonObject(SIZE);
+        JsonObject  bg           = json.getAsJsonObject(BACKGROUND_COLOR);
+        JsonElement enabled      = json.get(ENABLED);
+        JsonElement visible      = json.get(VISIBLE);
         JsonElement cornerRadius = json.get(CORNER_RADIUS);
-        JsonElement border = json.get(BORDER);
+        JsonElement border       = json.get(BORDER);
 
         if (isNotNull(position)) {
-            JsonElement x = position.get(X);
-            float xx = (!isNotNull(x)) ? object.getPosition().x : x.getAsFloat();
-            JsonElement y = position.get(Y);
-            float yy = (!isNotNull(y)) ? object.getPosition().y : y.getAsFloat();
+            JsonElement x  = position.get(X);
+            float       xx = (!isNotNull(x)) ? object.getPosition().x : x.getAsFloat();
+            JsonElement y  = position.get(Y);
+            float       yy = (!isNotNull(y)) ? object.getPosition().y : y.getAsFloat();
             object.setPosition(xx, yy);
         } else if (isJsonNull(position)) {
             object.setPosition(new Vector2f(0));
         }
 
         if (isNotNull(size)) {
-            JsonElement width = size.get(WIDTH);
-            float wid = (!isNotNull(width)) ? object.getSize().x : width.getAsFloat();
+            JsonElement width  = size.get(WIDTH);
+            float       wid    = (!isNotNull(width)) ? object.getSize().x : width.getAsFloat();
             JsonElement height = size.get(HEIGHT);
-            float hei = (!isNotNull(height)) ? object.getSize().y : height.getAsFloat();
+            float       hei    = (!isNotNull(height)) ? object.getSize().y : height.getAsFloat();
             object.setSize(wid, hei);
         } else if (isJsonNull(size)) {
             object.setSize(new Vector2f(0));

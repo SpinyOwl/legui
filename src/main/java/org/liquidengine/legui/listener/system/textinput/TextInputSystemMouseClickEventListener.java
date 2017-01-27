@@ -16,7 +16,7 @@ public class TextInputSystemMouseClickEventListener implements SystemEventListen
 
     @Override
     public void update(SystemMouseClickEvent event, TextInput gui, LeguiContext leguiContext) {
-        defaultSystemMouseClickEventListener.update(event,gui,leguiContext);
+        defaultSystemMouseClickEventListener.update(event, gui, leguiContext);
         int mouseCaretPosition = gui.getMouseCaretPosition();
         if (event.action == GLFW_PRESS) {
             gui.setCaretPosition(mouseCaretPosition);

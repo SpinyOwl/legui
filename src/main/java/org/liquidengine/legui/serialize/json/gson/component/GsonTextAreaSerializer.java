@@ -30,13 +30,13 @@ public class GsonTextAreaSerializer extends GsonComponentSerializer<TextArea> {
     protected void deserialize(JsonObject json, TextArea object, GsonSerializeContext context) {
         super.deserialize(json, object, context);
 
-        JsonElement editable = json.get(EDITABLE);
+        JsonElement editable       = json.get(EDITABLE);
         JsonElement selectionColor = json.get(SELECTION_COLOR);
-        JsonElement textState = json.get(TEXT_STATE);
+        JsonElement textState      = json.get(TEXT_STATE);
 
         if (isNotNull(textState)) {
             JsonObject asJsonObject = textState.getAsJsonObject();
-            TextState state = GsonSerializeUtil.deserializeFromJson(asJsonObject, context);
+            TextState  state        = GsonSerializeUtil.deserializeFromJson(asJsonObject, context);
             object.getTextState().copy(state);
         }
         if (isNotNull(editable)) object.setEditable(editable.getAsBoolean());

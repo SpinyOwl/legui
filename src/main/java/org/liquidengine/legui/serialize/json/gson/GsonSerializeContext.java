@@ -10,8 +10,8 @@ import java.util.Map;
  * Created by Alexander on 28.11.2016.
  */
 public final class GsonSerializeContext implements JsonSerializeContext {
-    private Map<String, Object> contextMap = new HashMap<>();
-    private Map<RadioButtonGroup, Integer> serializeRadioGroupMap = new HashMap<>();
+    private Map<String, Object>            contextMap               = new HashMap<>();
+    private Map<RadioButtonGroup, Integer> serializeRadioGroupMap   = new HashMap<>();
     private Map<Integer, RadioButtonGroup> deserializeRadioGroupMap = new HashMap<>();
 
 

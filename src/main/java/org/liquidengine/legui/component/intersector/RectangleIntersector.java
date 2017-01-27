@@ -53,18 +53,18 @@ public class RectangleIntersector implements LeguiIntersector {
     @Override
     public boolean intersects(Component gui, Vector2f point) {
         Vector2f pos = calculatePosition(gui);
-        float x = pos.x;
-        float y = pos.y;
-        float w = gui.getSize().x;
-        float h = gui.getSize().y;
+        float    x   = pos.x;
+        float    y   = pos.y;
+        float    w   = gui.getSize().x;
+        float    h   = gui.getSize().y;
         float verticies[] = {
                 x - paddingLeft, y - paddingTop,
                 x + w + paddingRight, y - paddingTop,
                 x + w + paddingRight, y + h + paddingBottom,
                 x - paddingLeft, y + h + paddingBottom
         };
-        int start[] = {0};
-        int count = 4;
+        int                  start[]     = {0};
+        int                  count       = 4;
         PolygonsIntersection intersector = new PolygonsIntersection(verticies, start, count);
         return intersector.testPoint(point.x, point.y);
     }

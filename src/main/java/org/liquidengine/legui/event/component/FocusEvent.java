@@ -10,7 +10,7 @@ import org.liquidengine.legui.event.LeguiEvent;
  * Created by Alexander on 07.11.2016.
  */
 public class FocusEvent extends LeguiEvent {
-    public final boolean focusGained;
+    public final boolean   focusGained;
     public final Component focusTarget;
 
     public FocusEvent(Component component, boolean focusGained, Component focusTarget) {

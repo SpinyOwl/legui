@@ -19,6 +19,9 @@ import java.util.List;
  * Created by Shcherbin Alexander on 10/31/2016.
  */
 public class DefaultSystemCursorPosEventListener implements SystemEventListener<Component, SystemCursorPosEvent> {
+
+    public static final int tooltipOffset = 15;
+
     @Override
     public void update(SystemCursorPosEvent event, Component component, LeguiContext context) {
         if (component.isEnabled() && component.isVisible()) {
@@ -69,15 +72,27 @@ public class DefaultSystemCursorPosEventListener implements SystemEventListener<
         Vector2f                                   mousePosition    = position.sub(cursorPosition).negate();
         boolean                                    update           = false;
         CursorEnterEvent                           cursorEnterEvent = null;
+
+        if (component.getState().isHovered() && component.getTooltipComponent() != null) {
+            component.getTooltipComponent().setPosition(cursorPosition.x + tooltipOffset, cursorPosition.y + tooltipOffset);
+        }
+
         if (component.getState().isHovered()) {
             if (!intersects || component != context.getMouseTargetGui()) {
                 component.getState().setHovered(false);
                 cursorEnterEvent = new CursorEnterEvent(component, CursorEnterEvent.CursorEnterAction.EXIT, mousePosition);
+                if (component.getTooltip() != null) {
+                    context.getFrame().getTooltipLayer().removeComponent(component.getTooltipComponent());
+                }
                 update = true;
             }
         } else if (!component.getState().isHovered() && intersects && component == context.getMouseTargetGui()) {
             component.getState().setHovered(true);
             cursorEnterEvent = new CursorEnterEvent(component, CursorEnterEvent.CursorEnterAction.ENTER, mousePosition);
+            if (component.getTooltip() != null) {
+                component.getTooltipComponent().setPosition(cursorPosition.x + tooltipOffset, cursorPosition.y + tooltipOffset);
+                context.getFrame().getTooltipLayer().addComponent(component.getTooltipComponent());
+            }
             update = true;
         }
         if (update) {

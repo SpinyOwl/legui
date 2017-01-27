@@ -1,9 +1,5 @@
 package org.liquidengine.legui.serialize.json.gson.component;
 
-import com.google.gson.JsonObject;
-import org.liquidengine.legui.component.Frame;
-import org.liquidengine.legui.serialize.json.gson.GsonSerializeContext;
-
 /**
  * Created by Alexander on 17.12.2016.
  */

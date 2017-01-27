@@ -29,7 +29,7 @@ public final class TextUtil {
         int length = text.length();
         if (current == length) return length;
 
-        int next = current + 1;
+        int     next        = current + 1;
         boolean word;
         boolean startedWord = false;
         while (next < length) {
@@ -49,7 +49,7 @@ public final class TextUtil {
     public static int findPrevWord(String text, int current) {
         if (current == 0) return 0;
 
-        int prev = current;
+        int     prev        = current;
         boolean word;
         boolean startedWord = false;
         while (prev > 0) {

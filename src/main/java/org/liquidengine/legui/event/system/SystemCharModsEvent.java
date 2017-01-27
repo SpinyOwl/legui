@@ -9,8 +9,8 @@ import org.liquidengine.legui.event.SystemEvent;
  */
 public class SystemCharModsEvent implements SystemEvent {
     public final long window;
-    public final int codepoint;
-    public final int mods;
+    public final int  codepoint;
+    public final int  mods;
 
     public SystemCharModsEvent(long window, int codepoint, int mods) {
         this.window = window;

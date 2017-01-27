@@ -23,10 +23,10 @@ public class GsonRadioButtonSerializer extends GsonComponentSerializer<RadioButt
     protected void jsonSerialize(RadioButton object, JsonObject json, GsonSerializeContext context) {
         super.jsonSerialize(object, json, context);
 
-        JsonObject textState = GsonSerializeUtil.serializeToJson(object.getTextState(), context);
-        RadioButtonGroup rbg = object.getRadioButtonGroup();
-        Map<RadioButtonGroup, Integer> sgm = context.getSerializeRadioGroupMap();
-        Integer group = null;
+        JsonObject                     textState = GsonSerializeUtil.serializeToJson(object.getTextState(), context);
+        RadioButtonGroup               rbg       = object.getRadioButtonGroup();
+        Map<RadioButtonGroup, Integer> sgm       = context.getSerializeRadioGroupMap();
+        Integer                        group     = null;
         if (sgm.containsKey(rbg)) {
             group = sgm.get(rbg);
         } else {
@@ -45,19 +45,19 @@ public class GsonRadioButtonSerializer extends GsonComponentSerializer<RadioButt
         super.deserialize(json, object, context);
 
         JsonElement textState = json.get(TEXT_STATE);
-        JsonElement selected = json.get(SELECTED);
-        JsonElement group = json.get(GROUP);
+        JsonElement selected  = json.get(SELECTED);
+        JsonElement group     = json.get(GROUP);
 
         if (isNotNull(textState)) {
             JsonObject asJsonObject = textState.getAsJsonObject();
-            TextState state = GsonSerializeUtil.deserializeFromJson(asJsonObject, context);
+            TextState  state        = GsonSerializeUtil.deserializeFromJson(asJsonObject, context);
             object.getTextState().copy(state);
         }
         if (isNotNull(selected)) object.setSelected(selected.getAsBoolean());
         if (isNotNull(group)) {
-            Map<Integer, RadioButtonGroup> drg = context.getDeserializeRadioGroupMap();
-            int groupId = group.getAsInt();
-            RadioButtonGroup g = null;
+            Map<Integer, RadioButtonGroup> drg     = context.getDeserializeRadioGroupMap();
+            int                            groupId = group.getAsInt();
+            RadioButtonGroup               g       = null;
             if (drg.containsKey(groupId)) {
                 g = drg.get(groupId);
             } else {

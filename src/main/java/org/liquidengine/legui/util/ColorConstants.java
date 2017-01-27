@@ -8,8 +8,6 @@ import org.joml.Vector4fc;
  */
 public final class ColorConstants {
 
-    private ColorConstants() {
-    }
     //@formatter:off
     public static final Vector4fc RED = new Vector4f(1, 0, 0, 1);
     public static final Vector4fc GREEN = new Vector4f(0, 1, 0, 1);
@@ -25,7 +23,6 @@ public final class ColorConstants {
     public static final Vector4fc TRANSPARENT = new Vector4f(0);
     public static final Vector4fc LIGHT_GRAY = new Vector4f(0.8f, 0.8f, 0.8f, 1);
     public static final Vector4fc DARK_GRAY = new Vector4f(0.2f, 0.2f, 0.2f, 1);
-
     public static final Vector4fc red = RED;
     public static final Vector4fc green = GREEN;
     public static final Vector4fc blue = BLUE;
@@ -40,6 +37,8 @@ public final class ColorConstants {
     public static final Vector4fc transparent = TRANSPARENT;
     public static final Vector4fc lightGray = LIGHT_GRAY;
     public static final Vector4fc darkGray = DARK_GRAY;
+    private ColorConstants() {
+    }
 
     public static Vector4f red() { return new Vector4f(red); }
     public static Vector4f green() { return new Vector4f(green); }

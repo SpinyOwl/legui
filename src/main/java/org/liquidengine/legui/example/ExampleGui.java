@@ -129,13 +129,13 @@ public class ExampleGui extends Frame {
         widget.setTitleHeight(20);
         widget.setTitleBackgroundColor(ColorConstants.lightGreen());
 
-        Button    turnWidVisible = new Button("", 360, 280, 20, 20);
+        Button turnWidVisible = new Button("", 360, 280, 20, 20);
         turnWidVisible.getLeguiEventListeners().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
             if (CLICK.equals(event.getAction())) widget.setVisible(true);
         });
-        ImageView bgIm           = new ImageView(new Image("org/liquidengine/legui/example/1.png"));
-        ImageView hbgIm          = new ImageView(new Image("org/liquidengine/legui/example/2.png"));
-        ImageView pbIm           = new ImageView(new Image("org/liquidengine/legui/example/3.png"));
+        ImageView bgIm  = new ImageView(new Image("org/liquidengine/legui/example/1.png"));
+        ImageView hbgIm = new ImageView(new Image("org/liquidengine/legui/example/2.png"));
+        ImageView pbIm  = new ImageView(new Image("org/liquidengine/legui/example/3.png"));
         bgIm.setSize(20, 20);
         hbgIm.setSize(20, 20);
         pbIm.setSize(20, 20);
@@ -169,14 +169,14 @@ public class ExampleGui extends Frame {
         widget2.setTitleBackgroundColor(ColorConstants.lightGreen());
         widget2.setDraggable(false);
 
-        Button    turnDraggable = new Button("Draggable", 10, 10, 80, 20);
+        Button turnDraggable = new Button("Draggable", 10, 10, 80, 20);
         turnDraggable.getLeguiEventListeners().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
             if (CLICK.equals(event.getAction())) widget2.setDraggable(!widget2.isDraggable());
         });
         widget2.getContainer().addComponent(turnDraggable);
         this.addComponent(widget2);
 
-        Button    turnWidVisible2 = new Button("", 360, 310, 20, 20);
+        Button turnWidVisible2 = new Button("", 360, 310, 20, 20);
         turnWidVisible2.getLeguiEventListeners().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
             if (CLICK.equals(event.getAction())) widget2.setVisible(true);
         });
@@ -190,7 +190,7 @@ public class ExampleGui extends Frame {
         widget3.setMinimizeable(false);
         this.addComponent(widget3);
 
-        Button    turnWidVisible3 = new Button("", 360, 340, 20, 20);
+        Button turnWidVisible3 = new Button("", 360, 340, 20, 20);
         turnWidVisible3.getLeguiEventListeners().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
             if (CLICK.equals(event.getAction())) widget3.setVisible(true);
         });
@@ -351,10 +351,12 @@ public class ExampleGui extends Frame {
         });
         this.addComponent(sbb);
 
-        ToggleButton toggleButton = new ToggleButton(100, 170, 40, 40);
-        ImageView bgImageNormal = new ImageView(new Image("org/liquidengine/legui/example/normal.png"));
-        ImageView bgImageToggledH = new ImageView(new Image("org/liquidengine/legui/example/1.png"));
-        ImageView bgImageToggled = new ImageView(new Image("org/liquidengine/legui/example/toggled.png"));
+        ToggleButton toggleButton    = new ToggleButton(100, 170, 40, 40);
+        ImageView    bgImageNormal   = new ImageView(new Image("org/liquidengine/legui/example/normal.png"));
+        ImageView    bgImageToggledH = new ImageView(new Image("org/liquidengine/legui/example/1.png"));
+        ImageView    bgImageToggled  = new ImageView(new Image("org/liquidengine/legui/example/toggled.png"));
+
+        toggleButton.setTooltip("Just toggle button");
 
         bgImageNormal.setSize(36, 36);
 //        bgImageToggledH.setSize(36, 36);

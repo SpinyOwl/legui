@@ -21,10 +21,11 @@ public abstract class LeguiRenderer {
     public void render(Frame frame) {
         preRender(frame);
         try {
-            for (Layer layer : frame.getAllLayers()) {
+            frame.getComponentLayer().getContainer().render(context);
+            for (Layer layer : frame.getLayers()) {
                 layer.getContainer().render(context);
             }
-
+            frame.getTooltipLayer().getContainer().render(context);
         } catch (Throwable e) {
             e.printStackTrace();
         }

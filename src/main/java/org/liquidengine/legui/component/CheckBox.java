@@ -109,7 +109,7 @@ public class CheckBox extends Component {
         textState.setHorizontalAlign(HorizontalAlign.CENTER);
         leguiEventListeners.addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
             if (event.getAction().equals(MouseClickEvent.MouseClickAction.CLICK)) {
-               checked = !checked;
+                checked = !checked;
             }
         });
     }

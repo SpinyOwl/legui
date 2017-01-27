@@ -27,8 +27,8 @@ public class GsonSelectBoxSerializer extends GsonComponentSerializer<SelectBox> 
                 .add(BUTTON_WIDTH, object.getButtonWidth())
                 .add(VISIBLE_COUNT, object.getVisibleCount())
         ;
-        List<String> elements = object.getElements();
-        JsonArray jsonElements = new JsonArray();
+        List<String> elements     = object.getElements();
+        JsonArray    jsonElements = new JsonArray();
         for (String element : elements) {
             jsonElements.add(element);
         }
@@ -40,11 +40,11 @@ public class GsonSelectBoxSerializer extends GsonComponentSerializer<SelectBox> 
     protected void deserialize(JsonObject json, SelectBox object, GsonSerializeContext context) {
         super.deserialize(json, object, context);
 
-        JsonElement elements = json.get(ELEMENTS);
+        JsonElement elements        = json.get(ELEMENTS);
         JsonElement selectedElement = json.get(SELECTED_ELEMENT);
-        JsonElement elementHeight = json.get(ELEMENT_HEIGHT);
-        JsonElement buttonWidth = json.get(BUTTON_WIDTH);
-        JsonElement visibleCount = json.get(VISIBLE_COUNT);
+        JsonElement elementHeight   = json.get(ELEMENT_HEIGHT);
+        JsonElement buttonWidth     = json.get(BUTTON_WIDTH);
+        JsonElement visibleCount    = json.get(VISIBLE_COUNT);
 
         if (isNotNull(elements) && elements.isJsonArray()) {
             JsonArray el = elements.getAsJsonArray();

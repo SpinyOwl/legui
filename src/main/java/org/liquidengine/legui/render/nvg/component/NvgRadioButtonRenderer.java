@@ -21,9 +21,9 @@ import static org.liquidengine.legui.util.NvgRenderUtils.*;
  * Created by Shcherbin Alexander on 8/22/2016.
  */
 public class NvgRadioButtonRenderer extends NvgLeguiComponentRenderer {
-    private static final String ICON_CHECKED = Util.cpToStr(0xE837);
-    private static final String ICON_UNCHECKED = Util.cpToStr(0xE836);
-    private NVGColor colorA = NVGColor.create();
+    private static final String   ICON_CHECKED   = Util.cpToStr(0xE837);
+    private static final String   ICON_UNCHECKED = Util.cpToStr(0xE836);
+    private              NVGColor colorA         = NVGColor.create();
 
     @Override
     public void render(Component component, LeguiContext leguiContext, long context) {
@@ -31,13 +31,13 @@ public class NvgRadioButtonRenderer extends NvgLeguiComponentRenderer {
         {
             // default renderer used
             RadioButton agui = (RadioButton) component;
-            Vector2f pos = Util.calculatePosition(component);
-            Vector2f size = component.getSize();
+            Vector2f    pos  = Util.calculatePosition(component);
+            Vector2f    size = component.getSize();
 
             TextState textState = agui.getTextState();
-            float fontSize = textState.getFontSize();
-            Vector4f textColor = textState.getTextColor();
-            Vector4f pad = textState.getPadding();
+            float     fontSize  = textState.getFontSize();
+            Vector4f  textColor = textState.getTextColor();
+            Vector4f  pad       = textState.getPadding();
 
             float iconWid = fontSize;
 
@@ -60,7 +60,7 @@ public class NvgRadioButtonRenderer extends NvgLeguiComponentRenderer {
         // renderNvg check symbol
         String icon = agui.isSelected() ? ICON_CHECKED : ICON_UNCHECKED;
         if (agui.getState().isFocused()) {
-            NvgRenderUtils.renderTextLineToBounds(context, x-1, y1+1, iconWid, h1, fontSize, FontRegister.MATERIAL_ICONS_REGULAR,
+            NvgRenderUtils.renderTextLineToBounds(context, x - 1, y1 + 1, iconWid, h1, fontSize, FontRegister.MATERIAL_ICONS_REGULAR,
                     DEFAULT_THEME.getFocusedStrokeColorLight(), colorA, icon, HorizontalAlign.CENTER, VerticalAlign.MIDDLE, false);
         }
         NvgRenderUtils.renderTextLineToBounds(context, x, y1, iconWid, h1, fontSize, FontRegister.MATERIAL_ICONS_REGULAR,

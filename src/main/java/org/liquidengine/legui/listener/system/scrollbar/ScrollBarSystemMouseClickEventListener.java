@@ -20,20 +20,20 @@ public class ScrollBarSystemMouseClickEventListener implements SystemEventListen
         if (!gui.isEnabled()) return;
         boolean released = event.action != GLFW_PRESS;
 
-        Vector2f pos = Util.calculatePosition(gui);
+        Vector2f pos            = Util.calculatePosition(gui);
         Vector2f cursorPosition = leguiContext.getCursorPosition();
 
-        float visibleAmount = gui.getVisibleAmount();
-        float curValue = gui.getCurValue();
-        boolean vertical = Orientation.VERTICAL.equals(gui.getOrientation());
+        float   visibleAmount = gui.getVisibleAmount();
+        float   curValue      = gui.getCurValue();
+        boolean vertical      = Orientation.VERTICAL.equals(gui.getOrientation());
 
-        Vector2f guiSize = gui.getSize();
-        float arrowSize = gui.isArrowsEnabled() ? gui.getArrowSize() : 0;
-        float scrollBarSize = (vertical ? guiSize.y : guiSize.x) - 2 * arrowSize;
-        float maxValue = gui.getMaxValue();
-        float minValue = gui.getMinValue();
-        float valueRange = maxValue - minValue;
-        float barSize = scrollBarSize * visibleAmount / valueRange;
+        Vector2f guiSize       = gui.getSize();
+        float    arrowSize     = gui.isArrowsEnabled() ? gui.getArrowSize() : 0;
+        float    scrollBarSize = (vertical ? guiSize.y : guiSize.x) - 2 * arrowSize;
+        float    maxValue      = gui.getMaxValue();
+        float    minValue      = gui.getMinValue();
+        float    valueRange    = maxValue - minValue;
+        float    barSize       = scrollBarSize * visibleAmount / valueRange;
         if (barSize < ScrollBar.MIN_SCROLL_SIZE) barSize = ScrollBar.MIN_SCROLL_SIZE;
         float scrollPosAccordingToScrollBounds = (scrollBarSize - barSize) * curValue / valueRange;
 
