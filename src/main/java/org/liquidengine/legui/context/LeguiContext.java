@@ -37,6 +37,7 @@ public class LeguiContext implements Serializable {
     private transient boolean debugEnabled = false;
 
     private boolean  iconified;
+    private boolean  reorderEnabled;
     private Vector2f mousePosition;
     private Vector2f cursorPosition     = new Vector2f();
     private Vector2f cursorPositionPrev = new Vector2f();
@@ -241,5 +242,13 @@ public class LeguiContext implements Serializable {
 
     public void setIconified(boolean iconified) {
         this.iconified = iconified;
+    }
+
+    public boolean isReorderEnabled() {
+        return reorderEnabled;
+    }
+
+    public void setReorderEnabled(boolean reorderEnabled) {
+        this.reorderEnabled = reorderEnabled;
     }
 }
