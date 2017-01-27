@@ -38,6 +38,7 @@ public class SingleClassExample {
     private static          long[]  monitors         = null;
     private static          boolean toggleFullscreen = false;
     private static          boolean fullscreen       = false;
+    private static LeguiContext context;
 
     public static void main(String[] args) throws IOException {
         System.setProperty("joml.nounsafe", Boolean.TRUE.toString());
@@ -68,7 +69,8 @@ public class SingleClassExample {
         // We need to create legui context which shared by renderer and event processor.
         // Also we need to pass event processor for ui events such as click on component, key typing and etc.
         LeguiEventProcessor leguiEventProcessor = new LeguiEventProcessor();
-        LeguiContext        context             = new LeguiContext(window, frame, leguiEventProcessor);
+        context = new LeguiContext(window, frame, leguiEventProcessor);
+        context.setReorderEnabled(true);
 
         // We need to create callback keeper which will hold all of callbacks.
         // These callbacks will be used in initialization of system event processor
@@ -192,6 +194,25 @@ public class SingleClassExample {
 
         frame.addComponent(button);
         frame.addComponent(button2);
+
+        Button toggleReordering = new Button("TOGGLE REORDERING", 10, 100, 160, 30);
+        toggleReordering.getLeguiEventListeners().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
+            if (event.getAction().equals(MouseClickEvent.MouseClickAction.CLICK)) {
+                context.setReorderEnabled(!context.isReorderEnabled());
+            }
+        });
+        frame.addComponent(toggleReordering);
+        Panel one = new Panel(200, 100, 100, 100);
+        Panel two = new Panel(200, 150, 100, 100);
+
+        Widget oneW = new Widget(10, 10, 80, 80);
+        Widget twoW = new Widget(10, 10, 80, 80);
+
+        one.addComponent(oneW);
+        two.addComponent(twoW);
+
+        frame.addComponent(one);
+        frame.addComponent(two);
     }
 
     private static List<Component> generateOnFly() {

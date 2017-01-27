@@ -1,6 +1,7 @@
 package org.liquidengine.legui.component;
 
-import org.apache.commons.collections4.list.SetUniqueList;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.joml.Vector2f;
 
 import java.util.*;
@@ -20,7 +21,7 @@ import java.util.stream.Stream;
  * Created by Shcherbin Alexander on 9/14/2016.
  */
 public abstract class ComponentContainer extends Component {
-    protected final List<Component> components = SetUniqueList.setUniqueList(new CopyOnWriteArrayList<>());
+    protected final List<Component> components = new CopyOnWriteArrayList<>();
 
     /**
      * Default constructor. Used to create instance without any parameters.
@@ -48,6 +49,28 @@ public abstract class ComponentContainer extends Component {
      */
     public ComponentContainer(Vector2f position, Vector2f size) {
         super(position, size);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ComponentContainer that = (ComponentContainer) o;
+
+        return new EqualsBuilder()
+                .appendSuper(super.equals(o))
+                .append(components, that.components)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37)
+                .appendSuper(super.hashCode())
+                .append(components)
+                .toHashCode();
     }
 
     /**
@@ -100,7 +123,7 @@ public abstract class ComponentContainer extends Component {
      * @see Set#add(Object)
      */
     public boolean addComponent(Component component) {
-        if (component == null || component == this) return false;
+        if (component == null || component == this || components.contains(component)) return false;
         changeParent(component);
         return components.add(component);
     }
@@ -114,10 +137,12 @@ public abstract class ComponentContainer extends Component {
      */
     public boolean addAllComponents(Collection<? extends Component> components) {
         if (components != null) {
+            List<Component> toAdd = new ArrayList<>();
             components.forEach(abstractGui -> {
-                if (abstractGui != this) changeParent(abstractGui);
+                if (abstractGui != this && !components.contains(abstractGui)) toAdd.add(abstractGui);
             });
-            return this.components.addAll(components);
+            toAdd.forEach(this::addComponent);
+            return !toAdd.isEmpty();
         } else {
             return false;
         }

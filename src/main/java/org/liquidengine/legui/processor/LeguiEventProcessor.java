@@ -2,6 +2,7 @@ package org.liquidengine.legui.processor;
 
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.event.LeguiEvent;
+import org.liquidengine.legui.event.system.SystemCursorPosEvent;
 import org.liquidengine.legui.listener.LeguiEventListener;
 
 import java.util.List;
