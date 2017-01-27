@@ -1,11 +1,17 @@
 package org.liquidengine.legui.component;
 
+import org.liquidengine.legui.component.optional.TextState;
+
 /**
  * Created by Aliaksandr_Shcherbin on 1/27/2017.
  */
-public class Tooltip extends Label {
+public class Tooltip extends Component {
+    protected TextState textState;
 
     public Tooltip() {
+        textState = new TextState();
+        size.set(100, 20);
+        cornerRadius = 3f;
     }
 
     @Override
@@ -19,6 +25,10 @@ public class Tooltip extends Label {
 
     @Override
     public Tooltip getTooltipComponent() {
-        return null;
+        return this;
+    }
+
+    public TextState getTextState() {
+        return textState;
     }
 }

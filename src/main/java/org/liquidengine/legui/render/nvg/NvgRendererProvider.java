@@ -41,6 +41,7 @@ public class NvgRendererProvider extends LeguiRendererProvider {
         registerRenderer(TextInput.class, new NvgTextInputRenderer());
         registerRenderer(TextArea.class, new NvgTextAreaRenderer());
         registerRenderer(ToggleButton.class, new NvgToggleButtonRenderer());
+        registerRenderer(Tooltip.class, new NvgTooltipRenderer());
 //
 //        // borders
         registerRenderer(SimpleRectangleLineBorder.class, new NvgSimpleLineBorderRenderer());
