@@ -295,7 +295,7 @@ public final class NvgRenderUtils {
 
 
     /**
-     * Creates scissor for provided component by it's parent components
+     * Creates scissor for provided tooltipComponent by it's parent components
      *
      * @param context nanovg context
      * @param gui     {@link Component}
@@ -326,7 +326,7 @@ public final class NvgRenderUtils {
     }
 
     /**
-     * Creates scissor by provided component and it's parent components
+     * Creates scissor by provided tooltipComponent and it's parent components
      *
      * @param context nanovg context
      */

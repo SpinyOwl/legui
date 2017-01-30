@@ -63,15 +63,16 @@ public class NvgButtonRenderer extends NvgLeguiComponentRenderer {
         boolean  pressed         = agui.getState().isPressed();
         Vector4f backgroundColor = new Vector4f(agui.getBackgroundColor());
 
-        ImageView image = null;
+        ImageView bgImage = agui.getBackgroundImage();
+        ImageView image   = null;
         if (!focused && !hovered && !pressed) {
-            image = agui.getBackgroundImage();
+            image = bgImage;
         } else if (hovered && !pressed) {
-            image = agui.getHoveredBackgroundImage();
+            image = (image = agui.getHoveredBackgroundImage()) == null ? bgImage : image;
         } else if (pressed) {
-            image = agui.getPressedBackgroundImage();
+            image = (image = agui.getPressedBackgroundImage()) == null ? bgImage : image;
         } else if (focused) {
-            image = agui.getFocusedBbackgroundImage();
+            image = (image = agui.getFocusedBbackgroundImage()) == null ? bgImage : image;
         }
 
         drawRectangle(context, backgroundColor, pos, size);

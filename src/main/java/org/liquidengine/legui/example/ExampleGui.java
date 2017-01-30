@@ -90,6 +90,37 @@ public class ExampleGui extends Frame {
         button.setBackgroundColor(new Vector4f(1));
         this.addComponent(button);
 
+        button.setTooltipText("Just button");
+        button.getTooltip().setPosition(0, 25);
+        button.getTooltip().getSize().set(50, 40);
+        button.getTooltip().setBackgroundColor(ColorConstants.darkGray());
+        button.getTooltip().getTextState().setTextColor(ColorConstants.white());
+        button.getTooltip().getTextState().setPadding(4, 4, 4, 4);
+
+        int idv[] = {0};
+        button.getLeguiEventListeners().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
+            if (event.getAction().equals(CLICK)) {
+                idv[0]++;
+                HorizontalAlign h = LEFT;
+                VerticalAlign   v = TOP;
+                int             hh = idv[0] % 3;
+                int             vv = (idv[0] / 3) % 3;
+                switch (hh){
+                    case 0: h = LEFT; break;
+                    case 1: h = CENTER; break;
+                    case 2: h = RIGHT; break;
+                }
+                switch (vv){
+                    case 0: v = TOP; break;
+                    case 1: v = MIDDLE; break;
+                    case 2: v = BOTTOM; break;
+                }
+                System.out.println(h + " " + v);
+                button.getTooltip().getTextState().setHorizontalAlign(h);
+                button.getTooltip().getTextState().setVerticalAlign(v);
+            }
+        });
+
         CheckBox checkBox1 = new CheckBox(20, 200, 50, 20);
         this.addComponent(checkBox1);
 
@@ -358,56 +389,50 @@ public class ExampleGui extends Frame {
         this.addComponent(sbb);
 
         ToggleButton toggleButton    = new ToggleButton(100, 170, 40, 40);
+        this.addComponent(toggleButton);
         ImageView    bgImageNormal   = new ImageView(new Image("org/liquidengine/legui/example/normal.png"));
-        ImageView    bgImageToggledH = new ImageView(new Image("org/liquidengine/legui/example/1.png"));
         ImageView    bgImageToggled  = new ImageView(new Image("org/liquidengine/legui/example/toggled.png"));
 
-        toggleButton.setTooltip("Just toggle button");
-        toggleButton.getTooltipComponent().getSize().set(60, 60);
-        toggleButton.getTooltipComponent().setBackgroundColor(ColorConstants.darkGray());
-        toggleButton.getTooltipComponent().getTextState().setTextColor(ColorConstants.white());
-        toggleButton.getTooltipComponent().getTextState().setPadding(4, 4, 4, 4);
+        toggleButton.setTooltipText("Just toggle button with long tooltipText text");
+        toggleButton.getTooltip().setPosition(45, 0);
+        toggleButton.getTooltip().getSize().set(140, 40);
+        toggleButton.getTooltip().setBackgroundColor(ColorConstants.darkGray());
+        toggleButton.getTooltip().getTextState().setTextColor(ColorConstants.white());
+        toggleButton.getTooltip().getTextState().setPadding(4, 4, 4, 4);
 
         int id[] = {0};
-        toggleButton.getLeguiEventListeners().addListener(MouseClickEvent.class, new MouseClickEventListener() {
-            @Override
-            public void update(MouseClickEvent event) {
-                if (event.getAction().equals(CLICK)) {
-                    id[0]++;
-                    HorizontalAlign h = LEFT;
-                    VerticalAlign   v = TOP;
-                    int             hh = id[0] % 3;
-                    int             vv = (id[0] / 3) % 3;
-                    switch (hh){
-                        case 0: h = LEFT; break;
-                        case 1: h = CENTER; break;
-                        case 2: h = RIGHT; break;
-                    }
-                    switch (vv){
-                        case 0: v = TOP; break;
-                        case 1: v = MIDDLE; break;
-                        case 2: v = BOTTOM; break;
-                    }
-                    System.out.println(h + " " + v);
-                    toggleButton.getTooltipComponent().getTextState().setHorizontalAlign(h);
-                    toggleButton.getTooltipComponent().getTextState().setVerticalAlign(v);
-
+        toggleButton.getLeguiEventListeners().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
+            if (event.getAction().equals(CLICK)) {
+                id[0]++;
+                HorizontalAlign h = LEFT;
+                VerticalAlign   v = TOP;
+                int             hh = id[0] % 3;
+                int             vv = (id[0] / 3) % 3;
+                switch (hh){
+                    case 0: h = LEFT; break;
+                    case 1: h = CENTER; break;
+                    case 2: h = RIGHT; break;
                 }
+                switch (vv){
+                    case 0: v = TOP; break;
+                    case 1: v = MIDDLE; break;
+                    case 2: v = BOTTOM; break;
+                }
+                System.out.println(h + " " + v);
+                toggleButton.getTooltip().getTextState().setHorizontalAlign(h);
+                toggleButton.getTooltip().getTextState().setVerticalAlign(v);
+
             }
         });
 
         bgImageNormal.setSize(36, 36);
-//        bgImageToggledH.setSize(36, 36);
         bgImageToggled.setSize(36, 36);
 
         bgImageNormal.setPosition(2, 2);
-//        bgImageToggledH.setPosition(2, 2);
         bgImageToggled.setPosition(2, 2);
 
         toggleButton.setBackgroundImage(bgImageNormal);
-//        toggleButton.setHoveredBackgroundImage(bgImageToggledH);
         toggleButton.setTogglededBackgroundImage(bgImageToggled);
-        this.addComponent(toggleButton);
 
     }
 

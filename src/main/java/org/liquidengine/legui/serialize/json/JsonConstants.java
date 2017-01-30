@@ -8,7 +8,7 @@ public final class JsonConstants {
     public static final String CLASS_PARAMETER = "@class";
 
     // COMPONENT
-    public static final String COMPONENT        = "component";
+    public static final String COMPONENT        = "tooltipComponent";
     public static final String BACKGROUND_COLOR = "backgroundColor";
     public static final String R                = "r";
     public static final String G                = "g";

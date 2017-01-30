@@ -5,11 +5,11 @@ package org.liquidengine.legui.listener.system.container;
  */
 //public class ContainerSystemMouseClickEventListener implements SystemEventListener<ComponentContainer, SystemMouseClickEvent> {
 //    @Override
-//    public void update(SystemMouseClickEvent event, ComponentContainer component, LeguiContext context) {
-//        if (!component.isVisible() || !component.isEnabled()) return;
+//    public void update(SystemMouseClickEvent event, ComponentContainer tooltipComponent, LeguiContext context) {
+//        if (!tooltipComponent.isVisible() || !tooltipComponent.isEnabled()) return;
 //
 //        Component target = null;
-//        List<Component> components = component.getComponents();
+//        List<Component> components = tooltipComponent.getComponents();
 //        if (!components.isEmpty()) {
 //            for (Component child : components) {
 //                if (child.isVisible() && child.getIntersector().intersects(child, context.getCursorPosition())) {

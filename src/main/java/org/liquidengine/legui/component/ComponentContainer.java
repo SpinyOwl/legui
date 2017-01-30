@@ -11,7 +11,7 @@ import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 /**
- * Basic abstract ComponentContainer object is a component
+ * Basic abstract ComponentContainer object is a tooltipComponent
  * that can contain other components.
  * <p>
  * The base of container is <b><span style="color:red">SetUniqueList</span>
@@ -32,10 +32,10 @@ public abstract class ComponentContainer extends Component {
     /**
      * Constructor with position and size parameters.
      *
-     * @param x      x position position in parent component
-     * @param y      y position position in parent component
-     * @param width  width of component
-     * @param height height of component
+     * @param x      x position position in parent tooltipComponent
+     * @param y      y position position in parent tooltipComponent
+     * @param width  width of tooltipComponent
+     * @param height height of tooltipComponent
      */
     public ComponentContainer(float x, float y, float width, float height) {
         super(x, y, width, height);
@@ -44,8 +44,8 @@ public abstract class ComponentContainer extends Component {
     /**
      * Constructor with position and size parameters.
      *
-     * @param position position position in parent component
-     * @param size     size of component
+     * @param position position position in parent tooltipComponent
+     * @param size     size of tooltipComponent
      */
     public ComponentContainer(Vector2f position, Vector2f size) {
         super(position, size);
@@ -94,10 +94,10 @@ public abstract class ComponentContainer extends Component {
     }
 
     /**
-     * Returns true if container contains specified component.
+     * Returns true if container contains specified tooltipComponent.
      *
-     * @param component component to check.
-     * @return true if container contains specified component.
+     * @param component tooltipComponent to check.
+     * @return true if container contains specified tooltipComponent.
      * @see Set#contains(Object)
      */
     public boolean containsComponent(Component component) {
@@ -116,10 +116,10 @@ public abstract class ComponentContainer extends Component {
     }
 
     /**
-     * Used to add component to container.
+     * Used to add tooltipComponent to container.
      *
-     * @param component component to add.
-     * @return true if component is added.
+     * @param component tooltipComponent to add.
+     * @return true if tooltipComponent is added.
      * @see Set#add(Object)
      */
     public boolean addComponent(Component component) {
@@ -149,9 +149,9 @@ public abstract class ComponentContainer extends Component {
     }
 
     /**
-     * Used to change parent of added component.
+     * Used to change parent of added tooltipComponent.
      *
-     * @param component component to change.
+     * @param component tooltipComponent to change.
      */
     private void changeParent(Component component) {
         if (component != null) {
@@ -165,9 +165,9 @@ public abstract class ComponentContainer extends Component {
     }
 
     /**
-     * Used to remove component.
+     * Used to remove tooltipComponent.
      *
-     * @param component component to remove.
+     * @param component tooltipComponent to remove.
      * @return true if removed.
      * @see Set#remove(Object)
      */
@@ -271,14 +271,14 @@ public abstract class ComponentContainer extends Component {
     }
 
     /**
-     * If this component is composite of several other components
+     * If this tooltipComponent is composite of several other components
      * it should return one of child components which intersects with cursor
      * else it should return {@code this}.
      * <p>
-     * If cursor is outside of component method should return null.
+     * If cursor is outside of tooltipComponent method should return null.
      *
      * @param cursorPosition cursor position
-     * @return component at cursor or null.
+     * @return tooltipComponent at cursor or null.
      */
     @Override
     public Component getComponentAt(Vector2f cursorPosition) {

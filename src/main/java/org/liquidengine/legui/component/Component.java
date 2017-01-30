@@ -15,6 +15,7 @@ import org.liquidengine.legui.listener.SystemEventListenerMap;
 import org.liquidengine.legui.render.LeguiComponentRenderer;
 import org.liquidengine.legui.render.LeguiRendererProvider;
 import org.liquidengine.legui.util.ColorConstants;
+import org.liquidengine.legui.util.Util;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -28,7 +29,7 @@ import java.util.Map;
 public abstract class Component implements Serializable {
 
 //    /**
-//     * Indexer is integer that store next value for component index.
+//     * Indexer is integer that store next value for tooltipComponent index.
 //     */
 //    private static final AtomicInteger indexer = new AtomicInteger();
 //
@@ -38,19 +39,19 @@ public abstract class Component implements Serializable {
 //    private final int componentId;
 
     /**
-     * Metadata map, place where renderers or event processors can store state of component.
+     * Metadata map, place where renderers or event processors can store state of tooltipComponent.
      */
     protected Map<String, Object> metadata = new HashMap<>();
 
     /**
-     * Position of component relative top left corner in parent component.
+     * Position of tooltipComponent relative top left corner in parent tooltipComponent.
      * <p>
-     * If component is the root component then position calculated relative window top left corner.
+     * If tooltipComponent is the root tooltipComponent then position calculated relative window top left corner.
      */
     protected Vector2f position;
 
     /**
-     * Size of component.
+     * Size of tooltipComponent.
      */
     protected Vector2f size;
 
@@ -67,19 +68,19 @@ public abstract class Component implements Serializable {
     protected Border border;
 
     /**
-     * Used to enable and disable event processing for this component.
-     * If enabled==false then component won't receive events.
+     * Used to enable and disable event processing for this tooltipComponent.
+     * If enabled==false then tooltipComponent won't receive events.
      */
     protected boolean enabled = true;
 
     /**
-     * Determines whether this component should be visible when its
+     * Determines whether this tooltipComponent should be visible when its
      * parent is visible. Components are initially visible.
      */
     protected boolean visible = true;
 
     /**
-     * Used to store component states such as
+     * Used to store tooltipComponent states such as
      * <ul>
      * <li>hovered</li>
      * <li>pressed</li>
@@ -89,22 +90,22 @@ public abstract class Component implements Serializable {
     protected ComponentState state = new ComponentState();
 
     /**
-     * Used to store corner radius of component.
+     * Used to store corner radius of tooltipComponent.
      */
     protected float cornerRadius = 0;
 
     /**
-     * Parent component container. For root components it could be null
+     * Parent tooltipComponent container. For root components it could be null
      */
     protected ComponentContainer parent;
 
     /**
-     * Intersector which used to determine for example if cursor intersects component or not. Cannot be null.
+     * Intersector which used to determine for example if cursor intersects tooltipComponent or not. Cannot be null.
      */
     protected LeguiIntersector intersector = new RectangleIntersector();
 
     /**
-     * Renderer which used to render component.
+     * Renderer which used to render tooltipComponent.
      */
     protected LeguiComponentRenderer renderer = LeguiRendererProvider.getProvider().getRenderer(this);
 
@@ -121,15 +122,15 @@ public abstract class Component implements Serializable {
     /**
      * Tooltip message
      */
-    protected String tooltip = null;
+    protected String tooltipText = null;
 
-    protected Tooltip tooltipComponent = null;
+    protected Tooltip tooltip = null;
 
     /**
-     * Default constructor. Used to create component instance without any parameters.
+     * Default constructor. Used to create tooltipComponent instance without any parameters.
      * <p>
      * Also if you want to make it easy to use with
-     * Json serializer/deserializer component should contain empty constructor.
+     * Json serializer/deserializer tooltipComponent should contain empty constructor.
      */
     public Component() {
         this(0, 0, 10, 10);
@@ -138,10 +139,10 @@ public abstract class Component implements Serializable {
     /**
      * Constructor with position and size parameters.
      *
-     * @param x      x position position in parent component
-     * @param y      y position position in parent component
-     * @param width  width of component
-     * @param height height of component
+     * @param x      x position position in parent tooltipComponent
+     * @param y      y position position in parent tooltipComponent
+     * @param width  width of tooltipComponent
+     * @param height height of tooltipComponent
      */
     public Component(float x, float y, float width, float height) {
         this(new Vector2f(x, y), new Vector2f(width, height));
@@ -150,8 +151,8 @@ public abstract class Component implements Serializable {
     /**
      * Constructor with position and size parameters.
      *
-     * @param position position position in parent component
-     * @param size     size of component
+     * @param position position position in parent tooltipComponent
+     * @param size     size of tooltipComponent
      */
     public Component(Vector2f position, Vector2f size) {
         this.position = position;
@@ -160,7 +161,7 @@ public abstract class Component implements Serializable {
     }
 
     /**
-     * Used by renderer thread to render component. Similar to flyweight pattern,
+     * Used by renderer thread to render tooltipComponent. Similar to flyweight pattern,
      * but implementation of renderer can be changed in dependent of context and graphics api
      *
      * @param context legui context
@@ -170,18 +171,18 @@ public abstract class Component implements Serializable {
     }
 
     /**
-     * Returns parent component. If returns null - current component is root component
+     * Returns parent tooltipComponent. If returns null - current tooltipComponent is root tooltipComponent
      *
-     * @return null or parent component
+     * @return null or parent tooltipComponent
      */
     public ComponentContainer getParent() {
         return parent;
     }
 
     /**
-     * Used to set parent component.
+     * Used to set parent tooltipComponent.
      *
-     * @param parent component container.
+     * @param parent tooltipComponent container.
      */
     public void setParent(ComponentContainer parent) {
         this.parent = parent;
@@ -191,12 +192,22 @@ public abstract class Component implements Serializable {
     }
 
     /**
-     * Returns system event listeners for component instance.
+     * Returns system event listeners for tooltipComponent instance.
      *
      * @return system event listeners map
      */
     public SystemEventListenerMap getSystemEventListeners() {
         return systemEventListeners;
+    }
+
+    /**
+     * Returns origin position vector (tooltipComponent position on the screen).
+     * Be careful during changing this vector.
+     *
+     * @return position vector
+     */
+    public Vector2f getOriginPosition() {
+        return Util.calculatePosition(this);
     }
 
     /**
@@ -210,7 +221,7 @@ public abstract class Component implements Serializable {
     }
 
     /**
-     * Used to set position of component
+     * Used to set position of tooltipComponent
      *
      * @param position
      */
@@ -221,19 +232,19 @@ public abstract class Component implements Serializable {
     /**
      * Used to set current position.
      *
-     * @param x x position relative to parent component
-     * @param y y position relative to parent component
+     * @param x x position relative to parent tooltipComponent
+     * @param y y position relative to parent tooltipComponent
      */
     public void setPosition(float x, float y) {
         this.position.set(x, y);
     }
 
     /**
-     * Returns size vector of component.
+     * Returns size vector of tooltipComponent.
      * So to get width you can use
      * <pre>
      * {@code
-     * Vector2f size = component.getSize();
+     * Vector2f size = tooltipComponent.getSize();
      * float width = size.x;
      * float height = size.y;
      * }
@@ -327,7 +338,7 @@ public abstract class Component implements Serializable {
     }
 
     /**
-     * Returns border of component.
+     * Returns border of tooltipComponent.
      *
      * @return border
      */
@@ -336,7 +347,7 @@ public abstract class Component implements Serializable {
     }
 
     /**
-     * Used to set border for component
+     * Used to set border for tooltipComponent
      *
      * @param border border
      */
@@ -345,16 +356,16 @@ public abstract class Component implements Serializable {
     }
 
     /**
-     * Returns true if component enabled. By default if component enabled it receives and proceed events
+     * Returns true if tooltipComponent enabled. By default if tooltipComponent enabled it receives and proceed events
      *
-     * @return true if component enabled. default value is {@link Boolean#TRUE}
+     * @return true if tooltipComponent enabled. default value is {@link Boolean#TRUE}
      */
     public boolean isEnabled() {
         return enabled;
     }
 
     /**
-     * Used to enable or disable component. By default if component enabled it receives and proceed events
+     * Used to enable or disable tooltipComponent. By default if tooltipComponent enabled it receives and proceed events
      *
      * @param enabled flag to set
      */
@@ -363,18 +374,18 @@ public abstract class Component implements Serializable {
     }
 
     /**
-     * Returns true if component visible.
-     * By default if component visible it will be rendered and will receive events
+     * Returns true if tooltipComponent visible.
+     * By default if tooltipComponent visible it will be rendered and will receive events
      *
-     * @return true if component visible. default value is {@link Boolean#TRUE}
+     * @return true if tooltipComponent visible. default value is {@link Boolean#TRUE}
      */
     public boolean isVisible() {
         return visible;
     }
 
     /**
-     * Used to make component visible or invisible.
-     * By default if component visible it will be rendered and will receive events
+     * Used to make tooltipComponent visible or invisible.
+     * By default if tooltipComponent visible it will be rendered and will receive events
      *
      * @param visible flag to set
      */
@@ -383,7 +394,7 @@ public abstract class Component implements Serializable {
     }
 
     /**
-     * Returns component intersector which used to check if cursor intersect component or not.
+     * Returns tooltipComponent intersector which used to check if cursor intersect tooltipComponent or not.
      *
      * @return intersector
      */
@@ -392,7 +403,7 @@ public abstract class Component implements Serializable {
     }
 
     /**
-     * Used to set intersector for component.
+     * Used to set intersector for tooltipComponent.
      *
      * @param intersector intersector
      */
@@ -401,7 +412,7 @@ public abstract class Component implements Serializable {
     }
 
     /**
-     * Returns corner radius of component
+     * Returns corner radius of tooltipComponent
      *
      * @return corner radius
      */
@@ -419,14 +430,14 @@ public abstract class Component implements Serializable {
     }
 
     /**
-     * If this component is composite of several other components
+     * If this tooltipComponent is composite of several other components
      * it should return one of child components which intersects with cursor
      * else it should return {@code this}.
      * <p>
-     * If cursor is outside of component method should return null
+     * If cursor is outside of tooltipComponent method should return null
      *
      * @param cursorPosition cursor position
-     * @return component at cursor or null.
+     * @return tooltipComponent at cursor or null.
      */
     public Component getComponentAt(Vector2f cursorPosition) {
         if (visible && intersector.intersects(this, cursorPosition)) {
@@ -437,7 +448,7 @@ public abstract class Component implements Serializable {
     }
 
     /**
-     * Returns renderer for component
+     * Returns renderer for tooltipComponent
      *
      * @return renderer
      */
@@ -446,34 +457,34 @@ public abstract class Component implements Serializable {
     }
 
     /**
-     * Used to set component renderer
+     * Used to set tooltipComponent renderer
      *
-     * @param renderer component renderer
+     * @param renderer tooltipComponent renderer
      */
     public void setRenderer(LeguiComponentRenderer renderer) {
         this.renderer = renderer;
     }
 
     /**
-     * Returns component state
+     * Returns tooltipComponent state
      *
-     * @return component state
+     * @return tooltipComponent state
      */
     public ComponentState getState() {
         return state;
     }
 
     /**
-     * Used to set component state
+     * Used to set tooltipComponent state
      *
-     * @param state component state
+     * @param state tooltipComponent state
      */
     public void setState(ComponentState state) {
         this.state = state;
     }
 
     /**
-     * Returns component metadata. Storage of some temporary statements. Can be used for example by stateless renderers.
+     * Returns tooltipComponent metadata. Storage of some temporary statements. Can be used for example by stateless renderers.
      *
      * @return map of objects
      */
@@ -482,7 +493,7 @@ public abstract class Component implements Serializable {
     }
 
 //    /**
-//     * Used to return component id
+//     * Used to return tooltipComponent id
 //     */
 //    public int getComponentId() {
 //        return componentId;
@@ -490,42 +501,42 @@ public abstract class Component implements Serializable {
 
 
     /**
-     * Returns tooltip text
+     * Returns tooltipText text
      *
-     * @return tooltip text
+     * @return tooltipText text
      */
-    public String getTooltip() {
-        return tooltip;
+    public String getTooltipText() {
+        return tooltipText;
     }
 
     /**
-     * Used to set tooltip text
+     * Used to set tooltipText text
      *
-     * @param tooltip tooltip text
+     * @param tooltip tooltipText text
      */
-    public void setTooltip(String tooltip) {
-        this.tooltip = tooltip;
-        if (tooltipComponent == null) {
-            tooltipComponent = new Tooltip();
+    public void setTooltipText(String tooltip) {
+        this.tooltipText = tooltip;
+        if (this.tooltip == null) {
+            this.tooltip = new Tooltip(this);
         }
-        tooltipComponent.getTextState().setText(tooltip);
+        this.tooltip.getTextState().setText(tooltip);
     }
 
     /**
-     * Generated tooltip component on base of tooltip text.
+     * Generated tooltipText tooltipComponent on base of tooltipText text.
      * <p>
-     * You can use this component to set background, font and other visual effects.
+     * You can use this tooltipComponent to set background, font and other visual effects.
      * <p>
      * <span style="color:red">
-     * NOTE: do nat add this component to frame component layer. <br>
-     * It automatically added to tooltip layer by system event processor.
-     * Also tooltip position automatically calculated there.
+     * NOTE: do nat add this tooltipComponent to frame tooltipComponent layer. <br>
+     * It automatically added to tooltipText layer by system event processor.
+     * Also tooltipText position automatically calculated there.
      * </span>
      *
-     * @return generated tooltip component or null if tooltip is empty.
+     * @return generated tooltipText tooltipComponent or null if tooltipText is empty.
      */
-    public Tooltip getTooltipComponent() {
-        return tooltipComponent;
+    public Tooltip getTooltip() {
+        return tooltip;
     }
 
     /**
@@ -542,7 +553,7 @@ public abstract class Component implements Serializable {
         Component component = (Component) o;
 
         return new EqualsBuilder()
-//                .append(componentId, component.componentId)
+//                .append(componentId, tooltipComponent.componentId)
                 .append(enabled, component.enabled)
                 .append(visible, component.visible)
                 .append(cornerRadius, component.cornerRadius)

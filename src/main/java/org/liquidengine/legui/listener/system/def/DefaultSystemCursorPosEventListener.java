@@ -73,25 +73,25 @@ public class DefaultSystemCursorPosEventListener implements SystemEventListener<
         boolean                                    update           = false;
         CursorEnterEvent                           cursorEnterEvent = null;
 
-        if (component.getState().isHovered() && component.getTooltipComponent() != null) {
-            component.getTooltipComponent().setPosition(cursorPosition.x + tooltipOffset, cursorPosition.y + tooltipOffset);
-        }
+//        if (tooltipComponent.getState().isHovered() && tooltipComponent.getTooltip() != null) {
+//            tooltipComponent.getTooltip().setPosition(cursorPosition.x + tooltipOffset, cursorPosition.y + tooltipOffset);
+//        }
 
         if (component.getState().isHovered()) {
             if (!intersects || component != context.getMouseTargetGui()) {
                 component.getState().setHovered(false);
                 cursorEnterEvent = new CursorEnterEvent(component, CursorEnterEvent.CursorEnterAction.EXIT, mousePosition);
-                if (component.getTooltip() != null) {
-                    context.getFrame().getTooltipLayer().removeComponent(component.getTooltipComponent());
+                if (component.getTooltipText() != null) {
+                    context.getFrame().getTooltipLayer().removeComponent(component.getTooltip());
                 }
                 update = true;
             }
         } else if (!component.getState().isHovered() && intersects && component == context.getMouseTargetGui()) {
             component.getState().setHovered(true);
             cursorEnterEvent = new CursorEnterEvent(component, CursorEnterEvent.CursorEnterAction.ENTER, mousePosition);
-            if (component.getTooltip() != null) {
-                component.getTooltipComponent().setPosition(cursorPosition.x + tooltipOffset, cursorPosition.y + tooltipOffset);
-                context.getFrame().getTooltipLayer().addComponent(component.getTooltipComponent());
+            if (component.getTooltipText() != null) {
+//                tooltipComponent.getTooltip().setPosition(cursorPosition.x + tooltipOffset, cursorPosition.y + tooltipOffset);
+                context.getFrame().getTooltipLayer().addComponent(component.getTooltip());
             }
             update = true;
         }
