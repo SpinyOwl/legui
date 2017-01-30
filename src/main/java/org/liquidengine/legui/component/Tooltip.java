@@ -23,17 +23,21 @@ public class Tooltip extends Component {
     }
 
     @Override
-    public String getTooltipText() {
+    public final String getTooltipText() {
         return null;
     }
 
     @Override
-    public void setTooltipText(String tooltip) {
+    public final void setTooltipText(String tooltip) {
     }
 
     @Override
-    public Tooltip getTooltip() {
+    public final Tooltip getTooltip() {
         return this;
+    }
+
+    @Override
+    public final void setTooltip(Tooltip tooltip) {
     }
 
     public TextState getTextState() {

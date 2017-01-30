@@ -540,6 +540,14 @@ public abstract class Component implements Serializable {
     }
 
     /**
+     * you can set your own tooltip with own tooltip renderer using this setter.
+     * @param tooltip new tooltip.
+     */
+    public void setTooltip(Tooltip tooltip) {
+        this.tooltip = tooltip;
+    }
+
+    /**
      * (non-Javadoc)
      *
      * @see Object#equals(Object)
