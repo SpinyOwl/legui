@@ -295,7 +295,7 @@ public final class NvgRenderUtils {
 
 
     /**
-     * Creates scissor for provided tooltipComponent by it's parent components
+     * Creates scissor for provided component by it's parent components
      *
      * @param context nanovg context
      * @param gui     {@link Component}
@@ -326,19 +326,14 @@ public final class NvgRenderUtils {
     }
 
     /**
-     * Creates scissor by provided tooltipComponent and it's parent components
+     * Creates scissor by provided component and it's parent components
      *
      * @param context nanovg context
      */
     public static void createScissorByParent(long context, Component parent) {
         if (parent != null) {
             Vector2f p = Util.calculatePosition(parent);
-            Vector2f s = null;
-            if (parent instanceof Layer.LayerContainer) {
-                s = new Vector2f(parent.getSize());
-            } else {
-                s = new Vector2f(parent.getSize());
-            }
+            Vector2f s = new Vector2f(parent.getSize());
             nvgScissor(context, p.x, p.y, s.x, s.y);
 
             while ((parent = parent.getParent()) != null) {
