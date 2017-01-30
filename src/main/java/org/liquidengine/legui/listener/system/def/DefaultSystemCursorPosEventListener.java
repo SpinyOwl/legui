@@ -73,10 +73,6 @@ public class DefaultSystemCursorPosEventListener implements SystemEventListener<
         boolean                                    update           = false;
         CursorEnterEvent                           cursorEnterEvent = null;
 
-//        if (tooltipComponent.getState().isHovered() && tooltipComponent.getTooltip() != null) {
-//            tooltipComponent.getTooltip().setPosition(cursorPosition.x + tooltipOffset, cursorPosition.y + tooltipOffset);
-//        }
-
         if (component.getState().isHovered()) {
             if (!intersects || component != context.getMouseTargetGui()) {
                 component.getState().setHovered(false);
@@ -90,7 +86,6 @@ public class DefaultSystemCursorPosEventListener implements SystemEventListener<
             component.getState().setHovered(true);
             cursorEnterEvent = new CursorEnterEvent(component, CursorEnterEvent.CursorEnterAction.ENTER, mousePosition);
             if (component.getTooltipText() != null) {
-//                tooltipComponent.getTooltip().setPosition(cursorPosition.x + tooltipOffset, cursorPosition.y + tooltipOffset);
                 context.getFrame().getTooltipLayer().addComponent(component.getTooltip());
             }
             update = true;

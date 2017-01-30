@@ -62,7 +62,6 @@ public class NvgTextInputRenderer extends NvgLeguiComponentRenderer {
             Vector4f  p         = new Vector4f(textState.getPadding()).add(2, 2, 2, 2);
 
             Vector4f intersectRect = new Vector4f(pos.x + p.x, pos.y + p.y, size.x - p.x - p.z, size.y - p.y - p.w);
-//            drawRectStroke(context, ColorConstants.red(),intersectRect, 0,1);
             intersectScissor(context, new Vector4f(intersectRect).sub(1, 1, -2, -2));
             renderTextNew(leguiContext, context, agui, size, intersectRect, bc);
         }

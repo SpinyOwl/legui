@@ -75,12 +75,6 @@ public class Image {
 
     @Override
     public String toString() {
-//        return new ToStringBuilder(this)
-//                .append("path", path)
-//                .append("width", width)
-//                .append("height", height)
-//                .append("channels", channels)
-//                .toString();
         return super.toString();
     }
 

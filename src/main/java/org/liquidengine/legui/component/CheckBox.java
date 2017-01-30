@@ -40,10 +40,10 @@ public class CheckBox extends Component {
      * Constructor with position and size parameters.
      * Initialize checkbox with "CheckBox" text.
      *
-     * @param x      x position position in parent tooltipComponent
-     * @param y      y position position in parent tooltipComponent
-     * @param width  width of tooltipComponent
-     * @param height height of tooltipComponent
+     * @param x      x position position in parent component
+     * @param y      y position position in parent component
+     * @param width  width of component
+     * @param height height of component
      */
     public CheckBox(float x, float y, float width, float height) {
         this("CheckBox", x, y, width, height);
@@ -53,8 +53,8 @@ public class CheckBox extends Component {
      * Constructor with position and size parameters.
      * Initialize checkbox with "CheckBox" text.
      *
-     * @param position position position in parent tooltipComponent
-     * @param size     size of tooltipComponent
+     * @param position position position in parent component
+     * @param size     size of component
      */
     public CheckBox(Vector2f position, Vector2f size) {
         this("CheckBox", position, size);
@@ -74,10 +74,10 @@ public class CheckBox extends Component {
      * Initialize checkbox with "CheckBox" text.
      *
      * @param text   specified text for checkbox
-     * @param x      x position position in parent tooltipComponent
-     * @param y      y position position in parent tooltipComponent
-     * @param width  width of tooltipComponent
-     * @param height height of tooltipComponent
+     * @param x      x position position in parent component
+     * @param y      y position position in parent component
+     * @param width  width of component
+     * @param height height of component
      */
     public CheckBox(String text, float x, float y, float width, float height) {
         super(x, y, width, height);
@@ -89,8 +89,8 @@ public class CheckBox extends Component {
      * Initialize checkbox with "CheckBox" text.
      *
      * @param text     specified text for checkbox
-     * @param position position position in parent tooltipComponent
-     * @param size     size of tooltipComponent
+     * @param position position position in parent component
+     * @param size     size of component
      */
     public CheckBox(String text, Vector2f position, Vector2f size) {
         super(position, size);

@@ -30,7 +30,6 @@ import org.liquidengine.legui.processor.pre.SystemMouseClickEventPreprocessor;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-//import org.liquidengine.legui.listener.system.container.ContainerSystemMouseClickEventListener;
 
 /**
  * Created by Shcherbin Alexander on 10/24/2016.
@@ -80,11 +79,7 @@ public class DefaultSystemEventListenerProvider extends SystemEventListenerProvi
     }
 
     private void initializeListeners() {
-//        registerListener(ComponentContainer.class, SystemMouseClickEvent.class, new ContainerSystemMouseClickEventListener());
-
         registerListener(Component.class, SystemCursorPosEvent.class, new DefaultSystemCursorPosEventListener());
-
-//        registerListener(CheckBox.class, SystemMouseClickEvent.class, new CheckBoxSystemMouseClickEventListener());
 
         registerListener(RadioButton.class, SystemMouseClickEvent.class, new RadioButtonSystemMouseClickListener());
 

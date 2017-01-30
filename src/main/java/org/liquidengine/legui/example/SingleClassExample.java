@@ -61,13 +61,13 @@ public class SingleClassExample {
             monitors[i] = pointerBuffer.get(i);
         }
 
-        // Firstly we need to create frame tooltipComponent for window.
+        // Firstly we need to create frame component for window.
         Frame frame = new Frame(WIDTH, HEIGHT);
         // we can add elements here or on the fly
         createGuiElements(frame);
 
         // We need to create legui context which shared by renderer and event processor.
-        // Also we need to pass event processor for ui events such as click on tooltipComponent, key typing and etc.
+        // Also we need to pass event processor for ui events such as click on component, key typing and etc.
         LeguiEventProcessor leguiEventProcessor = new LeguiEventProcessor();
         context = new LeguiContext(window, frame, leguiEventProcessor);
         context.setReorderEnabled(true);

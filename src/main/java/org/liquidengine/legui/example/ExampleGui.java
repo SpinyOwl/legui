@@ -288,7 +288,6 @@ public class ExampleGui extends Frame {
         Panel panel1 = new Panel(420, 170, 100, 100);
         panel1.setBackgroundColor(ColorConstants.blue());
         this.addComponent(panel1);
-//        panel1.getLeguiEventListeners().addListener(CursorEnterEvent.class, System.out::println);
         Panel panel2 = new Panel(470, 170, 100, 100);
         panel2.setBackgroundColor(ColorConstants.green());
         this.addComponent(panel2);

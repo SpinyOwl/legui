@@ -26,8 +26,6 @@ public class NvgDefaultRenderer extends NvgLeguiComponentRenderer {
 
         createScissor(context, component);
         {
-//            nvgSave(context);
-
             Vector2f pos             = calculatePosition(component);
             Vector2f size            = component.getSize();
             Vector4f backgroundColor = component.getBackgroundColor();

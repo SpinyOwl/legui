@@ -39,7 +39,7 @@ public class SystemMouseClickEventPreprocessor implements SystemEventPreprocesso
                 focusedGui.getState().setPressed(false);
             }
         }
-        if (/*context.isReorderEnabled() && */mouseTargetGui != null) {
+        if (mouseTargetGui != null) {
             pushContainersUp(mouseTargetGui);
         }
     }
@@ -65,15 +65,6 @@ public class SystemMouseClickEventPreprocessor implements SystemEventPreprocesso
             if (push) {
                 parent.removeComponent(current);
                 parent.addComponent(current);
-//                do {
-//                    ComponentContainer container =  parent;
-//                    if (container != null) {
-//                        container.removeComponent(current);
-//                        container.addComponent(current);
-//                        current = parent;
-//                        parent = current.getParent();
-//                    }
-//                } while (parent != null);
             }
         }
     }

@@ -24,7 +24,6 @@ public class Widget extends ComponentContainer {
     private static final String MINIMIZE_ICON = cpToStr(0xE5D6);
     private static final String MAXIMIZE_ICON = cpToStr(0xE5D7);
 
-    //    protected boolean resizable = false;
     protected boolean draggable = true;
     protected boolean minimized = false;
 
