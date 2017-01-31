@@ -16,7 +16,8 @@ public class ListenerMap {
     private final Lock                                                                 lock        = new ReentrantLock();
     private       Map<Class<? extends LeguiEvent>, List<? extends LeguiEventListener>> listenerMap = new ConcurrentHashMap<>();
 
-    public void addListener() {
+    public <T extends LeguiEvent> void addListener(Class<T> eventClass, LeguiEventListener<T> listener) {
+        getListeners(eventClass).add(listener);
     }
 
     public <E extends LeguiEvent> List<LeguiEventListener<E>> getListeners(Class<E> eventClass) {

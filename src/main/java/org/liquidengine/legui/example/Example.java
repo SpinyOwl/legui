@@ -168,7 +168,7 @@ public class Example {
 //        });
 //
         Component component = null;//
-        frame.getContainer().addComponent(component);
+        frame.getContainer().add(component);
 //        frame.addComponent(button2);
     }
 

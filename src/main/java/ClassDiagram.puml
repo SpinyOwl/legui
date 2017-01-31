@@ -1,0 +1,52 @@
+@startuml
+package org.liquidengine.legui{
+    package component{
+        abstract class Component
+        abstract class Controller {
+            -Tooltip tooltip
+        }
+        abstract class Container<T extends Component> {
+            ~List<T> components
+        }
+        class Panel<T>
+        class Widget<T>
+        class LayerContainer<T>
+        class Button
+        class Image
+        class Label
+        class Tooltip
+        class Layer<T> {
+            ~LayerContainer<T> container
+        }
+        class Frame {
+            ~Layer<Component> componentLayer
+            ~List<Layer> layers
+            ~Layer<Tooltip> tooltipLayer
+        }
+
+        Component       <--     Container
+        Container       <--     Panel
+        Container       <--     Widget
+        Container       <--     LayerContainer
+
+        Component       <--     Tooltip
+        Component       <--     Controller
+
+        Controller      <--     Button
+        Controller      <--     Image
+        Controller      <--     Label
+
+        Tooltip         --*     Controller
+        LayerContainer  --*     Layer
+        Frame           *-up-   Layer
+    }
+
+    package border{
+
+    }
+
+    package system{
+
+    }
+}
+@enduml

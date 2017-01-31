@@ -3,7 +3,7 @@ package org.liquidengine.legui.component;
 /**
  * Created by Aliaksandr_Shcherbin on 1/24/2017.
  */
-public class LayerFrame extends ComponentContainer {
+public class LayerFrame<T extends Component> extends ComponentContainer<T> {
     protected Layer layer;
 
     protected LayerFrame(Layer layer) {

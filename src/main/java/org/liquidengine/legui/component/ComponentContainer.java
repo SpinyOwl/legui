@@ -11,8 +11,8 @@ import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
-public abstract class ComponentContainer extends Component {
-    protected List<Component> components = SetUniqueList.setUniqueList(new CopyOnWriteArrayList<>());
+public abstract class ComponentContainer<T extends Component> extends Component {
+    protected List<T> components = SetUniqueList.setUniqueList(new CopyOnWriteArrayList<>());
 
     /**
      * Returns count of child components.
@@ -20,7 +20,7 @@ public abstract class ComponentContainer extends Component {
      * @return count of child components.
      * @see List#size()
      */
-    public int componentsCount() {
+    public int count() {
         return components.size();
     }
 
@@ -30,7 +30,7 @@ public abstract class ComponentContainer extends Component {
      * @return true if layerFrame contains no elements.
      * @see List#isEmpty()
      */
-    public boolean isContainerEmpty() {
+    public boolean isEmpty() {
         return components.isEmpty();
     }
 
@@ -41,7 +41,7 @@ public abstract class ComponentContainer extends Component {
      * @return true if layerFrame contains specified component.
      * @see List#contains(Object)
      */
-    public boolean containsComponent(Component component) {
+    public boolean contains(T component) {
         return components.contains(component);
     }
 
@@ -52,7 +52,7 @@ public abstract class ComponentContainer extends Component {
      * @return an iterator over the elements in this layerFrame.
      * @see List#iterator()
      */
-    public Iterator<Component> containerIterator() {
+    public Iterator<T> containerIterator() {
         return components.iterator();
     }
 
@@ -63,7 +63,7 @@ public abstract class ComponentContainer extends Component {
      * @return true if component is added.
      * @see List#add(Object)
      */
-    public boolean addComponent(Component component) {
+    public boolean add(T component) {
         if (component == null || component == this) return false;
         changeParent(component);
         return components.add(component);
@@ -76,7 +76,7 @@ public abstract class ComponentContainer extends Component {
      * @return true if added.
      * @see List#addAll(Collection)
      */
-    public boolean addAllComponents(Collection<? extends Component> components) {
+    public boolean addAll(Collection<? extends T> components) {
         if (components != null) {
             components.forEach(abstractGui -> {
                 if (abstractGui != this) changeParent(abstractGui);
@@ -92,12 +92,11 @@ public abstract class ComponentContainer extends Component {
      *
      * @param component component to change.
      */
-    private void changeParent(Component component) {
+    private void changeParent(T component) {
         if (component != null) {
-            Component parent = component.parent;
+            ComponentContainer parent = component.parent;
             if (parent != null) {
-                ComponentContainer container = ((ComponentContainer) parent);
-                container.removeComponent(component);
+                parent.remove(component);
             }
             component.parent = this;
         }
@@ -110,7 +109,7 @@ public abstract class ComponentContainer extends Component {
      * @return true if removed.
      * @see List#remove(Object)
      */
-    public boolean removeComponent(Component component) {
+    public boolean remove(T component) {
         if (component.parent != null && component.parent == this && components.contains(component)) {
             component.parent = null;
             return components.remove(component);
@@ -124,7 +123,7 @@ public abstract class ComponentContainer extends Component {
      * @param components components to remove.
      * @see List#removeAll(Collection)
      */
-    public void removeAllComponents(Collection<? extends Component> components) {
+    public void removeAll(Collection<? extends T> components) {
         components.forEach(compo -> compo.parent = null);
         this.components.removeAll(components);
     }
@@ -140,7 +139,7 @@ public abstract class ComponentContainer extends Component {
      * @return true if any components were removed.
      * @see List#removeIf(Predicate)
      */
-    public boolean removeComponentIf(Predicate<? super Component> filter) {
+    public boolean removeIf(Predicate<? super T> filter) {
         components.stream().filter(filter).forEach(compo -> compo.parent = null);
         return components.removeIf(filter);
     }
@@ -150,7 +149,7 @@ public abstract class ComponentContainer extends Component {
      *
      * @see List#clear()
      */
-    public void clearComponents() {
+    public void clear() {
         components.forEach(compo -> compo.parent = null);
         components.clear();
     }
@@ -162,7 +161,7 @@ public abstract class ComponentContainer extends Component {
      * @return true if this ComponentContainer contains all of the elements of the specified collection.
      * @see List#containsAll(Collection)
      */
-    public boolean containerContainsAll(Collection<?> components) {
+    public boolean containsAll(Collection<T> components) {
         return this.components.containsAll(components);
     }
 
@@ -172,7 +171,7 @@ public abstract class ComponentContainer extends Component {
      * @return a sequential Stream with this collection as its source.
      * @see List#stream()
      */
-    public Stream<Component> componentStream() {
+    public Stream<T> stream() {
         return components.stream();
     }
 
@@ -183,7 +182,7 @@ public abstract class ComponentContainer extends Component {
      * @return possibly parallel Stream with this collection as its source.
      * @see List#parallelStream()
      */
-    public Stream<Component> componentParallelStream() {
+    public Stream<T> parallelStream() {
         return components.parallelStream();
     }
 
@@ -193,7 +192,7 @@ public abstract class ComponentContainer extends Component {
      *
      * @param action The action to be performed for each element.
      */
-    public void forEachComponent(Consumer<? super Component> action) {
+    public void forEach(Consumer<? super T> action) {
         components.forEach(action);
     }
 
@@ -205,7 +204,7 @@ public abstract class ComponentContainer extends Component {
      *
      * @return list of child components.
      */
-    public List<Component> getComponents() {
+    public List<T> getAll() {
         return new ArrayList<>(components);
     }
 
