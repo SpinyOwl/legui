@@ -1,7 +1,7 @@
 package org.liquidengine.legui.component;
 
-public class Layer {
-    protected LayerFrame layerFrame;
+public class Layer<T extends Component> {
+    protected LayerFrame<T> layerFrame;
     protected Layer      bottomLayer;
     protected Layer      topLayer;
     protected Frame      display;
@@ -11,7 +11,7 @@ public class Layer {
     }
 
     private void initialize() {
-        layerFrame = new LayerFrame(this);
+        layerFrame = new LayerFrame<>(this);
     }
 
     public Frame getDisplay() {
