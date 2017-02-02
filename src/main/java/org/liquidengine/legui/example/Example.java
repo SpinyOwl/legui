@@ -151,7 +151,7 @@ public class Example {
     }
 
     private static void createGuiElements(Frame frame) {
-        frame.getContainer().getBackgroundColor().set(ColorConstants.lightBlue);
+        frame.getComponentLayer().getBackgroundColor().set(ColorConstants.lightBlue);
         // Set background color for frame
 //        frame.setBackgroundColor(ColorConstants.lightBlue());
 //
@@ -177,7 +177,7 @@ public class Example {
         component.getBackgroundColor().set(ColorConstants.green);
         component.setSize(new Vector2f(100, 100));
         component.setPosition(new Vector2f(10, 10));
-        frame.getContainer().add(component);
+        frame.getComponentLayer().add(component);
 //        frame.addComponent(button2);
     }
 
