@@ -11,7 +11,7 @@ import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
-public abstract class ComponentContainer<T extends Component> extends Component {
+public abstract class ComponentContainer<T extends Component> extends Controller {
     protected List<T> components = SetUniqueList.setUniqueList(new CopyOnWriteArrayList<>());
 
     /**
