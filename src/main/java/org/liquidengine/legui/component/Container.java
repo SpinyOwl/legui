@@ -1,28 +1,23 @@
 package org.liquidengine.legui.component;
 
-import org.apache.commons.collections4.list.SetUniqueList;
-
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
-public abstract class ComponentContainer<T extends Component> extends Controller {
-    protected List<T> components = SetUniqueList.setUniqueList(new CopyOnWriteArrayList<>());
-
+/**
+ * Created by Aliaksandr_Shcherbin on 2/2/2017.
+ */
+public interface Container<T extends Component> {
     /**
      * Returns count of child components.
      *
      * @return count of child components.
      * @see List#size()
      */
-    public int count() {
-        return components.size();
-    }
+    int count();
 
     /**
      * Returns true if layerFrame contains no elements.
@@ -30,9 +25,7 @@ public abstract class ComponentContainer<T extends Component> extends Controller
      * @return true if layerFrame contains no elements.
      * @see List#isEmpty()
      */
-    public boolean isEmpty() {
-        return components.isEmpty();
-    }
+    boolean isEmpty();
 
     /**
      * Returns true if layerFrame contains specified component.
@@ -41,9 +34,7 @@ public abstract class ComponentContainer<T extends Component> extends Controller
      * @return true if layerFrame contains specified component.
      * @see List#contains(Object)
      */
-    public boolean contains(T component) {
-        return components.contains(component);
-    }
+    boolean contains(T component);
 
     /**
      * Returns an iterator over the elements in this layerFrame.
@@ -52,9 +43,7 @@ public abstract class ComponentContainer<T extends Component> extends Controller
      * @return an iterator over the elements in this layerFrame.
      * @see List#iterator()
      */
-    public Iterator<T> containerIterator() {
-        return components.iterator();
-    }
+    Iterator<T> containerIterator();
 
     /**
      * Used to add component to layerFrame.
@@ -63,11 +52,7 @@ public abstract class ComponentContainer<T extends Component> extends Controller
      * @return true if component is added.
      * @see List#add(Object)
      */
-    public boolean add(T component) {
-        if (component == null || component == this) return false;
-        changeParent(component);
-        return components.add(component);
-    }
+    boolean add(T component);
 
     /**
      * Used to add components.
@@ -76,35 +61,7 @@ public abstract class ComponentContainer<T extends Component> extends Controller
      * @return true if added.
      * @see List#addAll(Collection)
      */
-    public boolean addAll(Collection<? extends T> components) {
-        if (components != null) {
-            List<T> toAdd = new ArrayList<T>();
-            components.forEach(abstractGui -> {
-                if (abstractGui != this || abstractGui != null) {
-                    changeParent(abstractGui);
-                    toAdd.add(abstractGui);
-                }
-            });
-            return this.components.addAll(toAdd);
-        } else {
-            return false;
-        }
-    }
-
-    /**
-     * Used to change parent of added component.
-     *
-     * @param component component to change.
-     */
-    private void changeParent(T component) {
-        if (component != null) {
-            ComponentContainer parent = component.parent;
-            if (parent != null) {
-                parent.remove(component);
-            }
-            component.parent = this;
-        }
-    }
+    boolean addAll(Collection<? extends T> components);
 
     /**
      * Used to remove component.
@@ -113,13 +70,7 @@ public abstract class ComponentContainer<T extends Component> extends Controller
      * @return true if removed.
      * @see List#remove(Object)
      */
-    public boolean remove(T component) {
-        if (component != null && component.parent != null && component.parent == this && components.contains(component)) {
-            component.parent = null;
-            return components.remove(component);
-        }
-        return false;
-    }
+    boolean remove(T component);
 
     /**
      * Used to remove components.
@@ -127,16 +78,7 @@ public abstract class ComponentContainer<T extends Component> extends Controller
      * @param components components to remove.
      * @see List#removeAll(Collection)
      */
-    public void removeAll(Collection<? extends T> components) {
-        List<T> toRemove = new ArrayList<T>();
-        components.forEach(compo -> {
-            if (compo != null) {
-                compo.parent = null;
-                toRemove.add(compo);
-            }
-        });
-        this.components.removeAll(toRemove);
-    }
+    void removeAll(Collection<? extends T> components);
 
     /**
      * Removes all of the elements of this layerFrame
@@ -149,20 +91,14 @@ public abstract class ComponentContainer<T extends Component> extends Controller
      * @return true if any components were removed.
      * @see List#removeIf(Predicate)
      */
-    public boolean removeIf(Predicate<? super T> filter) {
-        components.stream().filter(filter).forEach(compo -> compo.parent = null);
-        return components.removeIf(filter);
-    }
+    boolean removeIf(Predicate<? super T> filter);
 
     /**
      * Used to remove all child components from layerFrame.
      *
      * @see List#clear()
      */
-    public void clear() {
-        components.forEach(compo -> compo.parent = null);
-        components.clear();
-    }
+    void clear();
 
     /**
      * Returns true if this ComponentContainer contains all of the elements of the specified collection.
@@ -171,9 +107,7 @@ public abstract class ComponentContainer<T extends Component> extends Controller
      * @return true if this ComponentContainer contains all of the elements of the specified collection.
      * @see List#containsAll(Collection)
      */
-    public boolean containsAll(Collection<T> components) {
-        return this.components.containsAll(components);
-    }
+    boolean containsAll(Collection<T> components);
 
     /**
      * Returns a sequential Stream with this collection as its source.
@@ -181,9 +115,7 @@ public abstract class ComponentContainer<T extends Component> extends Controller
      * @return a sequential Stream with this collection as its source.
      * @see List#stream()
      */
-    public Stream<T> stream() {
-        return components.stream();
-    }
+    Stream<T> stream();
 
     /**
      * Returns a possibly parallel Stream with this collection as its source.
@@ -192,9 +124,7 @@ public abstract class ComponentContainer<T extends Component> extends Controller
      * @return possibly parallel Stream with this collection as its source.
      * @see List#parallelStream()
      */
-    public Stream<T> parallelStream() {
-        return components.parallelStream();
-    }
+    Stream<T> parallelStream();
 
     /**
      * Performs the given action for each element of the Iterable
@@ -202,9 +132,7 @@ public abstract class ComponentContainer<T extends Component> extends Controller
      *
      * @param action The action to be performed for each element.
      */
-    public void forEach(Consumer<? super T> action) {
-        components.forEach(action);
-    }
+    void forEach(Consumer<? super T> action);
 
     /**
      * Used to retrieve child components as {@link List}
@@ -214,8 +142,6 @@ public abstract class ComponentContainer<T extends Component> extends Controller
      *
      * @return list of child components.
      */
-    public List<T> getAll() {
-        return new ArrayList<>(components);
-    }
+    List<T> getAll();
 
 }

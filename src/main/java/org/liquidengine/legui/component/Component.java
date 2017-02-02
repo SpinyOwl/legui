@@ -12,6 +12,7 @@ public abstract class Component {
     private   Vector2f    position        = new Vector2f();
     private   Vector2f    size            = new Vector2f();
     private   Vector4f    backgroundColor = ColorConstants.transparent();
+    private   boolean     visible         = true;
 
     public ComponentContainer getParent() {
         return parent;
@@ -63,5 +64,9 @@ public abstract class Component {
 
     public Vector4f getBackgroundColor() {
         return backgroundColor;
+    }
+
+    public boolean isVisible() {
+        return visible;
     }
 }

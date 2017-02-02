@@ -1,17 +1,25 @@
 package org.liquidengine.legui.component;
 
-public class Layer<T extends Component> {
-    protected LayerFrame<T> layerFrame;
-    protected Layer      bottomLayer;
-    protected Layer      topLayer;
-    protected Frame      display;
+import org.apache.commons.collections4.list.SetUniqueList;
+import org.liquidengine.legui.event.WindowSizeEvent;
+import org.liquidengine.legui.listener.WindowSizeEventListener;
+
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
+
+public class Layer<T extends Component> extends ComponentContainer<T> {
+    protected List<T> components = SetUniqueList.setUniqueList(new CopyOnWriteArrayList<>());
+
+    protected Layer bottomLayer;
+    protected Layer topLayer;
+    protected Frame display;
 
     public Layer() {
         initialize();
     }
 
     private void initialize() {
-        layerFrame = new LayerFrame<>(this);
+        listenerMap.addListener(WindowSizeEvent.class, (WindowSizeEventListener) event -> getSize().set(event.getWidth(), event.getHeight()));
     }
 
     public Frame getDisplay() {
@@ -26,7 +34,4 @@ public class Layer<T extends Component> {
         return topLayer;
     }
 
-    public ComponentContainer getLayerFrame() {
-        return layerFrame;
-    }
 }

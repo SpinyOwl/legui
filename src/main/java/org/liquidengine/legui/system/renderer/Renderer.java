@@ -1,9 +1,8 @@
 package org.liquidengine.legui.system.renderer;
 
-import org.liquidengine.legui.component.*;
+import org.liquidengine.legui.component.Frame;
+import org.liquidengine.legui.component.Layer;
 import org.liquidengine.legui.system.context.Context;
-
-import java.util.List;
 
 /**
  * Created by Aliaksandr_Shcherbin on 1/24/2017.
@@ -24,8 +23,7 @@ public abstract class Renderer {
     public void render(Frame display) {
         preRender();
         for (Layer layer : display.getAllLayers()) {
-            ComponentContainer layerFrame = layer.getLayerFrame();
-            RendererProvider.getInstance().getComponentRenderer(LayerFrame.class).render(layerFrame, context);
+            RendererProvider.getInstance().getComponentRenderer(Layer.class).render(layer, context);
         }
         postRender();
     }

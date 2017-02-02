@@ -1,6 +1,7 @@
 package org.liquidengine.legui.system.processor;
 
 import org.liquidengine.legui.system.event.SystemEvent;
+import org.liquidengine.legui.system.event.SystemWindowSizeEvent;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -12,6 +13,7 @@ public class SystemEventProcessorProvider {
     private Map<Class<? extends SystemEvent>, SystemEventProcessor<? extends SystemEvent>> processorMap = new ConcurrentHashMap<>();
 
     private SystemEventProcessorProvider() {
+        registerProcessor(SystemWindowSizeEvent.class, new WindowSizeEventProcessor());
     }
 
     public static SystemEventProcessorProvider getInstance() {
