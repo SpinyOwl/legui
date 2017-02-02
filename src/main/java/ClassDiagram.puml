@@ -24,7 +24,7 @@ package org.liquidengine.legui{
             ~Layer<Tooltip> tooltipLayer
         }
 
-        Component       <--     Container
+
         Container       <--     Panel
         Container       <--     Widget
         Container       <--     LayerContainer
@@ -32,13 +32,14 @@ package org.liquidengine.legui{
         Component       <--     Tooltip
         Component       <--     Controller
 
+        Controller      <--     Container
         Controller      <--     Button
         Controller      <--     Image
         Controller      <--     Label
 
-        Tooltip         --*     Controller
-        LayerContainer  --*     Layer
-        Frame           *-up-   Layer
+         Tooltip        --*     Controller
+         LayerContainer --*     Layer
+         Layer          --*     Frame
     }
 
     package border{
@@ -48,5 +49,7 @@ package org.liquidengine.legui{
     package system{
 
     }
+
+    border .. system
 }
 @enduml

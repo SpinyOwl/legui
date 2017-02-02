@@ -11,15 +11,17 @@ public class Frame {
     protected Layer componentLayer;
     protected List<Layer> layers = SetUniqueList.setUniqueList(new CopyOnWriteArrayList<>());
 
-    public Frame() {
-        initialize();
+    public Frame(int width, int height) {
+        initialize(width, height);
     }
 
-    private void initialize() {
+    private void initialize(int width, int height) {
         tooltipLayer = new Layer();
         componentLayer = new Layer();
         componentLayer.topLayer = tooltipLayer;
         tooltipLayer.bottomLayer = componentLayer;
+        tooltipLayer.getLayerFrame().getSize().set(width, height);
+        componentLayer.getLayerFrame().getSize().set(width, height);
     }
 
     public void addLayer(Layer layer) {

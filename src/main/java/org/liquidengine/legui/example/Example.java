@@ -1,10 +1,14 @@
 package org.liquidengine.legui.example;
 
+import org.joml.Vector2f;
 import org.joml.Vector2i;
-import org.liquidengine.legui.Legui;
+import org.liquidengine.legui.DefaultInitializer;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.Frame;
-import org.liquidengine.legui.system.renderer.LeguiRenderer;
+import org.liquidengine.legui.component.Panel;
+import org.liquidengine.legui.system.context.Context;
+import org.liquidengine.legui.system.renderer.Renderer;
+import org.liquidengine.legui.util.ColorConstants;
 import org.lwjgl.PointerBuffer;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWKeyCallbackI;
@@ -44,21 +48,20 @@ public class Example {
 
         PointerBuffer pointerBuffer = glfwGetMonitors();
         int           remaining     = pointerBuffer.remaining();
-        System.out.println(remaining);
         monitors = new long[remaining];
         for (int i = 0; i < remaining; i++) {
             monitors[i] = pointerBuffer.get(i);
         }
 
         // Firstly we need to create frame component for window.
-        Frame frame = new Frame();// new Frame(WIDTH, HEIGHT);
+        Frame frame = new Frame(WIDTH, HEIGHT);// new Frame(WIDTH, HEIGHT);
         // we can add elements here or on the fly
         createGuiElements(frame);
 
         // We need to create legui instance one for window
         // which hold all necessary library components
         // or if you want some customizations you can do it by yourself.
-        Legui legui = new Legui(window, frame);
+        DefaultInitializer initializer = new DefaultInitializer(window, frame);
 
         GLFWKeyCallbackI         glfwKeyCallbackI         = (w1, key, code, action, mods) -> running = !(key == GLFW_KEY_ESCAPE && action != GLFW_RELEASE);
         GLFWWindowCloseCallbackI glfwWindowCloseCallbackI = w -> running = false;
@@ -70,8 +73,8 @@ public class Example {
         // glfwSetWindowCloseCallback(window, glfwWindowCloseCallbackI);
         //
         // Right:
-        legui.getCallbackKeeper().getChainKeyCallback().add(glfwKeyCallbackI);
-        legui.getCallbackKeeper().getChainWindowCloseCallback().add(glfwWindowCloseCallbackI);
+        initializer.getCallbackKeeper().getChainKeyCallback().add(glfwKeyCallbackI);
+        initializer.getCallbackKeeper().getChainWindowCloseCallback().add(glfwWindowCloseCallbackI);
 
 
         // Initialization finished, so we can start render loop.
@@ -81,7 +84,8 @@ public class Example {
         // Here is one-thread example.
 
         // before render loop we need to initialize renderer
-        legui.getRenderer().initialize();
+        Renderer renderer = initializer.getRenderer();
+        renderer.initialize();
 
         while (running) {
 
@@ -104,8 +108,9 @@ public class Example {
             //}
 
             // Also we can do it in one line
-            legui.getContext().updateGlfwWindow();
-            Vector2i windowSize = null;//context.getWindowSize();
+            Context context = initializer.getContext();
+            context.updateGlfwWindow();
+            Vector2i windowSize = context.getWindowSize();
 
             glClearColor(1, 1, 1, 1);
             // Set viewport size
@@ -114,18 +119,18 @@ public class Example {
             glClear(GL_COLOR_BUFFER_BIT);
 
             // render frame
-            legui.getRenderer().render(frame);
+            renderer.render(frame);
 
             // poll events to callbacks
             glfwPollEvents();
             glfwSwapBuffers(window);
 
             // Now we need to process events. Firstly we need to process system events.
-            legui.getSystemEventProcessorManager().processEvent();
+            initializer.getSystemEventProcessorManager().processEvent();
 
             // When system events are translated to GUI events we need to process them.
             // This event processor calls listeners added to ui components
-            legui.getGuiEventProcessor().processEvent();
+            initializer.getGuiEventProcessor().processEvent();
             if (toggleFullscreen) {
                 if (fullscreen) {
                     glfwSetWindowMonitor(window, NULL, 100, 100, WIDTH, HEIGHT, GLFW_DONT_CARE);
@@ -139,13 +144,14 @@ public class Example {
         }
 
         // And when rendering is ended we need to destroy renderer
-        legui.getRenderer().destroy();
+        renderer.destroy();
 
         glfwDestroyWindow(window);
         glfwTerminate();
     }
 
     private static void createGuiElements(Frame frame) {
+        frame.getContainer().getBackgroundColor().set(ColorConstants.lightBlue);
         // Set background color for frame
 //        frame.setBackgroundColor(ColorConstants.lightBlue());
 //
@@ -167,7 +173,10 @@ public class Example {
 //            }
 //        });
 //
-        Component component = null;//
+        Component component = new Panel<>();//
+        component.getBackgroundColor().set(ColorConstants.green);
+        component.setSize(new Vector2f(100, 100));
+        component.setPosition(new Vector2f(10, 10));
         frame.getContainer().add(component);
 //        frame.addComponent(button2);
     }
