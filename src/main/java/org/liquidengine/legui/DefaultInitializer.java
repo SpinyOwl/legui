@@ -5,7 +5,7 @@ import org.liquidengine.legui.listener.EventProcessor;
 import org.liquidengine.legui.system.context.DefaultCallbackKeeper;
 import org.liquidengine.legui.system.context.CallbackKeeper;
 import org.liquidengine.legui.system.context.Context;
-import org.liquidengine.legui.system.processor.SystemEventProcessorManager;
+import org.liquidengine.legui.system.processor.SystemEventProcessor;
 import org.liquidengine.legui.system.renderer.Renderer;
 import org.liquidengine.legui.system.renderer.RendererProvider;
 import org.liquidengine.legui.system.renderer.nvg.NvgRenderer;
@@ -15,13 +15,13 @@ import org.liquidengine.legui.system.renderer.nvg.NvgRendererProvider;
  * Created by Aliaksandr_Shcherbin on 1/25/2017.
  */
 public class DefaultInitializer {
-    private long                        window;
-    private Frame                       frame;
-    private Context                     context;
-    private EventProcessor              eventProcessor;
-    private SystemEventProcessorManager systemEventProcessorManager;
-    private CallbackKeeper              callbackKeeper;
-    private Renderer                    renderer;
+    private long                 window;
+    private Frame                frame;
+    private Context              context;
+    private EventProcessor       eventProcessor;
+    private SystemEventProcessor systemEventProcessor;
+    private CallbackKeeper       callbackKeeper;
+    private Renderer             renderer;
 
     public DefaultInitializer(long window, Frame frame) {
         this.frame = frame;
@@ -39,7 +39,7 @@ public class DefaultInitializer {
         ((DefaultCallbackKeeper) callbackKeeper).registerCallbacks(this.window);
 
         // Event processor for system events. System events should be processed and translated to gui events.
-        systemEventProcessorManager = new SystemEventProcessorManager(this.frame, context, callbackKeeper);
+        systemEventProcessor = new SystemEventProcessor(this.frame, context, callbackKeeper);
 
         // Also we need to create initialize renderer provider
         // and create renderer which will render our ui components.
@@ -56,8 +56,8 @@ public class DefaultInitializer {
         return eventProcessor;
     }
 
-    public SystemEventProcessorManager getSystemEventProcessorManager() {
-        return systemEventProcessorManager;
+    public SystemEventProcessor getSystemEventProcessor() {
+        return systemEventProcessor;
     }
 
     public Frame getFrame() {

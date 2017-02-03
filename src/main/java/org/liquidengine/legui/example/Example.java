@@ -5,7 +5,10 @@ import org.joml.Vector2i;
 import org.liquidengine.legui.DefaultInitializer;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.Frame;
+import org.liquidengine.legui.component.Layer;
 import org.liquidengine.legui.component.Panel;
+import org.liquidengine.legui.event.ScrollEvent;
+import org.liquidengine.legui.listener.ScrollEventListener;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.Renderer;
 import org.liquidengine.legui.util.ColorConstants;
@@ -56,7 +59,7 @@ public class Example {
         // Firstly we need to create frame component for window.
         Frame frame = new Frame(WIDTH, HEIGHT);// new Frame(WIDTH, HEIGHT);
         // we can add elements here or on the fly
-        createGuiElements(frame);
+        createGuiElements(frame, WIDTH, HEIGHT);
 
         // We need to create legui instance one for window
         // which hold all necessary library components
@@ -112,6 +115,11 @@ public class Example {
             context.updateGlfwWindow();
             Vector2i windowSize = context.getWindowSize();
 
+            double[] xp = {0};
+            double[] yp = {0};
+            glfwGetCursorPos(window, xp, yp);
+            context.setCursorPosition(new Vector2f((float) xp[0], (float) yp[0]));
+
             glClearColor(1, 1, 1, 1);
             // Set viewport size
             glViewport(0, 0, windowSize.x, windowSize.y);
@@ -126,7 +134,7 @@ public class Example {
             glfwSwapBuffers(window);
 
             // Now we need to process events. Firstly we need to process system events.
-            initializer.getSystemEventProcessorManager().processEvent();
+            initializer.getSystemEventProcessor().processEvent();
 
             // When system events are translated to GUI events we need to process them.
             // This event processor calls listeners added to ui components
@@ -150,7 +158,7 @@ public class Example {
         glfwTerminate();
     }
 
-    private static void createGuiElements(Frame frame) {
+    private static void createGuiElements(Frame frame, int w, int h) {
         frame.getComponentLayer().getBackgroundColor().set(ColorConstants.lightBlue);
         // Set background color for frame
 //        frame.setBackgroundColor(ColorConstants.lightBlue());
@@ -177,7 +185,21 @@ public class Example {
         component.getBackgroundColor().set(ColorConstants.green);
         component.setSize(new Vector2f(100, 100));
         component.setPosition(new Vector2f(10, 10));
+        component.getListenerMap().addListener(ScrollEvent.class, (ScrollEventListener) event -> System.out.println("C  " + event));
         frame.getComponentLayer().add(component);
+
+        Layer layer = new Layer();
+        layer.setSize(w, h);
+//        layer.setEventPassable(false);
+        Component component2 = new Panel<>();//
+        component2.getBackgroundColor().set(ColorConstants.red);
+        component2.setSize(new Vector2f(100, 100));
+        component2.setPosition(new Vector2f(60, 10));
+        component2.getListenerMap().addListener(ScrollEvent.class, (ScrollEventListener) event -> System.out.println("C2 " + event));
+        layer.add(component2);
+
+        frame.addLayer(layer);
+
 //        frame.addComponent(button2);
     }
 

@@ -10,7 +10,6 @@ package org.liquidengine.legui{
         }
         class Panel<T>
         class Widget<T>
-        class LayerContainer<T>
         class Button
         class Image
         class Label
@@ -27,7 +26,7 @@ package org.liquidengine.legui{
 
         Container       <--     Panel
         Container       <--     Widget
-        Container       <--     LayerContainer
+        Container       <--     Layer
 
         Component       <--     Tooltip
         Component       <--     Controller
@@ -37,9 +36,8 @@ package org.liquidengine.legui{
         Controller      <--     Image
         Controller      <--     Label
 
-         Tooltip        --*     Controller
-         LayerContainer --*     Layer
-         Layer          --*     Frame
+        Tooltip        -*      Controller
+        Layer          --*     Frame
     }
 
     package border{

@@ -43,7 +43,7 @@ public class NvgDefaultRenderer extends NvgComponentRenderer {
 
         if (component instanceof ComponentContainer) {
             ComponentContainer container = (ComponentContainer) component;
-            List<Component>    all       = container.getAll();
+            List<Component>    all       = container.getChilds();
             for (Component child : all) {
                 RendererProvider.getInstance().
                         getComponentRenderer(child.getClass()).render(child, context);
