@@ -2,6 +2,8 @@ package org.liquidengine.legui.component;
 
 import org.joml.Vector2f;
 import org.joml.Vector4f;
+import org.liquidengine.legui.intersection.Intersector;
+import org.liquidengine.legui.intersection.RectangleIntersector;
 import org.liquidengine.legui.listener.ListenerMap;
 import org.liquidengine.legui.util.ColorConstants;
 
@@ -13,6 +15,8 @@ public abstract class Component {
     private   Vector2f    size            = new Vector2f();
     private   Vector4f    backgroundColor = ColorConstants.transparent();
     private   boolean     visible         = true;
+    private   boolean     enabled         = true;
+    private   Intersector intersector     = new RectangleIntersector();
 
     public ComponentContainer getParent() {
         return parent;
@@ -66,7 +70,40 @@ public abstract class Component {
         return backgroundColor;
     }
 
+    public void setBackgroundColor(Vector4f backgroundColor) {
+        this.backgroundColor = backgroundColor;
+    }
+
     public boolean isVisible() {
         return visible;
+    }
+
+    public void setVisible(boolean visible) {
+        this.visible = visible;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public boolean intersects(Vector2f vector) {
+        return intersector.intersects(this, vector);
+    }
+
+    public Intersector getIntersector() {
+        return intersector;
+    }
+
+    public void setIntersector(Intersector intersector) {
+        if (intersector == null) return;
+        this.intersector = intersector;
+    }
+
+    public void setSize(float width, int height) {
+        size.set(width, height);
     }
 }

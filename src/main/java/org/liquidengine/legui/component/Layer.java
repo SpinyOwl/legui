@@ -1,18 +1,13 @@
 package org.liquidengine.legui.component;
 
-import org.apache.commons.collections4.list.SetUniqueList;
 import org.liquidengine.legui.event.WindowSizeEvent;
 import org.liquidengine.legui.listener.WindowSizeEventListener;
 
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
-
 public class Layer<T extends Component> extends ComponentContainer<T> {
-    protected List<T> components = SetUniqueList.setUniqueList(new CopyOnWriteArrayList<>());
-
     protected Layer bottomLayer;
     protected Layer topLayer;
     protected Frame display;
+    protected boolean eventPassable = true;
 
     public Layer() {
         initialize();
@@ -34,4 +29,11 @@ public class Layer<T extends Component> extends ComponentContainer<T> {
         return topLayer;
     }
 
+    public boolean isEventPassable() {
+        return eventPassable;
+    }
+
+    public void setEventPassable(boolean eventPassable) {
+        this.eventPassable = eventPassable;
+    }
 }

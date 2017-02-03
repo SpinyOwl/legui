@@ -1,7 +1,6 @@
 package org.liquidengine.legui.system.processor;
 
-import org.liquidengine.legui.system.event.SystemEvent;
-import org.liquidengine.legui.system.event.SystemWindowSizeEvent;
+import org.liquidengine.legui.system.event.*;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -10,22 +9,29 @@ import java.util.concurrent.ConcurrentHashMap;
  * Created by Aliaksandr_Shcherbin on 1/25/2017.
  */
 public class SystemEventProcessorProvider {
-    private Map<Class<? extends SystemEvent>, SystemEventProcessor<? extends SystemEvent>> processorMap = new ConcurrentHashMap<>();
+    private Map<Class<? extends SystemEvent>, SystemEventHandler<? extends SystemEvent>> processorMap = new ConcurrentHashMap<>();
 
     private SystemEventProcessorProvider() {
-        registerProcessor(SystemWindowSizeEvent.class, new WindowSizeEventProcessor());
+        registerProcessor(SystemWindowCloseEvent.class, new WindowCloseEventHandler());
+        registerProcessor(SystemWindowIconifyEvent.class, new WindowIconifyEventHandler());
+        registerProcessor(SystemScrollEvent.class, new ScrollEventHandler());
+        registerProcessor(SystemWindowFocusEvent.class, new WindowFocusEventHandler());
+        registerProcessor(SystemWindowPosEvent.class, new WindowPosEventHandler());
+        registerProcessor(SystemWindowRefreshEvent.class, new WindowRefreshEventHandler());
+        registerProcessor(SystemWindowSizeEvent.class, new WindowSizeEventHandler());
+
     }
 
     public static SystemEventProcessorProvider getInstance() {
         return LSEPPH.I;
     }
 
-    public <E extends SystemEvent> void registerProcessor(Class<E> eventClass, SystemEventProcessor<E> processor) {
+    public <E extends SystemEvent> void registerProcessor(Class<E> eventClass, SystemEventHandler<E> processor) {
         processorMap.put(eventClass, processor);
     }
 
-    public <E extends SystemEvent> SystemEventProcessor<E> getProcessor(Class<E> eventClass) {
-        return (SystemEventProcessor<E>) processorMap.get(eventClass);
+    public <E extends SystemEvent> SystemEventHandler<E> getProcessor(Class<E> eventClass) {
+        return (SystemEventHandler<E>) processorMap.get(eventClass);
     }
 
     private static class LSEPPH {
