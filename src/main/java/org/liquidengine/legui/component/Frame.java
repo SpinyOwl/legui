@@ -18,8 +18,6 @@ public class Frame {
     private void initialize(int width, int height) {
         tooltipLayer = new Layer();
         componentLayer = new Layer();
-        componentLayer.topLayer = tooltipLayer;
-        tooltipLayer.bottomLayer = componentLayer;
         tooltipLayer.getContainer().getSize().set(width, height);
         componentLayer.getContainer().getSize().set(width, height);
     }
@@ -28,23 +26,14 @@ public class Frame {
         if (layer == null ||
                 layer == tooltipLayer ||
                 layer == componentLayer ||
-                layer.display == this) {
+                layer.getFrame() == this) {
             return;
         }
 
-        if (layer.display != null) {
-            layer.display.removeLayer(layer);
+        if (layer.getFrame() != null) {
+            layer.getFrame().removeLayer(layer);
         }
-        Layer previous;
-        if (layers.isEmpty()) {
-            previous = componentLayer;
-        } else {
-            previous = layers.get(layers.size() - 1);
-        }
-        layer.display = this;
-        layer.bottomLayer = previous;
-        layer.topLayer = tooltipLayer;
-        previous.topLayer = layer;
+        layer.setFrame(this);
         layers.add(layer);
     }
 
@@ -52,12 +41,8 @@ public class Frame {
         if (layer == null) {
             return;
         }
-        layer.display = null;
+        layer.setFrame(this);
         if (layers.contains(layer)) {
-            Layer bottomLayer = layer.getBottomLayer();
-            Layer topLayer    = layer.getTopLayer();
-            bottomLayer.topLayer = topLayer;
-            topLayer.bottomLayer = bottomLayer;
             layers.remove(layer);
         }
     }
@@ -82,7 +67,7 @@ public class Frame {
         return layers;
     }
 
-    public ComponentContainer getContainer(){
+    public Container getContainer(){
         return componentLayer.getContainer();
     }
 }

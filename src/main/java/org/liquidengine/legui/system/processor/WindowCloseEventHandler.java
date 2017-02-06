@@ -1,7 +1,7 @@
 package org.liquidengine.legui.system.processor;
 
 import org.liquidengine.legui.component.Component;
-import org.liquidengine.legui.component.ComponentContainer;
+import org.liquidengine.legui.component.Container;
 import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.component.Layer;
 import org.liquidengine.legui.event.WindowCloseEvent;
@@ -28,8 +28,8 @@ public class WindowCloseEventHandler implements SystemEventHandler<SystemWindowC
     private void pushEvent(Component component, Context context) {
         if (!(component.isVisible())) return;
         context.getEventProcessor().pushEvent(new WindowCloseEvent(component));
-        if(component instanceof ComponentContainer){
-            List<Component> childs = ((ComponentContainer) component).getChilds();
+        if(component instanceof Container){
+            List<Component> childs = ((Container) component).getChilds();
             for (Component child : childs) {
                 pushEvent(child, context);
             }
