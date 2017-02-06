@@ -1,5 +1,7 @@
 package org.liquidengine.legui.component;
 
+import org.joml.Vector2f;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -20,11 +22,41 @@ import java.util.stream.Stream;
  * Created by Shcherbin Alexander on 9/14/2016.
  */
 public abstract class Container<T extends Component> extends Controller {
-
     /**
      * List of child components
      */
     private List<T> components = new CopyOnWriteArrayList<>();
+
+    /**
+     * Default constructor. Used to create component instance without any parameters.
+     * <p>
+     * Also if you want to make it easy to use with
+     * Json serializer/deserializer component should contain empty constructor.
+     */
+    public Container() {
+    }
+
+    /**
+     * Constructor with position and size parameters.
+     *
+     * @param x      x position position in parent component
+     * @param y      y position position in parent component
+     * @param width  width of component
+     * @param height height of component
+     */
+    public Container(float x, float y, float width, float height) {
+        super(x, y, width, height);
+    }
+
+    /**
+     * Constructor with position and size parameters.
+     *
+     * @param position position position in parent component
+     * @param size     size of component
+     */
+    public Container(Vector2f position, Vector2f size) {
+        super(position, size);
+    }
 
     /**
      * Returns count of child components.

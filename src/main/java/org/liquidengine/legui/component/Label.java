@@ -42,7 +42,6 @@ public class Label extends Controller {
 
     private void initialize(String text) {
         this.textState = new TextState(text);
-        textState.getPadding().set(2, 0, 2, 0);
     }
 
     public TextState getTextState() {

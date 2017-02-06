@@ -4,6 +4,7 @@ import org.joml.Vector4f;
 import org.joml.Vector4fc;
 import org.liquidengine.legui.border.Border;
 import org.liquidengine.legui.border.SimpleLineBorder;
+import org.liquidengine.legui.component.Viewport;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
 import org.liquidengine.legui.font.FontRegister;
@@ -43,6 +44,14 @@ public abstract class Theme {
 
     public abstract float cornerRadius();
 
+    public abstract Vector4f scrollBarArrowColor();
+
+    public abstract Vector4f scrollBarColor();
+
+    public abstract float scrollBarArrowSize();
+
+    public abstract boolean scrollBarArrowsEnabled();
+
 
     private static class DefaultTheme extends Theme {
 
@@ -77,7 +86,7 @@ public abstract class Theme {
 
         @Override
         public Vector4f textPadding() {
-            return new Vector4f(7, 5, 7, 5);
+            return new Vector4f(0);
         }
 
         @Override
@@ -98,6 +107,26 @@ public abstract class Theme {
         @Override
         public float cornerRadius() {
             return 0;
+        }
+
+        @Override
+        public Vector4f scrollBarArrowColor() {
+            return ColorConstants.darkGray();
+        }
+
+        @Override
+        public Vector4f scrollBarColor() {
+            return new Vector4f(bgColor);
+        }
+
+        @Override
+        public float scrollBarArrowSize() {
+            return 20;
+        }
+
+        @Override
+        public boolean scrollBarArrowsEnabled() {
+            return true;
         }
 
         @Override

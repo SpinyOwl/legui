@@ -9,6 +9,11 @@ public class SimpleLineBorder extends Border {
     private float    thickness;
     private Vector4f color;
 
+    public SimpleLineBorder(Vector4f color, float thickness) {
+        this.thickness = thickness;
+        this.color = color;
+    }
+
     public float getThickness() {
         return thickness;
     }
