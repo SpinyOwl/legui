@@ -159,48 +159,51 @@ public class Example {
     }
 
     private static void createGuiElements(Frame frame, int w, int h) {
-        frame.getContainer().getBackgroundColor().set(ColorConstants.lightBlue);
-        // Set background color for frame
-//        frame.setBackgroundColor(ColorConstants.lightBlue());
-//
-//        Button                    button  = new Button("Add components", 20, 20, 160, 30);
-//        Button                    button2 = new Button("Toggle fullscreen", 200, 20, 160, 30);
-//        SimpleRectangleLineBorder border  = new SimpleRectangleLineBorder(ColorConstants.black(), 1);
-//        button.setBorder(border);
-//
-//        boolean[] added = {false};
-//        button.getLeguiEventListeners().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
-//            if (!added[0]) {
-//                added[0] = true;
-//                frame.addAllComponents(generateOnFly());
-//            }
-//        });
-//        button2.getLeguiEventListeners().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
-//            if (event.getAction().equals(MouseClickEvent.MouseClickAction.CLICK)) {
-//                toggleFullscreen = true;
-//            }
-//        });
-//
-        Component component = new Panel<>();//
-        component.getBackgroundColor().set(ColorConstants.green);
-        component.setSize(new Vector2f(100, 100));
-        component.setPosition(new Vector2f(10, 10));
-        component.getListenerMap().addListener(ScrollEvent.class, (ScrollEventListener) event -> System.out.println("C  " + event));
+        ExampleGui component = new ExampleGui(w, h);
+        component.setBackgroundColor(ColorConstants.blue());
         frame.getContainer().add(component);
-
-        Layer layer = new Layer();
-        layer.getContainer().setSize(w, h);
-//        layer.setEventPassable(false);
-        Component component2 = new Panel<>();//
-        component2.getBackgroundColor().set(ColorConstants.red);
-        component2.setSize(new Vector2f(100, 100));
-        component2.setPosition(new Vector2f(60, 10));
-        component2.getListenerMap().addListener(ScrollEvent.class, (ScrollEventListener) event -> System.out.println("C2 " + event));
-        layer.getContainer().add(component2);
-
-        frame.addLayer(layer);
-
-//        frame.addComponent(button2);
+//        frame.getComponentLayer().getBackgroundColor().set(ColorConstants.lightBlue);
+//        // Set background color for frame
+////        frame.setBackgroundColor(ColorConstants.lightBlue());
+////
+////        Button                    button  = new Button("Add components", 20, 20, 160, 30);
+////        Button                    button2 = new Button("Toggle fullscreen", 200, 20, 160, 30);
+////        SimpleRectangleLineBorder border  = new SimpleRectangleLineBorder(ColorConstants.black(), 1);
+////        button.setBorder(border);
+////
+////        boolean[] added = {false};
+////        button.getLeguiEventListeners().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
+////            if (!added[0]) {
+////                added[0] = true;
+////                frame.addAllComponents(generateOnFly());
+////            }
+////        });
+////        button2.getLeguiEventListeners().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
+////            if (event.getAction().equals(MouseClickEvent.MouseClickAction.CLICK)) {
+////                toggleFullscreen = true;
+////            }
+////        });
+////
+//        Component component = new Panel<>();//
+//        component.getBackgroundColor().set(ColorConstants.green);
+//        component.setSize(new Vector2f(100, 100));
+//        component.setPosition(new Vector2f(10, 10));
+//        component.getListenerMap().addListener(ScrollEvent.class, (ScrollEventListener) event -> System.out.println("C  " + event));
+//        frame.getComponentLayer().add(component);
+//
+//        Layer layer = new Layer();
+//        layer.setSize(w, h);
+////        layer.setEventPassable(false);
+//        Component component2 = new Panel<>();//
+//        component2.getBackgroundColor().set(ColorConstants.red);
+//        component2.setSize(new Vector2f(100, 100));
+//        component2.setPosition(new Vector2f(60, 10));
+//        component2.getListenerMap().addListener(ScrollEvent.class, (ScrollEventListener) event -> System.out.println("C2 " + event));
+//        layer.add(component2);
+//
+//        frame.addLayer(layer);
+//
+////        frame.addComponent(button2);
     }
 
 //    private static List<Component> generateOnFly() {

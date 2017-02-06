@@ -2,7 +2,7 @@ package org.liquidengine.legui.system.processor;
 
 import org.joml.Vector2f;
 import org.liquidengine.legui.component.Component;
-import org.liquidengine.legui.component.ComponentContainer;
+import org.liquidengine.legui.component.Container;
 import org.liquidengine.legui.component.Layer;
 
 import java.util.List;
@@ -28,8 +28,8 @@ public final class SehUtil {
         if (component.isVisible()) {
             if (component.intersects(vector)) {
                 target = component;
-                if (component instanceof ComponentContainer) {
-                    List<Component> childs = ((ComponentContainer) component).getChilds();
+                if (component instanceof Container) {
+                    List<Component> childs = ((Container) component).getChilds();
                     for (Component child : childs) {
                         target = getTargetComponent(vector, child);
                     }

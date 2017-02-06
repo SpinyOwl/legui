@@ -1,6 +1,6 @@
 group 'org.liquidengine'
 
-Properties verProp = new Properties(); verProp.load(new FileInputStream("./version.properties"))
+Properties verProp = new Properties(); verProp.load(new FileInputStream("$project.projectDir/version.properties"))
 def projectVersion = verProp["liquidengine.legui.version"]
 project.version = projectVersion
 
