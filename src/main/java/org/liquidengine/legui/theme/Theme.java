@@ -126,7 +126,7 @@ public abstract class Theme {
 
         @Override
         public boolean scrollBarArrowsEnabled() {
-            return true;
+            return false;
         }
 
         @Override

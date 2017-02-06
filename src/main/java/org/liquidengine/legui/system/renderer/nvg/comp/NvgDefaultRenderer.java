@@ -2,6 +2,8 @@ package org.liquidengine.legui.system.renderer.nvg.comp;
 
 import org.joml.Vector2f;
 import org.joml.Vector4f;
+import org.liquidengine.legui.border.Border;
+import org.liquidengine.legui.border.SimpleLineBorder;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.Container;
 import org.liquidengine.legui.system.context.Context;
@@ -38,6 +40,18 @@ public class NvgDefaultRenderer extends NvgComponentRenderer {
             nvgRect(nanovg, p.x, p.y, s.x, s.y);
             nvgFill(nanovg);
             nvgColor.free();
+
+            Border border = component.getBorder();
+            if(border!=null && border instanceof SimpleLineBorder) {
+                SimpleLineBorder b = (SimpleLineBorder) border;
+                nvgColor = NVGColor.calloc();
+                nvgBeginPath(nanovg);
+                nvgStrokeWidth(nanovg, b.getThickness());
+                nvgRoundedRect(nanovg, p.x, p.y, s.x, s.y, component.getCornerRadius());
+                nvgStrokeColor(nanovg, NvgUtil.rgba(b.getColor(), nvgColor));
+                nvgStroke(nanovg);
+                nvgColor.free();
+            }
         }
         NvgRenderUtil.resetScissor(nanovg);
 
