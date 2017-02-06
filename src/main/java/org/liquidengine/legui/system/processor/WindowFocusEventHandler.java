@@ -1,7 +1,7 @@
 package org.liquidengine.legui.system.processor;
 
 import org.liquidengine.legui.component.Component;
-import org.liquidengine.legui.component.ComponentContainer;
+import org.liquidengine.legui.component.Container;
 import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.component.Layer;
 import org.liquidengine.legui.event.WindowFocusEvent;
@@ -28,8 +28,8 @@ public class WindowFocusEventHandler implements SystemEventHandler<SystemWindowF
     private void pushEvent(Component component, SystemWindowFocusEvent event, Context context) {
         if (!(component.isVisible())) return;
         context.getEventProcessor().pushEvent(new WindowFocusEvent(component, event.focused));
-        if(component instanceof ComponentContainer){
-            List<Component> childs = ((ComponentContainer) component).getChilds();
+        if(component instanceof Container){
+            List<Component> childs = ((Container) component).getChilds();
             for (Component child : childs) {
                 pushEvent(child, event, context);
             }

@@ -3,7 +3,7 @@ package org.liquidengine.legui.system.renderer.nvg.comp;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.Component;
-import org.liquidengine.legui.component.ComponentContainer;
+import org.liquidengine.legui.component.Container;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.RendererProvider;
 import org.liquidengine.legui.system.renderer.nvg.NvgComponentRenderer;
@@ -41,9 +41,9 @@ public class NvgDefaultRenderer extends NvgComponentRenderer {
         }
         NvgRenderUtil.resetScissor(nanovg);
 
-        if (component instanceof ComponentContainer) {
-            ComponentContainer container = (ComponentContainer) component;
-            List<Component>    all       = container.getChilds();
+        if (component instanceof Container) {
+            Container       container = (Container) component;
+            List<Component> all       = container.getChilds();
             for (Component child : all) {
                 RendererProvider.getInstance().
                         getComponentRenderer(child.getClass()).render(child, context);
