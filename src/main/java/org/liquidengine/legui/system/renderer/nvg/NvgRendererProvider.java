@@ -2,6 +2,7 @@ package org.liquidengine.legui.system.renderer.nvg;
 
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.Layer;
+import org.liquidengine.legui.component.LayerContainer;
 import org.liquidengine.legui.system.renderer.ComponentRenderer;
 import org.liquidengine.legui.system.renderer.RendererProvider;
 import org.liquidengine.legui.system.renderer.nvg.comp.NvgDefaultRenderer;
@@ -20,7 +21,7 @@ public class NvgRendererProvider extends RendererProvider {
     private NvgComponentRenderer defaultRenderer = new NvgDefaultRenderer();
 
     public NvgRendererProvider() {
-        componentRendererMap.put(Layer.class, new NvgLayerRenderer());
+        componentRendererMap.put(LayerContainer.class, new NvgLayerRenderer());
     }
 
     @Override

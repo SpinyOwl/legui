@@ -3,12 +3,9 @@ package org.liquidengine.legui.example;
 import org.joml.Vector2f;
 import org.joml.Vector2i;
 import org.liquidengine.legui.DefaultInitializer;
-import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.Frame;
-import org.liquidengine.legui.component.Layer;
-import org.liquidengine.legui.component.Panel;
-import org.liquidengine.legui.event.ScrollEvent;
-import org.liquidengine.legui.listener.ScrollEventListener;
+import org.liquidengine.legui.event.WindowSizeEvent;
+import org.liquidengine.legui.listener.WindowSizeEventListener;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.Renderer;
 import org.liquidengine.legui.util.ColorConstants;
@@ -161,6 +158,7 @@ public class Example {
     private static void createGuiElements(Frame frame, int w, int h) {
         ExampleGui component = new ExampleGui(w, h);
         component.setBackgroundColor(ColorConstants.blue());
+        component.getListenerMap().addListener(WindowSizeEvent.class, (WindowSizeEventListener) event -> component.setSize(event.getWidth(), event.getHeight()));
         frame.getContainer().add(component);
 //        frame.getComponentLayer().getBackgroundColor().set(ColorConstants.lightBlue);
 //        // Set background color for frame
