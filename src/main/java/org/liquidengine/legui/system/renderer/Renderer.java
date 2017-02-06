@@ -23,7 +23,7 @@ public abstract class Renderer {
     public void render(Frame display) {
         preRender();
         for (Layer layer : display.getAllLayers()) {
-            RendererProvider.getInstance().getComponentRenderer(Layer.class).render(layer, context);
+            RendererProvider.getInstance().getComponentRenderer(layer.getContainer().getClass()).render(layer.getContainer(), context);
         }
         postRender();
     }

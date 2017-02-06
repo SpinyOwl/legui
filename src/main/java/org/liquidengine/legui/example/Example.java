@@ -159,7 +159,7 @@ public class Example {
     }
 
     private static void createGuiElements(Frame frame, int w, int h) {
-        frame.getComponentLayer().getBackgroundColor().set(ColorConstants.lightBlue);
+        frame.getContainer().getBackgroundColor().set(ColorConstants.lightBlue);
         // Set background color for frame
 //        frame.setBackgroundColor(ColorConstants.lightBlue());
 //
@@ -186,17 +186,17 @@ public class Example {
         component.setSize(new Vector2f(100, 100));
         component.setPosition(new Vector2f(10, 10));
         component.getListenerMap().addListener(ScrollEvent.class, (ScrollEventListener) event -> System.out.println("C  " + event));
-        frame.getComponentLayer().add(component);
+        frame.getContainer().add(component);
 
         Layer layer = new Layer();
-        layer.setSize(w, h);
+        layer.getContainer().setSize(w, h);
 //        layer.setEventPassable(false);
         Component component2 = new Panel<>();//
         component2.getBackgroundColor().set(ColorConstants.red);
         component2.setSize(new Vector2f(100, 100));
         component2.setPosition(new Vector2f(60, 10));
         component2.getListenerMap().addListener(ScrollEvent.class, (ScrollEventListener) event -> System.out.println("C2 " + event));
-        layer.add(component2);
+        layer.getContainer().add(component2);
 
         frame.addLayer(layer);
 

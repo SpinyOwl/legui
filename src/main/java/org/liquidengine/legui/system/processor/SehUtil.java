@@ -14,9 +14,9 @@ public final class SehUtil {
     private SehUtil() {
     }
 
-    public static Component getIntersectedComponent(Layer layer, Vector2f vector) {
+    public static Component getTargetComponent(Layer layer, Vector2f vector) {
         Component       target = null;
-        List<Component> childs = layer.getChilds();
+        List<Component> childs = layer.getContainer().getChilds();
         for (Component child : childs) {
             target = getTargetComponent(vector, child);
         }
