@@ -20,8 +20,8 @@ public class Frame {
         componentLayer = new Layer();
         componentLayer.topLayer = tooltipLayer;
         tooltipLayer.bottomLayer = componentLayer;
-        tooltipLayer.getSize().set(width, height);
-        componentLayer.getSize().set(width, height);
+        tooltipLayer.getContainer().getSize().set(width, height);
+        componentLayer.getContainer().getSize().set(width, height);
     }
 
     public void addLayer(Layer layer) {
@@ -80,5 +80,9 @@ public class Frame {
         layers.addAll(this.layers);
         layers.add(tooltipLayer);
         return layers;
+    }
+
+    public ComponentContainer getContainer(){
+        return componentLayer.getContainer();
     }
 }

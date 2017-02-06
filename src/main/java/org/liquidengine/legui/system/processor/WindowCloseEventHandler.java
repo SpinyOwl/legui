@@ -20,7 +20,7 @@ public class WindowCloseEventHandler implements SystemEventHandler<SystemWindowC
         List<Layer> layers = frame.getAllLayers();
         Collections.reverse(layers);
         for (Layer layer : layers) {
-            pushEvent(layer, context);
+            pushEvent(layer.getContainer(), context);
             if(!layer.isEventPassable()) return;
         }
     }

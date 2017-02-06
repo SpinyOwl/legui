@@ -20,7 +20,7 @@ public class WindowRefreshEventHandler implements SystemEventHandler<SystemWindo
         List<Layer> layers = frame.getAllLayers();
         Collections.reverse(layers);
         for (Layer layer : layers) {
-            pushEvent(layer, context);
+            pushEvent(layer.getContainer(), context);
             if(!layer.isEventPassable()) return;
         }
     }

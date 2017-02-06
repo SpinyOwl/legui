@@ -20,10 +20,10 @@ public class ScrollEventHandler implements SystemEventHandler<SystemScrollEvent>
         Collections.reverse(layers);
         for (Layer layer : layers) {
             // if not visible or not enabled we should continue to next layer.
-            if (!layer.isVisible() || !layer.isEnabled()) continue;
+            if (!layer.getContainer().isVisible() || !layer.getContainer().isEnabled()) continue;
 
             // else proceed with event.
-            Component intersectedComponent = SehUtil.getIntersectedComponent(layer, context.getCursorPosition());
+            Component intersectedComponent = SehUtil.getTargetComponent(layer, context.getCursorPosition());
             if (intersectedComponent != null) {
                 context.getEventProcessor().pushEvent(new ScrollEvent(intersectedComponent, event.xoffset, event.yoffset));
                 return;
