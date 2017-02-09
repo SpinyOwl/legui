@@ -1,6 +1,5 @@
 package org.liquidengine.legui.listener;
 
-import org.liquidengine.legui.event.Event;
 import org.liquidengine.legui.event.WindowSizeEvent;
 
 /**

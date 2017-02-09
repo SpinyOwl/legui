@@ -3,6 +3,7 @@ package org.liquidengine.legui.system.context;
 import org.joml.Vector2f;
 import org.joml.Vector2i;
 import org.liquidengine.legui.component.Component;
+import org.liquidengine.legui.component.Controller;
 import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.listener.EventProcessor;
 import org.lwjgl.glfw.GLFW;
@@ -16,26 +17,20 @@ import static org.lwjgl.glfw.GLFW.*;
  * Created by Aliaksandr_Shcherbin on 1/25/2017.
  */
 public class Context {
-    private final     long     glfwWindow;
-    private           Vector2f windowMousePosition;
-    private           Vector2f windowPosition;
-    private           Vector2i windowSize;
-    private           Vector2f framebufferSize;
-    private transient float    pixelRatio;
 
-    private final Frame     frame;
-    private       Component mouseTargetGui;
-    private       Component focusedGui;
+    private final     long       glfwWindow;
+    private final     Frame      frame;
+
+    private           Vector2f   windowPosition;
+    private           Vector2i   windowSize;
+    private           Vector2f   framebufferSize;
+    private transient float      pixelRatio;
+    private           Component  mouseTargetGui;
+    private           Controller focusedGui;
 
     private boolean debugEnabled;
 
-    private boolean  iconified;
-    private Vector2f mousePosition;
-    private Vector2f cursorPosition     = new Vector2f();
-    private Vector2f cursorPositionPrev = new Vector2f();
-
-    private boolean[]  mouseButtonStates        = new boolean[GLFW.GLFW_MOUSE_BUTTON_LAST];
-    private Vector2f[] mouseButtonPressPosition = new Vector2f[GLFW.GLFW_MOUSE_BUTTON_LAST];
+    private boolean iconified;
 
     private Map<String, Object> contextData = new ConcurrentHashMap<>();
     private EventProcessor eventProcessor;
@@ -50,6 +45,9 @@ public class Context {
         return debugEnabled;
     }
 
+    public void setDebugEnabled(boolean debugEnabled) {
+        this.debugEnabled = debugEnabled;
+    }
 
     public Map<String, Object> getContextData() {
         return contextData;
@@ -79,10 +77,8 @@ public class Context {
         setFramebufferSize(new Vector2f(framebufferWidth, framebufferHeight));
         setPixelRatio((float) framebufferWidth / (float) targetWidth);
         setWindowPosition(new Vector2f(targetPosX, targetPosY));
-        setMousePosition(new Vector2f((float) mousePosX, (float) mousePosY));
         setIconified(iconified);
     }
-
 
     public float getPixelRatio() {
         return pixelRatio;
@@ -98,22 +94,6 @@ public class Context {
 
     public long getGlfwWindow() {
         return glfwWindow;
-    }
-
-    public Vector2f getMousePosition() {
-        return mousePosition;
-    }
-
-    public void setMousePosition(Vector2f mousePosition) {
-        this.mousePosition = mousePosition;
-    }
-
-    public Vector2f getWindowMousePosition() {
-        return windowMousePosition;
-    }
-
-    public void setWindowMousePosition(Vector2f windowMousePosition) {
-        this.windowMousePosition = windowMousePosition;
     }
 
     public Vector2f getWindowPosition() {
@@ -140,44 +120,12 @@ public class Context {
         this.framebufferSize = framebufferSize;
     }
 
-    public Component getFocusedGui() {
+    public Controller getFocusedGui() {
         return focusedGui;
     }
 
-    public void setFocusedGui(Component focusedGui) {
+    public void setFocusedGui(Controller focusedGui) {
         this.focusedGui = focusedGui;
-    }
-
-    public Vector2f getCursorPosition() {
-        return new Vector2f(cursorPosition);
-    }
-
-    public void setCursorPosition(Vector2f cursorPosition) {
-        this.cursorPosition = cursorPosition;
-    }
-
-    public Vector2f getCursorPositionPrev() {
-        return new Vector2f(cursorPositionPrev);
-    }
-
-    public void setCursorPositionPrev(Vector2f cursorPositionPrev) {
-        this.cursorPositionPrev = cursorPositionPrev;
-    }
-
-    public Vector2f[] getMouseButtonPressPosition() {
-        return mouseButtonPressPosition;
-    }
-
-    public boolean[] getMouseButtonStates() {
-        return mouseButtonStates;
-    }
-
-    public void setMouseButtonStates(boolean[] mouseButtonStates) {
-        this.mouseButtonStates = mouseButtonStates;
-    }
-
-    public void setDebugEnabled(boolean debugEnabled) {
-        this.debugEnabled = debugEnabled;
     }
 
     public Component getMouseTargetGui() {

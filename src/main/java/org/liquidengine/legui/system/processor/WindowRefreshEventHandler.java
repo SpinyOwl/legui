@@ -1,9 +1,6 @@
 package org.liquidengine.legui.system.processor;
 
-import org.liquidengine.legui.component.Component;
-import org.liquidengine.legui.component.Container;
-import org.liquidengine.legui.component.Frame;
-import org.liquidengine.legui.component.Layer;
+import org.liquidengine.legui.component.*;
 import org.liquidengine.legui.event.WindowRefreshEvent;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.event.SystemWindowRefreshEvent;
@@ -26,8 +23,9 @@ public class WindowRefreshEventHandler implements SystemEventHandler<SystemWindo
     }
 
     private void pushEvent(Component component, Context context) {
+        if (!(component instanceof Controller)) return;
         if (!(component.isVisible())) return;
-        context.getEventProcessor().pushEvent(new WindowRefreshEvent(component));
+        context.getEventProcessor().pushEvent(new WindowRefreshEvent((Controller) component));
         if (component instanceof Container) {
             List<Component> childs = ((Container) component).getChilds();
             for (Component child : childs) {

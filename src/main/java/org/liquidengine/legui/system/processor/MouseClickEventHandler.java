@@ -3,7 +3,7 @@ package org.liquidengine.legui.system.processor;
 import org.liquidengine.legui.component.Controller;
 import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.component.Layer;
-import org.liquidengine.legui.event.ScrollEvent;
+import org.liquidengine.legui.input.Mouse;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.event.SystemMouseClickEvent;
 
@@ -27,7 +27,7 @@ public class MouseClickEventHandler implements SystemEventHandler<SystemMouseCli
             if (!layer.getContainer().isVisible() || !layer.getContainer().isEnabled()) continue;
 
             // else proceed with event.
-            Controller targetController = SehUtil.getTargetController(layer, context.getCursorPosition());
+            Controller targetController = SehUtil.getTargetController(layer, Mouse.getCursorPosition());
             if (targetController != null) {
 //                context.getEventProcessor().pushEvent(new ScrollEvent(targetController, event.xoffset, event.yoffset));
                 return;
@@ -38,6 +38,10 @@ public class MouseClickEventHandler implements SystemEventHandler<SystemMouseCli
     }
 
     private void preProcess(SystemMouseClickEvent event, Frame frame, Context context) {
+        Mouse.MouseButton mouseButton = Mouse.MouseButton.getByCode(event.button);
+        mouseButton.setPressed(event.action != GLFW_RELEASE);
+        mouseButton.setPressPosition(Mouse.getCursorPosition());
+
         if (event.action == GLFW_PRESS) {
 
         } else if (event.action == GLFW_RELEASE) {

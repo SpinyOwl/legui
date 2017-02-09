@@ -5,6 +5,7 @@ import org.joml.Vector2i;
 import org.liquidengine.legui.DefaultInitializer;
 import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.event.WindowSizeEvent;
+import org.liquidengine.legui.input.Mouse;
 import org.liquidengine.legui.listener.WindowSizeEventListener;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.Renderer;
@@ -111,11 +112,6 @@ public class Example {
             Context context = initializer.getContext();
             context.updateGlfwWindow();
             Vector2i windowSize = context.getWindowSize();
-
-            double[] xp = {0};
-            double[] yp = {0};
-            glfwGetCursorPos(window, xp, yp);
-            context.setCursorPosition(new Vector2f((float) xp[0], (float) yp[0]));
 
             glClearColor(1, 1, 1, 1);
             // Set viewport size

@@ -1,10 +1,7 @@
 package org.liquidengine.legui.system.processor;
 
 import org.joml.Vector2f;
-import org.liquidengine.legui.component.Component;
-import org.liquidengine.legui.component.Container;
-import org.liquidengine.legui.component.Controller;
-import org.liquidengine.legui.component.Layer;
+import org.liquidengine.legui.component.*;
 
 import java.util.List;
 
@@ -16,17 +13,22 @@ public final class SehUtil {
     }
 
     public static Component getTargetComponent(Layer layer, Vector2f vector) {
-        return recursiveTargetComponentSearch(vector, layer.getContainer());
+        Component       target    = null;
+        LayerContainer  container = layer.getContainer();
+        List<Component> childs    = container.getChilds();
+        for (Component child : childs) {
+            target = recursiveTargetComponentSearch(vector, child, target);
+        }
+        return target;
     }
 
-    private static Component recursiveTargetComponentSearch(Vector2f vector, Component component) {
-        Component target = null;
+    private static Component recursiveTargetComponentSearch(Vector2f vector, Component component, Component target) {
         if (component.isVisible() && component.intersects(vector)) {
             target = component;
             if (component instanceof Container) {
                 List<Component> childs = ((Container) component).getChilds();
                 for (Component child : childs) {
-                    target = recursiveTargetComponentSearch(vector, child);
+                    target = recursiveTargetComponentSearch(vector, child, target);
                 }
             }
         }
@@ -34,19 +36,30 @@ public final class SehUtil {
     }
 
     public static Controller getTargetController(Layer layer, Vector2f vector) {
-        return recursiveTargetControllerSearch(vector, layer.getContainer());
-    }
-
-    private static Controller recursiveTargetControllerSearch(Vector2f vector, Controller component) {
-        final Controller[] target = {null};
-        if (component.isVisible() && component.intersects(vector)) {
-            target[0] = component;
-            if (component instanceof Container) {
-                List<Component> childs = ((Container) component).getChilds();
-                childs.stream().filter(c -> c instanceof Controller).forEach(c -> target[0] = recursiveTargetControllerSearch(vector, (Controller) c));
+        Controller      target    = null;
+        LayerContainer  container = layer.getContainer();
+        List<Component> childs    = container.getChilds();
+        for (Component child : childs) {
+            if (child instanceof Controller) {
+                target = recursiveTargetControllerSearch(vector, (Controller) child, target);
             }
         }
-        return target[0];
+        return target;
+    }
+
+    private static Controller recursiveTargetControllerSearch(Vector2f vector, Controller component, Controller target) {
+        if (component.isVisible() && component.intersects(vector)) {
+            target = component;
+            if (component instanceof Container) {
+                List<Component> childs = ((Container) component).getChilds();
+                for (Component child : childs) {
+                    if (child instanceof Controller) {
+                        target = recursiveTargetControllerSearch(vector, (Controller) child, target);
+                    }
+                }
+            }
+        }
+        return target;
     }
 
 }

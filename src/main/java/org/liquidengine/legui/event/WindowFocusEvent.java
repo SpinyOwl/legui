@@ -1,16 +1,15 @@
 package org.liquidengine.legui.event;
 
-import org.liquidengine.legui.component.Component;
+import org.liquidengine.legui.component.Controller;
 
 /**
  * Created by ShchAlexander on 03.02.2017.
  */
-public class WindowFocusEvent implements Event {
-    private final Component component;
-    private final boolean   focused;
+public class WindowFocusEvent extends AbstractEvent {
+    private final boolean focused;
 
-    public WindowFocusEvent(Component component, boolean focused) {
-        this.component = component;
+    public WindowFocusEvent(Controller controller, boolean focused) {
+        super(controller);
         this.focused = focused;
     }
 
@@ -18,8 +17,4 @@ public class WindowFocusEvent implements Event {
         return focused;
     }
 
-    @Override
-    public Component getComponent() {
-        return component;
-    }
 }

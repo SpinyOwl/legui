@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Frame {
-    protected Layer tooltipLayer;
-    protected Layer componentLayer;
+    protected TooltipLayer tooltipLayer;
+    protected ComponentLayer componentLayer;
     protected List<Layer> layers = SetUniqueList.setUniqueList(new CopyOnWriteArrayList<>());
 
     public Frame(int width, int height) {
@@ -16,8 +16,10 @@ public class Frame {
     }
 
     private void initialize(int width, int height) {
-        tooltipLayer = new Layer();
-        componentLayer = new Layer();
+        tooltipLayer = new TooltipLayer();
+        componentLayer = new ComponentLayer();
+        tooltipLayer.setFrame(this);
+        componentLayer.setFrame(this);
         tooltipLayer.getContainer().getSize().set(width, height);
         componentLayer.getContainer().getSize().set(width, height);
     }
@@ -38,7 +40,7 @@ public class Frame {
     }
 
     public void removeLayer(Layer layer) {
-        if (layer == null) {
+        if (layer == null || layer == tooltipLayer || layer == componentLayer) {
             return;
         }
         layer.setFrame(this);
@@ -47,11 +49,11 @@ public class Frame {
         }
     }
 
-    public Layer getComponentLayer() {
+    public ComponentLayer getComponentLayer() {
         return componentLayer;
     }
 
-    public Layer getTooltipLayer() {
+    public TooltipLayer getTooltipLayer() {
         return tooltipLayer;
     }
 

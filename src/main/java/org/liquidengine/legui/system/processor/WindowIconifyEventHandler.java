@@ -1,9 +1,6 @@
 package org.liquidengine.legui.system.processor;
 
-import org.liquidengine.legui.component.Component;
-import org.liquidengine.legui.component.Container;
-import org.liquidengine.legui.component.Frame;
-import org.liquidengine.legui.component.Layer;
+import org.liquidengine.legui.component.*;
 import org.liquidengine.legui.event.WindowIconifyEvent;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.event.SystemWindowIconifyEvent;
@@ -26,8 +23,9 @@ public class WindowIconifyEventHandler implements SystemEventHandler<SystemWindo
     }
 
     private void pushEvent(Component component, SystemWindowIconifyEvent event, Context context) {
+        if (!(component instanceof Controller)) return;
         if (!(component.isVisible())) return;
-        context.getEventProcessor().pushEvent(new WindowIconifyEvent(component, event.iconified));
+        context.getEventProcessor().pushEvent(new WindowIconifyEvent((Controller) component, event.iconified));
         if(component instanceof Container){
             List<Component> childs = ((Container) component).getChilds();
             for (Component child : childs) {

@@ -1,19 +1,14 @@
 package org.liquidengine.legui.event;
 
-import org.liquidengine.legui.component.Component;
+import org.liquidengine.legui.component.Controller;
 
 /**
  * Created by ShchAlexander on 03.02.2017.
  */
-public class WindowCloseEvent implements Event {
-    private Component component;
+public class WindowCloseEvent extends AbstractEvent {
 
-    public WindowCloseEvent(Component component) {
-        this.component = component;
+    public WindowCloseEvent(Controller controller) {
+        super(controller);
     }
 
-    @Override
-    public Component getComponent() {
-        return component;
-    }
 }
