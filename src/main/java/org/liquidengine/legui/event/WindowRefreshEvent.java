@@ -1,19 +1,13 @@
 package org.liquidengine.legui.event;
 
-import org.liquidengine.legui.component.Component;
+import org.liquidengine.legui.component.Controller;
 
 /**
  * Created by ShchAlexander on 03.02.2017.
  */
-public class WindowRefreshEvent implements Event {
-    private final Component component;
+public class WindowRefreshEvent extends AbstractEvent {
 
-    public WindowRefreshEvent(Component component) {
-        this.component = component;
-    }
-
-    @Override
-    public Component getComponent() {
-        return component;
+    public WindowRefreshEvent(Controller controller) {
+        super(controller);
     }
 }

@@ -29,7 +29,7 @@ public class SystemEventProcessor {
 
     public void processEvent() {
         for (SystemEvent event = eventQueue.poll(); event != null; event = eventQueue.poll()) {
-            SystemEventHandler processor = SystemEventProcessorProvider.getInstance().getProcessor(event.getClass());
+            SystemEventHandler processor = SystemEventHandlerProvider.getInstance().getProcessor(event.getClass());
             if (processor != null) processor.process(event, frame, context);
         }
     }

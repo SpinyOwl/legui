@@ -1,23 +1,16 @@
 package org.liquidengine.legui.event;
 
-import org.liquidengine.legui.component.Component;
-import org.liquidengine.legui.event.Event;
+import org.liquidengine.legui.component.Controller;
 
 /**
  * Created by ShchAlexander on 03.02.2017.
  */
-public class WindowIconifyEvent implements Event {
-    private final Component component;
+public class WindowIconifyEvent extends AbstractEvent {
     private final boolean iconified;
 
-    public WindowIconifyEvent(Component component, boolean iconified) {
-        this.component = component;
+    public WindowIconifyEvent(Controller controller, boolean iconified) {
+        super(controller);
         this.iconified = iconified;
-    }
-
-    @Override
-    public Component getComponent() {
-        return component;
     }
 
     public boolean isIconified() {

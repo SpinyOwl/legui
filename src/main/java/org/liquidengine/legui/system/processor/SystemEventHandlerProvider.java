@@ -8,10 +8,10 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * Created by Aliaksandr_Shcherbin on 1/25/2017.
  */
-public class SystemEventProcessorProvider {
+public class SystemEventHandlerProvider {
     private Map<Class<? extends SystemEvent>, SystemEventHandler<? extends SystemEvent>> processorMap = new ConcurrentHashMap<>();
 
-    private SystemEventProcessorProvider() {
+    private SystemEventHandlerProvider() {
         registerProcessor(SystemWindowCloseEvent.class, new WindowCloseEventHandler());
         registerProcessor(SystemWindowIconifyEvent.class, new WindowIconifyEventHandler());
         registerProcessor(SystemScrollEvent.class, new ScrollEventHandler());
@@ -19,10 +19,12 @@ public class SystemEventProcessorProvider {
         registerProcessor(SystemWindowPosEvent.class, new WindowPosEventHandler());
         registerProcessor(SystemWindowRefreshEvent.class, new WindowRefreshEventHandler());
         registerProcessor(SystemWindowSizeEvent.class, new WindowSizeEventHandler());
+        registerProcessor(SystemCursorPosEvent.class, new CursorPosEventHandler());
+        registerProcessor(SystemMouseClickEvent.class, new MouseClickEventHandler());
 
     }
 
-    public static SystemEventProcessorProvider getInstance() {
+    public static SystemEventHandlerProvider getInstance() {
         return LSEPPH.I;
     }
 
@@ -35,6 +37,6 @@ public class SystemEventProcessorProvider {
     }
 
     private static class LSEPPH {
-        private static final SystemEventProcessorProvider I = new SystemEventProcessorProvider();
+        private static final SystemEventHandlerProvider I = new SystemEventHandlerProvider();
     }
 }

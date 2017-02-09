@@ -4,9 +4,13 @@ import org.liquidengine.legui.event.WindowSizeEvent;
 import org.liquidengine.legui.listener.WindowSizeEventListener;
 
 public class Layer<T extends Component> {
+    protected LayerContainer<T> container = new LayerContainer<T>();
     private Frame frame;
     private boolean eventPassable = true;
-    protected LayerContainer<T> container = new LayerContainer<T>();
+    private boolean eventReceivable = true;
+
+    private boolean enabled;
+    private boolean visible;
 
 
     public Layer() {
@@ -21,7 +25,7 @@ public class Layer<T extends Component> {
         return frame;
     }
 
-    protected void setFrame(Frame frame){
+    protected void setFrame(Frame frame) {
         this.frame = frame;
     }
 
@@ -35,5 +39,13 @@ public class Layer<T extends Component> {
 
     public LayerContainer<T> getContainer() {
         return container;
+    }
+
+    public boolean isEventReceivable() {
+        return eventReceivable;
+    }
+
+    public void setEventReceivable(boolean eventReceivable) {
+        this.eventReceivable = eventReceivable;
     }
 }

@@ -1,9 +1,10 @@
 package org.liquidengine.legui.system.processor;
 
-import org.liquidengine.legui.component.Component;
+import org.liquidengine.legui.component.Controller;
 import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.component.Layer;
 import org.liquidengine.legui.event.ScrollEvent;
+import org.liquidengine.legui.input.Mouse;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.event.SystemScrollEvent;
 
@@ -23,7 +24,7 @@ public class ScrollEventHandler implements SystemEventHandler<SystemScrollEvent>
             if (!layer.getContainer().isVisible() || !layer.getContainer().isEnabled()) continue;
 
             // else proceed with event.
-            Component intersectedComponent = SehUtil.getTargetComponent(layer, context.getCursorPosition());
+            Controller intersectedComponent = SehUtil.getTargetController(layer, Mouse.getCursorPosition());
             if (intersectedComponent != null) {
                 context.getEventProcessor().pushEvent(new ScrollEvent(intersectedComponent, event.xoffset, event.yoffset));
                 return;

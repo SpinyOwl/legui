@@ -1,17 +1,16 @@
 package org.liquidengine.legui.event;
 
-import org.liquidengine.legui.component.Component;
+import org.liquidengine.legui.component.Controller;
 
 /**
  * Created by ShchAlexander on 03.02.2017.
  */
-public class WindowPosEvent implements Event {
-    private final Component component;
+public class WindowPosEvent extends AbstractEvent {
     private final int xpos;
     private final int ypos;
 
-    public WindowPosEvent(Component component, int xpos, int ypos) {
-        this.component = component;
+    public WindowPosEvent(Controller controller, int xpos, int ypos) {
+        super(controller);
         this.xpos = xpos;
         this.ypos = ypos;
     }
@@ -22,10 +21,5 @@ public class WindowPosEvent implements Event {
 
     public int getYpos() {
         return ypos;
-    }
-
-    @Override
-    public Component getComponent() {
-        return component;
     }
 }
