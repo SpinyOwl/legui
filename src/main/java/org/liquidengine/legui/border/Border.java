@@ -1,7 +1,7 @@
 package org.liquidengine.legui.border;
 
 /**
- * Created by Aliaksandr_Shcherbin on 2/6/2017.
+ * Abstract class defines hierarchy of borders.
  */
 public abstract class Border {
 }
