@@ -3,6 +3,7 @@ package org.liquidengine.legui.system.processor;
 import org.joml.Vector2f;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.Container;
+import org.liquidengine.legui.component.Controller;
 import org.liquidengine.legui.component.Layer;
 
 import java.util.List;
@@ -15,27 +16,37 @@ public final class SehUtil {
     }
 
     public static Component getTargetComponent(Layer layer, Vector2f vector) {
-        Component       target = null;
-        List<Component> childs = layer.getContainer().getChilds();
-        for (Component child : childs) {
-            target = getTargetComponent(vector, child);
-        }
-        return target;
+        return recursiveTargetComponentSearch(vector, layer.getContainer());
     }
 
-    private static  Component getTargetComponent(Vector2f vector, Component component) {
+    private static Component recursiveTargetComponentSearch(Vector2f vector, Component component) {
         Component target = null;
-        if (component.isVisible()) {
-            if (component.intersects(vector)) {
-                target = component;
-                if (component instanceof Container) {
-                    List<Component> childs = ((Container) component).getChilds();
-                    for (Component child : childs) {
-                        target = getTargetComponent(vector, child);
-                    }
+        if (component.isVisible() && component.intersects(vector)) {
+            target = component;
+            if (component instanceof Container) {
+                List<Component> childs = ((Container) component).getChilds();
+                for (Component child : childs) {
+                    target = recursiveTargetComponentSearch(vector, child);
                 }
             }
         }
         return target;
     }
+
+    public static Controller getTargetController(Layer layer, Vector2f vector) {
+        return recursiveTargetControllerSearch(vector, layer.getContainer());
+    }
+
+    private static Controller recursiveTargetControllerSearch(Vector2f vector, Controller component) {
+        final Controller[] target = {null};
+        if (component.isVisible() && component.intersects(vector)) {
+            target[0] = component;
+            if (component instanceof Container) {
+                List<Component> childs = ((Container) component).getChilds();
+                childs.stream().filter(c -> c instanceof Controller).forEach(c -> target[0] = recursiveTargetControllerSearch(vector, (Controller) c));
+            }
+        }
+        return target[0];
+    }
+
 }
