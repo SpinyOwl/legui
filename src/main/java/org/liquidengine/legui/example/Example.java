@@ -1,11 +1,9 @@
 package org.liquidengine.legui.example;
 
-import org.joml.Vector2f;
 import org.joml.Vector2i;
 import org.liquidengine.legui.DefaultInitializer;
 import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.event.WindowSizeEvent;
-import org.liquidengine.legui.input.Mouse;
 import org.liquidengine.legui.listener.WindowSizeEventListener;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.Renderer;
@@ -27,8 +25,8 @@ import static org.lwjgl.system.MemoryUtil.NULL;
  * Created by Aliaksandr_Shcherbin on 1/25/2017.
  */
 public class Example {
-    public static final     int     WIDTH            = 400;
-    public static final     int     HEIGHT           = 200;
+    public static final     int     WIDTH            = 800;
+    public static final     int     HEIGHT           = 600;
     private static volatile boolean running          = false;
     private static          long[]  monitors         = null;
     private static          boolean toggleFullscreen = false;

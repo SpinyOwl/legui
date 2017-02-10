@@ -2,6 +2,7 @@ package org.liquidengine.legui.system.processor;
 
 import org.joml.Vector2f;
 import org.liquidengine.legui.component.*;
+import org.liquidengine.legui.event.CursorEnterEvent;
 import org.liquidengine.legui.event.MouseDragEvent;
 import org.liquidengine.legui.input.Mouse;
 import org.liquidengine.legui.listener.EventProcessor;
@@ -28,7 +29,20 @@ public class CursorPosEventHandler extends AbstractSystemEventHandler<SystemCurs
             targetController = SehUtil.getTargetController(layer, cursorPosition);
             if (targetController != null || !layer.isEventPassable()) break;
         }
-        context.setMouseTargetGui(targetController);
+        if (targetController != null) {
+            Controller prevTarget = context.getMouseTargetGui();
+            if (targetController != prevTarget) {
+                context.setMouseTargetGui(targetController);
+                targetController.setHovered(true);
+                Vector2f curPosInController = targetController.getScreenPosition().sub(cursorPosition).negate();
+                context.getEventProcessor().pushEvent(new CursorEnterEvent(targetController, CursorEnterEvent.ENTER, curPosInController, cursorPosition));
+                if (prevTarget != null) {
+                    Vector2f curPosInPrevTarget = prevTarget.getScreenPosition().sub(cursorPosition).negate();
+                    context.getEventProcessor().pushEvent(new CursorEnterEvent(prevTarget, CursorEnterEvent.ENTER, curPosInPrevTarget, cursorPosition));
+                    prevTarget.setHovered(false);
+                }
+            }
+        }
     }
 
     @Override

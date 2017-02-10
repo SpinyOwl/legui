@@ -4,8 +4,12 @@ import org.joml.Vector4f;
 import org.liquidengine.legui.border.SimpleLineBorder;
 import org.liquidengine.legui.component.*;
 import org.liquidengine.legui.component.optional.Orientation;
+import org.liquidengine.legui.event.FocusEvent;
+import org.liquidengine.legui.event.MouseButtonEvent;
 import org.liquidengine.legui.font.FontRegister;
 import org.liquidengine.legui.image.Image;
+import org.liquidengine.legui.listener.FocusEventListener;
+import org.liquidengine.legui.listener.MouseButtonEventListener;
 import org.liquidengine.legui.util.ColorConstants;
 import org.liquidengine.legui.util.TextUtil;
 
@@ -13,6 +17,9 @@ import static org.liquidengine.legui.component.optional.align.HorizontalAlign.CE
 import static org.liquidengine.legui.component.optional.align.HorizontalAlign.RIGHT;
 import static org.liquidengine.legui.component.optional.align.VerticalAlign.BOTTOM;
 import static org.liquidengine.legui.component.optional.align.VerticalAlign.MIDDLE;
+import static org.liquidengine.legui.event.MouseButtonEvent.MOUSE_CLICK;
+import static org.liquidengine.legui.event.MouseButtonEvent.MOUSE_PRESS;
+import static org.liquidengine.legui.event.MouseButtonEvent.MOUSE_RELEASE;
 
 
 /**
@@ -30,28 +37,19 @@ public class ExampleGui extends Panel {
     private       ImageView imageView;
 
     public ExampleGui(int width, int height) {
-        super(0,0,width, height);
-
+        super(0, 0, width, height);
         //@formatter:off
-        Panel p1 = new Panel(1 * 20, 10, 10, 10);
-        this.add(p1);
-        Panel p2 = new Panel(2 * 20, 10, 10, 10);
-        this.add(p2);
-        Panel p3 = new Panel(3 * 20, 10, 10, 10);
-        this.add(p3);
-        Panel p4 = new Panel(4 * 20, 10, 10, 10);
-        this.add(p4);
-        Panel p5 = new Panel(5 * 20, 10, 10, 10);
-        this.add(p5);
-        Panel p6 = new Panel(6 * 20, 10, 10, 10);
-        this.add(p6);
-        Panel p7 = new Panel(7 * 20, 10, 10, 10);
-        this.add(p7);
-        Panel p8 = new Panel(8 * 20, 10, 10, 10);
-        this.add(p8);
-        Panel p9 = new Panel(9 * 20, 10, 10, 10);
-        this.add(p9);
+        Panel p1 = new Panel(1 * 20, 10, 10, 10); this.add(p1); p1.getListenerMap().addListener(FocusEvent.class, (FocusEventListener)System.out::println);
+        Panel p2 = new Panel(2 * 20, 10, 10, 10); this.add(p2); p2.getListenerMap().addListener(FocusEvent.class, (FocusEventListener)System.out::println);
+        Panel p3 = new Panel(3 * 20, 10, 10, 10); this.add(p3); p3.getListenerMap().addListener(FocusEvent.class, (FocusEventListener)System.out::println);
+        Panel p4 = new Panel(4 * 20, 10, 10, 10); this.add(p4); p4.getListenerMap().addListener(FocusEvent.class, (FocusEventListener)System.out::println);
+        Panel p5 = new Panel(5 * 20, 10, 10, 10); this.add(p5); p5.getListenerMap().addListener(FocusEvent.class, (FocusEventListener)System.out::println);
+        Panel p6 = new Panel(6 * 20, 10, 10, 10); this.add(p6); p6.getListenerMap().addListener(FocusEvent.class, (FocusEventListener)System.out::println);
+        Panel p7 = new Panel(7 * 20, 10, 10, 10); this.add(p7); p7.getListenerMap().addListener(FocusEvent.class, (FocusEventListener)System.out::println);
+        Panel p8 = new Panel(8 * 20, 10, 10, 10); this.add(p8); p8.getListenerMap().addListener(FocusEvent.class, (FocusEventListener)System.out::println);
+        Panel p9 = new Panel(9 * 20, 10, 10, 10); this.add(p9); p9.getListenerMap().addListener(FocusEvent.class, (FocusEventListener)System.out::println);
         //@formatter:on
+
 
         mouseTargetLabel = new Label("Hello Label", 10, height - 30, width - 20, 20);
         this.add(mouseTargetLabel);
@@ -77,6 +75,7 @@ public class ExampleGui extends Panel {
         Button button = new Button(20, 170, 50, 20);
         button.setBackgroundColor(new Vector4f(1));
         this.add(button);
+        button.getListenerMap().addListener(MouseButtonEvent.class, (MouseButtonEventListener) event -> System.out.println(event));
 
         button.setTooltip("Just button");
         button.getTooltip().setPosition(0, 25);
@@ -155,9 +154,9 @@ public class ExampleGui extends Panel {
         widget.setTitleBackgroundColor(ColorConstants.lightGreen());
 
         Button turnWidVisible = new Button("", 360, 280, 20, 20);
-//        turnWidVisible.getLeguiEventListeners().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
-//            if (CLICK.equals(event.getAction())) widget.setVisible(true);
-//        });
+        turnWidVisible.getListenerMap().addListener(MouseButtonEvent.class, (MouseButtonEventListener) event -> {
+        if (MOUSE_CLICK == (event.getAction())) widget.setVisible(true);
+        });
         ImageView bgIm  = new ImageView(new Image("org/liquidengine/legui/example/1.png"));
         ImageView hbgIm = new ImageView(new Image("org/liquidengine/legui/example/2.png"));
         ImageView pbIm  = new ImageView(new Image("org/liquidengine/legui/example/3.png"));
@@ -195,16 +194,16 @@ public class ExampleGui extends Panel {
         widget2.setDraggable(false);
 
         Button turnDraggable = new Button("Draggable", 10, 10, 80, 20);
-//        turnDraggable.getLeguiEventListeners().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
-//            if (CLICK.equals(event.getAction())) widget2.setDraggable(!widget2.isDraggable());
-//        });
+        turnDraggable.getListenerMap().addListener(MouseButtonEvent.class, (MouseButtonEventListener) event -> {
+            if (MOUSE_CLICK == event.getAction()) widget2.setDraggable(!widget2.isDraggable());
+        });
         widget2.getContainer().add(turnDraggable);
         this.add(widget2);
 
         Button turnWidVisible2 = new Button("", 360, 310, 20, 20);
-//        turnWidVisible2.getLeguiEventListeners().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
-//            if (CLICK.equals(event.getAction())) widget2.setVisible(true);
-//        });
+        turnWidVisible2.getListenerMap().addListener(MouseButtonEvent.class, (MouseButtonEventListener) event -> {
+            if (MOUSE_CLICK == event.getAction()) widget2.setVisible(true);
+        });
         this.add(turnWidVisible2);
 
         Widget widget3 = new Widget("Hello 2 widget", 250, 420, 100, 100);
@@ -216,9 +215,9 @@ public class ExampleGui extends Panel {
         this.add(widget3);
 
         Button turnWidVisible3 = new Button("", 360, 340, 20, 20);
-//        turnWidVisible3.getLeguiEventListeners().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
-//            if (CLICK.equals(event.getAction())) widget3.setVisible(true);
-//        });
+        turnWidVisible3.getListenerMap().addListener(MouseButtonEvent.class, (MouseButtonEventListener) event -> {
+            if (MOUSE_CLICK == event.getAction()) widget3.setVisible(true);
+        });
         this.add(turnWidVisible3);
 
         widget3.getContainer().add(new Panel(5, 5, 20, 20));
@@ -235,12 +234,12 @@ public class ExampleGui extends Panel {
         String up   = TextUtil.cpToStr(0xE5D8);
         String down = TextUtil.cpToStr(0xE5DB);
         b.getTextState().setText(down);
-//        b.getLeguiEventListeners().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
-//            if (event.getAction() == CLICK) {
-//                widget3.setTitleEnabled(!widget3.isTitleEnabled());
-//                b.getTextState().setText(widget3.isTitleEnabled() ? up : down);
-//            }
-//        });
+        b.getListenerMap().addListener(MouseButtonEvent.class, (MouseButtonEventListener) event -> {
+            if (event.getAction() == MOUSE_CLICK) {
+                widget3.setTitleEnabled(!widget3.isTitleEnabled());
+                b.getTextState().setText(widget3.isTitleEnabled() ? up : down);
+            }
+        });
         widget3.getContainer().add(b);
 
         ScrollBar scrollBar1 = new ScrollBar(360, 170, 20, 100, 20);
@@ -280,12 +279,12 @@ public class ExampleGui extends Panel {
         panel2.setBackgroundColor(ColorConstants.green());
         this.add(panel2);
 
-//        button.getLeguiEventListeners().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
-//            MouseClickEvent.MouseClickAction action = event.getAction();
-//            if (CLICK.equals(action)) mouseTargetLabel.setVisible(!mouseTargetLabel.isVisible());
-//            if (RELEASE.equals(action)) System.out.println("RELEASE");
-//            if (PRESS.equals(action)) System.out.println("PRESS");
-//        });
+        button.getListenerMap().addListener(MouseButtonEvent.class, (MouseButtonEventListener) event -> {
+            int action = event.getAction();
+            if (MOUSE_CLICK == action) mouseTargetLabel.setVisible(!mouseTargetLabel.isVisible());
+            if (MOUSE_RELEASE == action) System.out.println("RELEASE");
+            if (MOUSE_PRESS == action) System.out.println("PRESS");
+        });
 
         ScrollablePanel scrollablePanel = new ScrollablePanel(420, 10, 250, 150);
         scrollablePanel.setBackgroundColor(1, 1, 1, 1);
@@ -368,17 +367,17 @@ public class ExampleGui extends Panel {
         this.add(selectBox);
 
         Button sbb = new Button("Add element", 130, 260, 70, 20);
-//        sbb.getLeguiEventListeners().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
-//            if (event.getAction() == CLICK) {
-//                selectBox.addElement("WorlD " + i[0]++);
-//            }
-//        });
+        sbb.getListenerMap().addListener(MouseButtonEvent.class, (MouseButtonEventListener) event -> {
+            if (event.getAction() == MOUSE_CLICK) {
+                selectBox.addElement("WorlD " + i[0]++);
+            }
+        });
         this.add(sbb);
 
-        ToggleButton toggleButton    = new ToggleButton(100, 170, 40, 40);
+        ToggleButton toggleButton = new ToggleButton(100, 170, 40, 40);
         this.add(toggleButton);
-        ImageView    bgImageNormal   = new ImageView(new Image("org/liquidengine/legui/example/normal.png"));
-        ImageView    bgImageToggled  = new ImageView(new Image("org/liquidengine/legui/example/toggled.png"));
+        ImageView bgImageNormal  = new ImageView(new Image("org/liquidengine/legui/example/normal.png"));
+        ImageView bgImageToggled = new ImageView(new Image("org/liquidengine/legui/example/toggled.png"));
 
         toggleButton.setTooltip("Just toggle button with long tooltipText text");
         toggleButton.getTooltip().setPosition(45, 0);

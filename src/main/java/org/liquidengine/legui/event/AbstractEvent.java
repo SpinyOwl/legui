@@ -1,5 +1,6 @@
 package org.liquidengine.legui.event;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.liquidengine.legui.component.Controller;
 
 /**
@@ -14,5 +15,12 @@ public abstract class AbstractEvent {
 
     public final Controller getController() {
         return controller;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append("controller", controller)
+                .toString();
     }
 }
