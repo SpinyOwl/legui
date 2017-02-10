@@ -3,7 +3,9 @@ package org.liquidengine.legui.component;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.optional.TextState;
+import org.liquidengine.legui.event.MouseDragEvent;
 import org.liquidengine.legui.font.FontRegister;
+import org.liquidengine.legui.listener.MouseDragEventListener;
 import org.liquidengine.legui.util.ColorConstants;
 
 import static org.liquidengine.legui.util.TextUtil.cpToStr;
@@ -24,11 +26,11 @@ public class Widget<T extends Component> extends Container {
      */
     private Vector2f maximizedSize = new Vector2f();
 
-    private Container     container;
-    private Label                  title;
-    private Button                 closeButton;
-    private Button                 minimizeButton;
-//    protected MouseDragEventListener mouseDragEventLeguiEventListener;
+    private   Container              container;
+    private   Label                  title;
+    private   Button                 closeButton;
+    private   Button                 minimizeButton;
+    protected MouseDragEventListener mouseDragEventLeguiEventListener;
 
     public Widget() {
         initialize("Widget");
@@ -62,8 +64,8 @@ public class Widget<T extends Component> extends Container {
         this.title = new Label(title);
         this.title.getTextState().getPadding().set(10, 5, 10, 5);
 
-//        mouseDragEventLeguiEventListener = new WidgetDragListener();
-//        this.title.leguiEventListeners.addListener(MouseDragEvent.class, mouseDragEventLeguiEventListener);
+        mouseDragEventLeguiEventListener = new WidgetDragListener();
+        this.title.getListenerMap().addListener(MouseDragEvent.class, mouseDragEventLeguiEventListener);
 
         this.closeButton = new Button(CLOSE_ICON);
         this.closeButton.setBackgroundColor(ColorConstants.red());
@@ -204,9 +206,9 @@ public class Widget<T extends Component> extends Container {
     public void setDraggable(boolean draggable) {
         if (this.draggable != draggable) {
             if (draggable) {
-//                this.title.leguiEventListeners.addListener(MouseDragEvent.class, mouseDragEventLeguiEventListener);
+                this.title.getListenerMap().addListener(MouseDragEvent.class, mouseDragEventLeguiEventListener);
             } else {
-//                this.title.leguiEventListeners.removeListener(MouseDragEvent.class, mouseDragEventLeguiEventListener);
+                this.title.getListenerMap().removeListener(MouseDragEvent.class, mouseDragEventLeguiEventListener);
             }
             this.draggable = draggable;
         }
@@ -262,13 +264,12 @@ public class Widget<T extends Component> extends Container {
         }
     }
 
-//    public class WidgetDragListener implements MouseDragEventListener {
-//        @Override
-//        public void update(MouseDragEvent event) {
-//            Vector2f delta = event.getCursorPosition().sub(event.getCursorPositionPrev());
-//            Widget.this.position.add(delta);
-//        }
-//    }
+    public class WidgetDragListener implements MouseDragEventListener {
+        @Override
+        public void process(MouseDragEvent event) {
+            Widget.this.getPosition().add(event.getDelta());
+        }
+    }
 //
 //    public class WidgetCloseButMouseClickEventListener implements MouseClickEventListener {
 //        @Override

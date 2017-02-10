@@ -11,23 +11,30 @@ import java.util.List;
 /**
  * Created by Aliaksandr_Shcherbin on 2/9/2017.
  */
-public abstract class AbstractEventHandler<E extends SystemEvent> {
-    public void process(E event, Frame frame, Context context) {
+public abstract class AbstractSystemEventHandler<E extends SystemEvent> implements SystemEventHandler<E> {
+    public final void process(E event, Frame frame, Context context) {
         preProcess(event, frame, context);
         List<Layer> layers = frame.getAllLayers();
         Collections.reverse(layers);
         for (Layer layer : layers) {
             if (layer.isEventReceivable()) {
-                process(event, layer, context);
+                if (!layer.getContainer().isVisible() || !layer.getContainer().isEnabled()) continue;
+                if (process(event, layer, context)) {
+                    return;
+                }
             }
             if (!layer.isEventPassable()) return;
         }
         postProcess(event, frame, context);
     }
 
-    public abstract void preProcess(E event, Frame frame, Context context);
+    protected void preProcess(E event, Frame frame, Context context) {
+    }
 
-    public abstract void process(E event, Layer layer, Context context);
+    protected boolean process(E event, Layer layer, Context context) {
+        return false;
+    }
 
-    public abstract void postProcess(E event, Frame frame, Context context);
+    protected void postProcess(E event, Frame frame, Context context) {
+    }
 }

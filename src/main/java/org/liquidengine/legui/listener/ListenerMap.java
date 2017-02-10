@@ -1,6 +1,7 @@
 package org.liquidengine.legui.listener;
 
 import org.liquidengine.legui.event.AbstractEvent;
+import org.liquidengine.legui.event.MouseDragEvent;
 
 import java.util.List;
 import java.util.Map;
@@ -26,5 +27,9 @@ public class ListenerMap {
         if (eventListeners == null) listenerMap.put(eventClass, eventListeners = new CopyOnWriteArrayList<>());
         lock.unlock();
         return eventListeners;
+    }
+
+    public <T extends AbstractEvent>void removeListener(Class<T> eventClass, EventListener<T> listener) {
+        getListeners(eventClass).remove(listener);
     }
 }

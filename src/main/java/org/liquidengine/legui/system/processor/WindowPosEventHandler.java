@@ -3,6 +3,7 @@ package org.liquidengine.legui.system.processor;
 import org.liquidengine.legui.component.*;
 import org.liquidengine.legui.event.WindowPosEvent;
 import org.liquidengine.legui.system.context.Context;
+import org.liquidengine.legui.system.event.SystemWindowIconifyEvent;
 import org.liquidengine.legui.system.event.SystemWindowPosEvent;
 
 import java.util.Collections;
@@ -11,16 +12,12 @@ import java.util.List;
 /**
  * Created by ShchAlexander on 03.02.2017.
  */
-public class WindowPosEventHandler implements SystemEventHandler<SystemWindowPosEvent> {
+public class WindowPosEventHandler extends AbstractSystemEventHandler<SystemWindowPosEvent> {
 
     @Override
-    public void process(SystemWindowPosEvent event, Frame frame, Context context) {
-        List<Layer> layers = frame.getAllLayers();
-        Collections.reverse(layers);
-        for (Layer layer : layers) {
-            pushEvent(layer.getContainer(), event, context);
-            if(!layer.isEventPassable()) return;
-        }
+    protected boolean process(SystemWindowPosEvent event, Layer layer, Context context) {
+        pushEvent(layer.getContainer(), event, context);
+        return false;
     }
 
     private void pushEvent(Component component, SystemWindowPosEvent event, Context context) {
