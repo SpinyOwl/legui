@@ -6,7 +6,12 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.joml.Vector2f;
 import org.liquidengine.legui.border.SimpleLineBorder;
+import org.liquidengine.legui.event.FocusEvent;
+import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.font.FontRegister;
+import org.liquidengine.legui.input.Mouse;
+import org.liquidengine.legui.listener.FocusEventListener;
+import org.liquidengine.legui.listener.MouseClickEventListener;
 import org.liquidengine.legui.util.ColorConstants;
 
 import java.util.List;
@@ -14,6 +19,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+import static org.liquidengine.legui.event.MouseClickEvent.CLICK;
 import static org.liquidengine.legui.util.TextUtil.cpToStr;
 
 /**
@@ -79,34 +85,14 @@ public class SelectBox extends Container {
         this.add(selectionButton);
 
         expandButton.getTextState().setFont(FontRegister.MATERIAL_ICONS_REGULAR);
-//        MouseClickEventListener mouseClickEventListener = event -> {
-//            if (event.getAction() == CLICK) {
-//                setCollapsed(!isCollapsed());
-//            }
-//        };
-//        selectionButton.getLeguiEventListeners().addListener(MouseClickEvent.class, mouseClickEventListener);
-//        expandButton.getLeguiEventListeners().addListener(MouseClickEvent.class, mouseClickEventListener);
+        MouseClickEventListener mouseClickEventListener = new SelectBoxClickListener(this);
+        selectionButton.getListenerMap().addListener(MouseClickEvent.class, mouseClickEventListener);
+        expandButton.getListenerMap().addListener(MouseClickEvent.class, mouseClickEventListener);
 
-//        FocusEventListener focusEventListener = event -> {
-//            if (!event.focusGained && !collapsed) {
-//                boolean collapse = true;
-//                for (ListBoxElement listBoxElement : listBoxElements) {
-//                    if (event.focusTarget == listBoxElement) {
-//                        collapse = false;
-//                    }
-//                }
-//                if (
-//                        event.focusTarget == expandButton ||
-//                                event.focusTarget == selectionButton ||
-//                                event.focusTarget == selectionListPanel ||
-//                                event.focusTarget == selectionListPanel.getVerticalScrollBar()
-//                        ) collapse = false;
-//                if (collapse) setCollapsed(true);
-//            }
-//        };
-//        selectionListPanel.getVerticalScrollBar().getLeguiEventListeners().getListeners(FocusEvent.class).add(focusEventListener);
-//        selectionButton.getLeguiEventListeners().getListeners(FocusEvent.class).add(focusEventListener);
-//        expandButton.getLeguiEventListeners().getListeners(FocusEvent.class).add(focusEventListener);
+        FocusEventListener focusEventListener = new SelectBoxFocusListener(this);
+        selectionListPanel.getVerticalScrollBar().getListenerMap().getListeners(FocusEvent.class).add(focusEventListener);
+        selectionButton.getListenerMap().getListeners(FocusEvent.class).add(focusEventListener);
+        expandButton.getListenerMap().getListeners(FocusEvent.class).add(focusEventListener);
 
         resize();
     }
@@ -186,12 +172,12 @@ public class SelectBox extends Container {
         ListBoxElement boxElement = new ListBoxElement(element, false);
         boxElement.setSize(new Vector2f(selectionListPanel.getContainer().getSize().x, elementHeight));
         boxElement.setPosition(0, selectionListPanel.getContainer().count() * elementHeight);
-//        boxElement.getLeguiEventListeners().getListeners(MouseClickEvent.class).add((MouseClickEventListener) event -> {
-//            if (event.getAction() == CLICK && event.getButton() == GLFW.GLFW_MOUSE_BUTTON_LEFT) {
-//                setSelected(element, true);
-//                setCollapsed(true);
-//            }
-//        });
+        boxElement.getListenerMap().getListeners(MouseClickEvent.class).add((MouseClickEventListener) event -> {
+            if (event.getAction() == CLICK && event.getButton().equals(Mouse.MouseButton.MOUSE_BUTTON_1)) {
+                setSelected(element, true);
+                setCollapsed(true);
+            }
+        });
         return boxElement;
     }
 
@@ -261,6 +247,52 @@ public class SelectBox extends Container {
     public void setElementHeight(float elementHeight) {
         this.elementHeight = elementHeight;
         resize();
+    }
+
+    public static class SelectBoxFocusListener implements FocusEventListener {
+        private final SelectBox box;
+
+        public SelectBoxFocusListener(SelectBox box) {
+            if (box == null) throw new NullPointerException("SelectBox for this listener cannot be null");
+            this.box = box;
+        }
+
+        @Override
+        public void process(FocusEvent event) {
+            System.out.println("SB: " + event + " " + event.getController());
+            if (!event.isFocused() && !box.isCollapsed()) {
+                boolean    collapse  = true;
+                Controller nextFocus = event.getNextFocus();
+                for (ListBoxElement listBoxElement : box.listBoxElements) {
+                    if (nextFocus == listBoxElement) {
+                        collapse = false;
+                    }
+                }
+                if (nextFocus == box.expandButton ||
+                        nextFocus == box.selectionButton ||
+                        nextFocus == box.selectionListPanel ||
+                        nextFocus == box.selectionListPanel.getVerticalScrollBar()) {
+                    collapse = false;
+                }
+                box.setCollapsed(collapse);
+            }
+        }
+    }
+
+    public static class SelectBoxClickListener implements MouseClickEventListener {
+        private final SelectBox box;
+
+        public SelectBoxClickListener(SelectBox box) {
+            if (box == null) throw new NullPointerException("SelectBox for this listener cannot be null");
+            this.box = box;
+        }
+
+        @Override
+        public void process(MouseClickEvent event) {
+            if (event.getAction() == CLICK) {
+                box.setCollapsed(!box.isCollapsed());
+            }
+        }
     }
 
     public class ListBoxElement extends Button {

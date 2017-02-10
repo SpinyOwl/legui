@@ -5,11 +5,11 @@ import org.liquidengine.legui.border.SimpleLineBorder;
 import org.liquidengine.legui.component.*;
 import org.liquidengine.legui.component.optional.Orientation;
 import org.liquidengine.legui.event.FocusEvent;
-import org.liquidengine.legui.event.MouseButtonEvent;
+import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.font.FontRegister;
 import org.liquidengine.legui.image.Image;
 import org.liquidengine.legui.listener.FocusEventListener;
-import org.liquidengine.legui.listener.MouseButtonEventListener;
+import org.liquidengine.legui.listener.MouseClickEventListener;
 import org.liquidengine.legui.util.ColorConstants;
 import org.liquidengine.legui.util.TextUtil;
 
@@ -17,9 +17,9 @@ import static org.liquidengine.legui.component.optional.align.HorizontalAlign.CE
 import static org.liquidengine.legui.component.optional.align.HorizontalAlign.RIGHT;
 import static org.liquidengine.legui.component.optional.align.VerticalAlign.BOTTOM;
 import static org.liquidengine.legui.component.optional.align.VerticalAlign.MIDDLE;
-import static org.liquidengine.legui.event.MouseButtonEvent.MOUSE_CLICK;
-import static org.liquidengine.legui.event.MouseButtonEvent.MOUSE_PRESS;
-import static org.liquidengine.legui.event.MouseButtonEvent.MOUSE_RELEASE;
+import static org.liquidengine.legui.event.MouseClickEvent.CLICK;
+import static org.liquidengine.legui.event.MouseClickEvent.MOUSE_PRESS;
+import static org.liquidengine.legui.event.MouseClickEvent.MOUSE_RELEASE;
 
 
 /**
@@ -75,7 +75,7 @@ public class ExampleGui extends Panel {
         Button button = new Button(20, 170, 50, 20);
         button.setBackgroundColor(new Vector4f(1));
         this.add(button);
-        button.getListenerMap().addListener(MouseButtonEvent.class, (MouseButtonEventListener) event -> System.out.println(event));
+        button.getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> System.out.println(event));
 
         button.setTooltip("Just button");
         button.getTooltip().setPosition(0, 25);
@@ -154,8 +154,8 @@ public class ExampleGui extends Panel {
         widget.setTitleBackgroundColor(ColorConstants.lightGreen());
 
         Button turnWidVisible = new Button("", 360, 280, 20, 20);
-        turnWidVisible.getListenerMap().addListener(MouseButtonEvent.class, (MouseButtonEventListener) event -> {
-        if (MOUSE_CLICK == (event.getAction())) widget.setVisible(true);
+        turnWidVisible.getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
+        if (CLICK == (event.getAction())) widget.setVisible(true);
         });
         ImageView bgIm  = new ImageView(new Image("org/liquidengine/legui/example/1.png"));
         ImageView hbgIm = new ImageView(new Image("org/liquidengine/legui/example/2.png"));
@@ -194,15 +194,15 @@ public class ExampleGui extends Panel {
         widget2.setDraggable(false);
 
         Button turnDraggable = new Button("Draggable", 10, 10, 80, 20);
-        turnDraggable.getListenerMap().addListener(MouseButtonEvent.class, (MouseButtonEventListener) event -> {
-            if (MOUSE_CLICK == event.getAction()) widget2.setDraggable(!widget2.isDraggable());
+        turnDraggable.getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
+            if (CLICK == event.getAction()) widget2.setDraggable(!widget2.isDraggable());
         });
         widget2.getContainer().add(turnDraggable);
         this.add(widget2);
 
         Button turnWidVisible2 = new Button("", 360, 310, 20, 20);
-        turnWidVisible2.getListenerMap().addListener(MouseButtonEvent.class, (MouseButtonEventListener) event -> {
-            if (MOUSE_CLICK == event.getAction()) widget2.setVisible(true);
+        turnWidVisible2.getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
+            if (CLICK == event.getAction()) widget2.setVisible(true);
         });
         this.add(turnWidVisible2);
 
@@ -215,8 +215,8 @@ public class ExampleGui extends Panel {
         this.add(widget3);
 
         Button turnWidVisible3 = new Button("", 360, 340, 20, 20);
-        turnWidVisible3.getListenerMap().addListener(MouseButtonEvent.class, (MouseButtonEventListener) event -> {
-            if (MOUSE_CLICK == event.getAction()) widget3.setVisible(true);
+        turnWidVisible3.getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
+            if (CLICK == event.getAction()) widget3.setVisible(true);
         });
         this.add(turnWidVisible3);
 
@@ -234,8 +234,8 @@ public class ExampleGui extends Panel {
         String up   = TextUtil.cpToStr(0xE5D8);
         String down = TextUtil.cpToStr(0xE5DB);
         b.getTextState().setText(down);
-        b.getListenerMap().addListener(MouseButtonEvent.class, (MouseButtonEventListener) event -> {
-            if (event.getAction() == MOUSE_CLICK) {
+        b.getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
+            if (event.getAction() == CLICK) {
                 widget3.setTitleEnabled(!widget3.isTitleEnabled());
                 b.getTextState().setText(widget3.isTitleEnabled() ? up : down);
             }
@@ -279,9 +279,9 @@ public class ExampleGui extends Panel {
         panel2.setBackgroundColor(ColorConstants.green());
         this.add(panel2);
 
-        button.getListenerMap().addListener(MouseButtonEvent.class, (MouseButtonEventListener) event -> {
+        button.getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
             int action = event.getAction();
-            if (MOUSE_CLICK == action) mouseTargetLabel.setVisible(!mouseTargetLabel.isVisible());
+            if (CLICK == action) mouseTargetLabel.setVisible(!mouseTargetLabel.isVisible());
             if (MOUSE_RELEASE == action) System.out.println("RELEASE");
             if (MOUSE_PRESS == action) System.out.println("PRESS");
         });
@@ -367,8 +367,8 @@ public class ExampleGui extends Panel {
         this.add(selectBox);
 
         Button sbb = new Button("Add element", 130, 260, 70, 20);
-        sbb.getListenerMap().addListener(MouseButtonEvent.class, (MouseButtonEventListener) event -> {
-            if (event.getAction() == MOUSE_CLICK) {
+        sbb.getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
+            if (event.getAction() == CLICK) {
                 selectBox.addElement("WorlD " + i[0]++);
             }
         });

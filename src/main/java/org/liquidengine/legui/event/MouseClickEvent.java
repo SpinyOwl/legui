@@ -8,9 +8,9 @@ import org.liquidengine.legui.input.Mouse;
 /**
  * Created by Aliaksandr_Shcherbin on 2/10/2017.
  */
-public class MouseButtonEvent extends AbstractEvent {
+public class MouseClickEvent extends AbstractEvent {
     public static final int MOUSE_PRESS   = 0;
-    public static final int MOUSE_CLICK   = 1;
+    public static final int CLICK         = 1;
     public static final int MOUSE_RELEASE = 2;
 
     private final int               action;
@@ -18,7 +18,7 @@ public class MouseButtonEvent extends AbstractEvent {
     private final Vector2f          position;
     private final Vector2f          absolutePosition;
 
-    public MouseButtonEvent(Controller controller, int action, Mouse.MouseButton button, Vector2f position, Vector2f absolutePosition) {
+    public MouseClickEvent(Controller controller, int action, Mouse.MouseButton button, Vector2f position, Vector2f absolutePosition) {
         super(controller);
         this.action = action;
         this.button = button;

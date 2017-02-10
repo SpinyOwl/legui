@@ -3,7 +3,7 @@ package org.liquidengine.legui.system.processor;
 import org.joml.Vector2f;
 import org.liquidengine.legui.component.*;
 import org.liquidengine.legui.event.FocusEvent;
-import org.liquidengine.legui.event.MouseButtonEvent;
+import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.input.Mouse;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.event.SystemMouseClickEvent;
@@ -48,10 +48,10 @@ public class MouseClickEventHandler implements SystemEventHandler<SystemMouseCli
                 if (focusedGui != targetController) {
                     targetController.setFocused(true);
                     context.setFocusedGui(targetController);
-                    context.getEventProcessor().pushEvent(new FocusEvent(targetController, true));
+                    context.getEventProcessor().pushEvent(new FocusEvent(targetController,targetController, true));
                 }
                 Vector2f position = targetController.getScreenPosition().sub(cursorPosition).negate();
-                context.getEventProcessor().pushEvent(new MouseButtonEvent(targetController, MouseButtonEvent.MOUSE_PRESS, button, position, cursorPosition));
+                context.getEventProcessor().pushEvent(new MouseClickEvent(targetController, MouseClickEvent.MOUSE_PRESS, button, position, cursorPosition));
             }
         } else {
             button.setReleasePosition(cursorPosition);
@@ -61,9 +61,9 @@ public class MouseClickEventHandler implements SystemEventHandler<SystemMouseCli
 
             Vector2f position = targetController.getScreenPosition().sub(cursorPosition).negate();
             if(focusedGui!=null && focusedGui==targetController) {
-                context.getEventProcessor().pushEvent(new MouseButtonEvent(targetController, MouseButtonEvent.MOUSE_CLICK, button, position, cursorPosition));
+                context.getEventProcessor().pushEvent(new MouseClickEvent(targetController, MouseClickEvent.CLICK, button, position, cursorPosition));
             }
-            context.getEventProcessor().pushEvent(new MouseButtonEvent(targetController, MouseButtonEvent.MOUSE_RELEASE, button, position, cursorPosition));
+            context.getEventProcessor().pushEvent(new MouseClickEvent(targetController, MouseClickEvent.MOUSE_RELEASE, button, position, cursorPosition));
         }
         if (targetController != null) {
             pushWidgetsUp(targetController);
@@ -88,7 +88,7 @@ public class MouseClickEventHandler implements SystemEventHandler<SystemMouseCli
                 if (controller.isFocused()) {
                     controller.setFocused(false);
                     controller.setPressed(false);
-                    context.getEventProcessor().pushEvent(new FocusEvent(controller, false));
+                    context.getEventProcessor().pushEvent(new FocusEvent(controller, focused, false));
                 }
             }
         }
