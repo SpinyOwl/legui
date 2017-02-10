@@ -1,26 +1,25 @@
 package org.liquidengine.legui.system.processor;
 
-import org.liquidengine.legui.component.*;
+import org.liquidengine.legui.component.Component;
+import org.liquidengine.legui.component.Container;
+import org.liquidengine.legui.component.Controller;
+import org.liquidengine.legui.component.Layer;
 import org.liquidengine.legui.event.WindowFocusEvent;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.event.SystemWindowFocusEvent;
 
-import java.util.Collections;
 import java.util.List;
 
 /**
  * Created by ShchAlexander on 03.02.2017.
  */
-public class WindowFocusEventHandler implements SystemEventHandler<SystemWindowFocusEvent> {
+public class WindowFocusEventHandler extends AbstractSystemEventHandler<SystemWindowFocusEvent> {
     @Override
-    public void process(SystemWindowFocusEvent event, Frame frame, Context context) {
-        List<Layer> layers = frame.getAllLayers();
-        Collections.reverse(layers);
-        for (Layer layer : layers) {
-            pushEvent(layer.getContainer(), event, context);
-            if (!layer.isEventPassable()) return;
-        }
+    protected boolean process(SystemWindowFocusEvent event, Layer layer, Context context) {
+        pushEvent(layer.getContainer(), event, context);
+        return false;
     }
+
 
     private void pushEvent(Component component, SystemWindowFocusEvent event, Context context) {
         if (!(component instanceof Controller)) return;

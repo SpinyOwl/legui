@@ -11,15 +11,11 @@ import java.util.List;
 /**
  * Created by ShchAlexander on 03.02.2017.
  */
-public class WindowCloseEventHandler implements SystemEventHandler<SystemWindowCloseEvent> {
+public class WindowCloseEventHandler extends AbstractSystemEventHandler<SystemWindowCloseEvent> {
     @Override
-    public void process(SystemWindowCloseEvent event, Frame frame, Context context) {
-        List<Layer> layers = frame.getAllLayers();
-        Collections.reverse(layers);
-        for (Layer layer : layers) {
-            pushEvent(layer.getContainer(), context);
-            if (!layer.isEventPassable()) return;
-        }
+    protected boolean process(SystemWindowCloseEvent event, Layer layer, Context context) {
+        pushEvent(layer.getContainer(), context);
+        return false;
     }
 
     private void pushEvent(Component component, Context context) {

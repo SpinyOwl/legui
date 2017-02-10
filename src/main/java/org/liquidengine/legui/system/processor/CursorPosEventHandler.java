@@ -1,10 +1,7 @@
 package org.liquidengine.legui.system.processor;
 
 import org.joml.Vector2f;
-import org.liquidengine.legui.component.Component;
-import org.liquidengine.legui.component.Controller;
-import org.liquidengine.legui.component.Frame;
-import org.liquidengine.legui.component.Layer;
+import org.liquidengine.legui.component.*;
 import org.liquidengine.legui.event.MouseDragEvent;
 import org.liquidengine.legui.input.Mouse;
 import org.liquidengine.legui.listener.EventProcessor;
@@ -17,15 +14,9 @@ import java.util.List;
 /**
  * Created by ShchAlexander on 04.02.2017.
  */
-public class CursorPosEventHandler implements SystemEventHandler<SystemCursorPosEvent> {
-    @Override
-    public void process(SystemCursorPosEvent event, Frame frame, Context context) {
-        preProcess(event, frame, context);
-        processEvent(event, frame, context);
+public class CursorPosEventHandler extends AbstractSystemEventHandler<SystemCursorPosEvent> {
 
-    }
-
-    private void preProcess(SystemCursorPosEvent event, Frame frame, Context context) {
+    protected void preProcess(SystemCursorPosEvent event, Frame frame, Context context) {
         Vector2f cursorPosition = new Vector2f(event.fx, event.fy);
         Mouse.setCursorPositionPrev(new Vector2f(Mouse.getCursorPosition()));
         Mouse.setCursorPosition(cursorPosition);
@@ -40,31 +31,49 @@ public class CursorPosEventHandler implements SystemEventHandler<SystemCursorPos
         context.setMouseTargetGui(targetController);
     }
 
-    private void processEvent(SystemCursorPosEvent event, Frame frame, Context context) {
-        List<Layer> allLayers = frame.getLayers();
-        Collections.reverse(allLayers);
-        for (Layer layer : allLayers) {
-            processLayer(event, context, layer);
-            if (!layer.isEventPassable()) return;
-        }
-        processLayer(event, context, frame.getComponentLayer());
-    }
-
-    private void processLayer(SystemCursorPosEvent event, Context context, Layer layer) {
+    @Override
+    protected boolean process(SystemCursorPosEvent event, Layer layer, Context context) {
         List<Component> childs = layer.getContainer().getChilds();
-        for (Object child : childs) {
+        for (Component child : childs) {
             if (child instanceof Controller) {
                 update(event, (Controller) child, context);
             }
         }
+        return false;
+    }
+
+    @Override
+    protected void postProcess(SystemCursorPosEvent event, Frame frame, Context context) {
+
     }
 
     private void update(SystemCursorPosEvent event, Controller controller, Context context) {
+        if (controller instanceof Container) {
+            processAsContainer(event, controller, context);
+        } else {
+            processAsController(controller, context);
+        }
+    }
+
+    private void processAsContainer(SystemCursorPosEvent event, Controller controller, Context context) {
+        Container container = (Container) controller;
+        if (container.isEmpty()) {
+            processAsController(controller, context);
+        } else {
+            List<Component> childs = container.getChilds();
+            for (Component child : childs) {
+                if (child instanceof Controller) {
+                    update(event, (Controller) child, context);
+                }
+            }
+        }
+    }
+
+    private void processAsController(Controller controller, Context context) {
         EventProcessor eventProcessor = context.getEventProcessor();
         if (Mouse.MouseButton.MOUSE_BUTTON_1.isPressed() && controller == context.getFocusedGui()) {
             Vector2f delta = Mouse.getCursorPosition().sub(Mouse.getCursorPositionPrev());
             eventProcessor.pushEvent(new MouseDragEvent(controller, delta));
-            System.out.println("DRAG");
         }
     }
 //    /**

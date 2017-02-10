@@ -11,16 +11,13 @@ import java.util.List;
 /**
  * Created by ShchAlexander on 03.02.2017.
  */
-public class WindowIconifyEventHandler implements SystemEventHandler<SystemWindowIconifyEvent> {
+public class WindowIconifyEventHandler extends AbstractSystemEventHandler<SystemWindowIconifyEvent> {
     @Override
-    public void process(SystemWindowIconifyEvent event, Frame frame, Context context) {
-        List<Layer> layers = frame.getAllLayers();
-        Collections.reverse(layers);
-        for (Layer layer : layers) {
-            pushEvent(layer.getContainer(), event, context);
-            if(!layer.isEventPassable()) return;
-        }
+    protected boolean process(SystemWindowIconifyEvent event, Layer layer, Context context) {
+        pushEvent(layer.getContainer(), event, context);
+        return false;
     }
+
 
     private void pushEvent(Component component, SystemWindowIconifyEvent event, Context context) {
         if (!(component instanceof Controller)) return;

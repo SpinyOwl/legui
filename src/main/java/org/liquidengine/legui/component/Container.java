@@ -259,7 +259,7 @@ public abstract class Container<T extends Component> extends Controller {
      *
      * @return list of child components.
      */
-    public List<T> getChilds() {
+    public List<? extends Component> getChilds() {
         return new ArrayList<>(components);
     }
 
