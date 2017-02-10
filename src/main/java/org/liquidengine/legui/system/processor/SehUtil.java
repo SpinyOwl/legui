@@ -23,7 +23,7 @@ public final class SehUtil {
     }
 
     private static Component recursiveTargetComponentSearch(Vector2f vector, Component component, Component target) {
-        if (component.isVisible() && component.intersects(vector)) {
+        if (component.isVisible() && component.isEnabled() && component.intersects(vector)) {
             target = component;
             if (component instanceof Container) {
                 List<Component> childs = ((Container) component).getChilds();
@@ -48,7 +48,7 @@ public final class SehUtil {
     }
 
     private static Controller recursiveTargetControllerSearch(Vector2f vector, Controller component, Controller target) {
-        if (component.isVisible() && component.intersects(vector)) {
+        if (component.isVisible() && component.isEnabled() && component.intersects(vector)) {
             target = component;
             if (component instanceof Container) {
                 List<Component> childs = ((Container) component).getChilds();

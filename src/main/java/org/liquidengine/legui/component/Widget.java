@@ -3,11 +3,14 @@ package org.liquidengine.legui.component;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.optional.TextState;
+import org.liquidengine.legui.event.MouseButtonEvent;
 import org.liquidengine.legui.event.MouseDragEvent;
 import org.liquidengine.legui.font.FontRegister;
+import org.liquidengine.legui.listener.MouseButtonEventListener;
 import org.liquidengine.legui.listener.MouseDragEventListener;
 import org.liquidengine.legui.util.ColorConstants;
 
+import static org.liquidengine.legui.event.MouseButtonEvent.MOUSE_CLICK;
 import static org.liquidengine.legui.util.TextUtil.cpToStr;
 
 /**
@@ -17,20 +20,17 @@ public class Widget<T extends Component> extends Container {
     private static final String CLOSE_ICON    = cpToStr(0xE5CD);
     private static final String MINIMIZE_ICON = cpToStr(0xE5D6);
     private static final String MAXIMIZE_ICON = cpToStr(0xE5D7);
-
-    private boolean draggable = true;
-    private boolean minimized = false;
-
+    protected MouseDragEventListener mouseDragEventLeguiEventListener;
+    private boolean  draggable     = true;
+    private boolean  minimized     = false;
     /**
      * Used to store widget size in maximized state when minimizing widget
      */
     private Vector2f maximizedSize = new Vector2f();
-
-    private   Container              container;
-    private   Label                  title;
-    private   Button                 closeButton;
-    private   Button                 minimizeButton;
-    protected MouseDragEventListener mouseDragEventLeguiEventListener;
+    private Container container;
+    private Label     title;
+    private Button    closeButton;
+    private Button    minimizeButton;
 
     public Widget() {
         initialize("Widget");
@@ -70,11 +70,11 @@ public class Widget<T extends Component> extends Container {
         this.closeButton = new Button(CLOSE_ICON);
         this.closeButton.setBackgroundColor(ColorConstants.red());
         this.closeButton.getTextState().setFont(FontRegister.MATERIAL_ICONS_REGULAR);
-//        this.closeButton.getLeguiEventListeners().addListener(MouseClickEvent.class, new WidgetCloseButMouseClickEventListener());
+        this.closeButton.getListenerMap().addListener(MouseButtonEvent.class, new WidgetCloseButMouseClickEventListener());
 
         this.minimizeButton = new Button(MINIMIZE_ICON);
         this.minimizeButton.getTextState().setFont(FontRegister.MATERIAL_ICONS_REGULAR);
-//        this.minimizeButton.getLeguiEventListeners().addListener(MouseClickEvent.class, new WidgetMinimizeButMouseClickEventListener());
+        this.minimizeButton.getListenerMap().addListener(MouseButtonEvent.class, new WidgetMinimizeButMouseClickEventListener());
 
         this.container = new Panel();
 
@@ -270,24 +270,24 @@ public class Widget<T extends Component> extends Container {
             Widget.this.getPosition().add(event.getDelta());
         }
     }
-//
-//    public class WidgetCloseButMouseClickEventListener implements MouseClickEventListener {
-//        @Override
-//        public void update(MouseClickEvent event) {
-//            if (CLICK.equals(event.getAction())) {
-//                Widget.this.visible = false;
-//            }
-//        }
-//    }
 
-//    public class WidgetMinimizeButMouseClickEventListener implements MouseClickEventListener {
-//        @Override
-//        public void update(MouseClickEvent event) {
-//            if (CLICK.equals(event.getAction())) {
-//                boolean newValue = !Widget.this.isMinimized();
-//                Widget.this.minimizeButton.textState.setText(newValue ? MAXIMIZE_ICON : MINIMIZE_ICON);
-//                Widget.this.setMinimized(newValue);
-//            }
-//        }
-//    }
+    public class WidgetCloseButMouseClickEventListener implements MouseButtonEventListener {
+
+        @Override
+        public void process(MouseButtonEvent event) {
+            if (MOUSE_CLICK == event.getAction()) {
+                Widget.this.setVisible(false);
+            }
+        }
+    }
+
+    public class WidgetMinimizeButMouseClickEventListener implements MouseButtonEventListener {
+        public void process(MouseButtonEvent event) {
+            if (MOUSE_CLICK == event.getAction()) {
+                boolean newValue = !Widget.this.isMinimized();
+                Widget.this.minimizeButton.getTextState().setText(newValue ? MAXIMIZE_ICON : MINIMIZE_ICON);
+                Widget.this.setMinimized(newValue);
+            }
+        }
+    }
 }
