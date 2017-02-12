@@ -3,26 +3,25 @@ package org.liquidengine.legui.event;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.joml.Vector2f;
 import org.liquidengine.legui.component.Component;
+import org.liquidengine.legui.component.Frame;
 
 /**
  * Created by Aliaksandr_Shcherbin on 2/9/2017.
  */
 public class CursorEnterEvent extends AbstractEvent {
-    public static final int ENTER = 0;
-    public static final int EXIT  = 1;
-    private final int      enter;
+    private final boolean  entered;
     private final Vector2f negate;
     private final Vector2f cursorPosition;
 
-    public CursorEnterEvent(Component controller, int enter, Vector2f negate, Vector2f cursorPosition) {
-        super(controller);
-        this.enter = enter;
+    public CursorEnterEvent(Component controller, Frame frame, boolean entered, Vector2f negate, Vector2f cursorPosition) {
+        super(controller, frame);
+        this.entered = entered;
         this.negate = negate;
         this.cursorPosition = cursorPosition;
     }
 
-    public int getEnter() {
-        return enter;
+    public boolean isEntered() {
+        return entered;
     }
 
     public Vector2f getNegate() {
@@ -36,7 +35,7 @@ public class CursorEnterEvent extends AbstractEvent {
     @Override
     public String toString() {
         return new ToStringBuilder(this)
-                .append("enter", enter)
+                .append("entered", entered)
                 .append("negate", negate)
                 .append("cursorPosition", cursorPosition)
                 .toString();

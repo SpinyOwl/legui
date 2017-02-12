@@ -8,7 +8,7 @@ import org.liquidengine.legui.system.renderer.nvg.NvgImageReferenceManager;
 import org.lwjgl.nanovg.NVGPaint;
 
 import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.IMAGE_REFERENCE_MANAGER;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtil.*;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.*;
 import static org.lwjgl.nanovg.NanoVG.*;
 
 /**
@@ -19,7 +19,6 @@ public class NvgImageViewRenderer extends NvgComponentRenderer<ImageView> {
 
     @Override
     protected void renderComponent(ImageView imageView, Context context, long nanovg) {
-        if (!imageView.isVisible()) return;
         Vector2f size     = imageView.getSize();
         Vector2f position = imageView.getScreenPosition();
 

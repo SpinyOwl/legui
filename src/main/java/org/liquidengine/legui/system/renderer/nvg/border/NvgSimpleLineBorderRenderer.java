@@ -8,7 +8,7 @@ import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.nvg.NvgBorderRenderer;
 
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtil.drawRectStroke;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.drawRectStroke;
 
 /**
  * Created by ShchAlexander on 11.02.2017.

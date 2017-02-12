@@ -3,7 +3,6 @@ package org.liquidengine.legui.system.renderer.nvg;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.ComponentRenderer;
-import org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtil;
 
 import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.NVG_CONTEXT;
 
@@ -19,6 +18,7 @@ public abstract class NvgComponentRenderer<C extends Component> extends Componen
     @Override
     public void renderComponent(C component, Context context) {
         long nanovgContext = (long) context.getContextData().get(NVG_CONTEXT);
+        if (!component.isVisible()) return;
         renderComponent(component, context, nanovgContext);
     }
 

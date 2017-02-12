@@ -4,10 +4,12 @@ import org.joml.Vector4f;
 import org.liquidengine.legui.border.SimpleLineBorder;
 import org.liquidengine.legui.component.*;
 import org.liquidengine.legui.component.optional.Orientation;
+import org.liquidengine.legui.event.CursorEnterEvent;
 import org.liquidengine.legui.event.FocusEvent;
 import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.font.FontRegister;
 import org.liquidengine.legui.image.Image;
+import org.liquidengine.legui.listener.CursorEnterEventListener;
 import org.liquidengine.legui.listener.FocusEventListener;
 import org.liquidengine.legui.listener.MouseClickEventListener;
 import org.liquidengine.legui.color.ColorConstants;
@@ -379,7 +381,18 @@ public class ExampleGui extends Panel {
         ImageView bgImageNormal  = new ImageView(new Image("org/liquidengine/legui/example/normal.png"));
         ImageView bgImageToggled = new ImageView(new Image("org/liquidengine/legui/example/toggled.png"));
 
+        toggleButton.getListenerMap().addListener(CursorEnterEvent.class, new CursorEnterEventListener() {
+            @Override
+            public void process(CursorEnterEvent event) {
+                System.out.println(event);
+            }
+        });
+
+
         toggleButton.setTooltip("Just toggle button with long tooltipText text");
+
+
+
         toggleButton.getTooltip().setPosition(45, 0);
         toggleButton.getTooltip().getSize().set(140, 40);
         toggleButton.getTooltip().setBackgroundColor(ColorConstants.darkGray());

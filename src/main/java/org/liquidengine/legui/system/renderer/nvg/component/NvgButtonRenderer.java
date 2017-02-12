@@ -13,7 +13,7 @@ import org.lwjgl.nanovg.NVGColor;
 import org.lwjgl.nanovg.NVGPaint;
 
 import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.IMAGE_REFERENCE_MANAGER;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtil.*;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.*;
 import static org.lwjgl.nanovg.NanoVG.*;
 
 /**
@@ -25,7 +25,6 @@ public class NvgButtonRenderer extends NvgComponentRenderer<Button> {
 
     @Override
     protected void renderComponent(Button button, Context context, long nanovg) {
-        if (!button.isVisible()) return;
         createScissor(nanovg, button);
         {
             Vector2f pos  = button.getScreenPosition();

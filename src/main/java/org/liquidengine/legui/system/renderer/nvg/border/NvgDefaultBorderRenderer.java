@@ -11,7 +11,7 @@ import org.liquidengine.legui.system.renderer.nvg.NvgBorderRenderer;
 import org.liquidengine.legui.system.renderer.nvg.util.NVGUtils;
 import org.lwjgl.nanovg.NVGColor;
 
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtil.drawRectStroke;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.drawRectStroke;
 import static org.lwjgl.nanovg.NanoVG.*;
 import static org.lwjgl.nanovg.NanoVG.nvgStroke;
 

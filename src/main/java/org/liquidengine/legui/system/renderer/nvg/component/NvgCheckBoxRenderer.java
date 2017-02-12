@@ -13,7 +13,7 @@ import org.liquidengine.legui.system.renderer.nvg.NvgComponentRenderer;
 import org.lwjgl.nanovg.NVGColor;
 
 import static org.liquidengine.legui.system.renderer.nvg.util.NVGUtils.rgba;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtil.*;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.*;
 import static org.liquidengine.legui.theme.Theme.DEFAULT_THEME;
 import static org.liquidengine.legui.util.TextUtil.cpToStr;
 import static org.lwjgl.nanovg.NanoVG.*;
