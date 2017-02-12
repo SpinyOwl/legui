@@ -12,7 +12,7 @@ import org.lwjgl.nanovg.NVGColor;
 import org.lwjgl.nanovg.NVGPaint;
 
 import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.IMAGE_REFERENCE_MANAGER;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtil.*;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.*;
 import static org.lwjgl.nanovg.NanoVG.*;
 
 /**
@@ -24,7 +24,6 @@ public class NvgToggleButtonRenderer extends NvgComponentRenderer<ToggleButton> 
 
     @Override
     protected void renderComponent(ToggleButton toggleButton, Context context, long nanovg) {
-        if (!toggleButton.isVisible()) return;
         createScissor(nanovg, toggleButton);
         {
             Vector2f pos  = toggleButton.getScreenPosition();

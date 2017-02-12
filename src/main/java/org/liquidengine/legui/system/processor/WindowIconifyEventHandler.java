@@ -5,7 +5,6 @@ import org.liquidengine.legui.event.WindowIconifyEvent;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.event.SystemWindowIconifyEvent;
 
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -21,7 +20,7 @@ public class WindowIconifyEventHandler extends AbstractSystemEventHandler<System
 
     private void pushEvent(Component component, SystemWindowIconifyEvent event, Context context) {
         if (!(component.isVisible())) return;
-        context.getEventProcessor().pushEvent(new WindowIconifyEvent(component, event.iconified));
+        context.getEventProcessor().pushEvent(new WindowIconifyEvent(component, context.getFrame(), event.iconified));
         if(component instanceof Container){
             List<Component> childs = ((Container) component).getChilds();
             for (Component child : childs) {

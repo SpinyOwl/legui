@@ -35,6 +35,11 @@ public class NvgRendererProvider extends RendererProvider {
         componentRendererMap.put(Label.class, new NvgLabelRenderer());
         componentRendererMap.put(ProgressBar.class, new NvgProgressBarRenderer());
         componentRendererMap.put(RadioButton.class, new NvgRadioButtonRenderer());
+        componentRendererMap.put(ScrollBar.class, new NvgScrollBarRenderer());
+        componentRendererMap.put(Slider.class, new NvgSliderRenderer());
+        componentRendererMap.put(TextArea.class, new NvgTextAreaRenderer());
+        componentRendererMap.put(TextInput.class, new NvgTextInputRenderer());
+        componentRendererMap.put(Tooltip.class, new NvgTooltipRenderer());
 
         // register border renderers
         borderRendererMap.put(SimpleLineBorder.class, new NvgSimpleLineBorderRenderer());

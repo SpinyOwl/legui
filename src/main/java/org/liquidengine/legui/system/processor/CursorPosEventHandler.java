@@ -38,10 +38,10 @@ public class CursorPosEventHandler extends AbstractSystemEventHandler<SystemCurs
                 context.setMouseTargetGui(targetComponent);
                 targetComponent.setHovered(true);
                 Vector2f curPosInComponent = targetComponent.getScreenPosition().sub(cursorPosition).negate();
-                context.getEventProcessor().pushEvent(new CursorEnterEvent(targetComponent, CursorEnterEvent.ENTER, curPosInComponent, cursorPosition));
+                context.getEventProcessor().pushEvent(new CursorEnterEvent(targetComponent, frame, true, curPosInComponent, cursorPosition));
                 if (prevTarget != null) {
                     Vector2f curPosInPrevTarget = prevTarget.getScreenPosition().sub(cursorPosition).negate();
-                    context.getEventProcessor().pushEvent(new CursorEnterEvent(prevTarget, CursorEnterEvent.ENTER, curPosInPrevTarget, cursorPosition));
+                    context.getEventProcessor().pushEvent(new CursorEnterEvent(prevTarget, frame, false, curPosInPrevTarget, cursorPosition));
                     prevTarget.setHovered(false);
                 }
             }
@@ -55,11 +55,6 @@ public class CursorPosEventHandler extends AbstractSystemEventHandler<SystemCurs
             update(event, child, context);
         }
         return false;
-    }
-
-    @Override
-    protected void postProcess(SystemCursorPosEvent event, Frame frame, Context context) {
-
     }
 
     private void update(SystemCursorPosEvent event, Component component, Context context) {
@@ -86,7 +81,7 @@ public class CursorPosEventHandler extends AbstractSystemEventHandler<SystemCurs
         EventProcessor eventProcessor = context.getEventProcessor();
         if (Mouse.MouseButton.MOUSE_BUTTON_1.isPressed() && component == context.getFocusedGui()) {
             Vector2f delta = Mouse.getCursorPosition().sub(Mouse.getCursorPositionPrev());
-            eventProcessor.pushEvent(new MouseDragEvent(component, delta));
+            eventProcessor.pushEvent(new MouseDragEvent(component, context.getFrame(), delta));
         }
     }
 }

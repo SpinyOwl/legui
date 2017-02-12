@@ -15,7 +15,7 @@ public class ScrollEventHandler extends AbstractSystemEventHandler<SystemScrollE
     protected boolean process(SystemScrollEvent event, Layer layer, Context context) {
         Component intersectedComponent = SehUtil.getTargetComponent(layer, Mouse.getCursorPosition());
         if (intersectedComponent != null) {
-            context.getEventProcessor().pushEvent(new ScrollEvent(intersectedComponent, event.xoffset, event.yoffset));
+            context.getEventProcessor().pushEvent(new ScrollEvent(intersectedComponent, context.getFrame(), event.xoffset, event.yoffset));
             return true;
         }
         return false;

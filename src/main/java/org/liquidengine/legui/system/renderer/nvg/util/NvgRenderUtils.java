@@ -25,8 +25,8 @@ import static org.lwjgl.system.MemoryUtil.*;
 /**
  * Created by Aliaksandr_Shcherbin on 2/2/2017.
  */
-public final class NvgRenderUtil {
-    private NvgRenderUtil() {
+public final class NvgRenderUtils {
+    private NvgRenderUtils() {
     }
 
     public static void renderTextStateLineToBounds(long nvgContext, Vector2f pos, Vector2f size, TextState textState) {

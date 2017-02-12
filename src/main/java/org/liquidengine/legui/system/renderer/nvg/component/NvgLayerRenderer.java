@@ -14,7 +14,6 @@ import java.util.List;
 public class NvgLayerRenderer extends NvgComponentRenderer<LayerContainer> {
     @Override
     protected void renderComponent(LayerContainer layer, Context context, long nanovg) {
-        if (!layer.isVisible()) return;
         List<Component> all       = layer.getChilds();
         for (Component child : all) {
             RendererProvider.getInstance().getComponentRenderer(child.getClass()).render(child, context);

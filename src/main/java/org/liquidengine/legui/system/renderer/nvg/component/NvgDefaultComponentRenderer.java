@@ -10,12 +10,12 @@ import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.RendererProvider;
 import org.liquidengine.legui.system.renderer.nvg.NvgComponentRenderer;
 import org.liquidengine.legui.system.renderer.nvg.util.NVGUtils;
-import org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtil;
+import org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils;
 import org.lwjgl.nanovg.NVGColor;
 
 import java.util.List;
 
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtil.*;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.*;
 import static org.lwjgl.nanovg.NanoVG.*;
 
 /**
@@ -25,8 +25,7 @@ public class NvgDefaultComponentRenderer extends NvgComponentRenderer {
 
     @Override
     protected void renderComponent(Component component, Context context, long nanovg) {
-        if (!component.isVisible()) return;
-        NvgRenderUtil.createScissor(nanovg, component);
+        NvgRenderUtils.createScissor(nanovg, component);
         {
             Vector2f p = component.getScreenPosition();
             Vector2f s = component.getSize();
@@ -54,7 +53,7 @@ public class NvgDefaultComponentRenderer extends NvgComponentRenderer {
             renderBorder(component, context);
 
         }
-        NvgRenderUtil.resetScissor(nanovg);
+        NvgRenderUtils.resetScissor(nanovg);
 
         if (component instanceof Container) {
             Container       container = (Container) component;
