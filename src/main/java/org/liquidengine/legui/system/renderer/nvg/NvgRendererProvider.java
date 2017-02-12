@@ -1,12 +1,14 @@
 package org.liquidengine.legui.system.renderer.nvg;
 
-import org.liquidengine.legui.component.Component;
-import org.liquidengine.legui.component.Layer;
-import org.liquidengine.legui.component.LayerContainer;
+import org.liquidengine.legui.border.Border;
+import org.liquidengine.legui.border.SimpleLineBorder;
+import org.liquidengine.legui.component.*;
+import org.liquidengine.legui.system.renderer.BorderRenderer;
 import org.liquidengine.legui.system.renderer.ComponentRenderer;
 import org.liquidengine.legui.system.renderer.RendererProvider;
-import org.liquidengine.legui.system.renderer.nvg.comp.NvgDefaultRenderer;
-import org.liquidengine.legui.system.renderer.nvg.comp.NvgLayerRenderer;
+import org.liquidengine.legui.system.renderer.nvg.border.NvgDefaultBorderRenderer;
+import org.liquidengine.legui.system.renderer.nvg.border.NvgSimpleLineBorderRenderer;
+import org.liquidengine.legui.system.renderer.nvg.component.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,17 +19,50 @@ import java.util.concurrent.ConcurrentHashMap;
  * Created by Aliaksandr_Shcherbin on 1/26/2017.
  */
 public class NvgRendererProvider extends RendererProvider {
-    private Map<Class<? extends Component>, NvgComponentRenderer<? extends Component>> componentRendererMap = new ConcurrentHashMap<>();
-    private NvgComponentRenderer defaultRenderer = new NvgDefaultRenderer();
+    private Map<Class<? extends Component>, NvgComponentRenderer<? extends Component>> componentRendererMap     = new ConcurrentHashMap<>();
+    private Map<Class<? extends Border>, NvgBorderRenderer<? extends Border>>          borderRendererMap        = new ConcurrentHashMap<>();
+    private NvgComponentRenderer                                                       defaultComponentRenderer = new NvgDefaultComponentRenderer();
+    private NvgBorderRenderer                                                          defaultBorderRenderer    = new NvgDefaultBorderRenderer();
 
     public NvgRendererProvider() {
+
+        // register component renderers
         componentRendererMap.put(LayerContainer.class, new NvgLayerRenderer());
+        componentRendererMap.put(Button.class, new NvgButtonRenderer());
+        componentRendererMap.put(ToggleButton.class, new NvgToggleButtonRenderer());
+        componentRendererMap.put(ImageView.class, new NvgImageViewRenderer());
+        componentRendererMap.put(CheckBox.class, new NvgCheckBoxRenderer());
+        componentRendererMap.put(Label.class, new NvgLabelRenderer());
+        componentRendererMap.put(ProgressBar.class, new NvgProgressBarRenderer());
+        componentRendererMap.put(RadioButton.class, new NvgRadioButtonRenderer());
+
+        // register border renderers
+        borderRendererMap.put(SimpleLineBorder.class, new NvgSimpleLineBorderRenderer());
     }
 
     @Override
-    public <C extends Component> ComponentRenderer getComponentRenderer(Class<C> componentClass) {
-        return componentRendererMap.getOrDefault(componentClass, defaultRenderer);
+    public <C extends Component> ComponentRenderer<C> getComponentRenderer(Class<C> componentClass) {
+        return this.<C, ComponentRenderer<C>>cycledSearchOfRenderer(componentClass, componentRendererMap, defaultComponentRenderer);
     }
+
+    @Override
+    public <B extends Border> BorderRenderer<B> getBorderRenderer(Class<B> boorderClass) {
+        return this.<B, BorderRenderer<B>>cycledSearchOfRenderer(boorderClass, borderRendererMap, defaultBorderRenderer);
+    }
+
+    private <C, R> R cycledSearchOfRenderer(Class<C> componentClass, Map mapmap, R defaultRenderer) {
+        Map<Class<C>, R> map      = mapmap;
+        R                renderer = null;
+        Class            cClass   = componentClass;
+        while (renderer == null) {
+            renderer = map.get(cClass);
+            if (cClass.isAssignableFrom(Component.class)) break;
+            cClass = cClass.getSuperclass();
+        }
+        if (renderer == null) renderer = defaultRenderer;
+        return renderer;
+    }
+
 
     @Override
     public List<ComponentRenderer> getComponentRenderers() {

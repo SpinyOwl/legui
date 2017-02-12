@@ -2,7 +2,6 @@ package org.liquidengine.legui.system.processor;
 
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.Container;
-import org.liquidengine.legui.component.Controller;
 import org.liquidengine.legui.component.Layer;
 import org.liquidengine.legui.event.WindowRefreshEvent;
 import org.liquidengine.legui.system.context.Context;
@@ -22,9 +21,8 @@ public class WindowRefreshEventHandler extends AbstractSystemEventHandler<System
     }
 
     private void pushEvent(Component component, Context context) {
-        if (!(component instanceof Controller)) return;
         if (!(component.isVisible())) return;
-        context.getEventProcessor().pushEvent(new WindowRefreshEvent((Controller) component));
+        context.getEventProcessor().pushEvent(new WindowRefreshEvent(component));
         if (component instanceof Container) {
             List<Component> childs = ((Container) component).getChilds();
             for (Component child : childs) {

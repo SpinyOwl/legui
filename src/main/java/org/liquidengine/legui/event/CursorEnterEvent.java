@@ -2,7 +2,7 @@ package org.liquidengine.legui.event;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.joml.Vector2f;
-import org.liquidengine.legui.component.Controller;
+import org.liquidengine.legui.component.Component;
 
 /**
  * Created by Aliaksandr_Shcherbin on 2/9/2017.
@@ -14,7 +14,7 @@ public class CursorEnterEvent extends AbstractEvent {
     private final Vector2f negate;
     private final Vector2f cursorPosition;
 
-    public CursorEnterEvent(Controller controller, int enter, Vector2f negate, Vector2f cursorPosition) {
+    public CursorEnterEvent(Component controller, int enter, Vector2f negate, Vector2f cursorPosition) {
         super(controller);
         this.enter = enter;
         this.negate = negate;

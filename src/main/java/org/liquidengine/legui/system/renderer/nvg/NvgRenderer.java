@@ -63,14 +63,15 @@ public class NvgRenderer extends Renderer {
         glDisable(GL_BLEND);
         glEnable(GL_DEPTH_TEST);
 
-//        NvgImageReferenceManager manager = (NvgImageReferenceManager) context.getContextData().get(IMAGE_REFERENCE_MANAGER);
-//        manager.removeOldImages(nvgContext);
+        NvgImageReferenceManager manager = (NvgImageReferenceManager) context.getContextData().get(IMAGE_REFERENCE_MANAGER);
+        manager.removeOldImages(nvgContext);
+
     }
 
     @Override
     public void destroy() {
         NanoVGGL3.nnvgDeleteGL3(nvgContext);
         provider.getComponentRenderers().forEach(ComponentRenderer::destroy);
-//        ((NvgImageReferenceManager) context.getContextData().get(IMAGE_REFERENCE_MANAGER)).destroy();
+        ((NvgImageReferenceManager) context.getContextData().get(IMAGE_REFERENCE_MANAGER)).destroy();
     }
 }

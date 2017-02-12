@@ -1,7 +1,10 @@
 package org.liquidengine.legui.system.processor;
 
 import org.joml.Vector2f;
-import org.liquidengine.legui.component.*;
+import org.liquidengine.legui.component.Component;
+import org.liquidengine.legui.component.Container;
+import org.liquidengine.legui.component.Frame;
+import org.liquidengine.legui.component.Layer;
 import org.liquidengine.legui.event.CursorEnterEvent;
 import org.liquidengine.legui.event.MouseDragEvent;
 import org.liquidengine.legui.input.Mouse;
@@ -24,18 +27,18 @@ public class CursorPosEventHandler extends AbstractSystemEventHandler<SystemCurs
 
         List<Layer> allLayers = frame.getAllLayers();
         Collections.reverse(allLayers);
-        Controller targetController = null;
+        Component targetComponent = null;
         for (Layer layer : allLayers) {
-            targetController = SehUtil.getTargetController(layer, cursorPosition);
-            if (targetController != null || !layer.isEventPassable()) break;
+            targetComponent = SehUtil.getTargetComponent(layer, cursorPosition);
+            if (targetComponent != null || !layer.isEventPassable()) break;
         }
-        if (targetController != null) {
-            Controller prevTarget = context.getMouseTargetGui();
-            if (targetController != prevTarget) {
-                context.setMouseTargetGui(targetController);
-                targetController.setHovered(true);
-                Vector2f curPosInController = targetController.getScreenPosition().sub(cursorPosition).negate();
-                context.getEventProcessor().pushEvent(new CursorEnterEvent(targetController, CursorEnterEvent.ENTER, curPosInController, cursorPosition));
+        if (targetComponent != null) {
+            Component prevTarget = context.getMouseTargetGui();
+            if (targetComponent != prevTarget) {
+                context.setMouseTargetGui(targetComponent);
+                targetComponent.setHovered(true);
+                Vector2f curPosInComponent = targetComponent.getScreenPosition().sub(cursorPosition).negate();
+                context.getEventProcessor().pushEvent(new CursorEnterEvent(targetComponent, CursorEnterEvent.ENTER, curPosInComponent, cursorPosition));
                 if (prevTarget != null) {
                     Vector2f curPosInPrevTarget = prevTarget.getScreenPosition().sub(cursorPosition).negate();
                     context.getEventProcessor().pushEvent(new CursorEnterEvent(prevTarget, CursorEnterEvent.ENTER, curPosInPrevTarget, cursorPosition));
@@ -49,9 +52,7 @@ public class CursorPosEventHandler extends AbstractSystemEventHandler<SystemCurs
     protected boolean process(SystemCursorPosEvent event, Layer layer, Context context) {
         List<Component> childs = layer.getContainer().getChilds();
         for (Component child : childs) {
-            if (child instanceof Controller) {
-                update(event, (Controller) child, context);
-            }
+            update(event, child, context);
         }
         return false;
     }
@@ -61,86 +62,31 @@ public class CursorPosEventHandler extends AbstractSystemEventHandler<SystemCurs
 
     }
 
-    private void update(SystemCursorPosEvent event, Controller controller, Context context) {
-        if (controller instanceof Container) {
-            processAsContainer(event, controller, context);
+    private void update(SystemCursorPosEvent event, Component component, Context context) {
+        if (component instanceof Container) {
+            processAsContainer(event, component, context);
         } else {
-            processAsController(controller, context);
+            processAsComponent(component, context);
         }
     }
 
-    private void processAsContainer(SystemCursorPosEvent event, Controller controller, Context context) {
-        Container container = (Container) controller;
+    private void processAsContainer(SystemCursorPosEvent event, Component component, Context context) {
+        Container container = (Container) component;
         if (container.isEmpty()) {
-            processAsController(controller, context);
+            processAsComponent(component, context);
         } else {
             List<Component> childs = container.getChilds();
             for (Component child : childs) {
-                if (child instanceof Controller) {
-                    update(event, (Controller) child, context);
-                }
+                update(event, child, context);
             }
         }
     }
 
-    private void processAsController(Controller controller, Context context) {
+    private void processAsComponent(Component component, Context context) {
         EventProcessor eventProcessor = context.getEventProcessor();
-        if (Mouse.MouseButton.MOUSE_BUTTON_1.isPressed() && controller == context.getFocusedGui()) {
+        if (Mouse.MouseButton.MOUSE_BUTTON_1.isPressed() && component == context.getFocusedGui()) {
             Vector2f delta = Mouse.getCursorPosition().sub(Mouse.getCursorPositionPrev());
-            eventProcessor.pushEvent(new MouseDragEvent(controller, delta));
+            eventProcessor.pushEvent(new MouseDragEvent(component, delta));
         }
     }
-//    /**
-//     * Updates standard context of frame element
-//     *
-//     * @param event
-//     * @param component
-//     * @param context
-//     */
-//    private void updateComponentStatesAndCallListeners(SystemCursorPosEvent event, Controller controller, Context context) {
-//        EventProcessor eventProcessor = context.getEventProcessor();
-//        if (context.getMouseButtonStates()[GLFW.GLFW_MOUSE_BUTTON_LEFT] && component == context.getFocusedGui()) {
-//            List<LeguiEventListener<MouseDragEvent>> mouseDragEventListeners = component.getLeguiEventListeners().getListeners(MouseDragEvent.class);
-//            MouseDragEvent                           mouseDragEvent          = new MouseDragEvent(new Vector2f(event.fx, event.fy), context.getCursorPositionPrev(), component);
-//            if (eventProcessor == null) {
-//                mouseDragEventListeners.forEach(l -> l.update(mouseDragEvent));
-//            } else {
-//                eventProcessor.pushEvent(mouseDragEvent);
-//            }
-//        }
-//
-//        List<LeguiEventListener<CursorEnterEvent>> listeners        = component.getLeguiEventListeners().getListeners(CursorEnterEvent.class);
-//        Vector2f                                   position         = Util.calculatePosition(component);
-//        Vector2f                                   cursorPosition   = context.getCursorPosition();
-//        boolean                                    intersects       = component.getIntersector().intersects(component, cursorPosition);
-//        Vector2f                                   mousePosition    = position.sub(cursorPosition).negate();
-//        boolean                                    update           = false;
-//        CursorEnterEvent                           cursorEnterEvent = null;
-//
-//        if (component.getState().isHovered()) {
-//            if (!intersects || component != context.getMouseTargetGui()) {
-//                component.getState().setHovered(false);
-//                cursorEnterEvent = new CursorEnterEvent(component, CursorEnterEvent.CursorEnterAction.EXIT, mousePosition);
-//                if (component.getTooltipText() != null) {
-//                    context.getFrame().getTooltipLayer().removeComponent(component.getTooltip());
-//                }
-//                update = true;
-//            }
-//        } else if (!component.getState().isHovered() && intersects && component == context.getMouseTargetGui()) {
-//            component.getState().setHovered(true);
-//            cursorEnterEvent = new CursorEnterEvent(component, CursorEnterEvent.CursorEnterAction.ENTER, mousePosition);
-//            if (component.getTooltipText() != null) {
-//                context.getFrame().getTooltipLayer().addComponent(component.getTooltip());
-//            }
-//            update = true;
-//        }
-//        if (update) {
-//            if (leguiEventProcessor == null) {
-//                CursorEnterEvent finalCursorEnterEvent = cursorEnterEvent;
-//                listeners.forEach(listener -> listener.update(finalCursorEnterEvent));
-//            } else {
-//                leguiEventProcessor.pushEvent(cursorEnterEvent);
-//            }
-//        }
-//    }
 }

@@ -1,6 +1,6 @@
 package org.liquidengine.legui.event;
 
-import org.liquidengine.legui.component.Controller;
+import org.liquidengine.legui.component.Component;
 
 /**
  * Created by ShchAlexander on 03.02.2017.
@@ -8,7 +8,7 @@ import org.liquidengine.legui.component.Controller;
 public class WindowIconifyEvent extends AbstractEvent {
     private final boolean iconified;
 
-    public WindowIconifyEvent(Controller controller, boolean iconified) {
+    public WindowIconifyEvent(Component controller, boolean iconified) {
         super(controller);
         this.iconified = iconified;
     }

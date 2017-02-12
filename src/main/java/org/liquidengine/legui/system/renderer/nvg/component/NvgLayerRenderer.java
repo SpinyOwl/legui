@@ -1,8 +1,6 @@
-package org.liquidengine.legui.system.renderer.nvg.comp;
+package org.liquidengine.legui.system.renderer.nvg.component;
 
 import org.liquidengine.legui.component.Component;
-import org.liquidengine.legui.component.Container;
-import org.liquidengine.legui.component.Layer;
 import org.liquidengine.legui.component.LayerContainer;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.RendererProvider;

@@ -5,6 +5,10 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.liquidengine.legui.component.optional.TextState;
+import org.liquidengine.legui.event.MouseClickEvent;
+import org.liquidengine.legui.listener.MouseClickEventListener;
+
+import static org.liquidengine.legui.event.MouseClickEvent.CLICK;
 
 /**
  * Created by Aliaksandr_Shcherbin on 2/6/2017.
@@ -33,6 +37,12 @@ public class RadioButton extends Controller {
 
     private void initialize(String text) {
         textState = new TextState(text);
+        setBorder(null);
+        getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
+            if (event.getAction() == CLICK) {
+                setSelected(true);
+            }
+        });
     }
 
     public boolean isSelected() {

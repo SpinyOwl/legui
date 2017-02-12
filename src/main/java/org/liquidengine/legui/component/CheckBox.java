@@ -6,6 +6,10 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 import org.liquidengine.legui.component.optional.TextState;
+import org.liquidengine.legui.event.MouseClickEvent;
+import org.liquidengine.legui.listener.MouseClickEventListener;
+
+import static org.liquidengine.legui.event.MouseClickEvent.CLICK;
 
 /**
  * An implementation of a check box -- an item that can be selected or
@@ -98,11 +102,11 @@ public class CheckBox extends Controller {
      */
     private void initialize(String text) {
         this.textState = new TextState(text);
-//        leguiEventListeners.addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
-//            if (event.getAction().equals(MouseClickEvent.MouseClickAction.CLICK)) {
-//                setChecked(!isChecked());
-//            }
-//        });
+        getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
+            if (event.getAction() == CLICK) {
+                setChecked(!isChecked());
+            }
+        });
     }
 
     /**

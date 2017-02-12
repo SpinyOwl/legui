@@ -6,6 +6,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 import org.liquidengine.legui.component.optional.TextState;
+import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 
 /**
  * An implementation of "push" button.
@@ -110,6 +111,7 @@ public class Button extends Controller {
      */
     private void initialize(String text) {
         this.textState = new TextState(text);
+        textState.setHorizontalAlign(HorizontalAlign.CENTER);
     }
 
     /**

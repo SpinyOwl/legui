@@ -30,28 +30,28 @@ public class MouseClickEventHandler implements SystemEventHandler<SystemMouseCli
         layers.add(frame.getComponentLayer());
         Collections.reverse(layers);
 
-        Controller focusedGui       = context.getFocusedGui();
-        Controller targetController = null;
+        Component focusedGui       = context.getFocusedGui();
+        Component targetComponent = null;
         for (Layer layer : layers) {
             if (layer.isEventReceivable()) {
                 if (!layer.getContainer().isVisible() || !layer.getContainer().isEnabled()) continue;
-                targetController = SehUtil.getTargetController(layer, cursorPosition);
-                if (targetController != null) break;
+                targetComponent = SehUtil.getTargetComponent(layer, cursorPosition);
+                if (targetComponent != null) break;
             }
             if (!layer.isEventPassable()) break;
         }
         if (event.action == GLFW.GLFW_PRESS) {
             button.setPressPosition(cursorPosition);
-            removeFocus(targetController, frame, context);
-            if (targetController != null) {
-                targetController.setPressed(true);
-                if (focusedGui != targetController) {
-                    targetController.setFocused(true);
-                    context.setFocusedGui(targetController);
-                    context.getEventProcessor().pushEvent(new FocusEvent(targetController,targetController, true));
+            removeFocus(targetComponent, frame, context);
+            if (targetComponent != null) {
+                targetComponent.setPressed(true);
+                if (focusedGui != targetComponent) {
+                    targetComponent.setFocused(true);
+                    context.setFocusedGui(targetComponent);
+                    context.getEventProcessor().pushEvent(new FocusEvent(targetComponent, targetComponent, true));
                 }
-                Vector2f position = targetController.getScreenPosition().sub(cursorPosition).negate();
-                context.getEventProcessor().pushEvent(new MouseClickEvent(targetController, MouseClickEvent.MOUSE_PRESS, button, position, cursorPosition));
+                Vector2f position = targetComponent.getScreenPosition().sub(cursorPosition).negate();
+                context.getEventProcessor().pushEvent(new MouseClickEvent(targetComponent, MouseClickEvent.MOUSE_PRESS, button, position, cursorPosition));
             }
         } else {
             button.setReleasePosition(cursorPosition);
@@ -59,52 +59,48 @@ public class MouseClickEventHandler implements SystemEventHandler<SystemMouseCli
                 focusedGui.setPressed(false);
             }
 
-            Vector2f position = targetController.getScreenPosition().sub(cursorPosition).negate();
-            if(focusedGui!=null && focusedGui==targetController) {
-                context.getEventProcessor().pushEvent(new MouseClickEvent(targetController, MouseClickEvent.CLICK, button, position, cursorPosition));
+            Vector2f position = targetComponent.getScreenPosition().sub(cursorPosition).negate();
+            if (focusedGui != null && focusedGui == targetComponent) {
+                context.getEventProcessor().pushEvent(new MouseClickEvent(targetComponent, MouseClickEvent.CLICK, button, position, cursorPosition));
             }
-            context.getEventProcessor().pushEvent(new MouseClickEvent(targetController, MouseClickEvent.MOUSE_RELEASE, button, position, cursorPosition));
+            context.getEventProcessor().pushEvent(new MouseClickEvent(targetComponent, MouseClickEvent.MOUSE_RELEASE, button, position, cursorPosition));
         }
-        if (targetController != null) {
-            pushWidgetsUp(targetController);
+        if (targetComponent != null) {
+            pushWidgetsUp(targetComponent);
         }
     }
 
-    private void removeFocus(Controller targetController, Frame frame, Context context) {
+    private void removeFocus(Component targetComponent, Frame frame, Context context) {
         List<Layer> allLayers = frame.getAllLayers();
         for (Layer layer : allLayers) {
             List<Component> childs = layer.getContainer().getChilds();
             for (Component child : childs) {
-                if (child instanceof Controller) {
-                    removeFocus(targetController, (Controller) child, context);
-                }
+                removeFocus(targetComponent, child, context);
             }
         }
     }
 
-    private void removeFocus(Controller focused, Controller controller, Context context) {
-        if (controller != focused) {
-            if (controller.isVisible()) {
-                if (controller.isFocused()) {
-                    controller.setFocused(false);
-                    controller.setPressed(false);
-                    context.getEventProcessor().pushEvent(new FocusEvent(controller, focused, false));
+    private void removeFocus(Component focused, Component component, Context context) {
+        if (component != focused) {
+            if (component.isVisible()) {
+                if (component.isFocused()) {
+                    component.setFocused(false);
+                    component.setPressed(false);
+                    context.getEventProcessor().pushEvent(new FocusEvent(component, focused, false));
                 }
             }
         }
-        if (controller instanceof Container) {
-            List<Component> childs = ((Container) controller).getChilds();
+        if (component instanceof Container) {
+            List<Component> childs = ((Container) component).getChilds();
             for (Component child : childs) {
-                if (child instanceof Controller) {
-                    removeFocus(focused, (Controller) child, context);
-                }
+                removeFocus(focused, child, context);
             }
         }
     }
 
-    private void pushWidgetsUp(Controller gui) {
-        Container  parent  = gui.getParent();
-        Controller current = gui;
+    private void pushWidgetsUp(Component gui) {
+        Container parent  = gui.getParent();
+        Component current = gui;
         if (parent != null) {
             boolean push = false;
             while (parent != null) {

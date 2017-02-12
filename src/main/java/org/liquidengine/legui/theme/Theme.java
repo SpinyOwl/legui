@@ -4,11 +4,10 @@ import org.joml.Vector4f;
 import org.joml.Vector4fc;
 import org.liquidengine.legui.border.Border;
 import org.liquidengine.legui.border.SimpleLineBorder;
-import org.liquidengine.legui.component.Viewport;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
 import org.liquidengine.legui.font.FontRegister;
-import org.liquidengine.legui.util.ColorConstants;
+import org.liquidengine.legui.color.ColorConstants;
 
 /**
  * Created by Aliaksandr_Shcherbin on 2/6/2017.
@@ -52,6 +51,8 @@ public abstract class Theme {
 
     public abstract boolean scrollBarArrowsEnabled();
 
+    public abstract Vector4f getFocusedStrokeColorLight();
+
 
     private static class DefaultTheme extends Theme {
 
@@ -86,7 +87,7 @@ public abstract class Theme {
 
         @Override
         public Vector4f textPadding() {
-            return new Vector4f(0);
+            return new Vector4f(3);
         }
 
         @Override
@@ -106,7 +107,7 @@ public abstract class Theme {
 
         @Override
         public float cornerRadius() {
-            return 0;
+            return 2;
         }
 
         @Override
@@ -127,6 +128,11 @@ public abstract class Theme {
         @Override
         public boolean scrollBarArrowsEnabled() {
             return false;
+        }
+
+        @Override
+        public Vector4f getFocusedStrokeColorLight() {
+            return new Vector4f(ColorConstants.lightBlue);
         }
 
         @Override

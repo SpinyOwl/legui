@@ -20,9 +20,8 @@ public class WindowIconifyEventHandler extends AbstractSystemEventHandler<System
 
 
     private void pushEvent(Component component, SystemWindowIconifyEvent event, Context context) {
-        if (!(component instanceof Controller)) return;
         if (!(component.isVisible())) return;
-        context.getEventProcessor().pushEvent(new WindowIconifyEvent((Controller) component, event.iconified));
+        context.getEventProcessor().pushEvent(new WindowIconifyEvent(component, event.iconified));
         if(component instanceof Container){
             List<Component> childs = ((Container) component).getChilds();
             for (Component child : childs) {

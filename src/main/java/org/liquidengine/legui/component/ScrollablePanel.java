@@ -6,7 +6,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.joml.Vector2f;
 import org.liquidengine.legui.border.SimpleLineBorder;
 import org.liquidengine.legui.component.optional.Orientation;
-import org.liquidengine.legui.util.ColorConstants;
+import org.liquidengine.legui.color.ColorConstants;
 
 /**
  * Created by Aliaksandr_Shcherbin on 2/6/2017.

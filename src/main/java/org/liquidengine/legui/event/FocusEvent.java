@@ -1,17 +1,17 @@
 package org.liquidengine.legui.event;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.liquidengine.legui.component.Controller;
+import org.liquidengine.legui.component.Component;
 
 /**
  * Created by Aliaksandr_Shcherbin on 2/10/2017.
  */
 public class FocusEvent extends AbstractEvent {
 
-    private final boolean    focused;
-    private final Controller nextFocus;
+    private final boolean   focused;
+    private final Component nextFocus;
 
-    public FocusEvent(Controller controller, Controller nextFocus, boolean focused) {
+    public FocusEvent(Component controller, Component nextFocus, boolean focused) {
         super(controller);
         this.focused = focused;
         this.nextFocus = nextFocus;
@@ -21,7 +21,7 @@ public class FocusEvent extends AbstractEvent {
         return focused;
     }
 
-    public Controller getNextFocus() {
+    public Component getNextFocus() {
         return nextFocus;
     }
 

@@ -1,26 +1,26 @@
 package org.liquidengine.legui.event;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.liquidengine.legui.component.Controller;
+import org.liquidengine.legui.component.Component;
 
 /**
  * Created by Aliaksandr_Shcherbin on 1/25/2017.
  */
 public abstract class AbstractEvent {
-    private final Controller controller;
+    private final Component component;
 
-    public AbstractEvent(Controller controller) {
-        this.controller = controller;
+    public AbstractEvent(Component component) {
+        this.component = component;
     }
 
-    public final Controller getController() {
-        return controller;
+    public final Component getComponent() {
+        return component;
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this)
-                .append("controller", controller)
+                .append("component", component)
                 .toString();
     }
 }
