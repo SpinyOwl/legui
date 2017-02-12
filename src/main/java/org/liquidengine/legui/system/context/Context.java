@@ -2,6 +2,7 @@ package org.liquidengine.legui.system.context;
 
 import org.joml.Vector2f;
 import org.joml.Vector2i;
+import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.Controller;
 import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.listener.EventProcessor;
@@ -24,8 +25,8 @@ public class Context {
     private           Vector2i   windowSize;
     private           Vector2f   framebufferSize;
     private transient float      pixelRatio;
-    private           Controller mouseTargetGui;
-    private           Controller focusedGui;
+    private           Component mouseTargetGui;
+    private           Component focusedGui;
 
     private boolean debugEnabled;
 
@@ -119,19 +120,19 @@ public class Context {
         this.framebufferSize = framebufferSize;
     }
 
-    public Controller getFocusedGui() {
+    public Component getFocusedGui() {
         return focusedGui;
     }
 
-    public void setFocusedGui(Controller focusedGui) {
+    public void setFocusedGui(Component focusedGui) {
         this.focusedGui = focusedGui;
     }
 
-    public Controller getMouseTargetGui() {
+    public Component getMouseTargetGui() {
         return mouseTargetGui;
     }
 
-    public void setMouseTargetGui(Controller mouseTargetGui) {
+    public void setMouseTargetGui(Component mouseTargetGui) {
         this.mouseTargetGui = mouseTargetGui;
     }
 

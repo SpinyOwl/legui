@@ -1,4 +1,4 @@
-package org.liquidengine.legui.util;
+package org.liquidengine.legui.color;
 
 import org.joml.Vector4f;
 import org.joml.Vector4fc;

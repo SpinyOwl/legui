@@ -6,7 +6,7 @@ import org.lwjgl.nanovg.NVGColor;
 /**
  * Created by Aliaksandr_Shcherbin on 2/2/2017.
  */
-public class NvgUtil {
+public class NVGUtils {
     public static NVGColor rgba(float r, float g, float b, float a, NVGColor color) {
         color.r(r);
         color.g(g);

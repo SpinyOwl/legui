@@ -6,7 +6,9 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
-import org.liquidengine.legui.util.ColorConstants;
+import org.liquidengine.legui.color.ColorConstants;
+import org.liquidengine.legui.event.MouseClickEvent;
+import org.liquidengine.legui.listener.MouseClickEventListener;
 
 /**
  * An implementation of "toggle" button.
@@ -16,6 +18,20 @@ public class ToggleButton extends Button {
     protected ImageView togglededBackgroundImage;
     private   boolean   toggled;
     private   Vector4f  toggledBackgroundColor;
+
+    /**
+     * Creates a button with specified text and specified position and size.
+     *
+     * @param text   button text.
+     * @param x      x position in parent
+     * @param y      y position in parent
+     * @param width  width of component
+     * @param height height of component
+     */
+    public ToggleButton(String text, float x, float y, float width, float height) {
+        super(text, x, y, width, height);
+        initialize();
+    }
 
     /**
      * Creates toggle button with default bg color and default toggled bg color.
@@ -64,6 +80,8 @@ public class ToggleButton extends Button {
     private void initialize() {
         setBackgroundColor(ColorConstants.red());
         toggledBackgroundColor = ColorConstants.green();
+        MouseClickEventListener toggleButtonClickListener = new ToggleButtonMouseClickListener(this);
+        getListenerMap().addListener(MouseClickEvent.class, toggleButtonClickListener);
     }
 
     /**
@@ -150,5 +168,20 @@ public class ToggleButton extends Button {
                 .append("toggledBackgroundColor", toggledBackgroundColor)
                 .append("toggled", toggled)
                 .toString();
+    }
+
+    private static class ToggleButtonMouseClickListener implements MouseClickEventListener {
+        private final ToggleButton button;
+
+        private ToggleButtonMouseClickListener(ToggleButton button) {
+            this.button = button;
+        }
+
+        @Override
+        public void process(MouseClickEvent event) {
+            if (event.getAction() == MouseClickEvent.CLICK) {
+                button.setToggled(!button.isToggled());
+            }
+        }
     }
 }

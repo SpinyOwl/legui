@@ -12,7 +12,7 @@ import org.liquidengine.legui.font.FontRegister;
 import org.liquidengine.legui.input.Mouse;
 import org.liquidengine.legui.listener.FocusEventListener;
 import org.liquidengine.legui.listener.MouseClickEventListener;
-import org.liquidengine.legui.util.ColorConstants;
+import org.liquidengine.legui.color.ColorConstants;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -127,6 +127,7 @@ public class SelectBox extends Container {
         expandButton.getTextState().setText(collapsed ? COLLAPSED : EXPANDED);
         expandButton.setPosition(getSize().x - buttonWidth, 0);
         expandButton.setSize(buttonWidth, getSize().y);
+        selectionListPanel.getVerticalScrollBar().getSize().x = buttonWidth;
 
         for (int i = 0; i < listBoxElements.size(); i++) {
             ListBoxElement listBoxElement = listBoxElements.get(i);
@@ -259,10 +260,10 @@ public class SelectBox extends Container {
 
         @Override
         public void process(FocusEvent event) {
-            System.out.println("SB: " + event + " " + event.getController());
+            System.out.println("SB: " + event + " " + event.getComponent());
             if (!event.isFocused() && !box.isCollapsed()) {
                 boolean    collapse  = true;
-                Controller nextFocus = event.getNextFocus();
+                Component nextFocus = event.getNextFocus();
                 for (ListBoxElement listBoxElement : box.listBoxElements) {
                     if (nextFocus == listBoxElement) {
                         collapse = false;

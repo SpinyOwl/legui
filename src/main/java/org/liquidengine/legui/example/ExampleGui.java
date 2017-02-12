@@ -10,7 +10,7 @@ import org.liquidengine.legui.font.FontRegister;
 import org.liquidengine.legui.image.Image;
 import org.liquidengine.legui.listener.FocusEventListener;
 import org.liquidengine.legui.listener.MouseClickEventListener;
-import org.liquidengine.legui.util.ColorConstants;
+import org.liquidengine.legui.color.ColorConstants;
 import org.liquidengine.legui.util.TextUtil;
 
 import static org.liquidengine.legui.component.optional.align.HorizontalAlign.CENTER;
@@ -51,23 +51,23 @@ public class ExampleGui extends Panel {
         //@formatter:on
 
 
-        mouseTargetLabel = new Label("Hello Label", 10, height - 30, width - 20, 20);
+        mouseTargetLabel = new Label("Hello Label 1", 10, height - 30, width - 20, 20);
         this.add(mouseTargetLabel);
 
-        focusedGuiLabel = new Label("Hello Label", 10, height - 50, width - 20, 20);
+        focusedGuiLabel = new Label("Hello Label 2", 10, height - 50, width - 20, 20);
         focusedGuiLabel.setBorder(new SimpleLineBorder(ColorConstants.red(), 1));
         this.add(focusedGuiLabel);
 
         debugLabel = new Label("Debug Label", 10, height - 75, width - 20, 20);
         this.add(debugLabel);
 
-        mouseLabel = new Label("Hello Label", 130, 30, 100, 20);
+        mouseLabel = new Label("Hello Label 3", 130, 30, 100, 20);
         this.add(mouseLabel);
 
-        upsLabel = new Label("Hello Label", 130, 60, 100, 20);
+        upsLabel = new Label("Hello Label 4", 130, 60, 100, 20);
         this.add(upsLabel);
 
-        imageView = new ImageView(new Image("org/liquidengine/legui/example/11.jpg"));
+        imageView = new ImageView(new Image("org/liquidengine/legui/example/1.jpg"));
         imageView.setPosition(20, 30);
         imageView.setSize(100, 100);
         this.add(imageView);
@@ -374,7 +374,7 @@ public class ExampleGui extends Panel {
         });
         this.add(sbb);
 
-        ToggleButton toggleButton = new ToggleButton(100, 170, 40, 40);
+        ToggleButton toggleButton = new ToggleButton("",100, 170, 40, 40);
         this.add(toggleButton);
         ImageView bgImageNormal  = new ImageView(new Image("org/liquidengine/legui/example/normal.png"));
         ImageView bgImageToggled = new ImageView(new Image("org/liquidengine/legui/example/toggled.png"));

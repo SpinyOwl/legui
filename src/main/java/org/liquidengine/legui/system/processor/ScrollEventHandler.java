@@ -1,7 +1,6 @@
 package org.liquidengine.legui.system.processor;
 
-import org.liquidengine.legui.component.Controller;
-import org.liquidengine.legui.component.Frame;
+import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.Layer;
 import org.liquidengine.legui.event.ScrollEvent;
 import org.liquidengine.legui.input.Mouse;
@@ -14,7 +13,7 @@ import org.liquidengine.legui.system.event.SystemScrollEvent;
 public class ScrollEventHandler extends AbstractSystemEventHandler<SystemScrollEvent> {
     @Override
     protected boolean process(SystemScrollEvent event, Layer layer, Context context) {
-        Controller intersectedComponent = SehUtil.getTargetController(layer, Mouse.getCursorPosition());
+        Component intersectedComponent = SehUtil.getTargetComponent(layer, Mouse.getCursorPosition());
         if (intersectedComponent != null) {
             context.getEventProcessor().pushEvent(new ScrollEvent(intersectedComponent, event.xoffset, event.yoffset));
             return true;

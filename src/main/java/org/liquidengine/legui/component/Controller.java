@@ -7,11 +7,6 @@ import org.joml.Vector2f;
  */
 public abstract class Controller extends Component {
     private Tooltip tooltip;
-
-    private boolean hovered;
-    private boolean focused;
-    private boolean pressed;
-
     /**
      * Default constructor. Used to create component instance without any parameters.
      * <p>
@@ -55,29 +50,5 @@ public abstract class Controller extends Component {
 
     public void setTooltip(Tooltip tooltip) {
         this.tooltip = tooltip;
-    }
-
-    public boolean isHovered() {
-        return hovered;
-    }
-
-    public void setHovered(boolean hovered) {
-        this.hovered = hovered;
-    }
-
-    public boolean isFocused() {
-        return focused;
-    }
-
-    public void setFocused(boolean focused) {
-        this.focused = focused;
-    }
-
-    public boolean isPressed() {
-        return pressed;
-    }
-
-    public void setPressed(boolean pressed) {
-        this.pressed = pressed;
     }
 }

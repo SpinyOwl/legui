@@ -1,7 +1,7 @@
 package org.liquidengine.legui.border;
 
 import org.joml.Vector4f;
-import org.liquidengine.legui.util.ColorConstants;
+import org.liquidengine.legui.color.ColorConstants;
 
 /**
  * Simple one line rectangle border with specified thickness and color.
