@@ -20,7 +20,7 @@ public class WindowPosEventHandler extends AbstractSystemEventHandler<SystemWind
 
     private void pushEvent(Component component, SystemWindowPosEvent event, Context context) {
         if (!(component.isVisible())) return;
-        context.getEventProcessor().pushEvent(new WindowPosEvent(component, context.getFrame(), event.xpos, event.ypos));
+        context.getEventProcessor().pushEvent(new WindowPosEvent(component, context, event.xpos, event.ypos));
         if(component instanceof Container){
             List<Component> childs = ((Container) component).getChilds();
             for (Component child : childs) {

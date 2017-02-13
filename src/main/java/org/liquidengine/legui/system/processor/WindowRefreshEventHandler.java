@@ -22,7 +22,7 @@ public class WindowRefreshEventHandler extends AbstractSystemEventHandler<System
 
     private void pushEvent(Component component, Context context) {
         if (!(component.isVisible())) return;
-        context.getEventProcessor().pushEvent(new WindowRefreshEvent(component, context.getFrame()));
+        context.getEventProcessor().pushEvent(new WindowRefreshEvent(component, context));
         if (component instanceof Container) {
             List<Component> childs = ((Container) component).getChilds();
             for (Component child : childs) {

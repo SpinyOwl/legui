@@ -5,22 +5,23 @@ import org.joml.Vector2f;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.input.Mouse;
+import org.liquidengine.legui.system.context.Context;
 
 /**
  * Created by Aliaksandr_Shcherbin on 2/10/2017.
  */
 public class MouseClickEvent extends AbstractEvent {
-    public static final int MOUSE_PRESS   = 0;
-    public static final int CLICK         = 1;
-    public static final int MOUSE_RELEASE = 2;
+    public static final int PRESS   = 0;
+    public static final int CLICK   = 1;
+    public static final int RELEASE = 2;
 
     private final int               action;
     private final Mouse.MouseButton button;
     private final Vector2f          position;
     private final Vector2f          absolutePosition;
 
-    public MouseClickEvent(Component controller, Frame frame, int action, Mouse.MouseButton button, Vector2f position, Vector2f absolutePosition) {
-        super(controller, frame);
+    public MouseClickEvent(Component controller, Context context, int action, Mouse.MouseButton button, Vector2f position, Vector2f absolutePosition) {
+        super(controller, context);
         this.action = action;
         this.button = button;
         this.position = position;

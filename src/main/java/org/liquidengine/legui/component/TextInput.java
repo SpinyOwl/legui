@@ -4,8 +4,15 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.joml.Vector4f;
-import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.color.ColorConstants;
+import org.liquidengine.legui.component.optional.TextState;
+import org.liquidengine.legui.event.KeyEvent;
+import org.liquidengine.legui.listener.KeyEventListener;
+import org.liquidengine.legui.system.context.Context;
+
+import static org.liquidengine.legui.util.TextUtil.findNextWord;
+import static org.liquidengine.legui.util.TextUtil.findPrevWord;
+import static org.lwjgl.glfw.GLFW.*;
 
 /**
  * Created by Aliaksandr_Shcherbin on 2/6/2017.
@@ -51,6 +58,7 @@ public class TextInput extends Controller {
     private void initialize(String text) {
         textState = new TextState(text);
         textState.getPadding().set(5, 1, 5, 1);
+        getListenerMap().addListener(KeyEvent.class, new TextInputKeyEventListener(this));
     }
 
     public boolean isEditable() {
@@ -153,5 +161,173 @@ public class TextInput extends Controller {
                 .append(selectionColor)
                 .append(editable)
                 .toHashCode();
+    }
+
+    public static class TextInputKeyEventListener implements KeyEventListener {
+
+        private final TextInput gui;
+
+        public TextInputKeyEventListener(TextInput gui) {
+            this.gui = gui;
+        }
+
+        @Override
+        public void process(KeyEvent event) {
+            int       key           = event.getKey();
+            int       caretPosition = gui.getCaretPosition();
+            boolean   pressed       = event.getAction() != GLFW_RELEASE;
+            TextState textState     = gui.getTextState();
+            if (key == GLFW_KEY_LEFT && pressed) {
+                keyLeftAction(gui, caretPosition, event.getMods());
+            } else if (key == GLFW_KEY_RIGHT && pressed) {
+                keyRightAction(gui, caretPosition, textState, event.getMods());
+            } else if ((key == GLFW_KEY_UP || key == GLFW_KEY_HOME) && pressed) {
+                keyUpAndHomeAction(gui, event.getMods());
+            } else if ((key == GLFW_KEY_DOWN || key == GLFW_KEY_END) && pressed) {
+                keyDownAndEndAction(gui, event.getMods());
+            } else if (key == GLFW_KEY_BACKSPACE && pressed) {
+                keyBackSpaceAction(gui, caretPosition, textState, event.getMods());
+            } else if (key == GLFW_KEY_DELETE && pressed) {
+                keyDeleteAction(gui, caretPosition, textState, event.getMods());
+            } else if (key == GLFW_KEY_V && pressed && event.getMods() == GLFW_MOD_CONTROL) {
+                pasteAction(gui, event.getContext(), caretPosition, textState);
+            } else if (key == GLFW_KEY_C && pressed && event.getMods() == GLFW_MOD_CONTROL) {
+                copyAction(gui, event.getContext());
+            } else if (key == GLFW_KEY_X && pressed && event.getMods() == GLFW_MOD_CONTROL) {
+                cutAction(gui, event.getContext());
+            }
+        }
+
+        private void cutAction(TextInput gui, Context leguiContext) {
+            if (gui.isEditable()) {
+                String s = gui.getSelection();
+                if (s != null) {
+                    int start = gui.getStartSelectionIndex();
+                    int end   = gui.getEndSelectionIndex();
+                    if (start > end) {
+                        int swap = start;
+                        start = end;
+                        end = swap;
+                    }
+                    gui.getTextState().delete(start, end);
+                    gui.setCaretPosition(start);
+                    gui.setStartSelectionIndex(start);
+                    gui.setEndSelectionIndex(start);
+                    glfwSetClipboardString(leguiContext.getGlfwWindow(), s);
+                }
+            }
+        }
+
+        private void copyAction(TextInput gui, Context leguiContext) {
+            String s = gui.getSelection();
+            if (s != null) glfwSetClipboardString(leguiContext.getGlfwWindow(), s);
+        }
+
+        private void pasteAction(TextInput gui, Context leguiContext, int caretPosition, TextState textState) {
+            if (gui.isEditable()) {
+                String s = glfwGetClipboardString(leguiContext.getGlfwWindow());
+                if (s != null) {
+                    textState.insert(caretPosition, s);
+                    gui.setCaretPosition(caretPosition + s.length());
+                }
+            }
+        }
+
+        private void keyDeleteAction(TextInput gui, int caretPosition, TextState textState, int mods) {
+            if (gui.isEditable()) {
+                if ((mods & GLFW_MOD_CONTROL) != 0) {
+                    gui.setEndSelectionIndex(findNextWord(textState.getText(), caretPosition));
+                }
+                int start = gui.getStartSelectionIndex();
+                int end   = gui.getEndSelectionIndex();
+                if (start > end) {
+                    start = gui.getEndSelectionIndex();
+                    end = gui.getStartSelectionIndex();
+                }
+                if (start == end && caretPosition != textState.length()) {
+                    textState.deleteCharAt(caretPosition);
+                } else {
+                    textState.delete(start, end);
+                    gui.setCaretPosition(start);
+                    gui.setStartSelectionIndex(start);
+                    gui.setEndSelectionIndex(start);
+                }
+            }
+        }
+
+        private void keyBackSpaceAction(TextInput gui, int caretPosition, TextState textState, int mods) {
+            if (gui.isEditable()) {
+                if ((mods & GLFW_MOD_CONTROL) != 0) {
+                    gui.setEndSelectionIndex(findPrevWord(textState.getText(), caretPosition));
+                }
+                int start = gui.getStartSelectionIndex();
+                int end   = gui.getEndSelectionIndex();
+                if (start > end) {
+                    start = gui.getEndSelectionIndex();
+                    end = gui.getStartSelectionIndex();
+                }
+
+                if (start == end && caretPosition != 0) {
+                    textState.deleteCharAt(caretPosition - 1);
+                    gui.setCaretPosition(caretPosition - 1);
+                } else {
+                    textState.delete(start, end);
+                    gui.setCaretPosition(start);
+                    gui.setStartSelectionIndex(start);
+                    gui.setEndSelectionIndex(start);
+                }
+            }
+        }
+
+        private void keyDownAndEndAction(TextInput gui, int mods) {
+            int newCaretPosition = gui.getTextState().length();
+            gui.setEndSelectionIndex(newCaretPosition);
+            if ((mods & GLFW_MOD_SHIFT) == 0) {
+                gui.setStartSelectionIndex(newCaretPosition);
+            }
+            gui.setCaretPosition(newCaretPosition);
+
+        }
+
+        private void keyUpAndHomeAction(TextInput gui, int mods) {
+            int newCaretPosition = 0;
+            gui.setEndSelectionIndex(newCaretPosition);
+            if ((mods & GLFW_MOD_SHIFT) == 0) {
+                gui.setStartSelectionIndex(newCaretPosition);
+            }
+            gui.setCaretPosition(newCaretPosition);
+        }
+
+        private void keyRightAction(TextInput gui, int caretPosition, TextState textState, int mods) {
+            if (caretPosition < textState.length()) {
+                int newCaretPosition = caretPosition + 1;
+                if ((mods & GLFW_MOD_CONTROL) != 0) {
+                    newCaretPosition = findNextWord(gui.getTextState().getText(), caretPosition);
+                }
+
+                gui.setEndSelectionIndex(newCaretPosition);
+
+                if ((mods & GLFW_MOD_SHIFT) == 0) {
+                    gui.setStartSelectionIndex(newCaretPosition);
+                }
+
+                gui.setCaretPosition(newCaretPosition);
+            }
+        }
+
+        private void keyLeftAction(TextInput gui, int caretPosition, int mods) {
+            if (caretPosition > 0) {
+                int newCaretPosition = caretPosition - 1;
+                if ((mods & GLFW_MOD_CONTROL) != 0) {
+                    newCaretPosition = findPrevWord(gui.getTextState().getText(), caretPosition);
+                }
+
+                gui.setEndSelectionIndex(newCaretPosition);
+                if ((mods & GLFW_MOD_SHIFT) == 0) {
+                    gui.setStartSelectionIndex(newCaretPosition);
+                }
+                gui.setCaretPosition(newCaretPosition);
+            }
+        }
     }
 }

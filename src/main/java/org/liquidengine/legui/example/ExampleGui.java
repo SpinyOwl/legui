@@ -6,22 +6,26 @@ import org.liquidengine.legui.component.*;
 import org.liquidengine.legui.component.optional.Orientation;
 import org.liquidengine.legui.event.CursorEnterEvent;
 import org.liquidengine.legui.event.FocusEvent;
+import org.liquidengine.legui.event.KeyEvent;
 import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.font.FontRegister;
 import org.liquidengine.legui.image.Image;
 import org.liquidengine.legui.listener.CursorEnterEventListener;
 import org.liquidengine.legui.listener.FocusEventListener;
+import org.liquidengine.legui.listener.KeyEventListener;
 import org.liquidengine.legui.listener.MouseClickEventListener;
 import org.liquidengine.legui.color.ColorConstants;
 import org.liquidengine.legui.util.TextUtil;
+import org.lwjgl.glfw.GLFW;
 
 import static org.liquidengine.legui.component.optional.align.HorizontalAlign.CENTER;
+import static org.liquidengine.legui.component.optional.align.HorizontalAlign.LEFT;
 import static org.liquidengine.legui.component.optional.align.HorizontalAlign.RIGHT;
 import static org.liquidengine.legui.component.optional.align.VerticalAlign.BOTTOM;
 import static org.liquidengine.legui.component.optional.align.VerticalAlign.MIDDLE;
 import static org.liquidengine.legui.event.MouseClickEvent.CLICK;
-import static org.liquidengine.legui.event.MouseClickEvent.MOUSE_PRESS;
-import static org.liquidengine.legui.event.MouseClickEvent.MOUSE_RELEASE;
+import static org.liquidengine.legui.event.MouseClickEvent.PRESS;
+import static org.liquidengine.legui.event.MouseClickEvent.RELEASE;
 
 
 /**
@@ -141,14 +145,14 @@ public class ExampleGui extends Panel {
 
         textInput = new TextInput(250, 130, 100, 30);
         textInput.getTextState().setHorizontalAlign(RIGHT);
-//        textInput.getLeguiEventListeners().addListener(KeyboardKeyEvent.class, (KeyboardKeyEventListener) event -> {
-//            if (event.getKey() == GLFW.GLFW_KEY_F1 && event.getAction() == GLFW.GLFW_RELEASE)
-//                textInput.getTextState().setHorizontalAlign(LEFT);
-//            else if (event.getKey() == GLFW.GLFW_KEY_F2 && event.getAction() == GLFW.GLFW_RELEASE)
-//                textInput.getTextState().setHorizontalAlign(CENTER);
-//            else if (event.getKey() == GLFW.GLFW_KEY_F3 && event.getAction() == GLFW.GLFW_RELEASE)
-//                textInput.getTextState().setHorizontalAlign(RIGHT);
-//        });
+        textInput.getListenerMap().addListener(KeyEvent.class, (KeyEventListener) event -> {
+            if (event.getKey() == GLFW.GLFW_KEY_F1 && event.getAction() == GLFW.GLFW_RELEASE)
+                textInput.getTextState().setHorizontalAlign(LEFT);
+            else if (event.getKey() == GLFW.GLFW_KEY_F2 && event.getAction() == GLFW.GLFW_RELEASE)
+                textInput.getTextState().setHorizontalAlign(CENTER);
+            else if (event.getKey() == GLFW.GLFW_KEY_F3 && event.getAction() == GLFW.GLFW_RELEASE)
+                textInput.getTextState().setHorizontalAlign(RIGHT);
+        });
         this.add(textInput);
 
         Widget widget = new Widget("Hello widget", 250, 170, 100, 100);
@@ -284,8 +288,8 @@ public class ExampleGui extends Panel {
         button.getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
             int action = event.getAction();
             if (CLICK == action) mouseTargetLabel.setVisible(!mouseTargetLabel.isVisible());
-            if (MOUSE_RELEASE == action) System.out.println("RELEASE");
-            if (MOUSE_PRESS == action) System.out.println("PRESS");
+            if (RELEASE == action) System.out.println("RELEASE");
+            if (PRESS == action) System.out.println("PRESS");
         });
 
         ScrollablePanel scrollablePanel = new ScrollablePanel(420, 10, 250, 150);

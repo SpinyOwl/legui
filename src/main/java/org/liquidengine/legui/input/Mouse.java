@@ -30,7 +30,7 @@ public class Mouse {
     /**
      * Created by Aliaksandr_Shcherbin on 2/9/2017.
      */
-    public static enum MouseButton {
+    public enum MouseButton {
         /**
          * LEFT BUTTON
          */
@@ -49,7 +49,9 @@ public class Mouse {
         MOUSE_BUTTON_7(GLFW_MOUSE_BUTTON_7),     //= 6,
         MOUSE_BUTTON_8(GLFW_MOUSE_BUTTON_8),     //= 7,
         ;
-
+        public static final MouseButton MOUSE_BUTTON_LEFT   = MOUSE_BUTTON_1;
+        public static final MouseButton MOUSE_BUTTON_RIGHT  = MOUSE_BUTTON_2;
+        public static final MouseButton MOUSE_BUTTON_MIDDLE = MOUSE_BUTTON_3;
         private int      code;
         private boolean  pressed;
         private Vector2f pressPosition;

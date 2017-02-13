@@ -1,6 +1,7 @@
 package org.liquidengine.legui.example;
 
 import org.joml.Vector2i;
+import org.joml.Vector4f;
 import org.liquidengine.legui.DefaultInitializer;
 import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.event.WindowSizeEvent;
@@ -151,7 +152,7 @@ public class Example {
 
     private static void createGuiElements(Frame frame, int w, int h) {
         ExampleGui component = new ExampleGui(w, h);
-        component.setBackgroundColor(ColorConstants.blue());
+        component.setBackgroundColor(new Vector4f(0.9f,0.9f,0.9f,1f));
         component.getListenerMap().addListener(WindowSizeEvent.class, (WindowSizeEventListener) event -> component.setSize(event.getWidth(), event.getHeight()));
         frame.getContainer().add(component);
 //        frame.getComponentLayer().getBackgroundColor().set(ColorConstants.lightBlue);

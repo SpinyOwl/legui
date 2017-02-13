@@ -4,10 +4,19 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+import org.joml.Vector2f;
 import org.joml.Vector4f;
+import org.liquidengine.legui.color.ColorConstants;
 import org.liquidengine.legui.component.optional.Orientation;
+import org.liquidengine.legui.event.MouseClickEvent;
+import org.liquidengine.legui.event.MouseDragEvent;
+import org.liquidengine.legui.event.ScrollEvent;
+import org.liquidengine.legui.input.Mouse;
 import org.liquidengine.legui.intersection.Intersector;
 import org.liquidengine.legui.intersection.RectangleIntersector;
+import org.liquidengine.legui.listener.MouseClickEventListener;
+import org.liquidengine.legui.listener.MouseDragEventListener;
+import org.liquidengine.legui.listener.ScrollEventListener;
 
 /**
  * Created by Aliaksandr_Shcherbin on 2/6/2017.
@@ -25,8 +34,6 @@ public class Slider extends Controller {
     private Vector4f sliderColor       = new Vector4f(0.7f, 0.7f, 0.7f, 0.4f);
 
     private float sliderSize = 10f;
-
-//    private List<SliderChangeEventListener> sliderChangeEventListeners = new CopyOnWriteArrayList<>();
 
     public Slider(float value) {
         initialize(value);
@@ -47,11 +54,11 @@ public class Slider extends Controller {
 
     private void initialize(float value) {
         this.value = value;
-//        this.backgroundColor.set(0f);
-        RectangleIntersector rectangleIntersector = new RectangleIntersector();
-        rectangleIntersector.setPaddingLeft(sliderSize / 2f);
-        rectangleIntersector.setPaddingRight(sliderSize / 2f);
-        this.setIntersector(rectangleIntersector);
+        setBackgroundColor(ColorConstants.transparent());
+        setBorder(null);
+        getListenerMap().addListener(ScrollEvent.class, new SliderScrollEventListener(this));
+        getListenerMap().addListener(MouseClickEvent.class, new SliderMouseClickEventListener(this));
+        getListenerMap().addListener(MouseDragEvent.class, new SliderMouseDragEventListener(this));
     }
 
     @Override
@@ -84,13 +91,6 @@ public class Slider extends Controller {
         this.sliderSize = sliderSize;
     }
 
-//    public boolean addSliderChangeEventListener(SliderChangeEventListener sliderUpdateListener) {
-//        return sliderChangeEventListeners.add(sliderUpdateListener);
-//    }
-//
-//    public boolean removeSliderChangeEventListener(SliderChangeEventListener o) {
-//        return sliderChangeEventListeners.remove(o);
-//    }
 
     public Vector4f getSliderActiveColor() {
         return sliderActiveColor;
@@ -106,13 +106,6 @@ public class Slider extends Controller {
 
     public void setOrientation(Orientation orientation) {
         this.orientation = orientation;
-        if (Orientation.VERTICAL.equals(orientation)) {
-            ((RectangleIntersector) getIntersector()).setPaddingTop(sliderSize / 2f);
-            ((RectangleIntersector) getIntersector()).setPaddingBottom(sliderSize / 2f);
-        } else {
-            ((RectangleIntersector) getIntersector()).setPaddingLeft(sliderSize / 2f);
-            ((RectangleIntersector) getIntersector()).setPaddingRight(sliderSize / 2f);
-        }
     }
 
     @Override
@@ -130,7 +123,6 @@ public class Slider extends Controller {
                 .append(orientation, slider.orientation)
                 .append(sliderActiveColor, slider.sliderActiveColor)
                 .append(sliderColor, slider.sliderColor)
-//                .append(sliderChangeEventListeners, slider.sliderChangeEventListeners)
                 .isEquals();
     }
 
@@ -143,7 +135,6 @@ public class Slider extends Controller {
                 .append(sliderActiveColor)
                 .append(sliderColor)
                 .append(sliderSize)
-//                .append(sliderChangeEventListeners)
                 .toHashCode();
     }
 
@@ -155,7 +146,76 @@ public class Slider extends Controller {
                 .append("sliderActiveColor", sliderActiveColor)
                 .append("sliderColor", sliderColor)
                 .append("sliderSize", sliderSize)
-//                .append("sliderChangeEventListeners", sliderChangeEventListeners)
                 .toString();
+    }
+
+    public static class SliderScrollEventListener implements ScrollEventListener {
+
+        private final Slider slider;
+
+        public SliderScrollEventListener(Slider slider) {
+            this.slider = slider;
+        }
+
+        @Override
+        public void process(ScrollEvent event) {
+            float maxValue = 100f;
+            float minValue = 0f;
+            float curValue = slider.getValue();
+            float newVal   = (float) (curValue + event.getYoffset());
+
+            if (newVal > maxValue) newVal = maxValue;
+            if (newVal < minValue) newVal = minValue;
+
+            slider.setValue(newVal);
+        }
+    }
+
+    public static class SliderMouseClickEventListener implements MouseClickEventListener {
+        private final Slider slider;
+
+        public SliderMouseClickEventListener(Slider slider) {
+            this.slider = slider;
+        }
+
+        @Override
+        public void process(MouseClickEvent event) {
+            if (event.getButton().equals(Mouse.MouseButton.MOUSE_BUTTON_LEFT) && event.getAction() == MouseClickEvent.PRESS) {
+                Vector2f pos = slider.getScreenPosition();
+
+                Vector2f cursorPosition = Mouse.getCursorPosition();
+                float    value;
+                if (Orientation.VERTICAL.equals(slider.getOrientation())) {
+                    value = 100f * (pos.y + slider.getSize().y - cursorPosition.y - slider.sliderSize / 2f) / (slider.getSize().y - slider.sliderSize);
+                } else {
+                    value = 100f * (cursorPosition.x - pos.x - slider.sliderSize / 2f) / (slider.getSize().x - slider.sliderSize);
+                }
+                slider.setValue(value);
+            }
+        }
+    }
+
+    public static class SliderMouseDragEventListener implements MouseDragEventListener {
+        private final Slider slider;
+
+        public SliderMouseDragEventListener(Slider slider) {
+            this.slider = slider;
+        }
+
+        @Override
+        public void process(MouseDragEvent event) {
+            if (!Mouse.MouseButton.MOUSE_BUTTON_LEFT.isPressed()) return;
+
+            Vector2f pos = slider.getScreenPosition();
+
+            Vector2f cursorPosition = Mouse.getCursorPosition();
+            float    value;
+            if (Orientation.VERTICAL.equals(slider.getOrientation())) {
+                value = 100f * ((pos.y + slider.getSize().y) - cursorPosition.y - slider.sliderSize / 2f) / (slider.getSize().y - slider.sliderSize);
+            } else {
+                value = 100f * (cursorPosition.x - pos.x - slider.sliderSize / 2f) / (slider.getSize().x - slider.sliderSize);
+            }
+            slider.setValue(value);
+        }
     }
 }

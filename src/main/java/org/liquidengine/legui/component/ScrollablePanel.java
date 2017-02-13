@@ -69,9 +69,9 @@ public class ScrollablePanel<T extends Component> extends Container implements V
         container.setBorder(null);
         viewport.add(container);
 
+        this.add(viewport);
         this.add(verticalScrollBar);
         this.add(horizontalScrollBar);
-        this.add(viewport);
         this.setBackgroundColor(ColorConstants.transparent());
         this.setBorder(new SimpleLineBorder(ColorConstants.darkGray(), 0.5f));
 

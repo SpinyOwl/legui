@@ -22,7 +22,7 @@ public class WindowFocusEventHandler extends AbstractSystemEventHandler<SystemWi
 
     private void pushEvent(Component component, SystemWindowFocusEvent event, Context context) {
         if (!(component.isVisible())) return;
-        context.getEventProcessor().pushEvent(new WindowFocusEvent(component, context.getFrame(), event.focused));
+        context.getEventProcessor().pushEvent(new WindowFocusEvent(component, context, event.focused));
         if (component instanceof Container) {
             List<Component> childs = ((Container) component).getChilds();
             for (Component child : childs) {
