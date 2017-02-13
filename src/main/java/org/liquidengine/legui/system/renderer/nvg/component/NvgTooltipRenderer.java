@@ -55,8 +55,6 @@ public class NvgTooltipRenderer extends NvgComponentRenderer<Tooltip> {
                 byteText = memUTF8(text, false);
                 long start      = memAddress(byteText);
                 long end        = start + byteText.remaining();
-                int  rows       = 0;
-                int  currentRow = 0;
 
                 float x = pos.x + padding.x;
                 float y = pos.y + padding.y;
@@ -75,15 +73,15 @@ public class NvgTooltipRenderer extends NvgComponentRenderer<Tooltip> {
 
                 // calculate text bounds for every line and start/end indices
                 NVGTextRow.Buffer buffer = NVGTextRow.calloc(1);
-                while ((rows = nnvgTextBreakLines(context, start, end, size.x, memAddress(buffer), 1)) != 0) {
+                int  rows = 0;
+                while (nnvgTextBreakLines(context, start, end, size.x, memAddress(buffer), 1) != 0) {
                     NVGTextRow row    = buffer.get(0);
-                    float[]    bounds = createBounds(x, y + currentRow * fontSize, w, h, horizontalAlign, verticalAlign, row.width(), fontSize);
+                    float[]    bounds = createBounds(x, y + rows * fontSize, w, h, horizontalAlign, verticalAlign, row.width(), fontSize);
                     boundList.add(bounds);
                     indicesList.add(new long[]{row.start(), row.end()});
                     start = row.next();
-                    currentRow++;
+                    rows++;
                 }
-                rows = currentRow;
 
                 // calculate offset for all lines
                 float offsetY = 0.5f * fontSize * ((rows - 1) * verticalAlign.index - 1);
