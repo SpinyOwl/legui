@@ -36,7 +36,6 @@ public class NvgDefaultComponentRenderer extends NvgComponentRenderer {
             float    w     = s.x;
             float    h     = s.y;
 
-
             if (component instanceof Controller) {
                 Controller controller = (Controller) component;
                 if (controller.isPressed()) {
@@ -49,11 +48,9 @@ public class NvgDefaultComponentRenderer extends NvgComponentRenderer {
             } else {
                 drawRectBackground(nanovg, color, x, y, w, h);
             }
-
-            renderBorder(component, context);
-
         }
         NvgRenderUtils.resetScissor(nanovg);
+
 
         if (component instanceof Container) {
             Container       container = (Container) component;
@@ -63,6 +60,8 @@ public class NvgDefaultComponentRenderer extends NvgComponentRenderer {
                         getComponentRenderer(child.getClass()).render(child, context);
             }
         }
+
+        renderBorderWScissor(component, context, nanovg);
     }
 
     private void drawRectBackground(long nanovg, Vector4f color, float x, float y, float w, float h) {

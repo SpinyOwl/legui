@@ -21,6 +21,7 @@ public class SystemEventHandlerProvider {
         registerProcessor(SystemWindowSizeEvent.class, new WindowSizeEventHandler());
         registerProcessor(SystemCursorPosEvent.class, new CursorPosEventHandler());
         registerProcessor(SystemMouseClickEvent.class, new MouseClickEventHandler());
+        registerProcessor(SystemKeyEvent.class, new KeyEventHandler());
 
     }
 

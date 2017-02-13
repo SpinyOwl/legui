@@ -20,7 +20,7 @@ public class WindowCloseEventHandler extends AbstractSystemEventHandler<SystemWi
 
     private void pushEvent(Component component, Context context) {
         if (!(component.isVisible())) return;
-        context.getEventProcessor().pushEvent(new WindowCloseEvent(component, context.getFrame()));
+        context.getEventProcessor().pushEvent(new WindowCloseEvent(component, context));
         if (component instanceof Container) {
             List<Component> childs = ((Container) component).getChilds();
             for (Component child : childs) {

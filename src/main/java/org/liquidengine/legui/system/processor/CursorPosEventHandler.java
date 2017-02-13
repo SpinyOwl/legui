@@ -38,10 +38,10 @@ public class CursorPosEventHandler extends AbstractSystemEventHandler<SystemCurs
                 context.setMouseTargetGui(targetComponent);
                 targetComponent.setHovered(true);
                 Vector2f curPosInComponent = targetComponent.getScreenPosition().sub(cursorPosition).negate();
-                context.getEventProcessor().pushEvent(new CursorEnterEvent(targetComponent, frame, true, curPosInComponent, cursorPosition));
+                context.getEventProcessor().pushEvent(new CursorEnterEvent(targetComponent, context, true, curPosInComponent, cursorPosition));
                 if (prevTarget != null) {
                     Vector2f curPosInPrevTarget = prevTarget.getScreenPosition().sub(cursorPosition).negate();
-                    context.getEventProcessor().pushEvent(new CursorEnterEvent(prevTarget, frame, false, curPosInPrevTarget, cursorPosition));
+                    context.getEventProcessor().pushEvent(new CursorEnterEvent(prevTarget, context, false, curPosInPrevTarget, cursorPosition));
                     prevTarget.setHovered(false);
                 }
             }
@@ -81,7 +81,7 @@ public class CursorPosEventHandler extends AbstractSystemEventHandler<SystemCurs
         EventProcessor eventProcessor = context.getEventProcessor();
         if (Mouse.MouseButton.MOUSE_BUTTON_1.isPressed() && component == context.getFocusedGui()) {
             Vector2f delta = Mouse.getCursorPosition().sub(Mouse.getCursorPositionPrev());
-            eventProcessor.pushEvent(new MouseDragEvent(component, context.getFrame(), delta));
+            eventProcessor.pushEvent(new MouseDragEvent(component, context, delta));
         }
     }
 }

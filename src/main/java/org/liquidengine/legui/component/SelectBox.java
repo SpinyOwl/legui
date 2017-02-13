@@ -6,13 +6,15 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.joml.Vector2f;
 import org.liquidengine.legui.border.SimpleLineBorder;
+import org.liquidengine.legui.color.ColorConstants;
 import org.liquidengine.legui.event.FocusEvent;
 import org.liquidengine.legui.event.MouseClickEvent;
+import org.liquidengine.legui.event.ScrollEvent;
 import org.liquidengine.legui.font.FontRegister;
 import org.liquidengine.legui.input.Mouse;
 import org.liquidengine.legui.listener.FocusEventListener;
 import org.liquidengine.legui.listener.MouseClickEventListener;
-import org.liquidengine.legui.color.ColorConstants;
+import org.liquidengine.legui.listener.ScrollEventListener;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -29,21 +31,19 @@ public class SelectBox extends Container {
     public static final  String               NULL            = "null";
     private static final String               EXPANDED        = cpToStr(0xE5C7);
     private static final String               COLLAPSED       = cpToStr(0xE5C5);
-    protected            List<ListBoxElement> listBoxElements = SetUniqueList.setUniqueList(new CopyOnWriteArrayList<>());
-    protected            List<String>         elements        = SetUniqueList.setUniqueList(new CopyOnWriteArrayList<>());
+    private              List<ListBoxElement> listBoxElements = SetUniqueList.setUniqueList(new CopyOnWriteArrayList<>());
+    private              List<String>         elements        = SetUniqueList.setUniqueList(new CopyOnWriteArrayList<>());
 
-    protected SelectBoxScrollablePanel selectionListPanel = new SelectBoxScrollablePanel();
-    protected Button                   selectionButton    = new Button(NULL);
-    protected String                   selectedElement    = null;
-    protected float                    elementHeight      = 16;
-    protected float                    buttonWidth        = 15f;
-    protected int                      visibleCount       = 3;
-
-    protected Button expandButton = new Button(COLLAPSED);
-
-    protected boolean collapsed = true;
-
-    protected Lock lock = new ReentrantLock(false);
+    private       SelectBoxScrollablePanel selectionListPanel      = new SelectBoxScrollablePanel();
+    private final SelectBoxScrollListener  selectBoxScrollListener = new SelectBoxScrollListener(selectionListPanel.getVerticalScrollBar());
+    private       Button                   selectionButton         = new Button(NULL);
+    private       String                   selectedElement         = null;
+    private       float                    elementHeight           = 16;
+    private       float                    buttonWidth             = 15f;
+    private       int                      visibleCount            = 3;
+    private       Button                   expandButton            = new Button(COLLAPSED);
+    private       boolean                  collapsed               = true;
+    private       Lock                     lock                    = new ReentrantLock(false);
 
     public SelectBox() {
         initialize();
@@ -159,6 +159,7 @@ public class SelectBox extends Container {
 
                 ListBoxElement boxElement = createListBoxElement(element);
                 if (elements.isEmpty()) selectionButton.getTextState().setText(element);
+                boxElement.getListenerMap().addListener(ScrollEvent.class, selectBoxScrollListener);
                 elements.add(element);
                 listBoxElements.add(boxElement);
                 addListBoxComponent(boxElement);
@@ -260,9 +261,8 @@ public class SelectBox extends Container {
 
         @Override
         public void process(FocusEvent event) {
-            System.out.println("SB: " + event + " " + event.getComponent());
             if (!event.isFocused() && !box.isCollapsed()) {
-                boolean    collapse  = true;
+                boolean   collapse  = true;
                 Component nextFocus = event.getNextFocus();
                 for (ListBoxElement listBoxElement : box.listBoxElements) {
                     if (nextFocus == listBoxElement) {
@@ -275,7 +275,9 @@ public class SelectBox extends Container {
                         nextFocus == box.selectionListPanel.getVerticalScrollBar()) {
                     collapse = false;
                 }
-                box.setCollapsed(collapse);
+                if (box.collapsed != collapse) {
+                    box.setCollapsed(collapse);
+                }
             }
         }
     }
@@ -353,6 +355,19 @@ public class SelectBox extends Container {
 
         public SelectBoxScrollablePanel(Vector2f position, Vector2f size) {
             super(position, size);
+        }
+    }
+
+    public class SelectBoxScrollListener implements ScrollEventListener {
+        private final ScrollBar bar;
+
+        public SelectBoxScrollListener(ScrollBar bar) {
+            this.bar = bar;
+        }
+
+        @Override
+        public void process(ScrollEvent event) {
+            event.getContext().getEventProcessor().pushEvent(new ScrollEvent(bar, event.getContext(), event.getXoffset(), event.getYoffset()));
         }
     }
 }

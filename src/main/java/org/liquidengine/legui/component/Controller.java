@@ -77,11 +77,9 @@ public abstract class Controller extends Component {
             Tooltip tooltip = controller.tooltip;
             if (event.getComponent() == controller && tooltip != null) {
                 if (event.isEntered()) {
-                    event.getFrame().getTooltipLayer().getContainer().add(tooltip);
+                    event.getContext().getFrame().getTooltipLayer().getContainer().add(tooltip);
                     tooltip.setVisible(true);
-                    System.out.println("IN: " + tooltip);
                 } else {
-                    System.out.println("OUT: " + tooltip);
                     tooltip.setVisible(false);
                 }
             }
