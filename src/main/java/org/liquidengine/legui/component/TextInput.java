@@ -289,7 +289,6 @@ public class TextInput extends Controller {
                     textState.deleteCharAt(caretPosition - 1);
                     gui.setCaretPosition(caretPosition - 1);
                 } else if (start != end) {
-                    System.out.println(start + " " + end);
                     textState.delete(start, end);
                     gui.setCaretPosition(start);
                     gui.setStartSelectionIndex(start);
