@@ -14,9 +14,11 @@ import org.liquidengine.legui.event.ScrollEvent;
 import org.liquidengine.legui.input.Mouse;
 import org.liquidengine.legui.intersection.Intersector;
 import org.liquidengine.legui.intersection.RectangleIntersector;
+import org.liquidengine.legui.listener.EventListener;
 import org.liquidengine.legui.listener.MouseClickEventListener;
 import org.liquidengine.legui.listener.MouseDragEventListener;
 import org.liquidengine.legui.listener.ScrollEventListener;
+import org.liquidengine.legui.system.context.Context;
 
 /**
  * Created by Aliaksandr_Shcherbin on 2/6/2017.
@@ -149,6 +151,10 @@ public class Slider extends Controller {
                 .toString();
     }
 
+    public interface SliderChangeEventListener extends EventListener<SliderChangeEvent> {
+        void process(SliderChangeEvent event);
+    }
+
     public static class SliderScrollEventListener implements ScrollEventListener {
 
         private final Slider slider;
@@ -159,15 +165,14 @@ public class Slider extends Controller {
 
         @Override
         public void process(ScrollEvent event) {
-            float maxValue = 100f;
-            float minValue = 0f;
             float curValue = slider.getValue();
-            float newVal   = (float) (curValue + event.getYoffset());
+            float value   = (float) (curValue + event.getYoffset());
 
-            if (newVal > maxValue) newVal = maxValue;
-            if (newVal < minValue) newVal = minValue;
+            if (value > MAX_VALUE) value = MAX_VALUE;
+            if (value < MIN_VALUE) value = MIN_VALUE;
 
-            slider.setValue(newVal);
+            event.getContext().getEventProcessor().pushEvent(new SliderChangeEvent(slider, event.getContext(), slider.getValue(), value));
+            slider.setValue(value);
         }
     }
 
@@ -190,6 +195,9 @@ public class Slider extends Controller {
                 } else {
                     value = 100f * (cursorPosition.x - pos.x - slider.sliderSize / 2f) / (slider.getSize().x - slider.sliderSize);
                 }
+                if (value > MAX_VALUE) value = MAX_VALUE;
+                if (value < MIN_VALUE) value = MIN_VALUE;
+                event.getContext().getEventProcessor().pushEvent(new SliderChangeEvent(slider, event.getContext(), slider.getValue(), value));
                 slider.setValue(value);
             }
         }
@@ -215,7 +223,32 @@ public class Slider extends Controller {
             } else {
                 value = 100f * (cursorPosition.x - pos.x - slider.sliderSize / 2f) / (slider.getSize().x - slider.sliderSize);
             }
+
+            if (value > MAX_VALUE) value = MAX_VALUE;
+            if (value < MIN_VALUE) value = MIN_VALUE;
+
+            event.getContext().getEventProcessor().pushEvent(new SliderChangeEvent(slider, event.getContext(), slider.getValue(), value));
             slider.setValue(value);
+        }
+    }
+
+    public static class SliderChangeEvent extends org.liquidengine.legui.event.AbstractEvent {
+
+        private final float oldValue;
+        private final float newValue;
+
+        public SliderChangeEvent(Component component, Context context, float oldValue, float newValue) {
+            super(component, context);
+            this.oldValue = oldValue;
+            this.newValue = newValue;
+        }
+
+        public float getNewValue() {
+            return newValue;
+        }
+
+        public float getOldValue() {
+            return oldValue;
         }
     }
 }

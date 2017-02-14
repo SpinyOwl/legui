@@ -258,14 +258,14 @@ public class ExampleGui extends Panel {
         scrollablePanel.getContainer().add(scp);
         this.add(scrollablePanel);
 
-//        slider2.getLeguiEventListeners().addListener(SliderChangeEvent.class, (SliderChangeEventListener) event -> {
-//            scrollablePanel.getHorizontalScrollBar().getSize().y = event.getSlider().getValue() / 2f + 10;
-//            scrollablePanel.resize();
-//        });
-//        slider1.getLeguiEventListeners().addListener(SliderChangeEvent.class, (SliderChangeEventListener) event -> {
-//            scrollablePanel.getHorizontalScrollBar().setArrowSize(event.getSlider().getValue() / 4f + 10);
-//            scrollablePanel.resize();
-//        });
+        slider2.getListenerMap().addListener(Slider.SliderChangeEvent.class, (Slider.SliderChangeEventListener) event -> {
+            scrollablePanel.getHorizontalScrollBar().getSize().y = event.getNewValue() / 2f + 10;
+            scrollablePanel.resize();
+        });
+        slider1.getListenerMap().addListener(Slider.SliderChangeEvent.class, (Slider.SliderChangeEventListener) event -> {
+            scrollablePanel.getHorizontalScrollBar().setArrowSize(event.getNewValue() / 4f + 10);
+            scrollablePanel.resize();
+        });
 
         textArea = new TextArea(420, 280, 150, 100);
         textArea.getTextState().setText("ABC DEF GH\r\nI JKL MNO PQR\nSTU VWXYZ");
