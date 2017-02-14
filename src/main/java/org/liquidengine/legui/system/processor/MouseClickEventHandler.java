@@ -53,7 +53,7 @@ public class MouseClickEventHandler implements SystemEventHandler<SystemMouseCli
                 context.getEventProcessor().pushEvent(new FocusEvent(targetComponent, context, targetComponent, true));
             }
             Vector2f position = targetComponent.getScreenPosition().sub(cursorPosition).negate();
-            context.getEventProcessor().pushEvent(new MouseClickEvent(targetComponent, context, MouseClickEvent.PRESS, button, position, cursorPosition));
+            context.getEventProcessor().pushEvent(new MouseClickEvent(targetComponent, context, MouseClickEvent.MouseClickAction.PRESS, button, position, cursorPosition));
         } else {
             button.setReleasePosition(cursorPosition);
             if (focusedGui != null) {
@@ -62,9 +62,9 @@ public class MouseClickEventHandler implements SystemEventHandler<SystemMouseCli
 
             Vector2f position = targetComponent.getScreenPosition().sub(cursorPosition).negate();
             if (focusedGui != null && focusedGui == targetComponent) {
-                context.getEventProcessor().pushEvent(new MouseClickEvent(targetComponent, context, MouseClickEvent.CLICK, button, position, cursorPosition));
+                context.getEventProcessor().pushEvent(new MouseClickEvent(targetComponent, context, MouseClickEvent.MouseClickAction.CLICK, button, position, cursorPosition));
             }
-            context.getEventProcessor().pushEvent(new MouseClickEvent(targetComponent, context, MouseClickEvent.RELEASE, button, position, cursorPosition));
+            context.getEventProcessor().pushEvent(new MouseClickEvent(targetComponent, context, MouseClickEvent.MouseClickAction.RELEASE, button, position, cursorPosition));
         }
         pushWidgetsUp(targetComponent);
     }

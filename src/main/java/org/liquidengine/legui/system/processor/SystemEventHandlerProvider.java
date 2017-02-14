@@ -22,6 +22,7 @@ public class SystemEventHandlerProvider {
         registerProcessor(SystemCursorPosEvent.class, new CursorPosEventHandler());
         registerProcessor(SystemMouseClickEvent.class, new MouseClickEventHandler());
         registerProcessor(SystemKeyEvent.class, new KeyEventHandler());
+        registerProcessor(SystemCharEvent.class, new CharEventHandler());
 
     }
 

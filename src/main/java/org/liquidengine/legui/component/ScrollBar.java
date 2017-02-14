@@ -293,7 +293,7 @@ public class ScrollBar extends Controller {
 
         @Override
         public void process(MouseClickEvent event) {
-            boolean released = event.getAction() != MouseClickEvent.PRESS;
+            boolean released = event.getAction() != MouseClickEvent.MouseClickAction.PRESS;
             if (!event.getButton().equals(MOUSE_BUTTON_LEFT)) return;
 
             Vector2f pos            = scrollBar.getScreenPosition();

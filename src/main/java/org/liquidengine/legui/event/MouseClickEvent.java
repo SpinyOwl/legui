@@ -3,7 +3,6 @@ package org.liquidengine.legui.event;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.joml.Vector2f;
 import org.liquidengine.legui.component.Component;
-import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.input.Mouse;
 import org.liquidengine.legui.system.context.Context;
 
@@ -11,16 +10,13 @@ import org.liquidengine.legui.system.context.Context;
  * Created by Aliaksandr_Shcherbin on 2/10/2017.
  */
 public class MouseClickEvent extends AbstractEvent {
-    public static final int PRESS   = 0;
-    public static final int CLICK   = 1;
-    public static final int RELEASE = 2;
 
-    private final int               action;
+    private final MouseClickAction  action;
     private final Mouse.MouseButton button;
     private final Vector2f          position;
     private final Vector2f          absolutePosition;
 
-    public MouseClickEvent(Component controller, Context context, int action, Mouse.MouseButton button, Vector2f position, Vector2f absolutePosition) {
+    public MouseClickEvent(Component controller, Context context, MouseClickAction action, Mouse.MouseButton button, Vector2f position, Vector2f absolutePosition) {
         super(controller, context);
         this.action = action;
         this.button = button;
@@ -38,7 +34,7 @@ public class MouseClickEvent extends AbstractEvent {
                 .toString();
     }
 
-    public int getAction() {
+    public MouseClickAction getAction() {
         return action;
     }
 
@@ -52,5 +48,11 @@ public class MouseClickEvent extends AbstractEvent {
 
     public Vector2f getAbsolutePosition() {
         return absolutePosition;
+    }
+
+    public static enum MouseClickAction {
+        PRESS,
+        CLICK,
+        RELEASE,;
     }
 }

@@ -2,8 +2,11 @@ package org.liquidengine.legui.example;
 
 import org.joml.Vector4f;
 import org.liquidengine.legui.border.SimpleLineBorder;
+import org.liquidengine.legui.color.ColorConstants;
 import org.liquidengine.legui.component.*;
 import org.liquidengine.legui.component.optional.Orientation;
+import org.liquidengine.legui.component.optional.align.HorizontalAlign;
+import org.liquidengine.legui.component.optional.align.VerticalAlign;
 import org.liquidengine.legui.event.CursorEnterEvent;
 import org.liquidengine.legui.event.FocusEvent;
 import org.liquidengine.legui.event.KeyEvent;
@@ -14,18 +17,12 @@ import org.liquidengine.legui.listener.CursorEnterEventListener;
 import org.liquidengine.legui.listener.FocusEventListener;
 import org.liquidengine.legui.listener.KeyEventListener;
 import org.liquidengine.legui.listener.MouseClickEventListener;
-import org.liquidengine.legui.color.ColorConstants;
 import org.liquidengine.legui.util.TextUtil;
 import org.lwjgl.glfw.GLFW;
 
-import static org.liquidengine.legui.component.optional.align.HorizontalAlign.CENTER;
-import static org.liquidengine.legui.component.optional.align.HorizontalAlign.LEFT;
-import static org.liquidengine.legui.component.optional.align.HorizontalAlign.RIGHT;
-import static org.liquidengine.legui.component.optional.align.VerticalAlign.BOTTOM;
-import static org.liquidengine.legui.component.optional.align.VerticalAlign.MIDDLE;
-import static org.liquidengine.legui.event.MouseClickEvent.CLICK;
-import static org.liquidengine.legui.event.MouseClickEvent.PRESS;
-import static org.liquidengine.legui.event.MouseClickEvent.RELEASE;
+import static org.liquidengine.legui.component.optional.align.HorizontalAlign.*;
+import static org.liquidengine.legui.component.optional.align.VerticalAlign.*;
+import static org.liquidengine.legui.event.MouseClickEvent.MouseClickAction.*;
 
 
 /**
@@ -54,33 +51,22 @@ public class ExampleGui extends Panel {
         Panel p7 = new Panel(7 * 20, 10, 10, 10); this.add(p7); p7.getListenerMap().addListener(FocusEvent.class, (FocusEventListener)System.out::println);
         Panel p8 = new Panel(8 * 20, 10, 10, 10); this.add(p8); p8.getListenerMap().addListener(FocusEvent.class, (FocusEventListener)System.out::println);
         Panel p9 = new Panel(9 * 20, 10, 10, 10); this.add(p9); p9.getListenerMap().addListener(FocusEvent.class, (FocusEventListener)System.out::println);
-        //@formatter:on
 
 
-        mouseTargetLabel = new Label("Hello Label 1", 10, height - 30, width - 20, 20);
-        this.add(mouseTargetLabel);
+        mouseTargetLabel = new Label("Hello Label 1", 10, height - 30, width - 20, 20); this.add(mouseTargetLabel);
 
         focusedGuiLabel = new Label("Hello Label 2", 10, height - 50, width - 20, 20);
-        focusedGuiLabel.setBorder(new SimpleLineBorder(ColorConstants.red(), 1));
-        this.add(focusedGuiLabel);
+        focusedGuiLabel.setBorder(new SimpleLineBorder(ColorConstants.red(), 1)); this.add(focusedGuiLabel);
 
-        debugLabel = new Label("Debug Label", 10, height - 75, width - 20, 20);
-        this.add(debugLabel);
+        debugLabel = new Label("Debug Label", 10, height - 75, width - 20, 20); this.add(debugLabel);
 
-        mouseLabel = new Label("Hello Label 3", 130, 30, 100, 20);
-        this.add(mouseLabel);
+        mouseLabel = new Label("Hello Label 3", 130, 30, 100, 20); this.add(mouseLabel);
 
-        upsLabel = new Label("Hello Label 4", 130, 60, 100, 20);
-        this.add(upsLabel);
+        upsLabel = new Label("Hello Label 4", 130, 60, 100, 20); this.add(upsLabel);
 
-        imageView = new ImageView(new Image("org/liquidengine/legui/example/1.jpg"));
-        imageView.setPosition(20, 30);
-        imageView.setSize(100, 100);
-        this.add(imageView);
+        imageView = new ImageView(new Image("org/liquidengine/legui/example/1.jpg")); imageView.setPosition(20, 30); imageView.setSize(100, 100); this.add(imageView);
 
-        Button button = new Button(20, 170, 50, 20);
-        button.setBackgroundColor(new Vector4f(1));
-        this.add(button);
+        Button button = new Button(20, 170, 50, 20); button.setBackgroundColor(new Vector4f(1)); this.add(button);
         button.getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> System.out.println(event));
 
         button.setTooltip("Just button");
@@ -91,57 +77,43 @@ public class ExampleGui extends Panel {
         button.getTooltip().getTextState().setPadding(4, 4, 4, 4);
 
         int idv[] = {0};
-//        button.getLeguiEventListeners().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
-//            if (event.getAction().equals(CLICK)) {
-//                idv[0]++;
-//                HorizontalAlign h = LEFT;
-//                VerticalAlign   v = TOP;
-//                int             hh = idv[0] % 3;
-//                int             vv = (idv[0] / 3) % 3;
-//                switch (hh){
-//                    case 0: h = LEFT; break;
-//                    case 1: h = CENTER; break;
-//                    case 2: h = RIGHT; break;
-//                }
-//                switch (vv){
-//                    case 0: v = TOP; break;
-//                    case 1: v = MIDDLE; break;
-//                    case 2: v = BOTTOM; break;
-//                }
-//                System.out.println(h + " " + v);
-//                button.getTooltip().getTextState().setHorizontalAlign(h);
-//                button.getTooltip().getTextState().setVerticalAlign(v);
-//            }
-//        });
+        button.getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
+            if (event.getAction().equals(CLICK)) {
+                idv[0]++;
+                HorizontalAlign h  = LEFT;
+                VerticalAlign   v  = TOP;
+                int             hh = idv[0] % 3;
+                int             vv = (idv[0] / 3) % 3;
+                switch (hh){
+                    case 0: h = LEFT; break;
+                    case 1: h = CENTER; break;
+                    case 2: h = RIGHT; break;
+                }
+                switch (vv){
+                    case 0: v = TOP; break;
+                    case 1: v = MIDDLE; break;
+                    case 2: v = BOTTOM; break;
+                }
+                System.out.println(h + " " + v);
+                button.getTooltip().getTextState().setHorizontalAlign(h);
+                button.getTooltip().getTextState().setVerticalAlign(v);
+            }
+        });
 
-        CheckBox checkBox1 = new CheckBox(20, 200, 50, 20);
-        this.add(checkBox1);
+        CheckBox checkBox1 = new CheckBox(20, 200, 50, 20); this.add(checkBox1);
+        CheckBox checkBox2 = new CheckBox(20, 230, 50, 20); checkBox2.setBackgroundColor(new Vector4f(1)); checkBox2.setChecked(true); this.add(checkBox2);
 
-        CheckBox checkBox2 = new CheckBox(20, 230, 50, 20);
-        checkBox2.setBackgroundColor(new Vector4f(1));
-        checkBox2.setChecked(true);
-        this.add(checkBox2);
-
-        ProgressBar progressBar = new ProgressBar(250, 10, 100, 10);
-        progressBar.setValue(50);
-        this.add(progressBar);
+        ProgressBar progressBar = new ProgressBar(250, 10, 100, 10); progressBar.setValue(50); this.add(progressBar);
 
         RadioButtonGroup radioButtonGroup = new RadioButtonGroup();
-        RadioButton      radioButton1     = new RadioButton(250, 30, 100, 20);
-        this.add(radioButton1);
-        radioButton1.setSelected(true);
-        radioButton1.setRadioButtonGroup(radioButtonGroup);
-        RadioButton radioButton2 = new RadioButton(250, 60, 100, 20);
-        this.add(radioButton2);
-        radioButton2.setSelected(false);
-        radioButton2.setRadioButtonGroup(radioButtonGroup);
+        RadioButton      radioButton1     = new RadioButton(250, 30, 100, 20); this.add(radioButton1);
+        radioButton1.setSelected(true); radioButton1.setRadioButtonGroup(radioButtonGroup);
+        RadioButton radioButton2 = new RadioButton(250, 60, 100, 20); this.add(radioButton2);
+        radioButton2.setSelected(false); radioButton2.setRadioButtonGroup(radioButtonGroup);
 
-        Slider slider1 = new Slider(250, 90, 100, 20, 30);
-        this.add(slider1);
+        Slider slider1 = new Slider(250, 90, 100, 20, 30); this.add(slider1);
 
-        Slider slider2 = new Slider(220, 90, 20, 100, 50);
-        slider2.setOrientation(Orientation.VERTICAL);
-        this.add(slider2);
+        Slider slider2 = new Slider(220, 90, 20, 100, 50); slider2.setOrientation(Orientation.VERTICAL); this.add(slider2);
 
         textInput = new TextInput(250, 130, 100, 30);
         textInput.getTextState().setHorizontalAlign(RIGHT);
@@ -163,33 +135,17 @@ public class ExampleGui extends Panel {
         turnWidVisible.getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
         if (CLICK == (event.getAction())) widget.setVisible(true);
         });
-        ImageView bgIm  = new ImageView(new Image("org/liquidengine/legui/example/1.png"));
-        ImageView hbgIm = new ImageView(new Image("org/liquidengine/legui/example/2.png"));
-        ImageView pbIm  = new ImageView(new Image("org/liquidengine/legui/example/3.png"));
-        bgIm.setSize(20, 20);
-        hbgIm.setSize(20, 20);
-        pbIm.setSize(20, 20);
-        turnWidVisible.setBackgroundImage(bgIm);
-        turnWidVisible.setHoveredBackgroundImage(hbgIm);
-        turnWidVisible.setPressedBackgroundImage(pbIm);
+        ImageView bgIm  = new ImageView(new Image("org/liquidengine/legui/example/1.png")); bgIm.setSize(20, 20); turnWidVisible.setBackgroundImage(bgIm);
+        ImageView hbgIm = new ImageView(new Image("org/liquidengine/legui/example/2.png")); hbgIm.setSize(20, 20); turnWidVisible.setHoveredBackgroundImage(hbgIm);
+        ImageView pbIm  = new ImageView(new Image("org/liquidengine/legui/example/3.png")); pbIm.setSize(20, 20); turnWidVisible.setPressedBackgroundImage(pbIm);
+
         this.add(turnWidVisible);
 
-        Panel c0 = new Panel(-5, -5, 10, 10);
-        c0.setBackgroundColor(1, 0, 0, 1);
-        widget.getContainer().add(c0);
-        Panel c1 = new Panel(-5, 75, 10, 10);
-        c1.setBackgroundColor(1, 0, 0, 1);
-        widget.getContainer().add(c1);
-        Panel c2 = new Panel(95, -5, 10, 10);
-        c2.setBackgroundColor(1, 0, 0, 1);
-        widget.getContainer().add(c2);
-        c2.setVisible(false);
-        Panel c3 = new Panel(95, 75, 10, 10);
-        c3.setBackgroundColor(1, 0, 0, 1);
-        widget.getContainer().add(c3);
-        Panel c4 = new Panel(45, 35, 10, 10);
-        c4.setBackgroundColor(1, 0, 0, 1);
-        widget.getContainer().add(c4);
+        Panel c0 = new Panel(-5, -5, 10, 10); c0.setBackgroundColor(1, 0, 0, 1); widget.getContainer().add(c0);
+        Panel c1 = new Panel(-5, 75, 10, 10); c1.setBackgroundColor(1, 0, 0, 1); widget.getContainer().add(c1);
+        Panel c2 = new Panel(95, -5, 10, 10); c2.setBackgroundColor(1, 0, 0, 1); widget.getContainer().add(c2); c2.setVisible(false);
+        Panel c3 = new Panel(95, 75, 10, 10); c3.setBackgroundColor(1, 0, 0, 1); widget.getContainer().add(c3);
+        Panel c4 = new Panel(45, 35, 10, 10); c4.setBackgroundColor(1, 0, 0, 1); widget.getContainer().add(c4);
         this.add(widget);
 
         Widget widget2 = new Widget("Hello 2 widget", 250, 310, 100, 100);
@@ -278,15 +234,11 @@ public class ExampleGui extends Panel {
         scrollBar2.setArrowColor(ColorConstants.white());
         this.add(scrollBar2);
 
-        Panel panel1 = new Panel(420, 170, 100, 100);
-        panel1.setBackgroundColor(ColorConstants.blue());
-        this.add(panel1);
-        Panel panel2 = new Panel(470, 170, 100, 100);
-        panel2.setBackgroundColor(ColorConstants.green());
-        this.add(panel2);
+        Panel panel1 = new Panel(420, 170, 100, 100); panel1.setBackgroundColor(ColorConstants.blue()); this.add(panel1);
+        Panel panel2 = new Panel(470, 170, 100, 100); panel2.setBackgroundColor(ColorConstants.green()); this.add(panel2);
 
         button.getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
-            int action = event.getAction();
+            MouseClickEvent.MouseClickAction action = event.getAction();
             if (CLICK == action) mouseTargetLabel.setVisible(!mouseTargetLabel.isVisible());
             if (RELEASE == action) System.out.println("RELEASE");
             if (PRESS == action) System.out.println("PRESS");
@@ -322,22 +274,22 @@ public class ExampleGui extends Panel {
         textArea.getTextState().setVerticalAlign(BOTTOM);
         this.add(textArea);
 
-//        textArea.getLeguiEventListeners().addListener(KeyboardKeyEvent.class, (KeyboardKeyEventListener) event -> {
-//            if (event.getKey() == GLFW.GLFW_KEY_F1 && event.getAction() == GLFW.GLFW_RELEASE)
-//                textArea.getTextState().setHorizontalAlign(LEFT);
-//            else if (event.getKey() == GLFW.GLFW_KEY_F2 && event.getAction() == GLFW.GLFW_RELEASE)
-//                textArea.getTextState().setHorizontalAlign(CENTER);
-//            else if (event.getKey() == GLFW.GLFW_KEY_F3 && event.getAction() == GLFW.GLFW_RELEASE)
-//                textArea.getTextState().setHorizontalAlign(RIGHT);
-//            else if (event.getKey() == GLFW.GLFW_KEY_F5 && event.getAction() == GLFW.GLFW_RELEASE)
-//                textArea.getTextState().setVerticalAlign(TOP);
-//            else if (event.getKey() == GLFW.GLFW_KEY_F6 && event.getAction() == GLFW.GLFW_RELEASE)
-//                textArea.getTextState().setVerticalAlign(MIDDLE);
-//            else if (event.getKey() == GLFW.GLFW_KEY_F7 && event.getAction() == GLFW.GLFW_RELEASE)
-//                textArea.getTextState().setVerticalAlign(BOTTOM);
-//            else if (event.getKey() == GLFW.GLFW_KEY_F8 && event.getAction() == GLFW.GLFW_RELEASE)
-//                textArea.getTextState().setVerticalAlign(VerticalAlign.BASELINE);
-//        });
+        textArea.getListenerMap().addListener(KeyEvent.class, (KeyEventListener) event -> {
+            if (event.getKey() == GLFW.GLFW_KEY_F1 && event.getAction() == GLFW.GLFW_RELEASE)
+                textArea.getTextState().setHorizontalAlign(LEFT);
+            else if (event.getKey() == GLFW.GLFW_KEY_F2 && event.getAction() == GLFW.GLFW_RELEASE)
+                textArea.getTextState().setHorizontalAlign(CENTER);
+            else if (event.getKey() == GLFW.GLFW_KEY_F3 && event.getAction() == GLFW.GLFW_RELEASE)
+                textArea.getTextState().setHorizontalAlign(RIGHT);
+            else if (event.getKey() == GLFW.GLFW_KEY_F5 && event.getAction() == GLFW.GLFW_RELEASE)
+                textArea.getTextState().setVerticalAlign(TOP);
+            else if (event.getKey() == GLFW.GLFW_KEY_F6 && event.getAction() == GLFW.GLFW_RELEASE)
+                textArea.getTextState().setVerticalAlign(MIDDLE);
+            else if (event.getKey() == GLFW.GLFW_KEY_F7 && event.getAction() == GLFW.GLFW_RELEASE)
+                textArea.getTextState().setVerticalAlign(BOTTOM);
+            else if (event.getKey() == GLFW.GLFW_KEY_F8 && event.getAction() == GLFW.GLFW_RELEASE)
+                textArea.getTextState().setVerticalAlign(VerticalAlign.BASELINE);
+        });
 
         caretp = new TextInput(420, 400, 150, 20);
         caretp.getTextState().setHorizontalAlign(CENTER);
@@ -404,39 +356,33 @@ public class ExampleGui extends Panel {
         toggleButton.getTooltip().getTextState().setPadding(4, 4, 4, 4);
 
         int id[] = {0};
-//        toggleButton.getLeguiEventListeners().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
-//            if (event.getAction().equals(CLICK)) {
-//                id[0]++;
-//                HorizontalAlign h = LEFT;
-//                VerticalAlign   v = TOP;
-//                int             hh = id[0] % 3;
-//                int             vv = (id[0] / 3) % 3;
-//                switch (hh){
-//                    case 0: h = LEFT; break;
-//                    case 1: h = CENTER; break;
-//                    case 2: h = RIGHT; break;
-//                }
-//                switch (vv){
-//                    case 0: v = TOP; break;
-//                    case 1: v = MIDDLE; break;
-//                    case 2: v = BOTTOM; break;
-//                }
-//                System.out.println(h + " " + v);
-//                toggleButton.getTooltip().getTextState().setHorizontalAlign(h);
-//                toggleButton.getTooltip().getTextState().setVerticalAlign(v);
-//
-//            }
-//        });
+        toggleButton.getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
+            if (event.getAction().equals(CLICK)) {
+                id[0]++;
+                HorizontalAlign h = LEFT;
+                VerticalAlign   v = TOP;
+                int             hh = id[0] % 3;
+                int             vv = (id[0] / 3) % 3;
+                switch (hh){
+                    case 0: h = LEFT; break;
+                    case 1: h = CENTER; break;
+                    case 2: h = RIGHT; break;
+                }
+                switch (vv){
+                    case 0: v = TOP; break;
+                    case 1: v = MIDDLE; break;
+                    case 2: v = BOTTOM; break;
+                }
+                System.out.println(h + " " + v);
+                toggleButton.getTooltip().getTextState().setHorizontalAlign(h);
+                toggleButton.getTooltip().getTextState().setVerticalAlign(v);
 
-        bgImageNormal.setSize(36, 36);
-        bgImageToggled.setSize(36, 36);
+            }
+        });
 
-        bgImageNormal.setPosition(2, 2);
-        bgImageToggled.setPosition(2, 2);
-
-        toggleButton.setBackgroundImage(bgImageNormal);
-        toggleButton.setTogglededBackgroundImage(bgImageToggled);
-
+        bgImageNormal.setSize(36, 36); bgImageNormal.setPosition(2, 2); toggleButton.setBackgroundImage(bgImageNormal);
+        bgImageToggled.setSize(36, 36); bgImageToggled.setPosition(2, 2); toggleButton.setTogglededBackgroundImage(bgImageToggled);
+        //@formatter:on
     }
 
     public TextArea getTextArea() {

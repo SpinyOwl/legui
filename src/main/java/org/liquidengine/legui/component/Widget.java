@@ -10,7 +10,7 @@ import org.liquidengine.legui.listener.MouseClickEventListener;
 import org.liquidengine.legui.listener.MouseDragEventListener;
 import org.liquidengine.legui.color.ColorConstants;
 
-import static org.liquidengine.legui.event.MouseClickEvent.CLICK;
+import static org.liquidengine.legui.event.MouseClickEvent.MouseClickAction.CLICK;
 import static org.liquidengine.legui.util.TextUtil.cpToStr;
 
 /**

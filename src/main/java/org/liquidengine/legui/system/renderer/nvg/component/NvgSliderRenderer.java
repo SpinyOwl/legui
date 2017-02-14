@@ -65,8 +65,8 @@ public class NvgSliderRenderer extends NvgComponentRenderer<Slider> {
             nvgStrokeWidth(context, sliderWidth);
             nvgStrokeColor(context, rgba(sliderInactiveColor, colorA));
             nvgBeginPath(context);
-            nvgMoveTo(context, lx + 0.5f, by + 0.5f);
-            nvgLineTo(context, rx - 0.5f, ty - 0.5f);
+            nvgMoveTo(context, lx, by);
+            nvgLineTo(context, rx, ty);
             nvgStroke(context);
 
             // draw active part
@@ -75,8 +75,8 @@ public class NvgSliderRenderer extends NvgComponentRenderer<Slider> {
             nvgStrokeWidth(context, sliderWidth);
             nvgStrokeColor(context, rgba(sliderColor, colorA));
             nvgBeginPath(context);
-            nvgMoveTo(context, lx + 0.5f, by + 0.5f);
-            nvgLineTo(context, px - 0.5f, py - 0.5f);
+            nvgMoveTo(context, lx, by);
+            nvgLineTo(context, px, py);
             nvgStroke(context);
 
             // draw slider button
