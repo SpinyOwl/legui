@@ -6,12 +6,18 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.joml.Vector4f;
 import org.liquidengine.legui.color.ColorConstants;
 import org.liquidengine.legui.component.optional.TextState;
+import org.liquidengine.legui.event.CharEvent;
 import org.liquidengine.legui.event.KeyEvent;
+import org.liquidengine.legui.event.MouseClickEvent;
+import org.liquidengine.legui.event.MouseDragEvent;
+import org.liquidengine.legui.listener.CharEventListener;
 import org.liquidengine.legui.listener.KeyEventListener;
+import org.liquidengine.legui.listener.MouseClickEventListener;
+import org.liquidengine.legui.listener.MouseDragEventListener;
 import org.liquidengine.legui.system.context.Context;
 
-import static org.liquidengine.legui.util.TextUtil.findNextWord;
-import static org.liquidengine.legui.util.TextUtil.findPrevWord;
+import static org.liquidengine.legui.input.Mouse.MouseButton.MOUSE_BUTTON_LEFT;
+import static org.liquidengine.legui.util.TextUtil.*;
 import static org.lwjgl.glfw.GLFW.*;
 
 /**
@@ -28,6 +34,10 @@ public class TextInput extends Controller {
 
     protected Vector4f selectionColor = ColorConstants.lightBlue();
     protected boolean  editable       = true;
+    private TextInputKeyEventListener        keyEventListener;
+    private TextInputMouseClickEventListener mouseClickEventListener;
+    private TextInputDragEventListener       dragEventListener;
+    private TextInputCharEventListener       charEventListener;
 
     public TextInput() {
         initialize("TextInput");
@@ -58,7 +68,16 @@ public class TextInput extends Controller {
     private void initialize(String text) {
         textState = new TextState(text);
         textState.getPadding().set(5, 1, 5, 1);
-        getListenerMap().addListener(KeyEvent.class, new TextInputKeyEventListener(this));
+
+        keyEventListener = new TextInputKeyEventListener(this);
+        mouseClickEventListener = new TextInputMouseClickEventListener(this);
+        dragEventListener = new TextInputDragEventListener(this);
+        charEventListener = new TextInputCharEventListener(this);
+
+        getListenerMap().addListener(KeyEvent.class, keyEventListener);
+        getListenerMap().addListener(MouseClickEvent.class, mouseClickEventListener);
+        getListenerMap().addListener(MouseDragEvent.class, dragEventListener);
+        getListenerMap().addListener(CharEvent.class, charEventListener);
     }
 
     public boolean isEditable() {
@@ -246,7 +265,7 @@ public class TextInput extends Controller {
                 }
                 if (start == end && caretPosition != textState.length()) {
                     textState.deleteCharAt(caretPosition);
-                } else {
+                } else if (start != end) {
                     textState.delete(start, end);
                     gui.setCaretPosition(start);
                     gui.setStartSelectionIndex(start);
@@ -266,16 +285,17 @@ public class TextInput extends Controller {
                     start = gui.getEndSelectionIndex();
                     end = gui.getStartSelectionIndex();
                 }
-
                 if (start == end && caretPosition != 0) {
                     textState.deleteCharAt(caretPosition - 1);
                     gui.setCaretPosition(caretPosition - 1);
-                } else {
+                } else if (start != end) {
+                    System.out.println(start + " " + end);
                     textState.delete(start, end);
                     gui.setCaretPosition(start);
                     gui.setStartSelectionIndex(start);
                     gui.setEndSelectionIndex(start);
                 }
+
             }
         }
 
@@ -327,6 +347,76 @@ public class TextInput extends Controller {
                     gui.setStartSelectionIndex(newCaretPosition);
                 }
                 gui.setCaretPosition(newCaretPosition);
+            }
+        }
+    }
+
+    public static class TextInputMouseClickEventListener implements MouseClickEventListener {
+        private final TextInput gui;
+
+        public TextInputMouseClickEventListener(TextInput gui) {
+            this.gui = gui;
+        }
+
+        @Override
+        public void process(MouseClickEvent event) {
+            int mouseCaretPosition = gui.getMouseCaretPosition();
+            if (event.getAction() == MouseClickEvent.MouseClickAction.PRESS) {
+                gui.setCaretPosition(mouseCaretPosition);
+                gui.setStartSelectionIndex(mouseCaretPosition);
+                gui.setEndSelectionIndex(mouseCaretPosition);
+            }
+        }
+    }
+
+    public static class TextInputDragEventListener implements MouseDragEventListener {
+        private final TextInput textInput;
+
+        public TextInputDragEventListener(TextInput textInput) {
+            this.textInput = textInput;
+        }
+
+        @Override
+        public void process(MouseDragEvent event) {
+            if (MOUSE_BUTTON_LEFT.isPressed()) {
+                int mouseCaretPosition = textInput.getMouseCaretPosition();
+                textInput.setCaretPosition(mouseCaretPosition);
+                textInput.setEndSelectionIndex(mouseCaretPosition);
+            }
+        }
+    }
+
+    public static class TextInputCharEventListener implements CharEventListener {
+
+        private final TextInput textInput;
+
+        public TextInputCharEventListener(TextInput textInput) {
+            this.textInput = textInput;
+        }
+
+        @Override
+        public void process(CharEvent event) {
+            if (textInput.isFocused() && textInput.isEditable() && !MOUSE_BUTTON_LEFT.isPressed()) {
+                String    str       = cpToStr(event.getCodepoint());
+                TextState textState = textInput.getTextState();
+                int       start     = textInput.getStartSelectionIndex();
+                int       end       = textInput.getEndSelectionIndex();
+                if (start > end) {
+                    start = textInput.getEndSelectionIndex();
+                    end = textInput.getStartSelectionIndex();
+                }
+                if (start != end) {
+                    textState.delete(start, end);
+                    textInput.setCaretPosition(start);
+                    textInput.setStartSelectionIndex(start);
+                    textInput.setEndSelectionIndex(start);
+                }
+                int caretPosition = textInput.getCaretPosition();
+                textState.insert(caretPosition, str);
+                int newCaretPosition = caretPosition + str.length();
+                textInput.setCaretPosition(newCaretPosition);
+                textInput.setEndSelectionIndex(newCaretPosition);
+                textInput.setStartSelectionIndex(newCaretPosition);
             }
         }
     }

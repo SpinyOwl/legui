@@ -8,7 +8,7 @@ import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.listener.MouseClickEventListener;
 
-import static org.liquidengine.legui.event.MouseClickEvent.CLICK;
+import static org.liquidengine.legui.event.MouseClickEvent.MouseClickAction.CLICK;
 
 /**
  * Created by Aliaksandr_Shcherbin on 2/6/2017.

@@ -10,7 +10,7 @@ import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.listener.MouseClickEventListener;
 
-import static org.liquidengine.legui.event.MouseClickEvent.CLICK;
+import static org.liquidengine.legui.event.MouseClickEvent.MouseClickAction.CLICK;
 
 /**
  * An implementation of a check box -- an item that can be selected or
@@ -26,7 +26,8 @@ public class CheckBox extends Controller {
     /**
      * Checkbox state.
      */
-    protected boolean checked;
+    protected boolean                 checked;
+    private   MouseClickEventListener mouseClickEventListener;
 
     /**
      * Default constructor which initialize checkbox with "CheckBox" text.
@@ -105,11 +106,9 @@ public class CheckBox extends Controller {
         this.textState = new TextState(text);
         setBackgroundColor(ColorConstants.transparent());
         setBorder(null);
-        getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
-            if (event.getAction() == CLICK) {
-                setChecked(!isChecked());
-            }
-        });
+
+        mouseClickEventListener = new CheckBoxMouseClickEventListener(this);
+        getListenerMap().addListener(MouseClickEvent.class, mouseClickEventListener);
     }
 
     /**
@@ -184,5 +183,21 @@ public class CheckBox extends Controller {
                 .append("textState", textState)
                 .append("checked", checked)
                 .toString();
+    }
+
+    public static class CheckBoxMouseClickEventListener implements MouseClickEventListener {
+
+        private final CheckBox checkBox;
+
+        public CheckBoxMouseClickEventListener(CheckBox checkBox) {
+            this.checkBox = checkBox;
+        }
+
+        @Override
+        public void process(MouseClickEvent event) {
+            if (event.getAction() == CLICK) {
+                checkBox.setChecked(!checkBox.isChecked());
+            }
+        }
     }
 }

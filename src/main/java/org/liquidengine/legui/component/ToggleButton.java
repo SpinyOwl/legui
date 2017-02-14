@@ -179,7 +179,7 @@ public class ToggleButton extends Button {
 
         @Override
         public void process(MouseClickEvent event) {
-            if (event.getAction() == MouseClickEvent.CLICK) {
+            if (event.getAction() == MouseClickEvent.MouseClickAction.CLICK) {
                 button.setToggled(!button.isToggled());
             }
         }

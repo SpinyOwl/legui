@@ -180,7 +180,7 @@ public class Slider extends Controller {
 
         @Override
         public void process(MouseClickEvent event) {
-            if (event.getButton().equals(Mouse.MouseButton.MOUSE_BUTTON_LEFT) && event.getAction() == MouseClickEvent.PRESS) {
+            if (event.getButton().equals(Mouse.MouseButton.MOUSE_BUTTON_LEFT) && event.getAction() == MouseClickEvent.MouseClickAction.PRESS) {
                 Vector2f pos = slider.getScreenPosition();
 
                 Vector2f cursorPosition = Mouse.getCursorPosition();

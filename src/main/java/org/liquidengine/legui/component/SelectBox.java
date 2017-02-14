@@ -21,7 +21,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-import static org.liquidengine.legui.event.MouseClickEvent.CLICK;
+import static org.liquidengine.legui.event.MouseClickEvent.MouseClickAction.CLICK;
 import static org.liquidengine.legui.util.TextUtil.cpToStr;
 
 /**
