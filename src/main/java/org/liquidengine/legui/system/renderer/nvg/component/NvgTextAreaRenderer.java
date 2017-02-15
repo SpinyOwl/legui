@@ -54,7 +54,7 @@ public class NvgTextAreaRenderer extends NvgComponentRenderer<TextArea> {
             Vector4f  intersectRect = new Vector4f(pos.x + p.x, pos.y + p.y, size.x - p.x - p.z, size.y - p.y - p.w);
 
             intersectScissor(context, new Vector4f(intersectRect).sub(1, 1, -2, -2));
-            renderTextNew(leguiContext, context, component, pos, size, intersectRect, bc);
+            renderTextNew(leguiContext, context, component, size, intersectRect, bc);
         }
         resetScissor(context);
 
@@ -65,7 +65,7 @@ public class NvgTextAreaRenderer extends NvgComponentRenderer<TextArea> {
         resetScissor(context);
     }
 
-    private void renderTextNew(Context leguiContext, long context, TextArea gui, Vector2f pos, Vector2f size, Vector4f rect, Vector4f bc) {
+    private void renderTextNew(Context leguiContext, long context, TextArea gui, Vector2f size, Vector4f rect, Vector4f bc) {
         TextState           textState      = gui.getTextState();
         String              text           = textState.getText();
         String              font           = textState.getFont();
@@ -103,15 +103,15 @@ public class NvgTextAreaRenderer extends NvgComponentRenderer<TextArea> {
 
         int   vp             = valign == VerticalAlign.TOP ? 0 : valign == VerticalAlign.MIDDLE ? 1 : valign == VerticalAlign.BOTTOM ? 2 : 1;
         float voffset        = (lineCount - 1) * fontSize * vp * -0.5f + (valign == VerticalAlign.BASELINE ? fontSize / 4f : 0);
-        float caretx         = 0;
+        float caretx;
         float mouseCaretX    = 0;
         int   mouseLineIndex = 0;
 
         int      mouseCaretPositionInLine = 0;
-        Vector2f cursorPosition     = Mouse.getCursorPosition();
-        float    mouseX             = cursorPosition.x;
-        float    mouseY             = cursorPosition.y;
-        float    rat                = size.y * size.x;
+        Vector2f cursorPosition           = Mouse.getCursorPosition();
+        float    mouseX                   = cursorPosition.x;
+        float    mouseY                   = cursorPosition.y;
+        float    rat                      = size.y * size.x;
 
         preinitializeTextRendering(context, font, fontSize, halign, valign, textColor);
 
@@ -187,7 +187,7 @@ public class NvgTextAreaRenderer extends NvgComponentRenderer<TextArea> {
                         } else if (mx >= glyphs.get(ng - 1).maxx()) {
                             mouseCaretPositionInLine = ng;
                             mouseCaretX = glyphs.get(ng - 1).maxx();
-                        } else if (!leguiContext.isIconified()) {
+                        } else {
                             // binary search mouse caret position
                             int     upper = ng;
                             int     lower = 0;
@@ -274,10 +274,10 @@ public class NvgTextAreaRenderer extends NvgComponentRenderer<TextArea> {
                 startSelectionIndex = startSelectionIndex - endSelectionIndex;
             }
             if (startSelectionIndex != endSelectionIndex) {
-                int startSelectionLine        = 0;
-                int startSelectionIndexInLine = 0;
-                int endSelectionLine          = 0;
-                int endSelectionIndexInLine   = 0;
+                int startSelectionLine = 0;
+                int startSelectionIndexInLine;
+                int endSelectionLine   = 0;
+                int endSelectionIndexInLine;
                 for (int i = 0; i < lineCount; i++) {
                     if (startSelectionIndex > lineStartIndeces[i]) {
                         startSelectionLine = i;

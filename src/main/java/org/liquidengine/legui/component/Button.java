@@ -28,7 +28,7 @@ public class Button extends Controller {
     /**
      * Background image for focused state.
      */
-    private ImageView focusedBbackgroundImage;
+    private ImageView focusedBackgroundImage;
 
     /**
      * Background image for pressed state.
@@ -147,17 +147,17 @@ public class Button extends Controller {
      *
      * @return focused background image
      */
-    public ImageView getFocusedBbackgroundImage() {
-        return focusedBbackgroundImage;
+    public ImageView getFocusedBackgroundImage() {
+        return focusedBackgroundImage;
     }
 
     /**
      * Used to change focused background image
      *
-     * @param focusedBbackgroundImage focused background image
+     * @param focusedBackgroundImage focused background image
      */
-    public void setFocusedBbackgroundImage(ImageView focusedBbackgroundImage) {
-        this.focusedBbackgroundImage = focusedBbackgroundImage;
+    public void setFocusedBackgroundImage(ImageView focusedBackgroundImage) {
+        this.focusedBackgroundImage = focusedBackgroundImage;
     }
 
     /**

@@ -17,6 +17,7 @@ import org.liquidengine.legui.listener.MouseClickEventListener;
 import org.liquidengine.legui.listener.ScrollEventListener;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -227,7 +228,7 @@ public class SelectBox extends Container {
                     listBoxElements.get(index).selected = false;
                 }
                 selectedElement = element;
-                selectionButton.getTextState().setText(element.toString());
+                selectionButton.getTextState().setText(element);
             } else {
                 addElement(element);
                 setSelected(element, true);
@@ -235,7 +236,7 @@ public class SelectBox extends Container {
         } else {
             if (index != -1) {
                 listBoxElements.get(index).selected = false;
-                if (element == selectedElement) selectionButton.getTextState().setText(NULL);
+                if (Objects.equals(element, selectedElement)) selectionButton.getTextState().setText(NULL);
             } else {
                 addElement(element);
             }

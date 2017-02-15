@@ -122,7 +122,7 @@ public abstract class Container<T extends Component> extends Controller {
      */
     public boolean addAll(Collection<? extends T> components) {
         if (components != null) {
-            List<T> toAdd = new ArrayList<T>();
+            List<T> toAdd = new ArrayList<>();
             components.forEach(component -> {
                 if (component != null && component != this && !components.contains(component)) {
                     changeParent(component);
@@ -173,7 +173,7 @@ public abstract class Container<T extends Component> extends Controller {
      * @see List#removeAll(Collection)
      */
     public void removeAll(Collection<? extends T> components) {
-        List<T> toRemove = new ArrayList<T>();
+        List<T> toRemove = new ArrayList<>();
         components.forEach(compo -> {
             if (compo != null) {
                 compo.setParent(null);

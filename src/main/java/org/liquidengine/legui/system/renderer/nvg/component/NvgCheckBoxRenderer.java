@@ -54,14 +54,13 @@ public class NvgCheckBoxRenderer extends NvgComponentRenderer<CheckBox> {
 
             float h  = sh - (pad.y + pad.w);
             float y  = py + pad.y;
-            float x1 = px;
-            float x  = x1 + iconWid;
+            float x  = px + iconWid;
             float w  = sw - iconWid - pad.z;
             renderTextStateLineToBounds(nanovg, new Vector2f(x, y), new Vector2f(w, h), checkBox.getTextState());
 
             Vector4f textColor = textState.getTextColor();
             String   icon      = checkBox.isChecked() ? ICON_CHECKED : ICON_UNCHECKED;
-            renderIcon(checkBox, nanovg, fontSize, iconWid, h, y, x1, textColor, icon);
+            renderIcon(checkBox, nanovg, fontSize, iconWid, h, y, px, textColor, icon);
             renderBorder(checkBox, context);
         }
         resetScissor(nanovg);

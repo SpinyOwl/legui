@@ -9,7 +9,6 @@ import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.nvg.NvgComponentRenderer;
 import org.liquidengine.legui.system.renderer.nvg.NvgImageReferenceManager;
-import org.lwjgl.nanovg.NVGColor;
 import org.lwjgl.nanovg.NVGPaint;
 
 import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.IMAGE_REFERENCE_MANAGER;
@@ -20,7 +19,6 @@ import static org.lwjgl.nanovg.NanoVG.*;
  * Created by ShchAlexander on 11.02.2017.
  */
 public class NvgButtonRenderer extends NvgComponentRenderer<Button> {
-    private NVGColor colorA     = NVGColor.calloc();
     private NVGPaint imagePaint = NVGPaint.calloc();
 
     @Override
@@ -58,15 +56,15 @@ public class NvgButtonRenderer extends NvgComponentRenderer<Button> {
         Vector4f backgroundColor = new Vector4f(button.getBackgroundColor());
 
         ImageView bgImage = button.getBackgroundImage();
-        ImageView image   = null;
+        ImageView image;
         if (!focused && !hovered && !pressed) {
             image = bgImage;
         } else if (hovered && !pressed) {
             image = (image = button.getHoveredBackgroundImage()) == null ? bgImage : image;
         } else if (pressed) {
             image = (image = button.getPressedBackgroundImage()) == null ? bgImage : image;
-        } else if (focused) {
-            image = (image = button.getFocusedBbackgroundImage()) == null ? bgImage : image;
+        } else {
+            image = (image = button.getFocusedBackgroundImage()) == null ? bgImage : image;
         }
 
         drawRectangle(context, backgroundColor, pos, size);
@@ -75,7 +73,7 @@ public class NvgButtonRenderer extends NvgComponentRenderer<Button> {
                 Vector4f opp = ColorUtil.oppositeBlackOrWhite(backgroundColor);
                 opp.w = 0.3f;
                 drawRectangle(context, opp, pos, size);
-            } else if (pressed) {
+            } else {
                 Vector4f opp = ColorUtil.oppositeBlackOrWhite(backgroundColor);
                 opp.w = 0.6f;
                 drawRectangle(context, opp, pos, size);
