@@ -4,7 +4,7 @@ import org.joml.Vector4f;
 import org.joml.Vector4fc;
 
 /**
- * Created by Aliaksandr_Shcherbin on 2/2/2017.
+ * Contains predefined color values constants and constructors.
  */
 public final class ColorConstants {
 
