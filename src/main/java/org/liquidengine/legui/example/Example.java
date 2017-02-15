@@ -8,7 +8,6 @@ import org.liquidengine.legui.event.WindowSizeEvent;
 import org.liquidengine.legui.listener.WindowSizeEventListener;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.Renderer;
-import org.liquidengine.legui.color.ColorConstants;
 import org.lwjgl.PointerBuffer;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWKeyCallbackI;
@@ -152,7 +151,7 @@ public class Example {
 
     private static void createGuiElements(Frame frame, int w, int h) {
         ExampleGui component = new ExampleGui(w, h);
-        component.setBackgroundColor(new Vector4f(0.9f,0.9f,0.9f,1f));
+        component.setBackgroundColor(new Vector4f(0.9f, 0.9f, 0.9f, 1f));
         component.getListenerMap().addListener(WindowSizeEvent.class, (WindowSizeEventListener) event -> component.setSize(event.getWidth(), event.getHeight()));
         frame.getContainer().add(component);
 //        frame.getComponentLayer().getBackgroundColor().set(ColorConstants.lightBlue);

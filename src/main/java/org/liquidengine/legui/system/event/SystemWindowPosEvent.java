@@ -8,8 +8,8 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  */
 public class SystemWindowPosEvent implements SystemEvent {
     public final long window;
-    public final int xpos;
-    public final int ypos;
+    public final int  xpos;
+    public final int  ypos;
 
     public SystemWindowPosEvent(long window, int xpos, int ypos) {
         this.window = window;

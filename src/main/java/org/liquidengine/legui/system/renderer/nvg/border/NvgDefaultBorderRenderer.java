@@ -11,9 +11,7 @@ import org.liquidengine.legui.system.renderer.nvg.NvgBorderRenderer;
 import org.liquidengine.legui.system.renderer.nvg.util.NVGUtils;
 import org.lwjgl.nanovg.NVGColor;
 
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.drawRectStroke;
 import static org.lwjgl.nanovg.NanoVG.*;
-import static org.lwjgl.nanovg.NanoVG.nvgStroke;
 
 /**
  * Created by ShchAlexander on 11.02.2017.
@@ -41,6 +39,7 @@ public class NvgDefaultBorderRenderer extends NvgBorderRenderer {
             }
         }
     }
+
     private void drawRectStroke(Component component, long nanovg, float x, float y, float w, float h, SimpleLineBorder b) {
         NVGColor nvgColor;
         nvgColor = NVGColor.calloc();

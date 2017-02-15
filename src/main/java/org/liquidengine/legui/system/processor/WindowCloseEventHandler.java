@@ -1,11 +1,12 @@
 package org.liquidengine.legui.system.processor;
 
-import org.liquidengine.legui.component.*;
+import org.liquidengine.legui.component.Component;
+import org.liquidengine.legui.component.Container;
+import org.liquidengine.legui.component.Layer;
 import org.liquidengine.legui.event.WindowCloseEvent;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.event.SystemWindowCloseEvent;
 
-import java.util.Collections;
 import java.util.List;
 
 /**

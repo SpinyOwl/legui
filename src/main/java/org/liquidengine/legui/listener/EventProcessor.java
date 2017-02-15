@@ -23,7 +23,7 @@ public class EventProcessor {
         }
     }
 
-    public void pushEvent(AbstractEvent event){
+    public void pushEvent(AbstractEvent event) {
         eventQueue.add(event);
     }
 }

@@ -2,7 +2,6 @@ package org.liquidengine.legui.event;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.liquidengine.legui.component.Component;
-import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.system.context.Context;
 
 /**
@@ -17,7 +16,7 @@ public abstract class AbstractEvent {
         this.context = context;
     }
 
-    public final Component getComponent() {
+    public Component getComponent() {
         return component;
     }
 

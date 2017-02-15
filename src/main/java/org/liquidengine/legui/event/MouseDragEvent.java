@@ -2,7 +2,6 @@ package org.liquidengine.legui.event;
 
 import org.joml.Vector2f;
 import org.liquidengine.legui.component.Component;
-import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.system.context.Context;
 
 /**

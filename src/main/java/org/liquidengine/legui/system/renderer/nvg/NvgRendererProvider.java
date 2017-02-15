@@ -27,6 +27,7 @@ public class NvgRendererProvider extends RendererProvider {
     public NvgRendererProvider() {
 
         // register component renderers
+        componentRendererMap.put(Container.class, new NvgContainerRenderer());
         componentRendererMap.put(LayerContainer.class, new NvgLayerRenderer());
         componentRendererMap.put(Button.class, new NvgButtonRenderer());
         componentRendererMap.put(ToggleButton.class, new NvgToggleButtonRenderer());

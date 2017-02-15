@@ -2,13 +2,13 @@ package org.liquidengine.legui.component;
 
 import org.joml.Vector2f;
 import org.joml.Vector4f;
+import org.liquidengine.legui.color.ColorConstants;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.event.MouseDragEvent;
 import org.liquidengine.legui.font.FontRegister;
 import org.liquidengine.legui.listener.MouseClickEventListener;
 import org.liquidengine.legui.listener.MouseDragEventListener;
-import org.liquidengine.legui.color.ColorConstants;
 
 import static org.liquidengine.legui.event.MouseClickEvent.MouseClickAction.CLICK;
 import static org.liquidengine.legui.util.TextUtil.cpToStr;

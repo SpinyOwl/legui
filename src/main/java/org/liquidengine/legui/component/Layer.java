@@ -6,7 +6,7 @@ import org.liquidengine.legui.listener.WindowSizeEventListener;
 public class Layer<T extends Component> {
     protected LayerContainer<T> container = new LayerContainer<T>();
     private Frame frame;
-    private boolean eventPassable = true;
+    private boolean eventPassable   = true;
     private boolean eventReceivable = true;
 
     private boolean enabled;

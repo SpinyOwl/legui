@@ -45,7 +45,7 @@ public class NvgScrollBarRenderer extends NvgComponentRenderer<ScrollBar> {
             float    h               = size.y;
             Vector4f backgroundColor = new Vector4f(scrollBar.getBackgroundColor());
 
-            float     visibleAmount = scrollBar.getVisibleAmount();
+            float visibleAmount = scrollBar.getVisibleAmount();
 
             float minValue  = scrollBar.getMinValue();
             float maxValue  = scrollBar.getMaxValue();

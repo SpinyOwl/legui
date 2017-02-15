@@ -397,7 +397,7 @@ public final class NvgRenderUtils {
         }
     }
 
-    public static void renderBorderWScissor(Component component, Context context, long nanovg){
+    public static void renderBorderWScissor(Component component, Context context, long nanovg) {
         createScissor(nanovg, component);
         {
             renderBorder(component, context);

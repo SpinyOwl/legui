@@ -8,8 +8,8 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  */
 public class SystemFramebufferSizeEvent implements SystemEvent {
     public final long window;
-    public final int width;
-    public final int height;
+    public final int  width;
+    public final int  height;
 
     public SystemFramebufferSizeEvent(long window, int width, int height) {
 
