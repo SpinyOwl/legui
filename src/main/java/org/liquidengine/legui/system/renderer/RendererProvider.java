@@ -19,7 +19,7 @@ public abstract class RendererProvider {
 
     public abstract <C extends Component> ComponentRenderer getComponentRenderer(Class<C> componentClass);
 
-    public abstract <C extends Border> BorderRenderer getBorderRenderer(Class<C> boorderClass);
+    public abstract <C extends Border> BorderRenderer getBorderRenderer(Class<C> borderClass);
 
     public abstract List<ComponentRenderer> getComponentRenderers();
 

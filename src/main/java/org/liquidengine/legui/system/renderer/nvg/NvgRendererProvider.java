@@ -52,16 +52,15 @@ public class NvgRendererProvider extends RendererProvider {
     }
 
     @Override
-    public <B extends Border> BorderRenderer<B> getBorderRenderer(Class<B> boorderClass) {
-        return this.<B, BorderRenderer<B>>cycledSearchOfRenderer(boorderClass, borderRendererMap, defaultBorderRenderer);
+    public <B extends Border> BorderRenderer<B> getBorderRenderer(Class<B> borderClass) {
+        return this.<B, BorderRenderer<B>>cycledSearchOfRenderer(borderClass, borderRendererMap, defaultBorderRenderer);
     }
 
-    private <C, R> R cycledSearchOfRenderer(Class<C> componentClass, Map mapmap, R defaultRenderer) {
-        Map<Class<C>, R> map      = mapmap;
+    private <C, R> R cycledSearchOfRenderer(Class<C> componentClass, Map map, R defaultRenderer) {
         R                renderer = null;
         Class            cClass   = componentClass;
         while (renderer == null) {
-            renderer = map.get(cClass);
+            renderer = ((Map<Class<C>, R>) map).get(cClass);
             if (cClass.isAssignableFrom(Component.class)) break;
             cClass = cClass.getSuperclass();
         }

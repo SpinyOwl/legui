@@ -28,7 +28,7 @@ import static org.liquidengine.legui.event.MouseClickEvent.MouseClickAction.*;
 /**
  * Created by Shcherbin Alexander on 9/19/2016.
  */
-public class ExampleGui extends Panel {
+public class ExampleGui extends Panel<Component> {
     private final Label     mouseTargetLabel;
     private final Label     mouseLabel;
     private final Label     upsLabel;
@@ -67,7 +67,7 @@ public class ExampleGui extends Panel {
         imageView = new ImageView(new Image("org/liquidengine/legui/example/1.jpg")); imageView.setPosition(20, 30); imageView.setSize(100, 100); this.add(imageView);
 
         Button button = new Button(20, 170, 50, 20); button.setBackgroundColor(new Vector4f(1)); this.add(button);
-        button.getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> System.out.println(event));
+        button.getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) System.out::println);
 
         button.setTooltip("Just button");
         button.getTooltip().setPosition(0, 25);
@@ -337,12 +337,7 @@ public class ExampleGui extends Panel {
         ImageView bgImageNormal  = new ImageView(new Image("org/liquidengine/legui/example/normal.png"));
         ImageView bgImageToggled = new ImageView(new Image("org/liquidengine/legui/example/toggled.png"));
 
-        toggleButton.getListenerMap().addListener(CursorEnterEvent.class, new CursorEnterEventListener() {
-            @Override
-            public void process(CursorEnterEvent event) {
-                System.out.println(event);
-            }
-        });
+        toggleButton.getListenerMap().addListener(CursorEnterEvent.class, (CursorEnterEventListener)System.out::println);
 
 
         toggleButton.setTooltip("Just toggle button with long tooltipText text");

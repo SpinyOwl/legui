@@ -48,15 +48,15 @@ public class NvgToggleButtonRenderer extends NvgComponentRenderer<ToggleButton> 
         Vector4f backgroundColor = new Vector4f(toggled ? agui.getToggledBackgroundColor() : agui.getBackgroundColor());
 
         ImageView bgImage = toggled ? agui.getTogglededBackgroundImage() : agui.getBackgroundImage();
-        ImageView image   = null;
+        ImageView image;
         if (!focused && !hovered && !pressed) {
             image = bgImage;
         } else if (hovered && !pressed) {
             image = (image = agui.getHoveredBackgroundImage()) == null ? bgImage : image;
         } else if (pressed) {
             image = (image = agui.getPressedBackgroundImage()) == null ? bgImage : image;
-        } else if (focused) {
-            image = (image = agui.getFocusedBbackgroundImage()) == null ? bgImage : image;
+        } else {
+            image = (image = agui.getFocusedBackgroundImage()) == null ? bgImage : image;
         }
 
         drawRectangle(context, backgroundColor, pos, size);
@@ -65,7 +65,7 @@ public class NvgToggleButtonRenderer extends NvgComponentRenderer<ToggleButton> 
                 Vector4f opp = ColorUtil.oppositeBlackOrWhite(backgroundColor);
                 opp.w = 0.3f;
                 drawRectangle(context, opp, pos, size);
-            } else if (pressed) {
+            } else {
                 Vector4f opp = ColorUtil.oppositeBlackOrWhite(backgroundColor);
                 opp.w = 0.6f;
                 drawRectangle(context, opp, pos, size);

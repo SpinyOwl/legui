@@ -50,7 +50,7 @@ public class MouseClickEvent extends AbstractEvent {
         return absolutePosition;
     }
 
-    public static enum MouseClickAction {
+    public enum MouseClickAction {
         PRESS,
         CLICK,
         RELEASE,;

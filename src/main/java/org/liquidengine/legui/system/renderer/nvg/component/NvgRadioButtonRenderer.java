@@ -36,15 +36,13 @@ public class NvgRadioButtonRenderer extends NvgComponentRenderer<RadioButton> {
             Vector4f  textColor = textState.getTextColor();
             Vector4f  pad       = textState.getPadding();
 
-            float iconWid = fontSize;
-
             // renderNvg text
             float y1 = pos.y + pad.y;
             float h1 = size.y - (pad.y + pad.w);
-            float x1 = pos.x + iconWid;
-            float w1 = size.x - iconWid - pad.z;
+            float x1 = pos.x + fontSize;
+            float w1 = size.x - fontSize - pad.z;
             renderTextStateLineToBounds(nanovg, new Vector2f(x1, y1), new Vector2f(w1, h1), textState);
-            renderIcon(component, pos.x, fontSize, textColor, iconWid, y1, h1, nanovg);
+            renderIcon(component, pos.x, fontSize, textColor, fontSize, y1, h1, nanovg);
 
             renderBorderWScissor(component, context, nanovg);
         }

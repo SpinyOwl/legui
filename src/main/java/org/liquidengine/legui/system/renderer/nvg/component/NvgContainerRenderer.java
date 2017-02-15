@@ -2,7 +2,6 @@ package org.liquidengine.legui.system.renderer.nvg.component;
 
 import org.joml.Vector2f;
 import org.joml.Vector4f;
-import org.liquidengine.legui.border.SimpleLineBorder;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.Container;
 import org.liquidengine.legui.system.context.Context;
@@ -58,14 +57,4 @@ public class NvgContainerRenderer extends NvgComponentRenderer<Container> {
         nvgColor.free();
     }
 
-    private void drawRectStroke(Component component, long nanovg, float x, float y, float w, float h, SimpleLineBorder b) {
-        NVGColor nvgColor;
-        nvgColor = NVGColor.calloc();
-        nvgBeginPath(nanovg);
-        nvgStrokeWidth(nanovg, b.getThickness());
-        nvgRoundedRect(nanovg, x, y, w, h, component.getCornerRadius());
-        nvgStrokeColor(nanovg, NVGUtils.rgba(b.getColor(), nvgColor));
-        nvgStroke(nanovg);
-        nvgColor.free();
-    }
 }
