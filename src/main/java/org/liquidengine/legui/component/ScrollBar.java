@@ -6,13 +6,16 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.optional.Orientation;
+import org.liquidengine.legui.event.AbstractEvent;
 import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.event.MouseDragEvent;
 import org.liquidengine.legui.event.ScrollEvent;
 import org.liquidengine.legui.input.Mouse;
+import org.liquidengine.legui.listener.EventListener;
 import org.liquidengine.legui.listener.MouseClickEventListener;
 import org.liquidengine.legui.listener.MouseDragEventListener;
 import org.liquidengine.legui.listener.ScrollEventListener;
+import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.theme.Theme;
 
 import static org.liquidengine.legui.input.Mouse.MouseButton.MOUSE_BUTTON_LEFT;
@@ -210,6 +213,10 @@ public class ScrollBar extends Controller {
                 .toString();
     }
 
+    public interface ScrollBarChangeValueEventListener extends EventListener<ScrollBarChangeValueEvent> {
+        void process(ScrollBarChangeValueEvent event);
+    }
+
     public static class ScrollBarScrollListener implements ScrollEventListener {
         private final ScrollBar scrollBar;
 
@@ -228,6 +235,7 @@ public class ScrollBar extends Controller {
             if (newVal > maxValue) newVal = maxValue;
             if (newVal < minValue) newVal = minValue;
 
+            event.getContext().getEventProcessor().pushEvent(new ScrollBarChangeValueEvent(scrollBar, event.getContext(), curValue, newVal));
             scrollBar.setCurValue(newVal);
 
             Viewport viewport = scrollBar.getViewport();
@@ -275,6 +283,7 @@ public class ScrollBar extends Controller {
             float newVal = valueRange * (curPos - (dpos + arrowSize + barSize / 2f)) / (scrollBarSize - barSize);
             if (newVal > maxValue) newVal = maxValue;
             else if (newVal < minValue) newVal = minValue;
+            event.getContext().getEventProcessor().pushEvent(new ScrollBarChangeValueEvent(scrollBar, event.getContext(), scrollBar.getCurValue(), newVal));
             scrollBar.setCurValue(newVal);
 
             Viewport viewport = scrollBar.getViewport();
@@ -323,11 +332,11 @@ public class ScrollBar extends Controller {
             }
             if (curPos < left) {
                 newVal = curValue - 0.5f * visibleAmount * valueRange / (valueRange - visibleAmount);
-                if (!released) updateViewport(scrollBar, maxValue, minValue, newVal);
+                if (!released) updateViewport(event, scrollBar, maxValue, minValue, newVal);
                 scrollBar.setScrolling(false);
             } else if (curPos > left + barSize) {
                 newVal = curValue + 0.5f * visibleAmount * valueRange / (valueRange - visibleAmount);
-                if (!released) updateViewport(scrollBar, maxValue, minValue, newVal);
+                if (!released) updateViewport(event, scrollBar, maxValue, minValue, newVal);
                 scrollBar.setScrolling(false);
             } else {
                 if (released) scrollBar.setScrolling(false);
@@ -337,15 +346,36 @@ public class ScrollBar extends Controller {
             }
         }
 
-        private void updateViewport(ScrollBar gui, float maxValue, float minValue, float newVal) {
+        private void updateViewport(AbstractEvent event, ScrollBar gui, float maxValue, float minValue, float newVal) {
             if (newVal > maxValue) newVal = maxValue;
             else if (newVal < minValue) newVal = minValue;
+            event.getContext().getEventProcessor().pushEvent(new ScrollBarChangeValueEvent(scrollBar, event.getContext(), gui.getCurValue(), newVal));
             gui.setCurValue(newVal);
 
             Viewport viewport = gui.getViewport();
             if (viewport != null) {
                 viewport.updateViewport();
             }
+        }
+    }
+
+    public static class ScrollBarChangeValueEvent extends AbstractEvent {
+
+        private final float oldValue;
+        private final float newValue;
+
+        public ScrollBarChangeValueEvent(Component component, Context context, float oldValue, float newValue) {
+            super(component, context);
+            this.oldValue = oldValue;
+            this.newValue = newValue;
+        }
+
+        public float getNewValue() {
+            return newValue;
+        }
+
+        public float getOldValue() {
+            return oldValue;
         }
     }
 }

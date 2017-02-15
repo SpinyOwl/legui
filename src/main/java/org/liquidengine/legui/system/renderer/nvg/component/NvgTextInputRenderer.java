@@ -1,7 +1,5 @@
 package org.liquidengine.legui.system.renderer.nvg.component;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.TextInput;
@@ -28,13 +26,13 @@ import static org.lwjgl.system.MemoryUtil.*;
  * Created by ShchAlexander on 13.02.2017.
  */
 public class NvgTextInputRenderer extends NvgComponentRenderer<TextInput> {
-    public static final  String                  PRATIO        = "pratio";
-    public static final  String                  PALIGN        = "palign";
-    public static final  String                  POFFSET       = "poffset";
-    private final        Vector4f                caretColor    = new Vector4f(0, 0, 0, 0.5f);
-    private final        int                     maxGlyphCount = 1024;
-    private              NVGGlyphPosition.Buffer glyphs        = NVGGlyphPosition.create(maxGlyphCount);
-    private              NVGColor                colorA        = NVGColor.create();
+    public static final String                  PRATIO        = "pratio";
+    public static final String                  PALIGN        = "palign";
+    public static final String                  POFFSET       = "poffset";
+    private final       Vector4f                caretColor    = new Vector4f(0, 0, 0, 0.5f);
+    private final       int                     maxGlyphCount = 1024;
+    private             NVGGlyphPosition.Buffer glyphs        = NVGGlyphPosition.create(maxGlyphCount);
+    private             NVGColor                colorA        = NVGColor.create();
 
     @Override
     public void renderComponent(TextInput textInput, Context leguiContext, long context) {

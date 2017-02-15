@@ -4,10 +4,10 @@ import org.joml.Vector4f;
 import org.joml.Vector4fc;
 import org.liquidengine.legui.border.Border;
 import org.liquidengine.legui.border.SimpleLineBorder;
+import org.liquidengine.legui.color.ColorConstants;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
 import org.liquidengine.legui.font.FontRegister;
-import org.liquidengine.legui.color.ColorConstants;
 
 /**
  * Created by Aliaksandr_Shcherbin on 2/6/2017.

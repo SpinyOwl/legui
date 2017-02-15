@@ -53,8 +53,8 @@ public class NvgTooltipRenderer extends NvgComponentRenderer<Tooltip> {
             try {
 
                 byteText = memUTF8(text, false);
-                long start      = memAddress(byteText);
-                long end        = start + byteText.remaining();
+                long start = memAddress(byteText);
+                long end   = start + byteText.remaining();
 
                 float x = pos.x + padding.x;
                 float y = pos.y + padding.y;
@@ -73,7 +73,7 @@ public class NvgTooltipRenderer extends NvgComponentRenderer<Tooltip> {
 
                 // calculate text bounds for every line and start/end indices
                 NVGTextRow.Buffer buffer = NVGTextRow.calloc(1);
-                int  rows = 0;
+                int               rows   = 0;
                 while (nnvgTextBreakLines(context, start, end, size.x, memAddress(buffer), 1) != 0) {
                     NVGTextRow row    = buffer.get(0);
                     float[]    bounds = createBounds(x, y + rows * fontSize, w, h, horizontalAlign, verticalAlign, row.width(), fontSize);

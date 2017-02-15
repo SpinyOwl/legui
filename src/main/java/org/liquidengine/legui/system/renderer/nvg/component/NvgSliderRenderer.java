@@ -17,7 +17,8 @@ import static org.lwjgl.nanovg.NanoVG.*;
  * Created by ShchAlexander on 12.02.2017.
  */
 public class NvgSliderRenderer extends NvgComponentRenderer<Slider> {
-    private NVGColor colorA = NVGColor.malloc();
+    public static final float    SLIDER_WIDTH = 4.0f;
+    private             NVGColor colorA       = NVGColor.malloc();
 
     @Override
     public void renderComponent(Slider slider, Context leguiContext, long context) {
@@ -46,38 +47,22 @@ public class NvgSliderRenderer extends NvgComponentRenderer<Slider> {
 
             float lx, rx, ty, by, px, py;
             if (vertical) {
-                px = lx = rx = x + w / 2f;
+                px = lx = rx = x + (w - SLIDER_WIDTH) / 2f;
                 ty = y + sliderSize / 2f;
                 by = y + h - sliderSize / 2f;
                 py = by - (by - ty) * value / 100f;
             } else {
-                py = ty = by = y + h / 2f;
+                py = ty = by = y + (h - SLIDER_WIDTH) / 2f;
                 lx = x + sliderSize / 2f;
                 rx = x + w - sliderSize / 2f;
                 px = lx + (rx - lx) * value / 100f;
             }
 
-            float sliderWidth = 4.0f;
-
             // draw inactive color
-            nvgLineCap(context, NVG_ROUND);
-            nvgLineJoin(context, NVG_ROUND);
-            nvgStrokeWidth(context, sliderWidth);
-            nvgStrokeColor(context, rgba(sliderInactiveColor, colorA));
-            nvgBeginPath(context);
-            nvgMoveTo(context, lx, by);
-            nvgLineTo(context, rx, ty);
-            nvgStroke(context);
+            drawSliderLine(context, sliderInactiveColor, lx, rx, ty, by, SLIDER_WIDTH);
 
             // draw active part
-            nvgLineCap(context, NVG_ROUND);
-            nvgLineJoin(context, NVG_ROUND);
-            nvgStrokeWidth(context, sliderWidth);
-            nvgStrokeColor(context, rgba(sliderColor, colorA));
-            nvgBeginPath(context);
-            nvgMoveTo(context, lx, by);
-            nvgLineTo(context, px, py);
-            nvgStroke(context);
+            drawSliderLine(context, sliderColor, lx, px, py, by, SLIDER_WIDTH);
 
             // draw slider button
             float xx = px - sliderSize / 2f;
@@ -93,6 +78,17 @@ public class NvgSliderRenderer extends NvgComponentRenderer<Slider> {
             renderBorder(slider, leguiContext);
         }
         resetScissor(context);
+    }
+
+    private void drawSliderLine(long context, Vector4f sliderInactiveColor, float lx, float rx, float ty, float by, float sliderWidth) {
+        nvgLineCap(context, NVG_ROUND);
+        nvgLineJoin(context, NVG_ROUND);
+        nvgStrokeWidth(context, sliderWidth);
+        nvgStrokeColor(context, rgba(sliderInactiveColor, colorA));
+        nvgBeginPath(context);
+        nvgMoveTo(context, lx, by);
+        nvgLineTo(context, rx, ty);
+        nvgStroke(context);
     }
 
 }

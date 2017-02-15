@@ -151,8 +151,8 @@ public class Slider extends Controller {
                 .toString();
     }
 
-    public interface SliderChangeEventListener extends EventListener<SliderChangeEvent> {
-        void process(SliderChangeEvent event);
+    public interface SliderChangeValueEventListener extends EventListener<SliderChangeValueEvent> {
+        void process(SliderChangeValueEvent event);
     }
 
     public static class SliderScrollEventListener implements ScrollEventListener {
@@ -166,12 +166,12 @@ public class Slider extends Controller {
         @Override
         public void process(ScrollEvent event) {
             float curValue = slider.getValue();
-            float value   = (float) (curValue + event.getYoffset());
+            float value    = (float) (curValue + event.getYoffset());
 
             if (value > MAX_VALUE) value = MAX_VALUE;
             if (value < MIN_VALUE) value = MIN_VALUE;
 
-            event.getContext().getEventProcessor().pushEvent(new SliderChangeEvent(slider, event.getContext(), slider.getValue(), value));
+            event.getContext().getEventProcessor().pushEvent(new SliderChangeValueEvent(slider, event.getContext(), slider.getValue(), value));
             slider.setValue(value);
         }
     }
@@ -197,7 +197,7 @@ public class Slider extends Controller {
                 }
                 if (value > MAX_VALUE) value = MAX_VALUE;
                 if (value < MIN_VALUE) value = MIN_VALUE;
-                event.getContext().getEventProcessor().pushEvent(new SliderChangeEvent(slider, event.getContext(), slider.getValue(), value));
+                event.getContext().getEventProcessor().pushEvent(new SliderChangeValueEvent(slider, event.getContext(), slider.getValue(), value));
                 slider.setValue(value);
             }
         }
@@ -227,17 +227,17 @@ public class Slider extends Controller {
             if (value > MAX_VALUE) value = MAX_VALUE;
             if (value < MIN_VALUE) value = MIN_VALUE;
 
-            event.getContext().getEventProcessor().pushEvent(new SliderChangeEvent(slider, event.getContext(), slider.getValue(), value));
+            event.getContext().getEventProcessor().pushEvent(new SliderChangeValueEvent(slider, event.getContext(), slider.getValue(), value));
             slider.setValue(value);
         }
     }
 
-    public static class SliderChangeEvent extends org.liquidengine.legui.event.AbstractEvent {
+    public static class SliderChangeValueEvent extends org.liquidengine.legui.event.AbstractEvent {
 
         private final float oldValue;
         private final float newValue;
 
-        public SliderChangeEvent(Component component, Context context, float oldValue, float newValue) {
+        public SliderChangeValueEvent(Component component, Context context, float oldValue, float newValue) {
             super(component, context);
             this.oldValue = oldValue;
             this.newValue = newValue;
@@ -251,4 +251,5 @@ public class Slider extends Controller {
             return oldValue;
         }
     }
+
 }

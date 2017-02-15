@@ -5,17 +5,17 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.joml.Vector2f;
 import org.liquidengine.legui.border.SimpleLineBorder;
-import org.liquidengine.legui.component.optional.Orientation;
 import org.liquidengine.legui.color.ColorConstants;
+import org.liquidengine.legui.component.optional.Orientation;
 
 /**
  * Created by Aliaksandr_Shcherbin on 2/6/2017.
  */
 public class ScrollablePanel<T extends Component> extends Container implements Viewport {
     public static final float INITIAL_SCROLL_SIZE = 12f;
-    protected ScrollBar verticalScrollBar;
-    protected ScrollBar horizontalScrollBar;
-    protected Container viewport;
+    protected ScrollBar    verticalScrollBar;
+    protected ScrollBar    horizontalScrollBar;
+    protected Container    viewport;
     protected Container<T> container;
 
     public ScrollablePanel() {

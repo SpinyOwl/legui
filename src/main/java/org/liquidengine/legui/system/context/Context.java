@@ -3,7 +3,6 @@ package org.liquidengine.legui.system.context;
 import org.joml.Vector2f;
 import org.joml.Vector2i;
 import org.liquidengine.legui.component.Component;
-import org.liquidengine.legui.component.Controller;
 import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.listener.EventProcessor;
 import org.lwjgl.glfw.GLFW;
@@ -21,10 +20,10 @@ public class Context {
     private final long  glfwWindow;
     private final Frame frame;
 
-    private           Vector2f   windowPosition;
-    private           Vector2i   windowSize;
-    private           Vector2f   framebufferSize;
-    private transient float      pixelRatio;
+    private           Vector2f  windowPosition;
+    private           Vector2i  windowSize;
+    private           Vector2f  framebufferSize;
+    private transient float     pixelRatio;
     private           Component mouseTargetGui;
     private           Component focusedGui;
 

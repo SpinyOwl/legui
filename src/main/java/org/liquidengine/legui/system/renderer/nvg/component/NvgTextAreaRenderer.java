@@ -20,14 +20,12 @@ import static org.liquidengine.legui.color.ColorUtil.oppositeBlackOrWhite;
 import static org.liquidengine.legui.system.renderer.nvg.util.NVGUtils.rgba;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.*;
 import static org.lwjgl.nanovg.NanoVG.*;
-import static org.lwjgl.system.MemoryUtil.memAddress;
-import static org.lwjgl.system.MemoryUtil.memFree;
-import static org.lwjgl.system.MemoryUtil.memUTF8;
+import static org.lwjgl.system.MemoryUtil.*;
 
 /**
  * Created by ShchAlexander on 13.02.2017.
  */
-public class NvgTextAreaRenderer extends NvgComponentRenderer<TextArea>{
+public class NvgTextAreaRenderer extends NvgComponentRenderer<TextArea> {
     public static final String PRATIO   = "pratio";
     public static final String POFFSETX = "poffsetx";
     public static final String PHALIGN  = "phalign";
@@ -109,7 +107,7 @@ public class NvgTextAreaRenderer extends NvgComponentRenderer<TextArea>{
         float mouseCaretX    = 0;
         int   mouseLineIndex = 0;
 
-        int      mouseCaretPosition = 0;
+        int      mouseCaretPositionInLine = 0;
         Vector2f cursorPosition     = Mouse.getCursorPosition();
         float    mouseX             = cursorPosition.x;
         float    mouseY             = cursorPosition.y;
@@ -122,20 +120,12 @@ public class NvgTextAreaRenderer extends NvgComponentRenderer<TextArea>{
         float[] caretLineBounds = calculateTextBoundsRect(context, rect, caretLineText, halign, valign);
         float   carety          = caretLineBounds[5] + voffset + fontSize * caretLine;
         float   offsetY         = 0;
-        if (carety + fontSize > rect.y + rect.w) {
-            offsetY = carety - fontSize - (rect.y + rect.w);
-        } else if (carety < rect.y) {
-            offsetY = carety - rect.y;
-        }
+        offsetY = calculateOffsetY(rect, fontSize, carety, offsetY);
 
         // also we need to calculate offset x // caretLine
         float offsetX = 0;
         caretx = getCaretx(context, lineCaretPosition, caretLineText, caretLineBounds);
-        if (caretx > rect.z + rect.x) {
-            offsetX = caretx - rect.x - rect.z;
-        } else if (caretx < rect.x) {
-            offsetX = caretx - rect.x;
-        }
+        offsetX = calculateOffsetX(rect, caretx, offsetX);
 
         Float           poffsetx = /*offsetX;//*/(Float) metadata.getOrDefault(POFFSETX, 0f);
         Float           poffsety = /*offsetY;//*/(Float) metadata.getOrDefault(POFFSETY, 0f);
@@ -144,28 +134,10 @@ public class NvgTextAreaRenderer extends NvgComponentRenderer<TextArea>{
         VerticalAlign   pvalign  = (VerticalAlign) metadata.getOrDefault(PVALIGN, valign);
 
         // Check if we should recalculate offset y
-        if (pratio != rat || pvalign != valign) {
-            poffsety = offsetY;
-        } else {
-            // and if ratio is the same we should check if we need to update offset
-            if (carety + fontSize - poffsety > rect.y + rect.w) {
-                poffsety = poffsety + fontSize + (carety - poffsety - rect.y - rect.w);
-            } else if (carety - poffsety < rect.y) {
-                poffsety = poffsety + (carety - poffsety - rect.y);
-            }
-        }
+        poffsety = recalculateOffsetY(rect, fontSize, valign, rat, carety, offsetY, poffsety, pratio, pvalign);
 
         // Check if we should recalculate offset x
-        if (pratio != rat || phalign != halign) {
-            poffsetx = offsetX;
-        } else {
-            // and if ratio is the same we should check if we need to update offset
-            if (caretx - poffsetx > rect.z + rect.x) {
-                poffsetx = poffsetx + (caretx - poffsetx - rect.z - rect.x);
-            } else if (caretx - poffsetx < rect.x) {
-                poffsetx = poffsetx + (caretx - poffsetx - rect.x);
-            }
-        }
+        poffsetx = recalculateOffsetX(rect, halign, caretx, rat, offsetX, poffsetx, pratio, phalign);
 
         preinitializeTextRendering(context, font, fontSize, halign, valign, textColor);
 
@@ -188,6 +160,110 @@ public class NvgTextAreaRenderer extends NvgComponentRenderer<TextArea>{
         }
 
         // render selection background
+        renderselectionBackground(context, gui, fontSize, focused, selectionColor, lines, lineCount, lineStartIndeces, voffset, poffsetx, poffsety, bounds);
+
+        // render every line of text
+        for (int i = 0; i < lineCount; i++) {
+            ByteBuffer lineBytes = null;
+            try {
+                String line = lines[i];
+                lineBytes = memUTF8(line);
+
+                alignTextInBox(context, HorizontalAlign.LEFT, VerticalAlign.MIDDLE);
+                int ng = nnvgTextGlyphPositions(context, bounds[i][4], 0, memAddress(lineBytes), 0, memAddress(glyphs), maxGlyphCount);
+
+                float lineX = bounds[i][4] - poffsetx;
+                float lineY = bounds[i][5] - poffsety + voffset + fontSize * i;
+
+                // calculate mouse caret position
+                if (lineY <= mouseY && lineY + fontSize > mouseY) {
+                    if (line.length() == 0) {
+                        mouseCaretX = caretx;
+                    } else {
+                        float mx = mouseX + poffsetx;
+                        if (mx <= glyphs.get(0).minx()) {
+                            mouseCaretPositionInLine = 0;
+                            mouseCaretX = glyphs.get(0).minx();
+                        } else if (mx >= glyphs.get(ng - 1).maxx()) {
+                            mouseCaretPositionInLine = ng;
+                            mouseCaretX = glyphs.get(ng - 1).maxx();
+                        } else if (!leguiContext.isIconified()) {
+                            // binary search mouse caret position
+                            int     upper = ng;
+                            int     lower = 0;
+                            boolean found = false;
+                            do {
+                                int   index = (upper + lower) / 2;
+                                float left  = index == 0 ? glyphs.get(index).minx() : glyphs.get(index).x();
+                                float right = index >= ng - 1 ? glyphs.get(ng - 1).maxx() : glyphs.get(index + 1).x();
+                                float mid   = (left + right) / 2f;
+                                if (mx >= left && mx < right) {
+                                    found = true;
+                                    if (mx > mid) {
+                                        mouseCaretPositionInLine = index + 1;
+                                        mouseCaretX = right;
+                                    } else {
+                                        mouseCaretPositionInLine = index;
+                                        mouseCaretX = left;
+                                    }
+                                } else if (mx >= right) {
+                                    if (index != ng) {
+                                        lower = index + 1;
+                                    } else {
+                                        found = true;
+                                        mouseCaretPositionInLine = ng;
+                                        mouseCaretX = right;
+                                    }
+                                } else if (mx < left) {
+                                    if (index != 0) {
+                                        upper = index;
+                                    } else {
+                                        found = true;
+                                        mouseCaretPositionInLine = 0;
+                                        mouseCaretX = left;
+                                    }
+                                }
+                            } while (!found);
+                        }
+                    }
+                    mouseCaretX -= poffsetx;
+                    mouseLineIndex = i;
+                    // render mouse caret
+                    if (leguiContext.isDebugEnabled()) {
+                        drawRectStroke(context, mouseCaretX - 1, lineY, 1, bounds[i][7], new Vector4f(caretColor).div(2), 0, 1);
+                    }
+                }
+
+                // render current line background
+                if (i == caretLine && focused) {
+                    Vector4f currentLineBgColor = oppositeBlackOrWhite(bc);
+                    currentLineBgColor.w = 0.1f;
+                    drawRectangle(context, currentLineBgColor, rect.x, lineY, rect.z, fontSize);
+                }
+
+                renderTextLineToBounds(context, lineX, lineY, bounds[i][6], bounds[i][7], fontSize, font, textColor, line, HorizontalAlign.LEFT, VerticalAlign.MIDDLE, false);
+                if (i == caretLine && focused) {
+                    // render caret
+                    drawRectStroke(context, caretx - poffsetx - 1, lineY, 1, bounds[i][7], caretColor, 0, 1);
+                }
+            } finally {
+                // free allocated memory
+                if (lineBytes != null) {
+                    memFree(lineBytes);
+                }
+            }
+        }
+        gui.setMouseCaretPosition(lineStartIndeces[mouseLineIndex] + mouseCaretPositionInLine);
+
+        // put updated offsets and ratio to metadata
+        metadata.put(PRATIO, rat);
+        metadata.put(POFFSETY, poffsety);
+        metadata.put(POFFSETX, poffsetx);
+        metadata.put(PVALIGN, valign);
+        metadata.put(PHALIGN, halign);
+    }
+
+    private void renderselectionBackground(long context, TextArea gui, float fontSize, boolean focused, Vector4f selectionColor, String[] lines, int lineCount, int[] lineStartIndeces, float voffset, Float poffsetx, Float poffsety, float[][] bounds) {
         if (focused) {
             int startSelectionIndex = gui.getStartSelectionIndex();
             int endSelectionIndex   = gui.getEndSelectionIndex();
@@ -233,106 +309,52 @@ public class NvgTextAreaRenderer extends NvgComponentRenderer<TextArea>{
                 }
             }
         }
+    }
 
-        // render every line of text
-        for (int i = 0; i < lineCount; i++) {
-            ByteBuffer lineBytes = null;
-            try {
-                String line = lines[i];
-                lineBytes = memUTF8(line);
+    private float calculateOffsetX(Vector4f rect, float caretx, float offsetX) {
+        if (caretx > rect.z + rect.x) {
+            offsetX = caretx - rect.x - rect.z;
+        } else if (caretx < rect.x) {
+            offsetX = caretx - rect.x;
+        }
+        return offsetX;
+    }
 
-                alignTextInBox(context, HorizontalAlign.LEFT, VerticalAlign.MIDDLE);
-                int ng = nnvgTextGlyphPositions(context, bounds[i][4], 0, memAddress(lineBytes), 0, memAddress(glyphs), maxGlyphCount);
+    private float calculateOffsetY(Vector4f rect, float fontSize, float carety, float offsetY) {
+        if (carety + fontSize > rect.y + rect.w) {
+            offsetY = carety - fontSize - (rect.y + rect.w);
+        } else if (carety < rect.y) {
+            offsetY = carety - rect.y;
+        }
+        return offsetY;
+    }
 
-                float lineX = bounds[i][4] - poffsetx;
-                float lineY = bounds[i][5] - poffsety + voffset + fontSize * i;
-
-                // calculate mouse caret position
-                if (lineY <= mouseY && lineY + fontSize > mouseY) {
-                    if (line.length() == 0) {
-                        mouseCaretX = caretx;
-                    } else {
-                        float mx = mouseX + poffsetx;
-                        if (mx <= glyphs.get(0).minx()) {
-                            mouseCaretPosition = 0;
-                            mouseCaretX = glyphs.get(0).minx();
-                        } else if (mx >= glyphs.get(ng - 1).maxx()) {
-                            mouseCaretPosition = ng;
-                            mouseCaretX = glyphs.get(ng - 1).maxx();
-                        } else if (!leguiContext.isIconified()) {
-                            // binary search mouse caret position
-                            int     upper = ng;
-                            int     lower = 0;
-                            boolean found = false;
-                            do {
-                                int   index = (upper + lower) / 2;
-                                float left  = index == 0 ? glyphs.get(index).minx() : glyphs.get(index).x();
-                                float right = index >= ng - 1 ? glyphs.get(ng - 1).maxx() : glyphs.get(index + 1).x();
-                                float mid   = (left + right) / 2f;
-                                if (mx >= left && mx < right) {
-                                    found = true;
-                                    if (mx > mid) {
-                                        mouseCaretPosition = index + 1;
-                                        mouseCaretX = right;
-                                    } else {
-                                        mouseCaretPosition = index;
-                                        mouseCaretX = left;
-                                    }
-                                } else if (mx >= right) {
-                                    if (index != ng) {
-                                        lower = index + 1;
-                                    } else {
-                                        found = true;
-                                        mouseCaretPosition = ng;
-                                        mouseCaretX = right;
-                                    }
-                                } else if (mx < left) {
-                                    if (index != 0) {
-                                        upper = index;
-                                    } else {
-                                        found = true;
-                                        mouseCaretPosition = 0;
-                                        mouseCaretX = left;
-                                    }
-                                }
-                            } while (!found);
-                        }
-                    }
-                    mouseCaretX -= poffsetx;
-                    mouseLineIndex = i;
-                    // render mouse caret
-                    if (leguiContext.isDebugEnabled()) {
-                        drawRectStroke(context, mouseCaretX - 1, lineY, 1, bounds[i][7], new Vector4f(caretColor).div(2), 0, 1);
-                    }
-                }
-
-                // render current line background
-                if (i == caretLine && focused) {
-                    Vector4f currentLineBgColor = oppositeBlackOrWhite(bc);
-                    currentLineBgColor.w = 0.1f;
-                    drawRectangle(context, currentLineBgColor, rect.x, lineY, rect.z, fontSize);
-                }
-
-                renderTextLineToBounds(context, lineX, lineY, bounds[i][6], bounds[i][7], fontSize, font, textColor, line, HorizontalAlign.LEFT, VerticalAlign.MIDDLE, false);
-                if (i == caretLine && focused) {
-                    // render caret
-                    drawRectStroke(context, caretx - poffsetx - 1, lineY, 1, bounds[i][7], caretColor, 0, 1);
-                }
-            } finally {
-                // free allocated memory
-                if (lineBytes != null) {
-                    memFree(lineBytes);
-                }
+    private Float recalculateOffsetX(Vector4f rect, HorizontalAlign halign, float caretx, float rat, float offsetX, Float poffsetx, Float pratio, HorizontalAlign phalign) {
+        if (pratio != rat || phalign != halign) {
+            poffsetx = offsetX;
+        } else {
+            // and if ratio is the same we should check if we need to update offset
+            if (caretx - poffsetx > rect.z + rect.x) {
+                poffsetx = poffsetx + (caretx - poffsetx - rect.z - rect.x);
+            } else if (caretx - poffsetx < rect.x) {
+                poffsetx = poffsetx + (caretx - poffsetx - rect.x);
             }
         }
+        return poffsetx;
+    }
 
-        // put updated offsets and ratio to metadata
-        metadata.put(PRATIO, rat);
-        metadata.put(POFFSETY, poffsety);
-        metadata.put(POFFSETX, poffsetx);
-        metadata.put(PVALIGN, valign);
-        metadata.put(PHALIGN, halign);
-        gui.setMouseCaretPosition(lineStartIndeces[mouseLineIndex] + mouseCaretPosition);
+    private Float recalculateOffsetY(Vector4f rect, float fontSize, VerticalAlign valign, float rat, float carety, float offsetY, Float poffsety, Float pratio, VerticalAlign pvalign) {
+        if (pratio != rat || pvalign != valign) {
+            poffsety = offsetY;
+        } else {
+            // and if ratio is the same we should check if we need to update offset
+            if (carety + fontSize - poffsety > rect.y + rect.w) {
+                poffsety = poffsety + fontSize + (carety - poffsety - rect.y - rect.w);
+            } else if (carety - poffsety < rect.y) {
+                poffsety = poffsety + (carety - poffsety - rect.y);
+            }
+        }
+        return poffsety;
     }
 
     private float getCaretx(long context, int lineCaretPosition, String caretLineText, float[] caretLineBounds) {
@@ -376,20 +398,6 @@ public class NvgTextAreaRenderer extends NvgComponentRenderer<TextArea>{
         return caretx;
     }
 
-    private LineData getStartLineIndexAndLineNumber(String[] lines, int caretPosition) {
-        int caretLine   = 0;
-        int caretOffset = 0;
-        for (String line : lines) {
-            int newOffset = caretOffset + line.length();
-            if (newOffset >= caretPosition) {
-                break;
-            }
-            caretLine++;
-            caretOffset = newOffset + 1;
-        }
-        return new LineData(caretPosition - caretOffset, caretLine);
-    }
-
     private void drawBackground(long context, float x, float y, float w, float h, float br, Vector4f bc) {
         if (bc.w != 0) {
             nvgSave(context);
@@ -397,16 +405,6 @@ public class NvgTextAreaRenderer extends NvgComponentRenderer<TextArea>{
             nvgRoundedRect(context, x, y, w, h, br);
             nvgFillColor(context, rgba(bc, colorA));
             nvgFill(context);
-        }
-    }
-
-    private static class LineData {
-        private int caretPositionInLine;
-        private int lineIndex;
-
-        public LineData(int caretPositionInLine, int lineIndex) {
-            this.caretPositionInLine = caretPositionInLine;
-            this.lineIndex = lineIndex;
         }
     }
 }

@@ -8,9 +8,9 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  */
 public class SystemMouseClickEvent implements SystemEvent {
     public final long window;
-    public final int button;
-    public final int action;
-    public final int mods;
+    public final int  button;
+    public final int  action;
+    public final int  mods;
 
     public SystemMouseClickEvent(long window, int button, int action, int mods) {
         this.window = window;

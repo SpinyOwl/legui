@@ -14,7 +14,7 @@ import static org.lwjgl.BufferUtils.createByteBuffer;
 /**
  * Created by Aliaksandr_Shcherbin on 2/6/2017.
  */
-public  final class IOUtil {
+public final class IOUtil {
     private static final Logger LOGGER = LogManager.getLogger(IOUtil.class);
 
     private IOUtil() {

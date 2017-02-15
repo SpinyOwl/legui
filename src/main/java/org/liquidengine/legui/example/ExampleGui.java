@@ -258,11 +258,11 @@ public class ExampleGui extends Panel {
         scrollablePanel.getContainer().add(scp);
         this.add(scrollablePanel);
 
-        slider2.getListenerMap().addListener(Slider.SliderChangeEvent.class, (Slider.SliderChangeEventListener) event -> {
+        slider2.getListenerMap().addListener(Slider.SliderChangeValueEvent.class, (Slider.SliderChangeValueEventListener) event -> {
             scrollablePanel.getHorizontalScrollBar().getSize().y = event.getNewValue() / 2f + 10;
             scrollablePanel.resize();
         });
-        slider1.getListenerMap().addListener(Slider.SliderChangeEvent.class, (Slider.SliderChangeEventListener) event -> {
+        slider1.getListenerMap().addListener(Slider.SliderChangeValueEvent.class, (Slider.SliderChangeValueEventListener) event -> {
             scrollablePanel.getHorizontalScrollBar().setArrowSize(event.getNewValue() / 4f + 10);
             scrollablePanel.resize();
         });

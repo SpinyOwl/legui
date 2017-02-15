@@ -2,7 +2,6 @@ package org.liquidengine.legui.example;
 
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWErrorCallback;
-import org.lwjgl.glfw.GLFWErrorCallbackI;
 
 import static org.lwjgl.system.MemoryUtil.NULL;
 
