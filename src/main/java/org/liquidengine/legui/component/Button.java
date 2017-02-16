@@ -10,8 +10,6 @@ import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 
 /**
  * An implementation of "push" button.
- * <p>
- * Created by Shcherbin Alexander on 9/22/2016.
  */
 public class Button extends Controller {
 
@@ -50,10 +48,10 @@ public class Button extends Controller {
     /**
      * Creates a button with default text and specified position and size.
      *
-     * @param x      x position in parent
-     * @param y      y position in parent
-     * @param width  width of component
-     * @param height height of component
+     * @param x      x position in parent.
+     * @param y      y position in parent.
+     * @param width  width of component.
+     * @param height height of component.
      */
     public Button(float x, float y, float width, float height) {
         this("Button", x, y, width, height);
@@ -62,8 +60,8 @@ public class Button extends Controller {
     /**
      * Creates a button with default text and specified position and size.
      *
-     * @param position position in parent
-     * @param size     size of component
+     * @param position position in parent.
+     * @param size     size of component.
      */
     public Button(Vector2f position, Vector2f size) {
         this("Button", position, size);
@@ -82,10 +80,10 @@ public class Button extends Controller {
      * Creates a button with specified text and specified position and size.
      *
      * @param text   button text.
-     * @param x      x position in parent
-     * @param y      y position in parent
-     * @param width  width of component
-     * @param height height of component
+     * @param x      x position in parent.
+     * @param y      y position in parent.
+     * @param width  width of component.
+     * @param height height of component.
      */
     public Button(String text, float x, float y, float width, float height) {
         super(x, y, width, height);
@@ -96,8 +94,8 @@ public class Button extends Controller {
      * Creates a button with specified text and specified position and size.
      *
      * @param text     button text.
-     * @param position position in parent
-     * @param size     size of component
+     * @param position position in parent.
+     * @param size     size of component.
      */
     public Button(String text, Vector2f position, Vector2f size) {
         super(position, size);
@@ -105,9 +103,9 @@ public class Button extends Controller {
     }
 
     /**
-     * Initialize button with specified text
+     * Initialize button with specified text.
      *
-     * @param text used to initialize text state
+     * @param text used to initialize text state.
      */
     private void initialize(String text) {
         this.textState = new TextState(text);
@@ -115,9 +113,9 @@ public class Button extends Controller {
     }
 
     /**
-     * Returns text data of button
+     * Returns text data of button.
      *
-     * @return text state of button
+     * @return text state of button.
      */
     public TextState getTextState() {
         return textState;
@@ -125,72 +123,72 @@ public class Button extends Controller {
 
 
     /**
-     * Returns background image
+     * Returns background image.
      *
-     * @return background image
+     * @return background image.
      */
     public ImageView getBackgroundImage() {
         return backgroundImage;
     }
 
     /**
-     * Used to change background image
+     * Used to change background image.
      *
-     * @param backgroundImage background image
+     * @param backgroundImage background image.
      */
     public void setBackgroundImage(ImageView backgroundImage) {
         this.backgroundImage = backgroundImage;
     }
 
     /**
-     * Returns focused background image
+     * Returns focused background image.
      *
-     * @return focused background image
+     * @return focused background image.
      */
     public ImageView getFocusedBackgroundImage() {
         return focusedBackgroundImage;
     }
 
     /**
-     * Used to change focused background image
+     * Used to change focused background image.
      *
-     * @param focusedBackgroundImage focused background image
+     * @param focusedBackgroundImage focused background image.
      */
     public void setFocusedBackgroundImage(ImageView focusedBackgroundImage) {
         this.focusedBackgroundImage = focusedBackgroundImage;
     }
 
     /**
-     * Returns pressed background image
+     * Returns pressed background image.
      *
-     * @return pressed background image
+     * @return pressed background image.
      */
     public ImageView getPressedBackgroundImage() {
         return pressedBackgroundImage;
     }
 
     /**
-     * Used to change pressed background image
+     * Used to change pressed background image.
      *
-     * @param pressedBackgroundImage pressed background image
+     * @param pressedBackgroundImage pressed background image.
      */
     public void setPressedBackgroundImage(ImageView pressedBackgroundImage) {
         this.pressedBackgroundImage = pressedBackgroundImage;
     }
 
     /**
-     * Returns hovered background image
+     * Returns hovered background image.
      *
-     * @return hovered background image
+     * @return hovered background image.
      */
     public ImageView getHoveredBackgroundImage() {
         return hoveredBackgroundImage;
     }
 
     /**
-     * Used to change hovered background image
+     * Used to change hovered background image.
      *
-     * @param hoveredBackgroundImage hovered background image
+     * @param hoveredBackgroundImage hovered background image.
      */
     public void setHoveredBackgroundImage(ImageView hoveredBackgroundImage) {
         this.hoveredBackgroundImage = hoveredBackgroundImage;

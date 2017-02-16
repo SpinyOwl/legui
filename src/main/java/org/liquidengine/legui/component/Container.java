@@ -18,8 +18,6 @@ import java.util.stream.Stream;
  * The base of container is <b><span style="color:red">SetUniqueList</span>
  * created on base of <span style="color:red">CopyOnWriteArrayList</span></b>,
  * that's little restriction which determines that child can exist in parent only one time.
- * <p>
- * Created by Shcherbin Alexander on 9/14/2016.
  */
 public abstract class Container<T extends Component> extends Controller {
     /**
@@ -31,7 +29,7 @@ public abstract class Container<T extends Component> extends Controller {
      * Default constructor. Used to create component instance without any parameters.
      * <p>
      * Also if you want to make it easy to use with
-     * Json serializer/deserializer component should contain empty constructor.
+     * Json marshaller/unmarshaller component should contain empty constructor.
      */
     public Container() {
     }

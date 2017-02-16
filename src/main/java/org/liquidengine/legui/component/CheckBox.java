@@ -185,6 +185,9 @@ public class CheckBox extends Controller {
                 .toString();
     }
 
+    /**
+     * MouseClickEventListener for checkbox, used to toggle checkbox state on mouse click.
+     */
     public static class CheckBoxMouseClickEventListener implements MouseClickEventListener {
 
         private final CheckBox checkBox;
