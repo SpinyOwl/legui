@@ -1,5 +1,8 @@
 package org.liquidengine.legui.component;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.border.Border;
@@ -14,8 +17,6 @@ import java.util.Map;
 
 /**
  * Component is an object that have graphical representation in legui system.
- * <p>
- * Created by ShchAlexander on 9/14/2016.
  */
 public abstract class Component implements Serializable {
     /**
@@ -27,7 +28,7 @@ public abstract class Component implements Serializable {
      */
     private Map<String, Object> metadata     = new HashMap<>();
     /**
-     * Parent component container. For root components it could be null
+     * Parent component container. For root components it could be null.
      */
     private Container parent;
     /**
@@ -69,8 +70,19 @@ public abstract class Component implements Serializable {
      */
     private Intersector intersector     = new RectangleIntersector();
 
+    /**
+     * Determines whether this component hovered or not (cursor is over this component).
+     */
     private boolean hovered;
+
+    /**
+     * Determines whether this component focused or not.
+     */
     private boolean focused;
+
+    /**
+     * Determines whether this component pressed or not (Mouse button is down and on this component).
+     */
     private boolean pressed;
 
 
@@ -78,7 +90,7 @@ public abstract class Component implements Serializable {
      * Default constructor. Used to create component instance without any parameters.
      * <p>
      * Also if you want to make it easy to use with
-     * Json serializer/deserializer component should contain empty constructor.
+     * Json marshaller/unmarshaller component should contain empty constructor.
      */
     public Component() {
         this(0, 0, 10, 10);
@@ -87,10 +99,10 @@ public abstract class Component implements Serializable {
     /**
      * Constructor with position and size parameters.
      *
-     * @param x      x position position in parent component
-     * @param y      y position position in parent component
-     * @param width  width of component
-     * @param height height of component
+     * @param x      x position position in parent component.
+     * @param y      y position position in parent component.
+     * @param width  width of component.
+     * @param height height of component.
      */
     public Component(float x, float y, float width, float height) {
         this(new Vector2f(x, y), new Vector2f(width, height));
@@ -99,8 +111,8 @@ public abstract class Component implements Serializable {
     /**
      * Constructor with position and size parameters.
      *
-     * @param position position position in parent component
-     * @param size     size of component
+     * @param position position position in parent component.
+     * @param size     size of component.
      */
     public Component(Vector2f position, Vector2f size) {
         this.position = position;
@@ -108,9 +120,9 @@ public abstract class Component implements Serializable {
     }
 
     /**
-     * Returns parent component. If returns null - current component is root component
+     * Returns parent component. If returns null - current component is root component.
      *
-     * @return null or parent component
+     * @return null or parent component.
      */
     public Container getParent() {
         return parent;
@@ -151,16 +163,16 @@ public abstract class Component implements Serializable {
      * Returns position vector.
      * Be careful during changing this vector.
      *
-     * @return position vector
+     * @return position vector.
      */
     public Vector2f getPosition() {
         return position;
     }
 
     /**
-     * Used to set position of component
+     * Used to set position of component.
      *
-     * @param position new position for component
+     * @param position new position for component.
      */
     public void setPosition(Vector2f position) {
         if (position != null) {
@@ -173,8 +185,8 @@ public abstract class Component implements Serializable {
     /**
      * Used to set current position.
      *
-     * @param x x position relative to parent component
-     * @param y y position relative to parent component
+     * @param x x position relative to parent component.
+     * @param y y position relative to parent component.
      */
     public void setPosition(float x, float y) {
         this.position.set(x, y);
@@ -182,7 +194,7 @@ public abstract class Component implements Serializable {
 
     /**
      * Returns size vector of component.
-     * So to get width you can use
+     * So to get width you can use.
      * <pre>
      * {@code
      * Vector2f size = component.getSize();
@@ -191,16 +203,16 @@ public abstract class Component implements Serializable {
      * }
      * </pre>
      *
-     * @return size of component
+     * @return size of component.
      */
     public Vector2f getSize() {
         return size;
     }
 
     /**
-     * Used to set size vector
+     * Used to set size vector.
      *
-     * @param size size vector
+     * @param size size vector.
      */
     public void setSize(Vector2f size) {
         if (size != null) {
@@ -211,10 +223,10 @@ public abstract class Component implements Serializable {
     }
 
     /**
-     * Used to set size vector
+     * Used to set size vector.
      *
-     * @param width  width to set
-     * @param height height to set
+     * @param width  width to set.
+     * @param height height to set.
      */
     public void setSize(float width, float height) {
         this.size.set(width, height);
@@ -223,7 +235,7 @@ public abstract class Component implements Serializable {
     /**
      * Returns component position on the screen.
      *
-     * @return position vector
+     * @return position vector.
      */
     public Vector2f getScreenPosition() {
         Vector2f screenPos = new Vector2f(this.position);
@@ -243,7 +255,7 @@ public abstract class Component implements Serializable {
      * <li>0,0,0,0 - transparent black.</li>
      * </ul>
      *
-     * @return background color vector
+     * @return background color vector.
      */
     public Vector4f getBackgroundColor() {
         return backgroundColor;
@@ -259,7 +271,7 @@ public abstract class Component implements Serializable {
      * <li>0,0,0,0 - transparent black.</li>
      * </ul>
      *
-     * @param backgroundColor background color vector
+     * @param backgroundColor background color vector.
      */
     public void setBackgroundColor(Vector4f backgroundColor) {
         this.backgroundColor = backgroundColor;
@@ -268,28 +280,28 @@ public abstract class Component implements Serializable {
     /**
      * Used to set background color vector.
      *
-     * @param r red value
-     * @param g green value
-     * @param b blue value
-     * @param a alpha value
+     * @param r red value.
+     * @param g green value.
+     * @param b blue value.
+     * @param a alpha value.
      */
     public void setBackgroundColor(float r, float g, float b, float a) {
         backgroundColor.set(r, g, b, a);
     }
 
     /**
-     * Returns true if component enabled. By default if component enabled it receives and proceed events
+     * Returns true if component enabled. By default if component enabled it receives and proceed events.
      *
-     * @return true if component enabled. default value is {@link Boolean#TRUE}
+     * @return true if component enabled. default value is {@link Boolean#TRUE}.
      */
     public boolean isEnabled() {
         return enabled;
     }
 
     /**
-     * Used to enable or disable component. By default if component enabled it receives and proceed events
+     * Used to enable or disable component. By default if component enabled it receives and proceed events.
      *
-     * @param enabled flag to set
+     * @param enabled flag to set.
      */
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
@@ -297,9 +309,9 @@ public abstract class Component implements Serializable {
 
     /**
      * Returns true if component visible.
-     * By default if component visible it will be rendered and will receive events
+     * By default if component visible it will be rendered and will receive events.
      *
-     * @return true if component visible. default value is {@link Boolean#TRUE}
+     * @return true if component visible. default value is {@link Boolean#TRUE}.
      */
     public boolean isVisible() {
         return visible;
@@ -307,9 +319,9 @@ public abstract class Component implements Serializable {
 
     /**
      * Used to make component visible or invisible.
-     * By default if component visible it will be rendered and will receive events
+     * By default if component visible it will be rendered and will receive events.
      *
-     * @param visible flag to set
+     * @param visible flag to set.
      */
     public void setVisible(boolean visible) {
         this.visible = visible;
@@ -319,7 +331,7 @@ public abstract class Component implements Serializable {
      * Used to determine if point intersects component (in screen space).
      * This method uses component intersector.
      *
-     * @param point point to check
+     * @param point point to check.
      * @return true if component intersected by point.
      */
     public boolean intersects(Vector2f point) {
@@ -329,7 +341,7 @@ public abstract class Component implements Serializable {
     /**
      * Returns component intersector which used to check if cursor intersect component or not.
      *
-     * @return intersector
+     * @return intersector.
      */
     public Intersector getIntersector() {
         return intersector;
@@ -338,7 +350,7 @@ public abstract class Component implements Serializable {
     /**
      * Used to set intersector for component.
      *
-     * @param intersector intersector
+     * @param intersector intersector.
      */
     public void setIntersector(Intersector intersector) {
         if (intersector == null) return;
@@ -348,7 +360,7 @@ public abstract class Component implements Serializable {
     /**
      * Returns component metadata. Storage of some temporary statements. Can be used for example by stateless renderers.
      *
-     * @return map of objects
+     * @return map of objects.
      */
     public Map<String, Object> getMetadata() {
         return metadata;
@@ -357,61 +369,171 @@ public abstract class Component implements Serializable {
     /**
      * Returns border of component.
      *
-     * @return border
+     * @return border.
      */
     public Border getBorder() {
         return border;
     }
 
     /**
-     * Used to set border for component
+     * Used to set border for component.
      *
-     * @param border border
+     * @param border border.
      */
     public void setBorder(Border border) {
         this.border = border;
     }
 
     /**
-     * Returns corner radius of component
+     * Returns corner radius of component.
      *
-     * @return corner radius
+     * @return corner radius.
      */
     public float getCornerRadius() {
         return cornerRadius;
     }
 
     /**
-     * Used to set corner radius
+     * Used to set corner radius.
      *
-     * @param cornerRadius corner radius
+     * @param cornerRadius corner radius.
      */
     public void setCornerRadius(float cornerRadius) {
         this.cornerRadius = cornerRadius;
     }
 
-
+    /**
+     * Returns true if component is hovered.
+     *
+     * @return true if component is hovered.
+     */
     public boolean isHovered() {
         return hovered;
     }
 
+    /**
+     * Used to make component hovered or not.
+     *
+     * @param hovered new hovered value.
+     */
     public void setHovered(boolean hovered) {
         this.hovered = hovered;
     }
 
+    /**
+     * Returns true if component is focused.
+     *
+     * @return true if component is focused.
+     */
     public boolean isFocused() {
         return focused;
     }
 
+    /**
+     * Used to make component focused or not.
+     *
+     * @param focused new hovered value.
+     */
     public void setFocused(boolean focused) {
         this.focused = focused;
     }
 
+    /**
+     * Returns true if component is pressed.
+     *
+     * @return true if component is pressed.
+     */
     public boolean isPressed() {
         return pressed;
     }
 
+    /**
+     * Used to make component pressed or not.
+     *
+     * @param pressed new hovered value.
+     */
     public void setPressed(boolean pressed) {
         this.pressed = pressed;
+    }
+
+    /**
+     * (non-Javadoc)
+     *
+     * @see Object#equals(Object)
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Component component = (Component) o;
+
+        return new EqualsBuilder()
+                .append(getCornerRadius(), component.getCornerRadius())
+                .append(isEnabled(), component.isEnabled())
+                .append(isVisible(), component.isVisible())
+                .append(isHovered(), component.isHovered())
+                .append(isFocused(), component.isFocused())
+                .append(isPressed(), component.isPressed())
+                .append(getMetadata(), component.getMetadata())
+                .append(getParent(), component.getParent())
+                .append(getListenerMap(), component.getListenerMap())
+                .append(getPosition(), component.getPosition())
+                .append(getSize(), component.getSize())
+                .append(getBackgroundColor(), component.getBackgroundColor())
+                .append(getBorder(), component.getBorder())
+                .append(getIntersector(), component.getIntersector())
+                .isEquals();
+    }
+
+    /**
+     * (non-Javadoc)
+     *
+     * @see Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37)
+                .append(getCornerRadius())
+                .append(getMetadata())
+                .append(getParent())
+                .append(getListenerMap())
+                .append(getPosition())
+                .append(getSize())
+                .append(getBackgroundColor())
+                .append(getBorder())
+                .append(isEnabled())
+                .append(isVisible())
+                .append(getIntersector())
+                .append(isHovered())
+                .append(isFocused())
+                .append(isPressed())
+                .toHashCode();
+    }
+
+    /**
+     * (non-Javadoc)
+     *
+     * @see Object#toString()
+     */
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append("cornerRadius", cornerRadius)
+                .append("metadata", metadata)
+                .append("parent", parent)
+                .append("listenerMap", listenerMap)
+                .append("position", position)
+                .append("size", size)
+                .append("backgroundColor", backgroundColor)
+                .append("border", border)
+                .append("enabled", enabled)
+                .append("visible", visible)
+                .append("intersector", intersector)
+                .append("hovered", hovered)
+                .append("focused", focused)
+                .append("pressed", pressed)
+                .toString();
     }
 }

@@ -9,48 +9,104 @@ import org.liquidengine.legui.color.ColorConstants;
 import org.liquidengine.legui.component.optional.TextState;
 
 /**
- * Created by Aliaksandr_Shcherbin on 2/6/2017.
+ * Class represent single line non-editable text component.
  */
 public class Label extends Controller {
 
+    /**
+     * Used to hold text state of component.
+     */
     private TextState textState;
 
+    /**
+     * Default constructor. Creates label with 'Label' text.
+     */
     public Label() {
         this("Label");
     }
 
+    /**
+     * Creates label with specified size and on specified position.
+     *
+     * @param x      x position.
+     * @param y      y position.
+     * @param width  label width.
+     * @param height label height.
+     */
     public Label(float x, float y, float width, float height) {
         this("Label", x, y, width, height);
     }
 
+    /**
+     * Creates label with specified size and on specified position.
+     *
+     * @param position label position.
+     * @param size     label size.
+     */
     public Label(Vector2f position, Vector2f size) {
         this("Label", position, size);
     }
 
+    /**
+     * Creates label with specified text.
+     *
+     * @param text text to set.
+     */
     public Label(String text) {
         initialize(text);
     }
 
+    /**
+     * Creates label with specified text, size and on specified position.
+     *
+     * @param text   text to set.
+     * @param x      x position.
+     * @param y      y position.
+     * @param width  label width.
+     * @param height label height.
+     */
     public Label(String text, float x, float y, float width, float height) {
         super(x, y, width, height);
         initialize(text);
     }
 
+    /**
+     * Creates label with specified text, size and on specified position.
+     *
+     * @param text     text to set.
+     * @param position label position.
+     * @param size     label size.
+     */
     public Label(String text, Vector2f position, Vector2f size) {
         super(position, size);
         initialize(text);
     }
 
+    /**
+     * Used to initialize label.
+     *
+     * @param text text to set.
+     */
     private void initialize(String text) {
         this.textState = new TextState(text);
         setBackgroundColor(ColorConstants.transparent());
         setBorder(null);
     }
 
+    /**
+     * Used to retrieve text state.
+     *
+     * @return text state.
+     */
     public TextState getTextState() {
         return textState;
     }
 
+    /**
+     * (non-Javadoc)
+     *
+     * @see Object#equals(Object)
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -65,6 +121,11 @@ public class Label extends Controller {
                 .isEquals();
     }
 
+    /**
+     * (non-Javadoc)
+     *
+     * @see Object#hashCode()
+     */
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
@@ -73,6 +134,11 @@ public class Label extends Controller {
                 .toHashCode();
     }
 
+    /**
+     * (non-Javadoc)
+     *
+     * @see Object#toString()
+     */
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)

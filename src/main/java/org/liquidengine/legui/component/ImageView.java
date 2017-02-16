@@ -9,13 +9,24 @@ import org.liquidengine.legui.image.Image;
  * This class represents image view component.
  */
 public class ImageView extends Controller {
+    /**
+     * Image (or image data)
+     */
     private Image image;
 
+    /**
+     * Creates image view with specified image.
+     *
+     * @param image image to set.
+     */
     public ImageView(Image image) {
         this.image = image;
         initialize();
     }
 
+    /**
+     * Default constructor of image view.
+     */
     public ImageView() {
         initialize();
     }
@@ -23,14 +34,29 @@ public class ImageView extends Controller {
     private void initialize() {
     }
 
+    /**
+     * Returns image of image view.
+     *
+     * @return image of image view or null.
+     */
     public Image getImage() {
         return image;
     }
 
+    /**
+     * Used to set image.
+     *
+     * @param image image to set.
+     */
     public void setImage(Image image) {
         this.image = image;
     }
 
+    /**
+     * (non-Javadoc)
+     *
+     * @see Object#equals(Object)
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -45,6 +71,12 @@ public class ImageView extends Controller {
                 .isEquals();
     }
 
+
+    /**
+     * (non-Javadoc)
+     *
+     * @see Object#hashCode()
+     */
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
@@ -53,6 +85,11 @@ public class ImageView extends Controller {
                 .toHashCode();
     }
 
+    /**
+     * (non-Javadoc)
+     *
+     * @see Object#toString()
+     */
     @Override
     public String toString() {
         return new ToStringBuilder(this)
