@@ -24,7 +24,7 @@ import static org.liquidengine.legui.event.MouseClickEvent.MouseClickAction.CLIC
  * RadioButton      rb2 = new RadioButton();
  * radioButton1.setRadioButtonGroup(radioButtonGroup);
  * radioButton2.setRadioButtonGroup(radioButtonGroup);
- * }</pre></p>
+ * }</pre>
  */
 public class RadioButton extends Controller {
     /**
