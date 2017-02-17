@@ -39,9 +39,10 @@ public class Tooltip extends Component {
 
     @Override
     public Vector2f getScreenPosition() {
+        Vector2f screenPosition = super.getScreenPosition();
         Vector2f position = new Vector2f(getPosition());
         if (controller != null) {
-            position.add(controller.getScreenPosition());
+            position.add(controller.getScreenPosition()).add(screenPosition);
         }
         return position;
     }

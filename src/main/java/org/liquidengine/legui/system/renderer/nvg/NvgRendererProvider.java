@@ -28,7 +28,6 @@ public class NvgRendererProvider extends RendererProvider {
 
         // register component renderers
         componentRendererMap.put(Container.class, new NvgContainerRenderer());
-        componentRendererMap.put(LayerContainer.class, new NvgLayerRenderer());
         componentRendererMap.put(Button.class, new NvgButtonRenderer());
         componentRendererMap.put(ToggleButton.class, new NvgToggleButtonRenderer());
         componentRendererMap.put(ImageView.class, new NvgImageViewRenderer());
@@ -57,8 +56,8 @@ public class NvgRendererProvider extends RendererProvider {
     }
 
     private <C, R> R cycledSearchOfRenderer(Class<C> componentClass, Map map, R defaultRenderer) {
-        R                renderer = null;
-        Class            cClass   = componentClass;
+        R     renderer = null;
+        Class cClass   = componentClass;
         while (renderer == null) {
             renderer = ((Map<Class<C>, R>) map).get(cClass);
             if (cClass.isAssignableFrom(Component.class)) break;

@@ -378,6 +378,11 @@ public class ExampleGui extends Panel<Component> {
         bgImageNormal.setSize(36, 36); bgImageNormal.setPosition(2, 2); toggleButton.setBackgroundImage(bgImageNormal);
         bgImageToggled.setSize(36, 36); bgImageToggled.setPosition(2, 2); toggleButton.setTogglededBackgroundImage(bgImageToggled);
         //@formatter:on
+        RadioButtonGroup rbg = new RadioButtonGroup();
+        RadioButton      rb1 = new RadioButton();
+        RadioButton      rb2 = new RadioButton();
+        radioButton1.setRadioButtonGroup(radioButtonGroup);
+        radioButton2.setRadioButtonGroup(radioButtonGroup);
     }
 
     public TextArea getTextArea() {
