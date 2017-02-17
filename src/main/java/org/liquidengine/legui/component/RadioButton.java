@@ -4,6 +4,7 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+import org.joml.Vector2f;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.listener.MouseClickEventListener;
@@ -11,30 +12,109 @@ import org.liquidengine.legui.listener.MouseClickEventListener;
 import static org.liquidengine.legui.event.MouseClickEvent.MouseClickAction.CLICK;
 
 /**
- * Created by Aliaksandr_Shcherbin on 2/6/2017.
+ * RadioButtons create a series of items where only one item can be
+ * selected.
+ * <p>
+ * By default all created radio buttons have no group
+ * so all of them can be selected.
+ * <p>Usage example:</p>
+ * <p><pre>{@code
+ * RadioButtonGroup rbg = new RadioButtonGroup();
+ * RadioButton      rb1 = new RadioButton();
+ * RadioButton      rb2 = new RadioButton();
+ * radioButton1.setRadioButtonGroup(radioButtonGroup);
+ * radioButton2.setRadioButtonGroup(radioButtonGroup);
+ * }</pre></p>
  */
 public class RadioButton extends Controller {
+    /**
+     * Used to represent text state of radio button.
+     */
     protected TextState        textState;
-    protected boolean          selected;
-    protected RadioButtonGroup radioButtonGroup;
+    /**
+     * Used to represent if radio button selected or not.
+     */
+    private   boolean          selected;
+    /**
+     * Used to determine group of radio buttons where only one can be selected.
+     */
+    private   RadioButtonGroup radioButtonGroup;
 
+    /**
+     * Default constructor. Used to create component instance without any parameters.
+     * <p>
+     * Also if you want to make it easy to use with
+     * Json marshaller/unmarshaller component should contain empty constructor.
+     */
+    public RadioButton() {
+        this("RadioButton");
+    }
+
+    /**
+     * Constructor with position and size parameters.
+     *
+     * @param x      x position position in parent component.
+     * @param y      y position position in parent component.
+     * @param width  width of component.
+     * @param height height of component.
+     */
     public RadioButton(float x, float y, float width, float height) {
         this("RadioButton", x, y, width, height);
     }
 
+    /**
+     * Constructor with position and size parameters.
+     *
+     * @param position position position in parent component.
+     * @param size     size of component.
+     */
+    public RadioButton(Vector2f position, Vector2f size) {
+        this("RadioButton", position, size);
+    }
+
+    /**
+     * Default constructor. Used to create component instance without any parameters.
+     * <p>
+     * Also if you want to make it easy to use with
+     * Json marshaller/unmarshaller component should contain empty constructor.
+     *
+     * @param text text to set.
+     */
+    public RadioButton(String text) {
+        initialize(text);
+    }
+
+    /**
+     * Constructor with position and size parameters.
+     *
+     * @param text   text to set.
+     * @param x      x position position in parent component.
+     * @param y      y position position in parent component.
+     * @param width  width of component.
+     * @param height height of component.
+     */
     public RadioButton(String text, float x, float y, float width, float height) {
         super(x, y, width, height);
         initialize(text);
     }
 
-    public RadioButton(String text) {
+    /**
+     * Constructor with position and size parameters.
+     *
+     * @param text     text to set.
+     * @param position position position in parent component.
+     * @param size     size of component.
+     */
+    public RadioButton(String text, Vector2f position, Vector2f size) {
+        super(position, size);
         initialize(text);
     }
 
-    public RadioButton() {
-        this("RadioButton");
-    }
-
+    /**
+     * Used to initialize radio button.
+     *
+     * @param text text to set.
+     */
     private void initialize(String text) {
         textState = new TextState(text);
         setBorder(null);
@@ -45,10 +125,20 @@ public class RadioButton extends Controller {
         });
     }
 
+    /**
+     * Returns true if radio button is selected.
+     *
+     * @return true if radio button is selected.
+     */
     public boolean isSelected() {
         return selected;
     }
 
+    /**
+     * Used to set radio button selected or not.
+     *
+     * @param selected
+     */
     public void setSelected(boolean selected) {
         this.selected = selected;
         if (radioButtonGroup != null) {
@@ -56,10 +146,20 @@ public class RadioButton extends Controller {
         }
     }
 
+    /**
+     * Returns current radio button group.
+     *
+     * @return current radio button group.
+     */
     public RadioButtonGroup getRadioButtonGroup() {
         return radioButtonGroup;
     }
 
+    /**
+     * Used to set  radio button group.
+     *
+     * @param radioButtonGroup radio button group to set.
+     */
     public void setRadioButtonGroup(RadioButtonGroup radioButtonGroup) {
         if (this.radioButtonGroup != null) {
             this.radioButtonGroup.remove(this);
@@ -75,10 +175,20 @@ public class RadioButton extends Controller {
         }
     }
 
+    /**
+     * Returns text state of radio button.
+     *
+     * @return text state of radio button.
+     */
     public TextState getTextState() {
         return textState;
     }
 
+    /**
+     * (non-Javadoc)
+     *
+     * @see Object#equals(Object)
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -95,6 +205,11 @@ public class RadioButton extends Controller {
                 .isEquals();
     }
 
+    /**
+     * (non-Javadoc)
+     *
+     * @see Object#hashCode()
+     */
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
@@ -105,6 +220,11 @@ public class RadioButton extends Controller {
                 .toHashCode();
     }
 
+    /**
+     * (non-Javadoc)
+     *
+     * @see Object#toString()
+     */
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)

@@ -37,10 +37,10 @@ public abstract class Container<T extends Component> extends Controller {
     /**
      * Constructor with position and size parameters.
      *
-     * @param x      x position position in parent component
-     * @param y      y position position in parent component
-     * @param width  width of component
-     * @param height height of component
+     * @param x      x position position in parent component.
+     * @param y      y position position in parent component.
+     * @param width  width of component.
+     * @param height height of component.
      */
     public Container(float x, float y, float width, float height) {
         super(x, y, width, height);
@@ -49,8 +49,8 @@ public abstract class Container<T extends Component> extends Controller {
     /**
      * Constructor with position and size parameters.
      *
-     * @param position position position in parent component
-     * @param size     size of component
+     * @param position position position in parent component.
+     * @param size     size of component.
      */
     public Container(Vector2f position, Vector2f size) {
         super(position, size);
