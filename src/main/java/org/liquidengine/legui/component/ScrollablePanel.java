@@ -9,32 +9,65 @@ import org.liquidengine.legui.color.ColorConstants;
 import org.liquidengine.legui.component.optional.Orientation;
 
 /**
- * Created by Aliaksandr_Shcherbin on 2/6/2017.
+ * Panel with scroll bars.
  */
 public class ScrollablePanel<T extends Component> extends Container implements Viewport {
     public static final float INITIAL_SCROLL_SIZE = 12f;
-    protected ScrollBar    verticalScrollBar;
-    protected ScrollBar    horizontalScrollBar;
-    protected Container    viewport;
-    protected Container<T> container;
+    /**
+     * Used to scroll panel vertically.
+     */
+    private ScrollBar            verticalScrollBar;
+    /**
+     * Used to scroll panel horizontally.
+     */
+    private ScrollBar            horizontalScrollBar;
+    /**
+     * Base container which holds scroll bars and content panel.
+     */
+    private Container<Component> viewport;
+    /**
+     * Used to hold components added by user.
+     */
+    private Container<T>         container;
 
+    /**
+     * Default constructor. Used to create component instance without any parameters.
+     * <p>
+     * Also if you want to make it easy to use with
+     * Json marshaller/unmarshaller component should contain empty constructor.
+     */
     public ScrollablePanel() {
-        this(10, 10, 100, 100);
+        initialize();
     }
 
+    /**
+     * Constructor with position and size parameters.
+     *
+     * @param x      x position position in parent component.
+     * @param y      y position position in parent component.
+     * @param width  width of component.
+     * @param height height of component.
+     */
     public ScrollablePanel(float x, float y, float width, float height) {
         super(x, y, width, height);
-        initialize(width, height);
+        initialize();
     }
 
+    /**
+     * Constructor with position and size parameters.
+     *
+     * @param position position position in parent component.
+     * @param size     size of component.
+     */
     public ScrollablePanel(Vector2f position, Vector2f size) {
         super(position, size);
-        initialize(size.x, size.y);
+        initialize();
     }
 
-    private void initialize(float width, float height) {
-        float viewportWidth  = width - INITIAL_SCROLL_SIZE;
-        float viewportHeight = height - INITIAL_SCROLL_SIZE;
+    private void initialize() {
+
+        float viewportWidth  = getSize().x - INITIAL_SCROLL_SIZE;
+        float viewportHeight = getSize().y - INITIAL_SCROLL_SIZE;
 
         verticalScrollBar = new ScrollBar();
         verticalScrollBar.setBackgroundColor(ColorConstants.darkGray());
@@ -78,6 +111,9 @@ public class ScrollablePanel<T extends Component> extends Container implements V
         resize();
     }
 
+    /**
+     * Used to resize scrollable panel.
+     */
     public void resize() {
         boolean horizontalScrollBarVisible = horizontalScrollBar.isVisible();
         boolean verticalScrollBarVisible   = verticalScrollBar.isVisible();
@@ -104,6 +140,9 @@ public class ScrollablePanel<T extends Component> extends Container implements V
         updateViewport();
     }
 
+    /**
+     * Used to update container position in viewport.
+     */
     public void updateViewport() {
         float vh = viewport.getSize().y;
         float ch = container.getSize().y;
@@ -125,10 +164,20 @@ public class ScrollablePanel<T extends Component> extends Container implements V
         container.setPosition(new Vector2f(newPosX, newPosY));
     }
 
+    /**
+     * Returns vertical scrollbar.
+     *
+     * @return vertical scrollbar.
+     */
     public ScrollBar getVerticalScrollBar() {
         return verticalScrollBar;
     }
 
+    /**
+     * Used to set vertical scroll bar.
+     *
+     * @param verticalScrollBar vertical scroll bar to set.
+     */
     public void setVerticalScrollBar(ScrollBar verticalScrollBar) {
         this.verticalScrollBar.setViewport(null);
         this.remove(this.verticalScrollBar);
@@ -137,10 +186,20 @@ public class ScrollablePanel<T extends Component> extends Container implements V
         this.verticalScrollBar.setViewport(this);
     }
 
+    /**
+     * Returns horizontal scrollbar.
+     *
+     * @return horizontal scrollbar.
+     */
     public ScrollBar getHorizontalScrollBar() {
         return horizontalScrollBar;
     }
 
+    /**
+     * Used to set horizontal scroll bar.
+     *
+     * @param horizontalScrollBar horizontal scroll bar to set.
+     */
     public void setHorizontalScrollBar(ScrollBar horizontalScrollBar) {
         this.horizontalScrollBar.setViewport(null);
         this.remove(this.horizontalScrollBar);
@@ -149,16 +208,31 @@ public class ScrollablePanel<T extends Component> extends Container implements V
         this.horizontalScrollBar.setViewport(this);
     }
 
+    /**
+     * Returns container which should used to add components to scrollable panel.
+     *
+     * @return container which should used to add components to scrollable panel.
+     */
     public Container getContainer() {
         return container;
     }
 
+    /**
+     * Used to set container which should used to add components to scrollable panel.
+     *
+     * @param container container which should used to add components to scrollable panel.
+     */
     public void setContainer(Container container) {
         viewport.remove(this.container);
         this.container = container;
         viewport.add(this.container);
     }
 
+    /**
+     * (non-Javadoc)
+     *
+     * @see Object#equals(Object)
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -176,6 +250,11 @@ public class ScrollablePanel<T extends Component> extends Container implements V
                 .isEquals();
     }
 
+    /**
+     * (non-Javadoc)
+     *
+     * @see Object#toString()
+     */
     @Override
     public String toString() {
         return new ToStringBuilder(this)
@@ -186,6 +265,11 @@ public class ScrollablePanel<T extends Component> extends Container implements V
                 .toString();
     }
 
+    /**
+     * (non-Javadoc)
+     *
+     * @see Object#hashCode()
+     */
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
