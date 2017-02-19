@@ -21,7 +21,7 @@ import org.liquidengine.legui.theme.Theme;
 import static org.liquidengine.legui.input.Mouse.MouseButton.MOUSE_BUTTON_LEFT;
 
 /**
- * Created by Aliaksandr_Shcherbin on 2/6/2017.
+ * An implementation of a scrollbar.
  */
 public class ScrollBar extends Controller {
     public static final float MIN_SCROLL_SIZE = 1f;
