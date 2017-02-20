@@ -26,12 +26,34 @@ import static org.liquidengine.legui.input.Mouse.MouseButton.MOUSE_BUTTON_LEFT;
 public class ScrollBar extends Controller {
     public static final float MIN_SCROLL_SIZE = 1f;
 
+    /**
+     * Used to determine if scroll bar vertical or horizontal.
+     */
     private Orientation orientation = Orientation.VERTICAL;
 
+    /**
+     * Minimum value.
+     */
     private float minValue = 0f;
+
+    /**
+     * Maximum value.
+     */
     private float maxValue = 100f;
+
+    /**
+     * Current value.
+     */
     private float curValue = 0f;
 
+    /**
+     * Scroll step. Used to determine delta which should be added on scroll event.
+     */
+    private float scrollStep = 0.1f;
+
+    /**
+     * Used to determine visible part of viewport.
+     */
     private float visibleAmount;
 
     private boolean  arrowsEnabled = Theme.DEFAULT_THEME.scrollBarArrowsEnabled();
@@ -43,67 +65,175 @@ public class ScrollBar extends Controller {
 
     private Viewport viewport;
 
-    public ScrollBar(float x, float y, float width, float height, float curValue) {
-        super(x, y, width, height);
-        this.curValue = curValue;
+    /**
+     * Default constructor. Used to create component instance without any parameters.
+     * <p>
+     * Also if you want to make it easy to use with
+     * Json marshaller/unmarshaller component should contain empty constructor.
+     */
+    public ScrollBar() {
         initialize();
     }
 
+    /**
+     * Constructor with position and size parameters.
+     *
+     * @param x      x position position in parent component.
+     * @param y      y position position in parent component.
+     * @param width  width of component.
+     * @param height height of component.
+     */
     public ScrollBar(float x, float y, float width, float height) {
         super(x, y, width, height);
         initialize();
     }
 
-    public ScrollBar() {
+    /**
+     * Constructor with position and size parameters.
+     *
+     * @param position position position in parent component.
+     * @param size     size of component.
+     */
+    public ScrollBar(Vector2f position, Vector2f size) {
+        super(position, size);
         initialize();
     }
 
-    public ScrollBar(int curValue) {
+
+    /**
+     * Default constructor with current value parameter.
+     * <p>
+     * Also if you want to make it easy to use with
+     * Json marshaller/unmarshaller component should contain empty constructor.
+     *
+     * @param curValue current scroll bar value to set.
+     */
+    public ScrollBar(float curValue) {
+        this();
         this.curValue = curValue;
     }
 
+    /**
+     * Constructor with position, size and current value parameters.
+     *
+     * @param x        x position position in parent component.
+     * @param y        y position position in parent component.
+     * @param width    width of component.
+     * @param height   height of component.
+     * @param curValue current scroll bar value to set.
+     */
+    public ScrollBar(float x, float y, float width, float height, float curValue) {
+        this(x, y, width, height);
+        this.curValue = curValue;
+    }
+
+    /**
+     * Constructor with position, size and current value parameters.
+     *
+     * @param position position position in parent component.
+     * @param size     size of component.
+     * @param curValue current scroll bar value to set.
+     */
+    public ScrollBar(Vector2f position, Vector2f size, float curValue) {
+        this(position, size);
+        this.curValue = curValue;
+    }
+
+    /**
+     * Used to initialize listeners.
+     */
     private void initialize() {
         getListenerMap().addListener(ScrollEvent.class, new ScrollBarScrollListener(this));
         getListenerMap().addListener(MouseDragEvent.class, new ScrollBarMouseDragEventListener(this));
         getListenerMap().addListener(MouseClickEvent.class, new ScrollBarMouseClickEventListener(this));
     }
 
+    /**
+     * Determines if scroll bar currently scrolling by user. Used by event listeners.
+     *
+     * @return true if scrolling.
+     */
     public boolean isScrolling() {
         return scrolling;
     }
 
+    /**
+     * Used to set scrolling status. By default used by event listeners which implement scrolling behaviour.
+     *
+     * @param scrolling new status to set.
+     */
     public void setScrolling(boolean scrolling) {
         this.scrolling = scrolling;
     }
 
+    /**
+     * Returns viewport if scrollbar attached to viewport.
+     *
+     * @return scrollbar viewport.
+     */
     public Viewport getViewport() {
         return viewport;
     }
 
+    /**
+     * Used to attach scrollbar to viewport. So if scrollbar value updated - called {@link Viewport#updateViewport()} method.
+     *
+     * @param viewport viewport to set.
+     */
     public void setViewport(Viewport viewport) {
         this.viewport = viewport;
     }
 
+    /**
+     * Returns scrollbar orientation.
+     *
+     * @return scrollbar orientation.
+     */
     public Orientation getOrientation() {
         return orientation;
     }
 
+    /**
+     * Used to set scrollbar orientation.
+     *
+     * @param orientation scrollbar orientation to set.
+     */
     public void setOrientation(Orientation orientation) {
         this.orientation = orientation;
     }
 
+    /**
+     * Returns arrow size.
+     *
+     * @return arrow size.
+     */
     public float getArrowSize() {
         return arrowSize;
     }
 
+    /**
+     * Used to set arrow size.
+     *
+     * @param arrowSize arrow size to set.
+     */
     public void setArrowSize(float arrowSize) {
         this.arrowSize = arrowSize;
     }
 
+    /**
+     * Returns true if arrows enabled.
+     *
+     * @return true if arrows enabled.
+     */
     public boolean isArrowsEnabled() {
         return arrowsEnabled;
     }
 
+    /**
+     * Used to enable/disable arrows.
+     *
+     * @param arrowsEnabled value to enable/disable arrows.
+     */
     public void setArrowsEnabled(boolean arrowsEnabled) {
         this.arrowsEnabled = arrowsEnabled;
     }
@@ -153,6 +283,16 @@ public class ScrollBar extends Controller {
             this.curValue = maxValue;
         } else {
             this.curValue = curValue;
+        }
+    }
+
+    public float getScrollStep() {
+        return scrollStep;
+    }
+
+    public void setScrollStep(float scrollStep) {
+        if (scrollStep > 0) {
+            this.scrollStep = scrollStep;
         }
     }
 
@@ -230,7 +370,7 @@ public class ScrollBar extends Controller {
             float curValue      = scrollBar.getCurValue();
             float visibleAmount = scrollBar.getVisibleAmount();
             float valueRange    = scrollBar.getMaxValue() - scrollBar.getMinValue();
-            float newVal        = (float) (curValue - 0.1f * event.getYoffset() * visibleAmount * valueRange / (valueRange - visibleAmount));
+            float newVal        = (float) (curValue - scrollBar.getScrollStep() * event.getYoffset() * visibleAmount * valueRange / (valueRange - visibleAmount));
 
             if (newVal > maxValue) newVal = maxValue;
             if (newVal < minValue) newVal = minValue;
