@@ -1,6 +1,5 @@
 package org.liquidengine.legui.component;
 
-import org.apache.commons.collections4.list.SetUniqueList;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -29,11 +28,14 @@ import static org.liquidengine.legui.util.TextUtil.cpToStr;
  * Creates drop-down list with select options
  */
 public class SelectBox extends Container {
-    public static final  String               NULL            = "null";
-    private static final String               EXPANDED        = cpToStr(0xE5C7);
-    private static final String               COLLAPSED       = cpToStr(0xE5C5);
-    private              List<ListBoxElement> listBoxElements = SetUniqueList.setUniqueList(new CopyOnWriteArrayList<>());
-    private              List<String>         elements        = SetUniqueList.setUniqueList(new CopyOnWriteArrayList<>());
+    /**
+     * Default value for null element
+     */
+    public static final  String                 NULL              = "null";
+    private static final String                 EXPANDED          = cpToStr(0xE5C7);
+    private static final String                 COLLAPSED         = cpToStr(0xE5C5);
+    private              List<SelectBoxElement> selectBoxElements = new CopyOnWriteArrayList<>();
+    private              List<String>           elements          = new CopyOnWriteArrayList<>();
 
     private       SelectBoxScrollablePanel selectionListPanel      = new SelectBoxScrollablePanel();
     private final SelectBoxScrollListener  selectBoxScrollListener = new SelectBoxScrollListener(selectionListPanel.getVerticalScrollBar());
@@ -46,36 +48,79 @@ public class SelectBox extends Container {
     private       boolean                  collapsed               = true;
     private       Lock                     lock                    = new ReentrantLock(false);
 
+    /**
+     * Default constructor. Used to create component instance without any parameters.
+     * <p>
+     * Also if you want to make it easy to use with
+     * Json marshaller/unmarshaller component should contain empty constructor.
+     */
     public SelectBox() {
         initialize();
     }
 
+    /**
+     * Constructor with position and size parameters.
+     *
+     * @param x      x position position in parent component.
+     * @param y      y position position in parent component.
+     * @param width  width of component.
+     * @param height height of component.
+     */
     public SelectBox(float x, float y, float width, float height) {
         super(x, y, width, height);
         initialize();
     }
 
+    /**
+     * Constructor with position and size parameters.
+     *
+     * @param position position position in parent component.
+     * @param size     size of component.
+     */
     public SelectBox(Vector2f position, Vector2f size) {
         super(position, size);
         initialize();
     }
 
+    /**
+     * Returns all elements of list.
+     *
+     * @return all elements of list.
+     */
     public List<String> getElements() {
         return elements;
     }
 
+    /**
+     * Returns button width.
+     *
+     * @return button width.
+     */
     public float getButtonWidth() {
         return buttonWidth;
     }
 
+    /**
+     * Used to set button width.
+     *
+     * @param buttonWidth button width to set.
+     */
     public void setButtonWidth(float buttonWidth) {
         this.buttonWidth = buttonWidth;
     }
 
+    /**
+     * Returns selected element.
+     *
+     * @return selected element.
+     */
     public String getSelection() {
         return selectedElement;
     }
 
+    /**
+     * Used to initialize selectbox.
+     */
     private void initialize() {
         selectionListPanel.getHorizontalScrollBar().setVisible(false);
 
@@ -98,18 +143,38 @@ public class SelectBox extends Container {
         resize();
     }
 
+    /**
+     * Returns count of visible elements in expanded state.
+     *
+     * @return
+     */
     public int getVisibleCount() {
         return visibleCount;
     }
 
+    /**
+     * Used to set count of visible elements.
+     *
+     * @param visibleCount count of visible elements to set.
+     */
     public void setVisibleCount(int visibleCount) {
         this.visibleCount = visibleCount;
     }
 
+    /**
+     * Returns true if selectbox is collapsed and false if expanded.
+     *
+     * @return true if selectbox is collapsed and false if expanded.
+     */
     public boolean isCollapsed() {
         return collapsed;
     }
 
+    /**
+     * Used to set selectbox to collapsed or expanded state.
+     *
+     * @param collapsed collapsed state to set.
+     */
     public void setCollapsed(boolean collapsed) {
         this.collapsed = collapsed;
         if (collapsed) {
@@ -121,6 +186,9 @@ public class SelectBox extends Container {
         resize();
     }
 
+    /**
+     * Used to resize selectbox.
+     */
     private void resize() {
         selectionButton.setPosition(0, 0);
         selectionButton.setSize(getSize().x - buttonWidth, getSize().y);
@@ -130,10 +198,10 @@ public class SelectBox extends Container {
         expandButton.setSize(buttonWidth, getSize().y);
         selectionListPanel.getVerticalScrollBar().getSize().x = buttonWidth;
 
-        for (int i = 0; i < listBoxElements.size(); i++) {
-            ListBoxElement listBoxElement = listBoxElements.get(i);
-            listBoxElement.setSize(new Vector2f(selectionListPanel.getContainer().getSize().x, elementHeight));
-            listBoxElement.setPosition(0, i * elementHeight);
+        for (int i = 0; i < selectBoxElements.size(); i++) {
+            SelectBoxElement selectBoxElement = selectBoxElements.get(i);
+            selectBoxElement.setSize(new Vector2f(selectionListPanel.getContainer().getSize().x, elementHeight));
+            selectBoxElement.setPosition(0, i * elementHeight);
         }
 
 
@@ -153,26 +221,37 @@ public class SelectBox extends Container {
 
     }
 
+    /**
+     * Used to add element to selectbox.
+     *
+     * @param element element to add.
+     */
     public void addElement(String element) {
-        if (!elements.contains(element)) {
-            lock.lock();
-            try {
+        lock.lock();
+        try {
+            if (!elements.contains(element)) {
 
-                ListBoxElement boxElement = createListBoxElement(element);
+                SelectBoxElement boxElement = createSelectBoxElement(element);
                 if (elements.isEmpty()) selectionButton.getTextState().setText(element);
                 boxElement.getListenerMap().addListener(ScrollEvent.class, selectBoxScrollListener);
                 elements.add(element);
-                listBoxElements.add(boxElement);
-                addListBoxComponent(boxElement);
-            } finally {
-                lock.unlock();
+                selectBoxElements.add(boxElement);
+                addSelectBoxComponent(boxElement);
+                resize();
             }
+        } finally {
+            lock.unlock();
         }
-        resize();
     }
 
-    private ListBoxElement createListBoxElement(String element) {
-        ListBoxElement boxElement = new ListBoxElement(element, false);
+    /**
+     * Used to create {@link SelectBoxElement}.
+     *
+     * @param element element.
+     * @return {@link SelectBoxElement} created on base of element.
+     */
+    private SelectBoxElement createSelectBoxElement(String element) {
+        SelectBoxElement boxElement = new SelectBoxElement(element, false);
         boxElement.setSize(new Vector2f(selectionListPanel.getContainer().getSize().x, elementHeight));
         boxElement.setPosition(0, selectionListPanel.getContainer().count() * elementHeight);
         boxElement.getListenerMap().getListeners(MouseClickEvent.class).add((MouseClickEventListener) event -> {
@@ -184,35 +263,68 @@ public class SelectBox extends Container {
         return boxElement;
     }
 
-    private void addListBoxComponent(ListBoxElement element) {
+    /**
+     * Used to add {@link SelectBoxElement} to selectbox.
+     *
+     * @param element element to add.
+     */
+    private void addSelectBoxComponent(SelectBoxElement element) {
         selectionListPanel.getContainer().add(element);
         selectionListPanel.getContainer().getSize().y = selectionListPanel.getContainer().count() * elementHeight;
         selectionListPanel.resize();
     }
 
+    /**
+     * Used to get element index.
+     *
+     * @param element element to find index.
+     * @return index of element or -1 if no such element in selectbox.
+     */
     public int getElementIndex(String element) {
         return elements.indexOf(element);
     }
 
+    /**
+     * Used to remove element from selectbox.
+     *
+     * @param element element to remove from selectbox.
+     */
     public void removeElement(String element) {
         elements.remove(element);
     }
 
+    /**
+     * Used to remove element on specified index from selectbox.
+     *
+     * @param index index of element to remove from selectbox.
+     */
     public void removeElement(int index) {
         lock.lock();
         try {
             elements.remove(index);
-            listBoxElements.remove(index);
+            selectBoxElements.remove(index);
         } finally {
             lock.unlock();
         }
     }
 
+    /**
+     * Used to set selected state of element.
+     *
+     * @param element  element to set state.
+     * @param selected state of element to set.
+     */
     public void setSelected(String element, boolean selected) {
         int index = elements.indexOf(element);
         setSelected(element, selected, index);
     }
 
+    /**
+     * Used to set selected state of element on specified index.
+     *
+     * @param index    index of element to set state.
+     * @param selected state of element to set.
+     */
     public void setSelected(int index, boolean selected) {
         String element = elements.get(index);
         setSelected(element, selected, index);
@@ -221,11 +333,11 @@ public class SelectBox extends Container {
     private void setSelected(String element, boolean selected, int index) {
         if (selected) {
             if (index != -1) {
-                ListBoxElement tListBoxElement = listBoxElements.get(index);
-                tListBoxElement.selected = true;
+                SelectBoxElement tSelectBoxElement = selectBoxElements.get(index);
+                tSelectBoxElement.selected = true;
                 int selectedIndex = elements.indexOf(selectedElement);
                 if (selectedIndex != -1) {
-                    listBoxElements.get(index).selected = false;
+                    selectBoxElements.get(index).selected = false;
                 }
                 selectedElement = element;
                 selectionButton.getTextState().setText(element);
@@ -235,7 +347,7 @@ public class SelectBox extends Container {
             }
         } else {
             if (index != -1) {
-                listBoxElements.get(index).selected = false;
+                selectBoxElements.get(index).selected = false;
                 if (Objects.equals(element, selectedElement)) selectionButton.getTextState().setText(NULL);
             } else {
                 addElement(element);
@@ -243,15 +355,28 @@ public class SelectBox extends Container {
         }
     }
 
+    /**
+     * Returns element height.
+     *
+     * @return element height.
+     */
     public float getElementHeight() {
         return elementHeight;
     }
 
+    /**
+     * Used to set element height for all elements in selectbox.
+     *
+     * @param elementHeight element height to set.
+     */
     public void setElementHeight(float elementHeight) {
         this.elementHeight = elementHeight;
         resize();
     }
 
+    /**
+     * Default focus listener for selectbox. Used to collapse selectbox if it loses focus.
+     */
     public static class SelectBoxFocusListener implements FocusEventListener {
         private final SelectBox box;
 
@@ -265,8 +390,8 @@ public class SelectBox extends Container {
             if (!event.isFocused() && !box.isCollapsed()) {
                 boolean   collapse  = true;
                 Component nextFocus = event.getNextFocus();
-                for (ListBoxElement listBoxElement : box.listBoxElements) {
-                    if (nextFocus == listBoxElement) {
+                for (SelectBoxElement selectBoxElement : box.selectBoxElements) {
+                    if (nextFocus == selectBoxElement) {
                         collapse = false;
                     }
                 }
@@ -283,6 +408,9 @@ public class SelectBox extends Container {
         }
     }
 
+    /**
+     * Default mouse click listener for selectbox. Used to collapse selectbox if it loses focus and to expand/collapse if clicked on it.
+     */
     public static class SelectBoxClickListener implements MouseClickEventListener {
         private final SelectBox box;
 
@@ -299,19 +427,32 @@ public class SelectBox extends Container {
         }
     }
 
-    public class ListBoxElement extends Button {
+    /**
+     * Selectbox element which is subclass of button.
+     */
+    public class SelectBoxElement extends Button {
         private boolean selected;
 
-        private ListBoxElement(String text, boolean selected) {
+        private SelectBoxElement(String text, boolean selected) {
             super(text == null ? "null" : text);
             this.selected = selected;
             this.setBorder(null);
         }
 
+        /**
+         * Returns true if this select box element is currently selected.
+         *
+         * @return true if this select box element is currently selected.
+         */
         public boolean isSelected() {
             return selected;
         }
 
+        /**
+         * Used to set this element selected.
+         *
+         * @param selected
+         */
         private void setSelected(boolean selected) {
             this.selected = selected;
         }
@@ -329,7 +470,7 @@ public class SelectBox extends Container {
 
             if (o == null || getClass() != o.getClass()) return false;
 
-            ListBoxElement that = (ListBoxElement) o;
+            SelectBoxElement that = (SelectBoxElement) o;
 
             return new EqualsBuilder()
                     .appendSuper(super.equals(o))
@@ -346,19 +487,45 @@ public class SelectBox extends Container {
         }
     }
 
-    public class SelectBoxScrollablePanel extends ScrollablePanel {
+    /**
+     * Scrollable panel of selectbox.
+     */
+    public class SelectBoxScrollablePanel extends ScrollablePanel<SelectBoxElement> {
+        /**
+         * Default constructor. Used to create component instance without any parameters.
+         * <p>
+         * Also if you want to make it easy to use with
+         * Json marshaller/unmarshaller component should contain empty constructor.
+         */
         public SelectBoxScrollablePanel() {
         }
 
+        /**
+         * Constructor with position and size parameters.
+         *
+         * @param x      x position position in parent component.
+         * @param y      y position position in parent component.
+         * @param width  width of component.
+         * @param height height of component.
+         */
         public SelectBoxScrollablePanel(float x, float y, float width, float height) {
             super(x, y, width, height);
         }
 
+        /**
+         * Constructor with position and size parameters.
+         *
+         * @param position position position in parent component.
+         * @param size     size of component.
+         */
         public SelectBoxScrollablePanel(Vector2f position, Vector2f size) {
             super(position, size);
         }
     }
 
+    /**
+     * Listener of scroll action which used to scroll expanded selectbox.
+     */
     public class SelectBoxScrollListener implements ScrollEventListener {
         private final ScrollBar bar;
 
