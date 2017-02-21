@@ -21,7 +21,7 @@ import org.liquidengine.legui.listener.ScrollEventListener;
 import org.liquidengine.legui.system.context.Context;
 
 /**
- * Created by Aliaksandr_Shcherbin on 2/6/2017.
+ * Implementation of slider controller.
  */
 public class Slider extends Controller {
 
