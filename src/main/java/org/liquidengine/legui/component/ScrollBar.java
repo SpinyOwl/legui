@@ -307,7 +307,7 @@ public class ScrollBar extends Controller {
     /**
      * By default used by event listeners to set visible part of viewport.
      *
-     * @param visibleAmount
+     * @param visibleAmount visible size of viewport.
      */
     public void setVisibleAmount(float visibleAmount) {
         if (visibleAmount > minValue && visibleAmount <= maxValue) {
