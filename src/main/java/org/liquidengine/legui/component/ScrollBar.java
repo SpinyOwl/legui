@@ -238,44 +238,112 @@ public class ScrollBar extends Controller {
         this.arrowsEnabled = arrowsEnabled;
     }
 
+    /**
+     * Returns scrollbar color.
+     *
+     * @return scrollbar color.
+     */
     public Vector4f getScrollColor() {
         return scrollColor;
     }
 
+    /**
+     * Used to set scrollbar color.
+     *
+     * @param scrollColor scrollbar color to set.
+     */
     public void setScrollColor(Vector4f scrollColor) {
         this.scrollColor = scrollColor;
     }
 
+    /**
+     * Returns scrollbar arrow color.
+     *
+     * @return scrollbar arrow color.
+     */
+    public Vector4f getArrowColor() {
+        return arrowColor;
+    }
+
+    /**
+     * Used to set scrollbar arrow color.
+     *
+     * @param arrowColor scrollbar arrow color to set.
+     */
+    public void setArrowColor(Vector4f arrowColor) {
+        this.arrowColor = arrowColor;
+    }
+
+    /**
+     * Returns visible amount (if visible whole scrollbar visible amount = {@link #maxValue} - {@link #minValue})
+     *
+     * @return visible amount.
+     */
     public float getVisibleAmount() {
         return visibleAmount;
     }
 
+    /**
+     * By default used by event listeners to set visible part of viewport.
+     *
+     * @param visibleAmount
+     */
     public void setVisibleAmount(float visibleAmount) {
         if (visibleAmount > minValue && visibleAmount <= maxValue) {
             this.visibleAmount = visibleAmount;
         }
     }
 
+    /**
+     * Returns minimum state of scrollbar.
+     *
+     * @return minimum state of scrollbar.
+     */
     public float getMinValue() {
         return minValue;
     }
 
+    /**
+     * Used to set minimum state of scrollbar.
+     *
+     * @param minValue minimum state of scrollbar to set.
+     */
     public void setMinValue(float minValue) {
         this.minValue = minValue;
     }
 
+    /**
+     * Returns maximum state of scrollbar.
+     *
+     * @return maximum state of scrollbar.
+     */
     public float getMaxValue() {
         return maxValue;
     }
 
+    /**
+     * Used to set maximum state of scrollbar.
+     *
+     * @param maxValue maximum state of scrollbar to set.
+     */
     public void setMaxValue(float maxValue) {
         this.maxValue = maxValue;
     }
 
+    /**
+     * Returns current state of scrollbar.
+     *
+     * @return current state of scrollbar.
+     */
     public float getCurValue() {
         return curValue;
     }
 
+    /**
+     * Used to set current state of scrollbar.
+     *
+     * @param curValue current state of scrollbar to set.
+     */
     public void setCurValue(float curValue) {
         if (curValue < minValue) {
             this.curValue = minValue;
@@ -286,24 +354,31 @@ public class ScrollBar extends Controller {
         }
     }
 
+    /**
+     * Returns scrollbar scroll step (used by mouse scroll event listener).
+     *
+     * @return scrollbar scroll step (used by mouse scroll event listener).
+     */
     public float getScrollStep() {
         return scrollStep;
     }
 
+    /**
+     * Used to set scrollbar scroll step (used by mouse scroll event listener).
+     *
+     * @param scrollStep scrollbar scroll step to set.
+     */
     public void setScrollStep(float scrollStep) {
         if (scrollStep > 0) {
             this.scrollStep = scrollStep;
         }
     }
 
-    public Vector4f getArrowColor() {
-        return arrowColor;
-    }
-
-    public void setArrowColor(Vector4f arrowColor) {
-        this.arrowColor = arrowColor;
-    }
-
+    /**
+     * (non-Javadoc)
+     *
+     * @see Object#equals(Object)
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -322,6 +397,11 @@ public class ScrollBar extends Controller {
                 Objects.equal(scrollColor, scrollBar.scrollColor);
     }
 
+    /**
+     * (non-Javadoc)
+     *
+     * @see Object#hashCode()
+     */
     @Override
     public int hashCode() {
         return Objects.hashCode(super.hashCode(),
@@ -337,6 +417,11 @@ public class ScrollBar extends Controller {
                 scrollColor);
     }
 
+    /**
+     * (non-Javadoc)
+     *
+     * @see Object#toString()
+     */
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
@@ -353,10 +438,16 @@ public class ScrollBar extends Controller {
                 .toString();
     }
 
+    /**
+     * Defines contract for listener of {@link ScrollBarChangeValueEvent} event.
+     */
     public interface ScrollBarChangeValueEventListener extends EventListener<ScrollBarChangeValueEvent> {
         void process(ScrollBarChangeValueEvent event);
     }
 
+    /**
+     * Default mouse scroll event listener for scrollbar. Generates {@link ScrollBarChangeValueEvent} event.
+     */
     public static class ScrollBarScrollListener implements ScrollEventListener {
         private final ScrollBar scrollBar;
 
@@ -385,6 +476,9 @@ public class ScrollBar extends Controller {
         }
     }
 
+    /**
+     * Default mouse drag event listener for scrollbar. Generates {@link ScrollBarChangeValueEvent} event.
+     */
     public static class ScrollBarMouseDragEventListener implements MouseDragEventListener {
         private final ScrollBar scrollBar;
 
@@ -433,6 +527,10 @@ public class ScrollBar extends Controller {
         }
     }
 
+
+    /**
+     * Default mouse click event listener for scrollbar. Generates {@link ScrollBarChangeValueEvent} event.
+     */
     public static class ScrollBarMouseClickEventListener implements MouseClickEventListener {
         private final ScrollBar scrollBar;
 
