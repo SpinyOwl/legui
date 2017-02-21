@@ -252,7 +252,6 @@ public abstract class Container<T extends Component> extends Controller {
     /**
      * Used to retrieve child components as {@link List}
      * <p>
-     * <p>
      * <span style="color:red">NOTE: this method returns NEW {@link List} of components</span>
      *
      * @return list of child components.

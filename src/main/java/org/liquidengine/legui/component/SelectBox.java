@@ -146,7 +146,7 @@ public class SelectBox extends Container {
     /**
      * Returns count of visible elements in expanded state.
      *
-     * @return
+     * @return count of visible elements in expanded state.
      */
     public int getVisibleCount() {
         return visibleCount;

@@ -18,7 +18,7 @@ import static org.liquidengine.legui.event.MouseClickEvent.MouseClickAction.CLIC
  * By default all created radio buttons have no group
  * so all of them can be selected.
  * <p>Usage example:</p>
- * <p><pre>{@code
+ * <pre>{@code
  * RadioButtonGroup rbg = new RadioButtonGroup();
  * RadioButton      rb1 = new RadioButton();
  * RadioButton      rb2 = new RadioButton();
@@ -137,7 +137,7 @@ public class RadioButton extends Controller {
     /**
      * Used to set radio button selected or not.
      *
-     * @param selected
+     * @param selected true if it should be selected.
      */
     public void setSelected(boolean selected) {
         this.selected = selected;

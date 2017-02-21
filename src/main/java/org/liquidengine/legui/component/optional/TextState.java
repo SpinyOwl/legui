@@ -196,7 +196,6 @@ public class TextState implements Serializable {
 
     /**
      * Returns padding.
-     * <p>
      * <ul>
      * <li>x - left</li>
      * <li>y - top</li>
@@ -212,7 +211,6 @@ public class TextState implements Serializable {
 
     /**
      * Used to set padding.
-     * <p>
      * <ul>
      * <li>x - left</li>
      * <li>y - top</li>
@@ -220,7 +218,7 @@ public class TextState implements Serializable {
      * <li>w - bottom</li>
      * </ul>
      *
-     * @param padding
+     * @param padding text padding.
      */
     public void setPadding(Vector4f padding) {
         this.padding = padding;
@@ -288,7 +286,6 @@ public class TextState implements Serializable {
      * Ensures that the capacity is at least equal to the specified minimum.
      * If the current capacity is less than the argument, then a new internal
      * array is allocated with greater capacity. The new capacity is the larger of:
-     * <p>
      * <ul>
      * <li>The minimumCapacity argument.</li>
      * <li>Twice the old capacity, plus 2.</li>
@@ -347,7 +344,6 @@ public class TextState implements Serializable {
      * to <tt>length() - 1</tt>.  The first <code>char</code> value of the sequence is at
      * index zero, the next at index one, and so on, as for array
      * indexing.
-     * <p>
      * <p>If the <code>char</code> value specified by the index is a
      * <a href="{@docRoot}/java/lang/Character.html#unicode">surrogate</a>, the surrogate
      * value is returned.
@@ -366,7 +362,6 @@ public class TextState implements Serializable {
      * index. The index refers to {@code char} values
      * (Unicode code units) and ranges from {@code 0} to
      * {@link #length()}{@code  - 1}.
-     * <p>
      * <p> If the {@code char} value specified at the given index
      * is in the high-surrogate range, the following index is less
      * than the length of this sequence, and the
@@ -391,7 +386,6 @@ public class TextState implements Serializable {
      * index. The index refers to {@code char} values
      * (Unicode code units) and ranges from {@code 1} to {@link
      * #length()}.
-     * <p>
      * <p> If the {@code char} value at {@code (index - 1)}
      * is in the low-surrogate range, {@code (index - 2)} is not
      * negative, and the {@code char} value at {@code (index -
