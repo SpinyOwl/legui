@@ -4,10 +4,10 @@ package org.liquidengine.legui.exception;
  * Exception messages.
  */
 public enum LeguiExceptions {
-    SERIALIZE_EXCEPTION("Can't serialize your component"),
-    DESERIALIZE_EXCEPTION("Can't deserialize your component"),
-    SERIALIZER_IS_NOT_EXIST("Can't find serializer for component type: '%s'"),
-    DESERIALIZER_IS_NOT_EXIST("Can't find deserializer for component type: '%s'"),
+    MARSHALLING_EXCEPTION("Can't marshall your component"),
+    UNMARSHALLING_EXCEPTION("Can't unmarshall your component"),
+    MARSHALLER_IS_NOT_EXIST("Can't find marshaller for component type: '%s'"),
+    UNMARSHALLER_IS_NOT_EXIST("Can't find unmarshaller for component type: '%s'"),
     GSON_REGISTRY_TYPE_EXIST("Type '%s' already exist in type registry."),
     FAILED_TO_LOAD_FONT("Failed to initialize font. (%s)"),
     FAILED_TO_LOAD_IMAGE("Failed to initialize image. (%s)"),;
