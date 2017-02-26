@@ -1,6 +1,7 @@
 package org.liquidengine.legui.event;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.system.context.Context;
 
@@ -28,7 +29,7 @@ public class FocusEvent extends AbstractEvent {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this)
+        return new ToStringBuilder(this, ToStringStyle.JSON_STYLE)
                 .append("focused", focused)
                 .append("nextFocus", nextFocus)
                 .toString();

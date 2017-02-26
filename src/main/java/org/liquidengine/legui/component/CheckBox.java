@@ -107,7 +107,7 @@ public class CheckBox extends Controller {
         setBackgroundColor(ColorConstants.transparent());
         setBorder(null);
 
-        mouseClickEventListener = new CheckBoxMouseClickEventListener(this);
+        mouseClickEventListener = new CheckBoxMouseClickEventListener();
         getListenerMap().addListener(MouseClickEvent.class, mouseClickEventListener);
     }
 
@@ -179,7 +179,7 @@ public class CheckBox extends Controller {
      */
     @Override
     public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
+        return new ToStringBuilder(this, ToStringStyle.JSON_STYLE)
                 .append("textState", textState)
                 .append("checked", checked)
                 .toString();
@@ -190,14 +190,9 @@ public class CheckBox extends Controller {
      */
     public static class CheckBoxMouseClickEventListener implements MouseClickEventListener {
 
-        private final CheckBox checkBox;
-
-        public CheckBoxMouseClickEventListener(CheckBox checkBox) {
-            this.checkBox = checkBox;
-        }
-
         @Override
         public void process(MouseClickEvent event) {
+            CheckBox checkBox = (CheckBox) event.getComponent();
             if (event.getAction() == CLICK) {
                 checkBox.setChecked(!checkBox.isChecked());
             }

@@ -1,6 +1,7 @@
 package org.liquidengine.legui.event;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.system.context.Context;
@@ -34,7 +35,7 @@ public class CursorEnterEvent extends AbstractEvent {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this)
+        return new ToStringBuilder(this, ToStringStyle.JSON_STYLE)
                 .append("entered", entered)
                 .append("delta", delta)
                 .append("cursorPosition", cursorPosition)

@@ -142,7 +142,7 @@ public class Slider extends Controller {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
+        return new ToStringBuilder(this, ToStringStyle.JSON_STYLE)
                 .append("value", value)
                 .append("orientation", orientation)
                 .append("sliderActiveColor", sliderActiveColor)

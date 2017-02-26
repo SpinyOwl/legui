@@ -74,15 +74,6 @@ public abstract class AbstractGsonMarshaller<T> implements JsonMarshaller<T> {
         return null;
     }
 
-    /**
-     * Reads data from json object and puts it to object
-     *
-     * @param json    json object to read
-     * @param object  object to fill
-     * @param context marshal context
-     */
-    protected abstract void unmarshal(JsonObject json, T object, GsonMarshalContext context);
-
     @Override
     public final String marshal(T object, JsonMarshalContext context) {
         Gson       gson = new Gson();
@@ -115,5 +106,15 @@ public abstract class AbstractGsonMarshaller<T> implements JsonMarshaller<T> {
      * @param context marshal context
      */
     protected abstract void jsonMarshal(T object, JsonObject json, GsonMarshalContext context);
+
+    /**
+     * Reads data from json object and puts it to object
+     *
+     * @param json    json object to read
+     * @param object  object to fill
+     * @param context marshal context
+     */
+    protected abstract void unmarshal(JsonObject json, T object, GsonMarshalContext context);
+
 
 }

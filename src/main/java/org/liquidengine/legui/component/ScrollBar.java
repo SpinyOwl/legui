@@ -1,6 +1,8 @@
 package org.liquidengine.legui.component;
 
 import com.google.common.base.Objects;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
@@ -403,19 +405,24 @@ public class ScrollBar extends Controller {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof ScrollBar)) return false;
-        if (!super.equals(o)) return false;
+
+        if (o == null || getClass() != o.getClass()) return false;
+
         ScrollBar scrollBar = (ScrollBar) o;
-        return Float.compare(scrollBar.minValue, minValue) == 0 &&
-                Float.compare(scrollBar.maxValue, maxValue) == 0 &&
-                Float.compare(scrollBar.curValue, curValue) == 0 &&
-                Float.compare(scrollBar.visibleAmount, visibleAmount) == 0 &&
-                arrowsEnabled == scrollBar.arrowsEnabled &&
-                Float.compare(scrollBar.arrowSize, arrowSize) == 0 &&
-                scrolling == scrollBar.scrolling &&
-                orientation == scrollBar.orientation &&
-                Objects.equal(arrowColor, scrollBar.arrowColor) &&
-                Objects.equal(scrollColor, scrollBar.scrollColor);
+
+        return new EqualsBuilder()
+                .appendSuper(super.equals(o))
+                .append(minValue, scrollBar.minValue)
+                .append(maxValue, scrollBar.maxValue)
+                .append(curValue, scrollBar.curValue)
+                .append(scrollStep, scrollBar.scrollStep)
+                .append(visibleAmount, scrollBar.visibleAmount)
+                .append(arrowsEnabled, scrollBar.arrowsEnabled)
+                .append(arrowSize, scrollBar.arrowSize)
+                .append(orientation, scrollBar.orientation)
+                .append(arrowColor, scrollBar.arrowColor)
+                .append(scrollColor, scrollBar.scrollColor)
+                .isEquals();
     }
 
     /**
@@ -425,17 +432,19 @@ public class ScrollBar extends Controller {
      */
     @Override
     public int hashCode() {
-        return Objects.hashCode(super.hashCode(),
-                orientation,
-                minValue,
-                maxValue,
-                curValue,
-                visibleAmount,
-                arrowsEnabled,
-                arrowSize,
-                arrowColor,
-                scrolling,
-                scrollColor);
+        return new HashCodeBuilder(17, 37)
+                .appendSuper(super.hashCode())
+                .append(orientation)
+                .append(minValue)
+                .append(maxValue)
+                .append(curValue)
+                .append(scrollStep)
+                .append(visibleAmount)
+                .append(arrowsEnabled)
+                .append(arrowSize)
+                .append(arrowColor)
+                .append(scrollColor)
+                .toHashCode();
     }
 
     /**
@@ -445,7 +454,7 @@ public class ScrollBar extends Controller {
      */
     @Override
     public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
+        return new ToStringBuilder(this, ToStringStyle.JSON_STYLE)
                 .append("orientation", orientation)
                 .append("minValue", minValue)
                 .append("maxValue", maxValue)
@@ -454,7 +463,6 @@ public class ScrollBar extends Controller {
                 .append("arrowsEnabled", arrowsEnabled)
                 .append("arrowSize", arrowSize)
                 .append("arrowColor", arrowColor)
-                .append("scrolling", scrolling)
                 .append("scrollColor", scrollColor)
                 .toString();
     }

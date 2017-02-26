@@ -10,18 +10,20 @@ public final class JsonConstants {
     public static final String TYPE_PARAMETER  = "@type";
     public static final String CLASS_PARAMETER = "@class";
 
-    // COMPONENT
-    public static final String COMPONENT        = "tooltipComponent";
-    public static final String BACKGROUND_COLOR = "backgroundColor";
+    // COLOR
     public static final String R                = "r";
     public static final String G                = "g";
     public static final String B                = "b";
     public static final String A                = "a";
+    // COMPONENT
+    public static final String COMPONENT        = "component";
+    public static final String BACKGROUND_COLOR = "backgroundColor";
+    public static final String INTERSECTOR      = "intersector";
 
-    public static final String SIZE   = "size";
-    public static final String WIDTH  = "width";
-    public static final String HEIGHT = "height";
-
+    public static final String SIZE     = "size";
+    public static final String WIDTH    = "width";
+    public static final String HEIGHT   = "height";
+    // POSITION
     public static final String POSITION = "position";
     public static final String X        = "x";
     public static final String Y        = "y";

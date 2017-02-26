@@ -36,4 +36,35 @@ public class Panel<T extends Component> extends Container<T> {
     public Panel(Vector2f position, Vector2f size) {
         super(position, size);
     }
+
+    /**
+     * (non-Javadoc)
+     *
+     * @param o
+     * @see Object#equals(Object)
+     */
+    @Override
+    public boolean equals(Object o) {
+        return super.equals(o);
+    }
+
+    /**
+     * (non-Javadoc)
+     *
+     * @see Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    /**
+     * (non-Javadoc)
+     *
+     * @see Object#toString()
+     */
+    @Override
+    public String toString() {
+        return super.toString();
+    }
 }

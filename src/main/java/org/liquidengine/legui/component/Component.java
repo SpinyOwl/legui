@@ -3,6 +3,7 @@ package org.liquidengine.legui.component;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.border.Border;
@@ -20,13 +21,9 @@ import java.util.Map;
  */
 public abstract class Component implements Serializable {
     /**
-     * Used to store corner radius of component.
-     */
-    private float               cornerRadius = Theme.DEFAULT_THEME.cornerRadius();
-    /**
      * Metadata map, place where renderers or event processors can store state of component.
      */
-    private Map<String, Object> metadata     = new HashMap<>();
+    private Map<String, Object> metadata = new HashMap<>();
     /**
      * Parent component container. For root components it could be null.
      */
@@ -55,6 +52,10 @@ public abstract class Component implements Serializable {
      * Component border.
      */
     private Border      border          = Theme.DEFAULT_THEME.border();
+    /**
+     * Used to store corner radius of component.
+     */
+    private float       cornerRadius    = Theme.DEFAULT_THEME.cornerRadius();
     /**
      * Used to enable and disable event processing for this component.
      * If enabled==false then component won't receive events.
@@ -476,8 +477,6 @@ public abstract class Component implements Serializable {
                 .append(isHovered(), component.isHovered())
                 .append(isFocused(), component.isFocused())
                 .append(isPressed(), component.isPressed())
-                .append(getMetadata(), component.getMetadata())
-                .append(getParent(), component.getParent())
                 .append(getListenerMap(), component.getListenerMap())
                 .append(getPosition(), component.getPosition())
                 .append(getSize(), component.getSize())
@@ -496,8 +495,6 @@ public abstract class Component implements Serializable {
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
                 .append(getCornerRadius())
-                .append(getMetadata())
-                .append(getParent())
                 .append(getListenerMap())
                 .append(getPosition())
                 .append(getSize())
@@ -519,10 +516,8 @@ public abstract class Component implements Serializable {
      */
     @Override
     public String toString() {
-        return new ToStringBuilder(this)
+        return new ToStringBuilder(this, ToStringStyle.JSON_STYLE)
                 .append("cornerRadius", cornerRadius)
-                .append("metadata", metadata)
-                .append("parent", parent)
                 .append("listenerMap", listenerMap)
                 .append("position", position)
                 .append("size", size)

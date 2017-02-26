@@ -1,5 +1,8 @@
 package org.liquidengine.legui.component;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.color.ColorConstants;
@@ -264,10 +267,80 @@ public class Widget<T extends Component> extends Container {
         }
     }
 
+    /**
+     * (non-Javadoc)
+     *
+     * @param o
+     * @see Object#equals(Object)
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Widget<?> widget = (Widget<?>) o;
+
+        return new EqualsBuilder()
+                .appendSuper(super.equals(o))
+                .append(draggable, widget.draggable)
+                .append(minimized, widget.minimized)
+                .append(maximizedSize, widget.maximizedSize)
+                .append(container, widget.container)
+                .append(title, widget.title)
+                .append(closeButton, widget.closeButton)
+                .append(minimizeButton, widget.minimizeButton)
+                .isEquals();
+    }
+
+    /**
+     * (non-Javadoc)
+     *
+     * @see Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37)
+                .appendSuper(super.hashCode())
+                .append(draggable)
+                .append(minimized)
+                .append(maximizedSize)
+                .append(container)
+                .append(title)
+                .append(closeButton)
+                .append(minimizeButton)
+                .toHashCode();
+    }
+
+
+    /**
+     * (non-Javadoc)
+     *
+     * @see Object#toString()
+     */
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append("draggable", draggable)
+                .append("minimized", minimized)
+                .append("maximizedSize", maximizedSize)
+                .append("container", container)
+                .append("title", title)
+                .append("closeButton", closeButton)
+                .append("minimizeButton", minimizeButton)
+                .toString();
+    }
+
     public class WidgetDragListener implements MouseDragEventListener {
         @Override
         public void process(MouseDragEvent event) {
             Widget.this.getPosition().add(event.getDelta());
+        }
+
+        @Override
+        public String toString() {
+            return new ToStringBuilder(this)
+                    .toString();
         }
     }
 
