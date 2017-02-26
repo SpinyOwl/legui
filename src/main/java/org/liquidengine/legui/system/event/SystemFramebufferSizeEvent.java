@@ -20,7 +20,7 @@ public class SystemFramebufferSizeEvent implements SystemEvent {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
+        return new ToStringBuilder(this, ToStringStyle.JSON_STYLE)
                 .append("window", window)
                 .append("width", width)
                 .append("height", height)

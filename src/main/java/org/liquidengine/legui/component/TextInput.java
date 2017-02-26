@@ -3,6 +3,7 @@ package org.liquidengine.legui.component;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector4f;
 import org.liquidengine.legui.color.ColorConstants;
 import org.liquidengine.legui.component.optional.TextState;
@@ -137,7 +138,7 @@ public class TextInput extends Controller {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this)
+        return new ToStringBuilder(this, ToStringStyle.JSON_STYLE)
                 .append("textState", textState)
                 .append("caretPosition", caretPosition)
                 .append("mouseCaretPosition", mouseCaretPosition)

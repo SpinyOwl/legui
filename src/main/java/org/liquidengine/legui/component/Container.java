@@ -1,5 +1,9 @@
 package org.liquidengine.legui.component;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 
 import java.util.ArrayList;
@@ -260,4 +264,48 @@ public abstract class Container<T extends Component> extends Controller {
         return new ArrayList<>(components);
     }
 
+    /**
+     * (non-Javadoc)
+     *
+     * @param o
+     * @see Object#equals(Object)
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Container<?> container = (Container<?>) o;
+
+        return new EqualsBuilder()
+                .appendSuper(super.equals(o))
+                .append(components, container.components)
+                .isEquals();
+    }
+
+    /**
+     * (non-Javadoc)
+     *
+     * @see Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37)
+                .appendSuper(super.hashCode())
+                .append(components)
+                .toHashCode();
+    }
+
+    /**
+     * (non-Javadoc)
+     *
+     * @see Object#toString()
+     */
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this, ToStringStyle.JSON_STYLE)
+                .append("components", components)
+                .toString();
+    }
 }

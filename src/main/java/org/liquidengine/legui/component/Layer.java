@@ -1,5 +1,9 @@
 package org.liquidengine.legui.component;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.liquidengine.legui.event.WindowSizeEvent;
 import org.liquidengine.legui.listener.WindowSizeEventListener;
 
@@ -119,5 +123,59 @@ public class Layer<T extends Component> {
      */
     public void setEventReceivable(boolean eventReceivable) {
         this.eventReceivable = eventReceivable;
+    }
+
+    /**
+     * (non-Javadoc)
+     *
+     * @see Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37)
+                .append(container)
+                .append(eventPassable)
+                .append(eventReceivable)
+                .append(enabled)
+                .append(visible)
+                .toHashCode();
+    }
+
+    /**
+     * (non-Javadoc)
+     *
+     * @see Object#equals(Object)
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+
+        if (obj == null || getClass() != obj.getClass()) return false;
+
+        Layer<?> layer = (Layer<?>) obj;
+
+        return new EqualsBuilder()
+                .append(eventPassable, layer.eventPassable)
+                .append(eventReceivable, layer.eventReceivable)
+                .append(enabled, layer.enabled)
+                .append(visible, layer.visible)
+                .append(container, layer.container)
+                .isEquals();
+    }
+
+    /**
+     * (non-Javadoc)
+     *
+     * @see Object#toString()
+     */
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this, ToStringStyle.JSON_STYLE)
+                .append("container", container)
+                .append("eventPassable", eventPassable)
+                .append("eventReceivable", eventReceivable)
+                .append("enabled", enabled)
+                .append("visible", visible)
+                .toString();
     }
 }

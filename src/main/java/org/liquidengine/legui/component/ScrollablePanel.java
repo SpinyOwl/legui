@@ -3,6 +3,7 @@ package org.liquidengine.legui.component;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 import org.liquidengine.legui.border.SimpleLineBorder;
 import org.liquidengine.legui.color.ColorConstants;
@@ -257,7 +258,7 @@ public class ScrollablePanel<T extends Component> extends Container implements V
      */
     @Override
     public String toString() {
-        return new ToStringBuilder(this)
+        return new ToStringBuilder(this, ToStringStyle.JSON_STYLE)
                 .append("verticalScrollBar", verticalScrollBar)
                 .append("horizontalScrollBar", horizontalScrollBar)
                 .append("viewport", viewport)

@@ -3,6 +3,7 @@ package org.liquidengine.legui.component;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 import org.liquidengine.legui.border.SimpleLineBorder;
 import org.liquidengine.legui.color.ColorConstants;
@@ -409,6 +410,76 @@ public class SelectBox extends Container {
     }
 
     /**
+     * (non-Javadoc)
+     *
+     * @see Object#toString()
+     */
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append("elements", elements)
+                .append("selectedElement", selectedElement)
+                .append("elementHeight", elementHeight)
+                .append("buttonWidth", buttonWidth)
+                .append("visibleCount", visibleCount)
+                .append("collapsed", collapsed)
+                .toString();
+    }
+
+    /**
+     * (non-Javadoc)
+     *
+     * @param o
+     * @see Object#equals(Object)
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (o == null || getClass() != o.getClass()) return false;
+
+        SelectBox selectBox = (SelectBox) o;
+
+        return new EqualsBuilder()
+                .appendSuper(super.equals(o))
+                .append(elementHeight, selectBox.elementHeight)
+                .append(buttonWidth, selectBox.buttonWidth)
+                .append(visibleCount, selectBox.visibleCount)
+                .append(collapsed, selectBox.collapsed)
+                .append(selectBoxElements, selectBox.selectBoxElements)
+                .append(elements, selectBox.elements)
+                .append(selectionListPanel, selectBox.selectionListPanel)
+                .append(selectBoxScrollListener, selectBox.selectBoxScrollListener)
+                .append(selectionButton, selectBox.selectionButton)
+                .append(selectedElement, selectBox.selectedElement)
+                .append(expandButton, selectBox.expandButton)
+                .isEquals();
+    }
+
+    /**
+     * (non-Javadoc)
+     *
+     * @see Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37)
+                .appendSuper(super.hashCode())
+                .append(selectBoxElements)
+                .append(elements)
+                .append(selectionListPanel)
+                .append(selectBoxScrollListener)
+                .append(selectionButton)
+                .append(selectedElement)
+                .append(elementHeight)
+                .append(buttonWidth)
+                .append(visibleCount)
+                .append(expandButton)
+                .append(collapsed)
+                .toHashCode();
+    }
+
+    /**
      * Default mouse click listener for selectbox. Used to collapse selectbox if it loses focus and to expand/collapse if clicked on it.
      */
     public static class SelectBoxClickListener implements MouseClickEventListener {
@@ -459,7 +530,7 @@ public class SelectBox extends Container {
 
         @Override
         public String toString() {
-            return new ToStringBuilder(this)
+            return new ToStringBuilder(this, ToStringStyle.JSON_STYLE)
                     .append("selected", selected)
                     .toString();
         }

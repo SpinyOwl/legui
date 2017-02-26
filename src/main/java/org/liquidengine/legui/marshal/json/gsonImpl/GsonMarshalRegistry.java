@@ -4,10 +4,20 @@ import org.apache.commons.collections4.BidiMap;
 import org.apache.commons.collections4.bidimap.DualHashBidiMap;
 import org.liquidengine.legui.border.Border;
 import org.liquidengine.legui.border.SimpleLineBorder;
+import org.liquidengine.legui.component.Button;
+import org.liquidengine.legui.component.Component;
+import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.exception.LeguiException;
 import org.liquidengine.legui.exception.LeguiExceptions;
+import org.liquidengine.legui.intersection.Intersector;
+import org.liquidengine.legui.marshal.json.JsonMarshalRegistry;
+import org.liquidengine.legui.marshal.json.JsonMarshaller;
 import org.liquidengine.legui.marshal.json.gsonImpl.border.GsonBorderMarshaller;
 import org.liquidengine.legui.marshal.json.gsonImpl.border.GsonSimpleLineBorderMarshaller;
+import org.liquidengine.legui.marshal.json.gsonImpl.component.GsonButtonMarshaller;
+import org.liquidengine.legui.marshal.json.gsonImpl.component.GsonComponentMarshaller;
+import org.liquidengine.legui.marshal.json.gsonImpl.component.optional.GsonTextStateMarshaller;
+import org.liquidengine.legui.marshal.json.gsonImpl.intersector.GsonIntersectorMarshaller;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -17,10 +27,10 @@ import java.util.concurrent.locks.ReentrantLock;
 /**
  * Created by Aliaksandr_Shcherbin on 2/24/2017.
  */
-public class GsonMarshalRegistry {
-    private Map<Class<?>, AbstractGsonMarshaller<?>> marshallerMap = new ConcurrentHashMap<>();
-    private BidiMap<String, Class<?>>                typeMap       = new DualHashBidiMap<>();
-    private Lock                                     lock          = new ReentrantLock(false);
+public class GsonMarshalRegistry implements JsonMarshalRegistry {
+    private Map<Class<?>, JsonMarshaller<?>> marshallerMap = new ConcurrentHashMap<>();
+    private BidiMap<String, Class<?>>        typeMap       = new DualHashBidiMap<>();
+    private Lock                             lock          = new ReentrantLock(false);
 
     private GsonMarshalRegistry() {
     }
@@ -45,7 +55,7 @@ public class GsonMarshalRegistry {
      * @param marshaller marshaller
      * @param <T>        type parameter to prevent error in marshal registry.
      */
-    public <T> void registerMarshaller(String typeName, Class<T> tClass, AbstractGsonMarshaller<T> marshaller) {
+    public <T> void registerMarshaller(String typeName, Class<T> tClass, JsonMarshaller<T> marshaller) {
         lock.lock();
         try {
             if (typeName != null) {
@@ -126,15 +136,17 @@ public class GsonMarshalRegistry {
         private static final GsonMarshalRegistry I = new GsonMarshalRegistry();
 
         static {
-            // I.registerMarshaller("TextState", TextState.class, new GsonTextStateSerializer());
+            I.registerMarshaller("TextState", TextState.class, new GsonTextStateMarshaller<>());
 
             I.registerMarshaller("Border", Border.class, new GsonBorderMarshaller());
             I.registerMarshaller("SimpleLineBorder", SimpleLineBorder.class, new GsonSimpleLineBorderMarshaller());
 
-            // I.registerMarshaller("Button", Button.class, new GsonButtonSerializer());
+            I.registerMarshaller("Intersector", Intersector.class, new GsonIntersectorMarshaller());
+
+            I.registerMarshaller("Button", Button.class, new GsonButtonMarshaller<>());
             // I.registerMarshaller("CheckBox", CheckBox.class, new GsonCheckboxSerializer());
             // I.registerMarshaller("ComponentContainer", Container.class, new GsonContainerSerializer<>());
-            // I.registerMarshaller("Component", Component.class, new GsonComponentSerializer<>());
+            I.registerMarshaller("Component", Component.class, new GsonComponentMarshaller<>());
             // I.registerMarshaller("Controller", Controller.class, new GsonControllerSerializer<>());
             // I.registerMarshaller("ImageView", ImageView.class, new GsonImageViewSerializer());
             // I.registerMarshaller("Label", Label.class, new GsonLabelSerializer());

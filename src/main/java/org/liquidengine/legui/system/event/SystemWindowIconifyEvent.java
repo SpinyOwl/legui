@@ -17,7 +17,7 @@ public class SystemWindowIconifyEvent implements SystemEvent {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
+        return new ToStringBuilder(this, ToStringStyle.JSON_STYLE)
                 .append("iconified", iconified)
                 .append("window", window)
                 .toString();

@@ -16,10 +16,10 @@ public final class GsonMarshalUtil {
 
     public static <T> String marshal(T component) {
         if (component == null) return null;
-        AbstractGsonMarshaller marshalr = GsonMarshalRegistry.getRegistry().getMarshaller(component.getClass());
-        if (marshalr == null) throw new LeguiException(LeguiExceptions.MARSHALLER_IS_NOT_EXIST.message(component.getClass().getName()));
+        AbstractGsonMarshaller marshaller = GsonMarshalRegistry.getRegistry().getMarshaller(component.getClass());
+        if (marshaller == null) throw new LeguiException(LeguiExceptions.MARSHALLER_IS_NOT_EXIST.message(component.getClass().getName()));
         GsonMarshalContext context = new GsonMarshalContext();
-        return marshalr.marshal(component, context);
+        return marshaller.marshal(component, context);
     }
 
     public static <T> JsonObject marshalToJson(T component) {
@@ -28,14 +28,14 @@ public final class GsonMarshalUtil {
 
     public static <T> JsonObject marshalToJson(T component, GsonMarshalContext context) {
         if (component == null) return null;
-        AbstractGsonMarshaller marshalr = GsonMarshalRegistry.getRegistry().getMarshaller(component.getClass());
-        if (marshalr == null) throw new LeguiException(LeguiExceptions.MARSHALLER_IS_NOT_EXIST.message(component.getClass().getName()));
-        return marshalr.jsonMarshal(component, context);
+        AbstractGsonMarshaller marshaller = GsonMarshalRegistry.getRegistry().getMarshaller(component.getClass());
+        if (marshaller == null) throw new LeguiException(LeguiExceptions.MARSHALLER_IS_NOT_EXIST.message(component.getClass().getName()));
+        return marshaller.jsonMarshal(component, context);
     }
 
     public static <T> T unmarshal(String json) {
-        AbstractGsonMarshaller<T> marshalr = getGsonMarshaller(getClassName(json), getShortTypeName(json));
-        return marshalr.unmarshal(json, new GsonMarshalContext());
+        AbstractGsonMarshaller<T> marshaller = getGsonMarshaller(getClassName(json), getShortTypeName(json));
+        return marshaller.unmarshal(json, new GsonMarshalContext());
     }
 
     public static <T> T unmarshalFromJson(JsonObject json) {
@@ -43,27 +43,27 @@ public final class GsonMarshalUtil {
     }
 
     public static <T> T unmarshalFromJson(JsonObject json, GsonMarshalContext context) {
-        AbstractGsonMarshaller<T> marshalr = getGsonMarshaller(getClassName(json), getShortTypeName(json));
-        return marshalr.unmarshal(json, context);
+        AbstractGsonMarshaller<T> marshaller = getGsonMarshaller(getClassName(json), getShortTypeName(json));
+        return marshaller.unmarshal(json, context);
     }
 
     public static <T> AbstractGsonMarshaller<T> getGsonMarshaller(String className, String shortTypeName) {
-        AbstractGsonMarshaller<T> marshalr = null;
+        AbstractGsonMarshaller<T> marshaller = null;
         String                    type     = null;
         if (type == null) {
             type = className;
             if (type != null) {
-                marshalr = GsonMarshalRegistry.getRegistry().getMarshaller(type);
+                marshaller = GsonMarshalRegistry.getRegistry().getMarshaller(type);
             }
         }
         if (type == null) {
             type = shortTypeName;
             if (type != null) {
-                marshalr = GsonMarshalRegistry.getRegistry().getMarshallerByShortType(type);
+                marshaller = GsonMarshalRegistry.getRegistry().getMarshallerByShortType(type);
             }
         }
-        if (type == null || marshalr == null) throw new LeguiException(LeguiExceptions.UNMARSHALLER_IS_NOT_EXIST.message(type));
-        return marshalr;
+        if (type == null || marshaller == null) throw new LeguiException(LeguiExceptions.UNMARSHALLER_IS_NOT_EXIST.message(type));
+        return marshaller;
     }
 
     private static String getClassName(String json) {
