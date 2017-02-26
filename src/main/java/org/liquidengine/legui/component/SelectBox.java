@@ -376,40 +376,6 @@ public class SelectBox extends Container {
     }
 
     /**
-     * Default focus listener for selectbox. Used to collapse selectbox if it loses focus.
-     */
-    public static class SelectBoxFocusListener implements FocusEventListener {
-        private final SelectBox box;
-
-        public SelectBoxFocusListener(SelectBox box) {
-            if (box == null) throw new NullPointerException("SelectBox for this listener cannot be null");
-            this.box = box;
-        }
-
-        @Override
-        public void process(FocusEvent event) {
-            if (!event.isFocused() && !box.isCollapsed()) {
-                boolean   collapse  = true;
-                Component nextFocus = event.getNextFocus();
-                for (SelectBoxElement selectBoxElement : box.selectBoxElements) {
-                    if (nextFocus == selectBoxElement) {
-                        collapse = false;
-                    }
-                }
-                if (nextFocus == box.expandButton ||
-                        nextFocus == box.selectionButton ||
-                        nextFocus == box.selectionListPanel ||
-                        nextFocus == box.selectionListPanel.getVerticalScrollBar()) {
-                    collapse = false;
-                }
-                if (box.collapsed != collapse) {
-                    box.setCollapsed(collapse);
-                }
-            }
-        }
-    }
-
-    /**
      * (non-Javadoc)
      *
      * @see Object#toString()
@@ -477,6 +443,40 @@ public class SelectBox extends Container {
                 .append(expandButton)
                 .append(collapsed)
                 .toHashCode();
+    }
+
+    /**
+     * Default focus listener for selectbox. Used to collapse selectbox if it loses focus.
+     */
+    public static class SelectBoxFocusListener implements FocusEventListener {
+        private final SelectBox box;
+
+        public SelectBoxFocusListener(SelectBox box) {
+            if (box == null) throw new NullPointerException("SelectBox for this listener cannot be null");
+            this.box = box;
+        }
+
+        @Override
+        public void process(FocusEvent event) {
+            if (!event.isFocused() && !box.isCollapsed()) {
+                boolean   collapse  = true;
+                Component nextFocus = event.getNextFocus();
+                for (SelectBoxElement selectBoxElement : box.selectBoxElements) {
+                    if (nextFocus == selectBoxElement) {
+                        collapse = false;
+                    }
+                }
+                if (nextFocus == box.expandButton ||
+                        nextFocus == box.selectionButton ||
+                        nextFocus == box.selectionListPanel ||
+                        nextFocus == box.selectionListPanel.getVerticalScrollBar()) {
+                    collapse = false;
+                }
+                if (box.collapsed != collapse) {
+                    box.setCollapsed(collapse);
+                }
+            }
+        }
     }
 
     /**
