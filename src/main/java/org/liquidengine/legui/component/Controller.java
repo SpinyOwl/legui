@@ -93,6 +93,51 @@ public abstract class Controller extends Component {
     }
 
     /**
+     * (non-Javadoc)
+     *
+     * @param o
+     * @see Object#equals(Object)
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Controller that = (Controller) o;
+
+        return new EqualsBuilder()
+                .appendSuper(super.equals(o))
+                .append(tooltip, that.tooltip)
+                .isEquals();
+    }
+
+    /**
+     * (non-Javadoc)
+     *
+     * @see Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37)
+                .appendSuper(super.hashCode())
+                .append(tooltip)
+                .toHashCode();
+    }
+
+    /**
+     * (non-Javadoc)
+     *
+     * @see Object#toString()
+     */
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this, ToStringStyle.JSON_STYLE)
+                .append("tooltip", tooltip)
+                .toString();
+    }
+
+    /**
      * Default event listener for {@link CursorEnterEvent} to add tooltip to tooltip layer and make it visible or not visible.
      */
     public static class CursorEnterListenerForTooltip implements CursorEnterEventListener {
@@ -161,50 +206,5 @@ public abstract class Controller extends Component {
         public boolean equals(Object obj) {
             return true;
         }
-    }
-
-    /**
-     * (non-Javadoc)
-     *
-     * @param o
-     * @see Object#equals(Object)
-     */
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Controller that = (Controller) o;
-
-        return new EqualsBuilder()
-                .appendSuper(super.equals(o))
-                .append(tooltip, that.tooltip)
-                .isEquals();
-    }
-
-    /**
-     * (non-Javadoc)
-     *
-     * @see Object#hashCode()
-     */
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder(17, 37)
-                .appendSuper(super.hashCode())
-                .append(tooltip)
-                .toHashCode();
-    }
-
-    /**
-     * (non-Javadoc)
-     *
-     * @see Object#toString()
-     */
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.JSON_STYLE)
-                .append("tooltip", tooltip)
-                .toString();
     }
 }
