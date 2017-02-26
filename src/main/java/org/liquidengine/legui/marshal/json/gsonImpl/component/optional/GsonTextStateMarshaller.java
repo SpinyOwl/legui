@@ -2,7 +2,6 @@ package org.liquidengine.legui.marshal.json.gsonImpl.component.optional;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import org.joml.Vector4f;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
