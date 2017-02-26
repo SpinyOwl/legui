@@ -2,7 +2,7 @@ package org.liquidengine.legui.marshal.json.gsonImpl.component;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import org.liquidengine.legui.component.Button;
+import org.liquidengine.legui.component.Label;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.marshal.json.gsonImpl.GsonMarshalContext;
 import org.liquidengine.legui.marshal.json.gsonImpl.GsonMarshalUtil;
@@ -11,9 +11,9 @@ import static org.liquidengine.legui.marshal.JsonConstants.TEXT_STATE;
 import static org.liquidengine.legui.marshal.json.gsonImpl.GsonUtil.isNotNull;
 
 /**
- * Created by ShchAlexander on 26.02.2017.
+ * Created by ShchAlexander on 27.02.2017.
  */
-public class GsonButtonMarshaller<T extends Button> extends GsonControllerMarshaller<T> {
+public class GsonLabelMarshaller<T extends Label> extends GsonControllerMarshaller<T> {
     /**
      * Reads data from object and puts it to json object
      *
@@ -24,6 +24,7 @@ public class GsonButtonMarshaller<T extends Button> extends GsonControllerMarsha
     @Override
     protected void jsonMarshal(T object, JsonObject json, GsonMarshalContext context) {
         super.jsonMarshal(object, json, context);
+
 
         JsonObject textState = GsonMarshalUtil.marshalToJson(object.getTextState(), context);
         json.add(TEXT_STATE, textState);
@@ -46,6 +47,5 @@ public class GsonButtonMarshaller<T extends Button> extends GsonControllerMarsha
             TextState  state        = GsonMarshalUtil.unmarshal(asJsonObject, context);
             object.getTextState().copy(state);
         }
-
     }
 }

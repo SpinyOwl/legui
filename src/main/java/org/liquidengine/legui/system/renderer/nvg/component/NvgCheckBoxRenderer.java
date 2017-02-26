@@ -52,10 +52,10 @@ public class NvgCheckBoxRenderer extends NvgComponentRenderer<CheckBox> {
 
             Vector4f pad = textState.getPadding();
 
-            float h  = sh - (pad.y + pad.w);
-            float y  = py + pad.y;
-            float x  = px + iconWid;
-            float w  = sw - iconWid - pad.z;
+            float h = sh - (pad.y + pad.w);
+            float y = py + pad.y;
+            float x = px + iconWid;
+            float w = sw - iconWid - pad.z;
             renderTextStateLineToBounds(nanovg, new Vector2f(x, y), new Vector2f(w, h), checkBox.getTextState());
 
             Vector4f textColor = textState.getTextColor();

@@ -153,7 +153,7 @@ public class Example {
         ExampleGui component = new ExampleGui(w, h);
         component.setBackgroundColor(new Vector4f(0.9f, 0.9f, 0.9f, 1f));
         component.getListenerMap().addListener(WindowSizeEvent.class, (WindowSizeEventListener) event -> component.setSize(event.getWidth(), event.getHeight()));
-        frame.getTooltipLayer().getContainer().setPosition(50,50);
+        frame.getTooltipLayer().getContainer().setPosition(50, 50);
         frame.getContainer().add(component);
 //        frame.getComponentLayer().getBackgroundColor().set(ColorConstants.lightBlue);
 //        // Set background color for frame

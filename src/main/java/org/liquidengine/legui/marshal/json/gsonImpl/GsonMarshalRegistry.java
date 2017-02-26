@@ -4,8 +4,7 @@ import org.apache.commons.collections4.BidiMap;
 import org.apache.commons.collections4.bidimap.DualHashBidiMap;
 import org.liquidengine.legui.border.Border;
 import org.liquidengine.legui.border.SimpleLineBorder;
-import org.liquidengine.legui.component.Button;
-import org.liquidengine.legui.component.Component;
+import org.liquidengine.legui.component.*;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.exception.LeguiException;
 import org.liquidengine.legui.exception.LeguiExceptions;
@@ -14,8 +13,7 @@ import org.liquidengine.legui.marshal.json.JsonMarshalRegistry;
 import org.liquidengine.legui.marshal.json.JsonMarshaller;
 import org.liquidengine.legui.marshal.json.gsonImpl.border.GsonBorderMarshaller;
 import org.liquidengine.legui.marshal.json.gsonImpl.border.GsonSimpleLineBorderMarshaller;
-import org.liquidengine.legui.marshal.json.gsonImpl.component.GsonButtonMarshaller;
-import org.liquidengine.legui.marshal.json.gsonImpl.component.GsonComponentMarshaller;
+import org.liquidengine.legui.marshal.json.gsonImpl.component.*;
 import org.liquidengine.legui.marshal.json.gsonImpl.component.optional.GsonTextStateMarshaller;
 import org.liquidengine.legui.marshal.json.gsonImpl.intersector.GsonIntersectorMarshaller;
 
@@ -144,22 +142,22 @@ public class GsonMarshalRegistry implements JsonMarshalRegistry {
             I.registerMarshaller("Intersector", Intersector.class, new GsonIntersectorMarshaller());
 
             I.registerMarshaller("Button", Button.class, new GsonButtonMarshaller<>());
-            // I.registerMarshaller("CheckBox", CheckBox.class, new GsonCheckboxSerializer());
-            // I.registerMarshaller("ComponentContainer", Container.class, new GsonContainerSerializer<>());
+            I.registerMarshaller("CheckBox", CheckBox.class, new GsonCheckBoxMarshaller());
+            I.registerMarshaller("Container", Container.class, new GsonContainerMarshaller<>());
             I.registerMarshaller("Component", Component.class, new GsonComponentMarshaller<>());
-            // I.registerMarshaller("Controller", Controller.class, new GsonControllerSerializer<>());
-            // I.registerMarshaller("ImageView", ImageView.class, new GsonImageViewSerializer());
-            // I.registerMarshaller("Label", Label.class, new GsonLabelSerializer());
-            // I.registerMarshaller("Panel", Panel.class, new GsonPanelSerializer());
-            // I.registerMarshaller("ProgressBar", ProgressBar.class, new GsonProgressBarSerializer());
-            // I.registerMarshaller("RadioButton", RadioButton.class, new GsonRadioButtonSerializer());
-            // I.registerMarshaller("ScrollablePanel", ScrollablePanel.class, new GsonScrollablePanelSerializer());
-            // I.registerMarshaller("ScrollBar", ScrollBar.class, new GsonScrollBarSerializer());
-            // I.registerMarshaller("SelectBox", SelectBox.class, new GsonSelectBoxSerializer());
-            // I.registerMarshaller("Slider", Slider.class, new GsonSliderSerializer());
-            // I.registerMarshaller("TextArea", TextArea.class, new GsonTextAreaSerializer());
-            // I.registerMarshaller("TextInput", TextInput.class, new GsonTextInputSerializer());
-            // I.registerMarshaller("Widget", Widget.class, new GsonWidgetSerializer());
+            I.registerMarshaller("Controller", Controller.class, new GsonControllerMarshaller<>());
+            I.registerMarshaller("ImageView", ImageView.class, new GsonImageViewMarshaller());
+            I.registerMarshaller("Label", Label.class, new GsonLabelMarshaller());
+            I.registerMarshaller("Panel", Panel.class, new GsonPanelMarshaller());
+            I.registerMarshaller("ProgressBar", ProgressBar.class, new GsonProgressBarMarshaller());
+            I.registerMarshaller("RadioButton", RadioButton.class, new GsonRadioButtonMarshaller());
+            I.registerMarshaller("ScrollablePanel", ScrollablePanel.class, new GsonScrollablePanelMarshaller());
+            I.registerMarshaller("ScrollBar", ScrollBar.class, new GsonScrollBarMarshaller());
+            I.registerMarshaller("SelectBox", SelectBox.class, new GsonSelectBoxMarshaller());
+            I.registerMarshaller("Slider", Slider.class, new GsonSliderMarshaller());
+            I.registerMarshaller("TextArea", TextArea.class, new GsonTextAreaMarshaller());
+            I.registerMarshaller("TextInput", TextInput.class, new GsonTextInputMarshaller());
+            I.registerMarshaller("Widget", Widget.class, new GsonWidgetMarshaller());
         }
     }
 }

@@ -2,18 +2,19 @@ package org.liquidengine.legui.marshal.json.gsonImpl.component;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import org.liquidengine.legui.component.Button;
+import org.liquidengine.legui.component.TextArea;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.marshal.json.gsonImpl.GsonMarshalContext;
 import org.liquidengine.legui.marshal.json.gsonImpl.GsonMarshalUtil;
+import org.liquidengine.legui.marshal.json.gsonImpl.GsonUtil;
 
-import static org.liquidengine.legui.marshal.JsonConstants.TEXT_STATE;
+import static org.liquidengine.legui.marshal.JsonConstants.*;
 import static org.liquidengine.legui.marshal.json.gsonImpl.GsonUtil.isNotNull;
 
 /**
- * Created by ShchAlexander on 26.02.2017.
+ * Created by ShchAlexander on 27.02.2017.
  */
-public class GsonButtonMarshaller<T extends Button> extends GsonControllerMarshaller<T> {
+public class GsonTextAreaMarshaller<T extends TextArea> extends GsonControllerMarshaller<T> {
     /**
      * Reads data from object and puts it to json object
      *
@@ -26,7 +27,11 @@ public class GsonButtonMarshaller<T extends Button> extends GsonControllerMarsha
         super.jsonMarshal(object, json, context);
 
         JsonObject textState = GsonMarshalUtil.marshalToJson(object.getTextState(), context);
-        json.add(TEXT_STATE, textState);
+        GsonUtil.fill(json)
+                .add(EDITABLE, object.isEditable())
+                .add(SELECTION_COLOR, GsonUtil.createColor(object.getSelectionColor()))
+                .add(TEXT_STATE, textState)
+        ;
     }
 
     /**
@@ -40,12 +45,16 @@ public class GsonButtonMarshaller<T extends Button> extends GsonControllerMarsha
     protected void unmarshal(JsonObject json, T object, GsonMarshalContext context) {
         super.unmarshal(json, object, context);
 
-        JsonElement textState = json.get(TEXT_STATE);
+        JsonElement editable       = json.get(EDITABLE);
+        JsonElement selectionColor = json.get(SELECTION_COLOR);
+        JsonElement textState      = json.get(TEXT_STATE);
+
         if (isNotNull(textState)) {
             JsonObject asJsonObject = textState.getAsJsonObject();
             TextState  state        = GsonMarshalUtil.unmarshal(asJsonObject, context);
             object.getTextState().copy(state);
         }
-
+        if (isNotNull(editable)) object.setEditable(editable.getAsBoolean());
+        if (isNotNull(selectionColor)) object.setSelectionColor(GsonUtil.readColor(selectionColor.getAsJsonObject()));
     }
 }

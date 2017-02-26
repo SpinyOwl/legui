@@ -7,7 +7,6 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 

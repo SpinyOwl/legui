@@ -97,11 +97,11 @@ public class GsonComponentMarshaller<T extends Component> extends AbstractGsonMa
         if (isNotNull(cornerRadius)) object.setCornerRadius(cornerRadius.getAsFloat());
         else if (isJsonNull(cornerRadius)) object.setCornerRadius(0);
 
-        if (isNotNull(border)) object.setBorder(GsonMarshalUtil.unmarshalFromJson(border.getAsJsonObject(), context));
+        if (isNotNull(border)) object.setBorder(GsonMarshalUtil.unmarshal(border.getAsJsonObject(), context));
         else if (isJsonNull(border)) object.setBorder(null);
         else object.setBorder(null);
 
-        if (isNotNull(intersector)) object.setIntersector(GsonMarshalUtil.unmarshalFromJson(intersector.getAsJsonObject(), context));
+        if (isNotNull(intersector)) object.setIntersector(GsonMarshalUtil.unmarshal(intersector.getAsJsonObject(), context));
     }
 
 

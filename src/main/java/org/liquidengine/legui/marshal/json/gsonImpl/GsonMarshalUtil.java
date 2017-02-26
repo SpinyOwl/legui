@@ -38,18 +38,18 @@ public final class GsonMarshalUtil {
         return marshaller.unmarshal(json, new GsonMarshalContext());
     }
 
-    public static <T> T unmarshalFromJson(JsonObject json) {
-        return unmarshalFromJson(json, new GsonMarshalContext());
+    public static <T> T unmarshal(JsonObject json) {
+        return unmarshal(json, new GsonMarshalContext());
     }
 
-    public static <T> T unmarshalFromJson(JsonObject json, GsonMarshalContext context) {
+    public static <T> T unmarshal(JsonObject json, GsonMarshalContext context) {
         AbstractGsonMarshaller<T> marshaller = getGsonMarshaller(getClassName(json), getShortTypeName(json));
         return marshaller.unmarshal(json, context);
     }
 
     public static <T> AbstractGsonMarshaller<T> getGsonMarshaller(String className, String shortTypeName) {
         AbstractGsonMarshaller<T> marshaller = null;
-        String                    type     = null;
+        String                    type       = null;
         if (type == null) {
             type = className;
             if (type != null) {
