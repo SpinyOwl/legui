@@ -58,9 +58,9 @@ public class Slider extends Controller {
         this.value = value;
         setBackgroundColor(ColorConstants.transparent());
         setBorder(null);
-        getListenerMap().addListener(ScrollEvent.class, new SliderScrollEventListener(this));
-        getListenerMap().addListener(MouseClickEvent.class, new SliderMouseClickEventListener(this));
-        getListenerMap().addListener(MouseDragEvent.class, new SliderMouseDragEventListener(this));
+        getListenerMap().addListener(ScrollEvent.class, new SliderScrollEventListener());
+        getListenerMap().addListener(MouseClickEvent.class, new SliderMouseClickEventListener());
+        getListenerMap().addListener(MouseDragEvent.class, new SliderMouseDragEventListener());
     }
 
     @Override
@@ -157,14 +157,9 @@ public class Slider extends Controller {
 
     public static class SliderScrollEventListener implements ScrollEventListener {
 
-        private final Slider slider;
-
-        public SliderScrollEventListener(Slider slider) {
-            this.slider = slider;
-        }
-
         @Override
         public void process(ScrollEvent event) {
+            Slider slider = (Slider) event.getComponent();
             float curValue = slider.getValue();
             float value    = (float) (curValue + event.getYoffset());
 
@@ -174,18 +169,19 @@ public class Slider extends Controller {
             event.getContext().getEventProcessor().pushEvent(new SliderChangeValueEvent(slider, event.getContext(), slider.getValue(), value));
             slider.setValue(value);
         }
+
+        @Override
+        public boolean equals(Object obj) {
+            return true;
+        }
     }
 
     public static class SliderMouseClickEventListener implements MouseClickEventListener {
-        private final Slider slider;
-
-        public SliderMouseClickEventListener(Slider slider) {
-            this.slider = slider;
-        }
 
         @Override
         public void process(MouseClickEvent event) {
             if (event.getButton().equals(Mouse.MouseButton.MOUSE_BUTTON_LEFT) && event.getAction() == MouseClickEvent.MouseClickAction.PRESS) {
+                Slider slider = (Slider) event.getComponent();
                 Vector2f pos = slider.getScreenPosition();
 
                 Vector2f cursorPosition = Mouse.getCursorPosition();
@@ -201,17 +197,18 @@ public class Slider extends Controller {
                 slider.setValue(value);
             }
         }
+
+        @Override
+        public boolean equals(Object obj) {
+            return true;
+        }
     }
 
     public static class SliderMouseDragEventListener implements MouseDragEventListener {
-        private final Slider slider;
-
-        public SliderMouseDragEventListener(Slider slider) {
-            this.slider = slider;
-        }
 
         @Override
         public void process(MouseDragEvent event) {
+            Slider slider = (Slider) event.getComponent();
             if (!Mouse.MouseButton.MOUSE_BUTTON_LEFT.isPressed()) return;
 
             Vector2f pos = slider.getScreenPosition();
@@ -229,6 +226,11 @@ public class Slider extends Controller {
 
             event.getContext().getEventProcessor().pushEvent(new SliderChangeValueEvent(slider, event.getContext(), slider.getValue(), value));
             slider.setValue(value);
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            return true;
         }
     }
 

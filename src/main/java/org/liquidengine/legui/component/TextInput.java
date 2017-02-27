@@ -70,10 +70,10 @@ public class TextInput extends Controller {
         textState = new TextState(text);
         textState.getPadding().set(5, 1, 5, 1);
 
-        keyEventListener = new TextInputKeyEventListener(this);
-        mouseClickEventListener = new TextInputMouseClickEventListener(this);
-        dragEventListener = new TextInputDragEventListener(this);
-        charEventListener = new TextInputCharEventListener(this);
+        keyEventListener = new TextInputKeyEventListener();
+        mouseClickEventListener = new TextInputMouseClickEventListener();
+        dragEventListener = new TextInputDragEventListener();
+        charEventListener = new TextInputCharEventListener();
 
         getListenerMap().addListener(KeyEvent.class, keyEventListener);
         getListenerMap().addListener(MouseClickEvent.class, mouseClickEventListener);
@@ -185,14 +185,9 @@ public class TextInput extends Controller {
 
     public static class TextInputKeyEventListener implements KeyEventListener {
 
-        private final TextInput gui;
-
-        public TextInputKeyEventListener(TextInput gui) {
-            this.gui = gui;
-        }
-
         @Override
         public void process(KeyEvent event) {
+            TextInput gui           = (TextInput) event.getComponent();
             int       key           = event.getKey();
             int       caretPosition = gui.getCaretPosition();
             boolean   pressed       = event.getAction() != GLFW_RELEASE;
@@ -349,53 +344,55 @@ public class TextInput extends Controller {
                 gui.setCaretPosition(newCaretPosition);
             }
         }
+
+        @Override
+        public boolean equals(Object obj) {
+            return true;
+        }
     }
 
     public static class TextInputMouseClickEventListener implements MouseClickEventListener {
-        private final TextInput gui;
-
-        public TextInputMouseClickEventListener(TextInput gui) {
-            this.gui = gui;
-        }
 
         @Override
         public void process(MouseClickEvent event) {
-            int mouseCaretPosition = gui.getMouseCaretPosition();
+            TextInput gui                = (TextInput) event.getComponent();
+            int       mouseCaretPosition = gui.getMouseCaretPosition();
             if (event.getAction() == MouseClickEvent.MouseClickAction.PRESS) {
                 gui.setCaretPosition(mouseCaretPosition);
                 gui.setStartSelectionIndex(mouseCaretPosition);
                 gui.setEndSelectionIndex(mouseCaretPosition);
             }
         }
+
+        @Override
+        public boolean equals(Object obj) {
+            return true;
+        }
     }
 
     public static class TextInputDragEventListener implements MouseDragEventListener {
-        private final TextInput textInput;
-
-        public TextInputDragEventListener(TextInput textInput) {
-            this.textInput = textInput;
-        }
 
         @Override
         public void process(MouseDragEvent event) {
+            TextInput textInput = (TextInput) event.getComponent();
             if (MOUSE_BUTTON_LEFT.isPressed()) {
                 int mouseCaretPosition = textInput.getMouseCaretPosition();
                 textInput.setCaretPosition(mouseCaretPosition);
                 textInput.setEndSelectionIndex(mouseCaretPosition);
             }
         }
+
+        @Override
+        public boolean equals(Object obj) {
+            return true;
+        }
     }
 
     public static class TextInputCharEventListener implements CharEventListener {
 
-        private final TextInput textInput;
-
-        public TextInputCharEventListener(TextInput textInput) {
-            this.textInput = textInput;
-        }
-
         @Override
         public void process(CharEvent event) {
+            TextInput textInput = (TextInput) event.getComponent();
             if (textInput.isFocused() && textInput.isEditable() && !MOUSE_BUTTON_LEFT.isPressed()) {
                 String    str       = cpToStr(event.getCodepoint());
                 TextState textState = textInput.getTextState();
@@ -418,6 +415,11 @@ public class TextInput extends Controller {
                 textInput.setEndSelectionIndex(newCaretPosition);
                 textInput.setStartSelectionIndex(newCaretPosition);
             }
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            return true;
         }
     }
 }

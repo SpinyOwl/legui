@@ -342,6 +342,11 @@ public class Widget<T extends Component> extends Container {
             return new ToStringBuilder(this)
                     .toString();
         }
+
+        @Override
+        public boolean equals(Object obj) {
+            return true;
+        }
     }
 
     public class WidgetCloseButMouseClickEventListener implements MouseClickEventListener {
@@ -352,6 +357,11 @@ public class Widget<T extends Component> extends Container {
                 Widget.this.setVisible(false);
             }
         }
+
+        @Override
+        public boolean equals(Object obj) {
+            return true;
+        }
     }
 
     public class WidgetMinimizeButMouseClickEventListener implements MouseClickEventListener {
@@ -361,6 +371,11 @@ public class Widget<T extends Component> extends Container {
                 Widget.this.minimizeButton.getTextState().setText(newValue ? MAXIMIZE_ICON : MINIMIZE_ICON);
                 Widget.this.setMinimized(newValue);
             }
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            return true;
         }
     }
 }

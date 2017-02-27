@@ -80,7 +80,7 @@ public class ToggleButton extends Button {
     private void initialize() {
         setBackgroundColor(ColorConstants.red());
         toggledBackgroundColor = ColorConstants.green();
-        MouseClickEventListener toggleButtonClickListener = new ToggleButtonMouseClickListener(this);
+        MouseClickEventListener toggleButtonClickListener = new ToggleButtonMouseClickListener();
         getListenerMap().addListener(MouseClickEvent.class, toggleButtonClickListener);
     }
 
@@ -171,17 +171,18 @@ public class ToggleButton extends Button {
     }
 
     private static class ToggleButtonMouseClickListener implements MouseClickEventListener {
-        private final ToggleButton button;
-
-        private ToggleButtonMouseClickListener(ToggleButton button) {
-            this.button = button;
-        }
 
         @Override
         public void process(MouseClickEvent event) {
+            ToggleButton toggleButton = (ToggleButton) event.getComponent();
             if (event.getAction() == MouseClickEvent.MouseClickAction.CLICK) {
-                button.setToggled(!button.isToggled());
+                toggleButton.setToggled(!toggleButton.isToggled());
             }
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            return true;
         }
     }
 }

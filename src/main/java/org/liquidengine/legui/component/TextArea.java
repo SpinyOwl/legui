@@ -59,10 +59,10 @@ public class TextArea extends Controller {
         textState = new TextState(s);
         textState.getPadding().set(5, 10, 5, 10);
 
-        charEventListener = new TextAreaCharEventListener(this);
-        keyEventListener = new TextAreaKeyEventListener(this);
-        mouseClickEventListener = new TextAreaMouseClickEventListener(this);
-        dragEventListener = new TextAreaDragEventListener(this);
+        charEventListener = new TextAreaCharEventListener();
+        keyEventListener = new TextAreaKeyEventListener();
+        mouseClickEventListener = new TextAreaMouseClickEventListener();
+        dragEventListener = new TextAreaDragEventListener();
         getListenerMap().addListener(MouseDragEvent.class, dragEventListener);
         getListenerMap().addListener(MouseClickEvent.class, mouseClickEventListener);
         getListenerMap().addListener(KeyEvent.class, keyEventListener);
@@ -181,32 +181,28 @@ public class TextArea extends Controller {
     }
 
     public static class TextAreaDragEventListener implements MouseDragEventListener {
-        private final TextArea textArea;
-
-        public TextAreaDragEventListener(TextArea textArea) {
-            this.textArea = textArea;
-        }
 
         @Override
         public void process(MouseDragEvent event) {
+            TextArea textArea = (TextArea) event.getComponent();
             if (MOUSE_BUTTON_LEFT.isPressed()) {
                 int mouseCaretPosition = textArea.getMouseCaretPosition();
                 textArea.setCaretPosition(mouseCaretPosition);
                 textArea.setEndSelectionIndex(mouseCaretPosition);
             }
         }
+
+        @Override
+        public boolean equals(Object obj) {
+            return true;
+        }
     }
 
     public static class TextAreaMouseClickEventListener implements MouseClickEventListener {
 
-        private final TextArea textArea;
-
-        public TextAreaMouseClickEventListener(TextArea textArea) {
-            this.textArea = textArea;
-        }
-
         @Override
         public void process(MouseClickEvent event) {
+            TextArea textArea = (TextArea) event.getComponent();
             if (event.getAction() == MouseClickEvent.MouseClickAction.PRESS) {
                 int mouseCaretPosition = textArea.getMouseCaretPosition();
                 textArea.setCaretPosition(mouseCaretPosition);
@@ -214,18 +210,18 @@ public class TextArea extends Controller {
                 textArea.setEndSelectionIndex(mouseCaretPosition);
             }
         }
+
+        @Override
+        public boolean equals(Object obj) {
+            return true;
+        }
     }
 
     public static class TextAreaKeyEventListener implements KeyEventListener {
 
-        private final TextArea textArea;
-
-        public TextAreaKeyEventListener(TextArea textArea) {
-            this.textArea = textArea;
-        }
-
         @Override
         public void process(KeyEvent event) {
+            TextArea textArea = (TextArea) event.getComponent();
             if (textArea.isFocused() && textArea.isEditable()) {
                 int       key           = event.getKey();
                 int       caretPosition = textArea.getCaretPosition();
@@ -459,6 +455,11 @@ public class TextArea extends Controller {
             return new LineData(caretPosition - caretOffset, caretLine);
         }
 
+        @Override
+        public boolean equals(Object obj) {
+            return true;
+        }
+
         private static class LineData {
             private int caretPositionInLine;
             private int lineIndex;
@@ -472,36 +473,36 @@ public class TextArea extends Controller {
 
     public static class TextAreaCharEventListener implements CharEventListener {
 
-        private final TextArea gui;
-
-        public TextAreaCharEventListener(TextArea gui) {
-            this.gui = gui;
-        }
-
         @Override
         public void process(CharEvent event) {
-            if (gui.isFocused() && gui.isEditable() && !MOUSE_BUTTON_LEFT.isPressed()) {
+            TextArea textArea = (TextArea) event.getComponent();
+            if (textArea.isFocused() && textArea.isEditable() && !MOUSE_BUTTON_LEFT.isPressed()) {
                 String    str       = cpToStr(event.getCodepoint());
-                TextState textState = gui.getTextState();
-                int       start     = gui.getStartSelectionIndex();
-                int       end       = gui.getEndSelectionIndex();
+                TextState textState = textArea.getTextState();
+                int       start     = textArea.getStartSelectionIndex();
+                int       end       = textArea.getEndSelectionIndex();
                 if (start > end) {
-                    start = gui.getEndSelectionIndex();
-                    end = gui.getStartSelectionIndex();
+                    start = textArea.getEndSelectionIndex();
+                    end = textArea.getStartSelectionIndex();
                 }
                 if (start != end) {
                     textState.delete(start, end);
-                    gui.setCaretPosition(start);
-                    gui.setStartSelectionIndex(start);
-                    gui.setEndSelectionIndex(start);
+                    textArea.setCaretPosition(start);
+                    textArea.setStartSelectionIndex(start);
+                    textArea.setEndSelectionIndex(start);
                 }
-                int caretPosition = gui.getCaretPosition();
+                int caretPosition = textArea.getCaretPosition();
                 textState.insert(caretPosition, str);
                 int newCaretPosition = caretPosition + str.length();
-                gui.setCaretPosition(newCaretPosition);
-                gui.setEndSelectionIndex(newCaretPosition);
-                gui.setStartSelectionIndex(newCaretPosition);
+                textArea.setCaretPosition(newCaretPosition);
+                textArea.setEndSelectionIndex(newCaretPosition);
+                textArea.setStartSelectionIndex(newCaretPosition);
             }
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            return true;
         }
     }
 }
