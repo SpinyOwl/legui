@@ -10,6 +10,8 @@ import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.listener.MouseClickEventListener;
 
+import java.util.HashMap;
+
 import static org.liquidengine.legui.event.MouseClickEvent.MouseClickAction.CLICK;
 
 /**
@@ -196,6 +198,11 @@ public class CheckBox extends Controller {
             if (event.getAction() == CLICK) {
                 checkBox.setChecked(!checkBox.isChecked());
             }
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            return true;
         }
     }
 }

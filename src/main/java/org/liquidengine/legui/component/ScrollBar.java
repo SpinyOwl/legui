@@ -165,9 +165,9 @@ public class ScrollBar extends Controller {
      * Used to initialize listeners.
      */
     private void initialize() {
-        getListenerMap().addListener(ScrollEvent.class, new ScrollBarScrollListener(this));
-        getListenerMap().addListener(MouseDragEvent.class, new ScrollBarMouseDragEventListener(this));
-        getListenerMap().addListener(MouseClickEvent.class, new ScrollBarMouseClickEventListener(this));
+        getListenerMap().addListener(ScrollEvent.class, new ScrollBarScrollListener());
+        getListenerMap().addListener(MouseDragEvent.class, new ScrollBarMouseDragEventListener());
+        getListenerMap().addListener(MouseClickEvent.class, new ScrollBarMouseClickEventListener());
     }
 
     /**
@@ -477,19 +477,14 @@ public class ScrollBar extends Controller {
      * Default mouse scroll event listener for scrollbar. Generates {@link ScrollBarChangeValueEvent} event.
      */
     public static class ScrollBarScrollListener implements ScrollEventListener {
-        private final ScrollBar scrollBar;
-
-        public ScrollBarScrollListener(ScrollBar scrollBar) {
-            this.scrollBar = scrollBar;
-        }
-
         public void process(ScrollEvent event) {
-            float maxValue      = scrollBar.getMaxValue();
-            float minValue      = scrollBar.getMinValue();
-            float curValue      = scrollBar.getCurValue();
-            float visibleAmount = scrollBar.getVisibleAmount();
-            float valueRange    = scrollBar.getMaxValue() - scrollBar.getMinValue();
-            float newVal        = (float) (curValue - scrollBar.getScrollStep() * event.getYoffset() * visibleAmount * valueRange / (valueRange - visibleAmount));
+            ScrollBar scrollBar     = (ScrollBar) event.getComponent();
+            float     maxValue      = scrollBar.getMaxValue();
+            float     minValue      = scrollBar.getMinValue();
+            float     curValue      = scrollBar.getCurValue();
+            float     visibleAmount = scrollBar.getVisibleAmount();
+            float     valueRange    = scrollBar.getMaxValue() - scrollBar.getMinValue();
+            float     newVal        = (float) (curValue - scrollBar.getScrollStep() * event.getYoffset() * visibleAmount * valueRange / (valueRange - visibleAmount));
 
             if (newVal > maxValue) newVal = maxValue;
             if (newVal < minValue) newVal = minValue;
@@ -502,20 +497,21 @@ public class ScrollBar extends Controller {
                 viewport.updateViewport();
             }
         }
+
+        @Override
+        public boolean equals(Object obj) {
+            return true;
+        }
     }
 
     /**
      * Default mouse drag event listener for scrollbar. Generates {@link ScrollBarChangeValueEvent} event.
      */
     public static class ScrollBarMouseDragEventListener implements MouseDragEventListener {
-        private final ScrollBar scrollBar;
-
-        public ScrollBarMouseDragEventListener(ScrollBar scrollBar) {
-            this.scrollBar = scrollBar;
-        }
 
         @Override
         public void process(MouseDragEvent event) {
+            ScrollBar scrollBar = (ScrollBar) event.getComponent();
             if (!scrollBar.isScrolling()) return;
             if (!MOUSE_BUTTON_LEFT.isPressed()) return;
 
@@ -553,6 +549,11 @@ public class ScrollBar extends Controller {
                 viewport.updateViewport();
             }
         }
+
+        @Override
+        public boolean equals(Object obj) {
+            return true;
+        }
     }
 
 
@@ -560,15 +561,11 @@ public class ScrollBar extends Controller {
      * Default mouse click event listener for scrollbar. Generates {@link ScrollBarChangeValueEvent} event.
      */
     public static class ScrollBarMouseClickEventListener implements MouseClickEventListener {
-        private final ScrollBar scrollBar;
-
-        public ScrollBarMouseClickEventListener(ScrollBar scrollBar) {
-            this.scrollBar = scrollBar;
-        }
 
         @Override
         public void process(MouseClickEvent event) {
-            boolean released = event.getAction() != MouseClickEvent.MouseClickAction.PRESS;
+            ScrollBar scrollBar = (ScrollBar) event.getComponent();
+            boolean   released  = event.getAction() != MouseClickEvent.MouseClickAction.PRESS;
             if (!event.getButton().equals(MOUSE_BUTTON_LEFT)) return;
 
             Vector2f pos            = scrollBar.getScreenPosition();
@@ -612,16 +609,21 @@ public class ScrollBar extends Controller {
             }
         }
 
-        private void updateViewport(AbstractEvent event, ScrollBar gui, float maxValue, float minValue, float newVal) {
+        private void updateViewport(AbstractEvent event, ScrollBar scrollBar, float maxValue, float minValue, float newVal) {
             if (newVal > maxValue) newVal = maxValue;
             else if (newVal < minValue) newVal = minValue;
-            event.getContext().getEventProcessor().pushEvent(new ScrollBarChangeValueEvent(scrollBar, event.getContext(), gui.getCurValue(), newVal));
-            gui.setCurValue(newVal);
+            event.getContext().getEventProcessor().pushEvent(new ScrollBarChangeValueEvent(scrollBar, event.getContext(), scrollBar.getCurValue(), newVal));
+            scrollBar.setCurValue(newVal);
 
-            Viewport viewport = gui.getViewport();
+            Viewport viewport = scrollBar.getViewport();
             if (viewport != null) {
                 viewport.updateViewport();
             }
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            return true;
         }
     }
 
@@ -655,6 +657,28 @@ public class ScrollBar extends Controller {
          */
         public float getOldValue() {
             return oldValue;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+
+            if (o == null || getClass() != o.getClass()) return false;
+
+            ScrollBarChangeValueEvent that = (ScrollBarChangeValueEvent) o;
+
+            return new EqualsBuilder()
+                    .append(getOldValue(), that.getOldValue())
+                    .append(getNewValue(), that.getNewValue())
+                    .isEquals();
+        }
+
+        @Override
+        public int hashCode() {
+            return new HashCodeBuilder(17, 37)
+                    .append(getOldValue())
+                    .append(getNewValue())
+                    .toHashCode();
         }
     }
 }

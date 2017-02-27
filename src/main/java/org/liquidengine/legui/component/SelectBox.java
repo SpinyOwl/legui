@@ -132,11 +132,11 @@ public class SelectBox extends Container {
         this.add(selectionButton);
 
         expandButton.getTextState().setFont(FontRegister.MATERIAL_ICONS_REGULAR);
-        MouseClickEventListener mouseClickEventListener = new SelectBoxClickListener(this);
+        MouseClickEventListener mouseClickEventListener = new SelectBoxClickListener();
         selectionButton.getListenerMap().addListener(MouseClickEvent.class, mouseClickEventListener);
         expandButton.getListenerMap().addListener(MouseClickEvent.class, mouseClickEventListener);
 
-        FocusEventListener focusEventListener = new SelectBoxFocusListener(this);
+        FocusEventListener focusEventListener = new SelectBoxFocusListener();
         selectionListPanel.getVerticalScrollBar().getListenerMap().getListeners(FocusEvent.class).add(focusEventListener);
         selectionButton.getListenerMap().getListeners(FocusEvent.class).add(focusEventListener);
         expandButton.getListenerMap().getListeners(FocusEvent.class).add(focusEventListener);
@@ -449,15 +449,10 @@ public class SelectBox extends Container {
      * Default focus listener for selectbox. Used to collapse selectbox if it loses focus.
      */
     public static class SelectBoxFocusListener implements FocusEventListener {
-        private final SelectBox box;
-
-        public SelectBoxFocusListener(SelectBox box) {
-            if (box == null) throw new NullPointerException("SelectBox for this listener cannot be null");
-            this.box = box;
-        }
 
         @Override
         public void process(FocusEvent event) {
+            SelectBox box = (SelectBox) event.getComponent();
             if (!event.isFocused() && !box.isCollapsed()) {
                 boolean   collapse  = true;
                 Component nextFocus = event.getNextFocus();
@@ -477,24 +472,29 @@ public class SelectBox extends Container {
                 }
             }
         }
+
+        @Override
+        public boolean equals(Object obj) {
+            return true;
+        }
     }
 
     /**
      * Default mouse click listener for selectbox. Used to collapse selectbox if it loses focus and to expand/collapse if clicked on it.
      */
     public static class SelectBoxClickListener implements MouseClickEventListener {
-        private final SelectBox box;
-
-        public SelectBoxClickListener(SelectBox box) {
-            if (box == null) throw new NullPointerException("SelectBox for this listener cannot be null");
-            this.box = box;
-        }
 
         @Override
         public void process(MouseClickEvent event) {
+            SelectBox box = (SelectBox) event.getComponent();
             if (event.getAction() == CLICK) {
                 box.setCollapsed(!box.isCollapsed());
             }
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            return true;
         }
     }
 
@@ -607,6 +607,26 @@ public class SelectBox extends Container {
         @Override
         public void process(ScrollEvent event) {
             event.getContext().getEventProcessor().pushEvent(new ScrollEvent(bar, event.getContext(), event.getXoffset(), event.getYoffset()));
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+
+            if (o == null || getClass() != o.getClass()) return false;
+
+            SelectBoxScrollListener that = (SelectBoxScrollListener) o;
+
+            return new EqualsBuilder()
+                    .append(bar, that.bar)
+                    .isEquals();
+        }
+
+        @Override
+        public int hashCode() {
+            return new HashCodeBuilder(17, 37)
+                    .append(bar)
+                    .toHashCode();
         }
     }
 }
