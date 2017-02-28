@@ -22,8 +22,8 @@ public class GsonProgressBarMarshaller<T extends ProgressBar> extends GsonContro
      * @param context marshal context
      */
     @Override
-    protected void jsonMarshal(T object, JsonObject json, GsonMarshalContext context) {
-        super.jsonMarshal(object, json, context);
+    protected void marshal(T object, JsonObject json, GsonMarshalContext context) {
+        super.marshal(object, json, context);
 
         GsonUtil.fill(json)
                 .add(VALUE, object.getValue())

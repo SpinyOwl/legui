@@ -182,11 +182,15 @@ public class Widget<T extends Component> extends Container {
     }
 
     public Vector4f getCloseButtonColor() {
-        return closeButton.getBackgroundColor();
+        return closeButton.getTextState().getTextColor();
     }
 
     public void setCloseButtonColor(Vector4f closeButtonColor) {
         this.closeButton.getTextState().setTextColor(closeButtonColor);
+    }
+
+    public Vector4f getCloseButtonBackgroundColor() {
+        return this.closeButton.getBackgroundColor();
     }
 
     public void setCloseButtonBackgroundColor(Vector4f closeButtonBackgroundColor) {

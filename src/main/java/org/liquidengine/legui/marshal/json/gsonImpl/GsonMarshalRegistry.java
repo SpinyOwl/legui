@@ -136,28 +136,32 @@ public class GsonMarshalRegistry implements JsonMarshalRegistry {
         static {
             I.registerMarshaller("TextState", TextState.class, new GsonTextStateMarshaller<>());
 
-            I.registerMarshaller("Border", Border.class, new GsonBorderMarshaller());
+            I.registerMarshaller("Border", Border.class, new GsonBorderMarshaller<>());
             I.registerMarshaller("SimpleLineBorder", SimpleLineBorder.class, new GsonSimpleLineBorderMarshaller());
 
-            I.registerMarshaller("Intersector", Intersector.class, new GsonIntersectorMarshaller());
+            I.registerMarshaller("Intersector", Intersector.class, new GsonIntersectorMarshaller<>());
 
             I.registerMarshaller("Button", Button.class, new GsonButtonMarshaller<>());
-            I.registerMarshaller("CheckBox", CheckBox.class, new GsonCheckBoxMarshaller());
+            I.registerMarshaller("CheckBox", CheckBox.class, new GsonCheckBoxMarshaller<>());
             I.registerMarshaller("Container", Container.class, new GsonContainerMarshaller<>());
             I.registerMarshaller("Component", Component.class, new GsonComponentMarshaller<>());
             I.registerMarshaller("Controller", Controller.class, new GsonControllerMarshaller<>());
-            I.registerMarshaller("ImageView", ImageView.class, new GsonImageViewMarshaller());
-            I.registerMarshaller("Label", Label.class, new GsonLabelMarshaller());
-            I.registerMarshaller("Panel", Panel.class, new GsonPanelMarshaller());
-            I.registerMarshaller("ProgressBar", ProgressBar.class, new GsonProgressBarMarshaller());
-            I.registerMarshaller("RadioButton", RadioButton.class, new GsonRadioButtonMarshaller());
-            I.registerMarshaller("ScrollablePanel", ScrollablePanel.class, new GsonScrollablePanelMarshaller());
-            I.registerMarshaller("ScrollBar", ScrollBar.class, new GsonScrollBarMarshaller());
-            I.registerMarshaller("SelectBox", SelectBox.class, new GsonSelectBoxMarshaller());
-            I.registerMarshaller("Slider", Slider.class, new GsonSliderMarshaller());
-            I.registerMarshaller("TextArea", TextArea.class, new GsonTextAreaMarshaller());
-            I.registerMarshaller("TextInput", TextInput.class, new GsonTextInputMarshaller());
-            I.registerMarshaller("Widget", Widget.class, new GsonWidgetMarshaller());
+            I.registerMarshaller("ImageView", ImageView.class, new GsonImageViewMarshaller<>());
+            I.registerMarshaller("Label", Label.class, new GsonLabelMarshaller<>());
+            I.registerMarshaller("Panel", Panel.class, new GsonPanelMarshaller<>());
+            I.registerMarshaller("ProgressBar", ProgressBar.class, new GsonProgressBarMarshaller<>());
+            I.registerMarshaller("RadioButton", RadioButton.class, new GsonRadioButtonMarshaller<>());
+            I.registerMarshaller("ScrollablePanel", ScrollablePanel.class, new GsonScrollablePanelMarshaller<>());
+            I.registerMarshaller("ScrollBar", ScrollBar.class, new GsonScrollBarMarshaller<>());
+            I.registerMarshaller("SelectBox", SelectBox.class, new GsonSelectBoxMarshaller<>());
+            I.registerMarshaller("Slider", Slider.class, new GsonSliderMarshaller<>());
+            I.registerMarshaller("TextArea", TextArea.class, new GsonTextAreaMarshaller<>());
+            I.registerMarshaller("TextInput", TextInput.class, new GsonTextInputMarshaller<>());
+            I.registerMarshaller("Widget", Widget.class, new GsonWidgetMarshaller<>());
+            I.registerMarshaller("LayerContainer", LayerContainer.class, new GsonLayerContainerMarshaller<>());
+            I.registerMarshaller("Layer", Layer.class, new GsonLayerMarshaller<>());
+            I.registerMarshaller("Frame", Frame.class, new GsonFrameMarshaller<>());
+
         }
     }
 }

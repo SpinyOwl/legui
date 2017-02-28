@@ -17,7 +17,7 @@ public class GsonIntersectorMarshaller<T extends Intersector> extends AbstractGs
      * @param context marshal context
      */
     @Override
-    protected void jsonMarshal(T object, JsonObject json, GsonMarshalContext context) {
+    protected void marshal(T object, JsonObject json, GsonMarshalContext context) {
 
     }
 

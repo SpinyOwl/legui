@@ -19,8 +19,8 @@ public class GsonControllerMarshaller<T extends Controller> extends GsonComponen
      * @param context marshal context
      */
     @Override
-    protected void jsonMarshal(T object, JsonObject json, GsonMarshalContext context) {
-        super.jsonMarshal(object, json, context);
+    protected void marshal(T object, JsonObject json, GsonMarshalContext context) {
+        super.marshal(object, json, context);
 
         JsonObject jsonObject = GsonMarshalUtil.marshalToJson(object.getTooltip(), context);
         GsonUtil.fill(json).add("tooltip", jsonObject);
@@ -38,6 +38,6 @@ public class GsonControllerMarshaller<T extends Controller> extends GsonComponen
         super.unmarshal(json, object, context);
 
         JsonElement tooltip = json.get("tooltip");
-        if (GsonUtil.isNotNull(tooltip) && tooltip.isJsonObject()) object.setTooltip(GsonMarshalUtil.unmarshal((JsonObject) tooltip));
+        if (GsonUtil.isNotNull(tooltip) && tooltip.isJsonObject()) object.setTooltipComponent(GsonMarshalUtil.unmarshal((JsonObject) tooltip));
     }
 }

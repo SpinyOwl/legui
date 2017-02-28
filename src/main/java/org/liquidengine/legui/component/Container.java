@@ -126,7 +126,7 @@ public abstract class Container<T extends Component> extends Controller {
         if (components != null) {
             List<T> toAdd = new ArrayList<>();
             components.forEach(component -> {
-                if (component != null && component != this && !components.contains(component)) {
+                if (component != null && component != this && !this.components.contains(component)) {
                     changeParent(component);
                     toAdd.add(component);
                 }

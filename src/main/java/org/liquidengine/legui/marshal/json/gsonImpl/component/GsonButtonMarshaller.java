@@ -22,8 +22,8 @@ public class GsonButtonMarshaller<T extends Button> extends GsonControllerMarsha
      * @param context marshal context
      */
     @Override
-    protected void jsonMarshal(T object, JsonObject json, GsonMarshalContext context) {
-        super.jsonMarshal(object, json, context);
+    protected void marshal(T object, JsonObject json, GsonMarshalContext context) {
+        super.marshal(object, json, context);
 
         JsonObject textState = GsonMarshalUtil.marshalToJson(object.getTextState(), context);
         json.add(TEXT_STATE, textState);

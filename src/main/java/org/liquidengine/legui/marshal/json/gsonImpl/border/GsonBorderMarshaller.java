@@ -23,7 +23,7 @@ public class GsonBorderMarshaller<T extends Border> extends AbstractGsonMarshall
      * @param context marshal context
      */
     @Override
-    protected void jsonMarshal(T object, JsonObject json, GsonMarshalContext context) {
+    protected void marshal(T object, JsonObject json, GsonMarshalContext context) {
         GsonUtil.fill(json)
                 .add(ENABLED, object.isEnabled());
     }

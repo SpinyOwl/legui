@@ -48,35 +48,4 @@ public class LayerContainer<T extends Component> extends Container<T> {
         setBackgroundColor(ColorConstants.transparent());
         setBorder(null);
     }
-
-    /**
-     * (non-Javadoc)
-     *
-     * @param o
-     * @see Object#equals(Object)
-     */
-    @Override
-    public boolean equals(Object o) {
-        return super.equals(o);
-    }
-
-    /**
-     * (non-Javadoc)
-     *
-     * @see Object#hashCode()
-     */
-    @Override
-    public int hashCode() {
-        return super.hashCode();
-    }
-
-    /**
-     * (non-Javadoc)
-     *
-     * @see Object#toString()
-     */
-    @Override
-    public String toString() {
-        return super.toString();
-    }
 }

@@ -27,7 +27,7 @@ public class GsonComponentMarshaller<T extends Component> extends AbstractGsonMa
      * @param context marshal context
      */
     @Override
-    protected void jsonMarshal(T object, JsonObject json, GsonMarshalContext context) {
+    protected void marshal(T object, JsonObject json, GsonMarshalContext context) {
         GsonUtil.fill(json)
                 .add(POSITION, GsonUtil.create()
                         .add(X, object.getPosition().x)

@@ -26,8 +26,8 @@ public class GsonContainerMarshaller<T extends Container> extends GsonController
      * @param context marshal context
      */
     @Override
-    protected void jsonMarshal(T object, JsonObject json, GsonMarshalContext context) {
-        super.jsonMarshal(object, json, context);
+    protected void marshal(T object, JsonObject json, GsonMarshalContext context) {
+        super.marshal(object, json, context);
         List<Component> components = object.getChilds();
         JsonArray       comps      = new JsonArray();
         for (Component component : components) {

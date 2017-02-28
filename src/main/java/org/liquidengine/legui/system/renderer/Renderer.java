@@ -2,6 +2,7 @@ package org.liquidengine.legui.system.renderer;
 
 import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.component.Layer;
+import org.liquidengine.legui.component.LayerContainer;
 import org.liquidengine.legui.system.context.Context;
 
 /**
@@ -23,7 +24,8 @@ public abstract class Renderer {
     public void render(Frame display) {
         preRender();
         for (Layer layer : display.getAllLayers()) {
-            RendererProvider.getInstance().getComponentRenderer(layer.getContainer().getClass()).render(layer.getContainer(), context);
+            LayerContainer container = layer.getContainer();
+            RendererProvider.getInstance().getComponentRenderer(container.getClass()).render(container, context);
         }
         postRender();
     }

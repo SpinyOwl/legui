@@ -23,8 +23,8 @@ public class GsonSimpleLineBorderMarshaller extends GsonBorderMarshaller<SimpleL
      * @param context marshal context
      */
     @Override
-    protected void jsonMarshal(SimpleLineBorder object, JsonObject json, GsonMarshalContext context) {
-        super.jsonMarshal(object, json, context);
+    protected void marshal(SimpleLineBorder object, JsonObject json, GsonMarshalContext context) {
+        super.marshal(object, json, context);
         GsonUtil.fill(json)
                 .add(THICKNESS, object.getThickness())
                 .add(BORDER_COLOR, GsonUtil.createColor(object.getColor()));
