@@ -24,8 +24,8 @@ public class GsonSelectBoxMarshaller<T extends SelectBox> extends GsonController
      * @param context marshal context
      */
     @Override
-    protected void jsonMarshal(T object, JsonObject json, GsonMarshalContext context) {
-        super.jsonMarshal(object, json, context);
+    protected void marshal(T object, JsonObject json, GsonMarshalContext context) {
+        super.marshal(object, json, context);
 
         GsonUtil.fill(json)
                 .add(SELECTED_ELEMENT, object.getSelection())

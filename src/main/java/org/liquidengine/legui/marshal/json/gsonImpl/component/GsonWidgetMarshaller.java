@@ -23,8 +23,8 @@ public class GsonWidgetMarshaller<T extends Widget> extends GsonControllerMarsha
      * @param context marshal context
      */
     @Override
-    protected void jsonMarshal(T object, JsonObject json, GsonMarshalContext context) {
-        super.jsonMarshal(object, json, context);
+    protected void marshal(T object, JsonObject json, GsonMarshalContext context) {
+        super.marshal(object, json, context);
 
         Container  container = object.getContainer();
         JsonObject cont      = GsonMarshalUtil.marshalToJson(container, context);
@@ -38,6 +38,7 @@ public class GsonWidgetMarshaller<T extends Widget> extends GsonControllerMarsha
                 .add(TITLE_HEIGHT, object.getTitleHeight())
                 .add(TITLE_BACKGROUND_COLOR, createColor(object.getTitleBackgroundColor()))
                 .add(CLOSE_BUTTON_COLOR, createColor(object.getCloseButtonColor()))
+                .add(CLOSE_BUTTON_BACKGROUND_COLOR, createColor(object.getCloseButtonBackgroundColor()))
                 .add(TITLE, GsonMarshalUtil.marshalToJson(object.getTitleTextState(), context))
         ;
     }
@@ -63,6 +64,7 @@ public class GsonWidgetMarshaller<T extends Widget> extends GsonControllerMarsha
         JsonElement titleHeight          = json.get(TITLE_HEIGHT);
         JsonElement titleBackgroundColor = json.get(TITLE_BACKGROUND_COLOR);
         JsonElement closeButtonColor     = json.get(CLOSE_BUTTON_COLOR);
+        JsonElement closeButtonBackgroundColor     = json.get(CLOSE_BUTTON_BACKGROUND_COLOR);
         JsonElement title                = json.get(TITLE);
 
         if (isNotNull(container)) object.setContainer(GsonMarshalUtil.unmarshal(container.getAsJsonObject(), context));
@@ -71,10 +73,11 @@ public class GsonWidgetMarshaller<T extends Widget> extends GsonControllerMarsha
         if (isNotNull(titleHeight)) object.setTitleHeight(titleHeight.getAsFloat());
         if (isNotNull(titleBackgroundColor)) object.setTitleBackgroundColor(readColor(titleBackgroundColor.getAsJsonObject()));
         if (isNotNull(closeButtonColor)) object.setCloseButtonColor(readColor(closeButtonColor.getAsJsonObject()));
+        if (isNotNull(closeButtonBackgroundColor)) object.setCloseButtonBackgroundColor(readColor(closeButtonBackgroundColor.getAsJsonObject()));
         if (isNotNull(draggable)) object.setDraggable(draggable.getAsBoolean());
         if (isNotNull(closeable)) object.setCloseable(closeable.getAsBoolean());
         if (isNotNull(titleEnabled)) object.setTitleEnabled(titleEnabled.getAsBoolean());
-        if (isNotNull(minimized)) object.setDraggable(minimized.getAsBoolean());
+        if (isNotNull(minimized)) object.setMinimized(minimized.getAsBoolean());
 
         object.resize();
     }

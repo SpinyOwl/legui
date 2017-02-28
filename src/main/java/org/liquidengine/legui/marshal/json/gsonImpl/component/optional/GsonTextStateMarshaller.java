@@ -26,7 +26,7 @@ public class GsonTextStateMarshaller<T extends TextState> extends AbstractGsonMa
      * @param context marshal context
      */
     @Override
-    protected void jsonMarshal(T object, JsonObject json, GsonMarshalContext context) {
+    protected void marshal(T object, JsonObject json, GsonMarshalContext context) {
         GsonUtil.fill(json)
                 .add(FONT, object.getFont())
                 .add(TEXT, object.getText())

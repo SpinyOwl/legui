@@ -2,20 +2,39 @@ package org.liquidengine.legui.marshal.json;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.liquidengine.legui.component.Button;
+import org.liquidengine.legui.component.Frame;
+import org.liquidengine.legui.example.ExampleGui;
 import org.liquidengine.legui.marshal.json.gsonImpl.GsonMarshalContext;
 import org.liquidengine.legui.marshal.json.gsonImpl.GsonMarshalRegistry;
+import org.liquidengine.legui.marshal.json.gsonImpl.GsonMarshalUtil;
 
 public class TestJsonMarshaller {
 
     private void testJsonMarshalling(JsonMarshalRegistry registry, JsonMarshalContext context) {
-        Button                 b          = new Button(10, 20, 30, 40);
-        JsonMarshaller<Button> marshaller = registry.getMarshaller(Button.class);
+        Object toMarshal;
+        Object unMarshalled;
 
-        String json               = marshaller.marshal(b, context);
-        Button unmarshalledButton = marshaller.unmarshal(json, context);
+        Frame frame = new Frame();
+        frame.getContainer().addAll(new ExampleGui().getChilds());
 
-        Assert.assertEquals(b, unmarshalledButton);
+        String marshalled   = GsonMarshalUtil.marshal(frame);
+        Frame  unmarshaled  = GsonMarshalUtil.unmarshal(marshalled);
+        String remarshalled = GsonMarshalUtil.marshal(unmarshaled);
+
+
+        toMarshal = frame;
+        unMarshalled = unmarshaled;
+
+
+        String jsonOne = marshalled;
+        String jsonTwo = remarshalled;
+
+
+        System.out.println(jsonOne);
+        System.out.println(jsonTwo);
+        System.out.println(toMarshal.equals(unMarshalled));
+
+        Assert.assertEquals(toMarshal, unMarshalled);
     }
 
     @Test

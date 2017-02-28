@@ -91,7 +91,7 @@ public abstract class AbstractGsonMarshaller<T> implements JsonMarshaller<T> {
             } else {
                 json.addProperty(CLASS_PARAMETER, aClass.getName());
             }
-            jsonMarshal(object, json, context);
+            marshal(object, json, context);
             return json;
         } catch (Throwable e) {
             throw new LeguiException(LeguiExceptions.MARSHALLING_EXCEPTION.message(), e);
@@ -105,7 +105,7 @@ public abstract class AbstractGsonMarshaller<T> implements JsonMarshaller<T> {
      * @param json    json object to fill
      * @param context marshal context
      */
-    protected abstract void jsonMarshal(T object, JsonObject json, GsonMarshalContext context);
+    protected abstract void marshal(T object, JsonObject json, GsonMarshalContext context);
 
     /**
      * Reads data from json object and puts it to object

@@ -1,13 +1,13 @@
 package org.liquidengine.legui.marshal.json.gsonImpl.component;
 
 import com.google.gson.JsonObject;
-import org.liquidengine.legui.component.Panel;
+import org.liquidengine.legui.component.LayerContainer;
 import org.liquidengine.legui.marshal.json.gsonImpl.GsonMarshalContext;
 
 /**
- * Created by ShchAlexander on 27.02.2017.
+ * Marshaller for layer container.
  */
-public class GsonPanelMarshaller<T extends Panel> extends GsonContainerMarshaller<T> {
+public class GsonLayerContainerMarshaller<T extends LayerContainer> extends GsonContainerMarshaller<T> {
     /**
      * Reads data from object and puts it to json object
      *

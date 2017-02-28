@@ -39,6 +39,10 @@ public class ExampleGui extends Panel<Component> {
     private final Label     debugLabel;
     private       ImageView imageView;
 
+    public ExampleGui() {
+        this(800, 600);
+    }
+
     public ExampleGui(int width, int height) {
         super(0, 0, width, height);
         //@formatter:off
