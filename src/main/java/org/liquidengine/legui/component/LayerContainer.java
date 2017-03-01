@@ -2,11 +2,15 @@ package org.liquidengine.legui.component;
 
 import org.joml.Vector2f;
 import org.liquidengine.legui.color.ColorConstants;
+import org.liquidengine.legui.event.WindowSizeEvent;
+import org.liquidengine.legui.listener.WindowSizeEventListener;
 
 /**
  * Layer container. By default it has {@link org.liquidengine.legui.listener.WindowSizeEventListener} which used to resize this container.
  */
 public class LayerContainer<T extends Component> extends Container<T> {
+    private WindowSizeEventListener listener;
+
     /**
      * Default constructor. Used to create component instance without any parameters.
      * <p>
@@ -45,7 +49,21 @@ public class LayerContainer<T extends Component> extends Container<T> {
      * Used to initialize Layer container with default background and border.
      */
     private void initialize() {
+        getListenerMap().addListener(WindowSizeEvent.class, listener = new LayerContainerWindowSizeEventListener());
         setBackgroundColor(ColorConstants.transparent());
         setBorder(null);
+    }
+
+
+    public static class LayerContainerWindowSizeEventListener implements WindowSizeEventListener {
+        @Override
+        public void process(WindowSizeEvent event) {
+            event.getComponent().getSize().set(event.getWidth(), event.getHeight());
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            return true;
+        }
     }
 }
