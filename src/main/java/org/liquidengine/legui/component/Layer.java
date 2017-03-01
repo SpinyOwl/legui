@@ -44,8 +44,6 @@ public class Layer<T extends Component> {
 
     private boolean                 enabled;
     private boolean                 visible;
-    private WindowSizeEventListener listener;
-
 
     /**
      * Default constructor.
@@ -58,8 +56,6 @@ public class Layer<T extends Component> {
      * Used to initialize layer and layer container.
      */
     private void initialize() {
-        listener = new LayerContainerWindowSizeEventListener();
-        container.getListenerMap().addListener(WindowSizeEvent.class, listener);
     }
 
     /**
@@ -98,10 +94,8 @@ public class Layer<T extends Component> {
      * @param container new layer container to set.
      */
     public void setContainer(LayerContainer<T> container) {
-        this.container.getListenerMap().removeListener(WindowSizeEvent.class, listener);
         container.setSize(new Vector2f(this.container.getSize()));
         this.container = container;
-        container.getListenerMap().addListener(WindowSizeEvent.class, listener);
     }
 
     /**
@@ -148,9 +142,9 @@ public class Layer<T extends Component> {
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
-                .append(container)
-                .append(eventPassable)
-                .append(eventReceivable)
+                .append(getContainer())
+                .append(isEventPassable())
+                .append(isEventReceivable())
 //                .append(enabled)
 //                .append(visible)
                 .toHashCode();
@@ -170,11 +164,11 @@ public class Layer<T extends Component> {
         Layer<?> layer = (Layer<?>) obj;
 
         return new EqualsBuilder()
-                .append(eventPassable, layer.eventPassable)
-                .append(eventReceivable, layer.eventReceivable)
+                .append(isEventPassable(), layer.isEventPassable())
+                .append(isEventReceivable(), layer.isEventReceivable())
 //                .append(enabled, layer.enabled)
 //                .append(visible, layer.visible)
-                .append(container, layer.container)
+                .append(getContainer(), layer.getContainer())
                 .isEquals();
     }
 
@@ -186,23 +180,11 @@ public class Layer<T extends Component> {
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.JSON_STYLE)
-                .append("container", container)
-                .append("eventPassable", eventPassable)
-                .append("eventReceivable", eventReceivable)
+                .append("container", getContainer())
+                .append("eventPassable", isEventPassable())
+                .append("eventReceivable", isEventReceivable())
 //                .append("enabled", enabled)
 //                .append("visible", visible)
                 .toString();
-    }
-
-    public static class LayerContainerWindowSizeEventListener implements WindowSizeEventListener {
-        @Override
-        public void process(WindowSizeEvent event) {
-            event.getComponent().getSize().set(event.getWidth(), event.getHeight());
-        }
-
-        @Override
-        public boolean equals(Object obj) {
-            return true;
-        }
     }
 }
