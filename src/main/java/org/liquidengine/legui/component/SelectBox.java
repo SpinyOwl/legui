@@ -382,7 +382,7 @@ public class SelectBox extends Container {
      */
     @Override
     public String toString() {
-        return new ToStringBuilder(this)
+        return new ToStringBuilder(this, ToStringStyle.JSON_STYLE)
                 .append("elements", elements)
                 .append("selectedElement", selectedElement)
                 .append("elementHeight", elementHeight)

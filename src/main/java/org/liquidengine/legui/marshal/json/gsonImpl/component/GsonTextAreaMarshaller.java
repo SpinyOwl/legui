@@ -31,6 +31,7 @@ public class GsonTextAreaMarshaller<T extends TextArea> extends GsonControllerMa
                 .add(EDITABLE, object.isEditable())
                 .add(SELECTION_COLOR, GsonUtil.createColor(object.getSelectionColor()))
                 .add(TEXT_STATE, textState)
+                .add(CARET_POSITION, object.getCaretPosition())
         ;
     }
 
@@ -48,6 +49,7 @@ public class GsonTextAreaMarshaller<T extends TextArea> extends GsonControllerMa
         JsonElement editable       = json.get(EDITABLE);
         JsonElement selectionColor = json.get(SELECTION_COLOR);
         JsonElement textState      = json.get(TEXT_STATE);
+        JsonElement caretPosition  = json.get(CARET_POSITION);
 
         if (isNotNull(textState)) {
             JsonObject asJsonObject = textState.getAsJsonObject();
@@ -56,5 +58,6 @@ public class GsonTextAreaMarshaller<T extends TextArea> extends GsonControllerMa
         }
         if (isNotNull(editable)) object.setEditable(editable.getAsBoolean());
         if (isNotNull(selectionColor)) object.setSelectionColor(GsonUtil.readColor(selectionColor.getAsJsonObject()));
+        if (isNotNull(caretPosition)) object.setCaretPosition(caretPosition.getAsInt());
     }
 }

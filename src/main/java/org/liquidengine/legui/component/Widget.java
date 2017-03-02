@@ -3,6 +3,7 @@ package org.liquidengine.legui.component;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.color.ColorConstants;
@@ -324,7 +325,7 @@ public class Widget<T extends Component> extends Container {
      */
     @Override
     public String toString() {
-        return new ToStringBuilder(this)
+        return new ToStringBuilder(this, ToStringStyle.JSON_STYLE)
                 .append("draggable", draggable)
                 .append("minimized", minimized)
                 .append("maximizedSize", maximizedSize)
@@ -343,7 +344,7 @@ public class Widget<T extends Component> extends Container {
 
         @Override
         public String toString() {
-            return new ToStringBuilder(this)
+            return new ToStringBuilder(this, ToStringStyle.JSON_STYLE)
                     .toString();
         }
 
