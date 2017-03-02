@@ -3,7 +3,7 @@ package org.liquidengine.legui.marshal.json.gsonImpl.component;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.liquidengine.legui.component.ImageView;
-import org.liquidengine.legui.image.Image;
+import org.liquidengine.legui.image.BufferedImage;
 import org.liquidengine.legui.marshal.json.gsonImpl.GsonMarshalContext;
 import org.liquidengine.legui.marshal.json.gsonImpl.GsonUtil;
 
@@ -39,6 +39,6 @@ public class GsonImageViewMarshaller<T extends ImageView> extends GsonController
         super.unmarshal(json, object, context);
 
         JsonElement path = json.get(PATH);
-        if (isNotNull(path)) object.setImage(new Image(path.getAsString()));
+        if (isNotNull(path)) object.setImage(new BufferedImage(path.getAsString()));
     }
 }

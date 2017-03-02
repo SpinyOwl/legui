@@ -12,7 +12,7 @@ import org.liquidengine.legui.event.FocusEvent;
 import org.liquidengine.legui.event.KeyEvent;
 import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.font.FontRegister;
-import org.liquidengine.legui.image.Image;
+import org.liquidengine.legui.image.BufferedImage;
 import org.liquidengine.legui.listener.CursorEnterEventListener;
 import org.liquidengine.legui.listener.FocusEventListener;
 import org.liquidengine.legui.listener.KeyEventListener;
@@ -68,7 +68,7 @@ public class ExampleGui extends Panel<Component> {
 
         upsLabel = new Label("Hello Label 4", 130, 60, 100, 20); this.add(upsLabel);
 
-        imageView = new ImageView(new Image("org/liquidengine/legui/example/1.jpg")); imageView.setPosition(20, 30); imageView.setSize(100, 100); this.add(imageView);
+        imageView = new ImageView(new BufferedImage("org/liquidengine/legui/example/1.jpg")); imageView.setPosition(20, 30); imageView.setSize(100, 100); this.add(imageView);
 
         Button button = new Button(20, 170, 50, 20); button.setBackgroundColor(new Vector4f(1)); this.add(button);
         button.getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) System.out::println);
@@ -139,9 +139,9 @@ public class ExampleGui extends Panel<Component> {
         turnWidVisible.getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
         if (CLICK == (event.getAction())) widget.setVisible(true);
         });
-        ImageView bgIm  = new ImageView(new Image("org/liquidengine/legui/example/1.png")); bgIm.setSize(20, 20); turnWidVisible.setBackgroundImage(bgIm);
-        ImageView hbgIm = new ImageView(new Image("org/liquidengine/legui/example/2.png")); hbgIm.setSize(20, 20); turnWidVisible.setHoveredBackgroundImage(hbgIm);
-        ImageView pbIm  = new ImageView(new Image("org/liquidengine/legui/example/3.png")); pbIm.setSize(20, 20); turnWidVisible.setPressedBackgroundImage(pbIm);
+        ImageView bgIm  = new ImageView(new BufferedImage("org/liquidengine/legui/example/1.png")); bgIm.setSize(20, 20); turnWidVisible.setBackgroundImage(bgIm);
+        ImageView hbgIm = new ImageView(new BufferedImage("org/liquidengine/legui/example/2.png")); hbgIm.setSize(20, 20); turnWidVisible.setHoveredBackgroundImage(hbgIm);
+        ImageView pbIm  = new ImageView(new BufferedImage("org/liquidengine/legui/example/3.png")); pbIm.setSize(20, 20); turnWidVisible.setPressedBackgroundImage(pbIm);
 
         this.add(turnWidVisible);
 
@@ -338,8 +338,8 @@ public class ExampleGui extends Panel<Component> {
 
         ToggleButton toggleButton = new ToggleButton("",100, 170, 40, 40);
         this.add(toggleButton);
-        ImageView bgImageNormal  = new ImageView(new Image("org/liquidengine/legui/example/normal.png"));
-        ImageView bgImageToggled = new ImageView(new Image("org/liquidengine/legui/example/toggled.png"));
+        ImageView bgImageNormal  = new ImageView(new BufferedImage("org/liquidengine/legui/example/normal.png"));
+        ImageView bgImageToggled = new ImageView(new BufferedImage("org/liquidengine/legui/example/toggled.png"));
 
         toggleButton.getListenerMap().addListener(CursorEnterEvent.class, (CursorEnterEventListener)System.out::println);
 

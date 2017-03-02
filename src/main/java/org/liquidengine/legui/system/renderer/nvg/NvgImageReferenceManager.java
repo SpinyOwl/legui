@@ -17,7 +17,7 @@ import java.util.concurrent.*;
 public class NvgImageReferenceManager {
 
     /**
-     * Image queue to remove
+     * BufferedImage queue to remove
      */
     private Queue<String> imagesToRemove = new ConcurrentLinkedQueue<>();
 
