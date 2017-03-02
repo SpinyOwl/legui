@@ -11,7 +11,7 @@ import org.liquidengine.legui.image.Image;
  */
 public class ImageView extends Controller {
     /**
-     * Image (or image data)
+     * BufferedImage (or image data)
      */
     private Image image;
 
