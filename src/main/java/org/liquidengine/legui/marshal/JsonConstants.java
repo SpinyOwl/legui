@@ -27,6 +27,7 @@ public final class JsonConstants {
     public static final String CORNER_RADIUS                 = "cornerRadius";
     // TEXT_STATE
     public static final String TEXT_STATE                    = "textState";
+    public static final String CARET_POSITION                = "caretPosition";
     public static final String FONT                          = "font";
     public static final String TEXT                          = "text";
     public static final String FONT_SIZE                     = "fontSize";

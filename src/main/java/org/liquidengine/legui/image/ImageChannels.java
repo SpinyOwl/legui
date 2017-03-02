@@ -1,6 +1,7 @@
 package org.liquidengine.legui.image;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
  * Created by Aliaksandr_Shcherbin on 3/2/2017.
@@ -39,7 +40,7 @@ public enum ImageChannels {
      */
     @Override
     public String toString() {
-        return new ToStringBuilder(this)
+        return new ToStringBuilder(this, ToStringStyle.JSON_STYLE)
                 .append("channels", channels)
                 .toString();
     }
