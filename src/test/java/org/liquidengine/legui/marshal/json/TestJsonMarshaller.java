@@ -2,6 +2,7 @@ package org.liquidengine.legui.marshal.json;
 
 import org.joml.Vector4f;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.liquidengine.legui.border.SimpleLineBorder;
 import org.liquidengine.legui.color.ColorConstants;
@@ -15,6 +16,8 @@ import org.liquidengine.legui.event.KeyEvent;
 import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.font.FontRegister;
 import org.liquidengine.legui.image.DummyImage;
+import org.liquidengine.legui.image.DummyImageLoader;
+import org.liquidengine.legui.image.loader.ImageLoader;
 import org.liquidengine.legui.listener.CursorEnterEventListener;
 import org.liquidengine.legui.listener.FocusEventListener;
 import org.liquidengine.legui.listener.KeyEventListener;
@@ -33,6 +36,11 @@ import static org.liquidengine.legui.component.optional.align.VerticalAlign.*;
 import static org.liquidengine.legui.event.MouseClickEvent.MouseClickAction.*;
 
 public class TestJsonMarshaller {
+
+    @Before
+    public void setup(){
+        ImageLoader.setLoader(new DummyImageLoader());
+    }
 
     private void testJsonMarshalling(JsonMarshalRegistry registry, JsonMarshalContext context) {
         Object toMarshal;
