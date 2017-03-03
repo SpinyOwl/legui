@@ -1,13 +1,14 @@
 package org.liquidengine.legui.component;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-import java.util.concurrent.CopyOnWriteArraySet;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Group of radio buttons which determines that only one radio button can be selected in group.
@@ -17,7 +18,7 @@ public class RadioButtonGroup implements Serializable {
     /**
      * Used to hold radio buttons.
      */
-    private Set<RadioButton> radioButtons = new CopyOnWriteArraySet<>();
+    private List<RadioButton> radioButtons = new CopyOnWriteArrayList<>();
     /**
      * Currently selected radio button.
      */
@@ -29,6 +30,7 @@ public class RadioButtonGroup implements Serializable {
      * @param radioButton radio button to add.
      */
     void add(RadioButton radioButton) {
+        if (radioButtons.contains(radioButton)) return;
         radioButtons.add(radioButton);
         if (radioButton.isSelected()) {
             if (selection != null) {
@@ -109,7 +111,25 @@ public class RadioButtonGroup implements Serializable {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.JSON_STYLE)
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (o == null || getClass() != o.getClass()) return false;
+
+        RadioButtonGroup that = (RadioButtonGroup) o;
+
+        return new EqualsBuilder()
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37)
+                .toHashCode();
     }
 }

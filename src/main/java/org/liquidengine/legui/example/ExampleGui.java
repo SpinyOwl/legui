@@ -177,7 +177,7 @@ public class ExampleGui extends Panel<Component> {
         widget3.setTitleEnabled(false);
         widget3.setTitleBackgroundColor(ColorConstants.lightGreen());
         widget3.setCloseable(true);
-        widget3.setMinimizeable(false);
+        widget3.setMinimizable(false);
         this.add(widget3);
 
         Button turnWidVisible3 = new Button("", 360, 340, 20, 20);

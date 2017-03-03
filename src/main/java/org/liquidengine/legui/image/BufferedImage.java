@@ -94,7 +94,7 @@ public class BufferedImage extends Image {
      */
     @Override
     public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.JSON_STYLE)
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .append("path", getPath())
                 .append("width", width)
                 .append("height", height)

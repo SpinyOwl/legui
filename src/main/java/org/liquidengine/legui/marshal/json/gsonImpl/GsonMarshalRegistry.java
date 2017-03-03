@@ -161,6 +161,8 @@ public class GsonMarshalRegistry implements JsonMarshalRegistry {
             I.registerMarshaller("LayerContainer", LayerContainer.class, new GsonLayerContainerMarshaller<>());
             I.registerMarshaller("Layer", Layer.class, new GsonLayerMarshaller<>());
             I.registerMarshaller("Frame", Frame.class, new GsonFrameMarshaller<>());
+            I.registerMarshaller("Tooltip", Tooltip.class, new GsonTooltipMarshaller<>());
+            I.registerMarshaller("ToggleButton", ToggleButton.class, new GsonToggleButtonMarshaller<>());
 
         }
     }
