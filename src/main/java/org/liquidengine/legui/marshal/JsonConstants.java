@@ -25,7 +25,7 @@ public final class JsonConstants {
     public static final String ENABLED                       = "enabled";
     public static final String VISIBLE                       = "visible";
     public static final String CORNER_RADIUS                 = "cornerRadius";
-    // TEXT_STATE
+    // TEXT STATE
     public static final String TEXT_STATE                    = "textState";
     public static final String CARET_POSITION                = "caretPosition";
     public static final String FONT                          = "font";
@@ -46,15 +46,15 @@ public final class JsonConstants {
     // IMAGE
     public static final String IMAGE                         = "image";
     public static final String PATH                          = "path";
-    // PROGRESS_BAR
+    // PROGRESS BAR
     public static final String PROGRESS_BAR                  = "progressBar";
     public static final String VALUE                         = "value";
     public static final String PROGRESS_COLOR                = "progressColor";
-    // RADIO_BUTTON
+    // RADIO BUTTON
     public static final String RADIO_BUTTON                  = "radioButton";
     public static final String SELECTED                      = "selected";
     public static final String GROUP                         = "group";
-    // SCROLL_BAR
+    // SCROLL BAR
     public static final String SCROLL_BAR                    = "scrollBar";
     public static final String ORIENTATION                   = "orientation";
     public static final String MIN_VALUE                     = "minValue";
@@ -65,7 +65,7 @@ public final class JsonConstants {
     public static final String ARROW_SIZE                    = "arrowSize";
     public static final String ARROW_COLOR                   = "arrowColor";
     public static final String SCROLL_COLOR                  = "scrollColor";
-    // SELECT_BOX
+    // SELECT BOX
     public static final String SELECT_BOX                    = "selectBox";
     public static final String SELECTED_ELEMENT              = "selectedElement";
     public static final String ELEMENTS                      = "elements";
@@ -77,18 +77,18 @@ public final class JsonConstants {
     public static final String SLIDER_ACTIVE_COLOR           = "sliderActiveColor";
     public static final String SLIDER_COLOR                  = "sliderColor";
     public static final String SLIDER_SIZE                   = "sliderSize";
-    // TEXT_AREA
+    // TEXT AREA
     public static final String TEXT_AREA                     = "textArea";
     public static final String EDITABLE                      = "editable";
     public static final String SELECTION_COLOR               = "selectionColor";
-    // TEXT_INPUT
+    // TEXT INPUT
     public static final String TEXT_INPUT                    = "textInput";
-    // COMPONENT_CONTAINER
+    // COMPONENT CONTAINER
     public static final String COMPONENT_CONTAINER           = "componentContainer";
     public static final String COMPONENTS                    = "components";
     // PANEL
     public static final String PANEL                         = "panel";
-    // SCROLLABLE_PANEL
+    // SCROLLABLE PANEL
     public static final String SCROLLABLE_PANEL              = "scrollablePanel";
     public static final String CONTAINER                     = "container";
     public static final String HORIZONTAL_SCROLL_BAR         = "horizontalScrollBar";
@@ -98,6 +98,7 @@ public final class JsonConstants {
     public static final String RESIZABLE                     = "resizable";
     public static final String DRAGGABLE                     = "draggable";
     public static final String MINIMIZED                     = "minimized";
+    public static final String MINIMIZABLE                   = "minimizable";
     public static final String CLOSEABLE                     = "closeable";
     public static final String TITLE                         = "title";
     public static final String TITLE_ENABLED                 = "titleEnabled";
@@ -112,10 +113,19 @@ public final class JsonConstants {
     // LAYER
     public static final String EVENT_PASSABLE                = "eventPassable";
     public static final String EVENT_RECEIVABLE              = "eventReceivable";
-    //FRAME
+    // FRAME
     public static final String COMPONENT_LAYER               = "componentLayer";
     public static final String TOOLTIP_LAYER                 = "tooltipLayer";
     public static final String LAYERS                        = "layers";
+    // BUTTON
+    public static final String BACKGROUND_IMAGE              = "backgroundImage";
+    public static final String FOCUSED_BACKGROUND_IMAGE      = "focusedBackgroundImage";
+    public static final String PRESSED_BACKGROUND_IMAGE      = "pressedBackgroundImage";
+    public static final String HOVERED_BACKGROUND_IMAGE      = "hoveredBackgroundImage";
+    // TOGGLE BUTTON
+    public static final String TOGGLED                       = "toggled";
+    public static final String TOGGLEDED_BACKGROUND_IMAGE    = "togglededBackgroundImage";
+    public static final String TOGGLED_BACKGROUND_COLOR      = "toggledBackgroundColor";
 
     private JsonConstants() {
     }

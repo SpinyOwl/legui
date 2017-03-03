@@ -179,7 +179,7 @@ public class Layer<T extends Component> {
      */
     @Override
     public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.JSON_STYLE)
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .append("container", getContainer())
                 .append("eventPassable", isEventPassable())
                 .append("eventReceivable", isEventReceivable())

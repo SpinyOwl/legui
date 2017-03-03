@@ -233,7 +233,7 @@ public class Button extends Controller {
      */
     @Override
     public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.JSON_STYLE)
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .append("textState", textState)
                 .toString();
     }

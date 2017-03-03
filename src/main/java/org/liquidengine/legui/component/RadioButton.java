@@ -118,11 +118,7 @@ public class RadioButton extends Controller {
     private void initialize(String text) {
         textState = new TextState(text);
         setBorder(null);
-        getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
-            if (event.getAction() == CLICK) {
-                setSelected(true);
-            }
-        });
+        getListenerMap().addListener(MouseClickEvent.class, new RadioButtonClickEventListener());
     }
 
     /**
@@ -227,10 +223,26 @@ public class RadioButton extends Controller {
      */
     @Override
     public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.JSON_STYLE)
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .append("textState", textState)
                 .append("selected", selected)
                 .append("radioButtonGroup", radioButtonGroup)
                 .toString();
+    }
+
+    public static class RadioButtonClickEventListener implements MouseClickEventListener {
+
+        @Override
+        public void process(MouseClickEvent event) {
+            if (event.getAction() == CLICK) {
+                RadioButton component = (RadioButton) event.getComponent();
+                component.setSelected(true);
+            }
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            return true;
+        }
     }
 }

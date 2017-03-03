@@ -222,12 +222,12 @@ public class Widget<T extends Component> extends Container {
         }
     }
 
-    public boolean isMinimizeable() {
+    public boolean isMinimizable() {
         return minimizeButton.isVisible();
     }
 
-    public void setMinimizeable(boolean minimizeable) {
-        this.minimizeButton.setVisible(minimizeable);
+    public void setMinimizable(boolean minimizable) {
+        this.minimizeButton.setVisible(minimizable);
         resize();
     }
 
@@ -325,7 +325,7 @@ public class Widget<T extends Component> extends Container {
      */
     @Override
     public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.JSON_STYLE)
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .append("draggable", draggable)
                 .append("minimized", minimized)
                 .append("maximizedSize", maximizedSize)
@@ -344,7 +344,7 @@ public class Widget<T extends Component> extends Container {
 
         @Override
         public String toString() {
-            return new ToStringBuilder(this, ToStringStyle.JSON_STYLE)
+            return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                     .toString();
         }
 

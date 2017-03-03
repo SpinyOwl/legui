@@ -8,32 +8,22 @@ import org.liquidengine.legui.border.SimpleLineBorder;
 import org.liquidengine.legui.color.ColorConstants;
 import org.liquidengine.legui.component.*;
 import org.liquidengine.legui.component.optional.Orientation;
-import org.liquidengine.legui.component.optional.align.HorizontalAlign;
-import org.liquidengine.legui.component.optional.align.VerticalAlign;
-import org.liquidengine.legui.event.CursorEnterEvent;
-import org.liquidengine.legui.event.FocusEvent;
-import org.liquidengine.legui.event.KeyEvent;
-import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.font.FontRegister;
 import org.liquidengine.legui.image.DummyImage;
 import org.liquidengine.legui.image.DummyImageLoader;
 import org.liquidengine.legui.image.loader.ImageLoader;
-import org.liquidengine.legui.listener.CursorEnterEventListener;
-import org.liquidengine.legui.listener.FocusEventListener;
-import org.liquidengine.legui.listener.KeyEventListener;
-import org.liquidengine.legui.listener.MouseClickEventListener;
 import org.liquidengine.legui.marshal.json.gsonImpl.GsonMarshalContext;
 import org.liquidengine.legui.marshal.json.gsonImpl.GsonMarshalRegistry;
 import org.liquidengine.legui.marshal.json.gsonImpl.GsonMarshalUtil;
 import org.liquidengine.legui.util.TextUtil;
-import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.liquidengine.legui.component.optional.align.HorizontalAlign.*;
-import static org.liquidengine.legui.component.optional.align.VerticalAlign.*;
-import static org.liquidengine.legui.event.MouseClickEvent.MouseClickAction.*;
+import static org.liquidengine.legui.component.optional.align.HorizontalAlign.CENTER;
+import static org.liquidengine.legui.component.optional.align.HorizontalAlign.RIGHT;
+import static org.liquidengine.legui.component.optional.align.VerticalAlign.BOTTOM;
+import static org.liquidengine.legui.component.optional.align.VerticalAlign.MIDDLE;
 
 public class TestJsonMarshaller {
 
@@ -82,32 +72,22 @@ public class TestJsonMarshaller {
         List<Component> toReturn = new ArrayList<>();
         Panel           p1       = new Panel(1 * 20, 10, 10, 10);
         toReturn.add(p1);
-        p1.getListenerMap().addListener(FocusEvent.class, (FocusEventListener) System.out::println);
         Panel p2 = new Panel(2 * 20, 10, 10, 10);
         toReturn.add(p2);
-        p2.getListenerMap().addListener(FocusEvent.class, (FocusEventListener) System.out::println);
         Panel p3 = new Panel(3 * 20, 10, 10, 10);
         toReturn.add(p3);
-        p3.getListenerMap().addListener(FocusEvent.class, (FocusEventListener) System.out::println);
         Panel p4 = new Panel(4 * 20, 10, 10, 10);
         toReturn.add(p4);
-        p4.getListenerMap().addListener(FocusEvent.class, (FocusEventListener) System.out::println);
         Panel p5 = new Panel(5 * 20, 10, 10, 10);
         toReturn.add(p5);
-        p5.getListenerMap().addListener(FocusEvent.class, (FocusEventListener) System.out::println);
         Panel p6 = new Panel(6 * 20, 10, 10, 10);
         toReturn.add(p6);
-        p6.getListenerMap().addListener(FocusEvent.class, (FocusEventListener) System.out::println);
         Panel p7 = new Panel(7 * 20, 10, 10, 10);
         toReturn.add(p7);
-        p7.getListenerMap().addListener(FocusEvent.class, (FocusEventListener) System.out::println);
         Panel p8 = new Panel(8 * 20, 10, 10, 10);
         toReturn.add(p8);
-        p8.getListenerMap().addListener(FocusEvent.class, (FocusEventListener) System.out::println);
         Panel p9 = new Panel(9 * 20, 10, 10, 10);
         toReturn.add(p9);
-        p9.getListenerMap().addListener(FocusEvent.class, (FocusEventListener) System.out::println);
-
 
         Label mouseTargetLabel = new Label("Hello Label 1", 10, height - 30, width - 20, 20);
         toReturn.add(mouseTargetLabel);
@@ -133,7 +113,6 @@ public class TestJsonMarshaller {
         Button button = new Button(20, 170, 50, 20);
         button.setBackgroundColor(new Vector4f(1));
         toReturn.add(button);
-        button.getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) System.out::println);
 
         button.setTooltip("Just button");
         button.getTooltip().setPosition(0, 25);
@@ -143,40 +122,6 @@ public class TestJsonMarshaller {
         button.getTooltip().getTextState().setPadding(4, 4, 4, 4);
 
         int idv[] = {0};
-        button.getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
-            if (event.getAction().equals(CLICK)) {
-                idv[0]++;
-                HorizontalAlign h  = LEFT;
-                VerticalAlign   v  = TOP;
-                int             hh = idv[0] % 3;
-                int             vv = (idv[0] / 3) % 3;
-                switch (hh) {
-                    case 0:
-                        h = LEFT;
-                        break;
-                    case 1:
-                        h = CENTER;
-                        break;
-                    case 2:
-                        h = RIGHT;
-                        break;
-                }
-                switch (vv) {
-                    case 0:
-                        v = TOP;
-                        break;
-                    case 1:
-                        v = MIDDLE;
-                        break;
-                    case 2:
-                        v = BOTTOM;
-                        break;
-                }
-                System.out.println(h + " " + v);
-                button.getTooltip().getTextState().setHorizontalAlign(h);
-                button.getTooltip().getTextState().setVerticalAlign(v);
-            }
-        });
 
         CheckBox checkBox1 = new CheckBox(20, 200, 50, 20);
         toReturn.add(checkBox1);
@@ -208,14 +153,6 @@ public class TestJsonMarshaller {
 
         TextInput textInput = new TextInput(250, 130, 100, 30);
         textInput.getTextState().setHorizontalAlign(RIGHT);
-        textInput.getListenerMap().addListener(KeyEvent.class, (KeyEventListener) event -> {
-            if (event.getKey() == GLFW.GLFW_KEY_F1 && event.getAction() == GLFW.GLFW_RELEASE)
-                textInput.getTextState().setHorizontalAlign(LEFT);
-            else if (event.getKey() == GLFW.GLFW_KEY_F2 && event.getAction() == GLFW.GLFW_RELEASE)
-                textInput.getTextState().setHorizontalAlign(CENTER);
-            else if (event.getKey() == GLFW.GLFW_KEY_F3 && event.getAction() == GLFW.GLFW_RELEASE)
-                textInput.getTextState().setHorizontalAlign(RIGHT);
-        });
         toReturn.add(textInput);
 
         Widget widget = new Widget("Hello widget", 250, 170, 100, 100);
@@ -223,9 +160,6 @@ public class TestJsonMarshaller {
         widget.setTitleBackgroundColor(ColorConstants.lightGreen());
 
         Button turnWidVisible = new Button("", 360, 280, 20, 20);
-        turnWidVisible.getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
-            if (CLICK == (event.getAction())) widget.setVisible(true);
-        });
         ImageView bgIm = new ImageView(new DummyImage("org/liquidengine/legui/example/1.png"));
         bgIm.setSize(20, 20);
         turnWidVisible.setBackgroundImage(bgIm);
@@ -264,16 +198,10 @@ public class TestJsonMarshaller {
         widget2.setDraggable(false);
 
         Button turnDraggable = new Button("Draggable", 10, 10, 80, 20);
-        turnDraggable.getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
-            if (CLICK == event.getAction()) widget2.setDraggable(!widget2.isDraggable());
-        });
         widget2.getContainer().add(turnDraggable);
         toReturn.add(widget2);
 
         Button turnWidVisible2 = new Button("", 360, 310, 20, 20);
-        turnWidVisible2.getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
-            if (CLICK == event.getAction()) widget2.setVisible(true);
-        });
         toReturn.add(turnWidVisible2);
 
         Widget widget3 = new Widget("Hello 2 widget", 250, 420, 100, 100);
@@ -281,13 +209,10 @@ public class TestJsonMarshaller {
         widget3.setTitleEnabled(false);
         widget3.setTitleBackgroundColor(ColorConstants.lightGreen());
         widget3.setCloseable(true);
-        widget3.setMinimizeable(false);
+        widget3.setMinimizable(false);
         toReturn.add(widget3);
 
         Button turnWidVisible3 = new Button("", 360, 340, 20, 20);
-        turnWidVisible3.getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
-            if (CLICK == event.getAction()) widget3.setVisible(true);
-        });
         toReturn.add(turnWidVisible3);
 
         widget3.getContainer().add(new Panel(5, 5, 20, 20));
@@ -304,12 +229,6 @@ public class TestJsonMarshaller {
         String up   = TextUtil.cpToStr(0xE5D8);
         String down = TextUtil.cpToStr(0xE5DB);
         b.getTextState().setText(down);
-        b.getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
-            if (event.getAction() == CLICK) {
-                widget3.setTitleEnabled(!widget3.isTitleEnabled());
-                b.getTextState().setText(widget3.isTitleEnabled() ? up : down);
-            }
-        });
         widget3.getContainer().add(b);
 
         ScrollBar scrollBar1 = new ScrollBar(360, 170, 20, 100, 20);
@@ -349,13 +268,6 @@ public class TestJsonMarshaller {
         panel2.setBackgroundColor(ColorConstants.green());
         toReturn.add(panel2);
 
-        button.getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
-            MouseClickEvent.MouseClickAction action = event.getAction();
-            if (CLICK == action) mouseTargetLabel.setVisible(!mouseTargetLabel.isVisible());
-            if (RELEASE == action) System.out.println("RELEASE");
-            if (PRESS == action) System.out.println("PRESS");
-        });
-
         ScrollablePanel scrollablePanel = new ScrollablePanel(420, 10, 250, 150);
         scrollablePanel.setBackgroundColor(1, 1, 1, 1);
         scrollablePanel.getContainer().setSize(300, 200);
@@ -370,38 +282,12 @@ public class TestJsonMarshaller {
         scrollablePanel.getContainer().add(scp);
         toReturn.add(scrollablePanel);
 
-        slider2.getListenerMap().addListener(Slider.SliderChangeValueEvent.class, (Slider.SliderChangeValueEventListener) event -> {
-            scrollablePanel.getHorizontalScrollBar().getSize().y = event.getNewValue() / 2f + 10;
-            scrollablePanel.resize();
-        });
-        slider1.getListenerMap().addListener(Slider.SliderChangeValueEvent.class, (Slider.SliderChangeValueEventListener) event -> {
-            scrollablePanel.getHorizontalScrollBar().setArrowSize(event.getNewValue() / 4f + 10);
-            scrollablePanel.resize();
-        });
-
         TextArea textArea = new TextArea(420, 280, 150, 100);
         textArea.getTextState().setText("ABC DEF GH\r\nI JKL MNO PQR\nSTU VWXYZ");
         textArea.setCaretPosition(12);
         textArea.getTextState().setHorizontalAlign(CENTER);
         textArea.getTextState().setVerticalAlign(BOTTOM);
         toReturn.add(textArea);
-
-        textArea.getListenerMap().addListener(KeyEvent.class, (KeyEventListener) event -> {
-            if (event.getKey() == GLFW.GLFW_KEY_F1 && event.getAction() == GLFW.GLFW_RELEASE)
-                textArea.getTextState().setHorizontalAlign(LEFT);
-            else if (event.getKey() == GLFW.GLFW_KEY_F2 && event.getAction() == GLFW.GLFW_RELEASE)
-                textArea.getTextState().setHorizontalAlign(CENTER);
-            else if (event.getKey() == GLFW.GLFW_KEY_F3 && event.getAction() == GLFW.GLFW_RELEASE)
-                textArea.getTextState().setHorizontalAlign(RIGHT);
-            else if (event.getKey() == GLFW.GLFW_KEY_F5 && event.getAction() == GLFW.GLFW_RELEASE)
-                textArea.getTextState().setVerticalAlign(TOP);
-            else if (event.getKey() == GLFW.GLFW_KEY_F6 && event.getAction() == GLFW.GLFW_RELEASE)
-                textArea.getTextState().setVerticalAlign(MIDDLE);
-            else if (event.getKey() == GLFW.GLFW_KEY_F7 && event.getAction() == GLFW.GLFW_RELEASE)
-                textArea.getTextState().setVerticalAlign(BOTTOM);
-            else if (event.getKey() == GLFW.GLFW_KEY_F8 && event.getAction() == GLFW.GLFW_RELEASE)
-                textArea.getTextState().setVerticalAlign(VerticalAlign.BASELINE);
-        });
 
         TextInput caretp = new TextInput(420, 400, 150, 20);
         caretp.getTextState().setHorizontalAlign(CENTER);
@@ -437,11 +323,6 @@ public class TestJsonMarshaller {
         toReturn.add(selectBox);
 
         Button sbb = new Button("Add element", 130, 260, 70, 20);
-        sbb.getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
-            if (event.getAction() == CLICK) {
-                selectBox.addElement("WorlD " + i[0]++);
-            }
-        });
         toReturn.add(sbb);
 
         ToggleButton toggleButton = new ToggleButton("", 100, 170, 40, 40);
@@ -449,7 +330,6 @@ public class TestJsonMarshaller {
         ImageView bgImageNormal  = new ImageView(new DummyImage("org/liquidengine/legui/example/normal.png"));
         ImageView bgImageToggled = new ImageView(new DummyImage("org/liquidengine/legui/example/toggled.png"));
 
-        toggleButton.getListenerMap().addListener(CursorEnterEvent.class, (CursorEnterEventListener) System.out::println);
 
 
         toggleButton.setTooltip("Just toggle button with long tooltipText text");
@@ -462,41 +342,6 @@ public class TestJsonMarshaller {
         toggleButton.getTooltip().getTextState().setPadding(4, 4, 4, 4);
 
         int id[] = {0};
-        toggleButton.getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
-            if (event.getAction().equals(CLICK)) {
-                id[0]++;
-                HorizontalAlign h  = LEFT;
-                VerticalAlign   v  = TOP;
-                int             hh = id[0] % 3;
-                int             vv = (id[0] / 3) % 3;
-                switch (hh) {
-                    case 0:
-                        h = LEFT;
-                        break;
-                    case 1:
-                        h = CENTER;
-                        break;
-                    case 2:
-                        h = RIGHT;
-                        break;
-                }
-                switch (vv) {
-                    case 0:
-                        v = TOP;
-                        break;
-                    case 1:
-                        v = MIDDLE;
-                        break;
-                    case 2:
-                        v = BOTTOM;
-                        break;
-                }
-                System.out.println(h + " " + v);
-                toggleButton.getTooltip().getTextState().setHorizontalAlign(h);
-                toggleButton.getTooltip().getTextState().setVerticalAlign(v);
-
-            }
-        });
 
         bgImageNormal.setSize(36, 36);
         bgImageNormal.setPosition(2, 2);
@@ -505,11 +350,6 @@ public class TestJsonMarshaller {
         bgImageToggled.setPosition(2, 2);
         toggleButton.setTogglededBackgroundImage(bgImageToggled);
         //@formatter:on
-        RadioButtonGroup rbg = new RadioButtonGroup();
-        RadioButton      rb1 = new RadioButton();
-        RadioButton      rb2 = new RadioButton();
-        radioButton1.setRadioButtonGroup(radioButtonGroup);
-        radioButton2.setRadioButtonGroup(radioButtonGroup);
 
         return toReturn;
     }

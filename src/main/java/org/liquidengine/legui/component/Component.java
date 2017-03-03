@@ -471,18 +471,18 @@ public abstract class Component implements Serializable {
         Component component = (Component) o;
 
         return new EqualsBuilder()
-                .append(getCornerRadius(), component.getCornerRadius())
-                .append(isEnabled(), component.isEnabled())
-                .append(isVisible(), component.isVisible())
-                .append(isHovered(), component.isHovered())
-                .append(isFocused(), component.isFocused())
-                .append(isPressed(), component.isPressed())
-                .append(getListenerMap(), component.getListenerMap())
-                .append(getPosition(), component.getPosition())
-                .append(getSize(), component.getSize())
-                .append(getBackgroundColor(), component.getBackgroundColor())
-                .append(getBorder(), component.getBorder())
-                .append(getIntersector(), component.getIntersector())
+                .append(this.getCornerRadius(), component.getCornerRadius())
+                .append(this.isEnabled(), component.isEnabled())
+                .append(this.isVisible(), component.isVisible())
+                .append(this.isHovered(), component.isHovered())
+                .append(this.isFocused(), component.isFocused())
+                .append(this.isPressed(), component.isPressed())
+                .append(this.getListenerMap(), component.getListenerMap())
+                .append(this.getPosition(), component.getPosition())
+                .append(this.getSize(), component.getSize())
+                .append(this.getBackgroundColor(), component.getBackgroundColor())
+                .append(this.getBorder(), component.getBorder())
+                .append(this.getIntersector(), component.getIntersector())
                 .isEquals();
     }
 
@@ -516,7 +516,7 @@ public abstract class Component implements Serializable {
      */
     @Override
     public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.JSON_STYLE)
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .append("cornerRadius", cornerRadius)
                 .append("listenerMap", listenerMap)
                 .append("position", position)

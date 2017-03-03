@@ -7,7 +7,7 @@ import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.marshal.json.gsonImpl.GsonMarshalContext;
 import org.liquidengine.legui.marshal.json.gsonImpl.GsonMarshalUtil;
 
-import static org.liquidengine.legui.marshal.JsonConstants.TEXT_STATE;
+import static org.liquidengine.legui.marshal.JsonConstants.*;
 import static org.liquidengine.legui.marshal.json.gsonImpl.GsonUtil.isNotNull;
 
 /**
@@ -27,6 +27,10 @@ public class GsonButtonMarshaller<T extends Button> extends GsonControllerMarsha
 
         JsonObject textState = GsonMarshalUtil.marshalToJson(object.getTextState(), context);
         json.add(TEXT_STATE, textState);
+        json.add(BACKGROUND_IMAGE, GsonMarshalUtil.marshalToJson(object.getBackgroundImage(), context));
+        json.add(FOCUSED_BACKGROUND_IMAGE, GsonMarshalUtil.marshalToJson(object.getFocusedBackgroundImage(), context));
+        json.add(PRESSED_BACKGROUND_IMAGE, GsonMarshalUtil.marshalToJson(object.getPressedBackgroundImage(), context));
+        json.add(HOVERED_BACKGROUND_IMAGE, GsonMarshalUtil.marshalToJson(object.getHoveredBackgroundImage(), context));
     }
 
     /**
@@ -39,6 +43,16 @@ public class GsonButtonMarshaller<T extends Button> extends GsonControllerMarsha
     @Override
     protected void unmarshal(JsonObject json, T object, GsonMarshalContext context) {
         super.unmarshal(json, object, context);
+
+        JsonElement backgroundImage        = json.get(BACKGROUND_IMAGE);
+        JsonElement focusedBackgroundImage = json.get(FOCUSED_BACKGROUND_IMAGE);
+        JsonElement pressedBackgroundImage = json.get(PRESSED_BACKGROUND_IMAGE);
+        JsonElement hoveredBackgroundImage = json.get(HOVERED_BACKGROUND_IMAGE);
+
+        if (isNotNull(backgroundImage)) object.setBackgroundImage(GsonMarshalUtil.unmarshal(backgroundImage.getAsJsonObject(), context));
+        if (isNotNull(focusedBackgroundImage)) object.setFocusedBackgroundImage(GsonMarshalUtil.unmarshal(focusedBackgroundImage.getAsJsonObject(), context));
+        if (isNotNull(pressedBackgroundImage)) object.setPressedBackgroundImage(GsonMarshalUtil.unmarshal(pressedBackgroundImage.getAsJsonObject(), context));
+        if (isNotNull(hoveredBackgroundImage)) object.setHoveredBackgroundImage(GsonMarshalUtil.unmarshal(hoveredBackgroundImage.getAsJsonObject(), context));
 
         JsonElement textState = json.get(TEXT_STATE);
         if (isNotNull(textState)) {

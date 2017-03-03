@@ -2,7 +2,6 @@ package org.liquidengine.legui.marshal.json.gsonImpl.component;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import org.joml.Vector2f;
 import org.liquidengine.legui.color.ColorConstants;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.marshal.json.gsonImpl.AbstractGsonMarshaller;
@@ -66,23 +65,17 @@ public class GsonComponentMarshaller<T extends Component> extends AbstractGsonMa
         JsonElement intersector  = json.get(INTERSECTOR);
 
         if (isNotNull(position)) {
-            JsonElement x  = position.get(X);
-            float       xx = (!isNotNull(x)) ? object.getPosition().x : x.getAsFloat();
-            JsonElement y  = position.get(Y);
-            float       yy = (!isNotNull(y)) ? object.getPosition().y : y.getAsFloat();
-            object.setPosition(xx, yy);
-        } else if (isJsonNull(position)) {
-            object.setPosition(new Vector2f(0));
+            JsonElement x = position.get(X);
+            JsonElement y = position.get(Y);
+            if (isNotNull(x)) object.getPosition().x = x.getAsFloat();
+            if (isNotNull(y)) object.getPosition().y = y.getAsFloat();
         }
 
         if (isNotNull(size)) {
-            JsonElement width  = size.get(WIDTH);
-            float       wid    = (!isNotNull(width)) ? object.getSize().x : width.getAsFloat();
-            JsonElement height = size.get(HEIGHT);
-            float       hei    = (!isNotNull(height)) ? object.getSize().y : height.getAsFloat();
-            object.setSize(wid, hei);
-        } else if (isJsonNull(size)) {
-            object.setSize(new Vector2f(0));
+            JsonElement x = size.get(WIDTH);
+            JsonElement y = size.get(HEIGHT);
+            if (isNotNull(x)) object.getSize().x = x.getAsFloat();
+            if (isNotNull(y)) object.getSize().y = y.getAsFloat();
         }
 
         if (isNotNull(bg)) object.setBackgroundColor(readColor(bg));
