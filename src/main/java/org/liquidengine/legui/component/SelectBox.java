@@ -216,8 +216,10 @@ public class SelectBox extends Container {
         } else {
             wpos.set(getPosition().x, getPosition().y + getSize().y);
         }
+        selectionListPanel.setSize(wsize);
         selectionListPanel.setPosition(wpos);
         selectionListPanel.getContainer().getSize().y = selectionListPanel.getContainer().count() * elementHeight;
+        selectionListPanel.getContainer().getSize().x = this.getSize().x - selectionListPanel.getVerticalScrollBar().getSize().x;
         selectionListPanel.resize();
 
     }
@@ -443,27 +445,26 @@ public class SelectBox extends Container {
     /**
      * Default focus listener for selectbox. Used to collapse selectbox if it loses focus.
      */
-    public static class SelectBoxFocusListener implements FocusEventListener {
+    public class SelectBoxFocusListener implements FocusEventListener {
 
         @Override
         public void process(FocusEvent event) {
-            SelectBox box = (SelectBox) event.getComponent();
-            if (!event.isFocused() && !box.isCollapsed()) {
+            if (!event.isFocused() && !SelectBox.this.isCollapsed()) {
                 boolean   collapse  = true;
                 Component nextFocus = event.getNextFocus();
-                for (SelectBoxElement selectBoxElement : box.selectBoxElements) {
+                for (SelectBoxElement selectBoxElement : SelectBox.this.selectBoxElements) {
                     if (nextFocus == selectBoxElement) {
                         collapse = false;
                     }
                 }
-                if (nextFocus == box.expandButton ||
-                        nextFocus == box.selectionButton ||
-                        nextFocus == box.selectionListPanel ||
-                        nextFocus == box.selectionListPanel.getVerticalScrollBar()) {
+                if (nextFocus == expandButton ||
+                        nextFocus == selectionButton ||
+                        nextFocus == selectionListPanel ||
+                        nextFocus == selectionListPanel.getVerticalScrollBar()) {
                     collapse = false;
                 }
-                if (box.collapsed != collapse) {
-                    box.setCollapsed(collapse);
+                if (SelectBox.this.collapsed != collapse) {
+                    SelectBox.this.setCollapsed(collapse);
                 }
             }
         }
@@ -477,11 +478,11 @@ public class SelectBox extends Container {
     /**
      * Default mouse click listener for selectbox. Used to collapse selectbox if it loses focus and to expand/collapse if clicked on it.
      */
-    public static class SelectBoxClickListener implements MouseClickEventListener {
+    public class SelectBoxClickListener implements MouseClickEventListener {
 
         @Override
         public void process(MouseClickEvent event) {
-            SelectBox box = (SelectBox) event.getComponent();
+            SelectBox box = SelectBox.this;
             if (event.getAction() == CLICK) {
                 box.setCollapsed(!box.isCollapsed());
             }

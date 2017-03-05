@@ -161,7 +161,8 @@ public class NvgTextInputRenderer extends NvgComponentRenderer<TextInput> {
                 } else if (mx >= glyphs.get(ng - 1).maxx()) {
                     mouseCaretPosition = ng;
                     mouseCaretX = glyphs.get(ng - 1).maxx();
-                } else {
+                    // if window not minimized
+                } else if (!leguiContext.isIconified()) {
                     // binary search mouse caret position
                     int     upper = ng;
                     int     lower = 0;

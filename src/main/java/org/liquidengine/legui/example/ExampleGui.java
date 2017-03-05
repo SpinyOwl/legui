@@ -75,7 +75,7 @@ public class ExampleGui extends Panel<Component> {
 
         button.setTooltip("Just button");
         button.getTooltip().setPosition(0, 25);
-        button.getTooltip().getSize().set(50, 40);
+        button.getTooltip().getSize().set(50, 60);
         button.getTooltip().setBackgroundColor(ColorConstants.darkGray());
         button.getTooltip().getTextState().setTextColor(ColorConstants.white());
         button.getTooltip().getTextState().setPadding(4, 4, 4, 4);
@@ -164,7 +164,7 @@ public class ExampleGui extends Panel<Component> {
             if (event.getAction() == CLICK) {
                 Dialog dialog = new Dialog("Question:", 300, 100, event.getContext().getFrame(), turnDraggable);
 
-                Label questionLabel = new Label("Are you sure want to turn this widget draggable?", 10, 10, 200, 20);
+                Label questionLabel = new Label("Are you sure want to turn " + (widget2.isDraggable()?"off" : "on") +"this widget draggable?", 10, 10, 200, 20);
                 Button yesButton = new Button("Yes", 10, 50, 50, 20);
                 Button noButton = new Button("No", 70, 50, 50, 20);
                 yesButton.getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) e -> {
