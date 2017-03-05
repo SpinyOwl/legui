@@ -187,7 +187,8 @@ public class NvgTextAreaRenderer extends NvgComponentRenderer<TextArea> {
                         } else if (mx >= glyphs.get(ng - 1).maxx()) {
                             mouseCaretPositionInLine = ng;
                             mouseCaretX = glyphs.get(ng - 1).maxx();
-                        } else {
+                            // if window not minimized
+                        } else if (!leguiContext.isIconified()) {
                             // binary search mouse caret position
                             int     upper = ng;
                             int     lower = 0;

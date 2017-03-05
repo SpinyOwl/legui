@@ -86,6 +86,9 @@ public class Example {
         Renderer renderer = initializer.getRenderer();
         renderer.initialize();
 
+        long time    = System.currentTimeMillis();
+        int  updCntr = 0;
+
         while (running) {
 
             // Before rendering we need to update context with window size and window framebuffer size
@@ -140,6 +143,12 @@ public class Example {
                 fullscreen = !fullscreen;
                 toggleFullscreen = false;
             }
+            updCntr++;
+            if (System.currentTimeMillis() >= time + 1000) {
+                time += 1000;
+                GLFW.glfwSetWindowTitle(window,"LEGUI Example. Updates per second: " + updCntr);
+                updCntr=0;
+            }
         }
 
         // And when rendering is ended we need to destroy renderer
@@ -153,7 +162,6 @@ public class Example {
         ExampleGui component = new ExampleGui(w, h);
         component.setBackgroundColor(new Vector4f(0.9f, 0.9f, 0.9f, 1f));
         component.getListenerMap().addListener(WindowSizeEvent.class, (WindowSizeEventListener) event -> component.setSize(event.getWidth(), event.getHeight()));
-        frame.getTooltipLayer().getContainer().setPosition(50, 50);
         frame.getContainer().add(component);
 //        frame.getComponentLayer().getBackgroundColor().set(ColorConstants.lightBlue);
 //        // Set background color for frame
