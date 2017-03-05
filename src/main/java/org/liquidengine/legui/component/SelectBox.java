@@ -255,12 +255,7 @@ public class SelectBox extends Container {
         SelectBoxElement boxElement = new SelectBoxElement(element, false);
         boxElement.setSize(new Vector2f(selectionListPanel.getContainer().getSize().x, elementHeight));
         boxElement.setPosition(0, selectionListPanel.getContainer().count() * elementHeight);
-        boxElement.getListenerMap().getListeners(MouseClickEvent.class).add((MouseClickEventListener) event -> {
-            if (event.getAction() == CLICK && event.getButton().equals(Mouse.MouseButton.MOUSE_BUTTON_1)) {
-                setSelected(element, true);
-                setCollapsed(true);
-            }
-        });
+        boxElement.getListenerMap().getListeners(MouseClickEvent.class).add(new SelectBoxElementClickEventListener());
         return boxElement;
     }
 
@@ -503,11 +498,17 @@ public class SelectBox extends Container {
      */
     public class SelectBoxElement extends Button {
         private boolean selected;
+        private String  text;
 
         private SelectBoxElement(String text, boolean selected) {
             super(text == null ? "null" : text);
             this.selected = selected;
+            this.text = text;
             this.setBorder(null);
+        }
+
+        public String getText() {
+            return text;
         }
 
         /**
@@ -627,6 +628,22 @@ public class SelectBox extends Container {
             return new HashCodeBuilder(17, 37)
                     .append(bar)
                     .toHashCode();
+        }
+    }
+
+    public class SelectBoxElementClickEventListener implements MouseClickEventListener {
+        @Override
+        public void process(MouseClickEvent event) {
+            SelectBoxElement component = (SelectBoxElement) event.getComponent();
+            if (event.getAction() == CLICK && event.getButton().equals(Mouse.MouseButton.MOUSE_BUTTON_1)) {
+                SelectBox.this.setSelected(component.getText(), true);
+                SelectBox.this.setCollapsed(true);
+            }
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            return true;
         }
     }
 }
