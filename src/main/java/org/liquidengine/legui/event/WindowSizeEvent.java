@@ -6,12 +6,12 @@ import org.liquidengine.legui.system.context.Context;
 /**
  * Created by Aliaksandr_Shcherbin on 2/2/2017.
  */
-public class WindowSizeEvent extends AbstractEvent {
+public class WindowSizeEvent<T extends Component> extends AbstractEvent<T> {
     private final int width;
     private final int height;
 
-    public WindowSizeEvent(Component controller, Context context, int width, int height) {
-        super(controller, context);
+    public WindowSizeEvent(T component, Context context, int width, int height) {
+        super(component, context);
         this.width = width;
         this.height = height;
     }

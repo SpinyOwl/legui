@@ -8,11 +8,14 @@ import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.color.ColorConstants;
 import org.liquidengine.legui.component.optional.TextState;
+import org.liquidengine.legui.event.AbstractEvent;
 import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.event.MouseDragEvent;
 import org.liquidengine.legui.font.FontRegister;
+import org.liquidengine.legui.listener.EventListener;
 import org.liquidengine.legui.listener.MouseClickEventListener;
 import org.liquidengine.legui.listener.MouseDragEventListener;
+import org.liquidengine.legui.system.context.Context;
 
 import static org.liquidengine.legui.event.MouseClickEvent.MouseClickAction.CLICK;
 import static org.liquidengine.legui.util.TextUtil.cpToStr;
@@ -20,7 +23,7 @@ import static org.liquidengine.legui.util.TextUtil.cpToStr;
 /**
  * Created by Aliaksandr_Shcherbin on 2/6/2017.
  */
-public class Widget<T extends Component> extends Container {
+public class Widget extends Container<Component> {
     private static final String CLOSE_ICON    = cpToStr(0xE5CD);
     private static final String MINIMIZE_ICON = cpToStr(0xE5D6);
     private static final String MAXIMIZE_ICON = cpToStr(0xE5D7);
@@ -66,6 +69,7 @@ public class Widget<T extends Component> extends Container {
 
     private void initialize(String title) {
         this.title = new Label(title);
+        this.title.getSize().y = 20;
         this.title.getTextState().getPadding().set(10, 5, 10, 5);
 
         mouseDragEventLeguiEventListener = new WidgetDragListener();
@@ -284,7 +288,7 @@ public class Widget<T extends Component> extends Container {
 
         if (o == null || getClass() != o.getClass()) return false;
 
-        Widget<?> widget = (Widget<?>) o;
+        Widget widget = (Widget) o;
 
         return new EqualsBuilder()
                 .appendSuper(super.equals(o))
@@ -336,6 +340,16 @@ public class Widget<T extends Component> extends Container {
                 .toString();
     }
 
+    public interface WidgetCloseEventListener extends EventListener<WidgetCloseEvent> {
+        void process(WidgetCloseEvent event);
+    }
+
+    public static class WidgetCloseEvent<T extends Widget> extends AbstractEvent<T> {
+        public WidgetCloseEvent(T component, Context context) {
+            super(component, context);
+        }
+    }
+
     public class WidgetDragListener implements MouseDragEventListener {
         @Override
         public void process(MouseDragEvent event) {
@@ -360,6 +374,7 @@ public class Widget<T extends Component> extends Container {
         public void process(MouseClickEvent event) {
             if (CLICK == event.getAction()) {
                 Widget.this.setVisible(false);
+                event.getContext().getEventProcessor().pushEvent(new WidgetCloseEvent(Widget.this, event.getContext()));
             }
         }
 

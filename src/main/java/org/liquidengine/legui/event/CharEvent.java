@@ -6,11 +6,11 @@ import org.liquidengine.legui.system.context.Context;
 /**
  * Created by Aliaksandr_Shcherbin on 2/14/2017.
  */
-public class CharEvent extends AbstractEvent {
+public class CharEvent<T extends Component> extends AbstractEvent<T> {
 
     private final int codepoint;
 
-    public CharEvent(Component component, Context context, int codepoint) {
+    public CharEvent(T component, Context context, int codepoint) {
         super(component, context);
         this.codepoint = codepoint;
     }

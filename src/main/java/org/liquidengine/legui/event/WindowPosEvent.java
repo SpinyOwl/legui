@@ -6,12 +6,12 @@ import org.liquidengine.legui.system.context.Context;
 /**
  * Created by ShchAlexander on 03.02.2017.
  */
-public class WindowPosEvent extends AbstractEvent {
+public class WindowPosEvent<T extends Component> extends AbstractEvent<T> {
     private final int xpos;
     private final int ypos;
 
-    public WindowPosEvent(Component controller, Context context, int xpos, int ypos) {
-        super(controller, context);
+    public WindowPosEvent(T component, Context context, int xpos, int ypos) {
+        super(component, context);
         this.xpos = xpos;
         this.ypos = ypos;
     }

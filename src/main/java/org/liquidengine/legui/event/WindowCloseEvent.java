@@ -6,10 +6,10 @@ import org.liquidengine.legui.system.context.Context;
 /**
  * Created by ShchAlexander on 03.02.2017.
  */
-public class WindowCloseEvent extends AbstractEvent {
+public class WindowCloseEvent<T extends Component> extends AbstractEvent<T> {
 
-    public WindowCloseEvent(Component controller, Context context) {
-        super(controller, context);
+    public WindowCloseEvent(T component, Context context) {
+        super(component, context);
     }
 
 }

@@ -8,13 +8,13 @@ import org.liquidengine.legui.system.context.Context;
 /**
  * Created by Aliaksandr_Shcherbin on 2/10/2017.
  */
-public class FocusEvent extends AbstractEvent {
+public class FocusEvent<T extends Component> extends AbstractEvent<T> {
 
     private final boolean   focused;
     private final Component nextFocus;
 
-    public FocusEvent(Component controller, Context context, Component nextFocus, boolean focused) {
-        super(controller, context);
+    public FocusEvent(T component, Context context, Component nextFocus, boolean focused) {
+        super(component, context);
         this.focused = focused;
         this.nextFocus = nextFocus;
     }

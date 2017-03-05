@@ -161,7 +161,30 @@ public class ExampleGui extends Panel<Component> {
 
         Button turnDraggable = new Button("Draggable", 10, 10, 80, 20);
         turnDraggable.getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
-            if (CLICK == event.getAction()) widget2.setDraggable(!widget2.isDraggable());
+            if (event.getAction() == CLICK) {
+                Dialog dialog = new Dialog("Question:", 300, 100, event.getContext().getFrame(), turnDraggable);
+
+                Label questionLabel = new Label("Are you sure want to turn this widget draggable?", 10, 10, 200, 20);
+                Button yesButton = new Button("Yes", 10, 50, 50, 20);
+                Button noButton = new Button("No", 70, 50, 50, 20);
+                yesButton.getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) e -> {
+                    if (CLICK == e.getAction()) {
+                        widget2.setDraggable(!widget2.isDraggable());
+                        dialog.close();
+                    }
+                });
+                noButton.getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) e -> {
+                    if (CLICK == e.getAction()) {
+                        dialog.close();
+                    }
+                });
+
+                dialog.getContainer().add(questionLabel);
+                dialog.getContainer().add(yesButton);
+                dialog.getContainer().add(noButton);
+
+                dialog.show();
+            }
         });
         widget2.getContainer().add(turnDraggable);
         this.add(widget2);

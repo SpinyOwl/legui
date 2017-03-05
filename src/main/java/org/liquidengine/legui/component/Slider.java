@@ -8,6 +8,7 @@ import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.color.ColorConstants;
 import org.liquidengine.legui.component.optional.Orientation;
+import org.liquidengine.legui.event.AbstractEvent;
 import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.event.MouseDragEvent;
 import org.liquidengine.legui.event.ScrollEvent;
@@ -159,9 +160,9 @@ public class Slider extends Controller {
 
         @Override
         public void process(ScrollEvent event) {
-            Slider slider = (Slider) event.getComponent();
-            float curValue = slider.getValue();
-            float value    = (float) (curValue + event.getYoffset());
+            Slider slider   = (Slider) event.getComponent();
+            float  curValue = slider.getValue();
+            float  value    = (float) (curValue + event.getYoffset());
 
             if (value > MAX_VALUE) value = MAX_VALUE;
             if (value < MIN_VALUE) value = MIN_VALUE;
@@ -181,8 +182,8 @@ public class Slider extends Controller {
         @Override
         public void process(MouseClickEvent event) {
             if (event.getButton().equals(Mouse.MouseButton.MOUSE_BUTTON_LEFT) && event.getAction() == MouseClickEvent.MouseClickAction.PRESS) {
-                Slider slider = (Slider) event.getComponent();
-                Vector2f pos = slider.getScreenPosition();
+                Slider   slider = (Slider) event.getComponent();
+                Vector2f pos    = slider.getScreenPosition();
 
                 Vector2f cursorPosition = Mouse.getCursorPosition();
                 float    value;
@@ -234,12 +235,12 @@ public class Slider extends Controller {
         }
     }
 
-    public static class SliderChangeValueEvent extends org.liquidengine.legui.event.AbstractEvent {
+    public static class SliderChangeValueEvent<T extends Slider> extends AbstractEvent<T> {
 
         private final float oldValue;
         private final float newValue;
 
-        public SliderChangeValueEvent(Component component, Context context, float oldValue, float newValue) {
+        public SliderChangeValueEvent(T component, Context context, float oldValue, float newValue) {
             super(component, context);
             this.oldValue = oldValue;
             this.newValue = newValue;

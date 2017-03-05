@@ -7,12 +7,12 @@ import org.liquidengine.legui.system.context.Context;
 /**
  * Created by Aliaksandr_Shcherbin on 2/9/2017.
  */
-public class MouseDragEvent extends AbstractEvent {
+public class MouseDragEvent<T extends Component> extends AbstractEvent<T> {
 
     private final Vector2f delta;
 
-    public MouseDragEvent(Component controller, Context context, Vector2f delta) {
-        super(controller, context);
+    public MouseDragEvent(T component, Context context, Vector2f delta) {
+        super(component, context);
         this.delta = delta;
     }
 
