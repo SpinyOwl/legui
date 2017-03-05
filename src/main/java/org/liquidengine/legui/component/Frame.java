@@ -111,8 +111,8 @@ public class Frame {
         if (layer.getFrame() != null) {
             layer.getFrame().removeLayer(layer);
         }
-        layer.setFrame(this);
         layers.add(layer);
+        layer.setFrame(this);
     }
 
     /**

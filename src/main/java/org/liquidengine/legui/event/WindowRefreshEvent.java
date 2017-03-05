@@ -6,9 +6,9 @@ import org.liquidengine.legui.system.context.Context;
 /**
  * Created by ShchAlexander on 03.02.2017.
  */
-public class WindowRefreshEvent extends AbstractEvent {
+public class WindowRefreshEvent<T extends Component> extends AbstractEvent<T> {
 
-    public WindowRefreshEvent(Component controller, Context context) {
-        super(controller, context);
+    public WindowRefreshEvent(T component, Context context) {
+        super(component, context);
     }
 }

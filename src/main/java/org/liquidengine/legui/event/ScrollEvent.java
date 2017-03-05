@@ -6,12 +6,12 @@ import org.liquidengine.legui.system.context.Context;
 /**
  * Created by ShchAlexander on 03.02.2017.
  */
-public class ScrollEvent extends AbstractEvent {
+public class ScrollEvent<T extends Component> extends AbstractEvent<T> {
     private final double xoffset;
     private final double yoffset;
 
-    public ScrollEvent(Component controller, Context context, double xoffset, double yoffset) {
-        super(controller, context);
+    public ScrollEvent(T component, Context context, double xoffset, double yoffset) {
+        super(component, context);
         this.xoffset = xoffset;
         this.yoffset = yoffset;
     }

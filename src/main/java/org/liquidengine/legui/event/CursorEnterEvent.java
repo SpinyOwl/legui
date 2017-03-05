@@ -9,13 +9,13 @@ import org.liquidengine.legui.system.context.Context;
 /**
  * Created by Aliaksandr_Shcherbin on 2/9/2017.
  */
-public class CursorEnterEvent extends AbstractEvent {
+public class CursorEnterEvent<T extends Component> extends AbstractEvent<T> {
     private final boolean  entered;
     private final Vector2f delta;
     private final Vector2f cursorPosition;
 
-    public CursorEnterEvent(Component controller, Context context, boolean entered, Vector2f delta, Vector2f cursorPosition) {
-        super(controller, context);
+    public CursorEnterEvent(T component, Context context, boolean entered, Vector2f delta, Vector2f cursorPosition) {
+        super(component, context);
         this.entered = entered;
         this.delta = delta;
         this.cursorPosition = cursorPosition;

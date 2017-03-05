@@ -28,7 +28,6 @@ public class MouseClickEventHandler implements SystemEventHandler<SystemMouseCli
 
         List<Layer> layers = frame.getLayers();
         layers.add(frame.getComponentLayer());
-        Collections.reverse(layers);
 
         Component focusedGui      = context.getFocusedGui();
         Component targetComponent = null;
@@ -41,6 +40,7 @@ public class MouseClickEventHandler implements SystemEventHandler<SystemMouseCli
             if (!layer.isEventPassable()) break;
         }
         if (targetComponent == null) {
+            context.setFocusedGui(null);
             return;
         }
         if (event.action == GLFW.GLFW_PRESS) {
