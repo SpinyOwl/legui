@@ -10,7 +10,7 @@ import org.liquidengine.legui.component.optional.TextState;
 /**
  * Created by Aliaksandr_Shcherbin on 1/24/2017.
  */
-public class Tooltip extends Component {
+public class Tooltip extends Component implements TextComponent {
     private TextState  textState;
     private Controller controller;
 
@@ -26,8 +26,26 @@ public class Tooltip extends Component {
         this.textState = new TextState(text);
     }
 
+    /**
+     * Returns current text state.
+     *
+     * @return text state of component.
+     */
     public TextState getTextState() {
         return textState;
+    }
+
+    /**
+     * Used to set text state.
+     *
+     * @param textState new state to set.
+     */
+    public void setTextState(TextState textState) {
+        if (textState != null) {
+            this.textState = textState;
+        } else {
+            this.textState = new TextState();
+        }
     }
 
     public Controller getController() {

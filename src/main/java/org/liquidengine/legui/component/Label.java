@@ -11,7 +11,7 @@ import org.liquidengine.legui.component.optional.TextState;
 /**
  * Class represent single line non-editable text component.
  */
-public class Label extends Controller {
+public class Label extends Controller implements TextComponent {
 
     /**
      * Used to hold text state of component.
@@ -94,12 +94,25 @@ public class Label extends Controller {
     }
 
     /**
-     * Used to retrieve text state.
+     * Returns current text state.
      *
-     * @return text state.
+     * @return text state of component.
      */
     public TextState getTextState() {
         return textState;
+    }
+
+    /**
+     * Used to set text state.
+     *
+     * @param textState new state to set.
+     */
+    public void setTextState(TextState textState) {
+        if (textState != null) {
+            this.textState = textState;
+        } else {
+            this.textState = new TextState();
+        }
     }
 
     /**

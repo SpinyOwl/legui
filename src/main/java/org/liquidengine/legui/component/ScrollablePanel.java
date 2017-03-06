@@ -13,7 +13,7 @@ import org.liquidengine.legui.component.optional.Orientation;
  * Panel with scroll bars.
  */
 public class ScrollablePanel<T extends Component> extends Container implements Viewport {
-    public static final float INITIAL_SCROLL_SIZE = 12f;
+    public static final float INITIAL_SCROLL_SIZE = 8f;
     /**
      * Used to scroll panel vertically.
      */
@@ -71,27 +71,27 @@ public class ScrollablePanel<T extends Component> extends Container implements V
         float viewportHeight = getSize().y - INITIAL_SCROLL_SIZE;
 
         verticalScrollBar = new ScrollBar();
-        verticalScrollBar.setBackgroundColor(ColorConstants.darkGray());
+//        verticalScrollBar.setBackgroundColor(ColorConstants.darkGray());
         verticalScrollBar.setPosition(viewportWidth, 0);
         verticalScrollBar.setSize(INITIAL_SCROLL_SIZE, viewportHeight);
-        verticalScrollBar.setArrowColor(ColorConstants.white());
-        verticalScrollBar.setScrollColor(ColorConstants.white());
-        verticalScrollBar.setArrowsEnabled(true);
+//        verticalScrollBar.setArrowColor(ColorConstants.white());
+//        verticalScrollBar.setScrollColor(ColorConstants.white());
+//        verticalScrollBar.setArrowsEnabled(true);
         verticalScrollBar.setOrientation(Orientation.VERTICAL);
-        verticalScrollBar.setBorder(new SimpleLineBorder(ColorConstants.darkGray(), 0.5f));
-        verticalScrollBar.setArrowSize(INITIAL_SCROLL_SIZE);
+//        verticalScrollBar.setBorder(new SimpleLineBorder(ColorConstants.darkGray(), 0.5f));
+//        verticalScrollBar.setArrowSize(INITIAL_SCROLL_SIZE);
         verticalScrollBar.setViewport(this);
 
         horizontalScrollBar = new ScrollBar();
-        horizontalScrollBar.setBackgroundColor(ColorConstants.darkGray());
+//        horizontalScrollBar.setBackgroundColor(ColorConstants.darkGray());
         horizontalScrollBar.setPosition(0, viewportHeight);
         horizontalScrollBar.setSize(viewportWidth, INITIAL_SCROLL_SIZE);
-        horizontalScrollBar.setArrowColor(ColorConstants.white());
-        horizontalScrollBar.setScrollColor(ColorConstants.white());
-        horizontalScrollBar.setArrowsEnabled(true);
+//        horizontalScrollBar.setArrowColor(ColorConstants.white());
+//        horizontalScrollBar.setScrollColor(ColorConstants.white());
+//        horizontalScrollBar.setArrowsEnabled(true);
         horizontalScrollBar.setOrientation(Orientation.HORIZONTAL);
-        horizontalScrollBar.setBorder(new SimpleLineBorder(ColorConstants.darkGray(), 0.5f));
-        horizontalScrollBar.setArrowSize(INITIAL_SCROLL_SIZE);
+//        horizontalScrollBar.setBorder(new SimpleLineBorder(ColorConstants.darkGray(), 0.5f));
+//        horizontalScrollBar.setArrowSize(INITIAL_SCROLL_SIZE);
         horizontalScrollBar.setViewport(this);
 
         viewport = new Panel(0, 0, viewportWidth, viewportHeight);
@@ -107,7 +107,7 @@ public class ScrollablePanel<T extends Component> extends Container implements V
         this.add(verticalScrollBar);
         this.add(horizontalScrollBar);
         this.setBackgroundColor(ColorConstants.transparent());
-        this.setBorder(new SimpleLineBorder(ColorConstants.darkGray(), 0.5f));
+//        this.setBorder(new SimpleLineBorder(ColorConstants.darkGray(), 0.5f));
 
         resize();
     }

@@ -17,12 +17,16 @@ import org.liquidengine.legui.listener.CursorEnterEventListener;
 import org.liquidengine.legui.listener.FocusEventListener;
 import org.liquidengine.legui.listener.KeyEventListener;
 import org.liquidengine.legui.listener.MouseClickEventListener;
+import org.liquidengine.legui.theme.DarkTheme;
+import org.liquidengine.legui.theme.Theme;
+import org.liquidengine.legui.theme.ThemeUtil;
 import org.liquidengine.legui.util.TextUtil;
 import org.lwjgl.glfw.GLFW;
 
 import static org.liquidengine.legui.component.optional.align.HorizontalAlign.*;
 import static org.liquidengine.legui.component.optional.align.VerticalAlign.*;
 import static org.liquidengine.legui.event.MouseClickEvent.MouseClickAction.*;
+import static org.liquidengine.legui.input.Mouse.MouseButton.MOUSE_BUTTON_LEFT;
 
 
 /**
@@ -70,14 +74,14 @@ public class ExampleGui extends Panel<Component> {
 
         imageView = new ImageView(new BufferedImage("org/liquidengine/legui/example/1.jpg")); imageView.setPosition(20, 30); imageView.setSize(100, 100); this.add(imageView);
 
-        Button button = new Button(20, 170, 50, 20); button.setBackgroundColor(new Vector4f(1)); this.add(button);
+        Button button = new Button(20, 170, 50, 20); /*button.setBackgroundColor(new Vector4f(1));*/ this.add(button);
         button.getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) System.out::println);
 
         button.setTooltip("Just button");
         button.getTooltip().setPosition(0, 25);
         button.getTooltip().getSize().set(50, 60);
-        button.getTooltip().setBackgroundColor(ColorConstants.darkGray());
-        button.getTooltip().getTextState().setTextColor(ColorConstants.white());
+//        button.getTooltip().setBackgroundColor(ColorConstants.darkGray());
+//        button.getTooltip().getTextState().setTextColor(ColorConstants.white());
         button.getTooltip().getTextState().setPadding(4, 4, 4, 4);
 
         int idv[] = {0};
@@ -105,7 +109,7 @@ public class ExampleGui extends Panel<Component> {
         });
 
         CheckBox checkBox1 = new CheckBox(20, 200, 50, 20); this.add(checkBox1);
-        CheckBox checkBox2 = new CheckBox(20, 230, 50, 20); checkBox2.setBackgroundColor(new Vector4f(1)); checkBox2.setChecked(true); this.add(checkBox2);
+        CheckBox checkBox2 = new CheckBox(20, 230, 50, 20); checkBox2.setBackgroundColor(new Vector4f(1,0,0,1)); checkBox2.setChecked(true); this.add(checkBox2);
 
         ProgressBar progressBar = new ProgressBar(250, 10, 100, 10); progressBar.setValue(50); this.add(progressBar);
 
@@ -134,6 +138,7 @@ public class ExampleGui extends Panel<Component> {
         Widget widget = new Widget("Hello widget", 250, 170, 100, 100);
         widget.setTitleHeight(20);
         widget.setTitleBackgroundColor(ColorConstants.lightGreen());
+        widget.getTitleTextState().setTextColor(ColorConstants.black());
 
         Button turnWidVisible = new Button("", 360, 280, 20, 20);
         turnWidVisible.getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
@@ -157,6 +162,7 @@ public class ExampleGui extends Panel<Component> {
         widget2.setCloseButtonColor(ColorConstants.white());
         widget2.setCloseButtonBackgroundColor(ColorConstants.black());
         widget2.setTitleBackgroundColor(ColorConstants.lightGreen());
+        widget2.getTitleTextState().setTextColor(ColorConstants.black());
         widget2.setDraggable(false);
 
         Button turnDraggable = new Button("Draggable", 10, 10, 80, 20);
@@ -201,6 +207,7 @@ public class ExampleGui extends Panel<Component> {
         widget3.setTitleBackgroundColor(ColorConstants.lightGreen());
         widget3.setCloseable(true);
         widget3.setMinimizable(false);
+        widget3.getTitleTextState().setTextColor(ColorConstants.black());
         this.add(widget3);
 
         Button turnWidVisible3 = new Button("", 360, 340, 20, 20);
@@ -410,6 +417,29 @@ public class ExampleGui extends Panel<Component> {
         RadioButton      rb2 = new RadioButton();
         radioButton1.setRadioButtonGroup(radioButtonGroup);
         radioButton2.setRadioButtonGroup(radioButtonGroup);
+
+        final Theme[]      current      = {Theme.DEFAULT_THEME};
+        DarkTheme          darkTheme    = new DarkTheme();
+        Theme.DefaultTheme defaultTheme = new Theme.DefaultTheme();
+
+        String text        = "Switch theme to ";
+        String dark        = "dark";
+        String light       = "light";
+        Button switchTheme = new Button(text + dark, 600, 400, 120, 30);
+        switchTheme.getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
+            if (event.getAction().equals(CLICK) && event.getButton().equals(MOUSE_BUTTON_LEFT)) {
+                if (current[0] instanceof DarkTheme) {
+                    current[0] = defaultTheme;
+                    switchTheme.getTextState().setText(text + dark);
+                } else {
+                    current[0] = darkTheme;
+                    switchTheme.getTextState().setText(text + light);
+                }
+                Theme.DEFAULT_THEME = current[0];
+                ThemeUtil.applyTheme(current[0], event.getContext().getFrame());
+            }
+        });
+        this.add(switchTheme);
     }
 
     public TextArea getTextArea() {

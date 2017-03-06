@@ -6,7 +6,6 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
-import org.liquidengine.legui.color.ColorConstants;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.event.CharEvent;
 import org.liquidengine.legui.event.KeyEvent;
@@ -17,6 +16,7 @@ import org.liquidengine.legui.listener.KeyEventListener;
 import org.liquidengine.legui.listener.MouseClickEventListener;
 import org.liquidengine.legui.listener.MouseDragEventListener;
 import org.liquidengine.legui.system.context.Context;
+import org.liquidengine.legui.theme.Theme;
 
 import static org.liquidengine.legui.input.Mouse.MouseButton.MOUSE_BUTTON_LEFT;
 import static org.liquidengine.legui.util.TextUtil.*;
@@ -25,7 +25,7 @@ import static org.lwjgl.glfw.GLFW.*;
 /**
  * Created by Aliaksandr_Shcherbin on 2/6/2017.
  */
-public class TextArea extends Controller {
+public class TextArea extends Controller implements TextComponent {
     protected TextState textState;
 
     protected int caretPosition;
@@ -35,7 +35,7 @@ public class TextArea extends Controller {
     protected int endSelectionIndex;
 
     protected boolean  editable       = true;
-    protected Vector4f selectionColor = ColorConstants.lightBlue();
+    protected Vector4f selectionColor = Theme.DEFAULT_THEME.highlightColor();
     private TextAreaCharEventListener       charEventListener;
     private TextAreaKeyEventListener        keyEventListener;
     private TextAreaMouseClickEventListener mouseClickEventListener;
@@ -69,8 +69,26 @@ public class TextArea extends Controller {
         getListenerMap().addListener(CharEvent.class, charEventListener);
     }
 
+    /**
+     * Returns current text state.
+     *
+     * @return text state of component.
+     */
     public TextState getTextState() {
         return textState;
+    }
+
+    /**
+     * Used to set text state.
+     *
+     * @param textState new state to set.
+     */
+    public void setTextState(TextState textState) {
+        if (textState != null) {
+            this.textState = textState;
+        } else {
+            this.textState = new TextState();
+        }
     }
 
     public int getCaretPosition() {

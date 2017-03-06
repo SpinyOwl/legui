@@ -18,7 +18,7 @@ import static org.liquidengine.legui.event.MouseClickEvent.MouseClickAction.CLIC
  * An implementation of a check box -- an item that can be selected or
  * deselected, and which displays its state to the user.
  */
-public class CheckBox extends Controller {
+public class CheckBox extends Controller implements TextComponent {
 
     /**
      * Check box text state
@@ -114,12 +114,25 @@ public class CheckBox extends Controller {
     }
 
     /**
-     * Returns text data of button
+     * Returns current text state.
      *
-     * @return text state of button
+     * @return text state of component.
      */
     public TextState getTextState() {
         return textState;
+    }
+
+    /**
+     * Used to set text state.
+     *
+     * @param textState new state to set.
+     */
+    public void setTextState(TextState textState) {
+        if (textState != null) {
+            this.textState = textState;
+        } else {
+            this.textState = new TextState();
+        }
     }
 
     /**

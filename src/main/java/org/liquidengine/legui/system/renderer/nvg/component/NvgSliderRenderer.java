@@ -47,12 +47,12 @@ public class NvgSliderRenderer extends NvgComponentRenderer<Slider> {
 
             float lx, rx, ty, by, px, py;
             if (vertical) {
-                px = lx = rx = x + (w - SLIDER_WIDTH) / 2f;
+                px = lx = rx = x + (w) / 2f;
                 ty = y + sliderSize / 2f;
                 by = y + h - sliderSize / 2f;
                 py = by - (by - ty) * value / 100f;
             } else {
-                py = ty = by = y + (h - SLIDER_WIDTH) / 2f;
+                py = ty = by = y + (h) / 2f;
                 lx = x + sliderSize / 2f;
                 rx = x + w - sliderSize / 2f;
                 px = lx + (rx - lx) * value / 100f;
