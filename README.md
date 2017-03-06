@@ -1,3 +1,24 @@
+<table>
+  <tr>
+    <th align="center">Size</th>
+    <th align="center">Develop</th>
+    <th align="center">Snapshot</th>
+    <th align="center">Release</th>
+  </tr>
+  <tr>
+    <td align="center"><img src="https://reposs.herokuapp.com/?path=LiquidEngine/legui"/></td>
+    <td align="center"><a href="http://jenkins.liquidengine.tk/job/legui/job/develop/" target="_blank">
+      <img src="http://jenkins.liquidengine.tk/buildStatus/icon?job=legui/develop"/>
+    </a></td>
+    <td align="center"><a href="http://jenkins.liquidengine.tk/job/legui/job/snapshots/" target="_blank">
+      <img src="http://jenkins.liquidengine.tk/buildStatus/icon?job=legui/snapshots"/>
+    </a></td>
+    <td align="center"><a href="http://jenkins.liquidengine.tk/job/legui/job/releases/" target="_blank">
+      <img src="http://jenkins.liquidengine.tk/buildStatus/icon?job=legui/releases"/>
+    </a></td>
+  </tr>
+</table>
+
 _**(This is too early stuff and it would be implemented in little bit new way than previous version)**_  
 _**(Work in progress)**_
 ___
