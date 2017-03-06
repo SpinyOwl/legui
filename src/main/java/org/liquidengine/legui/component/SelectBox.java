@@ -160,6 +160,7 @@ public class SelectBox extends Container {
      */
     public void setVisibleCount(int visibleCount) {
         this.visibleCount = visibleCount;
+        resize();
     }
 
     /**
@@ -289,6 +290,7 @@ public class SelectBox extends Container {
      */
     public void removeElement(String element) {
         elements.remove(element);
+        resize();
     }
 
     /**
@@ -301,6 +303,7 @@ public class SelectBox extends Container {
         try {
             elements.remove(index);
             selectBoxElements.remove(index);
+            resize();
         } finally {
             lock.unlock();
         }
@@ -548,6 +551,7 @@ public class SelectBox extends Container {
             return new EqualsBuilder()
                     .appendSuper(super.equals(o))
                     .append(selected, that.selected)
+                    .append(text, that.text)
                     .isEquals();
         }
 
