@@ -11,7 +11,7 @@ import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 /**
  * An implementation of "push" button.
  */
-public class Button extends Controller {
+public class Button extends Controller implements TextComponent {
 
     /**
      * Button text state.
@@ -119,6 +119,19 @@ public class Button extends Controller {
      */
     public TextState getTextState() {
         return textState;
+    }
+
+    /**
+     * Used to set text state.
+     *
+     * @param textState new state to set.
+     */
+    public void setTextState(TextState textState) {
+        if (textState != null) {
+            this.textState = textState;
+        } else {
+            this.textState = new TextState();
+        }
     }
 
 

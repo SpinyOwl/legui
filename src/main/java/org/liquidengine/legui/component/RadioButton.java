@@ -26,7 +26,7 @@ import static org.liquidengine.legui.event.MouseClickEvent.MouseClickAction.CLIC
  * radioButton2.setRadioButtonGroup(radioButtonGroup);
  * }</pre>
  */
-public class RadioButton extends Controller {
+public class RadioButton extends Controller implements TextComponent {
     /**
      * Used to represent text state of radio button.
      */
@@ -172,12 +172,25 @@ public class RadioButton extends Controller {
     }
 
     /**
-     * Returns text state of radio button.
+     * Returns current text state.
      *
-     * @return text state of radio button.
+     * @return text state of component.
      */
     public TextState getTextState() {
         return textState;
+    }
+
+    /**
+     * Used to set text state.
+     *
+     * @param textState new state to set.
+     */
+    public void setTextState(TextState textState) {
+        if (textState != null) {
+            this.textState = textState;
+        } else {
+            this.textState = new TextState();
+        }
     }
 
     /**

@@ -125,9 +125,6 @@ public class SelectBox extends Container {
     private void initialize() {
         selectionListPanel.getHorizontalScrollBar().setVisible(false);
 
-        this.setBackgroundColor(ColorConstants.white());
-        this.setBorder(new SimpleLineBorder(ColorConstants.darkGray(), 1));
-
         this.add(expandButton);
         this.add(selectionButton);
 

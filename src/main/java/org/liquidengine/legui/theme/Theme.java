@@ -13,15 +13,7 @@ import org.liquidengine.legui.font.FontRegister;
  * Created by Aliaksandr_Shcherbin on 2/6/2017.
  */
 public abstract class Theme {
-    public static Theme DEFAULT_THEME = new DefaultTheme(ColorConstants.white);
-
-    public static void gray() {
-        DEFAULT_THEME = new DefaultTheme(ColorConstants.lightGray);
-    }
-
-    public static void white() {
-        DEFAULT_THEME = new DefaultTheme(ColorConstants.white);
-    }
+    public static Theme DEFAULT_THEME = new DefaultTheme();
 
     public abstract Vector4f backgroundColor();
 
@@ -54,20 +46,11 @@ public abstract class Theme {
     public abstract Vector4f getFocusedStrokeColorLight();
 
 
-    private static class DefaultTheme extends Theme {
-
-        private Vector4fc bgColor;
-
-        public DefaultTheme(Vector4fc bgColor) {
-            this.bgColor = bgColor;
-        }
+    public static class DefaultTheme extends Theme {
 
         @Override
         public Border border() {
-            SimpleLineBorder simpleLineBorder = new SimpleLineBorder();
-            simpleLineBorder.setThickness(1);
-            simpleLineBorder.setColor(ColorConstants.darkGray());
-            return simpleLineBorder;
+            return new SimpleLineBorder(ColorConstants.darkGray(), .7f);
         }
 
         @Override
@@ -117,17 +100,17 @@ public abstract class Theme {
 
         @Override
         public Vector4f scrollBarColor() {
-            return new Vector4f(bgColor);
+            return ColorConstants.darkGray();
         }
 
         @Override
         public float scrollBarArrowSize() {
-            return 20;
+            return 30;
         }
 
         @Override
         public boolean scrollBarArrowsEnabled() {
-            return false;
+            return true;
         }
 
         @Override
@@ -137,7 +120,7 @@ public abstract class Theme {
 
         @Override
         public Vector4f backgroundColor() {
-            return new Vector4f(bgColor);
+            return ColorConstants.white();
         }
     }
 }

@@ -23,6 +23,7 @@ public final class ColorConstants {
     public static final Vector4fc TRANSPARENT = new Vector4f(0.0f, 0.0f, 0.0f, 0.0f), transparent = TRANSPARENT;
     public static final Vector4fc LIGHT_GRAY  = new Vector4f(0.8f, 0.8f, 0.8f, 1.0f), lightGray   = LIGHT_GRAY;
     public static final Vector4fc DARK_GRAY   = new Vector4f(0.2f, 0.2f, 0.2f, 1.0f), darkGray    = DARK_GRAY;
+    public static final Vector4fc GRAY        = new Vector4f(0.5f, 0.5f, 0.5f, 1.0f), gray        = GRAY;
 
     private                 ColorConstants() {  }
 
@@ -53,5 +54,7 @@ public final class ColorConstants {
     public  static Vector4f lightGray     () { return new Vector4f(lightGray  ); }
 
     public  static Vector4f darkGray      () { return new Vector4f(darkGray   ); }
+
+    public  static Vector4f gray          () { return new Vector4f(gray       ); }
     //@formatter:on
 }
