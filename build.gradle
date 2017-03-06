@@ -93,19 +93,17 @@ if (build_type == "SNAPSHOT") {
     project.version += "-SNAPSHOT"
 }
 
-task publishSnapshot {
+task publishSnapshotProps {
     doLast {
         build_type = 'SNAPSHOT'
         project.version = projectVersion + "-SNAPSHOT"
-        publishArchives.execute()
     }
 }
 
-task publishRelease {
+task publishReleaseProps {
     doLast {
         build_type = 'RELEASE'
         project.version = projectVersion
-        publishArchives.execute()
     }
 }
 
@@ -145,6 +143,8 @@ task publishArchives {
         }
     }
 }
+publishArchives.mustRunAfter publishSnapshotProps
+publishArchives.mustRunAfter publishReleaseProps
 
 task sourcesJar(type: Jar, dependsOn: classes) {
     classifier = 'sources'

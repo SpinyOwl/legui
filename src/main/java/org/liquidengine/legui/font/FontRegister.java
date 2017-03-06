@@ -17,19 +17,19 @@ public class FontRegister {
     private static final Map<String, Font> fontRegister           = new ConcurrentHashMap<>();
 
     static {
-        registerFont(ENTYPO, "org/liquidengine/legui/font/entypo.ttf", true);
-        registerFont(ROBOTO_BOLD, "org/liquidengine/legui/font/Roboto-Bold.ttf", true);
-        registerFont(ROBOTO_LIGHT, "org/liquidengine/legui/font/Roboto-Light.ttf", true);
-        registerFont(ROBOTO_REGULAR, "org/liquidengine/legui/font/Roboto-Regular.ttf", true);
-        registerFont(MATERIAL_ICONS_REGULAR, "org/liquidengine/legui/font/MaterialIcons-Regular.ttf", true);
+        registerFont(ENTYPO, "org/liquidengine/legui/font/entypo.ttf");
+        registerFont(ROBOTO_BOLD, "org/liquidengine/legui/font/Roboto-Bold.ttf");
+        registerFont(ROBOTO_LIGHT, "org/liquidengine/legui/font/Roboto-Light.ttf");
+        registerFont(ROBOTO_REGULAR, "org/liquidengine/legui/font/Roboto-Regular.ttf");
+        registerFont(MATERIAL_ICONS_REGULAR, "org/liquidengine/legui/font/MaterialIcons-Regular.ttf");
 
-        registerFont(DEFAULT, "org/liquidengine/legui/font/Roboto-Bold.ttf", true);
+        registerFont(DEFAULT, "org/liquidengine/legui/font/Roboto-Bold.ttf");
     }
 
     private FontRegister() {
     }
 
-    public static void registerFont(final String name, final String path, final boolean inner) {
+    public static void registerFont(final String name, final String path) {
         Font font = new Font(path);
         fontRegister.put(name, font);
     }
