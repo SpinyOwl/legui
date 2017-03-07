@@ -19,7 +19,7 @@ public class DarkTheme extends Theme {
 
     @Override
     public Border border() {
-        return new SimpleLineBorder(ColorConstants.lightGray(), 0.7f);
+        return new SimpleLineBorder(ColorConstants.lightGray(), 1.2f);
     }
 
     @Override
@@ -34,7 +34,7 @@ public class DarkTheme extends Theme {
 
     @Override
     public Vector4f highlightColor() {
-        return ColorConstants.black();
+        return ColorConstants.darkBlue();
     }
 
     @Override
@@ -59,7 +59,7 @@ public class DarkTheme extends Theme {
 
     @Override
     public float cornerRadius() {
-        return 1;
+        return 2;
     }
 
     @Override
@@ -84,6 +84,6 @@ public class DarkTheme extends Theme {
 
     @Override
     public Vector4f getFocusedStrokeColorLight() {
-        return ColorConstants.black();
+        return ColorConstants.blue();
     }
 }

@@ -5,7 +5,6 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
-import org.joml.Vector4f;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.event.CharEvent;
 import org.liquidengine.legui.event.KeyEvent;
@@ -16,7 +15,6 @@ import org.liquidengine.legui.listener.KeyEventListener;
 import org.liquidengine.legui.listener.MouseClickEventListener;
 import org.liquidengine.legui.listener.MouseDragEventListener;
 import org.liquidengine.legui.system.context.Context;
-import org.liquidengine.legui.theme.Theme;
 
 import static org.liquidengine.legui.input.Mouse.MouseButton.MOUSE_BUTTON_LEFT;
 import static org.liquidengine.legui.util.TextUtil.*;
@@ -35,7 +33,6 @@ public class TextArea extends Controller implements TextComponent {
     protected int endSelectionIndex;
 
     protected boolean  editable       = true;
-    protected Vector4f selectionColor = Theme.DEFAULT_THEME.highlightColor();
     private TextAreaCharEventListener       charEventListener;
     private TextAreaKeyEventListener        keyEventListener;
     private TextAreaMouseClickEventListener mouseClickEventListener;
@@ -143,14 +140,6 @@ public class TextArea extends Controller implements TextComponent {
         return selection;
     }
 
-    public Vector4f getSelectionColor() {
-        return selectionColor;
-    }
-
-    public void setSelectionColor(Vector4f selectionColor) {
-        this.selectionColor = selectionColor;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -167,7 +156,6 @@ public class TextArea extends Controller implements TextComponent {
                 .append(startSelectionIndex, textArea.startSelectionIndex)
                 .append(endSelectionIndex, textArea.endSelectionIndex)
                 .append(textState, textArea.textState)
-                .append(selectionColor, textArea.selectionColor)
                 .isEquals();
     }
 
@@ -181,7 +169,6 @@ public class TextArea extends Controller implements TextComponent {
                 .append(editable)
                 .append(startSelectionIndex)
                 .append(endSelectionIndex)
-                .append(selectionColor)
                 .toHashCode();
     }
 
@@ -194,7 +181,6 @@ public class TextArea extends Controller implements TextComponent {
                 .append("editable", editable)
                 .append("startSelectionIndex", startSelectionIndex)
                 .append("endSelectionIndex", endSelectionIndex)
-                .append("selectionColor", selectionColor)
                 .toString();
     }
 

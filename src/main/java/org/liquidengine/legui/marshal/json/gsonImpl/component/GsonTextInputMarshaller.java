@@ -29,7 +29,6 @@ public class GsonTextInputMarshaller<T extends TextInput> extends GsonController
         JsonObject textState = GsonMarshalUtil.marshalToJson(object.getTextState(), context);
         GsonUtil.fill(json)
                 .add(EDITABLE, object.isEditable())
-                .add(SELECTION_COLOR, GsonUtil.createColor(object.getSelectionColor()))
                 .add(TEXT_STATE, textState)
         ;
     }
@@ -46,7 +45,6 @@ public class GsonTextInputMarshaller<T extends TextInput> extends GsonController
         super.unmarshal(json, object, context);
 
         JsonElement editable       = json.get(EDITABLE);
-        JsonElement selectionColor = json.get(SELECTION_COLOR);
         JsonElement textState      = json.get(TEXT_STATE);
 
         if (isNotNull(textState)) {
@@ -55,6 +53,5 @@ public class GsonTextInputMarshaller<T extends TextInput> extends GsonController
             object.getTextState().copy(state);
         }
         if (isNotNull(editable)) object.setEditable(editable.getAsBoolean());
-        if (isNotNull(selectionColor)) object.setSelectionColor(GsonUtil.readColor(selectionColor.getAsJsonObject()));
     }
 }

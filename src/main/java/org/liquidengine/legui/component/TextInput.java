@@ -33,7 +33,6 @@ public class TextInput extends Controller implements TextComponent {
     protected int startSelectionIndex;
     protected int endSelectionIndex;
 
-    protected Vector4f selectionColor = Theme.DEFAULT_THEME.highlightColor();
     protected boolean  editable       = true;
     private TextInputKeyEventListener        keyEventListener;
     private TextInputMouseClickEventListener mouseClickEventListener;
@@ -146,14 +145,6 @@ public class TextInput extends Controller implements TextComponent {
         }
     }
 
-    public Vector4f getSelectionColor() {
-        return selectionColor;
-    }
-
-    public void setSelectionColor(Vector4f selectionColor) {
-        this.selectionColor = selectionColor;
-    }
-
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
@@ -162,7 +153,6 @@ public class TextInput extends Controller implements TextComponent {
                 .append("mouseCaretPosition", mouseCaretPosition)
                 .append("startSelectionIndex", startSelectionIndex)
                 .append("endSelectionIndex", endSelectionIndex)
-                .append("selectionColor", selectionColor)
                 .append("editable", editable)
                 .toString();
     }
@@ -183,7 +173,6 @@ public class TextInput extends Controller implements TextComponent {
                 .append(endSelectionIndex, input.endSelectionIndex)
                 .append(editable, input.editable)
                 .append(textState, input.textState)
-                .append(selectionColor, input.selectionColor)
                 .isEquals();
     }
 
@@ -196,7 +185,6 @@ public class TextInput extends Controller implements TextComponent {
                 .append(mouseCaretPosition)
                 .append(startSelectionIndex)
                 .append(endSelectionIndex)
-                .append(selectionColor)
                 .append(editable)
                 .toHashCode();
     }
