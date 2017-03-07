@@ -149,9 +149,8 @@ public abstract class Controller extends Component {
             if (tooltip != null) {
                 if (event.isEntered()) {
                     event.getContext().getFrame().getTooltipLayer().getContainer().add(tooltip);
-                    tooltip.setVisible(true);
                 } else {
-                    tooltip.setVisible(false);
+                    event.getContext().getFrame().getTooltipLayer().getContainer().remove(tooltip);
                 }
             }
         }

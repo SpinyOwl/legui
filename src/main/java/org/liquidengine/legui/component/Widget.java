@@ -8,6 +8,8 @@ import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.color.ColorConstants;
 import org.liquidengine.legui.component.optional.TextState;
+import org.liquidengine.legui.component.optional.align.HorizontalAlign;
+import org.liquidengine.legui.component.optional.align.VerticalAlign;
 import org.liquidengine.legui.event.AbstractEvent;
 import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.event.MouseDragEvent;
@@ -24,9 +26,10 @@ import static org.liquidengine.legui.util.TextUtil.cpToStr;
  * Created by Aliaksandr_Shcherbin on 2/6/2017.
  */
 public class Widget extends Container<Component> {
-    private static final String CLOSE_ICON    = cpToStr(0xE5CD);
-    private static final String MINIMIZE_ICON = cpToStr(0xE5D6);
-    private static final String MAXIMIZE_ICON = cpToStr(0xE5D7);
+    public static final  int    INITIAL_TITLE_HEIGHT = 20;
+    private static final String CLOSE_ICON           = cpToStr(0xF2D4);
+    private static final String MINIMIZE_ICON        = cpToStr(0xF2D1);
+    private static final String MAXIMIZE_ICON        = cpToStr(0xF2D0);
     protected MouseDragEventListener mouseDragEventLeguiEventListener;
     private boolean  draggable     = true;
     private boolean  minimized     = false;
@@ -35,6 +38,7 @@ public class Widget extends Container<Component> {
      */
     private Vector2f maximizedSize = new Vector2f();
     private Container container;
+    private Container titleContainer;
     private Label     title;
     private Button    closeButton;
     private Button    minimizeButton;
@@ -68,39 +72,56 @@ public class Widget extends Container<Component> {
     }
 
     private void initialize(String title) {
+        this.titleContainer = new Panel();
+        this.titleContainer.getSize().y = INITIAL_TITLE_HEIGHT;
+
         this.title = new Label(title);
-        this.title.getSize().y = 20;
+        this.title.setPosition(0, 0);
+        this.title.getSize().y = INITIAL_TITLE_HEIGHT;
         this.title.getTextState().getPadding().set(10, 5, 10, 5);
+        this.title.setBackgroundColor(ColorConstants.transparent());
+        this.title.setBorder(null);
 
         mouseDragEventLeguiEventListener = new WidgetDragListener();
         this.title.getListenerMap().addListener(MouseDragEvent.class, mouseDragEventLeguiEventListener);
 
         this.closeButton = new Button(CLOSE_ICON);
-        this.closeButton.setBackgroundColor(ColorConstants.red());
-        this.closeButton.getTextState().setFont(FontRegister.MATERIAL_ICONS_REGULAR);
+        this.closeButton.setBackgroundColor(ColorConstants.transparent());
+        this.closeButton.getTextState().setFont(FontRegister.FONT_AWESOME_ICONS);
         this.closeButton.getListenerMap().addListener(MouseClickEvent.class, new WidgetCloseButMouseClickEventListener());
+        this.closeButton.setBorder(null);
+        this.closeButton.getTextState().setVerticalAlign(VerticalAlign.MIDDLE);
+        this.closeButton.getTextState().setHorizontalAlign(HorizontalAlign.CENTER);
 
         this.minimizeButton = new Button(MINIMIZE_ICON);
-        this.minimizeButton.getTextState().setFont(FontRegister.MATERIAL_ICONS_REGULAR);
+        this.minimizeButton.setBackgroundColor(ColorConstants.transparent());
+        this.minimizeButton.getTextState().setFont(FontRegister.FONT_AWESOME_ICONS);
         this.minimizeButton.getListenerMap().addListener(MouseClickEvent.class, new WidgetMinimizeButMouseClickEventListener());
+        this.minimizeButton.setBorder(null);
+        this.minimizeButton.getTextState().setVerticalAlign(VerticalAlign.MIDDLE);
+        this.minimizeButton.getTextState().setHorizontalAlign(HorizontalAlign.CENTER);
 
         this.container = new Panel();
 
-        this.add(this.title);
-        this.add(this.closeButton);
-        this.add(this.minimizeButton);
+        titleContainer.add(this.title);
+        titleContainer.add(this.closeButton);
+        titleContainer.add(this.minimizeButton);
+
+        this.add(this.titleContainer);
         this.add(this.container);
 
         resize();
     }
 
     public void resize() {
-        float titHei = title.getSize().y;
-        if (title.isVisible()) {
-            title.getPosition().set(0);
+        float titHei = titleContainer.getSize().y;
+        if (titleContainer.isVisible()) {
+            titleContainer.getPosition().set(0);
 
             float widgetWidth = getSize().x;
             float titleWidth  = widgetWidth;
+
+            titleContainer.getSize().set(titleWidth, titHei);
             if (closeButton.isVisible()) {
                 titleWidth -= titHei;
             }
@@ -156,12 +177,12 @@ public class Widget extends Container<Component> {
     }
 
     public boolean isTitleEnabled() {
-        return title.isVisible();
+        return titleContainer.isVisible();
     }
 
     public void setTitleEnabled(boolean titleEnabled) {
         if (minimized) return;
-        this.title.setVisible(titleEnabled);
+        this.titleContainer.setVisible(titleEnabled);
         resize();
     }
 
@@ -174,12 +195,34 @@ public class Widget extends Container<Component> {
         resize();
     }
 
+    /**
+     * Returns close button of widget.
+     *
+     * @return close button of widget.
+     */
+    public Button getCloseButton() {
+        return closeButton;
+    }
+
+    /**
+     * Returns minimize button of widget.
+     *
+     * @return minimize button of widget.
+     */
+    public Button getMinimizeButton() {
+        return minimizeButton;
+    }
+
+    public Container getTitleContainer() {
+        return titleContainer;
+    }
+
     public Vector4f getTitleBackgroundColor() {
-        return title.getBackgroundColor();
+        return titleContainer.getBackgroundColor();
     }
 
     public void setTitleBackgroundColor(Vector4f titleBackgroundColor) {
-        this.title.setBackgroundColor(titleBackgroundColor);
+        this.titleContainer.setBackgroundColor(titleBackgroundColor);
     }
 
     public TextState getTitleTextState() {
