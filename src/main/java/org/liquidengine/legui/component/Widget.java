@@ -18,6 +18,7 @@ import org.liquidengine.legui.listener.EventListener;
 import org.liquidengine.legui.listener.MouseClickEventListener;
 import org.liquidengine.legui.listener.MouseDragEventListener;
 import org.liquidengine.legui.system.context.Context;
+import org.liquidengine.legui.theme.Theme;
 
 import static org.liquidengine.legui.event.MouseClickEvent.MouseClickAction.CLICK;
 import static org.liquidengine.legui.util.TextUtil.cpToStr;
@@ -27,9 +28,9 @@ import static org.liquidengine.legui.util.TextUtil.cpToStr;
  */
 public class Widget extends Container<Component> {
     public static final  int    INITIAL_TITLE_HEIGHT = 20;
-    private static final String CLOSE_ICON           = cpToStr(0xF2D4);
-    private static final String MINIMIZE_ICON        = cpToStr(0xF2D1);
-    private static final String MAXIMIZE_ICON        = cpToStr(0xF2D0);
+    private static final String CLOSE_ICON           = cpToStr(0xF5AD);
+    private static final String MINIMIZE_ICON        = cpToStr(0xF5B0);
+    private static final String MAXIMIZE_ICON        = cpToStr(0xF5AF);
     protected MouseDragEventListener mouseDragEventLeguiEventListener;
     private boolean  draggable     = true;
     private boolean  minimized     = false;
@@ -87,7 +88,7 @@ public class Widget extends Container<Component> {
 
         this.closeButton = new Button(CLOSE_ICON);
         this.closeButton.setBackgroundColor(ColorConstants.transparent());
-        this.closeButton.getTextState().setFont(FontRegister.FONT_AWESOME_ICONS);
+        this.closeButton.getTextState().setFont(FontRegister.MATERIAL_DESIGN_ICONS);
         this.closeButton.getListenerMap().addListener(MouseClickEvent.class, new WidgetCloseButMouseClickEventListener());
         this.closeButton.setBorder(null);
         this.closeButton.getTextState().setVerticalAlign(VerticalAlign.MIDDLE);
@@ -95,7 +96,7 @@ public class Widget extends Container<Component> {
 
         this.minimizeButton = new Button(MINIMIZE_ICON);
         this.minimizeButton.setBackgroundColor(ColorConstants.transparent());
-        this.minimizeButton.getTextState().setFont(FontRegister.FONT_AWESOME_ICONS);
+        this.minimizeButton.getTextState().setFont(FontRegister.MATERIAL_DESIGN_ICONS);
         this.minimizeButton.getListenerMap().addListener(MouseClickEvent.class, new WidgetMinimizeButMouseClickEventListener());
         this.minimizeButton.setBorder(null);
         this.minimizeButton.getTextState().setVerticalAlign(VerticalAlign.MIDDLE);
@@ -135,13 +136,13 @@ public class Widget extends Container<Component> {
 
             closeButton.getSize().set(titHei);
             closeButton.getPosition().set(widgetWidth - titHei, 0);
-            closeButton.getTextState().setFontSize(titHei * 2f / 3f);
-            closeButton.getTextState().getPadding().set(titHei / 6f);
+            closeButton.getTextState().setFontSize(Theme.DEFAULT_THEME.fontSize());
+            closeButton.getTextState().getPadding().set(Theme.DEFAULT_THEME.textPadding());
 
             minimizeButton.getSize().set(titHei);
             minimizeButton.getPosition().set(titleWidth, 0);
-            minimizeButton.getTextState().setFontSize(titHei * 2f / 3f);
-            minimizeButton.getTextState().getPadding().set(titHei / 6f);
+            minimizeButton.getTextState().setFontSize(Theme.DEFAULT_THEME.fontSize());
+            minimizeButton.getTextState().getPadding().set(Theme.DEFAULT_THEME.textPadding());
 
         } else {
             container.getPosition().set(0, 0);
