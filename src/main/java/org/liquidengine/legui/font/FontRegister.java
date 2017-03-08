@@ -14,6 +14,7 @@ public class FontRegister {
     public static final  String            ROBOTO_REGULAR         = "roboto-regular";
     public static final  String            MATERIAL_ICONS_REGULAR = "MaterialIcons-Regular";
     public static final  String            FONT_AWESOME_ICONS     = "FontAwesomeIcons";
+    public static final  String            MATERIAL_DESIGN_ICONS     = "materialdesignicons";
     public static final  String            DEFAULT                = ROBOTO_BOLD;
     private static final Map<String, Font> fontRegister           = new ConcurrentHashMap<>();
 
@@ -24,6 +25,7 @@ public class FontRegister {
         registerFont(ROBOTO_REGULAR, "org/liquidengine/legui/font/Roboto-Regular.ttf");
         registerFont(MATERIAL_ICONS_REGULAR, "org/liquidengine/legui/font/MaterialIcons-Regular.ttf");
         registerFont(FONT_AWESOME_ICONS, "org/liquidengine/legui/font/FontAwesome.otf");
+        registerFont(MATERIAL_DESIGN_ICONS, "org/liquidengine/legui/font/materialdesignicons.ttf");
 
         registerFont(DEFAULT, "org/liquidengine/legui/font/Roboto-Bold.ttf");
     }
