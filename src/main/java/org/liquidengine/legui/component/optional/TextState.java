@@ -5,9 +5,10 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector4f;
+import org.liquidengine.legui.color.ColorConstants;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
-import org.liquidengine.legui.theme.Theme;
+import org.liquidengine.legui.font.FontRegister;
 
 import java.io.Serializable;
 
@@ -18,11 +19,11 @@ public class TextState implements Serializable {
     /**
      * Font name.
      */
-    private String          font            = Theme.DEFAULT_THEME.font();
+    private String          font            = FontRegister.DEFAULT;
     /**
      * Font size.
      */
-    private float           fontSize        = Theme.DEFAULT_THEME.fontSize();
+    private float           fontSize        = 16;
     /**
      * Text data.
      */
@@ -30,23 +31,23 @@ public class TextState implements Serializable {
     /**
      * Horizontal alignment.
      */
-    private HorizontalAlign horizontalAlign = Theme.DEFAULT_THEME.horizontalAlign();
+    private HorizontalAlign horizontalAlign = HorizontalAlign.CENTER;
     /**
      * Vertical alignment
      */
-    private VerticalAlign   verticalAlign   = Theme.DEFAULT_THEME.verticalAlign();
+    private VerticalAlign   verticalAlign   = VerticalAlign.MIDDLE;
     /**
      * Text color
      */
-    private Vector4f        textColor       = Theme.DEFAULT_THEME.fontColor();
+    private Vector4f        textColor       = ColorConstants.black();
     /**
      * Highlight color (used to highlight selection)
      */
-    private Vector4f        highlightColor  = Theme.DEFAULT_THEME.highlightColor();
+    private Vector4f        highlightColor  = ColorConstants.blue();
     /**
      * Padding in component.
      */
-    private Vector4f        padding         = Theme.DEFAULT_THEME.textPadding();
+    private Vector4f        padding         = new Vector4f(0);
 
     /**
      * Default constructor.

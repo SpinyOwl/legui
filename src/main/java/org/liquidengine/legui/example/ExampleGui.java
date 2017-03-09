@@ -18,6 +18,7 @@ import org.liquidengine.legui.listener.FocusEventListener;
 import org.liquidengine.legui.listener.KeyEventListener;
 import org.liquidengine.legui.listener.MouseClickEventListener;
 import org.liquidengine.legui.theme.DarkTheme;
+import org.liquidengine.legui.theme.DefaultTheme;
 import org.liquidengine.legui.theme.Theme;
 import org.liquidengine.legui.theme.ThemeUtil;
 import org.liquidengine.legui.util.TextUtil;
@@ -418,9 +419,9 @@ public class ExampleGui extends Panel<Component> {
         radioButton1.setRadioButtonGroup(radioButtonGroup);
         radioButton2.setRadioButtonGroup(radioButtonGroup);
 
-        final Theme[]      current      = {Theme.DEFAULT_THEME};
-        DarkTheme          darkTheme    = new DarkTheme();
-        Theme.DefaultTheme defaultTheme = new Theme.DefaultTheme();
+        final Theme[] current      = {Theme.getDefaultTheme()};
+        DarkTheme     darkTheme    = new DarkTheme();
+        DefaultTheme  defaultTheme = new DefaultTheme();
 
         String text        = "Switch theme to ";
         String dark        = "dark";
@@ -435,8 +436,9 @@ public class ExampleGui extends Panel<Component> {
                     current[0] = darkTheme;
                     switchTheme.getTextState().setText(text + light);
                 }
-                Theme.DEFAULT_THEME = current[0];
-                ThemeUtil.applyTheme(current[0], event.getContext().getFrame());
+                Theme.setDefaultTheme( current[0]);
+                Theme.getDefaultTheme().applyAll(event.getContext().getFrame());
+//                ThemeUtil.applyTheme(current[0], event.getContext().getFrame());
             }
         });
         this.add(switchTheme);

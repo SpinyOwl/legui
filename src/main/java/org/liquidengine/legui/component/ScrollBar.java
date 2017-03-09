@@ -6,6 +6,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
+import org.liquidengine.legui.color.ColorConstants;
 import org.liquidengine.legui.component.optional.Orientation;
 import org.liquidengine.legui.event.AbstractEvent;
 import org.liquidengine.legui.event.MouseClickEvent;
@@ -60,22 +61,22 @@ public class ScrollBar extends Controller {
     /**
      * Defines if scrollbar has arrows or not.
      */
-    private boolean arrowsEnabled = Theme.DEFAULT_THEME.scrollBarArrowsEnabled();
+    private boolean arrowsEnabled = true;
 
     /**
      * Defines size of arrows.
      */
-    private float arrowSize = Theme.DEFAULT_THEME.scrollBarArrowSize();
+    private float arrowSize = 16;
 
     /**
      * Defines arrow color.
      */
-    private Vector4f arrowColor = Theme.DEFAULT_THEME.scrollBarArrowColor();
+    private Vector4f arrowColor = ColorConstants.darkGray();
 
     /**
      * Defines scrollbar color.
      */
-    private Vector4f scrollColor = Theme.DEFAULT_THEME.scrollBarColor();
+    private Vector4f scrollColor = ColorConstants.darkGray();
 
     /**
      * Mostly used by event listeners. Shows if scrollbar is currently scrolling or not.

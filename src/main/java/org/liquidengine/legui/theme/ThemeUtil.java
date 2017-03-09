@@ -54,33 +54,33 @@ public final class ThemeUtil {
         updateComponent(titleContainer, theme);
         updateContainer(titleContainer, theme);
 
-        widget.getCloseButton().setCornerRadius(theme.cornerRadius());
+//        widget.getCloseButton().setCornerRadius(theme.cornerRadius());
         widget.getCloseButton().setBorder(null);
         updateTextComponent(theme, widget.getCloseButton());
 
-        widget.getMinimizeButton().setCornerRadius(theme.cornerRadius());
+//        widget.getMinimizeButton().setCornerRadius(theme.cornerRadius());
         widget.getMinimizeButton().setBorder(null);
         updateTextComponent(theme, widget.getMinimizeButton());
     }
 
     private static void updateComponent(Component component, Theme theme) {
-        component.setBackgroundColor(theme.backgroundColor());
-        component.setCornerRadius(theme.cornerRadius());
+//        component.setBackgroundColor(theme.backgroundColor());
+//        component.setCornerRadius(theme.cornerRadius());
 
         if (component instanceof TextComponent) {
             if (!(
                     (component instanceof CheckBox) ||
                             (component instanceof Label) ||
                             (component instanceof RadioButton))) {
-                component.setBorder(theme.border());
+//                component.setBorder(theme.border());
             }
             updateTextComponent(theme, (TextComponent) component);
         } else if (component instanceof ScrollBar) {
-            component.setBorder(theme.border());
+//            component.setBorder(theme.border());
             updateScrollBar(theme, (ScrollBar) component);
         } else if (component instanceof Slider) {
         } else {
-            component.setBorder(theme.border());
+//            component.setBorder(theme.border());
         }
 
         if (component instanceof Controller) {
@@ -92,17 +92,17 @@ public final class ThemeUtil {
     }
 
     private static void updateScrollBar(Theme theme, ScrollBar scrollBar) {
-        scrollBar.setArrowColor(theme.scrollBarArrowColor());
-        scrollBar.setScrollColor(theme.scrollBarColor());
-        scrollBar.setArrowsEnabled(theme.scrollBarArrowsEnabled());
-        scrollBar.setArrowSize(theme.scrollBarArrowSize());
+//        scrollBar.setArrowColor(theme.scrollBarArrowColor());
+//        scrollBar.setScrollColor(theme.scrollBarColor());
+//        scrollBar.setArrowsEnabled(theme.scrollBarArrowsEnabled());
+//        scrollBar.setArrowSize(theme.scrollBarArrowSize());
     }
 
     private static void updateTextComponent(Theme theme, TextComponent textComponent) {
         TextState textState = textComponent.getTextState();
-        textState.setTextColor(theme.fontColor());
-        textState.setFontSize(theme.fontSize());
-        textState.setHighlightColor(theme.highlightColor());
-        textState.setPadding(theme.textPadding());
+//        textState.setTextColor(theme.fontColor());
+//        textState.setFontSize(theme.fontSize());
+//        textState.setHighlightColor(theme.highlightColor());
+//        textState.setPadding(theme.textPadding());
     }
 }

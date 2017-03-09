@@ -7,6 +7,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.border.Border;
+import org.liquidengine.legui.color.ColorConstants;
 import org.liquidengine.legui.intersection.Intersector;
 import org.liquidengine.legui.intersection.RectangleIntersector;
 import org.liquidengine.legui.listener.ListenerMap;
@@ -31,45 +32,49 @@ public abstract class Component implements Serializable {
     /**
      * Map for UI event listeners.
      */
-    private ListenerMap listenerMap     = new ListenerMap();
+    private ListenerMap listenerMap        = new ListenerMap();
     /**
      * Position of component relative top left corner in parent component.
      * <p>
      * If component is the root component then position calculated relative window top left corner.
      */
-    private Vector2f    position        = new Vector2f();
+    private Vector2f    position           = new Vector2f();
     /**
      * Size of component.
      */
-    private Vector2f    size            = new Vector2f();
+    private Vector2f    size               = new Vector2f();
     /**
      * Component background color.
      * <p>Represented by vector where (x=r,y=g,z=b,w=a).
      * <p>For example white = {@code new Vector4f(1,1,1,1)}
      */
-    private Vector4f    backgroundColor = Theme.DEFAULT_THEME.backgroundColor();
+    private Vector4f    backgroundColor    = ColorConstants.white();
+    /**
+     * Stroke color. Used to render stroke if component is focused.
+     */
+    private Vector4f    focusedStrokeColor = ColorConstants.lightBlue();
     /**
      * Component border.
      */
-    private Border      border          = Theme.DEFAULT_THEME.border();
+    private Border      border             = null;
     /**
      * Used to store corner radius of component.
      */
-    private float       cornerRadius    = Theme.DEFAULT_THEME.cornerRadius();
+    private float       cornerRadius       = 0;
     /**
      * Used to enable and disable event processing for this component.
      * If enabled==false then component won't receive events.
      */
-    private boolean     enabled         = true;
+    private boolean     enabled            = true;
     /**
      * Determines whether this component should be visible when its
      * parent is visible. Components are initially visible.
      */
-    private boolean     visible         = true;
+    private boolean     visible            = true;
     /**
      * Intersector which used to determine for example if cursor intersects component or not. Cannot be null.
      */
-    private Intersector intersector     = new RectangleIntersector();
+    private Intersector intersector        = new RectangleIntersector();
 
     /**
      * Determines whether this component hovered or not (cursor is over this component).
@@ -118,6 +123,7 @@ public abstract class Component implements Serializable {
     public Component(Vector2f position, Vector2f size) {
         this.position = position;
         this.size = size;
+        Theme.getDefaultTheme().apply(this);
     }
 
     /**
@@ -287,6 +293,50 @@ public abstract class Component implements Serializable {
      * @param a alpha value.
      */
     public void setBackgroundColor(float r, float g, float b, float a) {
+        backgroundColor.set(r, g, b, a);
+    }
+
+    /**
+     * Returns {@link Vector4f} focused stroke color vector where x,y,z,w mapped to r,g,b,a values.
+     * <ul>
+     * <li>0,0,0,1 - black</li>
+     * <li>1,0,0,1 - red.</li>
+     * <li>0,1,0,1 - green.</li>
+     * <li>0,0,1,1 - blue.</li>
+     * <li>0,0,0,0 - transparent black.</li>
+     * </ul>
+     *
+     * @return background color vector.
+     */
+    public Vector4f getFocusedStrokeColor() {
+        return focusedStrokeColor;
+    }
+
+    /**
+     * Used to set focused stroke color vector where x,y,z,w mapped to r,g,b,a values.
+     * <ul>
+     * <li>0,0,0,1 - black</li>
+     * <li>1,0,0,1 - red.</li>
+     * <li>0,1,0,1 - green.</li>
+     * <li>0,0,1,1 - blue.</li>
+     * <li>0,0,0,0 - transparent black.</li>
+     * </ul>
+     *
+     * @param focusedStrokeColor focused stroke color vector.
+     */
+    public void setFocusedStrokeColor(Vector4f focusedStrokeColor) {
+        this.focusedStrokeColor = focusedStrokeColor;
+    }
+
+    /**
+     * Used to set focused stroke color vector.
+     *
+     * @param r red value.
+     * @param g green value.
+     * @param b blue value.
+     * @param a alpha value.
+     */
+    public void setFocusedStrokeColor(float r, float g, float b, float a) {
         backgroundColor.set(r, g, b, a);
     }
 
