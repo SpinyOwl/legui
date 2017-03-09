@@ -651,6 +651,11 @@ public class TextState implements Serializable {
                 .toHashCode();
     }
 
+    /**
+     * Used to copy provided text state to current state.
+     *
+     * @param state state to copy.
+     */
     public void copy(TextState state) {
         this.setText(state.getText());
         this.font = state.font;

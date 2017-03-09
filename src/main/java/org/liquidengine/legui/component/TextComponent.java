@@ -7,5 +7,4 @@ import org.liquidengine.legui.component.optional.TextState;
  */
 public interface TextComponent {
     TextState getTextState();
-    void setTextState(TextState state);
 }

@@ -8,6 +8,7 @@ import org.joml.Vector2f;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.listener.MouseClickEventListener;
+import org.liquidengine.legui.theme.Theme;
 
 import static org.liquidengine.legui.event.MouseClickEvent.MouseClickAction.CLICK;
 import static org.liquidengine.legui.font.FontRegister.MATERIAL_ICONS_REGULAR;
@@ -126,6 +127,7 @@ public class RadioButton extends Controller implements TextComponent {
         textState = new TextState(text);
         setBorder(null);
         getListenerMap().addListener(MouseClickEvent.class, new RadioButtonClickEventListener());
+        Theme.getDefaultTheme().getThemeManager().getComponentTheme(RadioButton.class).apply(this);
     }
 
     /**
@@ -275,19 +277,6 @@ public class RadioButton extends Controller implements TextComponent {
      */
     public TextState getTextState() {
         return textState;
-    }
-
-    /**
-     * Used to set text state.
-     *
-     * @param textState new state to set.
-     */
-    public void setTextState(TextState textState) {
-        if (textState != null) {
-            this.textState = textState;
-        } else {
-            this.textState = new TextState();
-        }
     }
 
     /**
