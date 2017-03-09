@@ -136,13 +136,13 @@ public class Widget extends Container<Component> {
 
             closeButton.getSize().set(titHei);
             closeButton.getPosition().set(widgetWidth - titHei, 0);
-            closeButton.getTextState().setFontSize(Theme.DEFAULT_THEME.fontSize());
-            closeButton.getTextState().getPadding().set(Theme.DEFAULT_THEME.textPadding());
+//            closeButton.getTextState().setFontSize(Theme.DEFAULT_THEME.fontSize());
+//            closeButton.getTextState().getPadding().set(Theme.DEFAULT_THEME.textPadding());
 
             minimizeButton.getSize().set(titHei);
             minimizeButton.getPosition().set(titleWidth, 0);
-            minimizeButton.getTextState().setFontSize(Theme.DEFAULT_THEME.fontSize());
-            minimizeButton.getTextState().getPadding().set(Theme.DEFAULT_THEME.textPadding());
+//            minimizeButton.getTextState().setFontSize(Theme.DEFAULT_THEME.fontSize());
+//            minimizeButton.getTextState().getPadding().set(Theme.DEFAULT_THEME.textPadding());
 
         } else {
             container.getPosition().set(0, 0);

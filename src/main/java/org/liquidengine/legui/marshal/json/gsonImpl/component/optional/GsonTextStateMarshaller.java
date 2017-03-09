@@ -76,25 +76,19 @@ public class GsonTextStateMarshaller<T extends TextState> extends AbstractGsonMa
         JsonElement padding         = json.getAsJsonObject(PADDING);
 
         if (isNotNull(font)) object.setFont(font.getAsString());
-        else if (font.isJsonNull()) object.setFont(Theme.DEFAULT_THEME.font());
 
         if (isNotNull(text)) object.setText(text.getAsString());
         else if (text.isJsonNull()) object.setText("");
 
         if (isNotNull(fontSize)) object.setFontSize(fontSize.getAsFloat());
-        else if (fontSize.isJsonNull()) object.setFontSize(Theme.DEFAULT_THEME.fontSize());
 
         if (isNotNull(horizontalAlign)) object.setHorizontalAlign(HorizontalAlign.valueOf(horizontalAlign.getAsString()));
-        else if (horizontalAlign.isJsonNull()) object.setHorizontalAlign(Theme.DEFAULT_THEME.horizontalAlign());
 
         if (isNotNull(verticalAlign)) object.setVerticalAlign(VerticalAlign.valueOf(verticalAlign.getAsString()));
-        else if (verticalAlign.isJsonNull()) object.setVerticalAlign(Theme.DEFAULT_THEME.verticalAlign());
 
         if (isNotNull(textColor)) object.setTextColor(readColor(textColor.getAsJsonObject()));
-        else if (textColor.isJsonNull()) object.setTextColor(Theme.DEFAULT_THEME.fontColor());
 
         if (isNotNull(highlightColor)) object.setHighlightColor(readColor(highlightColor.getAsJsonObject()));
-        else if (highlightColor.isJsonNull()) object.setHighlightColor(Theme.DEFAULT_THEME.highlightColor());
 
 
         if (isNotNull(padding)) {
@@ -109,8 +103,6 @@ public class GsonTextStateMarshaller<T extends TextState> extends AbstractGsonMa
                     isNotNull(right) ? right.getAsFloat() : 0,
                     isNotNull(bottom) ? bottom.getAsFloat() : 0
             );
-        } else if (padding.isJsonNull()) {
-            object.setPadding(Theme.DEFAULT_THEME.textPadding());
         }
 
     }

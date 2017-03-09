@@ -1,6 +1,7 @@
 package org.liquidengine.legui.component;
 
 import org.joml.Vector2f;
+import org.joml.Vector4f;
 import org.liquidengine.legui.color.ColorConstants;
 import org.liquidengine.legui.event.WindowSizeEvent;
 import org.liquidengine.legui.listener.WindowSizeEventListener;
@@ -43,6 +44,19 @@ public class LayerContainer<T extends Component> extends Container<T> {
     public LayerContainer(Vector2f position, Vector2f size) {
         super(position, size);
         initialize();
+    }
+
+    @Override
+    public Vector4f getBackgroundColor() {
+        return new Vector4f(0,0,0,0);
+    }
+
+    @Override
+    public void setBackgroundColor(Vector4f backgroundColor) {
+    }
+
+    @Override
+    public void setBackgroundColor(float r, float g, float b, float a) {
     }
 
     /**

@@ -10,6 +10,7 @@ import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.listener.MouseClickEventListener;
 
 import static org.liquidengine.legui.event.MouseClickEvent.MouseClickAction.CLICK;
+import static org.liquidengine.legui.font.FontRegister.MATERIAL_ICONS_REGULAR;
 
 /**
  * RadioButtons create a series of items where only one item can be
@@ -30,15 +31,21 @@ public class RadioButton extends Controller implements TextComponent {
     /**
      * Used to represent text state of radio button.
      */
-    protected TextState        textState;
+    protected TextState textState;
+
+    private String    iconFont           = MATERIAL_ICONS_REGULAR;
+    private int       iconUnchecked      = 0xE836;
+    private int       iconChecked        = 0xE837;
+    private ImageView iconImageUnchecked = null;
+    private ImageView iconImageChecked   = null;
     /**
      * Used to represent if radio button selected or not.
      */
-    private   boolean          selected;
+    private boolean          selected;
     /**
      * Used to determine group of radio buttons where only one can be selected.
      */
-    private   RadioButtonGroup radioButtonGroup;
+    private RadioButtonGroup radioButtonGroup;
 
     /**
      * Default constructor. Used to create component instance without any parameters.
@@ -169,6 +176,96 @@ public class RadioButton extends Controller implements TextComponent {
                 radioButtonGroup.setSelection(this, true);
             }
         }
+    }
+
+    /**
+     * Returns font used for drawing radio icon.
+     *
+     * @return font used for drawing radio icon.
+     */
+    public String getIconFont() {
+        return iconFont;
+    }
+
+    /**
+     * Used to set font for drawing radio icon.
+     *
+     * @param iconFont font to set.
+     */
+    public void setIconFont(String iconFont) {
+        this.iconFont = iconFont;
+    }
+
+    /**
+     * Returns radio icon for non-selected state.
+     *
+     * @return radio icon for non-selected state.
+     */
+    public int getIconUnchecked() {
+        return iconUnchecked;
+    }
+
+    /**
+     * Used to set radio icon for non-selected state.
+     *
+     * @param iconUnchecked radio icon for non-selected state to set.
+     */
+    public void setIconUnchecked(int iconUnchecked) {
+        this.iconUnchecked = iconUnchecked;
+    }
+
+    /**
+     * Returns radio icon for selected state.
+     *
+     * @return radio icon for selected state.
+     */
+    public int getIconChecked() {
+        return iconChecked;
+    }
+
+    /**
+     * Used to set radio icon for selected state.
+     *
+     * @param iconChecked radio icon for selected state to set.
+     */
+    public void setIconChecked(int iconChecked) {
+        this.iconChecked = iconChecked;
+    }
+
+    /**
+     * Returns radio image for non-selected state.
+     *
+     * @return radio image for non-selected state.
+     */
+    public ImageView getIconImageUnchecked() {
+        return iconImageUnchecked;
+    }
+
+    /**
+     * Used to set radio image for non-selected state.
+     *
+     * @param iconImageUnchecked radio image for non-selected state to set.
+     */
+    public void setIconImageUnchecked(ImageView iconImageUnchecked) {
+        this.iconImageUnchecked = iconImageUnchecked;
+    }
+
+    /**
+     * Returns radio image for selected state.
+     *
+     * @return radio image for selected state.
+     */
+    public ImageView getIconImageChecked() {
+        return iconImageChecked;
+    }
+
+    /**
+     * Used to set radio image for selected state.
+     *
+     * @param iconImageChecked radio image for selected state to set.
+     */
+    public void setIconImageChecked(ImageView iconImageChecked) {
+        this.iconImageChecked = iconImageChecked;
     }
 
     /**
