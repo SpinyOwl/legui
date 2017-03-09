@@ -35,19 +35,6 @@ public class Tooltip extends Component implements TextComponent {
         return textState;
     }
 
-    /**
-     * Used to set text state.
-     *
-     * @param textState new state to set.
-     */
-    public void setTextState(TextState textState) {
-        if (textState != null) {
-            this.textState = textState;
-        } else {
-            this.textState = new TextState();
-        }
-    }
-
     public Controller getController() {
         return controller;
     }

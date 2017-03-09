@@ -8,7 +8,7 @@ import org.liquidengine.legui.component.Component;
 public abstract class ThemeManager {
     public abstract void applyAll(Component component);
 
-    public abstract <T extends Component> IComponentTheme<T> getComponentTheme(Class<T> clazz);
+    public abstract <T extends Component> AbstractTheme<T> getComponentTheme(Class<T> clazz);
 
-    public abstract <T extends Component> void setComponentTheme(Class<T> clazz, IComponentTheme<T> theme);
+    public abstract <T extends Component> void setComponentTheme(Class<T> clazz, AbstractTheme<T> theme);
 }

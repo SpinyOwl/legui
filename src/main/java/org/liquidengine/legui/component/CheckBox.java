@@ -9,6 +9,7 @@ import org.liquidengine.legui.color.ColorConstants;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.listener.MouseClickEventListener;
+import org.liquidengine.legui.theme.Theme;
 
 import static org.liquidengine.legui.event.MouseClickEvent.MouseClickAction.CLICK;
 import static org.liquidengine.legui.font.FontRegister.MATERIAL_ICONS_REGULAR;
@@ -116,6 +117,7 @@ public class CheckBox extends Controller implements TextComponent {
 
         mouseClickEventListener = new CheckBoxMouseClickEventListener();
         getListenerMap().addListener(MouseClickEvent.class, mouseClickEventListener);
+        Theme.getDefaultTheme().getThemeManager().getComponentTheme(CheckBox.class).apply(this);
     }
 
     /**
@@ -215,19 +217,6 @@ public class CheckBox extends Controller implements TextComponent {
      */
     public TextState getTextState() {
         return textState;
-    }
-
-    /**
-     * Used to set text state.
-     *
-     * @param textState new state to set.
-     */
-    public void setTextState(TextState textState) {
-        if (textState != null) {
-            this.textState = textState;
-        } else {
-            this.textState = new TextState();
-        }
     }
 
     /**

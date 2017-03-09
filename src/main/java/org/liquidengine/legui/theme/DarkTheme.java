@@ -5,7 +5,6 @@ import org.liquidengine.legui.color.ColorConstants;
 import org.liquidengine.legui.component.Button;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.optional.TextState;
-import org.liquidengine.legui.font.FontRegister;
 
 /**
  * Created by ShchAlexander on 06.03.2017.
@@ -26,20 +25,21 @@ public class DarkTheme extends Theme {
         textState.setTextColor(ColorConstants.white());
     }
 
-    private static class ComponentTheme<T extends Component> implements IComponentTheme<T> {
+    private static class ComponentTheme<T extends Component> extends AbstractTheme<T> {
         @Override
-        public void apply(Component component) {
+        public void apply(T component) {
             component.setBorder(new SimpleLineBorder(ColorConstants.lightGray(), 1.2f));
             component.setCornerRadius(2);
             component.setBackgroundColor(ColorConstants.darkGray());
         }
     }
 
-    private static class ButtonTheme<T extends Button> implements IComponentTheme<T> {
+    private static class ButtonTheme<T extends Button> extends AbstractTheme<T> {
         @Override
         public void apply(T component) {
             applyForTextState(component.getTextState());
         }
+
     }
 //
 //    @Override
