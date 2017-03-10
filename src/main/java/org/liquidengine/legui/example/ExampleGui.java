@@ -20,7 +20,6 @@ import org.liquidengine.legui.listener.MouseClickEventListener;
 import org.liquidengine.legui.theme.DarkTheme;
 import org.liquidengine.legui.theme.DefaultTheme;
 import org.liquidengine.legui.theme.Theme;
-import org.liquidengine.legui.theme.ThemeUtil;
 import org.liquidengine.legui.util.TextUtil;
 import org.lwjgl.glfw.GLFW;
 
@@ -116,9 +115,9 @@ public class ExampleGui extends Panel<Component> {
 
         RadioButtonGroup radioButtonGroup = new RadioButtonGroup();
         RadioButton      radioButton1     = new RadioButton(250, 30, 100, 20); this.add(radioButton1);
-        radioButton1.setSelected(true); radioButton1.setRadioButtonGroup(radioButtonGroup);
+        radioButton1.setChecked(true); radioButton1.setRadioButtonGroup(radioButtonGroup);
         RadioButton radioButton2 = new RadioButton(250, 60, 100, 20); this.add(radioButton2);
-        radioButton2.setSelected(false); radioButton2.setRadioButtonGroup(radioButtonGroup);
+        radioButton2.setChecked(false); radioButton2.setRadioButtonGroup(radioButtonGroup);
 
         Slider slider1 = new Slider(250, 90, 100, 20, 30); this.add(slider1);
 

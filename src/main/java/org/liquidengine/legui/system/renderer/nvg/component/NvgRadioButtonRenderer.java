@@ -50,18 +50,20 @@ public class NvgRadioButtonRenderer extends NvgComponentRenderer<RadioButton> {
 
     private void renderIcon(RadioButton agui, float x, float fontSize, Vector4f textColor, float iconWid, float y1, float h1, long context) {
         // renderNvg check symbol
-        int    iconChar = agui.isSelected() ? agui.getIconChecked() : agui.getIconUnchecked();
+        int    iconChar = agui.isChecked() ? agui.getIconChecked() : agui.getIconUnchecked();
         String icon     = TextUtil.cpToStr(iconChar);
 
-        ImageView image = agui.isSelected() ? agui.getIconImageChecked() : agui.getIconImageUnchecked();
+        ImageView image = agui.isChecked() ? agui.getIconImageChecked() : agui.getIconImageUnchecked();
 
-        if (agui.isFocused()) {
-            if (image == null) {
+        if (image == null) {
+            if (agui.isFocused()) {
                 renderTextLineToBounds(context, x - 1, y1 + 1, iconWid, h1, fontSize, agui.getIconFont(),
                         agui.getFocusedStrokeColor(), colorA, icon, HorizontalAlign.CENTER, VerticalAlign.MIDDLE, false);
             }
+            renderTextLineToBounds(context, x, y1, iconWid, h1, fontSize, FontRegister.MATERIAL_ICONS_REGULAR,
+                    textColor, colorA, icon, HorizontalAlign.CENTER, VerticalAlign.MIDDLE, false);
+        } else {
+
         }
-        renderTextLineToBounds(context, x, y1, iconWid, h1, fontSize, FontRegister.MATERIAL_ICONS_REGULAR,
-                textColor, colorA, icon, HorizontalAlign.CENTER, VerticalAlign.MIDDLE, false);
     }
 }

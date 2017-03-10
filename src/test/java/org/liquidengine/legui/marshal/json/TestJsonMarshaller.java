@@ -137,11 +137,11 @@ public class TestJsonMarshaller {
         RadioButtonGroup radioButtonGroup = new RadioButtonGroup();
         RadioButton      radioButton1     = new RadioButton(250, 30, 100, 20);
         toReturn.add(radioButton1);
-        radioButton1.setSelected(true);
+        radioButton1.setChecked(true);
         radioButton1.setRadioButtonGroup(radioButtonGroup);
         RadioButton radioButton2 = new RadioButton(250, 60, 100, 20);
         toReturn.add(radioButton2);
-        radioButton2.setSelected(false);
+        radioButton2.setChecked(false);
         radioButton2.setRadioButtonGroup(radioButtonGroup);
 
         Slider slider1 = new Slider(250, 90, 100, 20, 30);
