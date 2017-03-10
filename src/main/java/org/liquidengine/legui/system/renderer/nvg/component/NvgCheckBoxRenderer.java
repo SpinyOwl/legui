@@ -3,6 +3,7 @@ package org.liquidengine.legui.system.renderer.nvg.component;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.CheckBox;
+import org.liquidengine.legui.component.ImageView;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
@@ -19,7 +20,7 @@ import static org.lwjgl.nanovg.NanoVG.*;
  * Created by ShchAlexander on 11.02.2017.
  */
 public class NvgCheckBoxRenderer extends NvgComponentRenderer<CheckBox> {
-    private              NVGColor colorA         = NVGColor.create();
+    private NVGColor colorA = NVGColor.create();
 
 
     @Override
@@ -63,11 +64,17 @@ public class NvgCheckBoxRenderer extends NvgComponentRenderer<CheckBox> {
     }
 
     private void renderIcon(CheckBox component, long nvgContext, float fontSize, float iconWid, float h, float y, float x1, Vector4f textColor, String icon) {
-        if (component.isFocused()) {
-            renderTextLineToBounds(nvgContext, x1 - 1, y + 1, iconWid, h, fontSize, component.getIconFont(),
-                    component.getFocusedStrokeColor(), colorA, icon, HorizontalAlign.CENTER, VerticalAlign.MIDDLE, false);
+
+        ImageView image = component.isChecked() ? component.getIconImageChecked() : component.getIconImageUnchecked();
+        if (image == null) {
+            if (component.isFocused()) {
+                renderTextLineToBounds(nvgContext, x1 - 1, y + 1, iconWid, h, fontSize, component.getIconFont(),
+                        component.getFocusedStrokeColor(), colorA, icon, HorizontalAlign.CENTER, VerticalAlign.MIDDLE, false);
+            }
+            renderTextLineToBounds(nvgContext, x1, y, iconWid, h, fontSize, component.getIconFont(),
+                    textColor, colorA, icon, HorizontalAlign.CENTER, VerticalAlign.MIDDLE, false);
+        } else {
+
         }
-        renderTextLineToBounds(nvgContext, x1, y, iconWid, h, fontSize, component.getIconFont(),
-                textColor, colorA, icon, HorizontalAlign.CENTER, VerticalAlign.MIDDLE, false);
     }
 }

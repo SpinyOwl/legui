@@ -66,7 +66,7 @@ public class GsonRadioButtonMarshaller<T extends RadioButton> extends GsonContro
             TextState  state        = GsonMarshalUtil.unmarshal(asJsonObject, context);
             object.getTextState().copy(state);
         }
-        if (isNotNull(selected)) object.setSelected(selected.getAsBoolean());
+        if (isNotNull(selected)) object.setChecked(selected.getAsBoolean());
         if (isNotNull(group)) {
             Map<Integer, RadioButtonGroup> drg     = context.getDeserializeRadioGroupMap();
             int                            groupId = group.getAsInt();
