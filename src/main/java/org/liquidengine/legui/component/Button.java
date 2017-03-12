@@ -7,6 +7,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
+import org.liquidengine.legui.icon.Icon;
 
 /**
  * An implementation of "push" button.
@@ -21,22 +22,22 @@ public class Button extends Controller implements TextComponent {
     /**
      * Default button background image.
      */
-    private ImageView backgroundImage;
+    private Icon backgroundIcon;
 
     /**
      * Background image for focused state.
      */
-    private ImageView focusedBackgroundImage;
+    private Icon focusedBackgroundIcon;
 
     /**
      * Background image for pressed state.
      */
-    private ImageView pressedBackgroundImage;
+    private Icon pressedBackgroundIcon;
 
     /**
      * Background image for hovered state.
      */
-    private ImageView hoveredBackgroundImage;
+    private Icon hoveredBackgroundIcon;
 
     /**
      * Creates a button with default text.
@@ -127,17 +128,17 @@ public class Button extends Controller implements TextComponent {
      *
      * @return background image.
      */
-    public ImageView getBackgroundImage() {
-        return backgroundImage;
+    public Icon getBackgroundIcon() {
+        return backgroundIcon;
     }
 
     /**
      * Used to change background image.
      *
-     * @param backgroundImage background image.
+     * @param backgroundIcon background image.
      */
-    public void setBackgroundImage(ImageView backgroundImage) {
-        this.backgroundImage = backgroundImage;
+    public void setBackgroundIcon(Icon backgroundIcon) {
+        this.backgroundIcon = backgroundIcon;
     }
 
     /**
@@ -145,17 +146,17 @@ public class Button extends Controller implements TextComponent {
      *
      * @return focused background image.
      */
-    public ImageView getFocusedBackgroundImage() {
-        return focusedBackgroundImage;
+    public Icon getFocusedBackgroundIcon() {
+        return focusedBackgroundIcon;
     }
 
     /**
      * Used to change focused background image.
      *
-     * @param focusedBackgroundImage focused background image.
+     * @param focusedBackgroundIcon focused background image.
      */
-    public void setFocusedBackgroundImage(ImageView focusedBackgroundImage) {
-        this.focusedBackgroundImage = focusedBackgroundImage;
+    public void setFocusedBackgroundIcon(Icon focusedBackgroundIcon) {
+        this.focusedBackgroundIcon = focusedBackgroundIcon;
     }
 
     /**
@@ -163,17 +164,17 @@ public class Button extends Controller implements TextComponent {
      *
      * @return pressed background image.
      */
-    public ImageView getPressedBackgroundImage() {
-        return pressedBackgroundImage;
+    public Icon getPressedBackgroundIcon() {
+        return pressedBackgroundIcon;
     }
 
     /**
      * Used to change pressed background image.
      *
-     * @param pressedBackgroundImage pressed background image.
+     * @param pressedBackgroundIcon pressed background image.
      */
-    public void setPressedBackgroundImage(ImageView pressedBackgroundImage) {
-        this.pressedBackgroundImage = pressedBackgroundImage;
+    public void setPressedBackgroundIcon(Icon pressedBackgroundIcon) {
+        this.pressedBackgroundIcon = pressedBackgroundIcon;
     }
 
     /**
@@ -181,17 +182,17 @@ public class Button extends Controller implements TextComponent {
      *
      * @return hovered background image.
      */
-    public ImageView getHoveredBackgroundImage() {
-        return hoveredBackgroundImage;
+    public Icon getHoveredBackgroundIcon() {
+        return hoveredBackgroundIcon;
     }
 
     /**
      * Used to change hovered background image.
      *
-     * @param hoveredBackgroundImage hovered background image.
+     * @param hoveredBackgroundIcon hovered background image.
      */
-    public void setHoveredBackgroundImage(ImageView hoveredBackgroundImage) {
-        this.hoveredBackgroundImage = hoveredBackgroundImage;
+    public void setHoveredBackgroundIcon(Icon hoveredBackgroundIcon) {
+        this.hoveredBackgroundIcon = hoveredBackgroundIcon;
     }
 
     /**

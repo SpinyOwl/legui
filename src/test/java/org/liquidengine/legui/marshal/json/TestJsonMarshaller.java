@@ -1,5 +1,6 @@
 package org.liquidengine.legui.marshal.json;
 
+import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.junit.Assert;
 import org.junit.Before;
@@ -9,6 +10,8 @@ import org.liquidengine.legui.color.ColorConstants;
 import org.liquidengine.legui.component.*;
 import org.liquidengine.legui.component.optional.Orientation;
 import org.liquidengine.legui.font.FontRegister;
+import org.liquidengine.legui.icon.Icon;
+import org.liquidengine.legui.icon.ImageIcon;
 import org.liquidengine.legui.image.DummyImage;
 import org.liquidengine.legui.image.DummyImageLoader;
 import org.liquidengine.legui.image.loader.ImageLoader;
@@ -28,7 +31,7 @@ import static org.liquidengine.legui.component.optional.align.VerticalAlign.MIDD
 public class TestJsonMarshaller {
 
     @Before
-    public void setup(){
+    public void setup() {
         ImageLoader.setLoader(new DummyImageLoader());
     }
 
@@ -160,15 +163,15 @@ public class TestJsonMarshaller {
         widget.setTitleBackgroundColor(ColorConstants.lightGreen());
 
         Button turnWidVisible = new Button("", 360, 280, 20, 20);
-        ImageView bgIm = new ImageView(new DummyImage("org/liquidengine/legui/example/1.png"));
-        bgIm.setSize(20, 20);
-        turnWidVisible.setBackgroundImage(bgIm);
-        ImageView hbgIm = new ImageView(new DummyImage("org/liquidengine/legui/example/2.png"));
-        hbgIm.setSize(20, 20);
-        turnWidVisible.setHoveredBackgroundImage(hbgIm);
-        ImageView pbIm = new ImageView(new DummyImage("org/liquidengine/legui/example/3.png"));
-        pbIm.setSize(20, 20);
-        turnWidVisible.setPressedBackgroundImage(pbIm);
+        Icon   bgIm           = new ImageIcon(new DummyImage("org/liquidengine/legui/example/1.png"));
+        bgIm.setSize(new Vector2f(20, 20));
+        turnWidVisible.setBackgroundIcon(bgIm);
+        Icon hbgIm = new ImageIcon(new DummyImage("org/liquidengine/legui/example/2.png"));
+        hbgIm.setSize(new Vector2f(20, 20));
+        turnWidVisible.setHoveredBackgroundIcon(hbgIm);
+        Icon pbIm = new ImageIcon(new DummyImage("org/liquidengine/legui/example/3.png"));
+        pbIm.setSize(new Vector2f(20, 20));
+        turnWidVisible.setPressedBackgroundIcon(pbIm);
 
         toReturn.add(turnWidVisible);
 
@@ -327,9 +330,8 @@ public class TestJsonMarshaller {
 
         ToggleButton toggleButton = new ToggleButton("", 100, 170, 40, 40);
         toReturn.add(toggleButton);
-        ImageView bgImageNormal  = new ImageView(new DummyImage("org/liquidengine/legui/example/normal.png"));
-        ImageView bgImageToggled = new ImageView(new DummyImage("org/liquidengine/legui/example/toggled.png"));
-
+        Icon bgImageNormal  = new ImageIcon(new DummyImage("org/liquidengine/legui/example/normal.png"));
+        Icon bgImageToggled = new ImageIcon(new DummyImage("org/liquidengine/legui/example/toggled.png"));
 
 
         toggleButton.setTooltip("Just toggle button with long tooltipText text");
@@ -343,12 +345,10 @@ public class TestJsonMarshaller {
 
         int id[] = {0};
 
-        bgImageNormal.setSize(36, 36);
-        bgImageNormal.setPosition(2, 2);
-        toggleButton.setBackgroundImage(bgImageNormal);
-        bgImageToggled.setSize(36, 36);
-        bgImageToggled.setPosition(2, 2);
-        toggleButton.setTogglededBackgroundImage(bgImageToggled);
+        bgImageNormal.setSize(new Vector2f(36, 36));
+        toggleButton.setBackgroundIcon(bgImageNormal);
+        bgImageToggled.setSize(new Vector2f(36, 36));
+        toggleButton.setTogglededBackgroundIcon(bgImageToggled);
         //@formatter:on
 
         return toReturn;
