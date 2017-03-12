@@ -4,14 +4,13 @@ import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.color.ColorUtil;
 import org.liquidengine.legui.component.Button;
-import org.liquidengine.legui.component.ImageView;
 import org.liquidengine.legui.component.optional.TextState;
+import org.liquidengine.legui.icon.Icon;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.nvg.NvgComponentRenderer;
-import org.liquidengine.legui.system.renderer.nvg.NvgImageReferenceManager;
+import org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils;
 import org.lwjgl.nanovg.NVGPaint;
 
-import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.IMAGE_REFERENCE_MANAGER;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.*;
 import static org.lwjgl.nanovg.NanoVG.*;
 
@@ -19,8 +18,6 @@ import static org.lwjgl.nanovg.NanoVG.*;
  * Created by ShchAlexander on 11.02.2017.
  */
 public class NvgButtonRenderer extends NvgComponentRenderer<Button> {
-    private NVGPaint imagePaint = NVGPaint.calloc();
-
     @Override
     protected void renderComponent(Button button, Context context, long nanovg) {
         createScissor(nanovg, button);
@@ -28,10 +25,9 @@ public class NvgButtonRenderer extends NvgComponentRenderer<Button> {
             Vector2f pos  = button.getScreenPosition();
             Vector2f size = button.getSize();
 
-            NvgImageReferenceManager manager = (NvgImageReferenceManager) context.getContextData().get(IMAGE_REFERENCE_MANAGER);
             nvgSave(nanovg);
             // render background
-            renderBackground(nanovg, button, pos, size, manager);
+            renderBackground(nanovg, button, pos, size, context);
 
             // Render text
             {
@@ -49,52 +45,39 @@ public class NvgButtonRenderer extends NvgComponentRenderer<Button> {
         nvgRestore(nanovg);
     }
 
-    private void renderBackground(long context, Button button, Vector2f pos, Vector2f size, NvgImageReferenceManager manager) {
+    private void renderBackground(long nvg, Button button, Vector2f pos, Vector2f size, Context context) {
         boolean  focused         = button.isFocused();
         boolean  hovered         = button.isHovered();
         boolean  pressed         = button.isPressed();
         Vector4f backgroundColor = new Vector4f(button.getBackgroundColor());
 
-        ImageView bgImage = button.getBackgroundImage();
-        ImageView image;
+        Icon bgIcon = button.getBackgroundIcon();
+        Icon image;
         if (!focused && !hovered && !pressed) {
-            image = bgImage;
+            image = bgIcon;
         } else if (hovered && !pressed) {
-            image = (image = button.getHoveredBackgroundImage()) == null ? bgImage : image;
+            image = (image = button.getHoveredBackgroundIcon()) == null ? bgIcon : image;
         } else if (pressed) {
-            image = (image = button.getPressedBackgroundImage()) == null ? bgImage : image;
+            image = (image = button.getPressedBackgroundIcon()) == null ? bgIcon : image;
         } else {
-            image = (image = button.getFocusedBackgroundImage()) == null ? bgImage : image;
+            image = (image = button.getFocusedBackgroundIcon()) == null ? bgIcon : image;
         }
 
-        drawRectangle(context, backgroundColor, pos, size);
+        drawRectangle(nvg, backgroundColor, pos, size);
         if (hovered) {
             if (!pressed) {
                 Vector4f opp = ColorUtil.oppositeBlackOrWhite(backgroundColor);
                 opp.w = 0.3f;
-                drawRectangle(context, opp, pos, size);
+                drawRectangle(nvg, opp, pos, size);
             } else {
                 Vector4f opp = ColorUtil.oppositeBlackOrWhite(backgroundColor);
                 opp.w = 0.6f;
-                drawRectangle(context, opp, pos, size);
+                drawRectangle(nvg, opp, pos, size);
             }
         }
         if (image != null) {
-            drawImage(context, pos, manager, image);
+            NvgRenderUtils.renderIcon(image, button, context);
         }
     }
 
-    private void drawImage(long context, Vector2f pos, NvgImageReferenceManager manager, ImageView image) {
-        Vector2f bipos    = image.getPosition();
-        Vector2f bisize   = image.getSize();
-        int      imageRef = manager.getImageReference(image.getImage(), context);
-
-        float ox = pos.x + bipos.x;
-        float oy = pos.y + bipos.y;
-        nvgBeginPath(context);
-        nvgImagePattern(context, ox, oy, bisize.x, bisize.y, 0, imageRef, 1, imagePaint);
-        nvgRoundedRect(context, ox, oy, bisize.x, bisize.y, image.getCornerRadius());
-        nvgFillPaint(context, imagePaint);
-        nvgFill(context);
-    }
 }

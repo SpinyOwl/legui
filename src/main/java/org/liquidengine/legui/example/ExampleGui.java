@@ -1,5 +1,6 @@
 package org.liquidengine.legui.example;
 
+import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.border.SimpleLineBorder;
 import org.liquidengine.legui.color.ColorConstants;
@@ -12,6 +13,8 @@ import org.liquidengine.legui.event.FocusEvent;
 import org.liquidengine.legui.event.KeyEvent;
 import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.font.FontRegister;
+import org.liquidengine.legui.icon.Icon;
+import org.liquidengine.legui.icon.ImageIcon;
 import org.liquidengine.legui.image.BufferedImage;
 import org.liquidengine.legui.listener.CursorEnterEventListener;
 import org.liquidengine.legui.listener.FocusEventListener;
@@ -144,9 +147,9 @@ public class ExampleGui extends Panel<Component> {
         turnWidVisible.getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
         if (CLICK == (event.getAction())) widget.setVisible(true);
         });
-        ImageView bgIm  = new ImageView(new BufferedImage("org/liquidengine/legui/example/1.png")); bgIm.setSize(20, 20); turnWidVisible.setBackgroundImage(bgIm);
-        ImageView hbgIm = new ImageView(new BufferedImage("org/liquidengine/legui/example/2.png")); hbgIm.setSize(20, 20); turnWidVisible.setHoveredBackgroundImage(hbgIm);
-        ImageView pbIm  = new ImageView(new BufferedImage("org/liquidengine/legui/example/3.png")); pbIm.setSize(20, 20); turnWidVisible.setPressedBackgroundImage(pbIm);
+        Icon bgIm  = new ImageIcon(new BufferedImage("org/liquidengine/legui/example/1.png")); bgIm.setSize(new Vector2f(20, 20)); turnWidVisible.setBackgroundIcon(bgIm);
+        Icon hbgIm = new ImageIcon(new BufferedImage("org/liquidengine/legui/example/2.png")); hbgIm.setSize(new Vector2f(20, 20)); turnWidVisible.setHoveredBackgroundIcon(hbgIm);
+        Icon pbIm  = new ImageIcon(new BufferedImage("org/liquidengine/legui/example/3.png")); pbIm.setSize(new Vector2f(20, 20)); turnWidVisible.setPressedBackgroundIcon(pbIm);
 
         this.add(turnWidVisible);
 
@@ -368,8 +371,8 @@ public class ExampleGui extends Panel<Component> {
 
         ToggleButton toggleButton = new ToggleButton("",100, 170, 40, 40);
         this.add(toggleButton);
-        ImageView bgImageNormal  = new ImageView(new BufferedImage("org/liquidengine/legui/example/normal.png"));
-        ImageView bgImageToggled = new ImageView(new BufferedImage("org/liquidengine/legui/example/toggled.png"));
+        Icon bgImageNormal  = new ImageIcon(new BufferedImage("org/liquidengine/legui/example/normal.png"));
+        Icon bgImageToggled = new ImageIcon(new BufferedImage("org/liquidengine/legui/example/toggled.png"));
 
         toggleButton.getListenerMap().addListener(CursorEnterEvent.class, (CursorEnterEventListener)System.out::println);
 
@@ -409,8 +412,8 @@ public class ExampleGui extends Panel<Component> {
             }
         });
 
-        bgImageNormal.setSize(36, 36); bgImageNormal.setPosition(2, 2); toggleButton.setBackgroundImage(bgImageNormal);
-        bgImageToggled.setSize(36, 36); bgImageToggled.setPosition(2, 2); toggleButton.setTogglededBackgroundImage(bgImageToggled);
+        bgImageNormal.setSize(new Vector2f(36, 36)); toggleButton.setBackgroundIcon(bgImageNormal);
+        bgImageToggled.setSize(new Vector2f(36, 36)); toggleButton.setTogglededBackgroundIcon(bgImageToggled);
         //@formatter:on
         RadioButtonGroup rbg = new RadioButtonGroup();
         RadioButton      rb1 = new RadioButton();
@@ -435,7 +438,7 @@ public class ExampleGui extends Panel<Component> {
                     current[0] = darkTheme;
                     switchTheme.getTextState().setText(text + light);
                 }
-                Theme.setDefaultTheme( current[0]);
+                Theme.setDefaultTheme(current[0]);
                 Theme.getDefaultTheme().applyAll(event.getContext().getFrame());
 //                ThemeUtil.applyTheme(current[0], event.getContext().getFrame());
             }

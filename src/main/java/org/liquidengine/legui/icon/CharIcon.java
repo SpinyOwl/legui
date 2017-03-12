@@ -1,18 +1,17 @@
-package org.liquidengine.legui.component.optional.icon;
+package org.liquidengine.legui.icon;
 
 import org.joml.Vector2f;
 
 /**
  * Created by Aliaksandr_Shcherbin on 3/10/2017.
  */
-public class CharIcon implements Icon {
+public class CharIcon extends Icon {
 
-    private Vector2f size = new Vector2f();
     private String font;
     private int    charCode;
 
     public CharIcon(Vector2f size, String font, int charCode) {
-        this.size = size;
+        super(size);
         this.font = font;
         this.charCode = charCode;
     }
@@ -31,15 +30,5 @@ public class CharIcon implements Icon {
 
     public void setCharCode(int charCode) {
         this.charCode = charCode;
-    }
-
-    @Override
-    public Vector2f getSize() {
-        return size;
-    }
-
-    @Override
-    public void setSize(Vector2f size) {
-        this.size = size;
     }
 }

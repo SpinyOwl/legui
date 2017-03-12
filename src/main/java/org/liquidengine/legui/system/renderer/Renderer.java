@@ -6,7 +6,7 @@ import org.liquidengine.legui.component.LayerContainer;
 import org.liquidengine.legui.system.context.Context;
 
 /**
- * Created by Aliaksandr_Shcherbin on 1/24/2017.
+ * Base of main renderer which called by renderer thread.
  */
 public abstract class Renderer {
     protected Context context;

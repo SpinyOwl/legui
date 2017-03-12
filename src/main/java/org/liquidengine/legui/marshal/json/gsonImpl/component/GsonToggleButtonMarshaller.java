@@ -27,7 +27,7 @@ public class GsonToggleButtonMarshaller<T extends ToggleButton> extends GsonButt
 
         GsonUtil.fill(json)
                 .add(TOGGLED, object.isToggled())
-                .add(TOGGLEDED_BACKGROUND_IMAGE, GsonMarshalUtil.marshalToJson(object.getTogglededBackgroundImage(), context))
+                .add(TOGGLEDED_BACKGROUND_ICON, GsonMarshalUtil.marshalToJson(object.getTogglededBackgroundIcon(), context))
                 .add(TOGGLED_BACKGROUND_COLOR, GsonUtil.createColor(object.getToggledBackgroundColor()))
         ;
     }
@@ -44,11 +44,11 @@ public class GsonToggleButtonMarshaller<T extends ToggleButton> extends GsonButt
         super.unmarshal(json, object, context);
 
         JsonElement toggled = json.get(TOGGLED);
-        JsonElement tbImage = json.get(TOGGLEDED_BACKGROUND_IMAGE);
+        JsonElement tbImage = json.get(TOGGLEDED_BACKGROUND_ICON);
         JsonElement tbColor = json.get(TOGGLED_BACKGROUND_COLOR);
 
         if (isNotNull(toggled)) object.setToggled(toggled.getAsBoolean());
-        if (isNotNull(tbImage)) object.setTogglededBackgroundImage(GsonMarshalUtil.unmarshal(tbImage.getAsJsonObject(), context));
+        if (isNotNull(tbImage)) object.setTogglededBackgroundIcon(GsonMarshalUtil.unmarshal(tbImage.getAsJsonObject(), context));
         if (isNotNull(tbColor)) object.setToggledBackgroundColor(GsonUtil.readColor(tbColor.getAsJsonObject()));
     }
 }
