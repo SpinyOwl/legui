@@ -16,6 +16,8 @@ public class NvgSimpleLineBorderRenderer extends NvgBorderRenderer<SimpleLineBor
     @Override
     protected void renderBorder(SimpleLineBorder border, Component component, Context context, long nanovg) {
         if (border.isEnabled()) {
+            if (border.getThickness() <= 0 || border.getColor().z == 0) return;
+
             Vector2f pos  = component.getScreenPosition();
             Vector2f size = component.getSize();
 
