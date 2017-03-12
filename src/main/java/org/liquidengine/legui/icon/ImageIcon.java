@@ -9,6 +9,10 @@ import org.liquidengine.legui.image.Image;
 public class ImageIcon extends Icon {
     private Image image;
 
+    public ImageIcon() {
+    }
+
+
     public ImageIcon(Vector2f size, Image image) {
         super(size);
         this.image = image;
