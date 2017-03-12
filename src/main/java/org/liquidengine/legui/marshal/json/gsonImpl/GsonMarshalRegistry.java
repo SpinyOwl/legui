@@ -8,9 +8,11 @@ import org.liquidengine.legui.component.*;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.exception.LeguiException;
 import org.liquidengine.legui.exception.LeguiExceptions;
+import org.liquidengine.legui.icon.Icon;
 import org.liquidengine.legui.intersection.Intersector;
 import org.liquidengine.legui.marshal.json.JsonMarshalRegistry;
 import org.liquidengine.legui.marshal.json.JsonMarshaller;
+import org.liquidengine.legui.marshal.json.gsonImpl.Icon.GsonIconMarshaller;
 import org.liquidengine.legui.marshal.json.gsonImpl.border.GsonBorderMarshaller;
 import org.liquidengine.legui.marshal.json.gsonImpl.border.GsonSimpleLineBorderMarshaller;
 import org.liquidengine.legui.marshal.json.gsonImpl.component.*;
@@ -134,13 +136,21 @@ public class GsonMarshalRegistry implements JsonMarshalRegistry {
         private static final GsonMarshalRegistry I = new GsonMarshalRegistry();
 
         static {
+            // icons
+            // TODO: Add CharIcon and ImageIcon marshaller.
+            I.registerMarshaller("Icon", Icon.class, new GsonIconMarshaller<>());
+
+            // textstate
             I.registerMarshaller("TextState", TextState.class, new GsonTextStateMarshaller<>());
 
+            // borders
             I.registerMarshaller("Border", Border.class, new GsonBorderMarshaller<>());
             I.registerMarshaller("SimpleLineBorder", SimpleLineBorder.class, new GsonSimpleLineBorderMarshaller());
 
+            // intersector
             I.registerMarshaller("Intersector", Intersector.class, new GsonIntersectorMarshaller<>());
 
+            // components
             I.registerMarshaller("Button", Button.class, new GsonButtonMarshaller<>());
             I.registerMarshaller("CheckBox", CheckBox.class, new GsonCheckBoxMarshaller<>());
             I.registerMarshaller("Container", Container.class, new GsonContainerMarshaller<>());
