@@ -1,12 +1,15 @@
 <table>
   <tr>
     <th align="center">Size</th>
+    <th align="center">Coverage</th>
     <th align="center">Develop</th>
     <th align="center">Snapshot</th>
     <th align="center">Release</th>
   </tr>
   <tr>
     <td align="center"><img src="https://reposs.herokuapp.com/?path=LiquidEngine/legui"/></td>
+    <td align="center"><a href='https://coveralls.io/github/LiquidEngine/legui'><img src='https://coveralls.io/repos/github/LiquidEngine/legui/badge.svg' alt='Coverage Status' /></a>
+</td>
     <td align="center"><a href="http://jenkins.liquidengine.tk/job/legui/job/develop/" target="_blank">
       <img src="http://jenkins.liquidengine.tk/buildStatus/icon?job=legui/develop"/>
     </a></td>
