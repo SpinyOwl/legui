@@ -39,7 +39,6 @@ public class DarkTheme extends Theme {
         public void apply(T component) {
             applyForTextState(component.getTextState());
         }
-
     }
 //
 //    @Override

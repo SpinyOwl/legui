@@ -6,7 +6,10 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 import org.liquidengine.legui.component.optional.TextState;
+import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.event.MouseClickEvent;
+import org.liquidengine.legui.icon.CharIcon;
+import org.liquidengine.legui.icon.Icon;
 import org.liquidengine.legui.listener.MouseClickEventListener;
 import org.liquidengine.legui.theme.Theme;
 
@@ -34,11 +37,8 @@ public class RadioButton extends Controller implements TextComponent {
      */
     protected TextState textState;
 
-    private String    iconFont           = MATERIAL_ICONS_REGULAR;
-    private int       iconUnchecked      = 0xE836;
-    private int       iconChecked        = 0xE837;
-    private ImageView iconImageUnchecked = null;
-    private ImageView iconImageChecked   = null;
+    private Icon iconUnchecked = new CharIcon(new Vector2f(16, 16), MATERIAL_ICONS_REGULAR, 0xE836);
+    private Icon iconChecked   = new CharIcon(new Vector2f(16, 16), MATERIAL_ICONS_REGULAR, 0xE837);
     /**
      * Used to represent if radio button checked or not.
      */
@@ -127,6 +127,8 @@ public class RadioButton extends Controller implements TextComponent {
         textState = new TextState(text);
         setBorder(null);
         getListenerMap().addListener(MouseClickEvent.class, new RadioButtonClickEventListener());
+        iconUnchecked.setHorizontalAlign(HorizontalAlign.LEFT);
+        iconChecked.setHorizontalAlign(HorizontalAlign.LEFT);
         Theme.getDefaultTheme().getThemeManager().getComponentTheme(RadioButton.class).apply(this);
     }
 
@@ -181,75 +183,21 @@ public class RadioButton extends Controller implements TextComponent {
     }
 
     /**
-     * Returns font used for drawing radio icon.
-     *
-     * @return font used for drawing radio icon.
-     */
-    public String getIconFont() {
-        return iconFont;
-    }
-
-    /**
-     * Used to set font for drawing radio icon.
-     *
-     * @param iconFont font to set.
-     */
-    public void setIconFont(String iconFont) {
-        this.iconFont = iconFont;
-    }
-
-    /**
-     * Returns radio icon for non-checked state.
-     *
-     * @return radio icon for non-checked state.
-     */
-    public int getIconUnchecked() {
-        return iconUnchecked;
-    }
-
-    /**
-     * Used to set radio icon for non-checked state.
-     *
-     * @param iconUnchecked radio icon for non-checked state to set.
-     */
-    public void setIconUnchecked(int iconUnchecked) {
-        this.iconUnchecked = iconUnchecked;
-    }
-
-    /**
-     * Returns radio icon for checked state.
-     *
-     * @return radio icon for checked state.
-     */
-    public int getIconChecked() {
-        return iconChecked;
-    }
-
-    /**
-     * Used to set radio icon for checked state.
-     *
-     * @param iconChecked radio icon for checked state to set.
-     */
-    public void setIconChecked(int iconChecked) {
-        this.iconChecked = iconChecked;
-    }
-
-    /**
      * Returns radio image for non-checked state.
      *
      * @return radio image for non-checked state.
      */
-    public ImageView getIconImageUnchecked() {
-        return iconImageUnchecked;
+    public Icon getIconUnchecked() {
+        return iconUnchecked;
     }
 
     /**
      * Used to set radio image for non-checked state.
      *
-     * @param iconImageUnchecked radio image for non-checked state to set.
+     * @param iconUnchecked radio image for non-checked state to set.
      */
-    public void setIconImageUnchecked(ImageView iconImageUnchecked) {
-        this.iconImageUnchecked = iconImageUnchecked;
+    public void setIconUnchecked(Icon iconUnchecked) {
+        this.iconUnchecked = iconUnchecked;
     }
 
     /**
@@ -257,17 +205,17 @@ public class RadioButton extends Controller implements TextComponent {
      *
      * @return radio image for checked state.
      */
-    public ImageView getIconImageChecked() {
-        return iconImageChecked;
+    public Icon getIconChecked() {
+        return iconChecked;
     }
 
     /**
      * Used to set radio image for checked state.
      *
-     * @param iconImageChecked radio image for checked state to set.
+     * @param iconChecked radio image for checked state to set.
      */
-    public void setIconImageChecked(ImageView iconImageChecked) {
-        this.iconImageChecked = iconImageChecked;
+    public void setIconChecked(Icon iconChecked) {
+        this.iconChecked = iconChecked;
     }
 
     /**

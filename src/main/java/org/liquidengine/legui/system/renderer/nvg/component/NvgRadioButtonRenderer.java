@@ -2,18 +2,17 @@ package org.liquidengine.legui.system.renderer.nvg.component;
 
 import org.joml.Vector2f;
 import org.joml.Vector4f;
-import org.liquidengine.legui.component.ImageView;
 import org.liquidengine.legui.component.RadioButton;
 import org.liquidengine.legui.component.optional.TextState;
-import org.liquidengine.legui.component.optional.align.HorizontalAlign;
-import org.liquidengine.legui.component.optional.align.VerticalAlign;
-import org.liquidengine.legui.font.FontRegister;
+import org.liquidengine.legui.icon.Icon;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.nvg.NvgComponentRenderer;
-import org.liquidengine.legui.util.TextUtil;
+import org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils;
 import org.lwjgl.nanovg.NVGColor;
 
+import static org.liquidengine.legui.system.renderer.nvg.util.NVGUtils.rgba;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.*;
+import static org.lwjgl.nanovg.NanoVG.*;
 
 /**
  * Created by ShchAlexander on 11.02.2017.
@@ -22,48 +21,47 @@ public class NvgRadioButtonRenderer extends NvgComponentRenderer<RadioButton> {
     private NVGColor colorA = NVGColor.create();
 
     @Override
-    public void renderComponent(RadioButton component, Context context, long nanovg) {
-        createScissor(nanovg, component);
+    public void renderComponent(RadioButton radioButton, Context context, long nanovg) {
+        createScissor(nanovg, radioButton);
         {
             // default renderer used
-            Vector2f pos  = component.getScreenPosition();
-            Vector2f size = component.getSize();
+            Vector2f pos  = radioButton.getScreenPosition();
+            Vector2f size = radioButton.getSize();
 
-            TextState textState = component.getTextState();
-            float     fontSize  = textState.getFontSize();
-            Vector4f  textColor = textState.getTextColor();
-            Vector4f  pad       = textState.getPadding();
+            float px = pos.x;
+            float py = pos.y;
+            float sw = size.x;
+            float sh = size.y;
+                /*Draw background rectangle*/
+            {
+                nvgBeginPath(nanovg);
+                nvgRoundedRect(nanovg, px, py, sw, sh, 0);
+                nvgFillColor(nanovg, rgba(radioButton.getBackgroundColor(), colorA));
+                nvgFill(nanovg);
+            }
+
+            TextState textState = radioButton.getTextState();
+            Icon      icon      = radioButton.isChecked() ? radioButton.getIconChecked() : radioButton.getIconUnchecked();
+            float     iconWid   = icon.getSize().x;
+
+            Vector4f pad = textState.getPadding();
 
             // renderNvg text
-            float y1 = pos.y + pad.y;
-            float h1 = size.y - (pad.y + pad.w);
-            float x1 = pos.x + fontSize;
-            float w1 = size.x - fontSize - pad.z;
-            renderTextStateLineToBounds(nanovg, new Vector2f(x1, y1), new Vector2f(w1, h1), textState);
-            renderIcon(component, pos.x, fontSize, textColor, fontSize, y1, h1, nanovg);
+            float iconWidthForUse = (icon.getHorizontalAlign().index == 0 ? 1 : 0) * iconWid;
 
-            renderBorderWScissor(component, context, nanovg);
+            float h = sh - (pad.y + pad.w);
+            float y = py + pad.y;
+            float x = px + iconWidthForUse;
+            float w = sw - iconWidthForUse - pad.z;
+
+
+            renderTextStateLineToBounds(nanovg, new Vector2f(x, y), new Vector2f(w, h), textState);
+
+            NvgRenderUtils.renderIcon(icon, radioButton, context);
+
+            renderBorder(radioButton, context);
         }
         resetScissor(nanovg);
-    }
 
-
-    private void renderIcon(RadioButton agui, float x, float fontSize, Vector4f textColor, float iconWid, float y1, float h1, long context) {
-        // renderNvg check symbol
-        int    iconChar = agui.isChecked() ? agui.getIconChecked() : agui.getIconUnchecked();
-        String icon     = TextUtil.cpToStr(iconChar);
-
-        ImageView image = agui.isChecked() ? agui.getIconImageChecked() : agui.getIconImageUnchecked();
-
-        if (image == null) {
-            if (agui.isFocused()) {
-                renderTextLineToBounds(context, x - 1, y1 + 1, iconWid, h1, fontSize, agui.getIconFont(),
-                        agui.getFocusedStrokeColor(), colorA, icon, HorizontalAlign.CENTER, VerticalAlign.MIDDLE, false);
-            }
-            renderTextLineToBounds(context, x, y1, iconWid, h1, fontSize, FontRegister.MATERIAL_ICONS_REGULAR,
-                    textColor, colorA, icon, HorizontalAlign.CENTER, VerticalAlign.MIDDLE, false);
-        } else {
-
-        }
     }
 }

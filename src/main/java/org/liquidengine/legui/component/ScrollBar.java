@@ -26,6 +26,7 @@ import static org.liquidengine.legui.input.Mouse.MouseButton.MOUSE_BUTTON_LEFT;
  * An implementation of a scrollbar.
  */
 public class ScrollBar extends Controller {
+    // TODO: It would be nice to add Icon here to render arrows.
     public static final float MIN_SCROLL_SIZE = 1f;
 
     /**
