@@ -3,6 +3,7 @@ package org.liquidengine.legui.theme;
 import org.liquidengine.legui.border.SimpleLineBorder;
 import org.liquidengine.legui.color.ColorConstants;
 import org.liquidengine.legui.component.*;
+import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 
 /**
  * Created by Aliaksandr_Shcherbin on 3/9/2017.
@@ -39,6 +40,7 @@ public class DefaultTheme extends Theme {
             super.apply(component);
             component.setBorder(null);
             component.getTextState().setTextColor(ColorConstants.black());
+            component.getTextState().setHorizontalAlign(HorizontalAlign.LEFT);
         }
     }
 
@@ -57,6 +59,7 @@ public class DefaultTheme extends Theme {
             super.apply(component);
             component.setBorder(null);
             component.getTextState().setTextColor(ColorConstants.black());
+            component.getTextState().setHorizontalAlign(HorizontalAlign.LEFT);
         }
     }
 
@@ -66,6 +69,7 @@ public class DefaultTheme extends Theme {
             super.apply(component);
             component.setBorder(null);
             component.getTextState().setTextColor(ColorConstants.black());
+            component.getTextState().setHorizontalAlign(HorizontalAlign.LEFT);
         }
     }
 

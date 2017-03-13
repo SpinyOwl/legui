@@ -7,7 +7,10 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 import org.liquidengine.legui.color.ColorConstants;
 import org.liquidengine.legui.component.optional.TextState;
+import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.event.MouseClickEvent;
+import org.liquidengine.legui.icon.CharIcon;
+import org.liquidengine.legui.icon.Icon;
 import org.liquidengine.legui.listener.MouseClickEventListener;
 import org.liquidengine.legui.theme.Theme;
 
@@ -29,11 +32,8 @@ public class CheckBox extends Controller implements TextComponent {
      */
     protected boolean   checked;
 
-    private String    iconFont           = MATERIAL_ICONS_REGULAR;
-    private int       iconUnchecked      = 0xE835;
-    private int       iconChecked        = 0xE834;
-    private ImageView iconImageUnchecked = null;
-    private ImageView iconImageChecked   = null;
+    private Icon iconChecked   = new CharIcon(new Vector2f(16, 16), MATERIAL_ICONS_REGULAR, 0xE834);
+    private Icon iconUnchecked = new CharIcon(new Vector2f(16, 16), MATERIAL_ICONS_REGULAR, 0xE835);
 
     private MouseClickEventListener mouseClickEventListener;
 
@@ -117,25 +117,9 @@ public class CheckBox extends Controller implements TextComponent {
 
         mouseClickEventListener = new CheckBoxMouseClickEventListener();
         getListenerMap().addListener(MouseClickEvent.class, mouseClickEventListener);
+        iconChecked.setHorizontalAlign(HorizontalAlign.LEFT);
+        iconUnchecked.setHorizontalAlign(HorizontalAlign.LEFT);
         Theme.getDefaultTheme().getThemeManager().getComponentTheme(CheckBox.class).apply(this);
-    }
-
-    /**
-     * Returns font used for drawing checkbox icon.
-     *
-     * @return font used for drawing checkbox icon.
-     */
-    public String getIconFont() {
-        return iconFont;
-    }
-
-    /**
-     * Used to set font for drawing checkbox icon.
-     *
-     * @param iconFont font to set.
-     */
-    public void setIconFont(String iconFont) {
-        this.iconFont = iconFont;
     }
 
     /**
@@ -143,7 +127,7 @@ public class CheckBox extends Controller implements TextComponent {
      *
      * @return checkbox icon for non-selected state.
      */
-    public int getIconUnchecked() {
+    public Icon getIconUnchecked() {
         return iconUnchecked;
     }
 
@@ -152,7 +136,7 @@ public class CheckBox extends Controller implements TextComponent {
      *
      * @param iconUnchecked checkbox icon for non-selected state to set.
      */
-    public void setIconUnchecked(int iconUnchecked) {
+    public void setIconUnchecked(Icon iconUnchecked) {
         this.iconUnchecked = iconUnchecked;
     }
 
@@ -161,7 +145,7 @@ public class CheckBox extends Controller implements TextComponent {
      *
      * @return checkbox icon for selected state.
      */
-    public int getIconChecked() {
+    public Icon getIconChecked() {
         return iconChecked;
     }
 
@@ -170,44 +154,9 @@ public class CheckBox extends Controller implements TextComponent {
      *
      * @param iconChecked checkbox icon for selected state to set.
      */
-    public void setIconChecked(int iconChecked) {
+    public void setIconChecked(Icon iconChecked) {
+        if(iconChecked!=null)
         this.iconChecked = iconChecked;
-    }
-
-    /**
-     * Returns checkbox image for non-selected state.
-     *
-     * @return checkbox image for non-selected state.
-     */
-    public ImageView getIconImageUnchecked() {
-        return iconImageUnchecked;
-    }
-
-    /**
-     * Used to set checkbox image for non-selected state.
-     *
-     * @param iconImageUnchecked checkbox image for non-selected state to set.
-     */
-    public void setIconImageUnchecked(ImageView iconImageUnchecked) {
-        this.iconImageUnchecked = iconImageUnchecked;
-    }
-
-    /**
-     * Returns checkbox image for selected state.
-     *
-     * @return checkbox image for selected state.
-     */
-    public ImageView getIconImageChecked() {
-        return iconImageChecked;
-    }
-
-    /**
-     * Used to set checkbox image for selected state.
-     *
-     * @param iconImageChecked checkbox image for selected state to set.
-     */
-    public void setIconImageChecked(ImageView iconImageChecked) {
-        this.iconImageChecked = iconImageChecked;
     }
 
     /**

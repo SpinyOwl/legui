@@ -3,6 +3,7 @@ package org.liquidengine.legui.system.renderer.nvg;
 import org.liquidengine.legui.border.Border;
 import org.liquidengine.legui.border.SimpleLineBorder;
 import org.liquidengine.legui.component.*;
+import org.liquidengine.legui.icon.CharIcon;
 import org.liquidengine.legui.icon.Icon;
 import org.liquidengine.legui.icon.ImageIcon;
 import org.liquidengine.legui.system.renderer.BorderRenderer;
@@ -12,6 +13,7 @@ import org.liquidengine.legui.system.renderer.RendererProvider;
 import org.liquidengine.legui.system.renderer.nvg.border.NvgDefaultBorderRenderer;
 import org.liquidengine.legui.system.renderer.nvg.border.NvgSimpleLineBorderRenderer;
 import org.liquidengine.legui.system.renderer.nvg.component.*;
+import org.liquidengine.legui.system.renderer.nvg.icon.NvgCharIconRenderer;
 import org.liquidengine.legui.system.renderer.nvg.icon.NvgDefaultIconRenderer;
 import org.liquidengine.legui.system.renderer.nvg.icon.NvgImageIconRenderer;
 
@@ -53,6 +55,7 @@ public class NvgRendererProvider extends RendererProvider {
 
         // register icon renderers
         iconRendererMap.put(ImageIcon.class, new NvgImageIconRenderer<>());
+        iconRendererMap.put(CharIcon.class, new NvgCharIconRenderer<>());
     }
 
     @Override

@@ -39,41 +39,12 @@ public abstract class Theme {
     public <T extends Component> void applyAll(T component) {
         themeManager.applyAll(component);
     }
-    public <T extends Component> void applyAll(Frame frame) {
+
+    public void applyAll(Frame frame) {
         List<Layer> allLayers = frame.getAllLayers();
         for (Layer allLayer : allLayers) {
             applyAll(allLayer.getContainer());
         }
     }
-
-    //    public abstract Vector4f backgroundColor();
-//
-//    public abstract Border border();
-//
-//    public abstract String font();
-//
-//    public abstract Vector4f fontColor();
-//
-//    public abstract Vector4f highlightColor();
-//
-//    public abstract Vector4f textPadding();
-//
-//    public abstract float fontSize();
-//
-//    public abstract HorizontalAlign horizontalAlign();
-//
-//    public abstract VerticalAlign verticalAlign();
-//
-//    public abstract float cornerRadius();
-//
-//    public abstract Vector4f scrollBarArrowColor();
-//
-//    public abstract Vector4f scrollBarColor();
-//
-//    public abstract float scrollBarArrowSize();
-//
-//    public abstract boolean scrollBarArrowsEnabled();
-//
-//    public abstract Vector4f getFocusedStrokeColorLight();
 
 }
