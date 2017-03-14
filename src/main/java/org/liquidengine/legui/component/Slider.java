@@ -63,7 +63,7 @@ public class Slider extends Controller {
         getListenerMap().addListener(ScrollEvent.class, new SliderScrollEventListener());
         getListenerMap().addListener(MouseClickEvent.class, new SliderMouseClickEventListener());
         getListenerMap().addListener(MouseDragEvent.class, new SliderMouseDragEventListener());
-        Theme.getDefaultTheme().getThemeManager().getComponentTheme(Slider.class).apply(this);
+        Theme.getDefaultTheme().getThemeManager().getComponentTheme(Slider.class).applyAll(this);
     }
 
     @Override

@@ -78,6 +78,8 @@ public class TextInput extends Controller implements TextComponent {
         getListenerMap().addListener(MouseClickEvent.class, mouseClickEventListener);
         getListenerMap().addListener(MouseDragEvent.class, dragEventListener);
         getListenerMap().addListener(CharEvent.class, charEventListener);
+
+        Theme.getDefaultTheme().getThemeManager().getComponentTheme(TextInput.class).applyAll(this);
     }
 
     public boolean isEditable() {

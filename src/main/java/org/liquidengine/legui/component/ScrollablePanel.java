@@ -8,6 +8,7 @@ import org.joml.Vector2f;
 import org.liquidengine.legui.border.SimpleLineBorder;
 import org.liquidengine.legui.color.ColorConstants;
 import org.liquidengine.legui.component.optional.Orientation;
+import org.liquidengine.legui.theme.Theme;
 
 /**
  * Panel with scroll bars.
@@ -71,27 +72,15 @@ public class ScrollablePanel<T extends Component> extends Container implements V
         float viewportHeight = getSize().y - INITIAL_SCROLL_SIZE;
 
         verticalScrollBar = new ScrollBar();
-//        verticalScrollBar.setBackgroundColor(ColorConstants.darkGray());
         verticalScrollBar.setPosition(viewportWidth, 0);
         verticalScrollBar.setSize(INITIAL_SCROLL_SIZE, viewportHeight);
-//        verticalScrollBar.setArrowColor(ColorConstants.white());
-//        verticalScrollBar.setScrollColor(ColorConstants.white());
-//        verticalScrollBar.setArrowsEnabled(true);
         verticalScrollBar.setOrientation(Orientation.VERTICAL);
-//        verticalScrollBar.setBorder(new SimpleLineBorder(ColorConstants.darkGray(), 0.5f));
-//        verticalScrollBar.setArrowSize(INITIAL_SCROLL_SIZE);
         verticalScrollBar.setViewport(this);
 
         horizontalScrollBar = new ScrollBar();
-//        horizontalScrollBar.setBackgroundColor(ColorConstants.darkGray());
         horizontalScrollBar.setPosition(0, viewportHeight);
         horizontalScrollBar.setSize(viewportWidth, INITIAL_SCROLL_SIZE);
-//        horizontalScrollBar.setArrowColor(ColorConstants.white());
-//        horizontalScrollBar.setScrollColor(ColorConstants.white());
-//        horizontalScrollBar.setArrowsEnabled(true);
         horizontalScrollBar.setOrientation(Orientation.HORIZONTAL);
-//        horizontalScrollBar.setBorder(new SimpleLineBorder(ColorConstants.darkGray(), 0.5f));
-//        horizontalScrollBar.setArrowSize(INITIAL_SCROLL_SIZE);
         horizontalScrollBar.setViewport(this);
 
         viewport = new Panel(0, 0, viewportWidth, viewportHeight);
@@ -107,7 +96,7 @@ public class ScrollablePanel<T extends Component> extends Container implements V
         this.add(verticalScrollBar);
         this.add(horizontalScrollBar);
         this.setBackgroundColor(ColorConstants.transparent());
-//        this.setBorder(new SimpleLineBorder(ColorConstants.darkGray(), 0.5f));
+        Theme.getDefaultTheme().getThemeManager().getComponentTheme(ScrollablePanel.class).applyAll(this);
 
         resize();
     }
@@ -280,5 +269,9 @@ public class ScrollablePanel<T extends Component> extends Container implements V
                 .append(viewport)
                 .append(container)
                 .toHashCode();
+    }
+
+    public Container<Component> getViewport() {
+        return viewport;
     }
 }

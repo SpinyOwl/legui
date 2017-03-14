@@ -20,26 +20,26 @@ public class DefaultThemeManager extends ThemeManager {
         public void applyAll(Component component) {}
     };
 
-    private void apply(Component c) {
-    }
-
-    @Override
-    public void applyAll(Component component) {
-        AbstractTheme componentTheme = getComponentTheme(component.getClass());
-        componentTheme.apply(component);
-        if (component instanceof Container) {
-            if (component instanceof Widget) {
-
-            } else if (component instanceof ScrollablePanel) {
-            } else {
-                Container       container = (Container) component;
-                List<Component> childs    = container.getChilds();
-                for (Component child : childs) {
-                    applyAll(child);
-                }
-            }
-        }
-    }
+//    private void apply(Component c) {
+//    }
+//
+//    @Override
+//    public void applyAll(Component component) {
+//        AbstractTheme componentTheme = getComponentTheme(component.getClass());
+//        componentTheme.apply(component);
+//        if (component instanceof Container) {
+//            if (component instanceof Widget) {
+//
+//            } else if (component instanceof ScrollablePanel) {
+//            } else {
+//                Container       container = (Container) component;
+//                List<Component> childs    = container.getChilds();
+//                for (Component child : childs) {
+//                    applyAll(child);
+//                }
+//            }
+//        }
+//    }
 
     @Override
     public <T extends Component> AbstractTheme<T> getComponentTheme(Class<T> clazz) {

@@ -15,6 +15,7 @@ import org.liquidengine.legui.listener.KeyEventListener;
 import org.liquidengine.legui.listener.MouseClickEventListener;
 import org.liquidengine.legui.listener.MouseDragEventListener;
 import org.liquidengine.legui.system.context.Context;
+import org.liquidengine.legui.theme.Theme;
 
 import static org.liquidengine.legui.input.Mouse.MouseButton.MOUSE_BUTTON_LEFT;
 import static org.liquidengine.legui.util.TextUtil.*;
@@ -64,6 +65,8 @@ public class TextArea extends Controller implements TextComponent {
         getListenerMap().addListener(MouseClickEvent.class, mouseClickEventListener);
         getListenerMap().addListener(KeyEvent.class, keyEventListener);
         getListenerMap().addListener(CharEvent.class, charEventListener);
+
+        Theme.getDefaultTheme().getThemeManager().getComponentTheme(TextArea.class).applyAll(this);
     }
 
     /**

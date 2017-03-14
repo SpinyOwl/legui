@@ -92,7 +92,7 @@ public class Label extends Controller implements TextComponent {
         textState.setText(text);
         setBackgroundColor(ColorConstants.transparent());
         setBorder(null);
-        Theme.getDefaultTheme().getThemeManager().getComponentTheme(Label.class).apply(this);
+        Theme.getDefaultTheme().getThemeManager().getComponentTheme(Label.class).applyAll(this);
     }
 
     /**

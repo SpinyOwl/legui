@@ -13,10 +13,6 @@ public abstract class Theme {
     private static Theme DEFAULT_THEME = new DefaultTheme();
     private ThemeManager themeManager;
 
-    public ThemeManager getThemeManager() {
-        return themeManager;
-    }
-
     protected Theme(ThemeManager themeManager) {
         this.themeManager = themeManager;
     }
@@ -31,13 +27,18 @@ public abstract class Theme {
         }
     }
 
+    public ThemeManager getThemeManager() {
+        return themeManager;
+    }
+
     public <T extends Component> void apply(T component) {
         AbstractTheme<T> componentTheme = themeManager.getComponentTheme((Class<T>) component.getClass());
         componentTheme.apply(component);
     }
 
     public <T extends Component> void applyAll(T component) {
-        themeManager.applyAll(component);
+        AbstractTheme<T> componentTheme = themeManager.getComponentTheme((Class<T>) component.getClass());
+        componentTheme.applyAll(component);
     }
 
     public void applyAll(Frame frame) {

@@ -75,6 +75,7 @@ public class Widget extends Container<Component> {
     private void initialize(String title) {
         this.titleContainer = new Panel();
         this.titleContainer.getSize().y = INITIAL_TITLE_HEIGHT;
+        this.titleContainer.setBackgroundColor(ColorConstants.white());
 
         this.title = new Label(title);
         this.title.setPosition(0, 0);
@@ -111,6 +112,8 @@ public class Widget extends Container<Component> {
         this.add(this.titleContainer);
         this.add(this.container);
 
+        Theme.getDefaultTheme().getThemeManager().getComponentTheme(Widget.class).applyAll(this);
+
         resize();
     }
 
@@ -136,13 +139,9 @@ public class Widget extends Container<Component> {
 
             closeButton.getSize().set(titHei);
             closeButton.getPosition().set(widgetWidth - titHei, 0);
-//            closeButton.getTextState().setFontSize(Theme.DEFAULT_THEME.fontSize());
-//            closeButton.getTextState().getPadding().set(Theme.DEFAULT_THEME.textPadding());
 
             minimizeButton.getSize().set(titHei);
             minimizeButton.getPosition().set(titleWidth, 0);
-//            minimizeButton.getTextState().setFontSize(Theme.DEFAULT_THEME.fontSize());
-//            minimizeButton.getTextState().getPadding().set(Theme.DEFAULT_THEME.textPadding());
 
         } else {
             container.getPosition().set(0, 0);

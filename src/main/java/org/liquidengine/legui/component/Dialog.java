@@ -1,6 +1,7 @@
 package org.liquidengine.legui.component;
 
 import org.joml.Vector2f;
+import org.liquidengine.legui.theme.Theme;
 
 /**
  * Created by ShchAlexander on 05.03.2017.
@@ -47,6 +48,7 @@ public class Dialog extends Widget {
 
         this.setMinimizable(false);
         this.getListenerMap().addListener(WidgetCloseEvent.class, new DialogCloseEventListener());
+        Theme.getDefaultTheme().getThemeManager().getComponentTheme(Dialog.class).applyAll(this);
     }
 
     public void show(Frame frame) {
