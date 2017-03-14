@@ -26,6 +26,7 @@ import static org.lwjgl.system.MemoryUtil.memAddress;
  * Created by ShchAlexander on 12.02.2017.
  */
 public class NvgScrollBarRenderer extends NvgComponentRenderer<ScrollBar> {
+    // TODO: It would be nice to add Icon here to render arrows.
     private static final String   B      = cpToStr(0xE5CF);
     private static final String   L      = cpToStr(0xE5CB);
     private static final String   R      = cpToStr(0xE5CC);
@@ -165,7 +166,12 @@ public class NvgScrollBarRenderer extends NvgComponentRenderer<ScrollBar> {
         drawRectangle(context, arrowColor, x2, y2, w2, h2);
 
 
-        float           fontSize        = arrowSize > h1 ? h1 : arrowSize;
+        float fontSize = 0;
+        if (vertical) {
+            fontSize = arrowSize > w1 ? w1 : arrowSize;
+        } else {
+            fontSize = arrowSize > h1 ? h1 : arrowSize;
+        }
         String          font            = FontRegister.MATERIAL_ICONS_REGULAR;
         HorizontalAlign horizontalAlign = HorizontalAlign.CENTER;
         VerticalAlign   verticalAlign   = VerticalAlign.MIDDLE;

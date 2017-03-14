@@ -75,7 +75,7 @@ public class NvgTextAreaRenderer extends NvgComponentRenderer<TextArea> {
         Vector4f            textColor      = textState.getTextColor();
         int                 caretPosition  = gui.getCaretPosition();
         boolean             focused        = gui.isFocused();
-        Vector4f            selectionColor = gui.getSelectionColor();
+        Vector4f            highlightColor = textState.getHighlightColor();
         int                 caretLine      = 0;
         Map<String, Object> metadata       = gui.getMetadata();
 
@@ -160,7 +160,7 @@ public class NvgTextAreaRenderer extends NvgComponentRenderer<TextArea> {
         }
 
         // render selection background
-        renderselectionBackground(context, gui, fontSize, focused, selectionColor, lines, lineCount, lineStartIndeces, voffset, poffsetx, poffsety, bounds);
+        renderselectionBackground(context, gui, fontSize, focused, highlightColor, lines, lineCount, lineStartIndeces, voffset, poffsetx, poffsety, bounds);
 
         // render every line of text
         for (int i = 0; i < lineCount; i++) {

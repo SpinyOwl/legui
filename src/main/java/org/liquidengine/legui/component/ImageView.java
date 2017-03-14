@@ -5,6 +5,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.liquidengine.legui.image.Image;
+import org.liquidengine.legui.theme.Theme;
 
 /**
  * This class represents image view component.
@@ -33,6 +34,7 @@ public class ImageView extends Controller {
     }
 
     private void initialize() {
+        Theme.getDefaultTheme().getThemeManager().getComponentTheme(ImageView.class).applyAll(this);
     }
 
     /**

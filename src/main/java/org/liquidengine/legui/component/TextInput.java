@@ -5,7 +5,6 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector4f;
-import org.liquidengine.legui.color.ColorConstants;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.event.CharEvent;
 import org.liquidengine.legui.event.KeyEvent;
@@ -16,6 +15,7 @@ import org.liquidengine.legui.listener.KeyEventListener;
 import org.liquidengine.legui.listener.MouseClickEventListener;
 import org.liquidengine.legui.listener.MouseDragEventListener;
 import org.liquidengine.legui.system.context.Context;
+import org.liquidengine.legui.theme.Theme;
 
 import static org.liquidengine.legui.input.Mouse.MouseButton.MOUSE_BUTTON_LEFT;
 import static org.liquidengine.legui.util.TextUtil.*;
@@ -24,7 +24,7 @@ import static org.lwjgl.glfw.GLFW.*;
 /**
  * Created by Aliaksandr_Shcherbin on 2/6/2017.
  */
-public class TextInput extends Controller {
+public class TextInput extends Controller implements TextComponent {
     protected TextState textState;
 
     protected int caretPosition;
@@ -33,7 +33,6 @@ public class TextInput extends Controller {
     protected int startSelectionIndex;
     protected int endSelectionIndex;
 
-    protected Vector4f selectionColor = ColorConstants.lightBlue();
     protected boolean  editable       = true;
     private TextInputKeyEventListener        keyEventListener;
     private TextInputMouseClickEventListener mouseClickEventListener;
@@ -79,6 +78,8 @@ public class TextInput extends Controller {
         getListenerMap().addListener(MouseClickEvent.class, mouseClickEventListener);
         getListenerMap().addListener(MouseDragEvent.class, dragEventListener);
         getListenerMap().addListener(CharEvent.class, charEventListener);
+
+        Theme.getDefaultTheme().getThemeManager().getComponentTheme(TextInput.class).applyAll(this);
     }
 
     public boolean isEditable() {
@@ -124,17 +125,15 @@ public class TextInput extends Controller {
         return selection;
     }
 
+    /**
+     * Returns current text state.
+     *
+     * @return text state of component.
+     */
     public TextState getTextState() {
         return textState;
     }
 
-    public Vector4f getSelectionColor() {
-        return selectionColor;
-    }
-
-    public void setSelectionColor(Vector4f selectionColor) {
-        this.selectionColor = selectionColor;
-    }
 
     @Override
     public String toString() {
@@ -144,7 +143,6 @@ public class TextInput extends Controller {
                 .append("mouseCaretPosition", mouseCaretPosition)
                 .append("startSelectionIndex", startSelectionIndex)
                 .append("endSelectionIndex", endSelectionIndex)
-                .append("selectionColor", selectionColor)
                 .append("editable", editable)
                 .toString();
     }
@@ -165,7 +163,6 @@ public class TextInput extends Controller {
                 .append(endSelectionIndex, input.endSelectionIndex)
                 .append(editable, input.editable)
                 .append(textState, input.textState)
-                .append(selectionColor, input.selectionColor)
                 .isEquals();
     }
 
@@ -178,7 +175,6 @@ public class TextInput extends Controller {
                 .append(mouseCaretPosition)
                 .append(startSelectionIndex)
                 .append(endSelectionIndex)
-                .append(selectionColor)
                 .append(editable)
                 .toHashCode();
     }

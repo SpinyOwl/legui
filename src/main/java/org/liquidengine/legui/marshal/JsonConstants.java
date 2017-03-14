@@ -116,16 +116,16 @@ public final class JsonConstants {
     // FRAME
     public static final String COMPONENT_LAYER               = "componentLayer";
     public static final String TOOLTIP_LAYER                 = "tooltipLayer";
-    public static final String LAYERS                        = "layers";
+    public static final String LAYERS                    = "layers";
     // BUTTON
-    public static final String BACKGROUND_IMAGE              = "backgroundImage";
-    public static final String FOCUSED_BACKGROUND_IMAGE      = "focusedBackgroundImage";
-    public static final String PRESSED_BACKGROUND_IMAGE      = "pressedBackgroundImage";
-    public static final String HOVERED_BACKGROUND_IMAGE      = "hoveredBackgroundImage";
+    public static final String BACKGROUND_ICON           = "backgroundIcon";
+    public static final String FOCUSED_BACKGROUND_ICON   = "focusedBackgroundIcon";
+    public static final String PRESSED_BACKGROUND_ICON   = "pressedBackgroundIcon";
+    public static final String HOVERED_BACKGROUND_ICON   = "hoveredBackgroundIcon";
     // TOGGLE BUTTON
-    public static final String TOGGLED                       = "toggled";
-    public static final String TOGGLEDED_BACKGROUND_IMAGE    = "togglededBackgroundImage";
-    public static final String TOGGLED_BACKGROUND_COLOR      = "toggledBackgroundColor";
+    public static final String TOGGLED                   = "toggled";
+    public static final String TOGGLEDED_BACKGROUND_ICON = "togglededBackgroundIcon";
+    public static final String TOGGLED_BACKGROUND_COLOR  = "toggledBackgroundColor";
 
     private JsonConstants() {
     }

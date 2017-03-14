@@ -7,16 +7,17 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 import org.liquidengine.legui.color.ColorConstants;
 import org.liquidengine.legui.component.optional.TextState;
+import org.liquidengine.legui.theme.Theme;
 
 /**
  * Class represent single line non-editable text component.
  */
-public class Label extends Controller {
+public class Label extends Controller implements TextComponent {
 
     /**
      * Used to hold text state of component.
      */
-    private TextState textState;
+    private TextState textState = new TextState();
 
     /**
      * Default constructor. Creates label with 'Label' text.
@@ -88,15 +89,16 @@ public class Label extends Controller {
      * @param text text to set.
      */
     private void initialize(String text) {
-        this.textState = new TextState(text);
+        textState.setText(text);
         setBackgroundColor(ColorConstants.transparent());
         setBorder(null);
+        Theme.getDefaultTheme().getThemeManager().getComponentTheme(Label.class).applyAll(this);
     }
 
     /**
-     * Used to retrieve text state.
+     * Returns current text state.
      *
-     * @return text state.
+     * @return text state of component.
      */
     public TextState getTextState() {
         return textState;

@@ -7,6 +7,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 import org.liquidengine.legui.event.CursorEnterEvent;
 import org.liquidengine.legui.listener.CursorEnterEventListener;
+import org.liquidengine.legui.theme.Theme;
 
 import java.util.HashMap;
 
@@ -60,6 +61,7 @@ public abstract class Controller extends Component {
     private void initialize() {
         CursorEnterEventListener listener = new CursorEnterListenerForTooltip();
         getListenerMap().addListener(CursorEnterEvent.class, listener);
+        Theme.getDefaultTheme().getThemeManager().getComponentTheme(Controller.class).applyAll(this);
     }
 
 
@@ -149,9 +151,8 @@ public abstract class Controller extends Component {
             if (tooltip != null) {
                 if (event.isEntered()) {
                     event.getContext().getFrame().getTooltipLayer().getContainer().add(tooltip);
-                    tooltip.setVisible(true);
                 } else {
-                    tooltip.setVisible(false);
+                    event.getContext().getFrame().getTooltipLayer().getContainer().remove(tooltip);
                 }
             }
         }

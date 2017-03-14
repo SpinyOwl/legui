@@ -32,9 +32,9 @@ public class RadioButtonGroup implements Serializable {
     void add(RadioButton radioButton) {
         if (radioButtons.contains(radioButton)) return;
         radioButtons.add(radioButton);
-        if (radioButton.isSelected()) {
+        if (radioButton.isChecked()) {
             if (selection != null) {
-                selection.setSelected(false);
+                selection.setChecked(false);
             }
             selection = radioButton;
         }
@@ -69,7 +69,7 @@ public class RadioButtonGroup implements Serializable {
         if (selection != null) {
             RadioButton oldSelection = selection;
             selection = null;
-            oldSelection.setSelected(false);
+            oldSelection.setChecked(false);
         }
     }
 
@@ -84,9 +84,9 @@ public class RadioButtonGroup implements Serializable {
             RadioButton oldSelection = selection;
             selection = radioButton;
             if (oldSelection != null) {
-                oldSelection.setSelected(false);
+                oldSelection.setChecked(false);
             }
-            radioButton.setSelected(true);
+            radioButton.setChecked(true);
         }
     }
 

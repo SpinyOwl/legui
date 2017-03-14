@@ -27,10 +27,10 @@ public class GsonButtonMarshaller<T extends Button> extends GsonControllerMarsha
 
         JsonObject textState = GsonMarshalUtil.marshalToJson(object.getTextState(), context);
         json.add(TEXT_STATE, textState);
-        json.add(BACKGROUND_IMAGE, GsonMarshalUtil.marshalToJson(object.getBackgroundImage(), context));
-        json.add(FOCUSED_BACKGROUND_IMAGE, GsonMarshalUtil.marshalToJson(object.getFocusedBackgroundImage(), context));
-        json.add(PRESSED_BACKGROUND_IMAGE, GsonMarshalUtil.marshalToJson(object.getPressedBackgroundImage(), context));
-        json.add(HOVERED_BACKGROUND_IMAGE, GsonMarshalUtil.marshalToJson(object.getHoveredBackgroundImage(), context));
+        json.add(BACKGROUND_ICON, GsonMarshalUtil.marshalToJson(object.getBackgroundIcon(), context));
+        json.add(FOCUSED_BACKGROUND_ICON, GsonMarshalUtil.marshalToJson(object.getFocusedBackgroundIcon(), context));
+        json.add(PRESSED_BACKGROUND_ICON, GsonMarshalUtil.marshalToJson(object.getPressedBackgroundIcon(), context));
+        json.add(HOVERED_BACKGROUND_ICON, GsonMarshalUtil.marshalToJson(object.getHoveredBackgroundIcon(), context));
     }
 
     /**
@@ -44,15 +44,15 @@ public class GsonButtonMarshaller<T extends Button> extends GsonControllerMarsha
     protected void unmarshal(JsonObject json, T object, GsonMarshalContext context) {
         super.unmarshal(json, object, context);
 
-        JsonElement backgroundImage        = json.get(BACKGROUND_IMAGE);
-        JsonElement focusedBackgroundImage = json.get(FOCUSED_BACKGROUND_IMAGE);
-        JsonElement pressedBackgroundImage = json.get(PRESSED_BACKGROUND_IMAGE);
-        JsonElement hoveredBackgroundImage = json.get(HOVERED_BACKGROUND_IMAGE);
+        JsonElement backgroundIcon        = json.get(BACKGROUND_ICON);
+        JsonElement focusedBackgroundIcon = json.get(FOCUSED_BACKGROUND_ICON);
+        JsonElement pressedBackgroundIcon = json.get(PRESSED_BACKGROUND_ICON);
+        JsonElement hoveredBackgroundIcon = json.get(HOVERED_BACKGROUND_ICON);
 
-        if (isNotNull(backgroundImage)) object.setBackgroundImage(GsonMarshalUtil.unmarshal(backgroundImage.getAsJsonObject(), context));
-        if (isNotNull(focusedBackgroundImage)) object.setFocusedBackgroundImage(GsonMarshalUtil.unmarshal(focusedBackgroundImage.getAsJsonObject(), context));
-        if (isNotNull(pressedBackgroundImage)) object.setPressedBackgroundImage(GsonMarshalUtil.unmarshal(pressedBackgroundImage.getAsJsonObject(), context));
-        if (isNotNull(hoveredBackgroundImage)) object.setHoveredBackgroundImage(GsonMarshalUtil.unmarshal(hoveredBackgroundImage.getAsJsonObject(), context));
+        if (isNotNull(backgroundIcon)) object.setBackgroundIcon(GsonMarshalUtil.unmarshal(backgroundIcon.getAsJsonObject(), context));
+        if (isNotNull(focusedBackgroundIcon)) object.setFocusedBackgroundIcon(GsonMarshalUtil.unmarshal(focusedBackgroundIcon.getAsJsonObject(), context));
+        if (isNotNull(pressedBackgroundIcon)) object.setPressedBackgroundIcon(GsonMarshalUtil.unmarshal(pressedBackgroundIcon.getAsJsonObject(), context));
+        if (isNotNull(hoveredBackgroundIcon)) object.setHoveredBackgroundIcon(GsonMarshalUtil.unmarshal(hoveredBackgroundIcon.getAsJsonObject(), context));
 
         JsonElement textState = json.get(TEXT_STATE);
         if (isNotNull(textState)) {

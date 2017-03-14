@@ -6,11 +6,12 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 import org.liquidengine.legui.component.optional.TextState;
+import org.liquidengine.legui.theme.Theme;
 
 /**
  * Created by Aliaksandr_Shcherbin on 1/24/2017.
  */
-public class Tooltip extends Component {
+public class Tooltip extends Component implements TextComponent {
     private TextState  textState;
     private Controller controller;
 
@@ -24,8 +25,15 @@ public class Tooltip extends Component {
 
     private void initialize(String text) {
         this.textState = new TextState(text);
+
+        Theme.getDefaultTheme().getThemeManager().getComponentTheme(Tooltip.class).applyAll(this);
     }
 
+    /**
+     * Returns current text state.
+     *
+     * @return text state of component.
+     */
     public TextState getTextState() {
         return textState;
     }

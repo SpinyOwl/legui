@@ -7,7 +7,7 @@ import org.liquidengine.legui.system.context.Context;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
- * Created by ShchAlexander on 11.02.2017.
+ * Border renderer base.
  */
 public abstract class BorderRenderer<B extends Border> {
     private AtomicBoolean initialized = new AtomicBoolean(false);

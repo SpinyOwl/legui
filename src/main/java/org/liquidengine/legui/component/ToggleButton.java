@@ -8,16 +8,18 @@ import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.color.ColorConstants;
 import org.liquidengine.legui.event.MouseClickEvent;
+import org.liquidengine.legui.icon.Icon;
 import org.liquidengine.legui.listener.MouseClickEventListener;
+import org.liquidengine.legui.theme.Theme;
 
 /**
  * An implementation of "toggle" button.
  * Behavior the same as checkbox but have not any text
  */
 public class ToggleButton extends Button {
-    protected ImageView togglededBackgroundImage;
-    private   boolean   toggled;
-    private   Vector4f  toggledBackgroundColor;
+    protected Icon     togglededBackgroundIcon;
+    private   boolean  toggled;
+    private   Vector4f toggledBackgroundColor;
 
     /**
      * Creates a button with specified text and specified position and size.
@@ -82,6 +84,8 @@ public class ToggleButton extends Button {
         toggledBackgroundColor = ColorConstants.green();
         MouseClickEventListener toggleButtonClickListener = new ToggleButtonMouseClickListener();
         getListenerMap().addListener(MouseClickEvent.class, toggleButtonClickListener);
+
+        Theme.getDefaultTheme().getThemeManager().getComponentTheme(ToggleButton.class).applyAll(this);
     }
 
     /**
@@ -121,21 +125,21 @@ public class ToggleButton extends Button {
     }
 
     /**
-     * Returns toggled background image
+     * Returns toggled background icon
      *
-     * @return toggled background image
+     * @return toggled background icon
      */
-    public ImageView getTogglededBackgroundImage() {
-        return togglededBackgroundImage;
+    public Icon getTogglededBackgroundIcon() {
+        return togglededBackgroundIcon;
     }
 
     /**
-     * Used to change toggled background image
+     * Used to change toggled background icon
      *
-     * @param togglededBackgroundImage toggled background image
+     * @param togglededBackgroundIcon toggled background icon
      */
-    public void setTogglededBackgroundImage(ImageView togglededBackgroundImage) {
-        this.togglededBackgroundImage = togglededBackgroundImage;
+    public void setTogglededBackgroundIcon(Icon togglededBackgroundIcon) {
+        this.togglededBackgroundIcon = togglededBackgroundIcon;
     }
 
     @Override

@@ -10,6 +10,7 @@ import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
 import org.liquidengine.legui.font.FontRegister;
+import org.liquidengine.legui.icon.Icon;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.nvg.NvgRendererProvider;
 import org.lwjgl.nanovg.NVGColor;
@@ -393,7 +394,7 @@ public final class NvgRenderUtils {
         Border border = component.getBorder();
         if (border != null && border.isEnabled()) {
             // Render border
-            NvgRendererProvider.getInstance().getBorderRenderer(border.getClass()).renderBorder(border, component, context);
+            NvgRendererProvider.getInstance().getBorderRenderer(border.getClass()).render(border, component, context);
         }
     }
 
@@ -403,5 +404,11 @@ public final class NvgRenderUtils {
             renderBorder(component, context);
         }
         resetScissor(nanovg);
+    }
+
+    public static void renderIcon(Icon icon, Component component, Context context) {
+        if (icon != null && component != null) {
+            NvgRendererProvider.getInstance().getIconRenderer(icon.getClass()).render(icon, component, context);
+        }
     }
 }

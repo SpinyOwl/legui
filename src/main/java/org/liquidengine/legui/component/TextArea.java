@@ -5,8 +5,6 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
-import org.joml.Vector4f;
-import org.liquidengine.legui.color.ColorConstants;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.event.CharEvent;
 import org.liquidengine.legui.event.KeyEvent;
@@ -17,6 +15,7 @@ import org.liquidengine.legui.listener.KeyEventListener;
 import org.liquidengine.legui.listener.MouseClickEventListener;
 import org.liquidengine.legui.listener.MouseDragEventListener;
 import org.liquidengine.legui.system.context.Context;
+import org.liquidengine.legui.theme.Theme;
 
 import static org.liquidengine.legui.input.Mouse.MouseButton.MOUSE_BUTTON_LEFT;
 import static org.liquidengine.legui.util.TextUtil.*;
@@ -25,7 +24,7 @@ import static org.lwjgl.glfw.GLFW.*;
 /**
  * Created by Aliaksandr_Shcherbin on 2/6/2017.
  */
-public class TextArea extends Controller {
+public class TextArea extends Controller implements TextComponent {
     protected TextState textState;
 
     protected int caretPosition;
@@ -35,7 +34,6 @@ public class TextArea extends Controller {
     protected int endSelectionIndex;
 
     protected boolean  editable       = true;
-    protected Vector4f selectionColor = ColorConstants.lightBlue();
     private TextAreaCharEventListener       charEventListener;
     private TextAreaKeyEventListener        keyEventListener;
     private TextAreaMouseClickEventListener mouseClickEventListener;
@@ -67,8 +65,15 @@ public class TextArea extends Controller {
         getListenerMap().addListener(MouseClickEvent.class, mouseClickEventListener);
         getListenerMap().addListener(KeyEvent.class, keyEventListener);
         getListenerMap().addListener(CharEvent.class, charEventListener);
+
+        Theme.getDefaultTheme().getThemeManager().getComponentTheme(TextArea.class).applyAll(this);
     }
 
+    /**
+     * Returns current text state.
+     *
+     * @return text state of component.
+     */
     public TextState getTextState() {
         return textState;
     }
@@ -125,14 +130,6 @@ public class TextArea extends Controller {
         return selection;
     }
 
-    public Vector4f getSelectionColor() {
-        return selectionColor;
-    }
-
-    public void setSelectionColor(Vector4f selectionColor) {
-        this.selectionColor = selectionColor;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -149,7 +146,6 @@ public class TextArea extends Controller {
                 .append(startSelectionIndex, textArea.startSelectionIndex)
                 .append(endSelectionIndex, textArea.endSelectionIndex)
                 .append(textState, textArea.textState)
-                .append(selectionColor, textArea.selectionColor)
                 .isEquals();
     }
 
@@ -163,7 +159,6 @@ public class TextArea extends Controller {
                 .append(editable)
                 .append(startSelectionIndex)
                 .append(endSelectionIndex)
-                .append(selectionColor)
                 .toHashCode();
     }
 
@@ -176,7 +171,6 @@ public class TextArea extends Controller {
                 .append("editable", editable)
                 .append("startSelectionIndex", startSelectionIndex)
                 .append("endSelectionIndex", endSelectionIndex)
-                .append("selectionColor", selectionColor)
                 .toString();
     }
 

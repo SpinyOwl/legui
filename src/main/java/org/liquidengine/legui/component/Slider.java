@@ -20,6 +20,7 @@ import org.liquidengine.legui.listener.MouseClickEventListener;
 import org.liquidengine.legui.listener.MouseDragEventListener;
 import org.liquidengine.legui.listener.ScrollEventListener;
 import org.liquidengine.legui.system.context.Context;
+import org.liquidengine.legui.theme.Theme;
 
 /**
  * Implementation of slider controller.
@@ -62,6 +63,7 @@ public class Slider extends Controller {
         getListenerMap().addListener(ScrollEvent.class, new SliderScrollEventListener());
         getListenerMap().addListener(MouseClickEvent.class, new SliderMouseClickEventListener());
         getListenerMap().addListener(MouseDragEvent.class, new SliderMouseDragEventListener());
+        Theme.getDefaultTheme().getThemeManager().getComponentTheme(Slider.class).applyAll(this);
     }
 
     @Override

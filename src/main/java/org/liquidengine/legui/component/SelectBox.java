@@ -5,8 +5,6 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
-import org.liquidengine.legui.border.SimpleLineBorder;
-import org.liquidengine.legui.color.ColorConstants;
 import org.liquidengine.legui.event.FocusEvent;
 import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.event.ScrollEvent;
@@ -15,6 +13,7 @@ import org.liquidengine.legui.input.Mouse;
 import org.liquidengine.legui.listener.FocusEventListener;
 import org.liquidengine.legui.listener.MouseClickEventListener;
 import org.liquidengine.legui.listener.ScrollEventListener;
+import org.liquidengine.legui.theme.Theme;
 
 import java.util.List;
 import java.util.Objects;
@@ -125,9 +124,6 @@ public class SelectBox extends Container {
     private void initialize() {
         selectionListPanel.getHorizontalScrollBar().setVisible(false);
 
-        this.setBackgroundColor(ColorConstants.white());
-        this.setBorder(new SimpleLineBorder(ColorConstants.darkGray(), 1));
-
         this.add(expandButton);
         this.add(selectionButton);
 
@@ -141,7 +137,21 @@ public class SelectBox extends Container {
         selectionButton.getListenerMap().getListeners(FocusEvent.class).add(focusEventListener);
         expandButton.getListenerMap().getListeners(FocusEvent.class).add(focusEventListener);
 
+        Theme.getDefaultTheme().getThemeManager().getComponentTheme(SelectBox.class).applyAll(this);
+
         resize();
+    }
+
+    public Button getExpandButton() {
+        return expandButton;
+    }
+
+    public Button getSelectionButton() {
+        return selectionButton;
+    }
+
+    public SelectBoxScrollablePanel getSelectionListPanel() {
+        return selectionListPanel;
     }
 
     /**

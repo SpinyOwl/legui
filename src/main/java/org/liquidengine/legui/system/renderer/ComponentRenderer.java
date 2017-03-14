@@ -6,7 +6,7 @@ import org.liquidengine.legui.system.context.Context;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
- * Created by Aliaksandr_Shcherbin on 1/24/2017.
+ * Component renderer base.
  */
 public abstract class ComponentRenderer<C extends Component> {
     private AtomicBoolean initialized = new AtomicBoolean(false);

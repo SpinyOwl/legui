@@ -7,29 +7,35 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 import org.liquidengine.legui.color.ColorConstants;
 import org.liquidengine.legui.component.optional.TextState;
+import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.event.MouseClickEvent;
+import org.liquidengine.legui.icon.CharIcon;
+import org.liquidengine.legui.icon.Icon;
 import org.liquidengine.legui.listener.MouseClickEventListener;
-
-import java.util.HashMap;
+import org.liquidengine.legui.theme.Theme;
 
 import static org.liquidengine.legui.event.MouseClickEvent.MouseClickAction.CLICK;
+import static org.liquidengine.legui.font.FontRegister.MATERIAL_ICONS_REGULAR;
 
 /**
  * An implementation of a check box -- an item that can be selected or
  * deselected, and which displays its state to the user.
  */
-public class CheckBox extends Controller {
+public class CheckBox extends Controller implements TextComponent {
 
     /**
      * Check box text state
      */
     protected TextState textState;
-
     /**
      * Checkbox state.
      */
-    protected boolean                 checked;
-    private   MouseClickEventListener mouseClickEventListener;
+    protected boolean   checked;
+
+    private Icon iconChecked   = new CharIcon(new Vector2f(16, 16), MATERIAL_ICONS_REGULAR, 0xE834);
+    private Icon iconUnchecked = new CharIcon(new Vector2f(16, 16), MATERIAL_ICONS_REGULAR, 0xE835);
+
+    private MouseClickEventListener mouseClickEventListener;
 
     /**
      * Default constructor which initialize checkbox with "CheckBox" text.
@@ -111,12 +117,52 @@ public class CheckBox extends Controller {
 
         mouseClickEventListener = new CheckBoxMouseClickEventListener();
         getListenerMap().addListener(MouseClickEvent.class, mouseClickEventListener);
+        iconChecked.setHorizontalAlign(HorizontalAlign.LEFT);
+        iconUnchecked.setHorizontalAlign(HorizontalAlign.LEFT);
+        Theme.getDefaultTheme().getThemeManager().getComponentTheme(CheckBox.class).applyAll(this);
     }
 
     /**
-     * Returns text data of button
+     * Returns checkbox icon for non-selected state.
      *
-     * @return text state of button
+     * @return checkbox icon for non-selected state.
+     */
+    public Icon getIconUnchecked() {
+        return iconUnchecked;
+    }
+
+    /**
+     * Used to set checkbox icon for non-selected state.
+     *
+     * @param iconUnchecked checkbox icon for non-selected state to set.
+     */
+    public void setIconUnchecked(Icon iconUnchecked) {
+        this.iconUnchecked = iconUnchecked;
+    }
+
+    /**
+     * Returns checkbox icon for selected state.
+     *
+     * @return checkbox icon for selected state.
+     */
+    public Icon getIconChecked() {
+        return iconChecked;
+    }
+
+    /**
+     * Used to set checkbox icon for selected state.
+     *
+     * @param iconChecked checkbox icon for selected state to set.
+     */
+    public void setIconChecked(Icon iconChecked) {
+        if(iconChecked!=null)
+        this.iconChecked = iconChecked;
+    }
+
+    /**
+     * Returns current text state.
+     *
+     * @return text state of component.
      */
     public TextState getTextState() {
         return textState;

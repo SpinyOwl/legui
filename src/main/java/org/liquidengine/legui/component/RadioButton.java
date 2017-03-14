@@ -6,17 +6,22 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 import org.liquidengine.legui.component.optional.TextState;
+import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.event.MouseClickEvent;
+import org.liquidengine.legui.icon.CharIcon;
+import org.liquidengine.legui.icon.Icon;
 import org.liquidengine.legui.listener.MouseClickEventListener;
+import org.liquidengine.legui.theme.Theme;
 
 import static org.liquidengine.legui.event.MouseClickEvent.MouseClickAction.CLICK;
+import static org.liquidengine.legui.font.FontRegister.MATERIAL_ICONS_REGULAR;
 
 /**
  * RadioButtons create a series of items where only one item can be
- * selected.
+ * checked.
  * <p>
  * By default all created radio buttons have no group
- * so all of them can be selected.
+ * so all of them can be checked.
  * <p>Usage example:</p>
  * <pre>{@code
  * RadioButtonGroup rbg = new RadioButtonGroup();
@@ -26,19 +31,22 @@ import static org.liquidengine.legui.event.MouseClickEvent.MouseClickAction.CLIC
  * radioButton2.setRadioButtonGroup(radioButtonGroup);
  * }</pre>
  */
-public class RadioButton extends Controller {
+public class RadioButton extends Controller implements TextComponent {
     /**
      * Used to represent text state of radio button.
      */
-    protected TextState        textState;
+    protected TextState textState;
+
+    private Icon iconUnchecked = new CharIcon(new Vector2f(16, 16), MATERIAL_ICONS_REGULAR, 0xE836);
+    private Icon iconChecked   = new CharIcon(new Vector2f(16, 16), MATERIAL_ICONS_REGULAR, 0xE837);
     /**
-     * Used to represent if radio button selected or not.
+     * Used to represent if radio button checked or not.
      */
-    private   boolean          selected;
+    private boolean          checked;
     /**
-     * Used to determine group of radio buttons where only one can be selected.
+     * Used to determine group of radio buttons where only one can be checked.
      */
-    private   RadioButtonGroup radioButtonGroup;
+    private RadioButtonGroup radioButtonGroup;
 
     /**
      * Default constructor. Used to create component instance without any parameters.
@@ -119,26 +127,29 @@ public class RadioButton extends Controller {
         textState = new TextState(text);
         setBorder(null);
         getListenerMap().addListener(MouseClickEvent.class, new RadioButtonClickEventListener());
+        iconUnchecked.setHorizontalAlign(HorizontalAlign.LEFT);
+        iconChecked.setHorizontalAlign(HorizontalAlign.LEFT);
+        Theme.getDefaultTheme().getThemeManager().getComponentTheme(RadioButton.class).applyAll(this);
     }
 
     /**
-     * Returns true if radio button is selected.
+     * Returns true if radio button is checked.
      *
-     * @return true if radio button is selected.
+     * @return true if radio button is checked.
      */
-    public boolean isSelected() {
-        return selected;
+    public boolean isChecked() {
+        return checked;
     }
 
     /**
-     * Used to set radio button selected or not.
+     * Used to set radio button checked or not.
      *
-     * @param selected true if it should be selected.
+     * @param checked true if it should be checked.
      */
-    public void setSelected(boolean selected) {
-        this.selected = selected;
+    public void setChecked(boolean checked) {
+        this.checked = checked;
         if (radioButtonGroup != null) {
-            radioButtonGroup.setSelection(this, selected);
+            radioButtonGroup.setSelection(this, checked);
         }
     }
 
@@ -162,9 +173,9 @@ public class RadioButton extends Controller {
         }
         this.radioButtonGroup = radioButtonGroup;
         this.radioButtonGroup.add(this);
-        if (selected) {
+        if (checked) {
             if (radioButtonGroup.getSelection() != null) {
-                selected = false;
+                checked = false;
             } else {
                 radioButtonGroup.setSelection(this, true);
             }
@@ -172,9 +183,45 @@ public class RadioButton extends Controller {
     }
 
     /**
-     * Returns text state of radio button.
+     * Returns radio image for non-checked state.
      *
-     * @return text state of radio button.
+     * @return radio image for non-checked state.
+     */
+    public Icon getIconUnchecked() {
+        return iconUnchecked;
+    }
+
+    /**
+     * Used to set radio image for non-checked state.
+     *
+     * @param iconUnchecked radio image for non-checked state to set.
+     */
+    public void setIconUnchecked(Icon iconUnchecked) {
+        this.iconUnchecked = iconUnchecked;
+    }
+
+    /**
+     * Returns radio image for checked state.
+     *
+     * @return radio image for checked state.
+     */
+    public Icon getIconChecked() {
+        return iconChecked;
+    }
+
+    /**
+     * Used to set radio image for checked state.
+     *
+     * @param iconChecked radio image for checked state to set.
+     */
+    public void setIconChecked(Icon iconChecked) {
+        this.iconChecked = iconChecked;
+    }
+
+    /**
+     * Returns current text state.
+     *
+     * @return text state of component.
      */
     public TextState getTextState() {
         return textState;
@@ -195,7 +242,7 @@ public class RadioButton extends Controller {
 
         return new EqualsBuilder()
                 .appendSuper(super.equals(o))
-                .append(selected, that.selected)
+                .append(checked, that.checked)
                 .append(textState, that.textState)
                 .append(radioButtonGroup, that.radioButtonGroup)
                 .isEquals();
@@ -211,7 +258,7 @@ public class RadioButton extends Controller {
         return new HashCodeBuilder(17, 37)
                 .appendSuper(super.hashCode())
                 .append(textState)
-                .append(selected)
+                .append(checked)
                 .append(radioButtonGroup)
                 .toHashCode();
     }
@@ -225,7 +272,7 @@ public class RadioButton extends Controller {
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .append("textState", textState)
-                .append("selected", selected)
+                .append("checked", checked)
                 .append("radioButtonGroup", radioButtonGroup)
                 .toString();
     }
@@ -236,7 +283,7 @@ public class RadioButton extends Controller {
         public void process(MouseClickEvent event) {
             if (event.getAction() == CLICK) {
                 RadioButton component = (RadioButton) event.getComponent();
-                component.setSelected(true);
+                component.setChecked(true);
             }
         }
 
