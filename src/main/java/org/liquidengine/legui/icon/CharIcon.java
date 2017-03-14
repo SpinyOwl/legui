@@ -26,6 +26,20 @@ public class CharIcon extends Icon {
         this.color = ColorConstants.black();
     }
 
+    public CharIcon(String font, int charCode) {
+        super(new Vector2f(16));
+        this.font = font;
+        this.charCode = charCode;
+        this.color = ColorConstants.black();
+    }
+
+    public CharIcon(Vector2f size, String font, int charCode, Vector4f color) {
+        super(size);
+        this.font = font;
+        this.charCode = charCode;
+        this.color = color;
+    }
+
     public Vector4f getColor() {
         return color;
     }

@@ -123,7 +123,7 @@ public abstract class Component implements Serializable {
     public Component(Vector2f position, Vector2f size) {
         this.position = position;
         this.size = size;
-        Theme.getDefaultTheme().getThemeManager().getComponentTheme(Component.class).apply(this);
+        Theme.getDefaultTheme().getThemeManager().getComponentTheme(Component.class).applyAll(this);
     }
 
     /**

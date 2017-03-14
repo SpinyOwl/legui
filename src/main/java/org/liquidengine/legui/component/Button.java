@@ -8,6 +8,7 @@ import org.joml.Vector2f;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.icon.Icon;
+import org.liquidengine.legui.theme.Theme;
 
 /**
  * An implementation of "push" button.
@@ -111,6 +112,7 @@ public class Button extends Controller implements TextComponent {
     private void initialize(String text) {
         this.textState = new TextState(text);
         textState.setHorizontalAlign(HorizontalAlign.CENTER);
+        Theme.getDefaultTheme().getThemeManager().getComponentTheme(Button.class).applyAll(this);
     }
 
     /**

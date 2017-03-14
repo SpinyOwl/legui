@@ -5,6 +5,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
+import org.liquidengine.legui.theme.Theme;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -36,6 +37,7 @@ public abstract class Container<T extends Component> extends Controller {
      * Json marshaller/unmarshaller component should contain empty constructor.
      */
     public Container() {
+        initialize();
     }
 
     /**
@@ -48,6 +50,7 @@ public abstract class Container<T extends Component> extends Controller {
      */
     public Container(float x, float y, float width, float height) {
         super(x, y, width, height);
+        initialize();
     }
 
     /**
@@ -58,6 +61,11 @@ public abstract class Container<T extends Component> extends Controller {
      */
     public Container(Vector2f position, Vector2f size) {
         super(position, size);
+        initialize();
+    }
+
+    private void initialize() {
+        Theme.getDefaultTheme().getThemeManager().getComponentTheme(Container.class).applyAll(this);
     }
 
     /**

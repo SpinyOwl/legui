@@ -170,6 +170,7 @@ public class ScrollBar extends Controller {
         getListenerMap().addListener(ScrollEvent.class, new ScrollBarScrollListener());
         getListenerMap().addListener(MouseDragEvent.class, new ScrollBarMouseDragEventListener());
         getListenerMap().addListener(MouseClickEvent.class, new ScrollBarMouseClickEventListener());
+        Theme.getDefaultTheme().getThemeManager().getComponentTheme(ScrollBar.class).applyAll(this);
     }
 
     /**

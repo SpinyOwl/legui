@@ -7,6 +7,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.color.ColorConstants;
+import org.liquidengine.legui.theme.Theme;
 
 /**
  * Progress bar. Used to display for example progress of loading or something else.
@@ -60,6 +61,7 @@ public class ProgressBar extends Controller {
     }
 
     private void initialize() {
+        Theme.getDefaultTheme().getThemeManager().getComponentTheme(ProgressBar.class).applyAll(this);
     }
 
     /**

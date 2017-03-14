@@ -13,6 +13,7 @@ import org.liquidengine.legui.input.Mouse;
 import org.liquidengine.legui.listener.FocusEventListener;
 import org.liquidengine.legui.listener.MouseClickEventListener;
 import org.liquidengine.legui.listener.ScrollEventListener;
+import org.liquidengine.legui.theme.Theme;
 
 import java.util.List;
 import java.util.Objects;
@@ -136,7 +137,21 @@ public class SelectBox extends Container {
         selectionButton.getListenerMap().getListeners(FocusEvent.class).add(focusEventListener);
         expandButton.getListenerMap().getListeners(FocusEvent.class).add(focusEventListener);
 
+        Theme.getDefaultTheme().getThemeManager().getComponentTheme(SelectBox.class).applyAll(this);
+
         resize();
+    }
+
+    public Button getExpandButton() {
+        return expandButton;
+    }
+
+    public Button getSelectionButton() {
+        return selectionButton;
+    }
+
+    public SelectBoxScrollablePanel getSelectionListPanel() {
+        return selectionListPanel;
     }
 
     /**
