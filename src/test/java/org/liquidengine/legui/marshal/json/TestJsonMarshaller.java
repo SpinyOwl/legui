@@ -15,9 +15,9 @@ import org.liquidengine.legui.icon.ImageIcon;
 import org.liquidengine.legui.image.DummyImage;
 import org.liquidengine.legui.image.DummyImageLoader;
 import org.liquidengine.legui.image.loader.ImageLoader;
-import org.liquidengine.legui.marshal.json.gsonImpl.GsonMarshalContext;
-import org.liquidengine.legui.marshal.json.gsonImpl.GsonMarshalRegistry;
-import org.liquidengine.legui.marshal.json.gsonImpl.GsonMarshalUtil;
+import org.liquidengine.legui.marshal.json.gsonimpl.GsonMarshalContext;
+import org.liquidengine.legui.marshal.json.gsonimpl.GsonMarshalRegistry;
+import org.liquidengine.legui.marshal.json.gsonimpl.GsonMarshalUtil;
 import org.liquidengine.legui.util.TextUtil;
 
 import java.util.ArrayList;
