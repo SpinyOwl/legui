@@ -20,10 +20,10 @@ import java.util.HashMap;
  */
 public class BufferedImage extends Image {
     private static final Logger LOGGER = LogManager.getLogger();
-    private       int           width;
-    private       int           height;
-    private       ImageChannels channels;
-    private       ByteBuffer    imageData;
+    private int           width;
+    private int           height;
+    private ImageChannels channels;
+    private ByteBuffer    imageData;
 
     public BufferedImage(String path) {
         super(path);

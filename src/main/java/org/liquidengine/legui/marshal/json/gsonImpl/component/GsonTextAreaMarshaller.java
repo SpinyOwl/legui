@@ -45,9 +45,9 @@ public class GsonTextAreaMarshaller<T extends TextArea> extends GsonControllerMa
     protected void unmarshal(JsonObject json, T object, GsonMarshalContext context) {
         super.unmarshal(json, object, context);
 
-        JsonElement editable       = json.get(EDITABLE);
-        JsonElement textState      = json.get(TEXT_STATE);
-        JsonElement caretPosition  = json.get(CARET_POSITION);
+        JsonElement editable      = json.get(EDITABLE);
+        JsonElement textState     = json.get(TEXT_STATE);
+        JsonElement caretPosition = json.get(CARET_POSITION);
 
         if (isNotNull(textState)) {
             JsonObject asJsonObject = textState.getAsJsonObject();

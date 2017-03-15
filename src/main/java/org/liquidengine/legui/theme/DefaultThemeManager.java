@@ -1,11 +1,7 @@
 package org.liquidengine.legui.theme;
 
 import org.liquidengine.legui.component.Component;
-import org.liquidengine.legui.component.Container;
-import org.liquidengine.legui.component.ScrollablePanel;
-import org.liquidengine.legui.component.Widget;
 
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -14,10 +10,12 @@ public class DefaultThemeManager extends ThemeManager {
 
     private AbstractTheme defaultComponentTheme = new AbstractTheme() {
         @Override
-        public void apply(Component component) {}
+        public void apply(Component component) {
+        }
 
         @Override
-        public void applyAll(Component component) {}
+        public void applyAll(Component component) {
+        }
     };
 
 //    private void apply(Component c) {

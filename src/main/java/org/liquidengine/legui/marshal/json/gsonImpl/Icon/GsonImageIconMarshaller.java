@@ -25,7 +25,7 @@ public class GsonImageIconMarshaller<I extends ImageIcon> extends GsonIconMarsha
     protected void marshal(I object, JsonObject json, GsonMarshalContext context) {
         super.marshal(object, json, context);
         GsonUtil.fill(json)
-            .add(PATH, object.getImage().getPath());
+                .add(PATH, object.getImage().getPath());
     }
 
     /**

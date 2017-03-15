@@ -49,7 +49,7 @@ public class LayerContainer<T extends Component> extends Container<T> {
 
     @Override
     public Vector4f getBackgroundColor() {
-        return new Vector4f(0,0,0,0);
+        return new Vector4f(0, 0, 0, 0);
     }
 
     @Override

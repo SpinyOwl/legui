@@ -8,7 +8,6 @@ import org.liquidengine.legui.component.optional.align.VerticalAlign;
 import org.liquidengine.legui.marshal.json.gsonImpl.AbstractGsonMarshaller;
 import org.liquidengine.legui.marshal.json.gsonImpl.GsonMarshalContext;
 import org.liquidengine.legui.marshal.json.gsonImpl.GsonUtil;
-import org.liquidengine.legui.theme.Theme;
 
 import static org.liquidengine.legui.marshal.JsonConstants.*;
 import static org.liquidengine.legui.marshal.json.gsonImpl.GsonUtil.isNotNull;

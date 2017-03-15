@@ -45,7 +45,7 @@ public class NvgCharIconRenderer<I extends CharIcon> extends NvgIconRenderer<I> 
 
     private void drawIcon(long context, float x, float y, float w, float h, CharIcon icon, Component component) {
         if (component.isFocused()) {
-            renderTextLineToBounds(context, x-1, y+1, w, h, icon.getSize().x, icon.getFont(),
+            renderTextLineToBounds(context, x - 1, y + 1, w, h, icon.getSize().x, icon.getFont(),
                     component.getFocusedStrokeColor(), colorA, TextUtil.cpToStr(icon.getCharCode()), icon.getHorizontalAlign(), icon.getVerticalAlign(), false);
         }
         renderTextLineToBounds(context, x, y, w, h, icon.getSize().x, icon.getFont(),

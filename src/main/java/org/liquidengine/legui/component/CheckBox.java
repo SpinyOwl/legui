@@ -155,8 +155,8 @@ public class CheckBox extends Controller implements TextComponent {
      * @param iconChecked checkbox icon for selected state to set.
      */
     public void setIconChecked(Icon iconChecked) {
-        if(iconChecked!=null)
-        this.iconChecked = iconChecked;
+        if (iconChecked != null)
+            this.iconChecked = iconChecked;
     }
 
     /**

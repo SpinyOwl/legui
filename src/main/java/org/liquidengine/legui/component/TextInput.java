@@ -4,7 +4,6 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
-import org.joml.Vector4f;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.event.CharEvent;
 import org.liquidengine.legui.event.KeyEvent;
@@ -33,7 +32,7 @@ public class TextInput extends Controller implements TextComponent {
     protected int startSelectionIndex;
     protected int endSelectionIndex;
 
-    protected boolean  editable       = true;
+    protected boolean editable = true;
     private TextInputKeyEventListener        keyEventListener;
     private TextInputMouseClickEventListener mouseClickEventListener;
     private TextInputDragEventListener       dragEventListener;

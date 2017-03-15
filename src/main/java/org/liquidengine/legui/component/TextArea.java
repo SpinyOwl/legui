@@ -33,7 +33,7 @@ public class TextArea extends Controller implements TextComponent {
     protected int startSelectionIndex;
     protected int endSelectionIndex;
 
-    protected boolean  editable       = true;
+    protected boolean editable = true;
     private TextAreaCharEventListener       charEventListener;
     private TextAreaKeyEventListener        keyEventListener;
     private TextAreaMouseClickEventListener mouseClickEventListener;

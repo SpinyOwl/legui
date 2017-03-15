@@ -11,8 +11,7 @@ public enum LeguiExceptions {
     GSON_REGISTRY_TYPE_EXIST("Type '%s' already exist in type registry."),
     FAILED_TO_LOAD_FONT("Failed to initialize font. (%s)"),
     FAILED_TO_LOAD_IMAGE("Failed to initialize image. (%s)"),
-    FAILED_TO_READ_IMAGE("Failed to read image data. (%s)"),
-    ;
+    FAILED_TO_READ_IMAGE("Failed to read image data. (%s)"),;
 
     private final String message;
 

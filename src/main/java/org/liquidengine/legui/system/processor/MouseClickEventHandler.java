@@ -9,7 +9,6 @@ import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.event.SystemMouseClickEvent;
 import org.lwjgl.glfw.GLFW;
 
-import java.util.Collections;
 import java.util.List;
 
 import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;

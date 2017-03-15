@@ -5,8 +5,6 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
-import org.liquidengine.legui.event.WindowSizeEvent;
-import org.liquidengine.legui.listener.WindowSizeEventListener;
 
 /**
  * Layer one of base structures.
@@ -42,8 +40,8 @@ public class Layer<T extends Component> {
      */
     private boolean eventReceivable = true;
 
-    private boolean                 enabled;
-    private boolean                 visible;
+    private boolean enabled;
+    private boolean visible;
 
     /**
      * Default constructor.

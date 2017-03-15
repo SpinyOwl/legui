@@ -8,7 +8,8 @@ import org.liquidengine.legui.marshal.json.gsonImpl.GsonMarshalContext;
 import org.liquidengine.legui.marshal.json.gsonImpl.GsonMarshalUtil;
 import org.liquidengine.legui.marshal.json.gsonImpl.GsonUtil;
 
-import static org.liquidengine.legui.marshal.JsonConstants.*;
+import static org.liquidengine.legui.marshal.JsonConstants.EDITABLE;
+import static org.liquidengine.legui.marshal.JsonConstants.TEXT_STATE;
 import static org.liquidengine.legui.marshal.json.gsonImpl.GsonUtil.isNotNull;
 
 /**
@@ -44,8 +45,8 @@ public class GsonTextInputMarshaller<T extends TextInput> extends GsonController
     protected void unmarshal(JsonObject json, T object, GsonMarshalContext context) {
         super.unmarshal(json, object, context);
 
-        JsonElement editable       = json.get(EDITABLE);
-        JsonElement textState      = json.get(TEXT_STATE);
+        JsonElement editable  = json.get(EDITABLE);
+        JsonElement textState = json.get(TEXT_STATE);
 
         if (isNotNull(textState)) {
             JsonObject asJsonObject = textState.getAsJsonObject();

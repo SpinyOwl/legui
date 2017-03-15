@@ -14,7 +14,7 @@ public class FontRegister {
     public static final  String            ROBOTO_REGULAR         = "roboto-regular";
     public static final  String            MATERIAL_ICONS_REGULAR = "MaterialIcons-Regular";
     public static final  String            FONT_AWESOME_ICONS     = "FontAwesomeIcons";
-    public static final  String            MATERIAL_DESIGN_ICONS     = "materialdesignicons";
+    public static final  String            MATERIAL_DESIGN_ICONS  = "materialdesignicons";
     public static final  String            DEFAULT                = ROBOTO_BOLD;
     private static final Map<String, Font> fontRegister           = new ConcurrentHashMap<>();
 

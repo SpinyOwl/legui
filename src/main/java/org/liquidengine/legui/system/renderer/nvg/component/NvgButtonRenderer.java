@@ -9,7 +9,6 @@ import org.liquidengine.legui.icon.Icon;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.nvg.NvgComponentRenderer;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils;
-import org.lwjgl.nanovg.NVGPaint;
 
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.*;
 import static org.lwjgl.nanovg.NanoVG.*;
