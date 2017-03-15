@@ -43,6 +43,8 @@ public final class JsonConstants {
     // CHECKBOX
     public static final String CHECKBOX                      = "checkbox";
     public static final String CHECKED                       = "checked";
+    public static final String ICON_CHECKED                  = "iconChecked";
+    public static final String ICON_UNCHECKED                = "iconUnchecked";
     // IMAGE
     public static final String IMAGE                         = "image";
     public static final String PATH                          = "path";
@@ -116,16 +118,19 @@ public final class JsonConstants {
     // FRAME
     public static final String COMPONENT_LAYER               = "componentLayer";
     public static final String TOOLTIP_LAYER                 = "tooltipLayer";
-    public static final String LAYERS                    = "layers";
+    public static final String LAYERS                        = "layers";
     // BUTTON
-    public static final String BACKGROUND_ICON           = "backgroundIcon";
-    public static final String FOCUSED_BACKGROUND_ICON   = "focusedBackgroundIcon";
-    public static final String PRESSED_BACKGROUND_ICON   = "pressedBackgroundIcon";
-    public static final String HOVERED_BACKGROUND_ICON   = "hoveredBackgroundIcon";
+    public static final String BACKGROUND_ICON               = "backgroundIcon";
+    public static final String FOCUSED_BACKGROUND_ICON       = "focusedBackgroundIcon";
+    public static final String PRESSED_BACKGROUND_ICON       = "pressedBackgroundIcon";
+    public static final String HOVERED_BACKGROUND_ICON       = "hoveredBackgroundIcon";
     // TOGGLE BUTTON
-    public static final String TOGGLED                   = "toggled";
-    public static final String TOGGLEDED_BACKGROUND_ICON = "togglededBackgroundIcon";
-    public static final String TOGGLED_BACKGROUND_COLOR  = "toggledBackgroundColor";
+    public static final String TOGGLED                       = "toggled";
+    public static final String TOGGLEDED_BACKGROUND_ICON     = "togglededBackgroundIcon";
+    public static final String TOGGLED_BACKGROUND_COLOR      = "toggledBackgroundColor";
+
+    public static final String COLOR     = "color";
+    public static final String CHAR_CODE = "charCode";
 
     private JsonConstants() {
     }

@@ -8,11 +8,15 @@ import org.liquidengine.legui.component.*;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.exception.LeguiException;
 import org.liquidengine.legui.exception.LeguiExceptions;
+import org.liquidengine.legui.icon.CharIcon;
 import org.liquidengine.legui.icon.Icon;
+import org.liquidengine.legui.icon.ImageIcon;
 import org.liquidengine.legui.intersection.Intersector;
 import org.liquidengine.legui.marshal.json.JsonMarshalRegistry;
 import org.liquidengine.legui.marshal.json.JsonMarshaller;
+import org.liquidengine.legui.marshal.json.gsonImpl.Icon.GsonCharIconMarshaller;
 import org.liquidengine.legui.marshal.json.gsonImpl.Icon.GsonIconMarshaller;
+import org.liquidengine.legui.marshal.json.gsonImpl.Icon.GsonImageIconMarshaller;
 import org.liquidengine.legui.marshal.json.gsonImpl.border.GsonBorderMarshaller;
 import org.liquidengine.legui.marshal.json.gsonImpl.border.GsonSimpleLineBorderMarshaller;
 import org.liquidengine.legui.marshal.json.gsonImpl.component.*;
@@ -139,6 +143,8 @@ public class GsonMarshalRegistry implements JsonMarshalRegistry {
             // icons
             // TODO: Add CharIcon and ImageIcon marshaller.
             I.registerMarshaller("Icon", Icon.class, new GsonIconMarshaller<>());
+            I.registerMarshaller("ImageIcon", ImageIcon.class, new GsonImageIconMarshaller<>());
+            I.registerMarshaller("CharIcon", CharIcon.class, new GsonCharIconMarshaller<>());
 
             // textstate
             I.registerMarshaller("TextState", TextState.class, new GsonTextStateMarshaller<>());

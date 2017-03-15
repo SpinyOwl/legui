@@ -8,8 +8,7 @@ import org.liquidengine.legui.marshal.json.gsonImpl.GsonMarshalContext;
 import org.liquidengine.legui.marshal.json.gsonImpl.GsonMarshalUtil;
 import org.liquidengine.legui.marshal.json.gsonImpl.GsonUtil;
 
-import static org.liquidengine.legui.marshal.JsonConstants.CHECKED;
-import static org.liquidengine.legui.marshal.JsonConstants.TEXT_STATE;
+import static org.liquidengine.legui.marshal.JsonConstants.*;
 import static org.liquidengine.legui.marshal.json.gsonImpl.GsonUtil.isNotNull;
 
 /**
@@ -30,6 +29,8 @@ public class GsonCheckBoxMarshaller<T extends CheckBox> extends GsonControllerMa
         GsonUtil.fill(json)
                 .add(TEXT_STATE, textState)
                 .add(CHECKED, object.isChecked())
+                .add(ICON_CHECKED, GsonMarshalUtil.marshalToJson(object.getIconChecked(), context))
+                .add(ICON_UNCHECKED, GsonMarshalUtil.marshalToJson(object.getIconUnchecked(), context))
         ;
     }
 
@@ -44,9 +45,13 @@ public class GsonCheckBoxMarshaller<T extends CheckBox> extends GsonControllerMa
     protected void unmarshal(JsonObject json, T object, GsonMarshalContext context) {
         super.unmarshal(json, object, context);
 
-        JsonElement textState = json.get(TEXT_STATE);
-        JsonElement checked   = json.get(CHECKED);
+        JsonElement textState     = json.get(TEXT_STATE);
+        JsonElement checked       = json.get(CHECKED);
+        JsonElement iconChecked   = json.get(ICON_CHECKED);
+        JsonElement iconUnchecked = json.get(ICON_UNCHECKED);
 
+        if (isNotNull(iconChecked)) object.setIconChecked(GsonMarshalUtil.unmarshal(iconChecked.getAsJsonObject(), context));
+        if (isNotNull(iconUnchecked)) object.setIconUnchecked(GsonMarshalUtil.unmarshal(iconUnchecked.getAsJsonObject(), context));
         if (isNotNull(textState)) {
             JsonObject asJsonObject = textState.getAsJsonObject();
             TextState  state        = GsonMarshalUtil.unmarshal(asJsonObject, context);
