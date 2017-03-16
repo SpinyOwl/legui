@@ -79,17 +79,13 @@ public class MouseClickEventHandler implements SystemEventHandler<SystemMouseCli
     }
 
     private void removeFocus(Component focused, Component component, Context context) {
-        if (component != focused) {
-            if (component.isVisible()) {
-                if (component.isFocused()) {
-                    component.setFocused(false);
-                    component.setPressed(false);
-                    context.getEventProcessor().pushEvent(new FocusEvent(component, context, focused, false));
-                }
-            }
+        if (component != focused && component.isVisible() && component.isFocused()) {
+            component.setFocused(false);
+            component.setPressed(false);
+            context.getEventProcessor().pushEvent(new FocusEvent<>(component, context, focused, false));
         }
         if (component instanceof Container) {
-            List<Component> childs = ((Container) component).getChilds();
+            List<? extends Component> childs = ((Container) component).getChilds();
             for (Component child : childs) {
                 removeFocus(focused, child, context);
             }

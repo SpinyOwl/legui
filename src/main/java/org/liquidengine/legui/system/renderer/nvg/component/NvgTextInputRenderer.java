@@ -58,7 +58,7 @@ public class NvgTextInputRenderer extends NvgComponentRenderer<TextInput> {
 
             Vector4f intersectRect = new Vector4f(pos.x + p.x, pos.y + p.y, size.x - p.x - p.z, size.y - p.y - p.w);
             intersectScissor(context, new Vector4f(intersectRect).sub(1, 1, -2, -2));
-            renderTextNew(leguiContext, context, textInput, size, intersectRect, bc);
+            renderText(leguiContext, context, textInput, size, intersectRect, bc);
         }
         resetScissor(context);
 
@@ -69,7 +69,7 @@ public class NvgTextInputRenderer extends NvgComponentRenderer<TextInput> {
         resetScissor(context);
     }
 
-    private void renderTextNew(Context leguiContext, long context, TextInput gui, Vector2f size, Vector4f rect, Vector4f bc) {
+    private void renderText(Context leguiContext, long context, TextInput gui, Vector2f size, Vector4f rect, Vector4f bc) {
         TextState           textState           = gui.getTextState();
         String              text                = textState.getText();
         String              font                = textState.getFont();
@@ -122,12 +122,7 @@ public class NvgTextInputRenderer extends NvgComponentRenderer<TextInput> {
 
             // calculate text offset in text field based on caret position on screen
             // (caret always should be inside text field bounds)
-            float offsetX = 0;
-            if (caretx > rect.z + rect.x) {
-                offsetX = caretx - rect.x - rect.z;
-            } else if (caretx < rect.x) {
-                offsetX = caretx - rect.x;
-            }
+            float offsetX = getOffsetX(rect, caretx);
 
             // get previous offset
             Float poffset = (Float) metadata.getOrDefault(POFFSET, offsetX);
@@ -139,16 +134,7 @@ public class NvgTextInputRenderer extends NvgComponentRenderer<TextInput> {
             HorizontalAlign palign = (HorizontalAlign) metadata.getOrDefault(PALIGN, halign);
 
             // we should recalculate offsets if ratio is changed
-            if (pratio != ratio || palign != halign) {
-                poffset = offsetX;
-            } else {
-                // and if ratio is the same we should check if we need to update offset
-                if (caretx - poffset > rect.z + rect.x) {
-                    poffset = poffset + (caretx - poffset - rect.z - rect.x);
-                } else if (caretx - poffset < rect.x) {
-                    poffset = poffset + (caretx - poffset - rect.x);
-                }
-            }
+            poffset = recalculateOffsetX(rect, halign, caretx, ratio, offsetX, poffset, pratio, palign);
 
             // calculate mouse caret position
             if (text.length() == 0) {
@@ -204,16 +190,7 @@ public class NvgTextInputRenderer extends NvgComponentRenderer<TextInput> {
             mouseCaretX -= poffset;
             float nCaretX = caretx - poffset;
 
-            if (focused) {
-                // calculate caret color based on time
-                oppositeBlackOrWhite(bc, caretColor);
-                caretColor.w = (float) Math.abs(GLFW.glfwGetTime() % 1 * 2 - 1);
-
-                // draw selection
-                if (startSelectionIndex != endSelectionIndex) {
-                    drawRectangle(context, highlightColor, startSelectionX - poffset, rect.y, endSelectionX - startSelectionX, rect.w);
-                }
-            }
+            drawSelectionAndUpdateCaret(context, rect, bc, highlightColor, startSelectionIndex, endSelectionIndex, focused, startSelectionX, endSelectionX, poffset);
             // render text
             renderTextLineToBounds(context, textBounds[4] - poffset, textBounds[5], textBounds[6], textBounds[7], fontSize, font, textColor, text, HorizontalAlign.LEFT, VerticalAlign.MIDDLE, false);
 
@@ -230,14 +207,55 @@ public class NvgTextInputRenderer extends NvgComponentRenderer<TextInput> {
             }
 
             // put last offset and ration to metadata
-            metadata.put(POFFSET, poffset);
-            metadata.put(PALIGN, halign);
-            metadata.put(PRATIO, ratio);
+            updateMetadata(halign, metadata, ratio, poffset);
         } finally {
             // free allocated memory
             memFree(textBytes);
         }
         gui.setMouseCaretPosition(mouseCaretPosition);
+    }
+
+    private void updateMetadata(HorizontalAlign halign, Map<String, Object> metadata, float ratio, Float poffset) {
+        metadata.put(POFFSET, poffset);
+        metadata.put(PALIGN, halign);
+        metadata.put(PRATIO, ratio);
+    }
+
+    private void drawSelectionAndUpdateCaret(long context, Vector4f rect, Vector4f bc, Vector4f highlightColor, int startSelectionIndex, int endSelectionIndex, boolean focused, float startSelectionX, float endSelectionX, Float poffset) {
+        if (focused) {
+            // calculate caret color based on time
+            oppositeBlackOrWhite(bc, caretColor);
+            caretColor.w = (float) Math.abs(GLFW.glfwGetTime() % 1 * 2 - 1);
+
+            // draw selection
+            if (startSelectionIndex != endSelectionIndex) {
+                drawRectangle(context, highlightColor, startSelectionX - poffset, rect.y, endSelectionX - startSelectionX, rect.w);
+            }
+        }
+    }
+
+    private Float recalculateOffsetX(Vector4f rect, HorizontalAlign halign, float caretx, float ratio, float offsetX, Float poffset, Float pratio, HorizontalAlign palign) {
+        if (pratio != ratio || palign != halign) {
+            poffset = offsetX;
+        } else {
+            // and if ratio is the same we should check if we need to update offset
+            if (caretx - poffset > rect.z + rect.x) {
+                poffset = poffset + (caretx - poffset - rect.z - rect.x);
+            } else if (caretx - poffset < rect.x) {
+                poffset = poffset + (caretx - poffset - rect.x);
+            }
+        }
+        return poffset;
+    }
+
+    private float getOffsetX(Vector4f rect, float caretx) {
+        float offsetX = 0;
+        if (caretx > rect.z + rect.x) {
+            offsetX = caretx - rect.x - rect.z;
+        } else if (caretx < rect.x) {
+            offsetX = caretx - rect.x;
+        }
+        return offsetX;
     }
 
     private void renderCaret(long context, Vector4f rect, float nCaretX, NVGColor rgba) {

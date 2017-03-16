@@ -98,12 +98,14 @@ public class ExampleGui extends Panel<Component> {
                 switch (hh){
                     case 0: h = LEFT; break;
                     case 1: h = CENTER; break;
-                    case 2: h = RIGHT; break;
+                    case 2:
+                    default: h = RIGHT; break;
                 }
                 switch (vv){
                     case 0: v = TOP; break;
                     case 1: v = MIDDLE; break;
-                    case 2: v = BOTTOM; break;
+                    case 2:
+                    default: v = BOTTOM; break;
                 }
                 System.out.println(h + " " + v);
                 button.getTooltip().getTextState().setHorizontalAlign(h);

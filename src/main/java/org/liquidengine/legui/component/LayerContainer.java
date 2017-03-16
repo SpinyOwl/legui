@@ -54,10 +54,12 @@ public class LayerContainer<T extends Component> extends Container<T> {
 
     @Override
     public void setBackgroundColor(Vector4f backgroundColor) {
+        // forbid to change background color
     }
 
     @Override
     public void setBackgroundColor(float r, float g, float b, float a) {
+        // forbid to change background color
     }
 
     /**

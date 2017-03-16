@@ -13,10 +13,6 @@ import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.NVG_CONTEXT
 public abstract class NvgBorderRenderer<B extends Border> extends BorderRenderer<B> {
 
     @Override
-    public void initialize() {
-    }
-
-    @Override
     public void renderBorder(B border, Component component, Context context) {
         long nanovgContext = (long) context.getContextData().get(NVG_CONTEXT);
         if (!border.isEnabled()) return;
@@ -25,8 +21,4 @@ public abstract class NvgBorderRenderer<B extends Border> extends BorderRenderer
 
     protected abstract void renderBorder(B border, Component component, Context context, long nanovg);
 
-
-    @Override
-    public void destroy() {
-    }
 }

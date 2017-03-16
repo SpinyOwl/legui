@@ -11,7 +11,10 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public abstract class ComponentRenderer<C extends Component> {
     private AtomicBoolean initialized = new AtomicBoolean(false);
 
-    public abstract void initialize();
+    public void initialize() {
+        // this method should be reimplemented if need to initialize some data in renderer before it can be used
+        // called only once
+    }
 
     public void render(C component, Context context) {
         if (!initialized.getAndSet(true)) {
@@ -23,5 +26,7 @@ public abstract class ComponentRenderer<C extends Component> {
 
     public abstract void renderComponent(C component, Context context);
 
-    public abstract void destroy();
+    public void destroy() {
+        // this method should be reimplemented if need to destroy some data in renderer before exit
+    }
 }

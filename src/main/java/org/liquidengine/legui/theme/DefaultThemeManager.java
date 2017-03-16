@@ -11,10 +11,7 @@ public class DefaultThemeManager extends ThemeManager {
     private AbstractTheme defaultComponentTheme = new AbstractTheme() {
         @Override
         public void apply(Component component) {
-        }
-
-        @Override
-        public void applyAll(Component component) {
+            // do nothing
         }
     };
 
@@ -42,7 +39,7 @@ public class DefaultThemeManager extends ThemeManager {
     @Override
     public <T extends Component> AbstractTheme<T> getComponentTheme(Class<T> clazz) {
         if (clazz == null) {
-            throw new NullPointerException("Class cannot be null!");
+            throw new IllegalArgumentException("Class cannot be null!");
         }
         AbstractTheme<T> theme = this.<T, AbstractTheme<T>>cycledSearch(clazz, themeMap, defaultComponentTheme);
         return theme;
@@ -51,10 +48,10 @@ public class DefaultThemeManager extends ThemeManager {
     @Override
     public <T extends Component> void setComponentTheme(Class<T> clazz, AbstractTheme<T> theme) {
         if (theme == null) {
-            throw new NullPointerException("Theme cannot be null!");
+            throw new IllegalArgumentException("Theme cannot be null!");
         }
         if (clazz == null) {
-            throw new NullPointerException("Class cannot be null!");
+            throw new IllegalArgumentException("Class cannot be null!");
         }
         themeMap.put(clazz, theme);
     }
