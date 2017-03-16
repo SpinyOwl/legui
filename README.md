@@ -1,12 +1,14 @@
 <table>
   <tr>
     <th align="center">Size</th>
+    <th align="center">Codacy</th>
     <th align="center">Develop</th>
     <th align="center">Snapshot</th>
     <th align="center">Release</th>
   </tr>
   <tr>
     <td align="center"><img src="https://reposs.herokuapp.com/?path=LiquidEngine/legui"/></td>
+    <td align="center"><a href="https://www.codacy.com/app/LiquidEngine/legui?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=LiquidEngine/legui&amp;utm_campaign=Badge_Grade"><img src="https://api.codacy.com/project/badge/Grade/e3a864cc6d6a4f08938a7b368bdb35da"/></a></td>
     <td align="center"><a href="http://jenkins.liquidengine.tk/job/legui/job/develop/" target="_blank">
       <img src="http://jenkins.liquidengine.tk/buildStatus/icon?job=legui/develop"/>
     </a></td>
@@ -25,7 +27,9 @@ ___
 # [LEGUI - What is it?](https://liquidengine.github.io/legui/)  
 GUI implementation for using with LWJGL3  
 
-To contribute you can add your proposals in **issues** or fork and create pull request.
+# Contribution
+1. To contribute you can add your proposals in **issues** or fork and create pull request.
+2. I can add you as developer to this project and you can implement some features. But you should follow previous rule.
 
 ## Dependencies
 For using this library you should add these urls as repositories:  
