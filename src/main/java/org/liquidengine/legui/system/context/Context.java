@@ -5,7 +5,6 @@ import org.joml.Vector2i;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.listener.EventProcessor;
-import org.lwjgl.glfw.GLFW;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -66,7 +65,7 @@ public class Context {
                 frameBufferWidth[0], frameBufferHeight[0],
                 xpos[0], ypos[0],
                 mx[0], my[0],
-                glfwGetWindowAttrib(glfwWindow, GLFW.GLFW_ICONIFIED) == GLFW_TRUE
+                glfwGetWindowAttrib(glfwWindow, GLFW_ICONIFIED) == GLFW_TRUE
         );
     }
 

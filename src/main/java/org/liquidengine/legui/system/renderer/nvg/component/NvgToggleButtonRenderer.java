@@ -7,7 +7,6 @@ import org.liquidengine.legui.component.ToggleButton;
 import org.liquidengine.legui.icon.Icon;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.nvg.NvgComponentRenderer;
-import org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils;
 
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.*;
 import static org.lwjgl.nanovg.NanoVG.nvgRestore;
@@ -68,7 +67,7 @@ public class NvgToggleButtonRenderer extends NvgComponentRenderer<ToggleButton> 
         }
 
         if (image != null) {
-            NvgRenderUtils.renderIcon(image, agui, context);
+            renderIcon(image, agui, context);
         }
     }
 }

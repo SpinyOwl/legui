@@ -40,15 +40,15 @@ public class Layer<T extends Component> {
      */
     private boolean eventReceivable = true;
 
-    private boolean enabled;
-    private boolean visible;
+//    private boolean enabled;
+//    private boolean visible;
 
-    /**
-     * Default constructor.
-     */
-    public Layer() {
+//    /**
+//     * Default constructor.
+//     */
+//    public Layer() {
 //        initialize();
-    }
+//    }
 
 //    /**
 //     * Used to initialize layer and layer container.

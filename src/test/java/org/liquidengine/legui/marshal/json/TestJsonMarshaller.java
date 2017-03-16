@@ -115,7 +115,7 @@ public class TestJsonMarshaller {
         button.getTooltip().getTextState().setTextColor(ColorConstants.white());
         button.getTooltip().getTextState().setPadding(4, 4, 4, 4);
 
-        int idv[] = {0};
+//        int idv[] = {0};
 
         CheckBox checkBox1 = new CheckBox(20, 200, 50, 20);
         toReturn.add(checkBox1);
@@ -220,7 +220,7 @@ public class TestJsonMarshaller {
         b.getTextState().setHorizontalAlign(CENTER);
         b.getTextState().setFontSize(20);
 
-        String up   = TextUtil.cpToStr(0xE5D8);
+//        String up   = TextUtil.cpToStr(0xE5D8);
         String down = TextUtil.cpToStr(0xE5DB);
         b.getTextState().setText(down);
         widget3.getContainer().add(b);

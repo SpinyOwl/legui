@@ -121,7 +121,7 @@ public class RadioButtonGroup implements Serializable {
 
         if (o == null || getClass() != o.getClass()) return false;
 
-        RadioButtonGroup that = (RadioButtonGroup) o;
+//        RadioButtonGroup that = (RadioButtonGroup) o;
 
         return new EqualsBuilder()
                 .isEquals();

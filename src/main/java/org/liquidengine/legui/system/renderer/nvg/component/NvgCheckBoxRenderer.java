@@ -7,7 +7,6 @@ import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.icon.Icon;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.nvg.NvgComponentRenderer;
-import org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils;
 import org.lwjgl.nanovg.NVGColor;
 
 import static org.liquidengine.legui.system.renderer.nvg.util.NVGUtils.rgba;
@@ -55,7 +54,7 @@ public class NvgCheckBoxRenderer extends NvgComponentRenderer<CheckBox> {
 
             renderTextStateLineToBounds(nanovg, new Vector2f(x, y), new Vector2f(w, h), textState);
 
-            NvgRenderUtils.renderIcon(icon, checkBox, context);
+            renderIcon(icon, checkBox, context);
 
             renderBorder(checkBox, context);
         }

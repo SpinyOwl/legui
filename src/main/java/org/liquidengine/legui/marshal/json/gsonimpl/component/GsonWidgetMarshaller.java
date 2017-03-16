@@ -28,7 +28,7 @@ public class GsonWidgetMarshaller<T extends Widget> extends GsonControllerMarsha
 
         Container  container = object.getContainer();
         JsonObject cont      = GsonMarshalUtil.marshalToJson(container, context);
-        GsonUtil.fill(json)
+        fill(json)
                 .add(CONTAINER, cont)
 //                .add(RESIZABLE, object.isResizable())
                 .add(DRAGGABLE, object.isDraggable())

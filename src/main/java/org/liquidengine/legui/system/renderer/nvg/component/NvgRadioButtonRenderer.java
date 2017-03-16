@@ -7,7 +7,6 @@ import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.icon.Icon;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.nvg.NvgComponentRenderer;
-import org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils;
 import org.lwjgl.nanovg.NVGColor;
 
 import static org.liquidengine.legui.system.renderer.nvg.util.NVGUtils.rgba;
@@ -57,7 +56,7 @@ public class NvgRadioButtonRenderer extends NvgComponentRenderer<RadioButton> {
 
             renderTextStateLineToBounds(nanovg, new Vector2f(x, y), new Vector2f(w, h), textState);
 
-            NvgRenderUtils.renderIcon(icon, radioButton, context);
+            renderIcon(icon, radioButton, context);
 
             renderBorder(radioButton, context);
         }

@@ -8,7 +8,6 @@ import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.icon.Icon;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.nvg.NvgComponentRenderer;
-import org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils;
 
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.*;
 import static org.lwjgl.nanovg.NanoVG.*;
@@ -75,7 +74,7 @@ public class NvgButtonRenderer extends NvgComponentRenderer<Button> {
             }
         }
         if (image != null) {
-            NvgRenderUtils.renderIcon(image, button, context);
+            renderIcon(image, button, context);
         }
     }
 

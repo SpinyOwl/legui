@@ -325,7 +325,7 @@ public class ExampleGui extends Panel<Component> {
             else if (event.getKey() == GLFW.GLFW_KEY_F7 && event.getAction() == GLFW.GLFW_RELEASE)
                 textArea.getTextState().setVerticalAlign(BOTTOM);
             else if (event.getKey() == GLFW.GLFW_KEY_F8 && event.getAction() == GLFW.GLFW_RELEASE)
-                textArea.getTextState().setVerticalAlign(VerticalAlign.BASELINE);
+                textArea.getTextState().setVerticalAlign(BASELINE);
         });
 
         caretp = new TextInput(420, 400, 150, 20);
@@ -415,9 +415,7 @@ public class ExampleGui extends Panel<Component> {
         bgImageNormal.setSize(new Vector2f(36, 36)); toggleButton.setBackgroundIcon(bgImageNormal);
         bgImageToggled.setSize(new Vector2f(36, 36)); toggleButton.setTogglededBackgroundIcon(bgImageToggled);
         //@formatter:on
-        RadioButtonGroup rbg = new RadioButtonGroup();
-        RadioButton      rb1 = new RadioButton();
-        RadioButton      rb2 = new RadioButton();
+
         radioButton1.setRadioButtonGroup(radioButtonGroup);
         radioButton2.setRadioButtonGroup(radioButtonGroup);
 

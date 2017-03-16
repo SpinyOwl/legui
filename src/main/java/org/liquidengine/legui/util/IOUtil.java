@@ -2,7 +2,6 @@ package org.liquidengine.legui.util;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.lwjgl.BufferUtils;
 
 import java.io.*;
 import java.nio.ByteBuffer;
@@ -65,7 +64,7 @@ public final class IOUtil {
     }
 
     private static ByteBuffer resizeBuffer(ByteBuffer buffer, int newCapacity) {
-        ByteBuffer newBuffer = BufferUtils.createByteBuffer(newCapacity);
+        ByteBuffer newBuffer = createByteBuffer(newCapacity);
         buffer.flip();
         newBuffer.put(buffer);
         return newBuffer;
