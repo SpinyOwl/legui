@@ -10,7 +10,7 @@ import org.liquidengine.legui.system.context.Context;
 /**
  * Created by Aliaksandr_Shcherbin on 2/10/2017.
  */
-public class MouseClickEvent<T extends Component> extends AbstractEvent<T> {
+public class MouseClickEvent<T extends Component> extends Event<T> {
 
     private final MouseClickAction  action;
     private final Mouse.MouseButton button;

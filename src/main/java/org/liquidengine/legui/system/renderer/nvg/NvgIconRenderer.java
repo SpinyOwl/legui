@@ -8,14 +8,17 @@ import org.liquidengine.legui.system.renderer.IconRenderer;
 import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.NVG_CONTEXT;
 
 /**
- * Created by ShchAlexander on 11.02.2017.
+ * Abstract renderer for Icon implementations.
  */
 public abstract class NvgIconRenderer<I extends Icon> extends IconRenderer<I> {
 
-    @Override
-    public void initialize() {
-    }
-
+    /**
+     * This method called by base abstract icon renderer.
+     *
+     * @param icon      icon to render.
+     * @param component component - icon owner.
+     * @param context   context.
+     */
     @Override
     public void renderIcon(I icon, Component component, Context context) {
         if (icon == null) return;
@@ -23,10 +26,14 @@ public abstract class NvgIconRenderer<I extends Icon> extends IconRenderer<I> {
         renderIcon(icon, component, context, nanovgContext);
     }
 
+    /**
+     * Used to render specific Icon.
+     *
+     * @param icon      icon to render.
+     * @param component component - icon owner.
+     * @param context   context.
+     * @param nanovg    nanoVG context.
+     */
     protected abstract void renderIcon(I icon, Component component, Context context, long nanovg);
 
-
-    @Override
-    public void destroy() {
-    }
 }

@@ -7,7 +7,7 @@ import org.liquidengine.legui.system.context.Context;
 /**
  * Created by Aliaksandr_Shcherbin on 2/9/2017.
  */
-public class MouseDragEvent<T extends Component> extends AbstractEvent<T> {
+public class MouseDragEvent<T extends Component> extends Event<T> {
 
     private final Vector2f delta;
 

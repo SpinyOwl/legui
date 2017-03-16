@@ -29,7 +29,7 @@ public class RadioButtonGroup implements Serializable {
      *
      * @param radioButton radio button to add.
      */
-    void add(RadioButton radioButton) {
+    protected void add(RadioButton radioButton) {
         if (radioButtons.contains(radioButton)) return;
         radioButtons.add(radioButton);
         if (radioButton.isChecked()) {
@@ -45,7 +45,7 @@ public class RadioButtonGroup implements Serializable {
      *
      * @param radioButton radio button to remove.
      */
-    void remove(RadioButton radioButton) {
+    protected void remove(RadioButton radioButton) {
         radioButtons.remove(radioButton);
         if (radioButton == selection) {
             selection = null;

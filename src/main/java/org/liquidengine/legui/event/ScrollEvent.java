@@ -6,7 +6,7 @@ import org.liquidengine.legui.system.context.Context;
 /**
  * Created by ShchAlexander on 03.02.2017.
  */
-public class ScrollEvent<T extends Component> extends AbstractEvent<T> {
+public class ScrollEvent<T extends Component> extends Event<T> {
     private final double xoffset;
     private final double yoffset;
 

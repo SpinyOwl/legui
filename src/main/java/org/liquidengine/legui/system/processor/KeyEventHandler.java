@@ -14,7 +14,7 @@ import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
  */
 public class KeyEventHandler implements SystemEventHandler<SystemKeyEvent> {
     @Override
-    public void process(SystemKeyEvent event, Frame frame, Context context) {
+    public void handle(SystemKeyEvent event, Frame frame, Context context) {
         int keyCode = event.key;
         if (keyCode != -1) {
             Keyboard.Key key = Keyboard.Key.getByCode(keyCode);

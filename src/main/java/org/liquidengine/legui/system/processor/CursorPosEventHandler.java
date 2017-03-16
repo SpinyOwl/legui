@@ -20,7 +20,7 @@ import java.util.List;
  */
 public class CursorPosEventHandler extends AbstractSystemEventHandler<SystemCursorPosEvent> {
 
-    protected void preProcess(SystemCursorPosEvent event, Frame frame, Context context) {
+    protected void preHandle(SystemCursorPosEvent event, Frame frame, Context context) {
         Vector2f cursorPosition = new Vector2f(event.fx, event.fy);
         Mouse.setCursorPositionPrev(new Vector2f(Mouse.getCursorPosition()));
         Mouse.setCursorPosition(cursorPosition);

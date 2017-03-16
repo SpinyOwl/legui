@@ -8,7 +8,7 @@ import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.color.ColorConstants;
 import org.liquidengine.legui.component.optional.Orientation;
-import org.liquidengine.legui.event.AbstractEvent;
+import org.liquidengine.legui.event.Event;
 import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.event.MouseDragEvent;
 import org.liquidengine.legui.event.ScrollEvent;
@@ -237,7 +237,7 @@ public class Slider extends Controller {
         }
     }
 
-    public static class SliderChangeValueEvent<T extends Slider> extends AbstractEvent<T> {
+    public static class SliderChangeValueEvent<T extends Slider> extends Event<T> {
 
         private final float oldValue;
         private final float newValue;

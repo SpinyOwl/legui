@@ -6,7 +6,7 @@ import org.liquidengine.legui.system.context.Context;
 /**
  * Created by Aliaksandr_Shcherbin on 2/13/2017.
  */
-public class KeyEvent<T extends Component> extends AbstractEvent<T> {
+public class KeyEvent<T extends Component> extends Event<T> {
 
     private final int action;
     private final int key;

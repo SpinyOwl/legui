@@ -47,14 +47,14 @@ public class Layer<T extends Component> {
      * Default constructor.
      */
     public Layer() {
-        initialize();
+//        initialize();
     }
 
-    /**
-     * Used to initialize layer and layer container.
-     */
-    private void initialize() {
-    }
+//    /**
+//     * Used to initialize layer and layer container.
+//     */
+//    private void initialize() {
+//    }
 
     /**
      * Returns frame to which attached this layer.

@@ -14,14 +14,21 @@ import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.*;
 import static org.lwjgl.nanovg.NanoVG.*;
 
 /**
- * Created by ShchAlexander on 12.02.2017.
+ * Renderer for Slider components.
  */
-public class NvgSliderRenderer extends NvgComponentRenderer<Slider> {
+public class NvgSliderRenderer<T extends Slider> extends NvgComponentRenderer<T> {
     public static final float    SLIDER_WIDTH = 4.0f;
     private             NVGColor colorA       = NVGColor.malloc();
 
+    /**
+     * Used to render slider component.
+     *
+     * @param slider       slider to render.
+     * @param leguiContext context.
+     * @param context      nanoVG context.
+     */
     @Override
-    public void renderComponent(Slider slider, Context leguiContext, long context) {
+    public void renderComponent(T slider, Context leguiContext, long context) {
         createScissor(context, slider);
         {
             nvgSave(context);
@@ -45,7 +52,12 @@ public class NvgSliderRenderer extends NvgComponentRenderer<Slider> {
             nvgFillColor(context, rgba(backgroundColor, colorA));
             nvgFill(context);
 
-            float lx, rx, ty, by, px, py;
+            float lx,
+                    rx,
+                    ty,
+                    by,
+                    px,
+                    py;
             if (vertical) {
                 px = lx = rx = x + (w) / 2f;
                 ty = y + sliderSize / 2f;
@@ -59,10 +71,10 @@ public class NvgSliderRenderer extends NvgComponentRenderer<Slider> {
             }
 
             // draw inactive color
-            drawSliderLine(context, sliderInactiveColor, lx, rx, ty, by, SLIDER_WIDTH);
+            drawLine(context, sliderInactiveColor, lx, by, rx, ty, SLIDER_WIDTH);
 
             // draw active part
-            drawSliderLine(context, sliderColor, lx, px, py, by, SLIDER_WIDTH);
+            drawLine(context, sliderColor, lx, by, px, py, SLIDER_WIDTH);
 
             // draw slider button
             float xx = px - sliderSize / 2f;
@@ -80,14 +92,25 @@ public class NvgSliderRenderer extends NvgComponentRenderer<Slider> {
         resetScissor(context);
     }
 
-    private void drawSliderLine(long context, Vector4f sliderInactiveColor, float lx, float rx, float ty, float by, float sliderWidth) {
+    /**
+     * Used to render line.
+     *
+     * @param context nanoVG context.
+     * @param color   color to render
+     * @param x1      left x
+     * @param x2      right x
+     * @param y2      top y
+     * @param y1      bottom y
+     * @param width   line width
+     */
+    private void drawLine(long context, Vector4f color, float x1, float y1, float x2, float y2, float width) {
         nvgLineCap(context, NVG_ROUND);
         nvgLineJoin(context, NVG_ROUND);
-        nvgStrokeWidth(context, sliderWidth);
-        nvgStrokeColor(context, rgba(sliderInactiveColor, colorA));
+        nvgStrokeWidth(context, width);
+        nvgStrokeColor(context, rgba(color, colorA));
         nvgBeginPath(context);
-        nvgMoveTo(context, lx, by);
-        nvgLineTo(context, rx, ty);
+        nvgMoveTo(context, x1, y1);
+        nvgLineTo(context, x2, y2);
         nvgStroke(context);
     }
 

@@ -19,7 +19,7 @@ import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
 public class MouseClickEventHandler implements SystemEventHandler<SystemMouseClickEvent> {
 
     @Override
-    public void process(SystemMouseClickEvent event, Frame frame, Context context) {
+    public void handle(SystemMouseClickEvent event, Frame frame, Context context) {
         Mouse.MouseButton button = Mouse.MouseButton.getByCode(event.button);
         button.setPressed(event.action != GLFW_RELEASE);
         Vector2f cursorPosition = Mouse.getCursorPosition();

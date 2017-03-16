@@ -16,7 +16,7 @@ import java.util.List;
  */
 public class WindowSizeEventHandler implements SystemEventHandler<SystemWindowSizeEvent> {
     @Override
-    public void process(SystemWindowSizeEvent event, Frame frame, Context context) {
+    public void handle(SystemWindowSizeEvent event, Frame frame, Context context) {
         List<Layer> layers = frame.getAllLayers();
         Collections.reverse(layers);
         for (Layer layer : layers) {

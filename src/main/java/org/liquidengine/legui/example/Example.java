@@ -130,10 +130,10 @@ public class Example {
             glfwPollEvents();
             glfwSwapBuffers(window);
 
-            // Now we need to process events. Firstly we need to process system events.
+            // Now we need to handle events. Firstly we need to handle system events.
             initializer.getSystemEventProcessor().processEvent();
 
-            // When system events are translated to GUI events we need to process them.
+            // When system events are translated to GUI events we need to handle them.
             // This event processor calls listeners added to ui components
             initializer.getGuiEventProcessor().processEvent();
             if (toggleFullscreen) {

@@ -15,8 +15,6 @@ import org.liquidengine.legui.icon.ImageIcon;
 import org.liquidengine.legui.image.DummyImage;
 import org.liquidengine.legui.image.DummyImageLoader;
 import org.liquidengine.legui.image.loader.ImageLoader;
-import org.liquidengine.legui.marshal.json.gsonimpl.GsonMarshalContext;
-import org.liquidengine.legui.marshal.json.gsonimpl.GsonMarshalRegistry;
 import org.liquidengine.legui.marshal.json.gsonimpl.GsonMarshalUtil;
 import org.liquidengine.legui.util.TextUtil;
 
@@ -31,11 +29,12 @@ import static org.liquidengine.legui.component.optional.align.VerticalAlign.MIDD
 public class TestJsonMarshaller {
 
     @Before
-    public void setup() {
+    public void initialize() {
         ImageLoader.setLoader(new DummyImageLoader());
     }
 
-    private void testJsonMarshalling(JsonMarshalRegistry registry, JsonMarshalContext context) {
+    @Test
+    public void testGsonImpl() {
         Object toMarshal;
         Object unMarshalled;
 
@@ -60,14 +59,6 @@ public class TestJsonMarshaller {
         System.out.println(toMarshal.equals(unMarshalled));
 
         Assert.assertEquals(toMarshal, unMarshalled);
-    }
-
-    @Test
-    public void testGsonImpl() {
-        GsonMarshalRegistry registry = GsonMarshalRegistry.getRegistry();
-        GsonMarshalContext  context  = new GsonMarshalContext();
-
-        testJsonMarshalling(registry, context);
     }
 
 

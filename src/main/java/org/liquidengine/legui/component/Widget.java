@@ -10,7 +10,7 @@ import org.liquidengine.legui.color.ColorConstants;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
-import org.liquidengine.legui.event.AbstractEvent;
+import org.liquidengine.legui.event.Event;
 import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.event.MouseDragEvent;
 import org.liquidengine.legui.font.FontRegister;
@@ -387,7 +387,7 @@ public class Widget extends Container<Component> {
         void process(WidgetCloseEvent event);
     }
 
-    public static class WidgetCloseEvent<T extends Widget> extends AbstractEvent<T> {
+    public static class WidgetCloseEvent<T extends Widget> extends Event<T> {
         public WidgetCloseEvent(T component, Context context) {
             super(component, context);
         }

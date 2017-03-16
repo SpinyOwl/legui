@@ -10,11 +10,11 @@ import org.liquidengine.legui.system.context.Context;
 /**
  * Created by Aliaksandr_Shcherbin on 1/25/2017.
  */
-public abstract class AbstractEvent<T extends Component> {
+public abstract class Event<T extends Component> {
     private final T       component;
     private final Context context;
 
-    public AbstractEvent(T component, Context context) {
+    public Event(T component, Context context) {
         this.component = component;
         this.context = context;
     }
@@ -33,7 +33,7 @@ public abstract class AbstractEvent<T extends Component> {
 
         if (o == null || getClass() != o.getClass()) return false;
 
-        AbstractEvent that = (AbstractEvent) o;
+        Event that = (Event) o;
 
         return new EqualsBuilder()
                 .append(getComponent(), that.getComponent())

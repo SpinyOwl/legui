@@ -18,7 +18,7 @@ public class GsonIntersectorMarshaller<T extends Intersector> extends AbstractGs
      */
     @Override
     protected void marshal(T object, JsonObject json, GsonMarshalContext context) {
-
+        // we shouldn't store some specific data here so this method is empty...
     }
 
     /**
@@ -30,6 +30,6 @@ public class GsonIntersectorMarshaller<T extends Intersector> extends AbstractGs
      */
     @Override
     protected void unmarshal(JsonObject json, T object, GsonMarshalContext context) {
-
+        // we shouldn't store some specific data here so this method is empty...
     }
 }
