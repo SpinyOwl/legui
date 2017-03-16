@@ -6,7 +6,6 @@ import org.liquidengine.legui.component.Slider;
 import org.liquidengine.legui.component.optional.Orientation;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.nvg.NvgComponentRenderer;
-import org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils;
 import org.lwjgl.nanovg.NVGColor;
 
 import static org.liquidengine.legui.system.renderer.nvg.util.NVGUtils.rgba;
@@ -85,7 +84,7 @@ public class NvgSliderRenderer<T extends Slider> extends NvgComponentRenderer<T>
             nvgFillColor(context, rgba(sliderColor, colorA));
             nvgFill(context);
 
-            NvgRenderUtils.drawRectStroke(context, xx + 0.5f, yy + 0.5f, sliderSize, sliderSize, sliderInactiveColor, cornerRadius, 1);
+            drawRectStroke(context, xx + 0.5f, yy + 0.5f, sliderSize, sliderSize, sliderInactiveColor, cornerRadius, 1);
 
             renderBorder(slider, leguiContext);
         }

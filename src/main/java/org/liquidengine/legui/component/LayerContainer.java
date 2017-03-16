@@ -11,7 +11,6 @@ import org.liquidengine.legui.theme.Theme;
  * Layer container. By default it has {@link org.liquidengine.legui.listener.WindowSizeEventListener} which used to resize this container.
  */
 public class LayerContainer<T extends Component> extends Container<T> {
-    private WindowSizeEventListener listener;
 
     /**
      * Default constructor. Used to create component instance without any parameters.
@@ -66,7 +65,7 @@ public class LayerContainer<T extends Component> extends Container<T> {
      * Used to initialize Layer container with default background and border.
      */
     private void initialize() {
-        getListenerMap().addListener(WindowSizeEvent.class, listener = new LayerContainerWindowSizeEventListener());
+        getListenerMap().addListener(WindowSizeEvent.class, new LayerContainerWindowSizeEventListener());
         setBackgroundColor(ColorConstants.transparent());
         setBorder(null);
         Theme.getDefaultTheme().getThemeManager().getComponentTheme(LayerContainer.class).applyAll(this);

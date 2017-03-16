@@ -2,12 +2,10 @@ package org.liquidengine.legui.marshal.json.gsonimpl.component;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import org.liquidengine.legui.color.ColorConstants;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.marshal.json.gsonimpl.AbstractGsonMarshaller;
 import org.liquidengine.legui.marshal.json.gsonimpl.GsonMarshalContext;
 import org.liquidengine.legui.marshal.json.gsonimpl.GsonMarshalUtil;
-import org.liquidengine.legui.marshal.json.gsonimpl.GsonUtil;
 
 import static org.liquidengine.legui.marshal.JsonConstants.*;
 import static org.liquidengine.legui.marshal.json.gsonimpl.GsonUtil.*;

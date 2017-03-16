@@ -6,7 +6,6 @@ import org.liquidengine.legui.component.Container;
 import org.liquidengine.legui.component.Widget;
 import org.liquidengine.legui.marshal.json.gsonimpl.GsonMarshalContext;
 import org.liquidengine.legui.marshal.json.gsonimpl.GsonMarshalUtil;
-import org.liquidengine.legui.marshal.json.gsonimpl.GsonUtil;
 
 import static org.liquidengine.legui.marshal.JsonConstants.*;
 import static org.liquidengine.legui.marshal.json.gsonimpl.GsonUtil.*;
