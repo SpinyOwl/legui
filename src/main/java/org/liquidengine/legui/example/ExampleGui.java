@@ -169,6 +169,7 @@ public class ExampleGui extends Panel<Component> {
         widget2.setTitleBackgroundColor(ColorConstants.lightGreen());
         widget2.getTitleTextState().setTextColor(ColorConstants.black());
         widget2.setDraggable(false);
+        widget2.setMinimizable(true);
 
         Button turnDraggable = new Button("Draggable", 10, 10, 80, 20);
         turnDraggable.getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
@@ -210,8 +211,8 @@ public class ExampleGui extends Panel<Component> {
         widget3.setTitleHeight(20);
         widget3.setTitleEnabled(false);
         widget3.setTitleBackgroundColor(ColorConstants.lightGreen());
-        widget3.setCloseable(true);
-        widget3.setMinimizable(false);
+        widget3.setCloseable(false);
+        widget3.setMinimizable(true);
         widget3.getTitleTextState().setTextColor(ColorConstants.black());
         this.add(widget3);
 

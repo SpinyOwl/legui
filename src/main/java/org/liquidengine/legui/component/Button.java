@@ -212,7 +212,11 @@ public class Button extends Controller implements TextComponent {
 
         return new EqualsBuilder()
                 .appendSuper(super.equals(o))
-                .append(textState, button.textState)
+                .append(getTextState(), button.getTextState())
+                .append(getBackgroundIcon(), button.getBackgroundIcon())
+                .append(getFocusedBackgroundIcon(), button.getFocusedBackgroundIcon())
+                .append(getPressedBackgroundIcon(), button.getPressedBackgroundIcon())
+                .append(getHoveredBackgroundIcon(), button.getHoveredBackgroundIcon())
                 .isEquals();
     }
 

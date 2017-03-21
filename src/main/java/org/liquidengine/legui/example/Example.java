@@ -29,6 +29,8 @@ public class Example {
     private static          long[]  monitors         = null;
     private static          boolean toggleFullscreen = false;
     private static          boolean fullscreen       = false;
+    private static ExampleGui gui;
+    private static Context    context;
 
 //    private static String json = IOUtil.loadResourceAsString("org/liquidengine/legui/example/json.json", 1024);
 
@@ -113,7 +115,7 @@ public class Example {
             //}
 
             // Also we can do it in one line
-            Context context = initializer.getContext();
+            context = initializer.getContext();
             context.updateGlfwWindow();
             Vector2i windowSize = context.getWindowSize();
 
@@ -146,6 +148,7 @@ public class Example {
                 fullscreen = !fullscreen;
                 toggleFullscreen = false;
             }
+            update();
             updCntr++;
             if (System.currentTimeMillis() >= time + 1000) {
                 time += 1000;
@@ -161,9 +164,15 @@ public class Example {
         glfwTerminate();
     }
 
+    private static void update() {
+        if (context != null && context.getMouseTargetGui() != null) {
+            gui.getMouseTargetLabel().getTextState().setText("-> " + context.getMouseTargetGui().getClass().getSimpleName());
+        }
+    }
+
     private static void createGuiElements(Frame frame, int w, int h) {
-        ExampleGui component = new ExampleGui(w, h);
-        component.getListenerMap().addListener(WindowSizeEvent.class, (WindowSizeEventListener) event -> component.setSize(event.getWidth(), event.getHeight()));
-        frame.getContainer().add(component);
+        gui = new ExampleGui(w, h);
+        gui.getListenerMap().addListener(WindowSizeEvent.class, (WindowSizeEventListener) event -> gui.setSize(event.getWidth(), event.getHeight()));
+        frame.getContainer().add(gui);
     }
 }

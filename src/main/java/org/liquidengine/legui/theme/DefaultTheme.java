@@ -6,7 +6,9 @@ import org.liquidengine.legui.border.SimpleLineBorder;
 import org.liquidengine.legui.color.ColorConstants;
 import org.liquidengine.legui.component.*;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
+import org.liquidengine.legui.component.optional.align.VerticalAlign;
 import org.liquidengine.legui.icon.CharIcon;
+import org.liquidengine.legui.icon.Icon;
 
 import java.util.List;
 
@@ -175,9 +177,32 @@ public class DefaultTheme extends Theme {
             component.getMinimizeButton().setBorder(null);
             component.getCloseButton().setBackgroundColor(ColorConstants.lightGray());
             component.getCloseButton().getTextState().setTextColor(ColorConstants.black());
+            Icon closeIcon = component.getCloseIcon();
+            if (closeIcon != null && closeIcon instanceof CharIcon) {
+                CharIcon bgIcon = (CharIcon) closeIcon;
+                bgIcon.setColor(ColorConstants.black());
+                bgIcon.setHorizontalAlign(HorizontalAlign.CENTER);
+                bgIcon.setVerticalAlign(VerticalAlign.MIDDLE);
+            }
             component.getCloseButton().setBorder(null);
             component.setTitleBackgroundColor(ColorConstants.lightGray());
             component.getTitleTextState().setTextColor(ColorConstants.black());
+
+            Icon minimizeIcon = component.getMinimizeIcon();
+            if (minimizeIcon != null && minimizeIcon instanceof CharIcon) {
+                CharIcon bgIcon = (CharIcon) minimizeIcon;
+                bgIcon.setColor(ColorConstants.black());
+                bgIcon.setHorizontalAlign(HorizontalAlign.CENTER);
+                bgIcon.setVerticalAlign(VerticalAlign.MIDDLE);
+            }
+
+            Icon maximizeIcon = component.getMaximizeIcon();
+            if (maximizeIcon != null && maximizeIcon instanceof CharIcon) {
+                CharIcon bgIcon = (CharIcon) maximizeIcon;
+                bgIcon.setColor(ColorConstants.black());
+                bgIcon.setHorizontalAlign(HorizontalAlign.CENTER);
+                bgIcon.setVerticalAlign(VerticalAlign.MIDDLE);
+            }
 
             Theme.getDefaultTheme().applyAll(component.getContainer());
         }

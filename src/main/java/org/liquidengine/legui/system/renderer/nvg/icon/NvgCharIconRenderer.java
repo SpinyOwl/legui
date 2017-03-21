@@ -45,10 +45,11 @@ public class NvgCharIconRenderer<I extends CharIcon> extends NvgIconRenderer<I> 
 
     private void drawIcon(long context, float x, float y, float w, float h, CharIcon icon, Component component) {
         if (component.isFocused()) {
-            renderTextLineToBounds(context, x - 1, y + 1, w, h, icon.getSize().x, icon.getFont(),
-                    component.getFocusedStrokeColor(), colorA, TextUtil.cpToStr(icon.getCharCode()), icon.getHorizontalAlign(), icon.getVerticalAlign(), false);
+            renderTextLineToBounds(context, x - 0.5f, y + 1, w, h, icon.getSize().y, icon.getFont(),
+                    component.getFocusedStrokeColor(), TextUtil.cpToStr(icon.getCharCode()), icon.getHorizontalAlign(), icon.getVerticalAlign(), true);
         }
-        renderTextLineToBounds(context, x, y, w, h, icon.getSize().x, icon.getFont(),
-                icon.getColor(), colorA, TextUtil.cpToStr(icon.getCharCode()), icon.getHorizontalAlign(), icon.getVerticalAlign(), false);
+
+        renderTextLineToBounds(context, x + 0.5f, y, w, h, icon.getSize().y, icon.getFont(),
+                icon.getColor(), TextUtil.cpToStr(icon.getCharCode()), icon.getHorizontalAlign(), icon.getVerticalAlign(), true);
     }
 }

@@ -1,5 +1,9 @@
 package org.liquidengine.legui.icon;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
@@ -92,5 +96,38 @@ public abstract class Icon {
      */
     public void setVerticalAlign(VerticalAlign verticalAlign) {
         this.verticalAlign = verticalAlign;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Icon icon = (Icon) o;
+
+        return new EqualsBuilder()
+                .append(getSize(), icon.getSize())
+                .append(getHorizontalAlign(), icon.getHorizontalAlign())
+                .append(getVerticalAlign(), icon.getVerticalAlign())
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37)
+                .append(getSize())
+                .append(getHorizontalAlign())
+                .append(getVerticalAlign())
+                .toHashCode();
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+                .append("size", size)
+                .append("horizontalAlign", horizontalAlign)
+                .append("verticalAlign", verticalAlign)
+                .toString();
     }
 }

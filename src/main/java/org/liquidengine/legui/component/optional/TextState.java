@@ -29,7 +29,7 @@ public class TextState implements Serializable {
      */
     private StringBuffer    text            = new StringBuffer();
     /**
-     * Horizontal alignment.
+     * Horizontal alignment. By default used {@link HorizontalAlign#CENTER}
      */
     private HorizontalAlign horizontalAlign = HorizontalAlign.CENTER;
     /**

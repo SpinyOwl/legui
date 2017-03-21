@@ -52,14 +52,14 @@ public class Context {
     }
 
     public void updateGlfwWindow() {
-        int[]    windowWidth       = {0},
-                 windowHeight      = {0};
-        int[]    frameBufferWidth  = {0},
-                 frameBufferHeight = {0};
-        int[]    xpos              = {0},
-                 ypos              = {0};
-        double[] mx                = {0},
-                 my                = {0};
+        int[] windowWidth = {0},
+                windowHeight = {0};
+        int[] frameBufferWidth = {0},
+                frameBufferHeight = {0};
+        int[] xpos = {0},
+                ypos = {0};
+        double[] mx = {0},
+                my = {0};
         glfwGetWindowSize(glfwWindow, windowWidth, windowHeight);
         glfwGetFramebufferSize(glfwWindow, frameBufferWidth, frameBufferHeight);
         glfwGetWindowPos(glfwWindow, xpos, ypos);

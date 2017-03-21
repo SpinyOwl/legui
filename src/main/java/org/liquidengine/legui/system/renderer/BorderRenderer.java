@@ -12,7 +12,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public abstract class BorderRenderer<B extends Border> {
     private AtomicBoolean initialized = new AtomicBoolean(false);
 
-    public void initialize(){
+    public void initialize() {
         // should be overrided
     }
 
