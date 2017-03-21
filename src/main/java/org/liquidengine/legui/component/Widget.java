@@ -38,9 +38,6 @@ public class Widget extends Container<Component> {
     private static final int    CLOSE_ICON_CHAR      = 0xF5AD;
     private static final int    MINIMIZE_ICON_CHAR   = 0xF5B0;
     private static final int    MAXIMIZE_ICON_CHAR   = 0xF5AF;
-    private static final String CLOSE_ICON_STRING    = cpToStr(CLOSE_ICON_CHAR);
-    private static final String MINIMIZE_ICON_STRING = cpToStr(MINIMIZE_ICON_CHAR);
-    private static final String MAXIMIZE_ICON_STRING = cpToStr(MAXIMIZE_ICON_CHAR);
     protected MouseDragEventListener mouseDragEventLeguiEventListener;
 
     private Icon closeIcon;

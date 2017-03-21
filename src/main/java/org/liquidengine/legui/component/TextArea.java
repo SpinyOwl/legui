@@ -22,49 +22,122 @@ import static org.liquidengine.legui.util.TextUtil.*;
 import static org.lwjgl.glfw.GLFW.*;
 
 /**
- * Created by Aliaksandr_Shcherbin on 2/6/2017.
+ * TextArea is multiline text component which allow to enter text.
  */
 public class TextArea extends Controller implements TextComponent {
+    /**
+     * Used to hold text state of text area.
+     */
     protected TextState textState;
 
-    protected int caretPosition;
-    protected int mouseCaretPosition;
+    /**
+     * Used to hold caret position of text area.
+     */
+    private int caretPosition;
 
-    protected int startSelectionIndex;
-    protected int endSelectionIndex;
+    /**
+     * Used to hold mouse caret position. Calculated and updated by renderer.
+     */
+    private int mouseCaretPosition;
 
-    protected boolean editable = true;
-    private TextAreaCharEventListener       charEventListener;
-    private TextAreaKeyEventListener        keyEventListener;
-    private TextAreaMouseClickEventListener mouseClickEventListener;
-    private TextAreaDragEventListener       dragEventListener;
+    /**
+     * Used to hold start selection index.
+     */
+    private int startSelectionIndex;
 
+    /**
+     * Used to hold end selection index.
+     */
+    private int endSelectionIndex;
+
+    /**
+     * If text area editable then text could be changed.
+     */
+    private boolean editable = true;
+
+    /**
+     * Default constructor. Used to create component instance without any parameters.
+     * <p>
+     * Also if you want to make it easy to use with
+     * Json marshaller/unmarshaller component should contain empty constructor.
+     */
     public TextArea() {
         initialize("");
     }
 
+    /**
+     * Constructor with position and size parameters.
+     *
+     * @param x      x position position in parent component.
+     * @param y      y position position in parent component.
+     * @param width  width of component.
+     * @param height height of component.
+     */
     public TextArea(float x, float y, float width, float height) {
         super(x, y, width, height);
         initialize("");
     }
 
+    /**
+     * Constructor with position and size parameters.
+     *
+     * @param position position position in parent component.
+     * @param size     size of component.
+     */
     public TextArea(Vector2f position, Vector2f size) {
         super(position, size);
         initialize("");
     }
 
+    /**
+     * Default constructor. Used to create component instance without any parameters.
+     * <p>
+     * Also if you want to make it easy to use with
+     * Json marshaller/unmarshaller component should contain empty constructor.
+     *
+     * @param text text to set.
+     */
+    public TextArea(String text) {
+        initialize(text);
+    }
+
+    /**
+     * Constructor with position and size parameters.
+     *
+     * @param x      x position position in parent component.
+     * @param y      y position position in parent component.
+     * @param width  width of component.
+     * @param height height of component.
+     */
+    public TextArea(String text, float x, float y, float width, float height) {
+        super(x, y, width, height);
+        initialize(text);
+    }
+
+    /**
+     * Constructor with position and size parameters.
+     *
+     * @param position position position in parent component.
+     * @param size     size of component.
+     */
+    public TextArea(String text, Vector2f position, Vector2f size) {
+        super(position, size);
+        initialize(text);
+    }
+
+    /**
+     * Used to initialize text area.
+     *
+     * @param s text to set.
+     */
     private void initialize(String s) {
         textState = new TextState(s);
         textState.getPadding().set(5, 10, 5, 10);
 
-        charEventListener = new TextAreaCharEventListener();
-        keyEventListener = new TextAreaKeyEventListener();
-        mouseClickEventListener = new TextAreaMouseClickEventListener();
-        dragEventListener = new TextAreaDragEventListener();
-        getListenerMap().addListener(MouseDragEvent.class, dragEventListener);
-        getListenerMap().addListener(MouseClickEvent.class, mouseClickEventListener);
-        getListenerMap().addListener(KeyEvent.class, keyEventListener);
-        getListenerMap().addListener(CharEvent.class, charEventListener);
+        getListenerMap().addListener(MouseDragEvent.class, new TextAreaDragEventListener());
+        getListenerMap().addListener(MouseClickEvent.class, new TextAreaMouseClickEventListener());
+        getListenerMap().addListener(KeyEvent.class, new TextAreaKeyEventListener());
+        getListenerMap().addListener(CharEvent.class, new TextAreaCharEventListener());
 
         Theme.getDefaultTheme().getThemeManager().getComponentTheme(TextArea.class).applyAll(this);
     }
@@ -78,19 +151,39 @@ public class TextArea extends Controller implements TextComponent {
         return textState;
     }
 
+    /**
+     * Returns caret position.
+     *
+     * @return caret position.
+     */
     public int getCaretPosition() {
         return caretPosition;
     }
 
+    /**
+     * Used to set caret position.
+     *
+     * @param caretPosition caret position to set.
+     */
     public void setCaretPosition(int caretPosition) {
         int length = getTextState().getText().length();
         this.caretPosition = caretPosition < 0 ? 0 : caretPosition > length ? length : caretPosition;
     }
 
+    /**
+     * Returns true if text is editable.
+     *
+     * @return true if text is editable.
+     */
     public boolean isEditable() {
         return editable;
     }
 
+    /**
+     * Used to set editable text or not.
+     *
+     * @param editable editable text or not.
+     */
     public void setEditable(boolean editable) {
         this.editable = editable;
     }
