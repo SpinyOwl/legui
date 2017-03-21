@@ -40,6 +40,9 @@ public class GsonWidgetMarshaller<T extends Widget> extends GsonControllerMarsha
                 .add(CLOSE_BUTTON_COLOR, createColor(object.getCloseButtonColor()))
                 .add(CLOSE_BUTTON_BACKGROUND_COLOR, createColor(object.getCloseButtonBackgroundColor()))
                 .add(TITLE, GsonMarshalUtil.marshalToJson(object.getTitleTextState(), context))
+                .add(CLOSE_ICON, GsonMarshalUtil.marshalToJson(object.getCloseIcon(), context))
+                .add(MINIMIZE_ICON, GsonMarshalUtil.marshalToJson(object.getMinimizeIcon(), context))
+                .add(MAXIMIZE_ICON, GsonMarshalUtil.marshalToJson(object.getMaximizeIcon(), context))
         ;
     }
 
@@ -67,6 +70,10 @@ public class GsonWidgetMarshaller<T extends Widget> extends GsonControllerMarsha
         JsonElement closeButtonColor           = json.get(CLOSE_BUTTON_COLOR);
         JsonElement closeButtonBackgroundColor = json.get(CLOSE_BUTTON_BACKGROUND_COLOR);
         JsonElement title                      = json.get(TITLE);
+        JsonElement closeIcon                  = json.get(CLOSE_ICON);
+        JsonElement minimizeIcon               = json.get(MINIMIZE_ICON);
+        JsonElement maximizeIcon               = json.get(MAXIMIZE_ICON);
+
 
         if (isNotNull(container)) object.setContainer(GsonMarshalUtil.unmarshal(container.getAsJsonObject(), context));
 //        if (isNotNull(resizable)) object.setResizable(resizable.getAsBoolean());
@@ -80,6 +87,9 @@ public class GsonWidgetMarshaller<T extends Widget> extends GsonControllerMarsha
         if (isNotNull(titleEnabled)) object.setTitleEnabled(titleEnabled.getAsBoolean());
         if (isNotNull(minimized)) object.setMinimized(minimized.getAsBoolean());
         if (isNotNull(minimizable)) object.setMinimizable(minimizable.getAsBoolean());
+        if (isNotNull(closeIcon)) object.setCloseIcon(GsonMarshalUtil.unmarshal(closeIcon.getAsJsonObject(), context));
+        if (isNotNull(minimizeIcon)) object.setMinimizeIcon(GsonMarshalUtil.unmarshal(minimizeIcon.getAsJsonObject(), context));
+        if (isNotNull(maximizeIcon)) object.setMaximizeIcon(GsonMarshalUtil.unmarshal(maximizeIcon.getAsJsonObject(), context));
 
         object.resize();
     }

@@ -14,13 +14,13 @@ import org.liquidengine.legui.icon.ImageIcon;
 import org.liquidengine.legui.intersection.Intersector;
 import org.liquidengine.legui.marshal.json.JsonMarshalRegistry;
 import org.liquidengine.legui.marshal.json.JsonMarshaller;
-import org.liquidengine.legui.marshal.json.gsonimpl.icon.GsonCharIconMarshaller;
-import org.liquidengine.legui.marshal.json.gsonimpl.icon.GsonIconMarshaller;
-import org.liquidengine.legui.marshal.json.gsonimpl.icon.GsonImageIconMarshaller;
 import org.liquidengine.legui.marshal.json.gsonimpl.border.GsonBorderMarshaller;
 import org.liquidengine.legui.marshal.json.gsonimpl.border.GsonSimpleLineBorderMarshaller;
 import org.liquidengine.legui.marshal.json.gsonimpl.component.*;
 import org.liquidengine.legui.marshal.json.gsonimpl.component.optional.GsonTextStateMarshaller;
+import org.liquidengine.legui.marshal.json.gsonimpl.icon.GsonCharIconMarshaller;
+import org.liquidengine.legui.marshal.json.gsonimpl.icon.GsonIconMarshaller;
+import org.liquidengine.legui.marshal.json.gsonimpl.icon.GsonImageIconMarshaller;
 import org.liquidengine.legui.marshal.json.gsonimpl.intersector.GsonIntersectorMarshaller;
 
 import java.util.Map;

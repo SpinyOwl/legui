@@ -167,8 +167,8 @@ public class ScrollBar extends Controller {
      * Used to initialize listeners.
      */
     private void initialize() {
-        getListenerMap().addListener(ScrollEvent.class, new     ScrollBarScrollListener         ());
-        getListenerMap().addListener(MouseDragEvent.class, new  ScrollBarMouseDragEventListener ());
+        getListenerMap().addListener(ScrollEvent.class, new ScrollBarScrollListener());
+        getListenerMap().addListener(MouseDragEvent.class, new ScrollBarMouseDragEventListener());
         getListenerMap().addListener(MouseClickEvent.class, new ScrollBarMouseClickEventListener());
         Theme.getDefaultTheme().getThemeManager().getComponentTheme(ScrollBar.class).applyAll(this);
     }
@@ -372,9 +372,9 @@ public class ScrollBar extends Controller {
     public void setCurValue(float curValue) {
         if (curValue < minValue) {
             this.curValue = minValue;
-        }else if (curValue > maxValue) {
+        } else if (curValue > maxValue) {
             this.curValue = maxValue;
-        }else {
+        } else {
             this.curValue = curValue;
         }
     }
@@ -405,8 +405,8 @@ public class ScrollBar extends Controller {
      * @see Object#equals(Object)
      */
     @Override
-             public boolean equals(Object o) {
-        if (this == o                              ) return true;
+    public boolean equals(Object o) {
+        if (this == o) return true;
 
         if (o == null || getClass() != o.getClass()) return false;
 
@@ -433,7 +433,7 @@ public class ScrollBar extends Controller {
      * @see Object#hashCode()
      */
     @Override
-             public int hashCode() {
+    public int hashCode() {
         return new HashCodeBuilder(17, 37)
                 .appendSuper(super.hashCode())
                 .append(orientation)
@@ -455,7 +455,7 @@ public class ScrollBar extends Controller {
      * @see Object#toString()
      */
     @Override
-             public String toString() {
+    public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .append("orientation", orientation)
                 .append("minValue", minValue)
@@ -487,7 +487,7 @@ public class ScrollBar extends Controller {
             float     curValue      = scrollBar.getCurValue();
             float     visibleAmount = scrollBar.getVisibleAmount();
             float     valueRange    = scrollBar.getMaxValue() - scrollBar.getMinValue();
-            float     newVal        = (float    ) (curValue - scrollBar.getScrollStep() * event.getYoffset() * visibleAmount * valueRange / (valueRange - visibleAmount));
+            float     newVal        = (float) (curValue - scrollBar.getScrollStep() * event.getYoffset() * visibleAmount * valueRange / (valueRange - visibleAmount));
 
             if (newVal > maxValue) newVal = maxValue;
             if (newVal < minValue) newVal = minValue;
@@ -515,35 +515,35 @@ public class ScrollBar extends Controller {
         @Override
         public void process(MouseDragEvent event) {
             ScrollBar scrollBar = (ScrollBar) event.getComponent();
-            if (!scrollBar.isScrolling()      ) return;
+            if (!scrollBar.isScrolling()) return;
             if (!MOUSE_BUTTON_LEFT.isPressed()) return;
 
             Vector2f pos            = scrollBar.getScreenPosition();
             Vector2f cursorPosition = Mouse.getCursorPosition();
 
-            float    visibleAmount  = scrollBar.getVisibleAmount();
-            boolean  vertical       = Orientation.VERTICAL.equals(scrollBar.getOrientation());
+            float   visibleAmount = scrollBar.getVisibleAmount();
+            boolean vertical      = Orientation.VERTICAL.equals(scrollBar.getOrientation());
 
-            Vector2f guiSize        = scrollBar.getSize          ();
-            float    arrowSize      = scrollBar.isArrowsEnabled() ? scrollBar.getArrowSize() : 0;
-            float    scrollBarSize  = (vertical ? guiSize.y : guiSize.x) - 2 * arrowSize;
-            float    maxValue       = scrollBar.getMaxValue();
-            float    minValue       = scrollBar.getMinValue();
-            float    valueRange     = maxValue                           - minValue;
-            float    barSize        = scrollBarSize * visibleAmount      / valueRange;
+            Vector2f guiSize       = scrollBar.getSize();
+            float    arrowSize     = scrollBar.isArrowsEnabled() ? scrollBar.getArrowSize() : 0;
+            float    scrollBarSize = (vertical ? guiSize.y : guiSize.x) - 2 * arrowSize;
+            float    maxValue      = scrollBar.getMaxValue();
+            float    minValue      = scrollBar.getMinValue();
+            float    valueRange    = maxValue - minValue;
+            float    barSize       = scrollBarSize * visibleAmount / valueRange;
             if (barSize < MIN_SCROLL_SIZE) barSize = MIN_SCROLL_SIZE;
 
             float curPos,
                     dpos;
             if (vertical) {
-                dpos   = pos.y;
+                dpos = pos.y;
                 curPos = cursorPosition.y;
-            }else {
-                dpos   = pos.x;
+            } else {
+                dpos = pos.x;
                 curPos = cursorPosition.x;
             }
             float newVal = valueRange * (curPos - (dpos + arrowSize + barSize / 2f)) / (scrollBarSize - barSize);
-            if      (newVal > maxValue) newVal = maxValue;
+            if (newVal > maxValue) newVal = maxValue;
             else if (newVal < minValue) newVal = minValue;
             event.getContext().getEventProcessor().pushEvent(new ScrollBarChangeValueEvent<>(scrollBar, event.getContext(), scrollBar.getCurValue(), newVal));
             scrollBar.setCurValue(newVal);
@@ -575,40 +575,40 @@ public class ScrollBar extends Controller {
             Vector2f pos            = scrollBar.getScreenPosition();
             Vector2f cursorPosition = Mouse.getCursorPosition();
 
-            float    visibleAmount  = scrollBar.getVisibleAmount();
-            float    curValue       = scrollBar.getCurValue();
-            boolean  vertical       = Orientation.VERTICAL.equals(scrollBar.getOrientation());
+            float   visibleAmount = scrollBar.getVisibleAmount();
+            float   curValue      = scrollBar.getCurValue();
+            boolean vertical      = Orientation.VERTICAL.equals(scrollBar.getOrientation());
 
-            Vector2f guiSize        = scrollBar.getSize          ();
-            float    arrowSize      = scrollBar.isArrowsEnabled() ? scrollBar.getArrowSize() : 0;
-            float    scrollBarSize  = (vertical ? guiSize.y : guiSize.x) - 2 * arrowSize;
-            float    maxValue       = scrollBar.getMaxValue();
-            float    minValue       = scrollBar.getMinValue();
-            float    valueRange     = maxValue                           - minValue;
-            float    barSize        = scrollBarSize * visibleAmount      / valueRange;
+            Vector2f guiSize       = scrollBar.getSize();
+            float    arrowSize     = scrollBar.isArrowsEnabled() ? scrollBar.getArrowSize() : 0;
+            float    scrollBarSize = (vertical ? guiSize.y : guiSize.x) - 2 * arrowSize;
+            float    maxValue      = scrollBar.getMaxValue();
+            float    minValue      = scrollBar.getMinValue();
+            float    valueRange    = maxValue - minValue;
+            float    barSize       = scrollBarSize * visibleAmount / valueRange;
             if (barSize < ScrollBar.MIN_SCROLL_SIZE) barSize = ScrollBar.MIN_SCROLL_SIZE;
             float scrollPosAccordingToScrollBounds = (scrollBarSize - barSize) * curValue / valueRange;
 
             float left,
-                  curPos,
-                  newVal;
+                    curPos,
+                    newVal;
             if (vertical) {
-                left   = pos.y + scrollPosAccordingToScrollBounds + arrowSize;
+                left = pos.y + scrollPosAccordingToScrollBounds + arrowSize;
                 curPos = cursorPosition.y;
-            }else {
-                left   = pos.x + scrollPosAccordingToScrollBounds + arrowSize;
+            } else {
+                left = pos.x + scrollPosAccordingToScrollBounds + arrowSize;
                 curPos = cursorPosition.x;
             }
             if (curPos < left) {
                 newVal = curValue - 0.5f * visibleAmount * valueRange / (valueRange - visibleAmount);
                 if (!released) updateViewport(event, scrollBar, maxValue, minValue, newVal);
                 scrollBar.setScrolling(false);
-            }else if (curPos > left + barSize) {
+            } else if (curPos > left + barSize) {
                 newVal = curValue + 0.5f * visibleAmount * valueRange / (valueRange - visibleAmount);
                 if (!released) updateViewport(event, scrollBar, maxValue, minValue, newVal);
                 scrollBar.setScrolling(false);
-            }else {
-                if   (released) scrollBar.setScrolling(false);
+            } else {
+                if (released) scrollBar.setScrolling(false);
                 else {
                     scrollBar.setScrolling(true);
                 }
@@ -616,7 +616,7 @@ public class ScrollBar extends Controller {
         }
 
         private void updateViewport(Event event, ScrollBar scrollBar, float maxValue, float minValue, float newVal) {
-            if      (newVal > maxValue) newVal = maxValue;
+            if (newVal > maxValue) newVal = maxValue;
             else if (newVal < minValue) newVal = minValue;
             event.getContext().getEventProcessor().pushEvent(new ScrollBarChangeValueEvent<>(scrollBar, event.getContext(), scrollBar.getCurValue(), newVal));
             scrollBar.setCurValue(newVal);
@@ -667,7 +667,7 @@ public class ScrollBar extends Controller {
 
         @Override
         public boolean equals(Object o) {
-            if (this == o                              ) return true;
+            if (this == o) return true;
 
             if (o == null || getClass() != o.getClass()) return false;
 
@@ -680,7 +680,7 @@ public class ScrollBar extends Controller {
         }
 
         @Override
-                 public int hashCode() {
+        public int hashCode() {
             return new HashCodeBuilder(17, 37)
                     .append(getOldValue())
                     .append(getNewValue())

@@ -108,29 +108,35 @@ public final class JsonConstants {
     public static final String TITLE_BACKGROUND_COLOR        = "titleBackgroundColor";
     public static final String CLOSE_BUTTON_COLOR            = "closeButtonColor";
     public static final String CLOSE_BUTTON_BACKGROUND_COLOR = "closeButtonBackgroundColor";
-    // BORDER
-    public static final String BORDER                        = "border";
-    public static final String THICKNESS                     = "THICKNESS";
-    public static final String BORDER_COLOR                  = "BORDER_COLOR";
-    // LAYER
-    public static final String EVENT_PASSABLE                = "eventPassable";
-    public static final String EVENT_RECEIVABLE              = "eventReceivable";
-    // FRAME
-    public static final String COMPONENT_LAYER               = "componentLayer";
-    public static final String TOOLTIP_LAYER                 = "tooltipLayer";
-    public static final String LAYERS                        = "layers";
-    // BUTTON
-    public static final String BACKGROUND_ICON               = "backgroundIcon";
-    public static final String FOCUSED_BACKGROUND_ICON       = "focusedBackgroundIcon";
-    public static final String PRESSED_BACKGROUND_ICON       = "pressedBackgroundIcon";
-    public static final String HOVERED_BACKGROUND_ICON       = "hoveredBackgroundIcon";
-    // TOGGLE BUTTON
-    public static final String TOGGLED                       = "toggled";
-    public static final String TOGGLEDED_BACKGROUND_ICON     = "togglededBackgroundIcon";
-    public static final String TOGGLED_BACKGROUND_COLOR      = "toggledBackgroundColor";
+    public static final String CLOSE_ICON                    = "closeIcon";
+    public static final String MINIMIZE_ICON                 = "minimizeIcon";
+    public static final String MAXIMIZE_ICON                 = "maximizeIcon";
 
+    // BORDER
+    public static final String BORDER                    = "border";
+    public static final String THICKNESS                 = "THICKNESS";
+    public static final String BORDER_COLOR              = "BORDER_COLOR";
+    // LAYER
+    public static final String EVENT_PASSABLE            = "eventPassable";
+    public static final String EVENT_RECEIVABLE          = "eventReceivable";
+    // FRAME
+    public static final String COMPONENT_LAYER           = "componentLayer";
+    public static final String TOOLTIP_LAYER             = "tooltipLayer";
+    public static final String LAYERS                    = "layers";
+    // BUTTON
+    public static final String BACKGROUND_ICON           = "backgroundIcon";
+    public static final String FOCUSED_BACKGROUND_ICON   = "focusedBackgroundIcon";
+    public static final String PRESSED_BACKGROUND_ICON   = "pressedBackgroundIcon";
+    public static final String HOVERED_BACKGROUND_ICON   = "hoveredBackgroundIcon";
+    // TOGGLE BUTTON
+    public static final String TOGGLED                   = "toggled";
+    public static final String TOGGLEDED_BACKGROUND_ICON = "togglededBackgroundIcon";
+    public static final String TOGGLED_BACKGROUND_COLOR  = "toggledBackgroundColor";
+
+    // CHAR ICON
     public static final String COLOR     = "color";
     public static final String CHAR_CODE = "charCode";
+
 
     private JsonConstants() {
     }

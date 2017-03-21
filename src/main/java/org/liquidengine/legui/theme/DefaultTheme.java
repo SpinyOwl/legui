@@ -177,7 +177,7 @@ public class DefaultTheme extends Theme {
             component.getMinimizeButton().setBorder(null);
             component.getCloseButton().setBackgroundColor(ColorConstants.lightGray());
             component.getCloseButton().getTextState().setTextColor(ColorConstants.black());
-            Icon closeIcon      = component.getCloseIcon();
+            Icon closeIcon = component.getCloseIcon();
             if (closeIcon != null && closeIcon instanceof CharIcon) {
                 CharIcon bgIcon = (CharIcon) closeIcon;
                 bgIcon.setColor(ColorConstants.black());
@@ -188,7 +188,7 @@ public class DefaultTheme extends Theme {
             component.setTitleBackgroundColor(ColorConstants.lightGray());
             component.getTitleTextState().setTextColor(ColorConstants.black());
 
-            Icon minimizeIcon      = component.getMinimizeIcon();
+            Icon minimizeIcon = component.getMinimizeIcon();
             if (minimizeIcon != null && minimizeIcon instanceof CharIcon) {
                 CharIcon bgIcon = (CharIcon) minimizeIcon;
                 bgIcon.setColor(ColorConstants.black());
@@ -196,7 +196,7 @@ public class DefaultTheme extends Theme {
                 bgIcon.setVerticalAlign(VerticalAlign.MIDDLE);
             }
 
-            Icon maximizeIcon      = component.getMaximizeIcon();
+            Icon maximizeIcon = component.getMaximizeIcon();
             if (maximizeIcon != null && maximizeIcon instanceof CharIcon) {
                 CharIcon bgIcon = (CharIcon) maximizeIcon;
                 bgIcon.setColor(ColorConstants.black());

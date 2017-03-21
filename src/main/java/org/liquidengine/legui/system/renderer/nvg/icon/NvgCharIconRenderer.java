@@ -1,11 +1,7 @@
 package org.liquidengine.legui.system.renderer.nvg.icon;
 
 import org.joml.Vector2f;
-import org.joml.Vector4f;
 import org.liquidengine.legui.component.Component;
-import org.liquidengine.legui.component.optional.align.HorizontalAlign;
-import org.liquidengine.legui.component.optional.align.VerticalAlign;
-import org.liquidengine.legui.font.FontRegister;
 import org.liquidengine.legui.icon.CharIcon;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.nvg.NvgIconRenderer;
@@ -13,7 +9,6 @@ import org.liquidengine.legui.util.TextUtil;
 import org.lwjgl.nanovg.NVGColor;
 
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.renderTextLineToBounds;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.renderTextStateLineToBounds;
 
 /**
  * Created by ShchAlexander on 13.03.2017.
