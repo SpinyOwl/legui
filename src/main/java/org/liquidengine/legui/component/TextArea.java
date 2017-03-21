@@ -104,6 +104,7 @@ public class TextArea extends Controller implements TextComponent {
     /**
      * Constructor with position and size parameters.
      *
+     * @param text   text to set.
      * @param x      x position position in parent component.
      * @param y      y position position in parent component.
      * @param width  width of component.
@@ -117,6 +118,7 @@ public class TextArea extends Controller implements TextComponent {
     /**
      * Constructor with position and size parameters.
      *
+     * @param text     text to set.
      * @param position position position in parent component.
      * @param size     size of component.
      */
@@ -188,30 +190,65 @@ public class TextArea extends Controller implements TextComponent {
         this.editable = editable;
     }
 
+    /**
+     * Returns mouse caret position.
+     *
+     * @return mouse caret position.
+     */
     public int getMouseCaretPosition() {
         return mouseCaretPosition;
     }
 
+    /**
+     * Used to set mouse caret position.
+     *
+     * @param mouseCaretPosition mouse caret position to set.
+     */
     public void setMouseCaretPosition(int mouseCaretPosition) {
         this.mouseCaretPosition = mouseCaretPosition;
     }
 
+    /**
+     * Returns start selection index.
+     *
+     * @return start selection index.
+     */
     public int getStartSelectionIndex() {
         return startSelectionIndex;
     }
 
+    /**
+     * Used to set start selection index.
+     *
+     * @param startSelectionIndex start selection index to set.
+     */
     public void setStartSelectionIndex(int startSelectionIndex) {
         this.startSelectionIndex = startSelectionIndex;
     }
 
+    /**
+     * Returns end selection index.
+     *
+     * @return end selection index.
+     */
     public int getEndSelectionIndex() {
         return endSelectionIndex;
     }
 
+    /**
+     * Used to set end selection index.
+     *
+     * @param endSelectionIndex end selection index to set.
+     */
     public void setEndSelectionIndex(int endSelectionIndex) {
         this.endSelectionIndex = endSelectionIndex;
     }
 
+    /**
+     * Returns selected text.
+     *
+     * @return selected text.
+     */
     public String getSelection() {
         if (startSelectionIndex < 0 || endSelectionIndex < 0) return null;
         String selection;
@@ -267,8 +304,16 @@ public class TextArea extends Controller implements TextComponent {
                 .toString();
     }
 
+    /**
+     * Mouse drag event listener for text area. Used to update selection indices.
+     */
     public static class TextAreaDragEventListener implements MouseDragEventListener {
 
+        /**
+         * Used to process {@link MouseDragEvent}.
+         *
+         * @param event event to process.
+         */
         @Override
         public void process(MouseDragEvent event) {
             TextArea textArea = (TextArea) event.getComponent();
@@ -285,8 +330,16 @@ public class TextArea extends Controller implements TextComponent {
         }
     }
 
+    /**
+     * Mouse click event listener for text area. Used to update caret position.
+     */
     public static class TextAreaMouseClickEventListener implements MouseClickEventListener {
 
+        /**
+         * Used to process {@link MouseClickEvent}.
+         *
+         * @param event event to process.
+         */
         @Override
         public void process(MouseClickEvent event) {
             TextArea textArea = (TextArea) event.getComponent();
@@ -304,8 +357,16 @@ public class TextArea extends Controller implements TextComponent {
         }
     }
 
+    /**
+     * Key event listener. Used to provide some text operations by keyboard.
+     */
     public static class TextAreaKeyEventListener implements KeyEventListener {
 
+        /**
+         * Used to process {@link KeyEvent}.
+         *
+         * @param event event to process.
+         */
         @Override
         public void process(KeyEvent event) {
             TextArea textArea = (TextArea) event.getComponent();
@@ -342,6 +403,13 @@ public class TextArea extends Controller implements TextComponent {
             }
         }
 
+        /**
+         * Used to cut some string from text area and put it to clipboard.
+         *
+         * @param gui          text area to work with.
+         * @param leguiContext context.
+         * @param textState    text state to work with.
+         */
         private void cutAction(TextArea gui, Context leguiContext, TextState textState) {
             if (gui.isEditable()) {
                 String s = gui.getSelection();
@@ -558,8 +626,16 @@ public class TextArea extends Controller implements TextComponent {
         }
     }
 
+    /**
+     * Char event listener for text area. Used to fill text area with symbols entered via keyboard.
+     */
     public static class TextAreaCharEventListener implements CharEventListener {
 
+        /**
+         * Used to process {@link CharEvent}.
+         *
+         * @param event event to process.
+         */
         @Override
         public void process(CharEvent event) {
             TextArea textArea = (TextArea) event.getComponent();
