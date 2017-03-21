@@ -26,16 +26,21 @@ public class CheckBox extends Controller implements TextComponent {
     /**
      * Check box text state
      */
-    protected TextState textState;
+    private TextState textState;
     /**
      * Checkbox state.
      */
-    protected boolean   checked;
+    private boolean   checked;
 
-    private Icon iconChecked   = new CharIcon(new Vector2f(16, 16), MATERIAL_ICONS_REGULAR, 0xE834);
+    /**
+     * Icon used to show checked state of checkbox.
+     */
+    private Icon iconChecked = new CharIcon(new Vector2f(16, 16), MATERIAL_ICONS_REGULAR, 0xE834);
+
+    /**
+     * Icon used to show unchecked state of checkbox.
+     */
     private Icon iconUnchecked = new CharIcon(new Vector2f(16, 16), MATERIAL_ICONS_REGULAR, 0xE835);
-
-    private MouseClickEventListener mouseClickEventListener;
 
     /**
      * Default constructor which initialize checkbox with "CheckBox" text.
@@ -115,8 +120,7 @@ public class CheckBox extends Controller implements TextComponent {
         setBackgroundColor(ColorConstants.transparent());
         setBorder(null);
 
-        mouseClickEventListener = new CheckBoxMouseClickEventListener();
-        getListenerMap().addListener(MouseClickEvent.class, mouseClickEventListener);
+        getListenerMap().addListener(MouseClickEvent.class, new CheckBoxMouseClickEventListener());
         iconChecked.setHorizontalAlign(HorizontalAlign.LEFT);
         iconUnchecked.setHorizontalAlign(HorizontalAlign.LEFT);
         Theme.getDefaultTheme().getThemeManager().getComponentTheme(CheckBox.class).applyAll(this);
@@ -238,6 +242,11 @@ public class CheckBox extends Controller implements TextComponent {
      */
     public static class CheckBoxMouseClickEventListener implements MouseClickEventListener {
 
+        /**
+         * Used to process event.
+         *
+         * @param event event to process.
+         */
         @Override
         public void process(MouseClickEvent event) {
             CheckBox checkBox = (CheckBox) event.getComponent();
@@ -246,9 +255,15 @@ public class CheckBox extends Controller implements TextComponent {
             }
         }
 
+        /**
+         * Used to compare instances of this event listener.
+         *
+         * @param obj object to compare.
+         * @return true if equals.
+         */
         @Override
         public boolean equals(Object obj) {
-            return true;
+            return obj == this || obj instanceof CheckBoxMouseClickEventListener;
         }
     }
 }

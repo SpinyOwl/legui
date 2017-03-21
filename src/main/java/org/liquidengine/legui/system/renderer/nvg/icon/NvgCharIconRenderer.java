@@ -1,14 +1,19 @@
 package org.liquidengine.legui.system.renderer.nvg.icon;
 
 import org.joml.Vector2f;
+import org.joml.Vector4f;
+import org.liquidengine.legui.color.ColorConstants;
 import org.liquidengine.legui.component.Component;
+import org.liquidengine.legui.component.optional.align.HorizontalAlign;
+import org.liquidengine.legui.component.optional.align.VerticalAlign;
+import org.liquidengine.legui.font.FontRegister;
 import org.liquidengine.legui.icon.CharIcon;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.nvg.NvgIconRenderer;
 import org.liquidengine.legui.util.TextUtil;
 import org.lwjgl.nanovg.NVGColor;
 
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.renderTextLineToBounds;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.*;
 
 /**
  * Created by ShchAlexander on 13.03.2017.
@@ -48,7 +53,22 @@ public class NvgCharIconRenderer<I extends CharIcon> extends NvgIconRenderer<I> 
             renderTextLineToBounds(context, x - 1, y + 1, w, h, icon.getSize().x, icon.getFont(),
                     component.getFocusedStrokeColor(), colorA, TextUtil.cpToStr(icon.getCharCode()), icon.getHorizontalAlign(), icon.getVerticalAlign(), false);
         }
-        renderTextLineToBounds(context, x, y, w, h, icon.getSize().x, icon.getFont(),
-                icon.getColor(), colorA, TextUtil.cpToStr(icon.getCharCode()), icon.getHorizontalAlign(), icon.getVerticalAlign(), false);
+
+//        renderTextStateLineToBounds(nanovg, pos, size, textState);
+        renderTextLineToBounds(context,
+            /* X position             */ x + 0.5f,
+            /* Y position             */ y,
+            /* Width                  */ w,
+            /* Height                 */ h,
+            /* font size              */ icon.getSize().y,
+            /* font name              */ icon.getFont(),
+            /* text color             */ icon.getColor(),
+            /* text to render         */ TextUtil.cpToStr(icon.getCharCode()),
+            /* horizontal alignment   */ HorizontalAlign.CENTER,
+            /* vertical alignment     */ VerticalAlign.MIDDLE,
+            /* hide out of bound text */ false);
+        drawRectStroke(context, x, y, w, h, ColorConstants.red(), 0,1);
+//        renderTextLineToBounds(context, x, y, w, h, icon.getSize().x, icon.getFont(),
+//                icon.getColor(), colorA, TextUtil.cpToStr(icon.getCharCode()), icon.getHorizontalAlign(), icon.getVerticalAlign(), false);
     }
 }

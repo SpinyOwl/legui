@@ -14,6 +14,8 @@ import org.liquidengine.legui.event.Event;
 import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.event.MouseDragEvent;
 import org.liquidengine.legui.font.FontRegister;
+import org.liquidengine.legui.icon.CharIcon;
+import org.liquidengine.legui.icon.Icon;
 import org.liquidengine.legui.listener.EventListener;
 import org.liquidengine.legui.listener.MouseClickEventListener;
 import org.liquidengine.legui.listener.MouseDragEventListener;
@@ -24,25 +26,38 @@ import static org.liquidengine.legui.event.MouseClickEvent.MouseClickAction.CLIC
 import static org.liquidengine.legui.util.TextUtil.cpToStr;
 
 /**
- * Created by Aliaksandr_Shcherbin on 2/6/2017.
+ * Widget component is container which have predefined components such as container, title label, close and minimize buttons and predefined event listeners.
+ * This component can be moved, minimized and restored, closed. Also now you can enable or disable title.
  */
 public class Widget extends Container<Component> {
+
+    /**
+     * Initial height of title. Used to initialize title components.
+     */
     public static final  int    INITIAL_TITLE_HEIGHT = 20;
-    private static final String CLOSE_ICON           = cpToStr(0xF5AD);
-    private static final String MINIMIZE_ICON        = cpToStr(0xF5B0);
-    private static final String MAXIMIZE_ICON        = cpToStr(0xF5AF);
+    private static final int    CLOSE_ICON_CHAR      = 0xF5AD;
+    private static final int    MINIMIZE_ICON_CHAR   = 0xF5B0;
+    private static final int    MAXIMIZE_ICON_CHAR   = 0xF5AF;
+    private static final String CLOSE_ICON_STRING    = cpToStr(CLOSE_ICON_CHAR);
+    private static final String MINIMIZE_ICON_STRING = cpToStr(MINIMIZE_ICON_CHAR);
+    private static final String MAXIMIZE_ICON_STRING = cpToStr(MAXIMIZE_ICON_CHAR);
     protected MouseDragEventListener mouseDragEventLeguiEventListener;
+
+    private Icon closeIcon;
+    private Icon minimizeIcon;
+    private Icon maximizeIcon;
+
     private boolean  draggable     = true;
     private boolean  minimized     = false;
     /**
      * Used to store widget size in maximized state when minimizing widget
      */
     private Vector2f maximizedSize = new Vector2f();
-    private Container container;
-    private Container titleContainer;
-    private Label     title;
-    private Button    closeButton;
-    private Button    minimizeButton;
+    private Container<Component> container;
+    private Container<Component> titleContainer;
+    private Label                title;
+    private Button               closeButton;
+    private Button               minimizeButton;
 
     public Widget() {
         initialize("Widget");
@@ -87,17 +102,31 @@ public class Widget extends Container<Component> {
         mouseDragEventLeguiEventListener = new WidgetDragListener();
         this.title.getListenerMap().addListener(MouseDragEvent.class, mouseDragEventLeguiEventListener);
 
-        this.closeButton = new Button(CLOSE_ICON);
+        this.closeButton = new Button("");
         this.closeButton.setBackgroundColor(ColorConstants.transparent());
-        this.closeButton.getTextState().setFont(FontRegister.MATERIAL_DESIGN_ICONS);
+        closeIcon = new CharIcon(new Vector2f(INITIAL_TITLE_HEIGHT*2/3), FontRegister.MATERIAL_DESIGN_ICONS, CLOSE_ICON_CHAR, ColorConstants.black());
+        closeIcon.setHorizontalAlign(HorizontalAlign.CENTER);
+        closeIcon.setVerticalAlign(VerticalAlign.MIDDLE);
+        this.closeButton.setBackgroundIcon(closeIcon);
+
         this.closeButton.getListenerMap().addListener(MouseClickEvent.class, new WidgetCloseButMouseClickEventListener());
         this.closeButton.setBorder(null);
         this.closeButton.getTextState().setVerticalAlign(VerticalAlign.MIDDLE);
         this.closeButton.getTextState().setHorizontalAlign(HorizontalAlign.CENTER);
 
-        this.minimizeButton = new Button(MINIMIZE_ICON);
+        this.minimizeButton = new Button("");
         this.minimizeButton.setBackgroundColor(ColorConstants.transparent());
-        this.minimizeButton.getTextState().setFont(FontRegister.MATERIAL_DESIGN_ICONS);
+
+        minimizeIcon = new CharIcon(new Vector2f(INITIAL_TITLE_HEIGHT*2/3), FontRegister.MATERIAL_DESIGN_ICONS, MINIMIZE_ICON_CHAR, ColorConstants.black());
+        minimizeIcon.setHorizontalAlign(HorizontalAlign.CENTER);
+        minimizeIcon.setVerticalAlign(VerticalAlign.MIDDLE);
+
+        maximizeIcon = new CharIcon(new Vector2f(INITIAL_TITLE_HEIGHT*2/3), FontRegister.MATERIAL_DESIGN_ICONS, MAXIMIZE_ICON_CHAR, ColorConstants.black());
+        maximizeIcon.setHorizontalAlign(HorizontalAlign.CENTER);
+        maximizeIcon.setVerticalAlign(VerticalAlign.MIDDLE);
+
+        this.minimizeButton.setBackgroundIcon(minimizeIcon);
+
         this.minimizeButton.getListenerMap().addListener(MouseClickEvent.class, new WidgetMinimizeButMouseClickEventListener());
         this.minimizeButton.setBorder(null);
         this.minimizeButton.getTextState().setVerticalAlign(VerticalAlign.MIDDLE);
@@ -319,6 +348,38 @@ public class Widget extends Container<Component> {
         }
     }
 
+    public Icon getCloseIcon() {
+        return closeIcon;
+    }
+
+    public void setCloseIcon(Icon closeIcon) {
+        this.closeIcon = closeIcon;
+        updateIcons();
+    }
+
+    public Icon getMaximizeIcon() {
+        return maximizeIcon;
+    }
+
+    public void setMaximizeIcon(Icon maximizeIcon) {
+        this.maximizeIcon = maximizeIcon;
+        updateIcons();
+    }
+
+    public Icon getMinimizeIcon() {
+        return minimizeIcon;
+    }
+
+    public void setMinimizeIcon(Icon minimizeIcon) {
+        this.minimizeIcon = minimizeIcon;
+        updateIcons();
+    }
+
+    private void updateIcons() {
+        closeButton.setBackgroundIcon(closeIcon);
+        minimizeButton.setBackgroundIcon(minimized ? maximizeIcon : minimizeIcon);
+    }
+
     /**
      * (non-Javadoc)
      *
@@ -431,7 +492,8 @@ public class Widget extends Container<Component> {
         public void process(MouseClickEvent event) {
             if (CLICK == event.getAction()) {
                 boolean newValue = !Widget.this.isMinimized();
-                Widget.this.minimizeButton.getTextState().setText(newValue ? MAXIMIZE_ICON : MINIMIZE_ICON);
+//                Widget.this.minimizeButton.getTextState().setText(newValue ? MAXIMIZE_ICON_STRING : MINIMIZE_ICON_STRING);
+                Widget.this.minimizeButton.setBackgroundIcon(newValue ? maximizeIcon : minimizeIcon);
                 Widget.this.setMinimized(newValue);
             }
         }
