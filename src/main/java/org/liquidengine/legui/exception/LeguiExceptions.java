@@ -4,8 +4,9 @@ package org.liquidengine.legui.exception;
  * Exception messages.
  */
 public enum LeguiExceptions {
-    MARSHALLING_EXCEPTION("Can't marshall your component"),
-    UNMARSHALLING_EXCEPTION("Can't unmarshall your component"),
+    UNHANDLED_EXCEPTION("Unhandled exception: %s"),
+    MARSHAL_EXCEPTION("Can't marshal your component"),
+    UNMARSHAL_EXCEPTION("Can't unmarshal your component"),
     MARSHALLER_IS_NOT_EXIST("Can't find marshaller for component type: '%s'"),
     UNMARSHALLER_IS_NOT_EXIST("Can't find unmarshaller for component type: '%s'"),
     GSON_REGISTRY_TYPE_EXIST("Type '%s' already exist in type registry."),

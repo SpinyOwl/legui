@@ -23,7 +23,6 @@ import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.theme.Theme;
 
 import static org.liquidengine.legui.event.MouseClickEvent.MouseClickAction.CLICK;
-import static org.liquidengine.legui.util.TextUtil.cpToStr;
 
 /**
  * Widget component is container which have predefined components such as container, title label, close and minimize buttons and predefined event listeners.

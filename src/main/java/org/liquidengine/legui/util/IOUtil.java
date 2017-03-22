@@ -2,6 +2,7 @@ package org.liquidengine.legui.util;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.liquidengine.legui.exception.LeguiExceptions;
 
 import java.io.*;
 import java.nio.ByteBuffer;
@@ -48,7 +49,7 @@ public final class IOUtil {
     }
 
     public static String loadAsString(InputStream stream) {
-        if (stream == null) throw new NullPointerException();
+        if (stream == null) throw new IllegalArgumentException();
         LOGGER.debug("loading resource: " + stream);
         StringBuilder     result       = new StringBuilder();
         InputStreamReader streamReader = new InputStreamReader(stream);
@@ -94,7 +95,7 @@ public final class IOUtil {
         try {
             return ioResourceToByteBuffer(resource, bufferSize);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw LeguiExceptions.UNHANDLED_EXCEPTION.create(e, e.getMessage());
         }
     }
 

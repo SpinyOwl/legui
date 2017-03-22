@@ -72,7 +72,10 @@ public class NvgScrollBarRenderer extends NvgComponentRenderer<ScrollBar> {
 
             // draw scroll bar back
             {
-                float lx, ly, wx, hy;
+                float lx,
+                      ly,
+                      wx,
+                      hy;
                 if (vertical) {
                     lx = x;
                     ly = y + diff;
@@ -105,9 +108,9 @@ public class NvgScrollBarRenderer extends NvgComponentRenderer<ScrollBar> {
                 float scrollPosAccordingToScrollBounds = diff + rangeToScroll * curValue / (maxValue - minValue);
 
                 float xx,
-                        yy,
-                        ww,
-                        hh;
+                      yy,
+                      ww,
+                      hh;
                 if (vertical) {
                     xx = x + offset;
                     yy = y + offset + scrollPosAccordingToScrollBounds;
@@ -138,13 +141,13 @@ public class NvgScrollBarRenderer extends NvgComponentRenderer<ScrollBar> {
         Vector4f arrowColor = scrollBar.getArrowColor();
         float    arrowSize  = scrollBar.getArrowSize();
         float x1,
-                y1,
-                w1,
-                h1,
-                x2,
-                y2,
-                w2,
-                h2;
+              y1,
+              w1,
+              h1,
+              x2,
+              y2,
+              w2,
+              h2;
         String first,
                 second;
         if (vertical) {

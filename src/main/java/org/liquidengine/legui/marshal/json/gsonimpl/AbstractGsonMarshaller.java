@@ -58,7 +58,7 @@ public abstract class AbstractGsonMarshaller<T> implements JsonMarshaller<T> {
             unmarshal(jsonObject, component, context);
             return component;
         } catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
-            throw new LeguiException(LeguiExceptions.UNMARSHALLING_EXCEPTION.message(), e);
+            throw new LeguiException(LeguiExceptions.UNMARSHAL_EXCEPTION.message(), e);
         }
     }
 
@@ -94,7 +94,7 @@ public abstract class AbstractGsonMarshaller<T> implements JsonMarshaller<T> {
             marshal(object, json, context);
             return json;
         } catch (Throwable e) {
-            throw new LeguiException(LeguiExceptions.MARSHALLING_EXCEPTION.message(), e);
+            throw new LeguiException(LeguiExceptions.MARSHAL_EXCEPTION.message(), e);
         }
     }
 
