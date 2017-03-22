@@ -33,10 +33,10 @@ public class Widget extends Container<Component> {
     /**
      * Initial height of title. Used to initialize title components.
      */
-    public static final  int    INITIAL_TITLE_HEIGHT = 20;
-    private static final int    CLOSE_ICON_CHAR      = 0xF5AD;
-    private static final int    MINIMIZE_ICON_CHAR   = 0xF5B0;
-    private static final int    MAXIMIZE_ICON_CHAR   = 0xF5AF;
+    public static final  int INITIAL_TITLE_HEIGHT = 20;
+    private static final int CLOSE_ICON_CHAR      = 0xF5AD;
+    private static final int MINIMIZE_ICON_CHAR   = 0xF5B0;
+    private static final int MAXIMIZE_ICON_CHAR   = 0xF5AF;
     protected MouseDragEventListener mouseDragEventLeguiEventListener;
 
     private Icon closeIcon;
@@ -55,29 +55,67 @@ public class Widget extends Container<Component> {
     private Button               closeButton;
     private Button               minimizeButton;
 
+    /**
+     * Creates a widget with default title text.
+     */
     public Widget() {
         initialize("Widget");
     }
 
+    /**
+     * Creates a widget with default title text and specified position and size.
+     *
+     * @param x      x position in parent.
+     * @param y      y position in parent.
+     * @param width  width of component.
+     * @param height height of component.
+     */
     public Widget(float x, float y, float width, float height) {
         super(x, y, width, height);
         initialize("Widget");
     }
 
+    /**
+     * Creates a widget with default title text and specified position and size.
+     *
+     * @param position position in parent.
+     * @param size     size of component.
+     */
     public Widget(Vector2f position, Vector2f size) {
         super(position, size);
         initialize("Widget");
     }
 
+    /**
+     * Creates a widget with specified title text.
+     *
+     * @param title widget text.
+     */
     public Widget(String title) {
         initialize(title);
     }
 
+    /**
+     * Creates a widget with specified title text and specified position and size.
+     *
+     * @param title  widget text.
+     * @param x      x position in parent.
+     * @param y      y position in parent.
+     * @param width  width of component.
+     * @param height height of component.
+     */
     public Widget(String title, float x, float y, float width, float height) {
         super(x, y, width, height);
         initialize(title);
     }
 
+    /**
+     * Creates a widget with specified title text and specified position and size.
+     *
+     * @param title    widget text.
+     * @param position position in parent.
+     * @param size     size of component.
+     */
     public Widget(String title, Vector2f position, Vector2f size) {
         super(position, size);
         initialize(title);
@@ -100,7 +138,7 @@ public class Widget extends Container<Component> {
 
         this.closeButton = new Button("");
         this.closeButton.setBackgroundColor(ColorConstants.transparent());
-        closeIcon = new CharIcon(new Vector2f(INITIAL_TITLE_HEIGHT*2/3), FontRegister.MATERIAL_DESIGN_ICONS, CLOSE_ICON_CHAR, ColorConstants.black());
+        closeIcon = new CharIcon(new Vector2f(INITIAL_TITLE_HEIGHT * 2 / 3), FontRegister.MATERIAL_DESIGN_ICONS, CLOSE_ICON_CHAR, ColorConstants.black());
         closeIcon.setHorizontalAlign(HorizontalAlign.CENTER);
         closeIcon.setVerticalAlign(VerticalAlign.MIDDLE);
         this.closeButton.setBackgroundIcon(closeIcon);
@@ -113,11 +151,11 @@ public class Widget extends Container<Component> {
         this.minimizeButton = new Button("");
         this.minimizeButton.setBackgroundColor(ColorConstants.transparent());
 
-        minimizeIcon = new CharIcon(new Vector2f(INITIAL_TITLE_HEIGHT*2/3), FontRegister.MATERIAL_DESIGN_ICONS, MINIMIZE_ICON_CHAR, ColorConstants.black());
+        minimizeIcon = new CharIcon(new Vector2f(INITIAL_TITLE_HEIGHT * 2 / 3), FontRegister.MATERIAL_DESIGN_ICONS, MINIMIZE_ICON_CHAR, ColorConstants.black());
         minimizeIcon.setHorizontalAlign(HorizontalAlign.CENTER);
         minimizeIcon.setVerticalAlign(VerticalAlign.MIDDLE);
 
-        maximizeIcon = new CharIcon(new Vector2f(INITIAL_TITLE_HEIGHT*2/3), FontRegister.MATERIAL_DESIGN_ICONS, MAXIMIZE_ICON_CHAR, ColorConstants.black());
+        maximizeIcon = new CharIcon(new Vector2f(INITIAL_TITLE_HEIGHT * 2 / 3), FontRegister.MATERIAL_DESIGN_ICONS, MAXIMIZE_ICON_CHAR, ColorConstants.black());
         maximizeIcon.setHorizontalAlign(HorizontalAlign.CENTER);
         maximizeIcon.setVerticalAlign(VerticalAlign.MIDDLE);
 

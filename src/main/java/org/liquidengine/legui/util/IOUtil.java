@@ -117,7 +117,7 @@ public final class IOUtil {
         try {
             return ioResourceToByteBuffer(resource, bufferSize);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw LeguiExceptions.UNHANDLED_EXCEPTION.create(e, e.getMessage());
         }
     }
 
