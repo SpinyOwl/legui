@@ -72,16 +72,17 @@ public final class IOUtil {
     }
 
     private static ByteBuffer readToBuffer(ByteBuffer buffer, InputStream source) {
+        ByteBuffer bufferToWork = buffer;
         try (ReadableByteChannel rbc = Channels.newChannel(source)) {
             while (true) {
-                int bytes = rbc.read(buffer);
+                int bytes = rbc.read(bufferToWork);
                 if (bytes == -1) break;
-                if (buffer.remaining() == 0) buffer = resizeBuffer(buffer, buffer.capacity() * 2);
+                if (bufferToWork.remaining() == 0) bufferToWork = resizeBuffer(bufferToWork, bufferToWork.capacity() * 2);
             }
         } catch (IOException e) {
             LOGGER.error(e.getMessage(), e);
         }
-        return buffer;
+        return bufferToWork;
     }
 
     /**

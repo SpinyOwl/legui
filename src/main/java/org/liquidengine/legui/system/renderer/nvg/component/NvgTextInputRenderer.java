@@ -235,17 +235,18 @@ public class NvgTextInputRenderer extends NvgComponentRenderer<TextInput> {
     }
 
     private Float recalculateOffsetX(Vector4f rect, HorizontalAlign halign, float caretx, float ratio, float offsetX, Float poffset, Float pratio, HorizontalAlign palign) {
+        float newpoffset = poffset;
         if (pratio != ratio || palign != halign) {
-            poffset = offsetX;
+            newpoffset = offsetX;
         } else {
             // and if ratio is the same we should check if we need to update offset
             if (caretx - poffset > rect.z + rect.x) {
-                poffset = poffset + (caretx - poffset - rect.z - rect.x);
+                newpoffset = poffset + (caretx - poffset - rect.z - rect.x);
             } else if (caretx - poffset < rect.x) {
-                poffset = poffset + (caretx - poffset - rect.x);
+                newpoffset = poffset + (caretx - poffset - rect.x);
             }
         }
-        return poffset;
+        return newpoffset;
     }
 
     private float getOffsetX(Vector4f rect, float caretx) {

@@ -313,49 +313,53 @@ public class NvgTextAreaRenderer extends NvgComponentRenderer<TextArea> {
     }
 
     private float calculateOffsetX(Vector4f rect, float caretx, float offsetX) {
+        float newOffsetX = offsetX;
         if (caretx > rect.z + rect.x) {
-            offsetX = caretx - rect.x - rect.z;
+            newOffsetX = caretx - rect.x - rect.z;
         } else if (caretx < rect.x) {
-            offsetX = caretx - rect.x;
+            newOffsetX = caretx - rect.x;
         }
-        return offsetX;
+        return newOffsetX;
     }
 
     private float calculateOffsetY(Vector4f rect, float fontSize, float carety, float offsetY) {
+        float newOffsetY = offsetY;
         if (carety + fontSize > rect.y + rect.w) {
-            offsetY = carety - fontSize - (rect.y + rect.w);
+            newOffsetY = carety - fontSize - (rect.y + rect.w);
         } else if (carety < rect.y) {
-            offsetY = carety - rect.y;
+            newOffsetY = carety - rect.y;
         }
-        return offsetY;
+        return newOffsetY;
     }
 
     private Float recalculateOffsetX(Vector4f rect, HorizontalAlign halign, float caretx, float rat, float offsetX, Float poffsetx, Float pratio, HorizontalAlign phalign) {
+        float newPOffsetX = poffsetx;
         if (pratio != rat || phalign != halign) {
-            poffsetx = offsetX;
+            newPOffsetX = offsetX;
         } else {
             // and if ratio is the same we should check if we need to update offset
             if (caretx - poffsetx > rect.z + rect.x) {
-                poffsetx = poffsetx + (caretx - poffsetx - rect.z - rect.x);
+                newPOffsetX = poffsetx + (caretx - poffsetx - rect.z - rect.x);
             } else if (caretx - poffsetx < rect.x) {
-                poffsetx = poffsetx + (caretx - poffsetx - rect.x);
+                newPOffsetX = poffsetx + (caretx - poffsetx - rect.x);
             }
         }
-        return poffsetx;
+        return newPOffsetX;
     }
 
     private Float recalculateOffsetY(Vector4f rect, float fontSize, VerticalAlign valign, float rat, float carety, float offsetY, Float poffsety, Float pratio, VerticalAlign pvalign) {
+        float newPOffsetY = poffsety;
         if (pratio != rat || pvalign != valign) {
-            poffsety = offsetY;
+            newPOffsetY = offsetY;
         } else {
             // and if ratio is the same we should check if we need to update offset
             if (carety + fontSize - poffsety > rect.y + rect.w) {
-                poffsety = poffsety + fontSize + (carety - poffsety - rect.y - rect.w);
+                newPOffsetY = poffsety + fontSize + (carety - poffsety - rect.y - rect.w);
             } else if (carety - poffsety < rect.y) {
-                poffsety = poffsety + (carety - poffsety - rect.y);
+                newPOffsetY = poffsety + (carety - poffsety - rect.y);
             }
         }
-        return poffsety;
+        return newPOffsetY;
     }
 
     private float getCaretx(long context, int lineCaretPosition, String caretLineText, float[] caretLineBounds) {

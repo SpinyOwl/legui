@@ -71,69 +71,73 @@ public class NvgScrollBarRenderer extends NvgComponentRenderer<ScrollBar> {
             nvgFill(context);
 
             // draw scroll bar back
-            {
-                float lx,
-                      ly,
-                      wx,
-                      hy;
-                if (vertical) {
-                    lx = x;
-                    ly = y + diff;
-                    wx = w;
-                    hy = h - 2 * diff;
-                } else {
-                    lx = x + diff;
-                    ly = y;
-                    wx = w - 2 * diff;
-                    hy = h;
-                }
+            drawScrollBackground(scrollBar, context, pos, size, x, y, w, h, arrowsEnabled, diff, vertical, scrollBarBackgroundColor, cornerRadius);
 
-                nvgBeginPath(context);
-                nvgRoundedRect(context, lx, ly, wx, hy, arrowsEnabled ? 0 : cornerRadius);
-                nvgFillColor(context, rgba(scrollBarBackgroundColor, colorA));
-                nvgFill(context);
-
-                if (arrowsEnabled) {
-                    drawArrows(context, scrollBar, pos, size);
-                }
-            }
-
-            // draw slider button
-            {
-                float scrollBarSize           = (vertical ? scrollBar.getSize().y : scrollBar.getSize().x) - 2 * diff;
-                float scrollBarPercentageSize = visibleAmount / (maxValue - minValue);
-                float barSize                 = scrollBarSize * scrollBarPercentageSize;
-                if (barSize < ScrollBar.MIN_SCROLL_SIZE) barSize = ScrollBar.MIN_SCROLL_SIZE;
-                float rangeToScroll                    = scrollBarSize - barSize;
-                float scrollPosAccordingToScrollBounds = diff + rangeToScroll * curValue / (maxValue - minValue);
-
-                float xx,
-                      yy,
-                      ww,
-                      hh;
-                if (vertical) {
-                    xx = x + offset;
-                    yy = y + offset + scrollPosAccordingToScrollBounds;
-                    ww = w - 2 * offset;
-                    hh = barSize - 2 * offset;
-                } else {
-                    xx = x + offset + scrollPosAccordingToScrollBounds;
-                    yy = y + offset;
-                    ww = barSize - 2 * offset;
-                    hh = h - 2 * offset;
-                }
-
-                nvgBeginPath(context);
-                nvgRoundedRect(context, xx, yy, ww, hh, cornerRadius);
-                nvgFillColor(context, rgba(scrollColor, colorA));
-                nvgFill(context);
-            }
+            // draw scroll button
+            drawScrollButton(scrollBar, context, x, y, w, h, visibleAmount, minValue, maxValue, diff, offset, curValue, vertical, scrollColor, cornerRadius);
 
             // draw border
             renderBorder(scrollBar, leguiContext);
 
         }
         resetScissor(context);
+    }
+
+    private void drawScrollBackground(ScrollBar scrollBar, long context, Vector2f pos, Vector2f size, float x, float y, float w, float h, boolean arrowsEnabled, float diff, boolean vertical, Vector4f scrollBarBackgroundColor, float cornerRadius) {
+        float lx,
+              ly,
+              wx,
+              hy;
+        if (vertical) {
+            lx = x;
+            ly = y + diff;
+            wx = w;
+            hy = h - 2 * diff;
+        } else {
+            lx = x + diff;
+            ly = y;
+            wx = w - 2 * diff;
+            hy = h;
+        }
+
+        nvgBeginPath(context);
+        nvgRoundedRect(context, lx, ly, wx, hy, arrowsEnabled ? 0 : cornerRadius);
+        nvgFillColor(context, rgba(scrollBarBackgroundColor, colorA));
+        nvgFill(context);
+
+        if (arrowsEnabled) {
+            drawArrows(context, scrollBar, pos, size);
+        }
+    }
+
+    private void drawScrollButton(ScrollBar scrollBar, long context, float x, float y, float w, float h, float visibleAmount, float minValue, float maxValue, float diff, float offset, float curValue, boolean vertical, Vector4f scrollColor, float cornerRadius) {
+        float scrollBarSize           = (vertical ? scrollBar.getSize().y : scrollBar.getSize().x) - 2 * diff;
+        float scrollBarPercentageSize = visibleAmount / (maxValue - minValue);
+        float barSize                 = scrollBarSize * scrollBarPercentageSize;
+        if (barSize < ScrollBar.MIN_SCROLL_SIZE) barSize = ScrollBar.MIN_SCROLL_SIZE;
+        float rangeToScroll                    = scrollBarSize - barSize;
+        float scrollPosAccordingToScrollBounds = diff + rangeToScroll * curValue / (maxValue - minValue);
+
+        float xx,
+              yy,
+              ww,
+              hh;
+        if (vertical) {
+            xx = x + offset;
+            yy = y + offset + scrollPosAccordingToScrollBounds;
+            ww = w - 2 * offset;
+            hh = barSize - 2 * offset;
+        } else {
+            xx = x + offset + scrollPosAccordingToScrollBounds;
+            yy = y + offset;
+            ww = barSize - 2 * offset;
+            hh = h - 2 * offset;
+        }
+
+        nvgBeginPath(context);
+        nvgRoundedRect(context, xx, yy, ww, hh, cornerRadius);
+        nvgFillColor(context, rgba(scrollColor, colorA));
+        nvgFill(context);
     }
 
     private void drawArrows(long context, ScrollBar scrollBar, Vector2f pos, Vector2f size) {
