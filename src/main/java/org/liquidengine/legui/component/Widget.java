@@ -478,7 +478,7 @@ public class Widget extends Container<Component> {
                 .toString();
     }
 
-    public interface WidgetCloseEventListener extends EventListener<WidgetCloseEvent> {
+    public interface WidgetCloseEventListener<T extends WidgetCloseEvent> extends EventListener<T> {
         void process(WidgetCloseEvent event);
     }
 

@@ -129,8 +129,14 @@ public class Dialog extends Widget {
         }
     }
 
+    /**
+     * Dialog layer used to hold dialog window.
+     */
     public static class DialogLayer extends Layer<Dialog> {
 
+        /**
+         * Default constructor of dialog layer.
+         */
         public DialogLayer() {
             setEventPassable(false);
             setEventReceivable(true);
@@ -138,7 +144,18 @@ public class Dialog extends Widget {
         }
     }
 
-    public class DialogCloseEventListener implements WidgetCloseEventListener {
+    /**
+     * Close event listener for dialog.
+     * When dialog closed dialog layer with dialog
+     * should be removed from frame.
+     */
+    public class DialogCloseEventListener implements WidgetCloseEventListener<WidgetCloseEvent> {
+
+        /**
+         * Used to process {@link WidgetCloseEvent} event.
+         *
+         * @param event event to process.
+         */
         @Override
         public void process(WidgetCloseEvent event) {
             closeDialog();
