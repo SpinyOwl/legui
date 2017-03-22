@@ -121,6 +121,11 @@ public class Widget extends Container<Component> {
         initialize(title);
     }
 
+    /**
+     * This method used to initialize widget.
+     *
+     * @param title title to set.
+     */
     private void initialize(String title) {
         this.titleContainer = new Panel();
         this.titleContainer.getSize().y = INITIAL_TITLE_HEIGHT;
@@ -180,6 +185,9 @@ public class Widget extends Container<Component> {
         resize();
     }
 
+    /**
+     * Used to resize widget container and title elements.
+     */
     public void resize() {
         float titHei = titleContainer.getSize().y;
         if (titleContainer.isVisible()) {
@@ -214,6 +222,11 @@ public class Widget extends Container<Component> {
         }
     }
 
+    /**
+     * Used to set size of widget.
+     *
+     * @param size size vector.
+     */
     @Override
     public void setSize(Vector2f size) {
         if (!minimized) {
@@ -222,6 +235,12 @@ public class Widget extends Container<Component> {
         }
     }
 
+    /**
+     * Used to set size of widget.
+     *
+     * @param width  width to set.
+     * @param height height to set.
+     */
     @Override
     public void setSize(float width, float height) {
         if (!minimized) {
@@ -230,29 +249,59 @@ public class Widget extends Container<Component> {
         }
     }
 
+    /**
+     * Returns height of title.
+     *
+     * @return height of title.
+     */
     public float getTitleHeight() {
         return title.getSize().y;
     }
 
+    /**
+     * Used to set title height.
+     *
+     * @param titleHeight title height to set.
+     */
     public void setTitleHeight(float titleHeight) {
         this.title.getSize().y = titleHeight;
         resize();
     }
 
+    /**
+     * Returns true if title enabled.
+     *
+     * @return true if title enabled.
+     */
     public boolean isTitleEnabled() {
         return titleContainer.isVisible();
     }
 
+    /**
+     * Used to set title enabled or not.
+     *
+     * @param titleEnabled title state (enable or not) to set.
+     */
     public void setTitleEnabled(boolean titleEnabled) {
         if (minimized) return;
         this.titleContainer.setVisible(titleEnabled);
         resize();
     }
 
+    /**
+     * Returns true if widget should be closeable.
+     *
+     * @return true if widget should be closeable.
+     */
     public boolean isCloseable() {
         return closeButton.isVisible();
     }
 
+    /**
+     * Used to set would widget closeable or not.
+     *
+     * @param closeable widget state (closeable or not) to set.
+     */
     public void setCloseable(boolean closeable) {
         this.closeButton.setVisible(closeable);
         resize();
@@ -276,51 +325,111 @@ public class Widget extends Container<Component> {
         return minimizeButton;
     }
 
+    /**
+     * Returns title container. Can be used to customize widget.
+     *
+     * @return title container.
+     */
     public Container getTitleContainer() {
         return titleContainer;
     }
 
+    /**
+     * Returns background color of title container.
+     *
+     * @return background color of title container.
+     */
     public Vector4f getTitleBackgroundColor() {
         return titleContainer.getBackgroundColor();
     }
 
+    /**
+     * Used to set title background color.
+     *
+     * @param titleBackgroundColor title background color to set.
+     */
     public void setTitleBackgroundColor(Vector4f titleBackgroundColor) {
         this.titleContainer.setBackgroundColor(titleBackgroundColor);
     }
 
+    /**
+     * Returns title text state.
+     *
+     * @return title text state.
+     */
     public TextState getTitleTextState() {
         return title.getTextState();
     }
 
+    /**
+     * Returns close button text color.
+     *
+     * @return close button text color.
+     */
     public Vector4f getCloseButtonColor() {
         return closeButton.getTextState().getTextColor();
     }
 
+    /**
+     * Used to set close button text color.
+     *
+     * @param closeButtonColor close button text color to set.
+     */
     public void setCloseButtonColor(Vector4f closeButtonColor) {
         this.closeButton.getTextState().setTextColor(closeButtonColor);
     }
 
+    /**
+     * Returns close button background color.
+     *
+     * @return close button background color.
+     */
     public Vector4f getCloseButtonBackgroundColor() {
         return this.closeButton.getBackgroundColor();
     }
 
+    /**
+     * Used to set close button background color.
+     *
+     * @param closeButtonBackgroundColor close button background color to set.
+     */
     public void setCloseButtonBackgroundColor(Vector4f closeButtonBackgroundColor) {
         this.closeButton.setBackgroundColor(closeButtonBackgroundColor);
     }
 
+    /**
+     * Returns widget container that hold all other elements. Should be used to add components.
+     *
+     * @return widget container.
+     */
     public Container getContainer() {
         return container;
     }
 
+    /**
+     * Used to set widget container.
+     *
+     * @param container widget container to set.
+     */
     public void setContainer(Container container) {
         this.remove(this.container);
         this.add(this.container = container);
     }
 
+    /**
+     * Returns true if widget could be dragged.
+     *
+     * @return true if widget could be dragged.
+     */
     public boolean isDraggable() {
         return draggable;
     }
 
+    /**
+     * Used to set widget draggable or not.
+     *
+     * @param draggable new draggable state of widget.
+     */
     public void setDraggable(boolean draggable) {
         if (this.draggable != draggable) {
             if (draggable) {
@@ -332,10 +441,20 @@ public class Widget extends Container<Component> {
         }
     }
 
+    /**
+     * Returns true if widget could be minimized (minimize button is visible).
+     *
+     * @return true if widget could be minimized (minimize button is visible).
+     */
     public boolean isMinimizable() {
         return minimizeButton.isVisible();
     }
 
+    /**
+     * Used to make minimize button visible or not.
+     *
+     * @param minimizable new minimizable state of widget.
+     */
     public void setMinimizable(boolean minimizable) {
         this.minimizeButton.setVisible(minimizable);
         resize();
@@ -366,6 +485,9 @@ public class Widget extends Container<Component> {
         }
     }
 
+    /**
+     * Used to minimize widget.
+     */
     private void minimize() {
         if (isTitleEnabled()) {
             Vector2f size = getSize();
@@ -375,6 +497,9 @@ public class Widget extends Container<Component> {
         }
     }
 
+    /**
+     * Used to maximize widget.
+     */
     private void maximize() {
         if (isTitleEnabled()) {
             getSize().set(maximizedSize);
@@ -382,33 +507,66 @@ public class Widget extends Container<Component> {
         }
     }
 
+    /**
+     * Returns close icon that used by close button.
+     *
+     * @return close icon that used by close button.
+     */
     public Icon getCloseIcon() {
         return closeIcon;
     }
 
+    /**
+     * Used to set close icon to close button.
+     *
+     * @param closeIcon close icon to set.
+     */
     public void setCloseIcon(Icon closeIcon) {
         this.closeIcon = closeIcon;
         updateIcons();
     }
 
+    /**
+     * Returns maximize icon that used by minimize button.
+     *
+     * @return maximize icon that used by minimize button.
+     */
     public Icon getMaximizeIcon() {
         return maximizeIcon;
     }
 
+    /**
+     * Used to set maximize icon to minimize button.
+     *
+     * @param maximizeIcon maximize icon to set.
+     */
     public void setMaximizeIcon(Icon maximizeIcon) {
         this.maximizeIcon = maximizeIcon;
         updateIcons();
     }
 
+    /**
+     * Returns minimize icon that used by minimize button.
+     *
+     * @return minimize icon that used by minimize button.
+     */
     public Icon getMinimizeIcon() {
         return minimizeIcon;
     }
 
+    /**
+     * Used to set minimize icon to minimize button.
+     *
+     * @param minimizeIcon minimize icon to set.
+     */
     public void setMinimizeIcon(Icon minimizeIcon) {
         this.minimizeIcon = minimizeIcon;
         updateIcons();
     }
 
+    /**
+     * Used to update icons of close and minimize buttons.
+     */
     private void updateIcons() {
         closeButton.setBackgroundIcon(closeIcon);
         minimizeButton.setBackgroundIcon(minimized ? maximizeIcon : minimizeIcon);
@@ -526,7 +684,6 @@ public class Widget extends Container<Component> {
         public void process(MouseClickEvent event) {
             if (CLICK == event.getAction()) {
                 boolean newValue = !Widget.this.isMinimized();
-//                Widget.this.minimizeButton.getTextState().setText(newValue ? MAXIMIZE_ICON_STRING : MINIMIZE_ICON_STRING);
                 Widget.this.minimizeButton.setBackgroundIcon(newValue ? maximizeIcon : minimizeIcon);
                 Widget.this.setMinimized(newValue);
             }

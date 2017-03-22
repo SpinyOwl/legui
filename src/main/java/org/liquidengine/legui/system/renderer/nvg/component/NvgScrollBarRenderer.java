@@ -71,7 +71,7 @@ public class NvgScrollBarRenderer extends NvgComponentRenderer<ScrollBar> {
             nvgFill(context);
 
             // draw scroll bar back
-            drawScrollBackground(scrollBar, context, pos, size, x, y, w, h, arrowsEnabled, diff, vertical, scrollBarBackgroundColor, cornerRadius);
+            drawScrollBackground(scrollBar, context, x, y, w, h, arrowsEnabled, diff, vertical, scrollBarBackgroundColor, cornerRadius);
 
             // draw scroll button
             drawScrollButton(scrollBar, context, x, y, w, h, visibleAmount, minValue, maxValue, diff, offset, curValue, vertical, scrollColor, cornerRadius);
@@ -83,7 +83,7 @@ public class NvgScrollBarRenderer extends NvgComponentRenderer<ScrollBar> {
         resetScissor(context);
     }
 
-    private void drawScrollBackground(ScrollBar scrollBar, long context, Vector2f pos, Vector2f size, float x, float y, float w, float h, boolean arrowsEnabled, float diff, boolean vertical, Vector4f scrollBarBackgroundColor, float cornerRadius) {
+    private void drawScrollBackground(ScrollBar scrollBar, long context, float x, float y, float w, float h, boolean arrowsEnabled, float diff, boolean vertical, Vector4f scrollBarBackgroundColor, float cornerRadius) {
         float lx,
               ly,
               wx,
@@ -106,11 +106,17 @@ public class NvgScrollBarRenderer extends NvgComponentRenderer<ScrollBar> {
         nvgFill(context);
 
         if (arrowsEnabled) {
-            drawArrows(context, scrollBar, pos, size);
+            drawArrows(context, scrollBar, x, y, w, h);
         }
     }
 
-    private void drawScrollButton(ScrollBar scrollBar, long context, float x, float y, float w, float h, float visibleAmount, float minValue, float maxValue, float diff, float offset, float curValue, boolean vertical, Vector4f scrollColor, float cornerRadius) {
+    private void drawScrollButton(ScrollBar scrollBar,
+                                  long context,
+                                  float x, float y, float w, float h,
+                                  float visibleAmount, float minValue,
+                                  float maxValue, float diff, float offset,
+                                  float curValue, boolean vertical,
+                                  Vector4f scrollColor, float cornerRadius) {
         float scrollBarSize           = (vertical ? scrollBar.getSize().y : scrollBar.getSize().x) - 2 * diff;
         float scrollBarPercentageSize = visibleAmount / (maxValue - minValue);
         float barSize                 = scrollBarSize * scrollBarPercentageSize;
@@ -140,7 +146,7 @@ public class NvgScrollBarRenderer extends NvgComponentRenderer<ScrollBar> {
         nvgFill(context);
     }
 
-    private void drawArrows(long context, ScrollBar scrollBar, Vector2f pos, Vector2f size) {
+    private void drawArrows(long context, ScrollBar scrollBar, float x, float y, float w, float h) {
         boolean  vertical   = VERTICAL.equals(scrollBar.getOrientation());
         Vector4f arrowColor = scrollBar.getArrowColor();
         float    arrowSize  = scrollBar.getArrowSize();
@@ -155,25 +161,25 @@ public class NvgScrollBarRenderer extends NvgComponentRenderer<ScrollBar> {
         String first,
                 second;
         if (vertical) {
-            x1 = pos.x;
-            y1 = pos.y;
-            w1 = size.x;
+            x1 = x;
+            y1 = y;
+            w1 = w;
             h1 = arrowSize;
-            x2 = pos.x;
-            y2 = pos.y + size.y - arrowSize;
-            w2 = size.x;
+            x2 = x;
+            y2 = y + h - arrowSize;
+            w2 = w;
             h2 = arrowSize;
             first = T;
             second = B;
         } else {
-            x1 = pos.x;
-            y1 = pos.y;
+            x1 = x;
+            y1 = y;
             w1 = arrowSize;
-            h1 = size.y;
-            x2 = pos.x + size.x - arrowSize;
-            y2 = pos.y;
+            h1 = h;
+            x2 = x + w - arrowSize;
+            y2 = y;
             w2 = arrowSize;
-            h2 = size.y;
+            h2 = h;
             first = L;
             second = R;
         }

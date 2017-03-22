@@ -6,23 +6,41 @@ import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.system.context.Context;
 
 /**
- * Created by Aliaksandr_Shcherbin on 2/10/2017.
+ * Focus event. Occurs when component receive or lose focus.
  */
 public class FocusEvent<T extends Component> extends Event<T> {
 
     private final boolean   focused;
     private final Component nextFocus;
 
+    /**
+     * Used to create focus event.
+     *
+     * @param component event receiver.
+     * @param context   context.
+     * @param nextFocus focus receiver.
+     * @param focused   state of component.
+     */
     public FocusEvent(T component, Context context, Component nextFocus, boolean focused) {
         super(component, context);
         this.focused = focused;
         this.nextFocus = nextFocus;
     }
 
+    /**
+     * Returns true if component receive focus.
+     *
+     * @return true if component receive focus.
+     */
     public boolean isFocused() {
         return focused;
     }
 
+    /**
+     * Returns component which received focus.
+     *
+     * @return component which received focus.
+     */
     public Component getNextFocus() {
         return nextFocus;
     }

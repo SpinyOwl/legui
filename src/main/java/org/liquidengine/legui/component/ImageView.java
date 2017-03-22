@@ -33,6 +33,9 @@ public class ImageView extends Controller {
         initialize();
     }
 
+    /**
+     * This method used to initialize image view component.
+     */
     private void initialize() {
         Theme.getDefaultTheme().getThemeManager().getComponentTheme(ImageView.class).applyAll(this);
     }
