@@ -4,6 +4,7 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+import org.joml.Vector2f;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.event.CharEvent;
 import org.liquidengine.legui.event.KeyEvent;
@@ -14,105 +15,232 @@ import org.liquidengine.legui.listener.KeyEventListener;
 import org.liquidengine.legui.listener.MouseClickEventListener;
 import org.liquidengine.legui.listener.MouseDragEventListener;
 import org.liquidengine.legui.system.context.Context;
-import org.liquidengine.legui.theme.Theme;
+import org.liquidengine.legui.theme.Themes;
 
 import static org.liquidengine.legui.input.Mouse.MouseButton.MOUSE_BUTTON_LEFT;
 import static org.liquidengine.legui.util.TextUtil.*;
 import static org.lwjgl.glfw.GLFW.*;
 
 /**
- * Created by Aliaksandr_Shcherbin on 2/6/2017.
+ * Text input is a single line text component which can be used to enter text.
  */
 public class TextInput extends Controller implements TextComponent {
+
+    /**
+     * Used to store text state of text input.
+     */
     protected TextState textState;
 
-    protected int caretPosition;
-    protected int mouseCaretPosition;
+    /**
+     * Used to store caret position in text.
+     */
+    private int caretPosition;
 
-    protected int startSelectionIndex;
-    protected int endSelectionIndex;
+    /**
+     * Used to store caret position calculated on mouse position base.
+     * Updated by renderers.
+     */
+    private int mouseCaretPosition;
 
-    protected boolean editable = true;
-    private TextInputKeyEventListener        keyEventListener;
-    private TextInputMouseClickEventListener mouseClickEventListener;
-    private TextInputDragEventListener       dragEventListener;
-    private TextInputCharEventListener       charEventListener;
+    /**
+     * Used to store start selection index.
+     */
+    private int startSelectionIndex;
 
+    /**
+     * Used to store end selection index.
+     */
+    private int endSelectionIndex;
+
+    /**
+     * Used to store text input editable state. If true then text could be updated by user input.
+     */
+    private boolean editable = true;
+
+    /**
+     * Default constructor. Used to create component instance without any parameters.
+     * <p>
+     * Also if you want to make it easy to use with
+     * Json marshaller/unmarshaller component should contain empty constructor.
+     */
     public TextInput() {
-        initialize("TextInput");
+        initialize("");
     }
 
+    /**
+     * Constructor with position and size parameters.
+     *
+     * @param x      x position position in parent component.
+     * @param y      y position position in parent component.
+     * @param width  width of component.
+     * @param height height of component.
+     */
     public TextInput(float x, float y, float width, float height) {
         super(x, y, width, height);
-        initialize("TextInput");
+        initialize("");
     }
 
+    /**
+     * Constructor with position and size parameters.
+     *
+     * @param position position position in parent component.
+     * @param size     size of component.
+     */
+    public TextInput(Vector2f position, Vector2f size) {
+        super(position, size);
+        initialize("");
+    }
+
+    /**
+     * Default constructor with text to set.
+     * <p>
+     * Also if you want to make it easy to use with
+     * Json marshaller/unmarshaller component should contain empty constructor.
+     *
+     * @param text text to set.
+     */
+    public TextInput(String text) {
+        initialize(text);
+    }
+
+    /**
+     * Constructor with text, position and size parameters.
+     *
+     * @param text   text to set.
+     * @param x      x position position in parent component.
+     * @param y      y position position in parent component.
+     * @param width  width of component.
+     * @param height height of component.
+     */
     public TextInput(String text, float x, float y, float width, float height) {
         super(x, y, width, height);
         initialize(text);
     }
 
-    public TextInput(String text) {
+    /**
+     * Constructor with text, position and size parameters.
+     *
+     * @param text     text to set.
+     * @param position position position in parent component.
+     * @param size     size of component.
+     */
+    public TextInput(String text, Vector2f position, Vector2f size) {
+        super(position, size);
         initialize(text);
     }
 
-    public int getMouseCaretPosition() {
-        return mouseCaretPosition;
-    }
-
-    public void setMouseCaretPosition(int mouseCaretPosition) {
-        this.mouseCaretPosition = mouseCaretPosition;
-    }
-
+    /**
+     * Used to initialize text input.
+     *
+     * @param text text to set.
+     */
     private void initialize(String text) {
         textState = new TextState(text);
         textState.getPadding().set(5, 1, 5, 1);
 
-        keyEventListener = new TextInputKeyEventListener();
-        mouseClickEventListener = new TextInputMouseClickEventListener();
-        dragEventListener = new TextInputDragEventListener();
-        charEventListener = new TextInputCharEventListener();
+        getListenerMap().addListener(KeyEvent.class, new TextInputKeyEventListener());
+        getListenerMap().addListener(MouseClickEvent.class, new TextInputMouseClickEventListener());
+        getListenerMap().addListener(MouseDragEvent.class, new TextInputDragEventListener());
+        getListenerMap().addListener(CharEvent.class, new TextInputCharEventListener());
 
-        getListenerMap().addListener(KeyEvent.class, keyEventListener);
-        getListenerMap().addListener(MouseClickEvent.class, mouseClickEventListener);
-        getListenerMap().addListener(MouseDragEvent.class, dragEventListener);
-        getListenerMap().addListener(CharEvent.class, charEventListener);
-
-        Theme.getDefaultTheme().getThemeManager().getComponentTheme(TextInput.class).applyAll(this);
+        Themes.getDefaultTheme().getThemeManager().getComponentTheme(TextInput.class).applyAll(this);
     }
 
+    /**
+     * Returns mouse caret position.
+     *
+     * @return mouse caret position.
+     */
+    public int getMouseCaretPosition() {
+        return mouseCaretPosition;
+    }
+
+    /**
+     * Used to set mouse caret position.
+     *
+     * @param mouseCaretPosition mouse caret position to set.
+     */
+    public void setMouseCaretPosition(int mouseCaretPosition) {
+        this.mouseCaretPosition = mouseCaretPosition;
+    }
+
+    /**
+     * Returns true if text is editable.
+     *
+     * @return true if text is editable.
+     */
     public boolean isEditable() {
         return editable;
     }
 
+    /**
+     * Used to set editable text or not.
+     *
+     * @param editable editable text or not.
+     */
     public void setEditable(boolean editable) {
         this.editable = editable;
     }
 
+    /**
+     * Returns caret position.
+     *
+     * @return caret position.
+     */
     public int getCaretPosition() {
         return caretPosition;
     }
 
+    /**
+     * Used to set caret position.
+     *
+     * @param caretPosition caret position to set.
+     */
     public void setCaretPosition(int caretPosition) {
         this.caretPosition = caretPosition;
     }
 
+    /**
+     * Returns start selection index.
+     *
+     * @return start selection index.
+     */
     public int getStartSelectionIndex() {
         return startSelectionIndex;
     }
 
+    /**
+     * Used to set start selection index.
+     *
+     * @param startSelectionIndex start selection index to set.
+     */
     public void setStartSelectionIndex(int startSelectionIndex) {
         this.startSelectionIndex = startSelectionIndex;
     }
 
+    /**
+     * Returns end selection index.
+     *
+     * @return end selection index.
+     */
     public int getEndSelectionIndex() {
         return endSelectionIndex;
     }
 
+    /**
+     * Used to set end selection index.
+     *
+     * @param endSelectionIndex end selection index to set.
+     */
     public void setEndSelectionIndex(int endSelectionIndex) {
         this.endSelectionIndex = endSelectionIndex;
     }
 
+    /**
+     * Returns selected text.
+     *
+     * @return selected text.
+     */
     public String getSelection() {
         if (startSelectionIndex < 0 || endSelectionIndex < 0) return null;
         String selection;
@@ -178,8 +306,16 @@ public class TextInput extends Controller implements TextComponent {
                 .toHashCode();
     }
 
+    /**
+     * Key event listener. Used to provide some text operations by keyboard.
+     */
     public static class TextInputKeyEventListener implements KeyEventListener {
 
+        /**
+         * Used to process {@link KeyEvent}.
+         *
+         * @param event event to process.
+         */
         @Override
         public void process(KeyEvent event) {
             TextInput gui           = (TextInput) event.getComponent();
@@ -225,6 +361,8 @@ public class TextInput extends Controller implements TextComponent {
                     gui.setEndSelectionIndex(start);
                     glfwSetClipboardString(leguiContext.getGlfwWindow(), s);
                 }
+            } else {
+                copyAction(gui, leguiContext);
             }
         }
 
@@ -342,12 +480,20 @@ public class TextInput extends Controller implements TextComponent {
 
         @Override
         public boolean equals(Object obj) {
-            return true;
+            return obj == this || obj instanceof TextInputKeyEventListener;
         }
     }
 
+    /**
+     * Mouse click event listener for text input. Used to update caret position.
+     */
     public static class TextInputMouseClickEventListener implements MouseClickEventListener {
 
+        /**
+         * Used to process {@link MouseClickEvent}.
+         *
+         * @param event event to process.
+         */
         @Override
         public void process(MouseClickEvent event) {
             TextInput gui                = (TextInput) event.getComponent();
@@ -361,10 +507,13 @@ public class TextInput extends Controller implements TextComponent {
 
         @Override
         public boolean equals(Object obj) {
-            return true;
+            return (obj != null) && ((obj == this) || ((obj != this) && (obj.getClass() == this.getClass())));
         }
     }
 
+    /**
+     * Mouse drag event listener for text input. Used to update selection indices.
+     */
     public static class TextInputDragEventListener implements MouseDragEventListener {
 
         @Override
@@ -379,12 +528,20 @@ public class TextInput extends Controller implements TextComponent {
 
         @Override
         public boolean equals(Object obj) {
-            return true;
+            return (obj != null) && ((obj == this) || ((obj != this) && (obj.getClass() == this.getClass())));
         }
     }
 
+    /**
+     * Char event listener for text input. Used to fill text area with symbols entered via keyboard.
+     */
     public static class TextInputCharEventListener implements CharEventListener {
 
+        /**
+         * Used to process {@link CharEvent}.
+         *
+         * @param event event to process.
+         */
         @Override
         public void process(CharEvent event) {
             TextInput textInput = (TextInput) event.getComponent();
@@ -414,7 +571,7 @@ public class TextInput extends Controller implements TextComponent {
 
         @Override
         public boolean equals(Object obj) {
-            return true;
+            return (obj != null) && ((obj == this) || ((obj != this) && (obj.getClass() == this.getClass())));
         }
     }
 }

@@ -45,9 +45,8 @@ public abstract class AbstractGsonMarshaller<T> implements JsonMarshaller<T> {
 
     @Override
     public final T unmarshal(String jsonString, JsonMarshalContext context) throws LeguiException {
-        JsonParser parser    = new JsonParser();
-        T          component = unmarshal(parser.parse(jsonString), (GsonMarshalContext) context);
-        return component;
+        JsonParser parser = new JsonParser();
+        return unmarshal(parser.parse(jsonString), (GsonMarshalContext) context);
     }
 
     public final T unmarshal(JsonElement json, GsonMarshalContext context) {

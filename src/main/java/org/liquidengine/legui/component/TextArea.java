@@ -15,7 +15,7 @@ import org.liquidengine.legui.listener.KeyEventListener;
 import org.liquidengine.legui.listener.MouseClickEventListener;
 import org.liquidengine.legui.listener.MouseDragEventListener;
 import org.liquidengine.legui.system.context.Context;
-import org.liquidengine.legui.theme.Theme;
+import org.liquidengine.legui.theme.Themes;
 
 import static org.liquidengine.legui.input.Mouse.MouseButton.MOUSE_BUTTON_LEFT;
 import static org.liquidengine.legui.util.TextUtil.*;
@@ -90,7 +90,7 @@ public class TextArea extends Controller implements TextComponent {
     }
 
     /**
-     * Default constructor. Used to create component instance without any parameters.
+     * Default constructor with text.
      * <p>
      * Also if you want to make it easy to use with
      * Json marshaller/unmarshaller component should contain empty constructor.
@@ -102,7 +102,7 @@ public class TextArea extends Controller implements TextComponent {
     }
 
     /**
-     * Constructor with position and size parameters.
+     * Constructor with text, position and size parameters.
      *
      * @param text   text to set.
      * @param x      x position position in parent component.
@@ -116,7 +116,7 @@ public class TextArea extends Controller implements TextComponent {
     }
 
     /**
-     * Constructor with position and size parameters.
+     * Constructor with text, position and size parameters.
      *
      * @param text     text to set.
      * @param position position position in parent component.
@@ -141,7 +141,7 @@ public class TextArea extends Controller implements TextComponent {
         getListenerMap().addListener(KeyEvent.class, new TextAreaKeyEventListener());
         getListenerMap().addListener(CharEvent.class, new TextAreaCharEventListener());
 
-        Theme.getDefaultTheme().getThemeManager().getComponentTheme(TextArea.class).applyAll(this);
+        Themes.getDefaultTheme().getThemeManager().getComponentTheme(TextArea.class).applyAll(this);
     }
 
     /**
@@ -326,7 +326,7 @@ public class TextArea extends Controller implements TextComponent {
 
         @Override
         public boolean equals(Object obj) {
-            return true;
+            return (obj != null) && ((obj == this) || ((obj != this) && (obj.getClass() == this.getClass())));
         }
     }
 
@@ -353,7 +353,7 @@ public class TextArea extends Controller implements TextComponent {
 
         @Override
         public boolean equals(Object obj) {
-            return true;
+            return (obj != null) && ((obj == this) || ((obj != this) && (obj.getClass() == this.getClass())));
         }
     }
 
@@ -612,7 +612,7 @@ public class TextArea extends Controller implements TextComponent {
 
         @Override
         public boolean equals(Object obj) {
-            return true;
+            return (obj != null) && ((obj == this) || ((obj != this) && (obj.getClass() == this.getClass())));
         }
 
         private static class LineData {
@@ -665,7 +665,7 @@ public class TextArea extends Controller implements TextComponent {
 
         @Override
         public boolean equals(Object obj) {
-            return true;
+            return (obj != null) && ((obj == this) || ((obj != this) && (obj.getClass() == this.getClass())));
         }
     }
 }

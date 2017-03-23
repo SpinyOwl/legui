@@ -85,9 +85,9 @@ public class NvgScrollBarRenderer extends NvgComponentRenderer<ScrollBar> {
 
     private void drawScrollBackground(ScrollBar scrollBar, long context, float x, float y, float w, float h, boolean arrowsEnabled, float diff, boolean vertical, Vector4f scrollBarBackgroundColor, float cornerRadius) {
         float lx,
-              ly,
-              wx,
-              hy;
+                ly,
+                wx,
+                hy;
         if (vertical) {
             lx = x;
             ly = y + diff;
@@ -125,9 +125,9 @@ public class NvgScrollBarRenderer extends NvgComponentRenderer<ScrollBar> {
         float scrollPosAccordingToScrollBounds = diff + rangeToScroll * curValue / (maxValue - minValue);
 
         float xx,
-              yy,
-              ww,
-              hh;
+                yy,
+                ww,
+                hh;
         if (vertical) {
             xx = x + offset;
             yy = y + offset + scrollPosAccordingToScrollBounds;
@@ -151,13 +151,13 @@ public class NvgScrollBarRenderer extends NvgComponentRenderer<ScrollBar> {
         Vector4f arrowColor = scrollBar.getArrowColor();
         float    arrowSize  = scrollBar.getArrowSize();
         float x1,
-              y1,
-              w1,
-              h1,
-              x2,
-              y2,
-              w2,
-              h2;
+                y1,
+                w1,
+                h1,
+                x2,
+                y2,
+                w2,
+                h2;
         String first,
                 second;
         if (vertical) {
@@ -190,7 +190,7 @@ public class NvgScrollBarRenderer extends NvgComponentRenderer<ScrollBar> {
         drawRectangle(context, arrowColor, x2, y2, w2, h2);
 
 
-        float fontSize = 0;
+        float fontSize;
         if (vertical) {
             fontSize = arrowSize > w1 ? w1 : arrowSize;
         } else {

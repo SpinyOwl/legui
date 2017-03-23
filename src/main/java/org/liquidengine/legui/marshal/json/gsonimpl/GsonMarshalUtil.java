@@ -49,12 +49,9 @@ public final class GsonMarshalUtil {
 
     public static <T> AbstractGsonMarshaller<T> getGsonMarshaller(String className, String shortTypeName) {
         AbstractGsonMarshaller<T> marshaller = null;
-        String                    type       = null;
-        if (type == null) {
-            type = className;
-            if (type != null) {
-                marshaller = GsonMarshalRegistry.getRegistry().getMarshaller(type);
-            }
+        String                    type       = className;
+        if (type != null) {
+            marshaller = GsonMarshalRegistry.getRegistry().getMarshaller(type);
         }
         if (type == null) {
             type = shortTypeName;

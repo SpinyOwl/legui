@@ -71,7 +71,7 @@ public class Layer<T extends Component> {
      * @param frame frame to attach.
      */
     protected void setFrame(Frame frame) {
-        if (!frame.getAllLayers().contains(this)) {
+        if (!frame.containsLayer(this)) {
             frame.addLayer(this);
         }
         this.frame = frame;

@@ -12,7 +12,7 @@ import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.icon.CharIcon;
 import org.liquidengine.legui.icon.Icon;
 import org.liquidengine.legui.listener.MouseClickEventListener;
-import org.liquidengine.legui.theme.Theme;
+import org.liquidengine.legui.theme.Themes;
 
 import static org.liquidengine.legui.event.MouseClickEvent.MouseClickAction.CLICK;
 import static org.liquidengine.legui.font.FontRegister.MATERIAL_ICONS_REGULAR;
@@ -113,7 +113,7 @@ public class CheckBox extends Controller implements TextComponent {
     /**
      * Used to initialize checkbox state.
      *
-     * @param text
+     * @param text text to set
      */
     private void initialize(String text) {
         this.textState = new TextState(text);
@@ -123,7 +123,7 @@ public class CheckBox extends Controller implements TextComponent {
         getListenerMap().addListener(MouseClickEvent.class, new CheckBoxMouseClickEventListener());
         iconChecked.setHorizontalAlign(HorizontalAlign.LEFT);
         iconUnchecked.setHorizontalAlign(HorizontalAlign.LEFT);
-        Theme.getDefaultTheme().getThemeManager().getComponentTheme(CheckBox.class).applyAll(this);
+        Themes.getDefaultTheme().getThemeManager().getComponentTheme(CheckBox.class).applyAll(this);
     }
 
     /**

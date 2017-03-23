@@ -7,7 +7,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 import org.liquidengine.legui.color.ColorConstants;
 import org.liquidengine.legui.component.optional.TextState;
-import org.liquidengine.legui.theme.Theme;
+import org.liquidengine.legui.theme.Themes;
 
 /**
  * Class represent single line non-editable text component.
@@ -92,7 +92,7 @@ public class Label extends Controller implements TextComponent {
         textState.setText(text);
         setBackgroundColor(ColorConstants.transparent());
         setBorder(null);
-        Theme.getDefaultTheme().getThemeManager().getComponentTheme(Label.class).applyAll(this);
+        Themes.getDefaultTheme().getThemeManager().getComponentTheme(Label.class).applyAll(this);
     }
 
     /**

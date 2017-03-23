@@ -63,7 +63,7 @@ public class DarkTheme extends Theme {
             super.applyAll(component);
             List<? extends Component> childs = component.getChilds();
             for (Component child : childs) {
-                Theme.getDefaultTheme().applyAll(child);
+                Themes.getDefaultTheme().applyAll(child);
             }
         }
     }
@@ -173,7 +173,7 @@ public class DarkTheme extends Theme {
             component.setTitleBackgroundColor(ColorConstants.lightBlack());
             component.getTitleTextState().setTextColor(ColorConstants.white());
 
-            Theme.getDefaultTheme().applyAll(component.getContainer());
+            Themes.getDefaultTheme().applyAll(component.getContainer());
         }
     }
 
@@ -183,7 +183,7 @@ public class DarkTheme extends Theme {
             super.applyAll(component);
             Tooltip tooltip = component.getTooltip();
             if (tooltip != null) {
-                Theme.getDefaultTheme().applyAll(tooltip);
+                Themes.getDefaultTheme().applyAll(tooltip);
             }
         }
     }
@@ -220,9 +220,9 @@ public class DarkTheme extends Theme {
         public void apply(T component) {
             super.apply(component);
             Container viewport = component.getViewport();
-            Theme.getDefaultTheme().apply(viewport);
-            Theme.getDefaultTheme().applyAll(component.getVerticalScrollBar());
-            Theme.getDefaultTheme().applyAll(component.getHorizontalScrollBar());
+            Themes.getDefaultTheme().apply(viewport);
+            Themes.getDefaultTheme().applyAll(component.getVerticalScrollBar());
+            Themes.getDefaultTheme().applyAll(component.getHorizontalScrollBar());
             viewport.setBorder(null);
             viewport.setBackgroundColor(ColorConstants.transparent());
         }
@@ -231,7 +231,7 @@ public class DarkTheme extends Theme {
         public void applyAll(T component) {
             super.applyAll(component);
             Container viewport = component.getViewport();
-            Theme.getDefaultTheme().applyAll(viewport);
+            Themes.getDefaultTheme().applyAll(viewport);
             viewport.setBorder(null);
             viewport.setBackgroundColor(ColorConstants.transparent());
         }
@@ -248,14 +248,14 @@ public class DarkTheme extends Theme {
             component.getSelectionButton().setBackgroundColor(ColorConstants.transparent());
             component.getSelectionButton().getTextState().setTextColor(ColorConstants.white());
 
-            Theme.getDefaultTheme().applyAll(component.getSelectionListPanel());
+            Themes.getDefaultTheme().applyAll(component.getSelectionListPanel());
         }
 
         @Override
         public void applyAll(T component) {
             super.applyAll(component);
 
-            Theme.getDefaultTheme().applyAll(component.getSelectionListPanel());
+            Themes.getDefaultTheme().applyAll(component.getSelectionListPanel());
         }
     }
 

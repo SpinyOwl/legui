@@ -5,7 +5,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
-import org.liquidengine.legui.theme.Theme;
+import org.liquidengine.legui.theme.Themes;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -65,7 +65,7 @@ public abstract class Container<T extends Component> extends Controller {
     }
 
     private void initialize() {
-        Theme.getDefaultTheme().getThemeManager().getComponentTheme(Container.class).applyAll(this);
+        Themes.getDefaultTheme().getThemeManager().getComponentTheme(Container.class).applyAll(this);
     }
 
     /**
@@ -96,7 +96,7 @@ public abstract class Container<T extends Component> extends Controller {
      * @see List#contains(Object)
      */
     public boolean contains(T component) {
-        return components.contains(component);
+        return isContains(component);
     }
 
     /**
@@ -118,9 +118,19 @@ public abstract class Container<T extends Component> extends Controller {
      * @see List#add(Object)
      */
     public boolean add(T component) {
-        if (component == null || component == this || components.contains(component)) return false;
+        if (component == null || component == this || isContains(component)) return false;
         changeParent(component);
         return components.add(component);
+    }
+
+    /**
+     * Used to check if component collection contains component or not. Checked by reference.
+     *
+     * @param component component to check
+     * @return true if collection contains provided component.
+     */
+    private boolean isContains(T component) {
+        return components.stream().anyMatch(c -> c == component);
     }
 
     /**
@@ -134,7 +144,7 @@ public abstract class Container<T extends Component> extends Controller {
         if (components != null) {
             List<T> toAdd = new ArrayList<>();
             components.forEach(component -> {
-                if (component != null && component != this && !this.components.contains(component)) {
+                if (component != null && component != this && !isContains(component)) {
                     changeParent(component);
                     toAdd.add(component);
                 }
@@ -168,7 +178,7 @@ public abstract class Container<T extends Component> extends Controller {
     public boolean remove(T component) {
         if (component != null) {
             Container parent = component.getParent();
-            if (parent != null && parent == this && components.contains(component)) {
+            if (parent != null && parent == this && isContains(component)) {
                 component.setParent(null);
                 return components.remove(component);
             }
@@ -275,7 +285,7 @@ public abstract class Container<T extends Component> extends Controller {
     /**
      * (non-Javadoc)
      *
-     * @param o
+     * @param o object to compare.
      * @see Object#equals(Object)
      */
     @Override

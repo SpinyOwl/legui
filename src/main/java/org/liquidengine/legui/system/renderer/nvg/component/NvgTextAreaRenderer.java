@@ -23,14 +23,14 @@ import static org.lwjgl.nanovg.NanoVG.*;
 import static org.lwjgl.system.MemoryUtil.*;
 
 /**
- * Created by ShchAlexander on 13.02.2017.
+ * NanoVG Text area renderer.
  */
 public class NvgTextAreaRenderer extends NvgComponentRenderer<TextArea> {
-    public static final String PRATIO   = "pratio";
-    public static final String POFFSETX = "poffsetx";
-    public static final String PHALIGN  = "phalign";
-    public static final String PVALIGN  = "pvalign";
-    public static final String POFFSETY = "poffsety";
+    private static final String PRATIO   = "pratio";
+    private static final String POFFSETX = "poffsetx";
+    private static final String PHALIGN  = "phalign";
+    private static final String PVALIGN  = "pvalign";
+    private static final String POFFSETY = "poffsety";
 
     private final Vector4f caretColor    = new Vector4f(0, 0, 0, 0.5f);
     private final int      maxGlyphCount = 2048;
@@ -54,7 +54,7 @@ public class NvgTextAreaRenderer extends NvgComponentRenderer<TextArea> {
             Vector4f  intersectRect = new Vector4f(pos.x + p.x, pos.y + p.y, size.x - p.x - p.z, size.y - p.y - p.w);
 
             intersectScissor(context, new Vector4f(intersectRect).sub(1, 1, -2, -2));
-            renderTextNew(leguiContext, context, component, size, intersectRect, bc);
+            renderText(leguiContext, context, component, size, intersectRect, bc);
         }
         resetScissor(context);
 
@@ -65,7 +65,7 @@ public class NvgTextAreaRenderer extends NvgComponentRenderer<TextArea> {
         resetScissor(context);
     }
 
-    private void renderTextNew(Context leguiContext, long context, TextArea gui, Vector2f size, Vector4f rect, Vector4f bc) {
+    private void renderText(Context leguiContext, long context, TextArea gui, Vector2f size, Vector4f rect, Vector4f bc) {
         TextState           textState      = gui.getTextState();
         String              text           = textState.getText();
         String              font           = textState.getFont();
@@ -160,7 +160,7 @@ public class NvgTextAreaRenderer extends NvgComponentRenderer<TextArea> {
         }
 
         // render selection background
-        renderselectionBackground(context, gui, fontSize, focused, highlightColor, lines, lineCount, lineStartIndeces, voffset, poffsetx, poffsety, bounds);
+        renderSelectionBackground(context, gui, fontSize, focused, highlightColor, lines, lineCount, lineStartIndeces, voffset, poffsetx, poffsety, bounds);
 
         // render every line of text
         for (int i = 0; i < lineCount; i++) {
@@ -236,11 +236,7 @@ public class NvgTextAreaRenderer extends NvgComponentRenderer<TextArea> {
                 }
 
                 // render current line background
-                if (i == caretLine && focused) {
-                    Vector4f currentLineBgColor = oppositeBlackOrWhite(bc);
-                    currentLineBgColor.w = 0.1f;
-                    drawRectangle(context, currentLineBgColor, rect.x, lineY, rect.z, fontSize);
-                }
+                renderCurrentLineBackground(context, rect, bc, fontSize, focused, caretLine, i, lineY);
 
                 renderTextLineToBounds(context, lineX, lineY, bounds[i][6], bounds[i][7], fontSize, font, textColor, line, HorizontalAlign.LEFT, VerticalAlign.MIDDLE, false);
                 if (i == caretLine && focused) {
@@ -264,7 +260,15 @@ public class NvgTextAreaRenderer extends NvgComponentRenderer<TextArea> {
         metadata.put(PHALIGN, halign);
     }
 
-    private void renderselectionBackground(long context, TextArea gui, float fontSize, boolean focused, Vector4f selectionColor, String[] lines, int lineCount, int[] lineStartIndeces, float voffset, Float poffsetx, Float poffsety, float[][] bounds) {
+    private void renderCurrentLineBackground(long context, Vector4f rect, Vector4f bc, float fontSize, boolean focused, int caretLine, int i, float lineY) {
+        if (i == caretLine && focused) {
+            Vector4f currentLineBgColor = oppositeBlackOrWhite(bc);
+            currentLineBgColor.w = 0.1f;
+            drawRectangle(context, currentLineBgColor, rect.x, lineY, rect.z, fontSize);
+        }
+    }
+
+    private void renderSelectionBackground(long context, TextArea gui, float fontSize, boolean focused, Vector4f selectionColor, String[] lines, int lineCount, int[] lineStartIndeces, float voffset, Float poffsetx, Float poffsety, float[][] bounds) {
         if (focused) {
             int startSelectionIndex = gui.getStartSelectionIndex();
             int endSelectionIndex   = gui.getEndSelectionIndex();

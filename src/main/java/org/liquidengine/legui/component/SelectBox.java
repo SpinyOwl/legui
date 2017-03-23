@@ -13,7 +13,7 @@ import org.liquidengine.legui.input.Mouse;
 import org.liquidengine.legui.listener.FocusEventListener;
 import org.liquidengine.legui.listener.MouseClickEventListener;
 import org.liquidengine.legui.listener.ScrollEventListener;
-import org.liquidengine.legui.theme.Theme;
+import org.liquidengine.legui.theme.Themes;
 
 import java.util.List;
 import java.util.Objects;
@@ -137,7 +137,7 @@ public class SelectBox extends Container {
         selectionButton.getListenerMap().getListeners(FocusEvent.class).add(focusEventListener);
         expandButton.getListenerMap().getListeners(FocusEvent.class).add(focusEventListener);
 
-        Theme.getDefaultTheme().getThemeManager().getComponentTheme(SelectBox.class).applyAll(this);
+        Themes.getDefaultTheme().getThemeManager().getComponentTheme(SelectBox.class).applyAll(this);
 
         resize();
     }
@@ -405,7 +405,7 @@ public class SelectBox extends Container {
     /**
      * (non-Javadoc)
      *
-     * @param o
+     * @param o object to compare.
      * @see Object#equals(Object)
      */
     @Override
@@ -484,7 +484,7 @@ public class SelectBox extends Container {
 
         @Override
         public boolean equals(Object obj) {
-            return true;
+            return (obj != null) && ((obj == this) || ((obj != this) && (obj.getClass() == this.getClass())));
         }
     }
 
@@ -503,7 +503,7 @@ public class SelectBox extends Container {
 
         @Override
         public boolean equals(Object obj) {
-            return true;
+            return (obj != null) && ((obj == this) || ((obj != this) && (obj.getClass() == this.getClass())));
         }
     }
 
@@ -537,7 +537,7 @@ public class SelectBox extends Container {
         /**
          * Used to set this element selected.
          *
-         * @param selected
+         * @param selected new selected state of select box.
          */
         private void setSelected(boolean selected) {
             this.selected = selected;
@@ -658,7 +658,7 @@ public class SelectBox extends Container {
 
         @Override
         public boolean equals(Object obj) {
-            return true;
+            return (obj != null) && ((obj == this) || ((obj != this) && (obj.getClass() == this.getClass())));
         }
     }
 }

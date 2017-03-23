@@ -1,7 +1,7 @@
 package org.liquidengine.legui.component;
 
 import org.joml.Vector2f;
-import org.liquidengine.legui.theme.Theme;
+import org.liquidengine.legui.theme.Themes;
 
 /**
  * Created by Aliaksandr_Shcherbin on 1/24/2017.
@@ -14,7 +14,7 @@ public class Panel<T extends Component> extends Container<T> {
      * Json marshaller/unmarshaller component should contain empty constructor.
      */
     public Panel() {
-        Theme.getDefaultTheme().applyAll(this);
+        Themes.getDefaultTheme().applyAll(this);
     }
 
     /**
@@ -27,7 +27,7 @@ public class Panel<T extends Component> extends Container<T> {
      */
     public Panel(float x, float y, float width, float height) {
         super(x, y, width, height);
-        Theme.getDefaultTheme().getThemeManager().getComponentTheme(Panel.class).applyAll(this);
+        Themes.getDefaultTheme().getThemeManager().getComponentTheme(Panel.class).applyAll(this);
     }
 
     /**
@@ -38,7 +38,7 @@ public class Panel<T extends Component> extends Container<T> {
      */
     public Panel(Vector2f position, Vector2f size) {
         super(position, size);
-        Theme.getDefaultTheme().applyAll(this);
+        Themes.getDefaultTheme().applyAll(this);
     }
 
 }

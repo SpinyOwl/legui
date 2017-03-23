@@ -48,6 +48,8 @@ public class Mouse {
         MOUSE_BUTTON_6(GLFW_MOUSE_BUTTON_6),     //= 5,
         MOUSE_BUTTON_7(GLFW_MOUSE_BUTTON_7),     //= 6,
         MOUSE_BUTTON_8(GLFW_MOUSE_BUTTON_8),     //= 7,
+        MOUSE_BUTTON_UNKNOWN(-1),     //= UNKNOWN,
+
         ;
         public static final MouseButton MOUSE_BUTTON_LEFT   = MOUSE_BUTTON_1;
         public static final MouseButton MOUSE_BUTTON_RIGHT  = MOUSE_BUTTON_2;
@@ -65,7 +67,7 @@ public class Mouse {
             for (MouseButton mouseButton : MouseButton.values()) {
                 if (mouseButton.getCode() == code) return mouseButton;
             }
-            return null;
+            return MOUSE_BUTTON_UNKNOWN;
         }
 
         public int getCode() {

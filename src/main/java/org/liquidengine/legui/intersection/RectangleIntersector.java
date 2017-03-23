@@ -147,6 +147,6 @@ public class RectangleIntersector extends Intersector {
      */
     @Override
     public boolean equals(Object obj) {
-        return true;
+        return (obj != null) && ((obj == this) || ((obj != this) && (obj.getClass() == this.getClass())));
     }
 }

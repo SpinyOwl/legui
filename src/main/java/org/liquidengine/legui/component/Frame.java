@@ -125,9 +125,19 @@ public class Frame {
             return;
         }
         layer.setFrame(this);
-        if (layers.contains(layer)) {
+        if (containsLayer(layer)) {
             layers.remove(layer);
         }
+    }
+
+    /**
+     * Used to check if layer list contains provided layer.
+     *
+     * @param layer layer to check.
+     * @return true if layer list contains provided layer.
+     */
+    public boolean containsLayer(Layer layer) {
+        return (layer != null) && ((layer == tooltipLayer) || (layer == componentLayer) || layers.stream().anyMatch(l -> l == layer));
     }
 
     /**

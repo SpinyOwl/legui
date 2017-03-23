@@ -6,7 +6,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 import org.liquidengine.legui.component.optional.TextState;
-import org.liquidengine.legui.theme.Theme;
+import org.liquidengine.legui.theme.Themes;
 
 /**
  * Created by Aliaksandr_Shcherbin on 1/24/2017.
@@ -26,7 +26,7 @@ public class Tooltip extends Component implements TextComponent {
     private void initialize(String text) {
         this.textState = new TextState(text);
 
-        Theme.getDefaultTheme().getThemeManager().getComponentTheme(Tooltip.class).applyAll(this);
+        Themes.getDefaultTheme().getThemeManager().getComponentTheme(Tooltip.class).applyAll(this);
     }
 
     /**
@@ -61,7 +61,7 @@ public class Tooltip extends Component implements TextComponent {
     /**
      * (non-Javadoc)
      *
-     * @param o
+     * @param o object to compare.
      * @see Object#equals(Object)
      */
     @Override

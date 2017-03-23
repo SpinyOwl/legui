@@ -10,22 +10,12 @@ import java.util.List;
  * Created by Aliaksandr_Shcherbin on 2/6/2017.
  */
 public abstract class Theme {
-    private static Theme DEFAULT_THEME = new DefaultTheme();
     private ThemeManager themeManager;
 
     protected Theme(ThemeManager themeManager) {
         this.themeManager = themeManager;
     }
 
-    public static Theme getDefaultTheme() {
-        return DEFAULT_THEME;
-    }
-
-    public static void setDefaultTheme(Theme defaultTheme) {
-        if (defaultTheme != null) {
-            DEFAULT_THEME = defaultTheme;
-        }
-    }
 
     public ThemeManager getThemeManager() {
         return themeManager;

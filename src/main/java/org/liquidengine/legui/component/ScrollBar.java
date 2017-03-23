@@ -18,7 +18,7 @@ import org.liquidengine.legui.listener.MouseClickEventListener;
 import org.liquidengine.legui.listener.MouseDragEventListener;
 import org.liquidengine.legui.listener.ScrollEventListener;
 import org.liquidengine.legui.system.context.Context;
-import org.liquidengine.legui.theme.Theme;
+import org.liquidengine.legui.theme.Themes;
 
 import static org.liquidengine.legui.input.Mouse.MouseButton.MOUSE_BUTTON_LEFT;
 
@@ -170,7 +170,7 @@ public class ScrollBar extends Controller {
         getListenerMap().addListener(ScrollEvent.class, new ScrollBarScrollListener());
         getListenerMap().addListener(MouseDragEvent.class, new ScrollBarMouseDragEventListener());
         getListenerMap().addListener(MouseClickEvent.class, new ScrollBarMouseClickEventListener());
-        Theme.getDefaultTheme().getThemeManager().getComponentTheme(ScrollBar.class).applyAll(this);
+        Themes.getDefaultTheme().getThemeManager().getComponentTheme(ScrollBar.class).applyAll(this);
     }
 
     /**
@@ -503,7 +503,7 @@ public class ScrollBar extends Controller {
 
         @Override
         public boolean equals(Object obj) {
-            return true;
+            return (obj != null) && ((obj == this) || ((obj != this) && (obj.getClass() == this.getClass())));
         }
     }
 
@@ -556,7 +556,7 @@ public class ScrollBar extends Controller {
 
         @Override
         public boolean equals(Object obj) {
-            return true;
+            return (obj != null) && ((obj == this) || ((obj != this) && (obj.getClass() == this.getClass())));
         }
     }
 
@@ -629,7 +629,7 @@ public class ScrollBar extends Controller {
 
         @Override
         public boolean equals(Object obj) {
-            return true;
+            return (obj != null) && ((obj == this) || ((obj != this) && (obj.getClass() == this.getClass())));
         }
     }
 

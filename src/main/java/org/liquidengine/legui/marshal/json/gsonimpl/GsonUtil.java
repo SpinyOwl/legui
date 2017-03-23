@@ -17,11 +17,11 @@ public final class GsonUtil {
         this.object = object;
     }
 
-    public static final GsonUtil create() {
+    public static GsonUtil create() {
         return new GsonUtil(new JsonObject());
     }
 
-    public static final GsonUtil fill(JsonObject object) {
+    public static GsonUtil fill(JsonObject object) {
         return new GsonUtil(object != null ? object : new JsonObject());
     }
 

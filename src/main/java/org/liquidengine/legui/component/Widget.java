@@ -20,7 +20,7 @@ import org.liquidengine.legui.listener.EventListener;
 import org.liquidengine.legui.listener.MouseClickEventListener;
 import org.liquidengine.legui.listener.MouseDragEventListener;
 import org.liquidengine.legui.system.context.Context;
-import org.liquidengine.legui.theme.Theme;
+import org.liquidengine.legui.theme.Themes;
 
 import static org.liquidengine.legui.event.MouseClickEvent.MouseClickAction.CLICK;
 
@@ -127,7 +127,7 @@ public class Widget extends Container<Component> {
      * @param title title to set.
      */
     private void initialize(String title) {
-        this.titleContainer = new Panel();
+        this.titleContainer = new Panel<>();
         this.titleContainer.getSize().y = INITIAL_TITLE_HEIGHT;
         this.titleContainer.setBackgroundColor(ColorConstants.white());
 
@@ -180,7 +180,7 @@ public class Widget extends Container<Component> {
         this.add(this.titleContainer);
         this.add(this.container);
 
-        Theme.getDefaultTheme().getThemeManager().getComponentTheme(Widget.class).applyAll(this);
+        Themes.getDefaultTheme().getThemeManager().getComponentTheme(Widget.class).applyAll(this);
 
         resize();
     }
@@ -575,7 +575,7 @@ public class Widget extends Container<Component> {
     /**
      * (non-Javadoc)
      *
-     * @param o
+     * @param o object to compare.
      * @see Object#equals(Object)
      */
     @Override
@@ -660,7 +660,7 @@ public class Widget extends Container<Component> {
 
         @Override
         public boolean equals(Object obj) {
-            return true;
+            return (obj != null) && ((obj == this) || ((obj != this) && (obj.getClass() == this.getClass())));
         }
     }
 
@@ -676,7 +676,7 @@ public class Widget extends Container<Component> {
 
         @Override
         public boolean equals(Object obj) {
-            return true;
+            return (obj != null) && ((obj == this) || ((obj != this) && (obj.getClass() == this.getClass())));
         }
     }
 
@@ -691,7 +691,7 @@ public class Widget extends Container<Component> {
 
         @Override
         public boolean equals(Object obj) {
-            return true;
+            return (obj != null) && ((obj == this) || ((obj != this) && (obj.getClass() == this.getClass())));
         }
     }
 }

@@ -41,8 +41,7 @@ public class DefaultThemeManager extends ThemeManager {
         if (clazz == null) {
             throw new IllegalArgumentException("Class cannot be null!");
         }
-        AbstractTheme<T> theme = this.<T, AbstractTheme<T>>cycledSearch(clazz, themeMap, defaultComponentTheme);
-        return theme;
+        return this.<T, AbstractTheme<T>>cycledSearch(clazz, themeMap, defaultComponentTheme);
     }
 
     @Override

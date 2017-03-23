@@ -23,6 +23,7 @@ import org.liquidengine.legui.listener.MouseClickEventListener;
 import org.liquidengine.legui.theme.DarkTheme;
 import org.liquidengine.legui.theme.DefaultTheme;
 import org.liquidengine.legui.theme.Theme;
+import org.liquidengine.legui.theme.Themes;
 import org.liquidengine.legui.util.TextUtil;
 import org.lwjgl.glfw.GLFW;
 
@@ -83,16 +84,14 @@ public class ExampleGui extends Panel<Component> {
         button.setTooltip("Just button");
         button.getTooltip().setPosition(0, 25);
         button.getTooltip().getSize().set(50, 60);
-//        button.getTooltip().setBackgroundColor(ColorConstants.darkGray());
-//        button.getTooltip().getTextState().setTextColor(ColorConstants.white());
         button.getTooltip().getTextState().setPadding(4, 4, 4, 4);
 
         int idv[] = {0};
-        button.getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
+        button.getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) (MouseClickEvent event) -> {
             if (event.getAction().equals(CLICK)) {
                 idv[0]++;
-                HorizontalAlign h  = LEFT;
-                VerticalAlign   v  = TOP;
+                HorizontalAlign h   ;
+                VerticalAlign   v   ;
                 int             hh = idv[0] % 3;
                 int             vv = (idv[0] / 3) % 3;
                 switch (hh){
@@ -422,7 +421,7 @@ public class ExampleGui extends Panel<Component> {
         radioButton1.setRadioButtonGroup(radioButtonGroup);
         radioButton2.setRadioButtonGroup(radioButtonGroup);
 
-        final Theme[] current      = {Theme.getDefaultTheme()};
+        final Theme[] current      = {Themes.getDefaultTheme()};
         DarkTheme     darkTheme    = new DarkTheme();
         DefaultTheme  defaultTheme = new DefaultTheme();
 
@@ -439,8 +438,8 @@ public class ExampleGui extends Panel<Component> {
                     current[0] = darkTheme;
                     switchTheme.getTextState().setText(text + light);
                 }
-                Theme.setDefaultTheme(current[0]);
-                Theme.getDefaultTheme().applyAll(event.getContext().getFrame());
+                Themes.setDefaultTheme(current[0]);
+                Themes.getDefaultTheme().applyAll(event.getContext().getFrame());
 //                ThemeUtil.applyTheme(current[0], event.getContext().getFrame());
             }
         });

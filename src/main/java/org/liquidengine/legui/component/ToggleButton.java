@@ -10,7 +10,7 @@ import org.liquidengine.legui.color.ColorConstants;
 import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.icon.Icon;
 import org.liquidengine.legui.listener.MouseClickEventListener;
-import org.liquidengine.legui.theme.Theme;
+import org.liquidengine.legui.theme.Themes;
 
 /**
  * An implementation of "toggle" button.
@@ -85,7 +85,7 @@ public class ToggleButton extends Button {
         MouseClickEventListener toggleButtonClickListener = new ToggleButtonMouseClickListener();
         getListenerMap().addListener(MouseClickEvent.class, toggleButtonClickListener);
 
-        Theme.getDefaultTheme().getThemeManager().getComponentTheme(ToggleButton.class).applyAll(this);
+        Themes.getDefaultTheme().getThemeManager().getComponentTheme(ToggleButton.class).applyAll(this);
     }
 
     /**
@@ -186,7 +186,7 @@ public class ToggleButton extends Button {
 
         @Override
         public boolean equals(Object obj) {
-            return true;
+            return (obj != null) && ((obj == this) || ((obj != this) && (obj.getClass() == this.getClass())));
         }
     }
 }

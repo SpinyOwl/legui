@@ -11,7 +11,7 @@ import org.liquidengine.legui.color.ColorConstants;
 import org.liquidengine.legui.intersection.Intersector;
 import org.liquidengine.legui.intersection.RectangleIntersector;
 import org.liquidengine.legui.listener.ListenerMap;
-import org.liquidengine.legui.theme.Theme;
+import org.liquidengine.legui.theme.Themes;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -123,7 +123,7 @@ public abstract class Component implements Serializable {
     public Component(Vector2f position, Vector2f size) {
         this.position = position;
         this.size = size;
-        Theme.getDefaultTheme().getThemeManager().getComponentTheme(Component.class).applyAll(this);
+        Themes.getDefaultTheme().getThemeManager().getComponentTheme(Component.class).applyAll(this);
     }
 
     /**

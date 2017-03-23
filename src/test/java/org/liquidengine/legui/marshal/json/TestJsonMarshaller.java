@@ -334,8 +334,6 @@ public class TestJsonMarshaller {
         toggleButton.getTooltip().getTextState().setTextColor(ColorConstants.white());
         toggleButton.getTooltip().getTextState().setPadding(4, 4, 4, 4);
 
-        int id[] = {0};
-
         bgImageNormal.setSize(new Vector2f(36, 36));
         toggleButton.setBackgroundIcon(bgImageNormal);
         bgImageToggled.setSize(new Vector2f(36, 36));

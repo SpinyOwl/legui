@@ -11,7 +11,7 @@ import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.icon.CharIcon;
 import org.liquidengine.legui.icon.Icon;
 import org.liquidengine.legui.listener.MouseClickEventListener;
-import org.liquidengine.legui.theme.Theme;
+import org.liquidengine.legui.theme.Themes;
 
 import static org.liquidengine.legui.event.MouseClickEvent.MouseClickAction.CLICK;
 import static org.liquidengine.legui.font.FontRegister.MATERIAL_ICONS_REGULAR;
@@ -129,7 +129,7 @@ public class RadioButton extends Controller implements TextComponent {
         getListenerMap().addListener(MouseClickEvent.class, new RadioButtonClickEventListener());
         iconUnchecked.setHorizontalAlign(HorizontalAlign.LEFT);
         iconChecked.setHorizontalAlign(HorizontalAlign.LEFT);
-        Theme.getDefaultTheme().getThemeManager().getComponentTheme(RadioButton.class).applyAll(this);
+        Themes.getDefaultTheme().getThemeManager().getComponentTheme(RadioButton.class).applyAll(this);
     }
 
     /**
@@ -289,7 +289,7 @@ public class RadioButton extends Controller implements TextComponent {
 
         @Override
         public boolean equals(Object obj) {
-            return true;
+            return (obj != null) && ((obj == this) || ((obj != this) && (obj.getClass() == this.getClass())));
         }
     }
 }

@@ -131,7 +131,7 @@ public class DefaultTheme extends Theme {
             super.applyAll(component);
             List<? extends Component> childs = component.getChilds();
             for (Component child : childs) {
-                Theme.getDefaultTheme().applyAll(child);
+                Themes.getDefaultTheme().applyAll(child);
             }
         }
     }
@@ -204,7 +204,7 @@ public class DefaultTheme extends Theme {
                 bgIcon.setVerticalAlign(VerticalAlign.MIDDLE);
             }
 
-            Theme.getDefaultTheme().applyAll(component.getContainer());
+            Themes.getDefaultTheme().applyAll(component.getContainer());
         }
     }
 
@@ -214,7 +214,7 @@ public class DefaultTheme extends Theme {
             super.applyAll(component);
             Tooltip tooltip = component.getTooltip();
             if (tooltip != null) {
-                Theme.getDefaultTheme().applyAll(tooltip);
+                Themes.getDefaultTheme().applyAll(tooltip);
             }
         }
     }
@@ -250,22 +250,22 @@ public class DefaultTheme extends Theme {
         public void apply(T component) {
             super.apply(component);
             Container viewport = component.getViewport();
-            Theme.getDefaultTheme().apply(viewport);
-            Theme.getDefaultTheme().apply(component.getVerticalScrollBar());
-            Theme.getDefaultTheme().apply(component.getHorizontalScrollBar());
+            Themes.getDefaultTheme().apply(viewport);
+            Themes.getDefaultTheme().apply(component.getVerticalScrollBar());
+            Themes.getDefaultTheme().apply(component.getHorizontalScrollBar());
             viewport.setBorder(null);
             viewport.setBackgroundColor(ColorConstants.transparent());
-//            Theme.getDefaultTheme().applyAll(component.getContainer());
+//            Themes.getDefaultTheme().applyAll(component.getContainer());
         }
 
         @Override
         public void applyAll(T component) {
             super.applyAll(component);
             Container viewport = component.getViewport();
-            Theme.getDefaultTheme().applyAll(viewport);
+            Themes.getDefaultTheme().applyAll(viewport);
             viewport.setBorder(null);
             viewport.setBackgroundColor(ColorConstants.transparent());
-//            Theme.getDefaultTheme().applyAll(component.getContainer());
+//            Themes.getDefaultTheme().applyAll(component.getContainer());
         }
     }
 
@@ -280,14 +280,14 @@ public class DefaultTheme extends Theme {
             component.getSelectionButton().setBackgroundColor(ColorConstants.transparent());
             component.getSelectionButton().getTextState().setTextColor(ColorConstants.black());
 
-            Theme.getDefaultTheme().applyAll(component.getSelectionListPanel());
+            Themes.getDefaultTheme().applyAll(component.getSelectionListPanel());
         }
 
         @Override
         public void applyAll(T component) {
             super.applyAll(component);
 
-            Theme.getDefaultTheme().applyAll(component.getSelectionListPanel());
+            Themes.getDefaultTheme().applyAll(component.getSelectionListPanel());
         }
     }
 
@@ -295,14 +295,14 @@ public class DefaultTheme extends Theme {
         @Override
         public void apply(T component) {
             super.apply(component);
-            Theme.getDefaultTheme().apply(component.getContainer());
+            Themes.getDefaultTheme().apply(component.getContainer());
         }
 
         @Override
         public void applyAll(T component) {
             super.applyAll(component);
 
-            Theme.getDefaultTheme().applyAll(component.getContainer());
+            Themes.getDefaultTheme().applyAll(component.getContainer());
         }
     }
 

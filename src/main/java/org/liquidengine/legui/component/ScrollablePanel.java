@@ -7,7 +7,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 import org.liquidengine.legui.color.ColorConstants;
 import org.liquidengine.legui.component.optional.Orientation;
-import org.liquidengine.legui.theme.Theme;
+import org.liquidengine.legui.theme.Themes;
 
 /**
  * Panel with scroll bars.
@@ -95,7 +95,7 @@ public class ScrollablePanel<T extends Component> extends Container implements V
         this.add(verticalScrollBar);
         this.add(horizontalScrollBar);
         this.setBackgroundColor(ColorConstants.transparent());
-        Theme.getDefaultTheme().getThemeManager().getComponentTheme(ScrollablePanel.class).applyAll(this);
+        Themes.getDefaultTheme().getThemeManager().getComponentTheme(ScrollablePanel.class).applyAll(this);
 
         resize();
     }

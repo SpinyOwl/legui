@@ -5,7 +5,7 @@ import org.joml.Vector4f;
 import org.liquidengine.legui.color.ColorConstants;
 import org.liquidengine.legui.event.WindowSizeEvent;
 import org.liquidengine.legui.listener.WindowSizeEventListener;
-import org.liquidengine.legui.theme.Theme;
+import org.liquidengine.legui.theme.Themes;
 
 /**
  * Layer container. By default it has {@link org.liquidengine.legui.listener.WindowSizeEventListener} which used to resize this container.
@@ -68,7 +68,7 @@ public class LayerContainer<T extends Component> extends Container<T> {
         getListenerMap().addListener(WindowSizeEvent.class, new LayerContainerWindowSizeEventListener());
         setBackgroundColor(ColorConstants.transparent());
         setBorder(null);
-        Theme.getDefaultTheme().getThemeManager().getComponentTheme(LayerContainer.class).applyAll(this);
+        Themes.getDefaultTheme().getThemeManager().getComponentTheme(LayerContainer.class).applyAll(this);
     }
 
 
@@ -80,7 +80,7 @@ public class LayerContainer<T extends Component> extends Container<T> {
 
         @Override
         public boolean equals(Object obj) {
-            return true;
+            return (obj != null) && ((obj == this) || ((obj != this) && (obj.getClass() == this.getClass())));
         }
     }
 }

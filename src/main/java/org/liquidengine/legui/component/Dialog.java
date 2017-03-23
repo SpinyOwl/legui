@@ -1,7 +1,7 @@
 package org.liquidengine.legui.component;
 
 import org.joml.Vector2f;
-import org.liquidengine.legui.theme.Theme;
+import org.liquidengine.legui.theme.Themes;
 
 /**
  * Dialog component is component which extended from {@link Widget} and have some additional functionality.
@@ -90,7 +90,7 @@ public class Dialog extends Widget {
 
         this.setMinimizable(false);
         this.getListenerMap().addListener(WidgetCloseEvent.class, new DialogCloseEventListener());
-        Theme.getDefaultTheme().getThemeManager().getComponentTheme(Dialog.class).applyAll(this);
+        Themes.getDefaultTheme().getThemeManager().getComponentTheme(Dialog.class).applyAll(this);
     }
 
     /**

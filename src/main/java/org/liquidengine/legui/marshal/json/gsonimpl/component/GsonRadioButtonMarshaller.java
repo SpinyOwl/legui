@@ -32,7 +32,7 @@ public class GsonRadioButtonMarshaller<T extends RadioButton> extends GsonContro
         JsonObject                     textState = GsonMarshalUtil.marshalToJson(object.getTextState(), context);
         RadioButtonGroup               rbg       = object.getRadioButtonGroup();
         Map<RadioButtonGroup, Integer> sgm       = context.getSerializeRadioGroupMap();
-        Integer                        group     = null;
+        Integer                        group;
         if (sgm.containsKey(rbg)) {
             group = sgm.get(rbg);
         } else {
@@ -76,7 +76,7 @@ public class GsonRadioButtonMarshaller<T extends RadioButton> extends GsonContro
         if (isNotNull(group)) {
             Map<Integer, RadioButtonGroup> drg     = context.getDeserializeRadioGroupMap();
             int                            groupId = group.getAsInt();
-            RadioButtonGroup               g       = null;
+            RadioButtonGroup               g;
             if (drg.containsKey(groupId)) {
                 g = drg.get(groupId);
             } else {
