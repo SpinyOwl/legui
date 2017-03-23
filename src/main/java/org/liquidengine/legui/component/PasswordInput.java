@@ -7,7 +7,7 @@ import org.joml.Vector2f;
  */
 public class PasswordInput extends TextInput {
     /**
-     * Used to mask password;
+     * Used to mask password.
      */
     private int maskCharacter = 0x002A;
 

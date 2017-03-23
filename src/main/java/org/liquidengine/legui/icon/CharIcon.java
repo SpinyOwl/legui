@@ -10,14 +10,29 @@ import org.liquidengine.legui.color.ColorConstants;
 import org.liquidengine.legui.font.FontRegister;
 
 /**
- * Created by Aliaksandr_Shcherbin on 3/10/2017.
+ * Icon. Used to draw component icons based on characters and fonts.
  */
 public class CharIcon extends Icon {
 
+    /**
+     * Used to hold icon color.
+     */
     private Vector4f color;
-    private String   font;
-    private char      charCode;
 
+    /**
+     * Used to hold icon font.
+     */
+    private String font;
+
+    /**
+     * Used to hold icon character.
+     */
+    private char charCode;
+
+    /**
+     * Used to create char icon with default font and color.
+     * Default font is {@link FontRegister#MATERIAL_DESIGN_ICONS}.
+     */
     public CharIcon() {
         this.font = FontRegister.MATERIAL_DESIGN_ICONS;
         this.color = ColorConstants.black();

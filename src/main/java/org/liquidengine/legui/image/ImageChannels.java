@@ -4,7 +4,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
- * Created by Aliaksandr_Shcherbin on 3/2/2017.
+ * Channels of image.
  */
 public enum ImageChannels {
     G(1),

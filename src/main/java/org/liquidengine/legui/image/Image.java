@@ -11,20 +11,53 @@ import java.nio.ByteBuffer;
  * Represent image source
  */
 public abstract class Image {
+    /**
+     * Path to image source.
+     */
     private final String path;
 
+    /**
+     * Used to create image object but not load it.
+     *
+     * @param path path to image source.
+     */
     public Image(String path) {
         this.path = path;
     }
 
+    /**
+     * Returns image width.
+     *
+     * @return image width.
+     */
     public abstract int getWidth();
 
+    /**
+     * Returns image height.
+     *
+     * @return image height.
+     */
     public abstract int getHeight();
 
+    /**
+     * Returns image channels.
+     *
+     * @return image channels.
+     */
     public abstract ImageChannels getChannels();
 
+    /**
+     * Returns image data.
+     *
+     * @return image data.
+     */
     public abstract ByteBuffer getImageData();
 
+    /**
+     * Returns image path.
+     *
+     * @return image path.
+     */
     public String getPath() {
         return path;
     }
