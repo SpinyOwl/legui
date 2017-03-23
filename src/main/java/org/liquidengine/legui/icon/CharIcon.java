@@ -16,28 +16,28 @@ public class CharIcon extends Icon {
 
     private Vector4f color;
     private String   font;
-    private int      charCode;
+    private char      charCode;
 
     public CharIcon() {
         this.font = FontRegister.MATERIAL_DESIGN_ICONS;
         this.color = ColorConstants.black();
     }
 
-    public CharIcon(Vector2f size, String font, int charCode) {
+    public CharIcon(Vector2f size, String font, char charCode) {
         super(size);
         this.font = font;
         this.charCode = charCode;
         this.color = ColorConstants.black();
     }
 
-    public CharIcon(String font, int charCode) {
+    public CharIcon(String font, char charCode) {
         super(new Vector2f(16));
         this.font = font;
         this.charCode = charCode;
         this.color = ColorConstants.black();
     }
 
-    public CharIcon(Vector2f size, String font, int charCode, Vector4f color) {
+    public CharIcon(Vector2f size, String font, char charCode, Vector4f color) {
         super(size);
         this.font = font;
         this.charCode = charCode;
@@ -60,11 +60,11 @@ public class CharIcon extends Icon {
         this.font = font;
     }
 
-    public int getCharCode() {
+    public char getCharCode() {
         return charCode;
     }
 
-    public void setCharCode(int charCode) {
+    public void setCharCode(char charCode) {
         this.charCode = charCode;
     }
 

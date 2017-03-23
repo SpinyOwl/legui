@@ -48,6 +48,7 @@ public class NvgRendererProvider extends RendererProvider {
         componentRendererMap.put(Slider.class, new NvgSliderRenderer());
         componentRendererMap.put(TextArea.class, new NvgTextAreaRenderer());
         componentRendererMap.put(TextInput.class, new NvgTextInputRenderer());
+        componentRendererMap.put(PasswordInput.class, new NvgPasswordInputRenderer());
         componentRendererMap.put(Tooltip.class, new NvgTooltipRenderer());
 
         // register border renderers

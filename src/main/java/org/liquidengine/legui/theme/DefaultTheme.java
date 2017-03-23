@@ -68,8 +68,8 @@ public class DefaultTheme extends Theme {
             component.setBackgroundColor(ColorConstants.transparent());
             component.getTextState().setTextColor(ColorConstants.black());
             component.getTextState().setHorizontalAlign(HorizontalAlign.LEFT);
-            component.setIconUnchecked(new CharIcon(new Vector2f(16), MATERIAL_ICONS_REGULAR, 0xE836, ColorConstants.black()));
-            component.setIconChecked(new CharIcon(new Vector2f(16), MATERIAL_ICONS_REGULAR, 0xE837, ColorConstants.black()));
+            component.setIconUnchecked(new CharIcon(new Vector2f(16), MATERIAL_ICONS_REGULAR, (char) 0xE836, ColorConstants.black()));
+            component.setIconChecked(new CharIcon(new Vector2f(16), MATERIAL_ICONS_REGULAR, (char) 0xE837, ColorConstants.black()));
             component.getIconUnchecked().setHorizontalAlign(HorizontalAlign.LEFT);
             component.getIconChecked().setHorizontalAlign(HorizontalAlign.LEFT);
         }
@@ -91,8 +91,8 @@ public class DefaultTheme extends Theme {
             component.setBackgroundColor(ColorConstants.transparent());
             component.getTextState().setTextColor(ColorConstants.black());
             component.getTextState().setHorizontalAlign(HorizontalAlign.LEFT);
-            component.setIconUnchecked(new CharIcon(new Vector2f(16), MATERIAL_ICONS_REGULAR, 0xE835, ColorConstants.black()));
-            component.setIconChecked(new CharIcon(new Vector2f(16), MATERIAL_ICONS_REGULAR, 0xE834, ColorConstants.black()));
+            component.setIconUnchecked(new CharIcon(new Vector2f(16), MATERIAL_ICONS_REGULAR,(char)0xE835, ColorConstants.black()));
+            component.setIconChecked(new CharIcon(new Vector2f(16), MATERIAL_ICONS_REGULAR, (char)0xE834, ColorConstants.black()));
             component.getIconUnchecked().setHorizontalAlign(HorizontalAlign.LEFT);
             component.getIconChecked().setHorizontalAlign(HorizontalAlign.LEFT);
         }
@@ -171,12 +171,15 @@ public class DefaultTheme extends Theme {
         @Override
         public void applyAll(T component) {
             super.applyAll(component);
-            component.getTitleContainer().setBackgroundColor(ColorConstants.lightGray());
             component.getMinimizeButton().setBackgroundColor(ColorConstants.lightGray());
             component.getMinimizeButton().getTextState().setTextColor(ColorConstants.black());
             component.getMinimizeButton().setBorder(null);
             component.getCloseButton().setBackgroundColor(ColorConstants.lightGray());
             component.getCloseButton().getTextState().setTextColor(ColorConstants.black());
+            component.getCloseButton().setBorder(null);
+            component.getTitleContainer().setBackgroundColor(ColorConstants.lightGray());
+            component.setTitleBackgroundColor(ColorConstants.lightGray());
+            component.getTitleTextState().setTextColor(ColorConstants.black());
             Icon closeIcon = component.getCloseIcon();
             if (closeIcon != null && closeIcon instanceof CharIcon) {
                 CharIcon bgIcon = (CharIcon) closeIcon;
@@ -184,9 +187,6 @@ public class DefaultTheme extends Theme {
                 bgIcon.setHorizontalAlign(HorizontalAlign.CENTER);
                 bgIcon.setVerticalAlign(VerticalAlign.MIDDLE);
             }
-            component.getCloseButton().setBorder(null);
-            component.setTitleBackgroundColor(ColorConstants.lightGray());
-            component.getTitleTextState().setTextColor(ColorConstants.black());
 
             Icon minimizeIcon = component.getMinimizeIcon();
             if (minimizeIcon != null && minimizeIcon instanceof CharIcon) {

@@ -48,7 +48,7 @@ public class GsonCharIconMarshaller<I extends CharIcon> extends GsonIconMarshall
 
         if (isNotNull(font)) object.setFont(font.getAsString());
         if (isNotNull(color)) object.setColor(GsonUtil.readColor(color.getAsJsonObject()));
-        if (isNotNull(charCode)) object.setCharCode(charCode.getAsInt());
+        if (isNotNull(charCode)) object.setCharCode(charCode.getAsCharacter());
 
     }
 }

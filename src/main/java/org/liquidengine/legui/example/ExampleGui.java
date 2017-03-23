@@ -41,7 +41,6 @@ public class ExampleGui extends Panel<Component> {
     private final Label     mouseLabel;
     private final Label     upsLabel;
     private final Label     focusedGuiLabel;
-    private final TextInput caretp;
     private final TextArea  textArea;
     private final TextInput textInput;
     private final Label     debugLabel;
@@ -330,7 +329,9 @@ public class ExampleGui extends Panel<Component> {
                 textArea.getTextState().setVerticalAlign(BASELINE);
         });
 
-        caretp = new TextInput(420, 400, 150, 20);
+        Label passLabel = new Label("Password:", 420, 390, 150, 15);
+        this.add(passLabel);
+        PasswordInput caretp = new PasswordInput(420, 405, 150, 20);
         caretp.getTextState().setHorizontalAlign(CENTER);
         this.add(caretp);
 
@@ -414,6 +415,7 @@ public class ExampleGui extends Panel<Component> {
             }
         });
 
+
         bgImageNormal.setSize(new Vector2f(36, 36)); toggleButton.setBackgroundIcon(bgImageNormal);
         bgImageToggled.setSize(new Vector2f(36, 36)); toggleButton.setTogglededBackgroundIcon(bgImageToggled);
         //@formatter:on
@@ -448,10 +450,6 @@ public class ExampleGui extends Panel<Component> {
 
     public TextArea getTextArea() {
         return textArea;
-    }
-
-    public TextInput getCaretp() {
-        return caretp;
     }
 
     public ImageView getImageView() {

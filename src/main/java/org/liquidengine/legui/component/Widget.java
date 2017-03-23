@@ -143,7 +143,7 @@ public class Widget extends Container<Component> {
 
         this.closeButton = new Button("");
         this.closeButton.setBackgroundColor(ColorConstants.transparent());
-        closeIcon = new CharIcon(new Vector2f(INITIAL_TITLE_HEIGHT * 2 / 3), FontRegister.MATERIAL_DESIGN_ICONS, CLOSE_ICON_CHAR, ColorConstants.black());
+        closeIcon = new CharIcon(new Vector2f(INITIAL_TITLE_HEIGHT * 2 / 3), FontRegister.MATERIAL_DESIGN_ICONS, (char) CLOSE_ICON_CHAR, ColorConstants.black());
         closeIcon.setHorizontalAlign(HorizontalAlign.CENTER);
         closeIcon.setVerticalAlign(VerticalAlign.MIDDLE);
         this.closeButton.setBackgroundIcon(closeIcon);
@@ -156,11 +156,11 @@ public class Widget extends Container<Component> {
         this.minimizeButton = new Button("");
         this.minimizeButton.setBackgroundColor(ColorConstants.transparent());
 
-        minimizeIcon = new CharIcon(new Vector2f(INITIAL_TITLE_HEIGHT * 2 / 3), FontRegister.MATERIAL_DESIGN_ICONS, MINIMIZE_ICON_CHAR, ColorConstants.black());
+        minimizeIcon = new CharIcon(new Vector2f(INITIAL_TITLE_HEIGHT * 2 / 3), FontRegister.MATERIAL_DESIGN_ICONS, (char) MINIMIZE_ICON_CHAR, ColorConstants.black());
         minimizeIcon.setHorizontalAlign(HorizontalAlign.CENTER);
         minimizeIcon.setVerticalAlign(VerticalAlign.MIDDLE);
 
-        maximizeIcon = new CharIcon(new Vector2f(INITIAL_TITLE_HEIGHT * 2 / 3), FontRegister.MATERIAL_DESIGN_ICONS, MAXIMIZE_ICON_CHAR, ColorConstants.black());
+        maximizeIcon = new CharIcon(new Vector2f(INITIAL_TITLE_HEIGHT * 2 / 3), FontRegister.MATERIAL_DESIGN_ICONS, (char) MAXIMIZE_ICON_CHAR, ColorConstants.black());
         maximizeIcon.setHorizontalAlign(HorizontalAlign.CENTER);
         maximizeIcon.setVerticalAlign(VerticalAlign.MIDDLE);
 

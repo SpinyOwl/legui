@@ -6,7 +6,9 @@ import org.liquidengine.legui.border.SimpleLineBorder;
 import org.liquidengine.legui.color.ColorConstants;
 import org.liquidengine.legui.component.*;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
+import org.liquidengine.legui.component.optional.align.VerticalAlign;
 import org.liquidengine.legui.icon.CharIcon;
+import org.liquidengine.legui.icon.Icon;
 
 import java.util.List;
 
@@ -75,8 +77,8 @@ public class DarkTheme extends Theme {
             component.setBorder(null);
             component.setBackgroundColor(ColorConstants.transparent());
             component.getTextState().setTextColor(ColorConstants.white());
-            component.setIconUnchecked(new CharIcon(new Vector2f(16), MATERIAL_ICONS_REGULAR, 0xE836, ColorConstants.white()));
-            component.setIconChecked(new CharIcon(new Vector2f(16), MATERIAL_ICONS_REGULAR, 0xE837, ColorConstants.white()));
+            component.setIconUnchecked(new CharIcon(new Vector2f(16), MATERIAL_ICONS_REGULAR, (char)0xE836, ColorConstants.white()));
+            component.setIconChecked(new CharIcon(new Vector2f(16), MATERIAL_ICONS_REGULAR, (char)0xE837, ColorConstants.white()));
             component.getIconUnchecked().setHorizontalAlign(HorizontalAlign.LEFT);
             component.getIconChecked().setHorizontalAlign(HorizontalAlign.LEFT);
             component.getTextState().setHorizontalAlign(HorizontalAlign.LEFT);
@@ -100,8 +102,8 @@ public class DarkTheme extends Theme {
             component.setBackgroundColor(ColorConstants.transparent());
             component.getTextState().setTextColor(ColorConstants.white());
             component.getTextState().setHorizontalAlign(HorizontalAlign.LEFT);
-            component.setIconUnchecked(new CharIcon(new Vector2f(16), MATERIAL_ICONS_REGULAR, 0xE835, ColorConstants.white()));
-            component.setIconChecked(new CharIcon(new Vector2f(16), MATERIAL_ICONS_REGULAR, 0xE834, ColorConstants.white()));
+            component.setIconUnchecked(new CharIcon(new Vector2f(16), MATERIAL_ICONS_REGULAR, (char) 0xE835, ColorConstants.white()));
+            component.setIconChecked(new CharIcon(new Vector2f(16), MATERIAL_ICONS_REGULAR, (char) 0xE834, ColorConstants.white()));
             component.getIconUnchecked().setHorizontalAlign(HorizontalAlign.LEFT);
             component.getIconChecked().setHorizontalAlign(HorizontalAlign.LEFT);
         }
@@ -172,6 +174,29 @@ public class DarkTheme extends Theme {
             component.getTitleContainer().setBackgroundColor(ColorConstants.lightBlack());
             component.setTitleBackgroundColor(ColorConstants.lightBlack());
             component.getTitleTextState().setTextColor(ColorConstants.white());
+            Icon closeIcon = component.getCloseIcon();
+            if (closeIcon != null && closeIcon instanceof CharIcon) {
+                CharIcon bgIcon = (CharIcon) closeIcon;
+                bgIcon.setColor(ColorConstants.white());
+                bgIcon.setHorizontalAlign(HorizontalAlign.CENTER);
+                bgIcon.setVerticalAlign(VerticalAlign.MIDDLE);
+            }
+
+            Icon minimizeIcon = component.getMinimizeIcon();
+            if (minimizeIcon != null && minimizeIcon instanceof CharIcon) {
+                CharIcon bgIcon = (CharIcon) minimizeIcon;
+                bgIcon.setColor(ColorConstants.white());
+                bgIcon.setHorizontalAlign(HorizontalAlign.CENTER);
+                bgIcon.setVerticalAlign(VerticalAlign.MIDDLE);
+            }
+
+            Icon maximizeIcon = component.getMaximizeIcon();
+            if (maximizeIcon != null && maximizeIcon instanceof CharIcon) {
+                CharIcon bgIcon = (CharIcon) maximizeIcon;
+                bgIcon.setColor(ColorConstants.white());
+                bgIcon.setHorizontalAlign(HorizontalAlign.CENTER);
+                bgIcon.setVerticalAlign(VerticalAlign.MIDDLE);
+            }
 
             Themes.getDefaultTheme().applyAll(component.getContainer());
         }
