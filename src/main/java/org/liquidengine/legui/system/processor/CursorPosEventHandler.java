@@ -49,7 +49,7 @@ public class CursorPosEventHandler extends AbstractSystemEventHandler<SystemCurs
     }
 
     @Override
-    protected boolean process(SystemCursorPosEvent event, Layer layer, Context context) {
+    protected boolean handle(SystemCursorPosEvent event, Layer layer, Context context) {
         List<Component> childs = layer.getContainer().getChilds();
         for (Component child : childs) {
             update(event, child, context);

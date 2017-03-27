@@ -14,7 +14,6 @@ import org.liquidengine.legui.icon.Icon;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.nvg.NvgRendererProvider;
 import org.lwjgl.nanovg.NVGColor;
-import org.lwjgl.nanovg.NVGGlyphPosition;
 import org.lwjgl.nanovg.NVGPaint;
 import org.lwjgl.nanovg.NVGTextRow;
 
@@ -30,10 +29,27 @@ public final class NvgRenderUtils {
     private NvgRenderUtils() {
     }
 
+    /**
+     * Used to render text state to rectangle bounds.
+     *
+     * @param nvgContext nanovg context.
+     * @param pos        rectangle position.
+     * @param size       rectangle size.
+     * @param textState  text state to render.
+     */
     public static void renderTextStateLineToBounds(long nvgContext, Vector2f pos, Vector2f size, TextState textState) {
         renderTextStateLineToBounds(nvgContext, pos, size, textState, true);
     }
 
+    /**
+     * Used to render text state to rectangle bounds.
+     *
+     * @param nvgContext nanovg context.
+     * @param pos        rectangle position.
+     * @param size       rectangle size.
+     * @param textState  text state to render.
+     * @param hide       true if need to hide out of bounds textState.
+     */
     public static void renderTextStateLineToBounds(long nvgContext, Vector2f pos, Vector2f size, TextState textState, boolean hide) {
         Vector4f        pad             = textState.getPadding();
         String          font            = textState.getFont() == null ? FontRegister.DEFAULT : textState.getFont();
@@ -54,20 +70,20 @@ public final class NvgRenderUtils {
     }
 
     /**
-     * Used to renderNvg textState to rectangle bounds
+     * Used to render textState to rectangle bounds.
      *
-     * @param context         nanovg context
-     * @param x               x position of rectangle
-     * @param y               y position of rectangle
-     * @param w               width of rectangle
-     * @param h               height of rectangle
-     * @param fontSize        titleFont size
-     * @param font            titleFont name which contains in titleFont register
-     * @param textColor       textState color
-     * @param text            textState
-     * @param horizontalAlign horizontal align
-     * @param verticalAlign   vertical align
-     * @param hide            true if need to hide out of bounds textState
+     * @param context         nanovg context.
+     * @param x               x position of rectangle.
+     * @param y               y position of rectangle.
+     * @param w               width of rectangle.
+     * @param h               height of rectangle.
+     * @param fontSize        titleFont size.
+     * @param font            titleFont name which contains in titleFont register.
+     * @param textColor       textState color.
+     * @param text            textState.
+     * @param horizontalAlign horizontal align.
+     * @param verticalAlign   vertical align.
+     * @param hide            true if need to hide out of bounds textState.
      */
     public static void renderTextLineToBounds(long context,
                                               float x, float y, float w, float h,
@@ -258,7 +274,7 @@ public final class NvgRenderUtils {
     public static void alignTextInBox(long context, HorizontalAlign hAlig, VerticalAlign vAlig) {
         int hAlign = hAlig == HorizontalAlign.CENTER ? NVG_ALIGN_CENTER : hAlig == HorizontalAlign.LEFT ? NVG_ALIGN_LEFT : NVG_ALIGN_RIGHT;
         int vAlign = vAlig == VerticalAlign.TOP ? NVG_ALIGN_TOP : vAlig == VerticalAlign.BOTTOM ?
-                                                                  NVG_ALIGN_BOTTOM : vAlig == VerticalAlign.MIDDLE ? NVG_ALIGN_MIDDLE : NVG_ALIGN_BASELINE;
+                NVG_ALIGN_BOTTOM : vAlig == VerticalAlign.MIDDLE ? NVG_ALIGN_MIDDLE : NVG_ALIGN_BASELINE;
         nvgTextAlign(context, hAlign | vAlign);
     }
 
@@ -296,42 +312,6 @@ public final class NvgRenderUtils {
         shadowPaint.free();
         colorA.free();
         colorB.free();
-    }
-
-    public static float getCaretX(long context,
-                                  float x, float w,
-                                  String text,
-                                  int caretPosition,
-                                  float fontSize,
-                                  HorizontalAlign horizontalAlign,
-                                  VerticalAlign verticalAlign,
-                                  NVGGlyphPosition.Buffer glyphs, int maxGlyphCount) {
-        float      bounds[]  = calculateTextBoundsRect(context, x, 0, w, fontSize, text, horizontalAlign, verticalAlign);
-        ByteBuffer textBytes = null;
-        try {
-            textBytes = memUTF8(text);
-            int ng = nnvgTextGlyphPositions(context, bounds[0], bounds[1], memAddress(textBytes), 0, memAddress(glyphs), maxGlyphCount);
-
-            float caretx = 0;
-            if (caretPosition < ng) {
-                try {
-                    caretx = glyphs.get(caretPosition).x();
-                } catch (IndexOutOfBoundsException e) {
-                    e.printStackTrace();
-                }
-            } else {
-                if (ng > 0) {
-                    caretx = glyphs.get(ng - 1).maxx();
-                } else {
-                    caretx = x + horizontalAlign.index * w / 2f;
-                }
-            }
-            return caretx;
-        } finally {
-            if (textBytes != null) {
-                memFree(textBytes);
-            }
-        }
     }
 
     /**
@@ -386,7 +366,7 @@ public final class NvgRenderUtils {
     }
 
     /**
-     * Resets scissor
+     * Used to reset scissor.
      *
      * @param context nanovg context pointer
      */
@@ -394,6 +374,12 @@ public final class NvgRenderUtils {
         nvgResetScissor(context);
     }
 
+    /**
+     * Used to render border.
+     *
+     * @param component component for which should be rendered border.
+     * @param context   context.
+     */
     public static void renderBorder(Component component, Context context) {
         Border border = component.getBorder();
         if (border != null && border.isEnabled()) {
@@ -402,6 +388,13 @@ public final class NvgRenderUtils {
         }
     }
 
+    /**
+     * Used to render border with scissor.
+     *
+     * @param component component for which should be rendered border.
+     * @param context   context.
+     * @param nanovg    nanovg context.
+     */
     public static void renderBorderWScissor(Component component, Context context, long nanovg) {
         createScissor(nanovg, component);
         {
@@ -410,6 +403,13 @@ public final class NvgRenderUtils {
         resetScissor(nanovg);
     }
 
+    /**
+     * Used to render icon of component.
+     *
+     * @param icon      icon to render.
+     * @param component icon owner.
+     * @param context   context.
+     */
     public static void renderIcon(Icon icon, Component component, Context context) {
         if (icon != null && component != null) {
             NvgRendererProvider.getInstance().getIconRenderer(icon.getClass()).render(icon, component, context);

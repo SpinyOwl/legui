@@ -15,7 +15,7 @@ import java.util.List;
 public class WindowRefreshEventHandler extends AbstractSystemEventHandler<SystemWindowRefreshEvent> {
 
     @Override
-    protected boolean process(SystemWindowRefreshEvent event, Layer layer, Context context) {
+    protected boolean handle(SystemWindowRefreshEvent event, Layer layer, Context context) {
         pushEvent(layer.getContainer(), context);
         return false;
     }

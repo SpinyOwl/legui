@@ -310,9 +310,9 @@ public class TextArea extends Controller implements TextComponent {
     public static class TextAreaDragEventListener implements MouseDragEventListener {
 
         /**
-         * Used to process {@link MouseDragEvent}.
+         * Used to handle {@link MouseDragEvent}.
          *
-         * @param event event to process.
+         * @param event event to handle.
          */
         @Override
         public void process(MouseDragEvent event) {
@@ -336,9 +336,9 @@ public class TextArea extends Controller implements TextComponent {
     public static class TextAreaMouseClickEventListener implements MouseClickEventListener {
 
         /**
-         * Used to process {@link MouseClickEvent}.
+         * Used to handle {@link MouseClickEvent}.
          *
-         * @param event event to process.
+         * @param event event to handle.
          */
         @Override
         public void process(MouseClickEvent event) {
@@ -363,9 +363,9 @@ public class TextArea extends Controller implements TextComponent {
     public static class TextAreaKeyEventListener implements KeyEventListener {
 
         /**
-         * Used to process {@link KeyEvent}.
+         * Used to handle {@link KeyEvent}.
          *
-         * @param event event to process.
+         * @param event event to handle.
          */
         @Override
         public void process(KeyEvent event) {
@@ -632,9 +632,9 @@ public class TextArea extends Controller implements TextComponent {
     public static class TextAreaCharEventListener implements CharEventListener {
 
         /**
-         * Used to process {@link CharEvent}.
+         * Used to handle {@link CharEvent}.
          *
-         * @param event event to process.
+         * @param event event to handle.
          */
         @Override
         public void process(CharEvent event) {

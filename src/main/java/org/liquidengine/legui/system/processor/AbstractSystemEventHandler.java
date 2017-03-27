@@ -29,7 +29,7 @@ public abstract class AbstractSystemEventHandler<E extends SystemEvent> implemen
         for (Layer layer : layers) {
             if (layer.isEventReceivable()) {
                 if (!layer.getContainer().isVisible() || !layer.getContainer().isEnabled()) continue;
-                if (process(event, layer, context)) {
+                if (handle(event, layer, context)) {
                     return;
                 }
             }
@@ -58,7 +58,7 @@ public abstract class AbstractSystemEventHandler<E extends SystemEvent> implemen
      * @param context context.
      * @return true if event processed and it shouldn't be processed for other underlying layers.
      */
-    protected boolean process(E event, Layer layer, Context context) {
+    protected boolean handle(E event, Layer layer, Context context) {
         return false;
     }
 

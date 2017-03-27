@@ -8,9 +8,9 @@ import org.liquidengine.legui.event.CharEvent;
 public interface CharEventListener extends EventListener<CharEvent> {
 
     /**
-     * Used to process {@link CharEvent}.
+     * Used to handle {@link CharEvent}.
      *
-     * @param event event to process.
+     * @param event event to handle.
      */
     void process(CharEvent event);
 }

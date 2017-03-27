@@ -243,9 +243,9 @@ public class CheckBox extends Controller implements TextComponent {
     public static class CheckBoxMouseClickEventListener implements MouseClickEventListener {
 
         /**
-         * Used to process event.
+         * Used to handle event.
          *
-         * @param event event to process.
+         * @param event event to handle.
          */
         @Override
         public void process(MouseClickEvent event) {

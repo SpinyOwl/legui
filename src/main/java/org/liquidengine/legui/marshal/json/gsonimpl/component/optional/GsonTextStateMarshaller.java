@@ -14,9 +14,10 @@ import static org.liquidengine.legui.marshal.json.gsonimpl.GsonUtil.isNotNull;
 import static org.liquidengine.legui.marshal.json.gsonimpl.GsonUtil.readColor;
 
 /**
- * Created by ShchAlexander on 26.02.2017.
+ * Json marshaller for {@link TextState} component.
  */
 public class GsonTextStateMarshaller<T extends TextState> extends AbstractGsonMarshaller<T> {
+
     /**
      * Reads data from object and puts it to json object
      *

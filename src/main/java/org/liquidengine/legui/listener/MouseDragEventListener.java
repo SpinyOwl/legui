@@ -8,9 +8,9 @@ import org.liquidengine.legui.event.MouseDragEvent;
 public interface MouseDragEventListener extends EventListener<MouseDragEvent> {
 
     /**
-     * Used to process {@link MouseDragEvent}.
+     * Used to handle {@link MouseDragEvent}.
      *
-     * @param event event to process.
+     * @param event event to handle.
      */
     @Override
     void process(MouseDragEvent event);

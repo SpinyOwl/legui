@@ -15,13 +15,22 @@ import java.util.List;
 import static org.liquidengine.legui.font.FontRegister.MATERIAL_ICONS_REGULAR;
 
 /**
- * Created by ShchAlexander on 06.03.2017.
+ * Dark Theme. Used to change theme of components to dark.
  */
 public class DarkTheme extends Theme {
+
+    /**
+     * Used to create theme instance.
+     */
     public DarkTheme() {
         super(createThemeManager());
     }
 
+    /**
+     * Used to initialize theme manager.
+     *
+     * @return initialized theme manager.
+     */
     private static ThemeManager createThemeManager() {
         ThemeManager manager = new DefaultThemeManager();
         manager.setComponentTheme(Button.class, new DarkButtonTheme<>());
@@ -29,11 +38,8 @@ public class DarkTheme extends Theme {
         manager.setComponentTheme(Component.class, new DarkComponentTheme<>());
         manager.setComponentTheme(Container.class, new DarkContainerTheme<>());
         manager.setComponentTheme(Controller.class, new DarkControllerTheme<>());
-//        manager.setComponentTheme(Dialog.class, new DarkDialogTheme<>());
-//        manager.setComponentTheme(ImageView.class, new DarkImageViewTheme<>());
         manager.setComponentTheme(Label.class, new DarkLabelTheme<>());
         manager.setComponentTheme(LayerContainer.class, new DarkLayerContainerTheme<>());
-//        manager.setComponentTheme(Panel.class, new DarkPanelTheme<>());
         manager.setComponentTheme(ProgressBar.class, new DarkProgressBarTheme<>());
         manager.setComponentTheme(ScrollablePanel.class, new DarkScrollablePanelTheme<>());
         manager.setComponentTheme(RadioButton.class, new DarkRadioButtonTheme<>());
@@ -77,8 +83,8 @@ public class DarkTheme extends Theme {
             component.setBorder(null);
             component.setBackgroundColor(ColorConstants.transparent());
             component.getTextState().setTextColor(ColorConstants.white());
-            component.setIconUnchecked(new CharIcon(new Vector2f(16), MATERIAL_ICONS_REGULAR, (char)0xE836, ColorConstants.white()));
-            component.setIconChecked(new CharIcon(new Vector2f(16), MATERIAL_ICONS_REGULAR, (char)0xE837, ColorConstants.white()));
+            component.setIconUnchecked(new CharIcon(new Vector2f(16), MATERIAL_ICONS_REGULAR, (char) 0xE836, ColorConstants.white()));
+            component.setIconChecked(new CharIcon(new Vector2f(16), MATERIAL_ICONS_REGULAR, (char) 0xE837, ColorConstants.white()));
             component.getIconUnchecked().setHorizontalAlign(HorizontalAlign.LEFT);
             component.getIconChecked().setHorizontalAlign(HorizontalAlign.LEFT);
             component.getTextState().setHorizontalAlign(HorizontalAlign.LEFT);

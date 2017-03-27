@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class WindowIconifyEventHandler extends AbstractSystemEventHandler<SystemWindowIconifyEvent> {
     @Override
-    protected boolean process(SystemWindowIconifyEvent event, Layer layer, Context context) {
+    protected boolean handle(SystemWindowIconifyEvent event, Layer layer, Context context) {
         pushEvent(layer.getContainer(), event, context);
         return false;
     }

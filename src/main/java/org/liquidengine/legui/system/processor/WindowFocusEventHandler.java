@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class WindowFocusEventHandler extends AbstractSystemEventHandler<SystemWindowFocusEvent> {
     @Override
-    protected boolean process(SystemWindowFocusEvent event, Layer layer, Context context) {
+    protected boolean handle(SystemWindowFocusEvent event, Layer layer, Context context) {
         pushEvent(layer.getContainer(), event, context);
         return false;
     }

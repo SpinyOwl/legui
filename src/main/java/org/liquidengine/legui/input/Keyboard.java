@@ -3,7 +3,7 @@ package org.liquidengine.legui.input;
 import static org.lwjgl.glfw.GLFW.*;
 
 /**
- * Created by Aliaksandr_Shcherbin on 2/9/2017.
+ * This class used to allow use last states of keyboard keys.
  */
 public final class Keyboard {
 

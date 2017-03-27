@@ -10,7 +10,7 @@ import org.liquidengine.legui.system.event.SystemKeyEvent;
 import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
 
 /**
- * Created by Aliaksandr_Shcherbin on 2/13/2017.
+ * System handler that used to update key states of {@link Keyboard.Key}.
  */
 public class KeyEventHandler implements SystemEventHandler<SystemKeyEvent> {
     @Override

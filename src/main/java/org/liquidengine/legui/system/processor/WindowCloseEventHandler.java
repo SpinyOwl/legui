@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class WindowCloseEventHandler extends AbstractSystemEventHandler<SystemWindowCloseEvent> {
     @Override
-    protected boolean process(SystemWindowCloseEvent event, Layer layer, Context context) {
+    protected boolean handle(SystemWindowCloseEvent event, Layer layer, Context context) {
         pushEvent(layer.getContainer(), context);
         return false;
     }

@@ -152,9 +152,9 @@ public class Dialog extends Widget {
     public class DialogCloseEventListener implements WidgetCloseEventListener<WidgetCloseEvent> {
 
         /**
-         * Used to process {@link WidgetCloseEvent} event.
+         * Used to handle {@link WidgetCloseEvent} event.
          *
-         * @param event event to process.
+         * @param event event to handle.
          */
         @Override
         public void process(WidgetCloseEvent event) {

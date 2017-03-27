@@ -12,7 +12,7 @@ import org.liquidengine.legui.system.event.SystemScrollEvent;
  */
 public class ScrollEventHandler extends AbstractSystemEventHandler<SystemScrollEvent> {
     @Override
-    protected boolean process(SystemScrollEvent event, Layer layer, Context context) {
+    protected boolean handle(SystemScrollEvent event, Layer layer, Context context) {
         Component intersectedComponent = SehUtil.getTargetComponent(layer, Mouse.getCursorPosition());
         if (intersectedComponent != null) {
             context.getEventProcessor().pushEvent(new ScrollEvent(intersectedComponent, context, event.xoffset, event.yoffset));

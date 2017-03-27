@@ -69,6 +69,16 @@ public class NvgPasswordInputRenderer extends NvgComponentRenderer<PasswordInput
         resetScissor(context);
     }
 
+    /**
+     * This method used to render password field and cursor.
+     *
+     * @param leguiContext legui context.
+     * @param context      nanovg context.
+     * @param gui          password input.
+     * @param size         input size.
+     * @param rect         rectangle in which should be rendered password.
+     * @param bc           background color.
+     */
     private void renderText(Context leguiContext, long context, PasswordInput gui, Vector2f size, Vector4f rect, Vector4f bc) {
         TextState           textState           = gui.getTextState();
         String              text                = textState.getText();

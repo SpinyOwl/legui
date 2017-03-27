@@ -46,7 +46,7 @@ public class Widget extends Container<Component> {
     private boolean  draggable     = true;
     private boolean  minimized     = false;
     /**
-     * Used to store widget size in maximized state when minimizing widget
+     * Used to store widget size in maximized state when minimizing widget.
      */
     private Vector2f maximizedSize = new Vector2f();
     private Container<Component> container;
