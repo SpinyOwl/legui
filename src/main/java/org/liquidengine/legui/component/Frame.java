@@ -14,7 +14,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * Default structure which should be associated with OpenGL window.
  * Contains two default layers:
  * <ul>
- * <li>Component layer - holds components and always on bottom of all layers</li>
+ * <li>Component layer - holds components and always on bottom of all layers.</li>
  * <li>Tooltip layer - holds tooltips and always on top of all layers.</li>
  * </ul>
  * <span style="color:red;">NOTE: layers processed in reverse order - from top to bottom.</span>
@@ -36,8 +36,8 @@ public class Frame {
     /**
      * Used to create frame and initialize layers with specified size.
      *
-     * @param width  width
-     * @param height height
+     * @param width  width.
+     * @param height height.
      */
     public Frame(float width, float height) {
         initialize(width, height);
@@ -53,7 +53,7 @@ public class Frame {
     /**
      * Used to create frame and initialize layers with specified size.
      *
-     * @param size size
+     * @param size size.
      */
     public Frame(Vector2f size) {
         initialize(size.x, size.y);
@@ -62,8 +62,8 @@ public class Frame {
     /**
      * Used to initialize frame and layers.
      *
-     * @param width  initial window width
-     * @param height initial window height
+     * @param width  initial window width.
+     * @param height initial window height.
      */
     private void initialize(float width, float height) {
         tooltipLayer = new TooltipLayer();
@@ -74,7 +74,7 @@ public class Frame {
     }
 
     /**
-     * Used to set frame size (if frame created with default constructor)
+     * Used to set frame size (if frame created with default constructor).
      *
      * @param size frame size.
      */
@@ -83,10 +83,10 @@ public class Frame {
     }
 
     /**
-     * Used to set frame size (if frame created with default constructor)
+     * Used to set frame size (if frame created with default constructor).
      *
-     * @param width  width
-     * @param height height
+     * @param width  width.
+     * @param height height.
      */
     public void setSize(float width, float height) {
         tooltipLayer.getContainer().setSize(width, height);

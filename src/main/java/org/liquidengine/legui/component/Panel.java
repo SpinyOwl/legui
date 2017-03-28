@@ -4,9 +4,10 @@ import org.joml.Vector2f;
 import org.liquidengine.legui.theme.Themes;
 
 /**
- * Created by Aliaksandr_Shcherbin on 1/24/2017.
+ * Default Container implementation. Used to hold components.
  */
 public class Panel<T extends Component> extends Container<T> {
+
     /**
      * Default constructor. Used to create component instance without any parameters.
      * <p>

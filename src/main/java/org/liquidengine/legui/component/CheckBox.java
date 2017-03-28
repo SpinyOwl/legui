@@ -24,7 +24,7 @@ import static org.liquidengine.legui.font.FontRegister.MATERIAL_ICONS_REGULAR;
 public class CheckBox extends Controller implements TextComponent {
 
     /**
-     * Check box text state
+     * Check box text state.
      */
     private TextState textState;
     /**
@@ -53,10 +53,10 @@ public class CheckBox extends Controller implements TextComponent {
      * Constructor with position and size parameters.
      * Initialize checkbox with "CheckBox" text.
      *
-     * @param x      x position position in parent component
-     * @param y      y position position in parent component
-     * @param width  width of component
-     * @param height height of component
+     * @param x      x position position in parent component.
+     * @param y      y position position in parent component.
+     * @param width  width of component.
+     * @param height height of component.
      */
     public CheckBox(float x, float y, float width, float height) {
         this("CheckBox", x, y, width, height);
@@ -66,8 +66,8 @@ public class CheckBox extends Controller implements TextComponent {
      * Constructor with position and size parameters.
      * Initialize checkbox with "CheckBox" text.
      *
-     * @param position position position in parent component
-     * @param size     size of component
+     * @param position position position in parent component.
+     * @param size     size of component.
      */
     public CheckBox(Vector2f position, Vector2f size) {
         this("CheckBox", position, size);
@@ -76,7 +76,7 @@ public class CheckBox extends Controller implements TextComponent {
     /**
      * Default constructor which initialize checkbox with specified text.
      *
-     * @param text specified text for checkbox
+     * @param text specified text for checkbox.
      */
     public CheckBox(String text) {
         initialize(text);
@@ -86,11 +86,11 @@ public class CheckBox extends Controller implements TextComponent {
      * Constructor with position and size parameters.
      * Initialize checkbox with "CheckBox" text.
      *
-     * @param text   specified text for checkbox
-     * @param x      x position position in parent component
-     * @param y      y position position in parent component
-     * @param width  width of component
-     * @param height height of component
+     * @param text   specified text for checkbox.
+     * @param x      x position position in parent component.
+     * @param y      y position position in parent component.
+     * @param width  width of component.
+     * @param height height of component.
      */
     public CheckBox(String text, float x, float y, float width, float height) {
         super(x, y, width, height);
@@ -101,9 +101,9 @@ public class CheckBox extends Controller implements TextComponent {
      * Constructor with position and size parameters.
      * Initialize checkbox with "CheckBox" text.
      *
-     * @param text     specified text for checkbox
-     * @param position position position in parent component
-     * @param size     size of component
+     * @param text     specified text for checkbox.
+     * @param position position position in parent component.
+     * @param size     size of component.
      */
     public CheckBox(String text, Vector2f position, Vector2f size) {
         super(position, size);
@@ -113,7 +113,7 @@ public class CheckBox extends Controller implements TextComponent {
     /**
      * Used to initialize checkbox state.
      *
-     * @param text text to set
+     * @param text text to set.
      */
     private void initialize(String text) {
         this.textState = new TextState(text);
@@ -173,18 +173,18 @@ public class CheckBox extends Controller implements TextComponent {
     }
 
     /**
-     * Returns true if checkbox is checked
+     * Returns true if checkbox is checked.
      *
-     * @return true if checkbox is checked
+     * @return true if checkbox is checked.
      */
     public boolean isChecked() {
         return checked;
     }
 
     /**
-     * Used to change checked state
+     * Used to change checked state.
      *
-     * @param checked new checkbox state
+     * @param checked new checkbox state.
      */
     public void setChecked(boolean checked) {
         this.checked = checked;

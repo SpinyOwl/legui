@@ -12,7 +12,7 @@ import org.liquidengine.legui.theme.Themes;
  */
 public class ImageView extends Controller {
     /**
-     * BufferedImage (or image data)
+     * BufferedImage (or image data).
      */
     private Image image;
 

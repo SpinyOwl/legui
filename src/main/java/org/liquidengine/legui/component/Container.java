@@ -26,7 +26,7 @@ import java.util.stream.Stream;
  */
 public abstract class Container<T extends Component> extends Controller {
     /**
-     * List of child components
+     * List of child components.
      */
     private List<T> components = new CopyOnWriteArrayList<>();
 
@@ -126,7 +126,7 @@ public abstract class Container<T extends Component> extends Controller {
     /**
      * Used to check if component collection contains component or not. Checked by reference.
      *
-     * @param component component to check
+     * @param component component to check.
      * @return true if collection contains provided component.
      */
     private boolean isContains(T component) {
@@ -274,7 +274,7 @@ public abstract class Container<T extends Component> extends Controller {
     /**
      * Used to retrieve child components as {@link List}
      * <p>
-     * <span style="color:red">NOTE: this method returns NEW {@link List} of components</span>
+     * <span style="color:red">NOTE: this method returns NEW {@link List} of components</span>.
      *
      * @return list of child components.
      */

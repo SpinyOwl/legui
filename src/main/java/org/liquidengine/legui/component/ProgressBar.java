@@ -13,7 +13,15 @@ import org.liquidengine.legui.theme.Themes;
  * Progress bar. Used to display for example progress of loading or something else.
  */
 public class ProgressBar extends Controller {
+
+    /**
+     * Maximum value of progress bar state.
+     */
     public static final float MAX_VALUE = 100f;
+
+    /**
+     * Minimum value of progress bar state.
+     */
     public static final float MIN_VALUE = 0f;
 
     /**

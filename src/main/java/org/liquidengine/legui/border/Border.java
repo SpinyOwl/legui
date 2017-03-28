@@ -12,7 +12,7 @@ public abstract class Border {
     /**
      * Returns true if border enabled and renderable. By default it enabled.
      *
-     * @return true if border enabled and renderable
+     * @return true if border enabled and renderable.
      */
     public boolean isEnabled() {
         return enabled;

@@ -32,13 +32,22 @@ import static org.liquidengine.legui.font.FontRegister.MATERIAL_ICONS_REGULAR;
  * }</pre>
  */
 public class RadioButton extends Controller implements TextComponent {
+
     /**
      * Used to represent text state of radio button.
      */
     protected TextState textState;
 
+    /**
+     * Used to render unchecked state of radio button.
+     */
     private Icon iconUnchecked = new CharIcon(new Vector2f(16, 16), MATERIAL_ICONS_REGULAR, (char)0xE836);
+
+    /**
+     * Used to render checked state of radio button.
+     */
     private Icon iconChecked   = new CharIcon(new Vector2f(16, 16), MATERIAL_ICONS_REGULAR, (char)0xE837);
+
     /**
      * Used to represent if radio button checked or not.
      */

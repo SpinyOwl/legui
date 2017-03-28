@@ -255,11 +255,10 @@ public abstract class Component implements Serializable {
     /**
      * Returns {@link Vector4f} background color vector where x,y,z,w mapped to r,g,b,a values.
      * <ul>
-     * <li>0,0,0,1 - black</li>
-     * <li>1,0,0,1 - red.</li>
-     * <li>0,1,0,1 - green.</li>
-     * <li>0,0,1,1 - blue.</li>
-     * <li>0,0,0,0 - transparent black.</li>
+     * <li>vector.x - red.</li>
+     * <li>vector.y - green.</li>
+     * <li>vector.z - blue.</li>
+     * <li>vector.a - alpha.</li>
      * </ul>
      *
      * @return background color vector.
@@ -271,11 +270,10 @@ public abstract class Component implements Serializable {
     /**
      * Used to set background color vector where x,y,z,w mapped to r,g,b,a values.
      * <ul>
-     * <li>0,0,0,1 - black</li>
-     * <li>1,0,0,1 - red.</li>
-     * <li>0,1,0,1 - green.</li>
-     * <li>0,0,1,1 - blue.</li>
-     * <li>0,0,0,0 - transparent black.</li>
+     * <li>vector.x - red.</li>
+     * <li>vector.y - green.</li>
+     * <li>vector.z - blue.</li>
+     * <li>vector.a - alpha.</li>
      * </ul>
      *
      * @param backgroundColor background color vector.
@@ -299,11 +297,10 @@ public abstract class Component implements Serializable {
     /**
      * Returns {@link Vector4f} focused stroke color vector where x,y,z,w mapped to r,g,b,a values.
      * <ul>
-     * <li>0,0,0,1 - black</li>
-     * <li>1,0,0,1 - red.</li>
-     * <li>0,1,0,1 - green.</li>
-     * <li>0,0,1,1 - blue.</li>
-     * <li>0,0,0,0 - transparent black.</li>
+     * <li>vector.x - red.</li>
+     * <li>vector.y - green.</li>
+     * <li>vector.z - blue.</li>
+     * <li>vector.a - alpha.</li>
      * </ul>
      *
      * @return background color vector.
@@ -315,11 +312,10 @@ public abstract class Component implements Serializable {
     /**
      * Used to set focused stroke color vector where x,y,z,w mapped to r,g,b,a values.
      * <ul>
-     * <li>0,0,0,1 - black</li>
-     * <li>1,0,0,1 - red.</li>
-     * <li>0,1,0,1 - green.</li>
-     * <li>0,0,1,1 - blue.</li>
-     * <li>0,0,0,0 - transparent black.</li>
+     * <li>vector.x - red.</li>
+     * <li>vector.y - green.</li>
+     * <li>vector.z - blue.</li>
+     * <li>vector.a - alpha.</li>
      * </ul>
      *
      * @param focusedStrokeColor focused stroke color vector.

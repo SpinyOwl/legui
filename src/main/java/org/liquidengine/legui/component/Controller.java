@@ -54,7 +54,7 @@ public abstract class Controller extends Component {
     /**
      * Initializes controller with default {@link CursorEnterEventListener} to show tooltip.
      * <p>
-     * See {@link CursorEnterListenerForTooltip}
+     * See {@link CursorEnterListenerForTooltip}.
      */
     private void initialize() {
         CursorEnterEventListener listener = new CursorEnterListenerForTooltip();
@@ -142,6 +142,11 @@ public abstract class Controller extends Component {
      */
     public static class CursorEnterListenerForTooltip implements CursorEnterEventListener {
 
+        /**
+         * Used to process {@link CursorEnterEvent}.
+         *
+         * @param event event to process.
+         */
         @Override
         public void process(CursorEnterEvent event) {
             Controller controller = (Controller) event.getComponent();
@@ -155,6 +160,12 @@ public abstract class Controller extends Component {
             }
         }
 
+        /**
+         * (non-Javadoc)
+         *
+         * @param obj object to compare.
+         * @see Object#equals(Object)
+         */
         @Override
         public boolean equals(Object obj) {
             return (obj != null) && ((obj == this) || ((obj != this) && (obj.getClass() == this.getClass())));
