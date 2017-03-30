@@ -144,23 +144,19 @@ public final class NvgRenderUtils {
                 NVGTextRow.Buffer buffer = NVGTextRow.calloc(1);
                 int               rows   = nnvgTextBreakLines(context, start, end, w, memAddress(buffer), 1);
                 NVGTextRow        row    = buffer.get(0);
-                float[]           bounds = createBounds(x, y, w, h, horizontalAlign, verticalAlign, row.width(), fontSize);
-
                 if (rows != 0) {
-                    nvgBeginPath(context);
-                    NVGColor textColorN = textColor.w == 0 ? NVGUtils.rgba(0.0f, 0.0f, 0.0f, 1f, nvgColor) : NVGUtils.rgba(textColor, nvgColor);
-                    nvgFillColor(context, textColorN);
-                    nnvgText(context, bounds[0], bounds[1], row.start(), row.end());
+                    long rowStart = row.start();
+                    long rowEnd   = row.end();
+
+                    renderTextLine(context, x, y, w, h, textColor, nvgColor, horizontalAlign, verticalAlign, rowStart, rowEnd);
                 }
                 buffer.free();
             } else {
                 byteText = memUTF8(text, false);
-                long     start      = memAddress(byteText);
-                long     end        = start + byteText.remaining();
-                float[]  bounds     = calculateTextBoundsRect(context, x, y, w, h, byteText, horizontalAlign, verticalAlign);
-                NVGColor textColorN = textColor.w == 0 ? NVGUtils.rgba(0.0f, 0.0f, 0.0f, 1f, nvgColor) : NVGUtils.rgba(textColor, nvgColor);
-                nvgFillColor(context, textColorN);
-                nnvgText(context, bounds[0], bounds[1], start, end);
+                long start = memAddress(byteText);
+                long end   = start + byteText.remaining();
+
+                renderTextLine(context, x, y, w, h, textColor, nvgColor, horizontalAlign, verticalAlign, start, end);
             }
         } finally {
             if (byteText != null) {
@@ -169,6 +165,41 @@ public final class NvgRenderUtils {
         }
     }
 
+    /**
+     * Used to render text line.
+     *
+     * @param context         nanovg context.
+     * @param x               left bound of rectangle.
+     * @param y               top bound of rectangle.
+     * @param w               rectangle width.
+     * @param h               rectangle height.
+     * @param textColor       text color
+     * @param nvgColor        nanovg color.
+     * @param horizontalAlign horizontal align.
+     * @param verticalAlign   vertical align.
+     * @param rowStart        pointer to start of string to render.
+     * @param rowEnd          pointer to end of string to render.
+     */
+    private static void renderTextLine(long context, float x, float y, float w, float h, Vector4f textColor, NVGColor nvgColor, HorizontalAlign horizontalAlign, VerticalAlign verticalAlign, long rowStart, long rowEnd) {
+        float tx = x + w * horizontalAlign.index / 2f;
+        float ty = y + h * verticalAlign.index / 2f;
+
+        nvgBeginPath(context);
+        NVGColor textColorN = textColor.w == 0 ? NVGUtils.rgba(0.0f, 0.0f, 0.0f, 1f, nvgColor) : NVGUtils.rgba(textColor, nvgColor);
+        nvgFillColor(context, textColorN);
+        nnvgText(context, tx, ty, rowStart, rowEnd);
+    }
+
+    /**
+     * Used to draw rectangle.
+     *
+     * @param context nanovg context.
+     * @param color   color.
+     * @param x       x position of rectangle.
+     * @param y       y position of rectangle.
+     * @param w       rectangle width.
+     * @param h       rectangle height.
+     */
     public static void drawRectangle(long context, Vector4fc color, float x, float y, float w, float h) {
         NVGColor nvgColor = NVGColor.calloc();
         NVGColor rgba     = NVGUtils.rgba(color, nvgColor);
@@ -215,12 +246,10 @@ public final class NvgRenderUtils {
     }
 
     public static float[] calculateTextBoundsRect(long context, float x, float y, float w, float h, String text, HorizontalAlign horizontalAlign, VerticalAlign verticalAlign) {
-        float      bounds[] = new float[4];
         ByteBuffer byteText = null;
         try {
             byteText = memUTF8(text, false);
-            nvgTextBounds(context, x, y, byteText, bounds);
-            return createBounds(w, h, horizontalAlign, verticalAlign, bounds);
+            return calculateTextBoundsRect(context, x, y, w, h, byteText, horizontalAlign, verticalAlign);
         } finally {
             if (byteText != null) {
                 memFree(byteText);
@@ -231,14 +260,14 @@ public final class NvgRenderUtils {
     public static float[] calculateTextBoundsRect(long context, float x, float y, float w, float h, ByteBuffer text, HorizontalAlign horizontalAlign, VerticalAlign verticalAlign) {
         float bounds[] = new float[4];
         nvgTextBounds(context, x, y, text, bounds);
-        return createBounds(w, h, horizontalAlign, verticalAlign, bounds);
+        return createBounds(x, y, w, h, horizontalAlign, verticalAlign, bounds);
     }
 
 
-    public static float[] createBounds(float w, float h, HorizontalAlign horizontalAlign, VerticalAlign verticalAlign, float[] bounds) {
+    public static float[] createBounds(float x, float y, float w, float h, HorizontalAlign horizontalAlign, VerticalAlign verticalAlign, float[] bounds) {
         float ww = bounds[2] - bounds[0];
         float hh = bounds[3] - bounds[1];
-        return createBounds(w, h, horizontalAlign, verticalAlign, bounds, ww, hh);
+        return createBounds(x, y, w, h, horizontalAlign, verticalAlign, /*bounds, */ww, hh);
     }
 
     public static float[] createBounds(float w, float h, HorizontalAlign horizontalAlign, VerticalAlign verticalAlign, float[] bounds, float ww, float hh) {
@@ -256,8 +285,8 @@ public final class NvgRenderUtils {
     }
 
     public static float[] createBounds(float x, float y, float w, float h, HorizontalAlign horizontalAlign, VerticalAlign verticalAlign, float tw, float th) {
-        int hp = horizontalAlign == HorizontalAlign.LEFT ? 0 : horizontalAlign == HorizontalAlign.CENTER ? 1 : 2;
-        int vp = verticalAlign == VerticalAlign.TOP ? 0 : verticalAlign == VerticalAlign.MIDDLE ? 1 : verticalAlign == VerticalAlign.BOTTOM ? 2 : 3;
+        int hp = horizontalAlign.index;
+        int vp = verticalAlign.index;
 
         float x1 = x + w * 0.5f * hp;
 
@@ -274,7 +303,7 @@ public final class NvgRenderUtils {
     public static void alignTextInBox(long context, HorizontalAlign hAlig, VerticalAlign vAlig) {
         int hAlign = hAlig == HorizontalAlign.CENTER ? NVG_ALIGN_CENTER : hAlig == HorizontalAlign.LEFT ? NVG_ALIGN_LEFT : NVG_ALIGN_RIGHT;
         int vAlign = vAlig == VerticalAlign.TOP ? NVG_ALIGN_TOP : vAlig == VerticalAlign.BOTTOM ?
-                NVG_ALIGN_BOTTOM : vAlig == VerticalAlign.MIDDLE ? NVG_ALIGN_MIDDLE : NVG_ALIGN_BASELINE;
+                                                                  NVG_ALIGN_BOTTOM : vAlig == VerticalAlign.MIDDLE ? NVG_ALIGN_MIDDLE : NVG_ALIGN_BASELINE;
         nvgTextAlign(context, hAlign | vAlign);
     }
 

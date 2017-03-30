@@ -36,7 +36,7 @@ public class NvgLabelRenderer extends NvgComponentRenderer<Label> {
 
             // draw text into box
             TextState textState = label.getTextState();
-            renderTextStateLineToBounds(nanovg, pos, size, textState, true);
+            renderTextStateLineToBounds(nanovg, pos, size, textState, false);
             renderBorder(label, context);
         }
         resetScissor(nanovg);
