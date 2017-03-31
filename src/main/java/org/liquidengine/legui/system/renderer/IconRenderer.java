@@ -12,7 +12,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public abstract class IconRenderer<I extends Icon> {
     private AtomicBoolean initialized = new AtomicBoolean(false);
 
-    public abstract void initialize();
 
     public void render(I icon, Component component, Context context) {
         if (!initialized.getAndSet(true)) {
@@ -24,5 +23,12 @@ public abstract class IconRenderer<I extends Icon> {
 
     public abstract void renderIcon(I icon, Component component, Context context);
 
-    public abstract void destroy();
+    public void initialize() {
+        // this method should be reimplemented if need to initialize some data in renderer before it can be used
+        // called only once
+    }
+
+    public void destroy() {
+        // this method should be reimplemented if need to destroy some data in renderer before exit
+    }
 }

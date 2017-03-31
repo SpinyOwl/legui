@@ -3,7 +3,7 @@ package org.liquidengine.legui.system.renderer.nvg;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.RemovalListener;
-import org.liquidengine.legui.image.Image;
+import org.liquidengine.legui.image.LoadableImage;
 import org.lwjgl.nanovg.NanoVG;
 
 import java.nio.ByteBuffer;
@@ -14,7 +14,7 @@ import java.util.concurrent.*;
 /**
  * Created by Aliaksandr_Shcherbin on 1/26/2017.
  */
-public class NvgImageReferenceManager {
+public class NvgLoadableImageReferenceManager {
 
     /**
      * BufferedImage queue to remove
@@ -38,12 +38,20 @@ public class NvgImageReferenceManager {
     private ScheduledExecutorService cleanup             = Executors.newSingleThreadScheduledExecutor();
     private Map<String, Integer>     imageAssociationMap = new ConcurrentHashMap<>();
 
-    public NvgImageReferenceManager() {
+    /**
+     * Used to create image reference manager.
+     */
+    protected NvgLoadableImageReferenceManager() {
         cleanup.scheduleAtFixedRate(() -> imageCache.cleanUp(), 1, 1, TimeUnit.SECONDS);
     }
 
 
-    public void removeOldImages(long context) {
+    /**
+     * Used to remove old images.
+     *
+     * @param context nanovg context.
+     */
+    void removeOldImages(long context) {
         String path = imagesToRemove.poll();
         if (path == null) return;
         Integer imageRef = imageAssociationMap.remove(path);
@@ -52,7 +60,14 @@ public class NvgImageReferenceManager {
         }
     }
 
-    public int getImageReference(Image image, long context) {
+    /**
+     * Used to obtain image reference by image.
+     *
+     * @param image   image to get reference.
+     * @param context nanovg context.
+     * @return reference of provided image or 0 if not found.
+     */
+    public int getImageReference(LoadableImage image, long context) {
         Integer imageRef = 0;
         if (image != null) {
 
@@ -78,6 +93,9 @@ public class NvgImageReferenceManager {
         return imageRef;
     }
 
+    /**
+     * Used to destroy image reference manager.
+     */
     public void destroy() {
         cleanup.shutdown();
     }

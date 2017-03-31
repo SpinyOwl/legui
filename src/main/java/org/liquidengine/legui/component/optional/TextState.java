@@ -8,7 +8,7 @@ import org.joml.Vector4f;
 import org.liquidengine.legui.color.ColorConstants;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
-import org.liquidengine.legui.font.FontRegister;
+import org.liquidengine.legui.font.FontRegistry;
 
 import java.io.Serializable;
 
@@ -19,7 +19,7 @@ public class TextState implements Serializable {
     /**
      * Font name.
      */
-    private String          font            = FontRegister.DEFAULT;
+    private String          font            = FontRegistry.DEFAULT;
     /**
      * Font size.
      */

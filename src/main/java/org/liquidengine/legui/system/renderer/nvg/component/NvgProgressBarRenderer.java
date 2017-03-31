@@ -7,7 +7,9 @@ import org.liquidengine.legui.system.renderer.nvg.NvgComponentRenderer;
 import org.liquidengine.legui.system.renderer.nvg.util.NVGUtils;
 import org.lwjgl.nanovg.NVGColor;
 
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.*;
+import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderBorder;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.createScissor;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.resetScissor;
 import static org.lwjgl.nanovg.NanoVG.*;
 
 /**

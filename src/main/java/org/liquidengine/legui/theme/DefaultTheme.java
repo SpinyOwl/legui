@@ -12,7 +12,7 @@ import org.liquidengine.legui.icon.Icon;
 
 import java.util.List;
 
-import static org.liquidengine.legui.font.FontRegister.MATERIAL_ICONS_REGULAR;
+import static org.liquidengine.legui.font.FontRegistry.MATERIAL_ICONS_REGULAR;
 
 /**
  * Created by Aliaksandr_Shcherbin on 3/9/2017.
@@ -91,8 +91,8 @@ public class DefaultTheme extends Theme {
             component.setBackgroundColor(ColorConstants.transparent());
             component.getTextState().setTextColor(ColorConstants.black());
             component.getTextState().setHorizontalAlign(HorizontalAlign.LEFT);
-            component.setIconUnchecked(new CharIcon(new Vector2f(16), MATERIAL_ICONS_REGULAR,(char)0xE835, ColorConstants.black()));
-            component.setIconChecked(new CharIcon(new Vector2f(16), MATERIAL_ICONS_REGULAR, (char)0xE834, ColorConstants.black()));
+            component.setIconUnchecked(new CharIcon(new Vector2f(16), MATERIAL_ICONS_REGULAR, (char) 0xE835, ColorConstants.black()));
+            component.setIconChecked(new CharIcon(new Vector2f(16), MATERIAL_ICONS_REGULAR, (char) 0xE834, ColorConstants.black()));
             component.getIconUnchecked().setHorizontalAlign(HorizontalAlign.LEFT);
             component.getIconChecked().setHorizontalAlign(HorizontalAlign.LEFT);
         }

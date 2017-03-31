@@ -12,7 +12,7 @@ import org.liquidengine.legui.event.CursorEnterEvent;
 import org.liquidengine.legui.event.FocusEvent;
 import org.liquidengine.legui.event.KeyEvent;
 import org.liquidengine.legui.event.MouseClickEvent;
-import org.liquidengine.legui.font.FontRegister;
+import org.liquidengine.legui.font.FontRegistry;
 import org.liquidengine.legui.icon.Icon;
 import org.liquidengine.legui.icon.ImageIcon;
 import org.liquidengine.legui.image.BufferedImage;
@@ -75,7 +75,7 @@ public class ExampleGui extends Panel<Component> {
 
         upsLabel = new Label("Hello Label 4", 130, 60, 100, 20); this.add(upsLabel);
 
-        imageView = new ImageView(new BufferedImage("org/liquidengine/legui/example/1.jpg")); imageView.setPosition(20, 30); imageView.setSize(100, 100); this.add(imageView);
+        imageView = new ImageView(new BufferedImage("org/liquidengine/legui/example/1.jpg")); imageView.setPosition(20, 30); imageView.setSize(100, 100); this.add(imageView); imageView.setCornerRadius(10);
 
         Button button = new Button(20, 170, 50, 20); /*button.setBackgroundColor(new Vector4f(1));*/ this.add(button);
         button.getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) System.out::println);
@@ -226,7 +226,7 @@ public class ExampleGui extends Panel<Component> {
         widget3.getContainer().add(new Panel(5, 30, 20, 20));
         widget3.getContainer().add(new Panel(5, 30, 20, 20));
         Button b = new Button(55, 5, 40, 45);
-        b.getTextState().setFont(FontRegister.MATERIAL_ICONS_REGULAR);
+        b.getTextState().setFont(FontRegistry.MATERIAL_ICONS_REGULAR);
         b.getTextState().setVerticalAlign(MIDDLE);
         b.getTextState().setHorizontalAlign(CENTER);
         b.getTextState().setFontSize(20);

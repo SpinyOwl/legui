@@ -9,6 +9,8 @@ import org.liquidengine.legui.icon.Icon;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.nvg.NvgComponentRenderer;
 
+import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderBorderWScissor;
+import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderIcon;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.*;
 import static org.lwjgl.nanovg.NanoVG.*;
 
@@ -38,7 +40,6 @@ public class NvgButtonRenderer extends NvgComponentRenderer<Button> {
         resetScissor(nanovg);
 
         renderBorderWScissor(button, context, nanovg);
-
 
         nvgRestore(nanovg);
     }

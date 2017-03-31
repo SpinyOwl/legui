@@ -7,7 +7,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.color.ColorConstants;
-import org.liquidengine.legui.font.FontRegister;
+import org.liquidengine.legui.font.FontRegistry;
 
 /**
  * Icon. Used to draw component icons based on characters and fonts.
@@ -31,10 +31,10 @@ public class CharIcon extends Icon {
 
     /**
      * Used to create char icon with default font and color.
-     * Default font is {@link FontRegister#MATERIAL_DESIGN_ICONS}.
+     * Default font is {@link FontRegistry#MATERIAL_DESIGN_ICONS}.
      */
     public CharIcon() {
-        this.font = FontRegister.MATERIAL_DESIGN_ICONS;
+        this.font = FontRegistry.MATERIAL_DESIGN_ICONS;
         this.color = ColorConstants.black();
     }
 

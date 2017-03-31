@@ -17,6 +17,7 @@ import java.nio.ByteBuffer;
 import java.util.Map;
 
 import static org.liquidengine.legui.color.ColorUtil.oppositeBlackOrWhite;
+import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderBorder;
 import static org.liquidengine.legui.system.renderer.nvg.util.NVGUtils.rgba;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.*;
 import static org.lwjgl.nanovg.NanoVG.*;

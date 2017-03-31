@@ -6,16 +6,17 @@ import org.liquidengine.legui.component.*;
 import org.liquidengine.legui.icon.CharIcon;
 import org.liquidengine.legui.icon.Icon;
 import org.liquidengine.legui.icon.ImageIcon;
-import org.liquidengine.legui.system.renderer.BorderRenderer;
-import org.liquidengine.legui.system.renderer.ComponentRenderer;
-import org.liquidengine.legui.system.renderer.IconRenderer;
-import org.liquidengine.legui.system.renderer.RendererProvider;
+import org.liquidengine.legui.image.Image;
+import org.liquidengine.legui.image.LoadableImage;
+import org.liquidengine.legui.system.renderer.*;
 import org.liquidengine.legui.system.renderer.nvg.border.NvgDefaultBorderRenderer;
 import org.liquidengine.legui.system.renderer.nvg.border.NvgSimpleLineBorderRenderer;
 import org.liquidengine.legui.system.renderer.nvg.component.*;
 import org.liquidengine.legui.system.renderer.nvg.icon.NvgCharIconRenderer;
 import org.liquidengine.legui.system.renderer.nvg.icon.NvgDefaultIconRenderer;
 import org.liquidengine.legui.system.renderer.nvg.icon.NvgImageIconRenderer;
+import org.liquidengine.legui.system.renderer.nvg.image.NvgDefaultImageRenderer;
+import org.liquidengine.legui.system.renderer.nvg.image.NvgLoadableImageRenderer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,9 +30,11 @@ public class NvgRendererProvider extends RendererProvider {
     private Map<Class<? extends Component>, NvgComponentRenderer<? extends Component>> componentRendererMap     = new ConcurrentHashMap<>();
     private Map<Class<? extends Border>, NvgBorderRenderer<? extends Border>>          borderRendererMap        = new ConcurrentHashMap<>();
     private Map<Class<? extends Icon>, NvgIconRenderer<? extends Icon>>                iconRendererMap          = new ConcurrentHashMap<>();
+    private Map<Class<? extends Image>, NvgImageRenderer<? extends Image>>             imageRendererMap         = new ConcurrentHashMap<>();
     private NvgComponentRenderer                                                       defaultComponentRenderer = new NvgDefaultComponentRenderer();
     private NvgBorderRenderer                                                          defaultBorderRenderer    = new NvgDefaultBorderRenderer();
     private NvgIconRenderer                                                            defaultIconRenderer      = new NvgDefaultIconRenderer();
+    private NvgImageRenderer                                                           defaultImageRenderer     = new NvgDefaultImageRenderer();
 
     public NvgRendererProvider() {
 
@@ -57,6 +60,9 @@ public class NvgRendererProvider extends RendererProvider {
         // register icon renderers
         iconRendererMap.put(ImageIcon.class, new NvgImageIconRenderer<>());
         iconRendererMap.put(CharIcon.class, new NvgCharIconRenderer<>());
+
+        // register image renderers
+        imageRendererMap.put(LoadableImage.class, new NvgLoadableImageRenderer<>());
     }
 
     @Override
@@ -72,6 +78,11 @@ public class NvgRendererProvider extends RendererProvider {
     @Override
     public <C extends Icon> IconRenderer getIconRenderer(Class<C> iconClass) {
         return this.<C, IconRenderer<C>>cycledSearchOfRenderer(iconClass, iconRendererMap, defaultIconRenderer);
+    }
+
+    @Override
+    public <I extends Image> ImageRenderer getImageRenderer(Class<I> imageClass) {
+        return this.<I, ImageRenderer<I>>cycledSearchOfRenderer(imageClass, imageRendererMap, defaultImageRenderer);
     }
 
     private <C, R> R cycledSearchOfRenderer(Class<C> componentClass, Map map, R defaultRenderer) {

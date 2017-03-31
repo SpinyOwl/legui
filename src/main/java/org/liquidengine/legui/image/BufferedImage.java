@@ -17,7 +17,7 @@ import java.nio.ByteBuffer;
 /**
  * Created by Aliaksandr_Shcherbin on 2/6/2017.
  */
-public class BufferedImage extends Image {
+public class BufferedImage extends LoadableImage {
     private static final Logger LOGGER = LogManager.getLogger();
     private int           width;
     private int           height;

@@ -3,6 +3,7 @@ package org.liquidengine.legui.system.renderer;
 import org.liquidengine.legui.border.Border;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.icon.Icon;
+import org.liquidengine.legui.image.Image;
 
 import java.util.List;
 
@@ -22,7 +23,9 @@ public abstract class RendererProvider {
 
     public abstract <C extends Border> BorderRenderer getBorderRenderer(Class<C> borderClass);
 
-    public abstract <C extends Icon> IconRenderer getIconRenderer(Class<C> iconClass);
+    public abstract <I extends Icon> IconRenderer getIconRenderer(Class<I> iconClass);
+
+    public abstract <I extends Image> ImageRenderer getImageRenderer(Class<I> imageClass);
 
     public abstract List<ComponentRenderer> getComponentRenderers();
 

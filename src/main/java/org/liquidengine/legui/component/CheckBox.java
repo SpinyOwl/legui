@@ -15,7 +15,7 @@ import org.liquidengine.legui.listener.MouseClickEventListener;
 import org.liquidengine.legui.theme.Themes;
 
 import static org.liquidengine.legui.event.MouseClickEvent.MouseClickAction.CLICK;
-import static org.liquidengine.legui.font.FontRegister.MATERIAL_ICONS_REGULAR;
+import static org.liquidengine.legui.font.FontRegistry.MATERIAL_ICONS_REGULAR;
 
 /**
  * An implementation of a check box -- an item that can be selected or
@@ -35,12 +35,12 @@ public class CheckBox extends Controller implements TextComponent {
     /**
      * Icon used to show checked state of checkbox.
      */
-    private Icon iconChecked = new CharIcon(new Vector2f(16, 16), MATERIAL_ICONS_REGULAR, (char)0xE834);
+    private Icon iconChecked = new CharIcon(new Vector2f(16, 16), MATERIAL_ICONS_REGULAR, (char) 0xE834);
 
     /**
      * Icon used to show unchecked state of checkbox.
      */
-    private Icon iconUnchecked = new CharIcon(new Vector2f(16, 16), MATERIAL_ICONS_REGULAR, (char)0xE835);
+    private Icon iconUnchecked = new CharIcon(new Vector2f(16, 16), MATERIAL_ICONS_REGULAR, (char) 0xE835);
 
     /**
      * Default constructor which initialize checkbox with "CheckBox" text.

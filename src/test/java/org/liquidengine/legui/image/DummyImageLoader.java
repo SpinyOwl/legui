@@ -7,7 +7,7 @@ import org.liquidengine.legui.image.loader.ImageLoader;
  */
 public class DummyImageLoader extends ImageLoader {
     @Override
-    protected Image createImage(String path) {
+    protected LoadableImage createImage(String path) {
         return new DummyImage(path);
     }
 }

@@ -5,7 +5,7 @@ import org.joml.Vector4f;
 import org.liquidengine.legui.component.ScrollBar;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
-import org.liquidengine.legui.font.FontRegister;
+import org.liquidengine.legui.font.FontRegistry;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.nvg.NvgComponentRenderer;
 import org.lwjgl.nanovg.NVGColor;
@@ -16,6 +16,7 @@ import java.nio.ByteBuffer;
 
 import static org.liquidengine.legui.color.ColorUtil.oppositeBlackOrWhite;
 import static org.liquidengine.legui.component.optional.Orientation.VERTICAL;
+import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderBorder;
 import static org.liquidengine.legui.system.renderer.nvg.util.NVGUtils.rgba;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.*;
 import static org.liquidengine.legui.util.TextUtil.cpToStr;
@@ -196,7 +197,7 @@ public class NvgScrollBarRenderer extends NvgComponentRenderer<ScrollBar> {
         } else {
             fontSize = arrowSize > h1 ? h1 : arrowSize;
         }
-        String          font            = FontRegister.MATERIAL_ICONS_REGULAR;
+        String          font            = FontRegistry.MATERIAL_ICONS_REGULAR;
         HorizontalAlign horizontalAlign = HorizontalAlign.CENTER;
         VerticalAlign   verticalAlign   = VerticalAlign.MIDDLE;
 

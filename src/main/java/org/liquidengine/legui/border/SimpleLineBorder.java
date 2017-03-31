@@ -7,8 +7,6 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector4f;
 import org.liquidengine.legui.color.ColorConstants;
 
-import java.util.HashMap;
-
 /**
  * Simple one line rectangle border with specified thickness and color.
  */

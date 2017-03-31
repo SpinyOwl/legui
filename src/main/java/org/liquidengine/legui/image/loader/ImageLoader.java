@@ -1,6 +1,6 @@
 package org.liquidengine.legui.image.loader;
 
-import org.liquidengine.legui.image.Image;
+import org.liquidengine.legui.image.LoadableImage;
 
 /**
  * Created by Aliaksandr_Shcherbin on 3/2/2017.
@@ -19,11 +19,11 @@ public abstract class ImageLoader {
         }
     }
 
-    public static Image loadImage(String path) {
+    public static LoadableImage loadImage(String path) {
         initializeDefault();
         return loader.createImage(path);
     }
 
-    protected abstract Image createImage(String path);
+    protected abstract LoadableImage createImage(String path);
 
 }

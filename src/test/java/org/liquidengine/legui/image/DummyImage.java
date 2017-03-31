@@ -8,7 +8,7 @@ import java.nio.ByteBuffer;
 /**
  * Created by Aliaksandr_Shcherbin on 3/2/2017.
  */
-public class DummyImage extends Image {
+public class DummyImage extends LoadableImage {
     public DummyImage(String path) {
         super(path);
     }

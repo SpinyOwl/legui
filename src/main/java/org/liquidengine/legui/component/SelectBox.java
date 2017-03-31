@@ -8,7 +8,7 @@ import org.joml.Vector2f;
 import org.liquidengine.legui.event.FocusEvent;
 import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.event.ScrollEvent;
-import org.liquidengine.legui.font.FontRegister;
+import org.liquidengine.legui.font.FontRegistry;
 import org.liquidengine.legui.input.Mouse;
 import org.liquidengine.legui.listener.FocusEventListener;
 import org.liquidengine.legui.listener.MouseClickEventListener;
@@ -127,7 +127,7 @@ public class SelectBox extends Container {
         this.add(expandButton);
         this.add(selectionButton);
 
-        expandButton.getTextState().setFont(FontRegister.MATERIAL_ICONS_REGULAR);
+        expandButton.getTextState().setFont(FontRegistry.MATERIAL_ICONS_REGULAR);
         MouseClickEventListener mouseClickEventListener = new SelectBoxClickListener();
         selectionButton.getListenerMap().addListener(MouseClickEvent.class, mouseClickEventListener);
         expandButton.getListenerMap().addListener(MouseClickEvent.class, mouseClickEventListener);

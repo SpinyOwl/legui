@@ -4,15 +4,11 @@ import org.joml.Vector2f;
 import org.joml.Vector2fc;
 import org.joml.Vector4f;
 import org.joml.Vector4fc;
-import org.liquidengine.legui.border.Border;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
-import org.liquidengine.legui.font.FontRegister;
-import org.liquidengine.legui.icon.Icon;
-import org.liquidengine.legui.system.context.Context;
-import org.liquidengine.legui.system.renderer.nvg.NvgRendererProvider;
+import org.liquidengine.legui.font.FontRegistry;
 import org.lwjgl.nanovg.NVGColor;
 import org.lwjgl.nanovg.NVGPaint;
 import org.lwjgl.nanovg.NVGTextRow;
@@ -52,7 +48,7 @@ public final class NvgRenderUtils {
      */
     public static void renderTextStateLineToBounds(long nvgContext, Vector2f pos, Vector2f size, TextState textState, boolean hide) {
         Vector4f        pad             = textState.getPadding();
-        String          font            = textState.getFont() == null ? FontRegister.DEFAULT : textState.getFont();
+        String          font            = textState.getFont() == null ? FontRegistry.DEFAULT : textState.getFont();
         HorizontalAlign horizontalAlign = textState.getHorizontalAlign();
         VerticalAlign   verticalAlign   = textState.getVerticalAlign();
         renderTextLineToBounds(nvgContext,
@@ -401,47 +397,5 @@ public final class NvgRenderUtils {
      */
     public static void resetScissor(long context) {
         nvgResetScissor(context);
-    }
-
-    /**
-     * Used to render border.
-     *
-     * @param component component for which should be rendered border.
-     * @param context   context.
-     */
-    public static void renderBorder(Component component, Context context) {
-        Border border = component.getBorder();
-        if (border != null && border.isEnabled()) {
-            // Render border
-            NvgRendererProvider.getInstance().getBorderRenderer(border.getClass()).render(border, component, context);
-        }
-    }
-
-    /**
-     * Used to render border with scissor.
-     *
-     * @param component component for which should be rendered border.
-     * @param context   context.
-     * @param nanovg    nanovg context.
-     */
-    public static void renderBorderWScissor(Component component, Context context, long nanovg) {
-        createScissor(nanovg, component);
-        {
-            renderBorder(component, context);
-        }
-        resetScissor(nanovg);
-    }
-
-    /**
-     * Used to render icon of component.
-     *
-     * @param icon      icon to render.
-     * @param component icon owner.
-     * @param context   context.
-     */
-    public static void renderIcon(Icon icon, Component component, Context context) {
-        if (icon != null && component != null) {
-            NvgRendererProvider.getInstance().getIconRenderer(icon.getClass()).render(icon, component, context);
-        }
     }
 }

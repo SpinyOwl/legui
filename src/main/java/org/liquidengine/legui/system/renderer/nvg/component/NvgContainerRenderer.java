@@ -13,7 +13,7 @@ import org.lwjgl.nanovg.NVGColor;
 
 import java.util.List;
 
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.renderBorderWScissor;
+import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderBorderWScissor;
 import static org.lwjgl.nanovg.NanoVG.*;
 
 /**

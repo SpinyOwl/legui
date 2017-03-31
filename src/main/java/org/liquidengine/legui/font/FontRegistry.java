@@ -7,7 +7,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * Created by Aliaksandr_Shcherbin on 1/26/2017.
  */
-public class FontRegister {
+public class FontRegistry {
     public static final  String            ENTYPO                 = "entypo";
     public static final  String            ROBOTO_BOLD            = "roboto italic";
     public static final  String            ROBOTO_LIGHT           = "roboto-light";
@@ -30,7 +30,7 @@ public class FontRegister {
         registerFont(DEFAULT, "org/liquidengine/legui/font/Roboto-Bold.ttf");
     }
 
-    private FontRegister() {
+    private FontRegistry() {
     }
 
     public static void registerFont(final String name, final String path) {

@@ -9,7 +9,7 @@ import org.liquidengine.legui.border.SimpleLineBorder;
 import org.liquidengine.legui.color.ColorConstants;
 import org.liquidengine.legui.component.*;
 import org.liquidengine.legui.component.optional.Orientation;
-import org.liquidengine.legui.font.FontRegister;
+import org.liquidengine.legui.font.FontRegistry;
 import org.liquidengine.legui.icon.Icon;
 import org.liquidengine.legui.icon.ImageIcon;
 import org.liquidengine.legui.image.DummyImage;
@@ -215,7 +215,7 @@ public class TestJsonMarshaller {
         widget3.getContainer().add(new Panel(5, 30, 20, 20));
         widget3.getContainer().add(new Panel(5, 30, 20, 20));
         Button b = new Button(55, 5, 40, 45);
-        b.getTextState().setFont(FontRegister.MATERIAL_ICONS_REGULAR);
+        b.getTextState().setFont(FontRegistry.MATERIAL_ICONS_REGULAR);
         b.getTextState().setVerticalAlign(MIDDLE);
         b.getTextState().setHorizontalAlign(CENTER);
         b.getTextState().setFontSize(20);

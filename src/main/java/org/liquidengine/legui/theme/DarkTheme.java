@@ -12,7 +12,7 @@ import org.liquidengine.legui.icon.Icon;
 
 import java.util.List;
 
-import static org.liquidengine.legui.font.FontRegister.MATERIAL_ICONS_REGULAR;
+import static org.liquidengine.legui.font.FontRegistry.MATERIAL_ICONS_REGULAR;
 
 /**
  * Dark Theme. Used to change theme of components to dark.

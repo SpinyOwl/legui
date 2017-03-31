@@ -1,29 +1,9 @@
 package org.liquidengine.legui.image;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-
-import java.nio.ByteBuffer;
-
 /**
- * Represent image source
+ * Fixed size picture.
  */
 public abstract class Image {
-    /**
-     * Path to image source.
-     */
-    private final String path;
-
-    /**
-     * Used to create image object but not load it.
-     *
-     * @param path path to image source.
-     */
-    public Image(String path) {
-        this.path = path;
-    }
 
     /**
      * Returns image width.
@@ -38,54 +18,4 @@ public abstract class Image {
      * @return image height.
      */
     public abstract int getHeight();
-
-    /**
-     * Returns image channels.
-     *
-     * @return image channels.
-     */
-    public abstract ImageChannels getChannels();
-
-    /**
-     * Returns image data.
-     *
-     * @return image data.
-     */
-    public abstract ByteBuffer getImageData();
-
-    /**
-     * Returns image path.
-     *
-     * @return image path.
-     */
-    public String getPath() {
-        return path;
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("path", path)
-                .toString();
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Image image = (Image) o;
-
-        return new EqualsBuilder()
-                .append(getPath(), image.getPath())
-                .isEquals();
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder(17, 37)
-                .append(getPath())
-                .toHashCode();
-    }
 }

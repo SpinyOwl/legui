@@ -14,7 +14,7 @@ import org.liquidengine.legui.listener.MouseClickEventListener;
 import org.liquidengine.legui.theme.Themes;
 
 import static org.liquidengine.legui.event.MouseClickEvent.MouseClickAction.CLICK;
-import static org.liquidengine.legui.font.FontRegister.MATERIAL_ICONS_REGULAR;
+import static org.liquidengine.legui.font.FontRegistry.MATERIAL_ICONS_REGULAR;
 
 /**
  * RadioButtons create a series of items where only one item can be
@@ -41,12 +41,12 @@ public class RadioButton extends Controller implements TextComponent {
     /**
      * Used to render unchecked state of radio button.
      */
-    private Icon iconUnchecked = new CharIcon(new Vector2f(16, 16), MATERIAL_ICONS_REGULAR, (char)0xE836);
+    private Icon iconUnchecked = new CharIcon(new Vector2f(16, 16), MATERIAL_ICONS_REGULAR, (char) 0xE836);
 
     /**
      * Used to render checked state of radio button.
      */
-    private Icon iconChecked   = new CharIcon(new Vector2f(16, 16), MATERIAL_ICONS_REGULAR, (char)0xE837);
+    private Icon iconChecked = new CharIcon(new Vector2f(16, 16), MATERIAL_ICONS_REGULAR, (char) 0xE837);
 
     /**
      * Used to represent if radio button checked or not.
