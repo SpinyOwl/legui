@@ -9,6 +9,7 @@ import org.liquidengine.legui.font.FontRegistry;
 import org.liquidengine.legui.icon.Icon;
 import org.liquidengine.legui.image.Image;
 import org.liquidengine.legui.system.context.Context;
+import org.liquidengine.legui.system.renderer.BorderRenderer;
 import org.liquidengine.legui.system.renderer.ComponentRenderer;
 import org.liquidengine.legui.system.renderer.Renderer;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils;
@@ -44,7 +45,8 @@ public class NvgRenderer extends Renderer {
         Border border = component.getBorder();
         if (border != null && border.isEnabled()) {
             // Render border
-            NvgRendererProvider.getInstance().getBorderRenderer(border.getClass()).render(border, component, context);
+            BorderRenderer borderRenderer = NvgRendererProvider.getInstance().getBorderRenderer(border.getClass());
+            borderRenderer.render(border, component, context);
         }
     }
 

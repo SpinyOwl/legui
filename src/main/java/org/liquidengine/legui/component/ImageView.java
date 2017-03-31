@@ -4,6 +4,7 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+import org.liquidengine.legui.image.Image;
 import org.liquidengine.legui.image.LoadableImage;
 import org.liquidengine.legui.theme.Themes;
 
@@ -14,14 +15,14 @@ public class ImageView extends Controller {
     /**
      * BufferedImage (or image data).
      */
-    private LoadableImage image;
+    private Image image;
 
     /**
      * Creates image view with specified image.
      *
      * @param image image to set.
      */
-    public ImageView(LoadableImage image) {
+    public ImageView(Image image) {
         this.image = image;
         initialize();
     }
@@ -45,7 +46,7 @@ public class ImageView extends Controller {
      *
      * @return image of image view or null.
      */
-    public LoadableImage getImage() {
+    public Image getImage() {
         return image;
     }
 
@@ -54,7 +55,7 @@ public class ImageView extends Controller {
      *
      * @param image image to set.
      */
-    public void setImage(LoadableImage image) {
+    public void setImage(Image image) {
         this.image = image;
     }
 

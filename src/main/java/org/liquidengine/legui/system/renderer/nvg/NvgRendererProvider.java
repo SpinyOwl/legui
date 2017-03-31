@@ -27,16 +27,17 @@ import java.util.concurrent.ConcurrentHashMap;
  * Created by Aliaksandr_Shcherbin on 1/26/2017.
  */
 public class NvgRendererProvider extends RendererProvider {
-    private Map<Class<? extends Component>, NvgComponentRenderer<? extends Component>> componentRendererMap     = new ConcurrentHashMap<>();
-    private Map<Class<? extends Border>, NvgBorderRenderer<? extends Border>>          borderRendererMap        = new ConcurrentHashMap<>();
-    private Map<Class<? extends Icon>, NvgIconRenderer<? extends Icon>>                iconRendererMap          = new ConcurrentHashMap<>();
-    private Map<Class<? extends Image>, NvgImageRenderer<? extends Image>>             imageRendererMap         = new ConcurrentHashMap<>();
-    private NvgComponentRenderer                                                       defaultComponentRenderer = new NvgDefaultComponentRenderer();
-    private NvgBorderRenderer                                                          defaultBorderRenderer    = new NvgDefaultBorderRenderer();
-    private NvgIconRenderer                                                            defaultIconRenderer      = new NvgDefaultIconRenderer();
-    private NvgImageRenderer                                                           defaultImageRenderer     = new NvgDefaultImageRenderer();
+    private Map<Class<? extends Component>, NvgComponentRenderer<? extends Component>> componentRendererMap = new ConcurrentHashMap<>();
+    private Map<Class<? extends Border>, NvgBorderRenderer<? extends Border>>          borderRendererMap    = new ConcurrentHashMap<>();
+    private Map<Class<? extends Icon>, NvgIconRenderer<? extends Icon>>                iconRendererMap      = new ConcurrentHashMap<>();
+    private Map<Class<? extends Image>, NvgImageRenderer<? extends Image>>             imageRendererMap     = new ConcurrentHashMap<>();
 
-    public NvgRendererProvider() {
+    private NvgComponentRenderer defaultComponentRenderer = new NvgDefaultComponentRenderer();
+    private NvgBorderRenderer    defaultBorderRenderer    = new NvgDefaultBorderRenderer();
+    private NvgIconRenderer      defaultIconRenderer      = new NvgDefaultIconRenderer();
+    private NvgImageRenderer     defaultImageRenderer     = new NvgDefaultImageRenderer();
+
+    private NvgRendererProvider() {
 
         // register component renderers
         componentRendererMap.put(Container.class, new NvgContainerRenderer());
@@ -63,6 +64,10 @@ public class NvgRendererProvider extends RendererProvider {
 
         // register image renderers
         imageRendererMap.put(LoadableImage.class, new NvgLoadableImageRenderer<>());
+    }
+
+    public static NvgRendererProvider getInstance() {
+        return NRPH.I;
     }
 
     @Override
@@ -97,9 +102,34 @@ public class NvgRendererProvider extends RendererProvider {
         return renderer;
     }
 
+    public <I extends Component, R extends NvgComponentRenderer<I>> void putComponentRenderer(Class<I> imageClass, R renderer) {
+        if (imageClass == null || renderer == null) return;
+        componentRendererMap.put(imageClass, renderer);
+    }
+
+    public <I extends Border, R extends NvgBorderRenderer<I>> void putBorderRenderer(Class<I> imageClass, R renderer) {
+        if (imageClass == null || renderer == null) return;
+        borderRendererMap.put(imageClass, renderer);
+    }
+
+
+    public <I extends Icon, R extends NvgIconRenderer<I>> void putIconRenderer(Class<I> imageClass, R renderer) {
+        if (imageClass == null || renderer == null) return;
+        iconRendererMap.put(imageClass, renderer);
+    }
+
+
+    public <I extends Image, R extends NvgImageRenderer<I>> void putImageRenderer(Class<I> imageClass, R renderer) {
+        if (imageClass == null || renderer == null) return;
+        imageRendererMap.put(imageClass, renderer);
+    }
 
     @Override
     public List<ComponentRenderer> getComponentRenderers() {
         return new ArrayList<>(componentRendererMap.values());
+    }
+
+    private static final class NRPH {
+        private static final NvgRendererProvider I = new NvgRendererProvider();
     }
 }

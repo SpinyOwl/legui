@@ -58,23 +58,19 @@ public class Context {
                 frameBufferHeight = {0};
         int[] xpos = {0},
                 ypos = {0};
-        double[] mx = {0},
-                my = {0};
         glfwGetWindowSize(glfwWindow, windowWidth, windowHeight);
         glfwGetFramebufferSize(glfwWindow, frameBufferWidth, frameBufferHeight);
         glfwGetWindowPos(glfwWindow, xpos, ypos);
-        glfwGetCursorPos(glfwWindow, mx, my);
 
         update(windowWidth[0], windowHeight[0],
                 frameBufferWidth[0], frameBufferHeight[0],
                 xpos[0], ypos[0],
-                mx[0], my[0],
                 glfwGetWindowAttrib(glfwWindow, GLFW_ICONIFIED) == GLFW_TRUE
         );
     }
 
     public void update(int targetWidth, int targetHeight, int framebufferWidth, int framebufferHeight,
-                       int targetPosX, int targetPosY, double mousePosX, double mousePosY, boolean iconified) {
+                       int targetPosX, int targetPosY, boolean iconified) {
         setWindowSize(new Vector2i(targetWidth, targetHeight));
         setFramebufferSize(new Vector2f(framebufferWidth, framebufferHeight));
         setPixelRatio((float) framebufferWidth / (float) targetWidth);
