@@ -18,8 +18,10 @@ public class JsonTestBase {
     }
 
     public JsonObject readJsonFromFile(String path) {
-        String     json   = IOUtil.loadResourceAsString(path);
-        JsonParser parser = new JsonParser();
-        return parser.parse(json).getAsJsonObject();
+        return new JsonParser().parse(IOUtil.loadResourceAsString(path)).getAsJsonObject();
+    }
+
+    public String readJsonStringFromFile(String path) {
+        return IOUtil.loadResourceAsString(path);
     }
 }
