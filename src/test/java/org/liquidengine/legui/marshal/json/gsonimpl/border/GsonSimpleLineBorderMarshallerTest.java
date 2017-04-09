@@ -14,7 +14,6 @@ import org.liquidengine.legui.marshal.json.gsonimpl.GsonMarshalUtil;
  */
 public class GsonSimpleLineBorderMarshallerTest extends JsonTestBase {
 
-    @Ignore
     @Test
     public void test() {
         SimpleLineBorder border    = new SimpleLineBorder(ColorConstants.red(), 1.2f);

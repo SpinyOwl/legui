@@ -4,6 +4,7 @@ import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.liquidengine.legui.border.SimpleLineBorder;
 import org.liquidengine.legui.color.ColorConstants;
@@ -33,6 +34,7 @@ public class TestJsonMarshaller {
         ImageLoader.setLoader(new DummyImageLoader());
     }
 
+    @Ignore
     @Test
     public void testGsonImpl() {
         Object toMarshal;
