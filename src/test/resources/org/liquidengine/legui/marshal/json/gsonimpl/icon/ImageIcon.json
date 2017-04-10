@@ -1,0 +1,10 @@
+{
+  "@type": "ImageIcon",
+  "size": {
+    "width": 16.0,
+    "height": 16.0
+  },
+  "horizontalAlign": "CENTER",
+  "verticalAlign": "MIDDLE",
+  "path": "test/image.png"
+}
