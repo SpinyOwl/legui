@@ -1,6 +1,8 @@
 package org.liquidengine.legui.marshal.json.gsonimpl.border;
 
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import org.junit.Assert;
 import org.junit.Test;
 import org.liquidengine.legui.border.SimpleLineBorder;
 import org.liquidengine.legui.color.ColorConstants;
@@ -23,7 +25,9 @@ public class GsonSimpleLineBorderMarshallerTest extends GsonMarshallingTestBase 
      */
     @Test
     public void marshal() throws Exception {
-        testMarshal(border, marshaller, pathToJson);
+        String expected = readJsonFromFile(pathToJson).toString();
+        String actual   = marshaller.marshal(border, new GsonMarshalContext());
+        Assert.assertEquals(expected, actual);
     }
 
 
@@ -34,7 +38,9 @@ public class GsonSimpleLineBorderMarshallerTest extends GsonMarshallingTestBase 
      */
     @Test
     public void unmarshal() throws Exception {
-        testUnmarshal(border, marshaller, pathToJson);
+        JsonObject       jsonToUnmarshal = readJsonFromFile(pathToJson);
+        SimpleLineBorder actual          = marshaller.unmarshal(jsonToUnmarshal, new GsonMarshalContext());
+        Assert.assertEquals(border, actual);
     }
 
 }
