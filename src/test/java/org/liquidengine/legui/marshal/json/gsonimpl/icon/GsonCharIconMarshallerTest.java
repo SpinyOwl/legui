@@ -4,7 +4,6 @@ import com.google.gson.JsonObject;
 import org.joml.Vector2f;
 import org.junit.Assert;
 import org.junit.Test;
-import org.liquidengine.legui.border.SimpleLineBorder;
 import org.liquidengine.legui.font.FontRegistry;
 import org.liquidengine.legui.icon.CharIcon;
 import org.liquidengine.legui.marshal.json.gsonimpl.GsonMarshalContext;

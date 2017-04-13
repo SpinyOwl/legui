@@ -2,8 +2,6 @@ package org.liquidengine.legui.marshal.json.gsonimpl;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import org.junit.Assert;
-import org.junit.Before;
 import org.liquidengine.legui.image.DummyImageLoader;
 import org.liquidengine.legui.image.loader.ImageLoader;
 import org.liquidengine.legui.util.IOUtil;

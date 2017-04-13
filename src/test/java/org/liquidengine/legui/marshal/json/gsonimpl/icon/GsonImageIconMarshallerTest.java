@@ -9,8 +9,6 @@ import org.liquidengine.legui.image.loader.ImageLoader;
 import org.liquidengine.legui.marshal.json.gsonimpl.GsonMarshalContext;
 import org.liquidengine.legui.marshal.json.gsonimpl.GsonMarshallingTestBase;
 
-import static org.junit.Assert.*;
-
 /**
  * Test for ImageIcon Gson Marshaller.
  */
