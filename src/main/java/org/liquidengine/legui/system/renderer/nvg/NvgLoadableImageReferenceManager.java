@@ -51,7 +51,7 @@ public class NvgLoadableImageReferenceManager {
      *
      * @param context nanovg context.
      */
-    void removeOldImages(long context) {
+    protected void removeOldImages(long context) {
         String path = imagesToRemove.poll();
         if (path == null) return;
         Integer imageRef = imageAssociationMap.remove(path);
