@@ -1,0 +1,34 @@
+{
+  "@type": "ImageView",
+  "position": {
+    "x": 0.0,
+    "y": 0.0
+  },
+  "size": {
+    "width": 10.0,
+    "height": 10.0
+  },
+  "backgroundColor": {
+    "r": 1.0,
+    "g": 1.0,
+    "b": 1.0,
+    "a": 1.0
+  },
+  "enabled": true,
+  "visible": true,
+  "cornerRadius": 2.0,
+  "border": {
+    "@type": "SimpleLineBorder",
+    "enabled": true,
+    "THICKNESS": 0.7,
+    "BORDER_COLOR": {
+      "r": 0.2,
+      "g": 0.2,
+      "b": 0.2,
+      "a": 1.0
+    }
+  },
+  "intersector": {
+    "@class": "org.liquidengine.legui.intersection.RectangleIntersector"
+  }
+}
