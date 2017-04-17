@@ -5,7 +5,7 @@ import org.liquidengine.legui.component.ImageView;
 import org.liquidengine.legui.marshal.json.gsonimpl.GsonMarshalContext;
 
 /**
- * Created by ShchAlexander on 27.02.2017.
+ * Marshaller for {@link ImageView}.
  */
 public class GsonImageViewMarshaller<T extends ImageView> extends GsonControllerMarshaller<T> {
     /**

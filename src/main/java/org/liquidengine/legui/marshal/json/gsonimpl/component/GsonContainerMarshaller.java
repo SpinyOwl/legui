@@ -15,7 +15,7 @@ import static org.liquidengine.legui.marshal.JsonConstants.COMPONENTS;
 import static org.liquidengine.legui.marshal.json.gsonimpl.GsonUtil.isNotNull;
 
 /**
- * Created by ShchAlexander on 27.02.2017.
+ * Marshaller for {@link Container}.
  */
 public class GsonContainerMarshaller<T extends Container> extends GsonControllerMarshaller<T> {
     /**

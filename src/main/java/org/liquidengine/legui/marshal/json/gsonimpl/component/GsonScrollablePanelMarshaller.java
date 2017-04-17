@@ -13,7 +13,7 @@ import static org.liquidengine.legui.marshal.JsonConstants.*;
 import static org.liquidengine.legui.marshal.json.gsonimpl.GsonUtil.isNotNull;
 
 /**
- * Created by ShchAlexander on 27.02.2017.
+ * Marshaller for {@link ScrollablePanel}.
  */
 public class GsonScrollablePanelMarshaller<T extends ScrollablePanel> extends GsonControllerMarshaller<T> {
     /**

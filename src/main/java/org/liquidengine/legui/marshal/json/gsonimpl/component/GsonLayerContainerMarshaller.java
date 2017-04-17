@@ -5,7 +5,7 @@ import org.liquidengine.legui.component.LayerContainer;
 import org.liquidengine.legui.marshal.json.gsonimpl.GsonMarshalContext;
 
 /**
- * Marshaller for layer container.
+ * Marshaller for {@link LayerContainer}.
  */
 public class GsonLayerContainerMarshaller<T extends LayerContainer> extends GsonContainerMarshaller<T> {
     /**

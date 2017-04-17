@@ -12,7 +12,7 @@ import static org.liquidengine.legui.marshal.JsonConstants.*;
 import static org.liquidengine.legui.marshal.json.gsonimpl.GsonUtil.isNotNull;
 
 /**
- * Created by Aliaksandr_Shcherbin on 2/28/2017.
+ * Marshaller for {@link Layer}.
  */
 public class GsonLayerMarshaller<T extends Layer> extends AbstractGsonMarshaller<T> {
     /**

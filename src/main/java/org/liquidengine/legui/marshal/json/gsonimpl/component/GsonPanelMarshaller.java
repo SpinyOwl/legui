@@ -5,7 +5,7 @@ import org.liquidengine.legui.component.Panel;
 import org.liquidengine.legui.marshal.json.gsonimpl.GsonMarshalContext;
 
 /**
- * Created by ShchAlexander on 27.02.2017.
+ * Marshaller for {@link Panel}.
  */
 public class GsonPanelMarshaller<T extends Panel> extends GsonContainerMarshaller<T> {
     /**

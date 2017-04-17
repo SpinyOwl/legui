@@ -11,7 +11,7 @@ import static org.liquidengine.legui.marshal.JsonConstants.TEXT_STATE;
 import static org.liquidengine.legui.marshal.json.gsonimpl.GsonUtil.isNotNull;
 
 /**
- * Created by Aliaksandr_Shcherbin on 3/3/2017.
+ * Marshaller for {@link Tooltip}.
  */
 public class GsonTooltipMarshaller<T extends Tooltip> extends GsonComponentMarshaller<T> {
     /**

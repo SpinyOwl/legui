@@ -8,7 +8,7 @@ import org.liquidengine.legui.marshal.json.gsonimpl.GsonMarshalUtil;
 import org.liquidengine.legui.marshal.json.gsonimpl.GsonUtil;
 
 /**
- * Created by ShchAlexander on 27.02.2017.
+ * Marshaller for {@link Controller}.
  */
 public class GsonControllerMarshaller<T extends Controller> extends GsonComponentMarshaller<T> {
     /**

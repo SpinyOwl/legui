@@ -12,7 +12,7 @@ import static org.liquidengine.legui.marshal.json.gsonimpl.GsonUtil.isNotNull;
 import static org.liquidengine.legui.marshal.json.gsonimpl.GsonUtil.readColor;
 
 /**
- * Created by ShchAlexander on 27.02.2017.
+ * Marshaller for {@link Slider}.
  */
 public class GsonSliderMarshaller<T extends Slider> extends GsonControllerMarshaller<T> {
     /**

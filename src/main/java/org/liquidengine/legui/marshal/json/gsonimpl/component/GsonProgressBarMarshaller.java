@@ -11,7 +11,7 @@ import static org.liquidengine.legui.marshal.JsonConstants.VALUE;
 import static org.liquidengine.legui.marshal.json.gsonimpl.GsonUtil.isNotNull;
 
 /**
- * Created by ShchAlexander on 27.02.2017.
+ * Marshaller for {@link ProgressBar}.
  */
 public class GsonProgressBarMarshaller<T extends ProgressBar> extends GsonControllerMarshaller<T> {
     /**

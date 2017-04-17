@@ -13,7 +13,7 @@ import static org.liquidengine.legui.marshal.JsonConstants.TEXT_STATE;
 import static org.liquidengine.legui.marshal.json.gsonimpl.GsonUtil.isNotNull;
 
 /**
- * Created by ShchAlexander on 27.02.2017.
+ * Marshaller for {@link TextInput}.
  */
 public class GsonTextInputMarshaller<T extends TextInput> extends GsonControllerMarshaller<T> {
     /**
