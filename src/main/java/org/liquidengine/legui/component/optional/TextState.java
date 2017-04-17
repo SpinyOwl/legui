@@ -443,6 +443,9 @@ public class TextState implements Serializable {
         return text.offsetByCodePoints(index, codePointOffset);
     }
 
+    /**
+     * @see StringBuffer#getChars(int, int, char[], int)
+     */
     public void getChars(int srcBegin, int srcEnd, char[] dst, int dstBegin) {
         text.getChars(srcBegin, srcEnd, dst, dstBegin);
     }
