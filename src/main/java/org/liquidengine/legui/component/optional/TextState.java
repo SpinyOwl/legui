@@ -972,7 +972,7 @@ public class TextState implements Serializable {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritDoc}.
      */
     @Override
     public String toString() {
@@ -989,7 +989,7 @@ public class TextState implements Serializable {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritDoc}.
      */
     @Override
     public boolean equals(Object o) {
@@ -1012,7 +1012,7 @@ public class TextState implements Serializable {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritDoc}.
      */
     @Override
     public int hashCode() {
