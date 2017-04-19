@@ -29,23 +29,30 @@ public class GsonRadioButtonMarshaller<T extends RadioButton> extends GsonContro
     protected void marshal(T object, JsonObject json, GsonMarshalContext context) {
         super.marshal(object, json, context);
 
-        JsonObject                     textState = GsonMarshalUtil.marshalToJson(object.getTextState(), context);
-        RadioButtonGroup               rbg       = object.getRadioButtonGroup();
-        Map<RadioButtonGroup, Integer> sgm       = context.getSerializeRadioGroupMap();
-        Integer                        group;
-        if (sgm.containsKey(rbg)) {
-            group = sgm.get(rbg);
-        } else {
-            group = sgm.size();
-            sgm.put(rbg, group);
-        }
+        JsonObject textState = GsonMarshalUtil.marshalToJson(object.getTextState(), context);
+
         GsonUtil.fill(json)
                 .add(TEXT_STATE, textState)
-                .add(SELECTED, object.isEnabled())
-                .add(GROUP, group)
+                .add(SELECTED, object.isChecked())
                 .add(ICON_CHECKED, GsonMarshalUtil.marshalToJson(object.getIconChecked(), context))
                 .add(ICON_UNCHECKED, GsonMarshalUtil.marshalToJson(object.getIconUnchecked(), context))
         ;
+
+
+        RadioButtonGroup rbg = object.getRadioButtonGroup();
+        if (rbg != null) {
+            Map<RadioButtonGroup, Integer> sgm = context.getSerializeRadioGroupMap();
+            Integer                        group;
+            if (sgm.containsKey(rbg)) {
+                group = sgm.get(rbg);
+            } else {
+                group = sgm.size();
+                sgm.put(rbg, group);
+            }
+            GsonUtil.fill(json)
+                    .add(GROUP, group)
+            ;
+        }
     }
 
     /**
