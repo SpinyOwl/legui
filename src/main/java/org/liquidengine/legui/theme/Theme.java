@@ -16,7 +16,6 @@ public abstract class Theme {
         this.themeManager = themeManager;
     }
 
-
     public ThemeManager getThemeManager() {
         return themeManager;
     }
@@ -31,10 +30,28 @@ public abstract class Theme {
         componentTheme.applyAll(component);
     }
 
+
+    public <T extends Component> void applyWithParent(T component) {
+        AbstractTheme<T> componentTheme = themeManager.getComponentTheme((Class<T>) component.getClass());
+        componentTheme.applyWithParent(component);
+    }
+
+    public <T extends Component> void applyAllWithParent(T component) {
+        AbstractTheme<T> componentTheme = themeManager.getComponentTheme((Class<T>) component.getClass());
+        componentTheme.applyAllWithParent(component);
+    }
+
     public void applyAll(Frame frame) {
         List<Layer> allLayers = frame.getAllLayers();
         for (Layer allLayer : allLayers) {
             applyAll(allLayer.getContainer());
+        }
+    }
+
+    public void applyAllWithParent(Frame frame) {
+        List<Layer> allLayers = frame.getAllLayers();
+        for (Layer allLayer : allLayers) {
+            applyAllWithParent(allLayer.getContainer());
         }
     }
 

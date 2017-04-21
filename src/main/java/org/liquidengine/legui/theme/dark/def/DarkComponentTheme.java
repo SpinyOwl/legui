@@ -1,21 +1,25 @@
-package org.liquidengine.legui.theme;
+package org.liquidengine.legui.theme.dark.def;
 
+import org.liquidengine.legui.border.SimpleLineBorder;
+import org.liquidengine.legui.color.ColorConstants;
 import org.liquidengine.legui.component.Component;
-
+import org.liquidengine.legui.theme.AbstractTheme;
 
 /**
- * This interface defines method which can be used to change theme only for provided component.
- * Children and parent components should not be changed by this method.
+ * Dark Component Theme for all components. Used to make component dark.
  */
-public abstract class AbstractTheme<T extends Component> {
-
+public class DarkComponentTheme<T extends Component> extends AbstractTheme<T> {
     /**
      * Used to apply theme only for component and not apply for child components.
-     * Applies changes only for current class part and not for parent part.
      *
      * @param component component to apply theme.
      */
-    public abstract void apply(T component);
+    @Override
+    public void apply(T component) {
+        component.setBorder(new SimpleLineBorder(ColorConstants.lightGray(), 1.2f));
+        component.setCornerRadius(2);
+        component.setBackgroundColor(ColorConstants.darkGray());
+    }
 
     /**
      * Used to apply theme only for component and not apply for child components.
@@ -23,17 +27,9 @@ public abstract class AbstractTheme<T extends Component> {
      *
      * @param component component to apply theme.
      */
+    @Override
     public void applyWithParent(T component) {
-        apply(component);
-    }
-
-    /**
-     * Used to apply theme for component and for all children of this component.
-     * Should be reimplemented for components that contains other child components.
-     *
-     * @param component component to apply theme.
-     */
-    public void applyAll(T component) {
+        super.applyWithParent(component);
         apply(component);
     }
 
@@ -43,7 +39,9 @@ public abstract class AbstractTheme<T extends Component> {
      *
      * @param component component to apply theme.
      */
+    @Override
     public void applyAllWithParent(T component) {
+        super.applyAllWithParent(component);
         applyAll(component);
     }
 }

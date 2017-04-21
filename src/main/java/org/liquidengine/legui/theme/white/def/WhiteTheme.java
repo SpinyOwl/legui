@@ -1,4 +1,4 @@
-package org.liquidengine.legui.theme;
+package org.liquidengine.legui.theme.white.def;
 
 import org.joml.Vector2f;
 import org.joml.Vector4f;
@@ -9,17 +9,18 @@ import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
 import org.liquidengine.legui.icon.CharIcon;
 import org.liquidengine.legui.icon.Icon;
+import org.liquidengine.legui.theme.*;
 
 import java.util.List;
 
 import static org.liquidengine.legui.font.FontRegistry.MATERIAL_ICONS_REGULAR;
 
 /**
- * Created by Aliaksandr_Shcherbin on 3/9/2017.
+ * Default white theme which used by ThemeManager as default theme.
  */
-public class DefaultTheme extends Theme {
+public class WhiteTheme extends Theme {
 
-    public DefaultTheme() {
+    public WhiteTheme() {
         super(createThemeManager());
     }
 
