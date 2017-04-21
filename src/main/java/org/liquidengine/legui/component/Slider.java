@@ -41,6 +41,8 @@ public class Slider extends Controller {
 
     /**
      * Used to create slider with predefined value.
+     *
+     * @param value value to set.
      */
     public Slider(float value) {
         initialize(value);
@@ -51,6 +53,7 @@ public class Slider extends Controller {
      *
      * @param position position position in parent component.
      * @param size     size of component.
+     * @param value    value to set.
      */
     public Slider(Vector2f position, Vector2f size, float value) {
         super(position, size);
@@ -64,6 +67,7 @@ public class Slider extends Controller {
      * @param y      y position position in parent component.
      * @param width  width of component.
      * @param height height of component.
+     * @param value  value to set.
      */
     public Slider(float x, float y, float width, float height, float value) {
         super(x, y, width, height);
