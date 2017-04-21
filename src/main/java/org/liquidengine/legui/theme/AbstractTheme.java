@@ -15,7 +15,7 @@ public abstract class AbstractTheme<T extends Component> {
      *
      * @param component component to apply theme.
      */
-    public abstract void apply(T component);
+    public void apply(T component){}
 
     /**
      * Used to apply theme only for component and not apply for child components.

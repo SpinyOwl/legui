@@ -32,6 +32,7 @@ public class DarkComponentTheme<T extends Component> extends AbstractTheme<T> {
     @Override
     public void applyWithParent(T component) {
         super.applyWithParent(component);
+        super.apply(component);
         apply(component);
     }
 
@@ -44,6 +45,7 @@ public class DarkComponentTheme<T extends Component> extends AbstractTheme<T> {
     @Override
     public void applyAllWithParent(T component) {
         super.applyAllWithParent(component);
+        super.applyAll(component);
         applyAll(component);
     }
 }
