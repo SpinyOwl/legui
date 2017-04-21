@@ -39,23 +39,74 @@ public class Slider extends Controller {
 
     private float sliderSize = 10f;
 
+    /**
+     * Used to create slider with predefined value.
+     */
     public Slider(float value) {
         initialize(value);
     }
 
+    /**
+     * Constructor with position and size parameters and predefined value.
+     *
+     * @param position position position in parent component.
+     * @param size     size of component.
+     */
+    public Slider(Vector2f position, Vector2f size, float value) {
+        super(position, size);
+        initialize(value);
+    }
+
+    /**
+     * Constructor with position and size parameters and predefined value.
+     *
+     * @param x      x position position in parent component.
+     * @param y      y position position in parent component.
+     * @param width  width of component.
+     * @param height height of component.
+     */
     public Slider(float x, float y, float width, float height, float value) {
         super(x, y, width, height);
         initialize(value);
     }
 
+    /**
+     * Default constructor. Used to create component instance without any parameters.
+     * <p>
+     * Also if you want to make it easy to use with
+     * Json marshaller/unmarshaller component should contain empty constructor.
+     */
     public Slider() {
         this(0f);
     }
 
+    /**
+     * Constructor with position and size parameters.
+     *
+     * @param x      x position position in parent component.
+     * @param y      y position position in parent component.
+     * @param width  width of component.
+     * @param height height of component.
+     */
     public Slider(float x, float y, float width, float height) {
         this(x, y, width, height, 0f);
     }
 
+    /**
+     * Constructor with position and size parameters.
+     *
+     * @param position position position in parent component.
+     * @param size     size of component.
+     */
+    public Slider(Vector2f position, Vector2f size) {
+        this(position, size, 0);
+    }
+
+    /**
+     * Used to initialize slider with predefined value.
+     *
+     * @param value value to set.
+     */
     private void initialize(float value) {
         this.value = value;
         setBackgroundColor(ColorConstants.transparent());
