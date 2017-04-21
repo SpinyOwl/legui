@@ -6,6 +6,8 @@ import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 
 /**
  * Dark Label Theme for all labels. Used to make label dark.
+ *
+ * @param <T> {@link Label} subclasses.
  */
 public class DarkLabelTheme<T extends Label> extends DarkControllerTheme<T> {
     /**

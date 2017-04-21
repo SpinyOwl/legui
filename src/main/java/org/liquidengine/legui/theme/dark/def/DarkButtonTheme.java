@@ -6,6 +6,8 @@ import org.liquidengine.legui.component.Button;
 
 /**
  * Dark Button Theme for all buttons. Used to make button dark.
+ *
+ * @param <T> {@link Button} subclasses.
  */
 public class DarkButtonTheme<T extends Button> extends DarkControllerTheme<T> {
     /**

@@ -7,6 +7,8 @@ import org.liquidengine.legui.component.Tooltip;
 
 /**
  * Dark Tooltip Theme for all tooltips. Used to make tooltip dark.
+ *
+ * @param <T> tooltip subclasses.
  */
 public class DarkTooltipTheme<T extends Tooltip> extends DarkComponentTheme<T> {
     /**

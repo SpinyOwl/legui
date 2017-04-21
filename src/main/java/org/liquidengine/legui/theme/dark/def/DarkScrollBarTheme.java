@@ -5,6 +5,8 @@ import org.liquidengine.legui.component.ScrollBar;
 
 /**
  * Dark ScrollBar Theme for all scroll bars. Used to make scroll bar dark.
+ *
+ * @param <T> {@link ScrollBar} subclasses.
  */
 public class DarkScrollBarTheme<T extends ScrollBar> extends DarkControllerTheme<T> {
     /**

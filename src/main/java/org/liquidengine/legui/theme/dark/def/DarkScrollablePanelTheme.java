@@ -7,6 +7,8 @@ import org.liquidengine.legui.theme.Themes;
 
 /**
  * Dark ScrollablePanel Theme for all scrollable panels. Used to make scrollable panel dark.
+ *
+ * @param <T> {@link ScrollablePanel} subclasses.
  */
 public class DarkScrollablePanelTheme<T extends ScrollablePanel> extends DarkControllerTheme<T> {
     /**

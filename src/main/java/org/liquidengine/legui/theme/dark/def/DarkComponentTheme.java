@@ -7,6 +7,8 @@ import org.liquidengine.legui.theme.AbstractTheme;
 
 /**
  * Dark Component Theme for all components. Used to make component dark.
+ *
+ * @param <T> {@link Component} subclasses.
  */
 public class DarkComponentTheme<T extends Component> extends AbstractTheme<T> {
     /**

@@ -5,6 +5,8 @@ import org.liquidengine.legui.component.LayerContainer;
 
 /**
  * Dark LayerContainer Theme for all layer containers. Used to make layer container dark.
+ *
+ * @param <T> {@link LayerContainer} subclasses.
  */
 public class DarkLayerContainerTheme<T extends LayerContainer> extends DarkContainerTheme<T> {
     /**

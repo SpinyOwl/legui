@@ -8,6 +8,8 @@ import java.util.List;
 
 /**
  * Dark Component Theme for all components. Used to make component dark.
+ *
+ * @param <T> {@link Container} subclasses.
  */
 public class DarkContainerTheme<T extends Container> extends DarkControllerTheme<T> {
     /**

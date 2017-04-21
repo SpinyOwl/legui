@@ -7,6 +7,8 @@ import org.liquidengine.legui.theme.ThemeManager;
 
 /**
  * Dark SelectBox Theme for all select boxes. Used to make select box dark.
+ *
+ * @param <T> {@link SelectBox} subclasses.
  */
 public class DarkSelectBoxTheme<T extends SelectBox> extends DarkControllerTheme<T> {
     private ThemeManager themeManager;

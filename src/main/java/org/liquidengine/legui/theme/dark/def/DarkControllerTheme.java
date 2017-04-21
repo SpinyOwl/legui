@@ -6,6 +6,8 @@ import org.liquidengine.legui.theme.Themes;
 
 /**
  * Dark theme for controller instances.
+ *
+ * @param <T> {@link Controller} subclasses.
  */
 public class DarkControllerTheme<T extends Controller> extends DarkComponentTheme<T> {
     /**

@@ -10,6 +10,8 @@ import static org.liquidengine.legui.font.FontRegistry.MATERIAL_ICONS_REGULAR;
 
 /**
  * Dark CheckBox Theme for all check boxes. Used to make check box dark.
+ *
+ * @param <T> {@link CheckBox} subclasses.
  */
 public class DarkCheckBoxTheme<T extends CheckBox> extends DarkControllerTheme<T> {
     /**

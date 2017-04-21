@@ -10,6 +10,8 @@ import static org.liquidengine.legui.font.FontRegistry.MATERIAL_ICONS_REGULAR;
 
 /**
  * Dark RadioButton Theme for all radio buttons. Used to make radio button dark.
+ *
+ * @param <T> {@link RadioButton} subclasses.
  */
 public class DarkRadioButtonTheme<T extends RadioButton> extends DarkControllerTheme<T> {
 

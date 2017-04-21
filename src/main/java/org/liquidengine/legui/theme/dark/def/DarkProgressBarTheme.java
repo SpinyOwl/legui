@@ -5,6 +5,8 @@ import org.liquidengine.legui.component.ProgressBar;
 
 /**
  * Dark ProgressBar Theme for all progress bars. Used to make progress bar dark.
+ *
+ * @param <T> {@link ProgressBar} subclasses.
  */
 public class DarkProgressBarTheme<T extends ProgressBar> extends DarkControllerTheme<T> {
     /**

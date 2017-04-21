@@ -6,6 +6,8 @@ import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 
 /**
  * Dark TextInput Theme for all text inputs. Used to make text input dark.
+ *
+ * @param <T> {@link TextInput} subclasses.
  */
 public class DarkTextInputTheme<T extends TextInput> extends DarkControllerTheme<T> {
     /**

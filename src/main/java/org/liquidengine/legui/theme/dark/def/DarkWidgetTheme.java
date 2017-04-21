@@ -10,7 +10,9 @@ import org.liquidengine.legui.theme.AbstractTheme;
 import org.liquidengine.legui.theme.ThemeManager;
 
 /**
- * Created by Aliaksandr_Shcherbin on 4/21/2017.
+ * Dark Widget Theme for all scrollable widgets. Used to make widget dark.
+ *
+ * @param <T> {@link Widget} subclasses.
  */
 public class DarkWidgetTheme<T extends Widget> extends DarkControllerTheme<T> {
     private ThemeManager darkThemeManager;

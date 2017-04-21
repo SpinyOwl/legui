@@ -5,6 +5,8 @@ import org.liquidengine.legui.component.Slider;
 
 /**
  * Dark Slider Theme for all sliders. Used to make slider dark.
+ *
+ * @param <T> {@link Slider} subclasses.
  */
 public class DarkSliderTheme<T extends Slider> extends DarkControllerTheme<T> {
     /**
