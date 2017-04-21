@@ -22,28 +22,4 @@ public class DarkComponentTheme<T extends Component> extends AbstractTheme<T> {
         component.setCornerRadius(2);
         component.setBackgroundColor(ColorConstants.darkGray());
     }
-
-    /**
-     * Used to apply theme only for component and not apply for child components.
-     * Applies changes only for current class part and for parent part.
-     *
-     * @param component component to apply theme.
-     */
-    @Override
-    public void applyWithParent(T component) {
-        super.applyWithParent(component);
-        apply(component);
-    }
-
-    /**
-     * Used to apply theme for component and for all children of this component.
-     * Applies changes only for current class part and for parent part.
-     *
-     * @param component component to apply theme.
-     */
-    @Override
-    public void applyAllWithParent(T component) {
-        super.applyAllWithParent(component);
-        applyAll(component);
-    }
 }

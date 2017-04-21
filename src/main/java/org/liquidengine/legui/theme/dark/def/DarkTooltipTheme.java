@@ -18,6 +18,7 @@ public class DarkTooltipTheme<T extends Tooltip> extends DarkComponentTheme<T> {
      */
     @Override
     public void apply(T component) {
+        super.apply(component);
         component.setBorder(new SimpleLineBorder(new Vector4f(0, 0, 0, 0.9f), 1.2f));
         component.setBackgroundColor(new Vector4f(0.3f, 0.3f, 0.3f, 0.9f));
         component.getTextState().setTextColor(ColorConstants.white());

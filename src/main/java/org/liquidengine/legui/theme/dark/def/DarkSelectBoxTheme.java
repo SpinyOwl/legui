@@ -24,6 +24,7 @@ public class DarkSelectBoxTheme<T extends SelectBox> extends DarkControllerTheme
      */
     @Override
     public void apply(T component) {
+        super.apply(component);
         component.getExpandButton().setBorder(null);
         component.getExpandButton().setBackgroundColor(ColorConstants.transparent());
         component.getExpandButton().getTextState().setTextColor(ColorConstants.white());

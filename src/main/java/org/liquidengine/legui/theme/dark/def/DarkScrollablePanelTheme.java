@@ -18,6 +18,7 @@ public class DarkScrollablePanelTheme<T extends ScrollablePanel> extends DarkCon
      */
     @Override
     public void apply(T component) {
+        super.apply(component);
         Container viewport = component.getViewport();
         Themes.getDefaultTheme().apply(viewport);
         Themes.getDefaultTheme().applyAll(component.getVerticalScrollBar());
@@ -34,6 +35,7 @@ public class DarkScrollablePanelTheme<T extends ScrollablePanel> extends DarkCon
      */
     @Override
     public void applyAll(T component) {
+        super.applyAll(component);
         Container viewport = component.getViewport();
         Themes.getDefaultTheme().applyAll(viewport);
         viewport.setBorder(null);

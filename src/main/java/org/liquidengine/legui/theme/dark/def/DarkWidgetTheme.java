@@ -34,6 +34,7 @@ public class DarkWidgetTheme<T extends Widget> extends DarkControllerTheme<T> {
      */
     @Override
     public void applyAll(T component) {
+        super.applyAll(component);
         component.getMinimizeButton().setBackgroundColor(ColorConstants.lightBlack());
         component.getMinimizeButton().getTextState().setTextColor(ColorConstants.white());
         component.getMinimizeButton().setBorder(null);

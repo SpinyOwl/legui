@@ -17,6 +17,7 @@ public class DarkButtonTheme<T extends Button> extends DarkControllerTheme<T> {
      */
     @Override
     public void apply(T component) {
+        super.apply(component);
         component.setBorder(new SimpleLineBorder(ColorConstants.lightGray(), 1.2f));
         component.getTextState().setTextColor(ColorConstants.white());
     }

@@ -16,6 +16,7 @@ public class DarkProgressBarTheme<T extends ProgressBar> extends DarkControllerT
      */
     @Override
     public void apply(T component) {
+        super.apply(component);
         component.setProgressColor(ColorConstants.gray());
     }
 }

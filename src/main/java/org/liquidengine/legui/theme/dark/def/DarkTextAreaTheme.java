@@ -17,6 +17,7 @@ public class DarkTextAreaTheme<T extends TextArea> extends DarkControllerTheme<T
      */
     @Override
     public void apply(T component) {
+        super.apply(component);
         component.getTextState().setTextColor(ColorConstants.white());
         component.getTextState().setHorizontalAlign(HorizontalAlign.LEFT);
         component.getTextState().setHighlightColor(ColorConstants.black());

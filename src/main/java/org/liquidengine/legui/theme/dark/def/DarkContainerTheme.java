@@ -26,16 +26,4 @@ public class DarkContainerTheme<T extends Container> extends DarkControllerTheme
             Themes.getDefaultTheme().applyAll(child);
         }
     }
-
-    /**
-     * Used to apply theme for component and for all children of this component.
-     * Applies changes only for current class part and for parent part.
-     *
-     * @param component component to apply theme.
-     */
-    @Override
-    public void applyAllWithParent(T component) {
-        super.applyAllWithParent(component);
-        this.applyAll(component);
-    }
 }

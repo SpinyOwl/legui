@@ -16,6 +16,7 @@ public class DarkScrollBarTheme<T extends ScrollBar> extends DarkControllerTheme
      */
     @Override
     public void apply(T component) {
+        super.apply(component);
         component.setArrowColor(ColorConstants.white());
         component.setScrollColor(ColorConstants.white());
         component.setArrowsEnabled(true);
