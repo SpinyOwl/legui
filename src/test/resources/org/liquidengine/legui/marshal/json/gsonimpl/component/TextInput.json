@@ -1,0 +1,61 @@
+{
+  "@type": "TextInput",
+  "position": {
+    "x": 10.0,
+    "y": 30.0
+  },
+  "size": {
+    "width": 50.0,
+    "height": 70.0
+  },
+  "backgroundColor": {
+    "r": 1.0,
+    "g": 1.0,
+    "b": 1.0,
+    "a": 1.0
+  },
+  "enabled": true,
+  "visible": true,
+  "cornerRadius": 2.0,
+  "border": {
+    "@type": "SimpleLineBorder",
+    "enabled": true,
+    "THICKNESS": 0.7,
+    "BORDER_COLOR": {
+      "r": 0.2,
+      "g": 0.2,
+      "b": 0.2,
+      "a": 1.0
+    }
+  },
+  "intersector": {
+    "@class": "org.liquidengine.legui.intersection.RectangleIntersector"
+  },
+  "editable": true,
+  "textState": {
+    "@type": "TextState",
+    "font": "roboto italic",
+    "text": "Test text input",
+    "fontSize": 16.0,
+    "horizontalAlign": "LEFT",
+    "verticalAlign": "MIDDLE",
+    "textColor": {
+      "r": 0.0,
+      "g": 0.0,
+      "b": 0.0,
+      "a": 1.0
+    },
+    "highlightColor": {
+      "r": 0.6,
+      "g": 0.7,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "padding": {
+      "left": 5.0,
+      "top": 1.0,
+      "right": 5.0,
+      "bottom": 1.0
+    }
+  }
+}
