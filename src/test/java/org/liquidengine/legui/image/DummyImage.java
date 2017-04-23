@@ -9,6 +9,9 @@ import java.nio.ByteBuffer;
  * Created by Aliaksandr_Shcherbin on 3/2/2017.
  */
 public class DummyImage extends LoadableImage {
+    public DummyImage() {
+    }
+
     public DummyImage(String path) {
         super(path);
     }
@@ -31,6 +34,14 @@ public class DummyImage extends LoadableImage {
     @Override
     public ByteBuffer getImageData() {
         return null;
+    }
+
+    /**
+     * Should be used to load image data from source.
+     */
+    @Override
+    public void load() {
+        // nothing to do for dummy object
     }
 
     @Override

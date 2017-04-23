@@ -25,6 +25,12 @@ public class BufferedImage extends LoadableImage {
     private ByteBuffer    imageData;
 
     /**
+     * This constructor should be used with {@link #setPath(String)} and {@link #load()} methods.
+     */
+    public BufferedImage() {
+    }
+
+    /**
      * Used to create buffered image object and load it.
      *
      * @param path path to image source.
@@ -39,9 +45,10 @@ public class BufferedImage extends LoadableImage {
     }
 
     /**
-     * Used to load image source.
+     * Should be used to load image data from source.
      */
-    private void load() {
+    @Override
+    public void load() {
         try {
             ByteBuffer byteBuffer = IOUtil.ioResourceToByteBuffer(getPath(), 1024);
             int[]      width      = {0};

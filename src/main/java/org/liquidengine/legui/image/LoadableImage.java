@@ -14,7 +14,14 @@ public abstract class LoadableImage extends Image {
     /**
      * Path to image source.
      */
-    private final String path;
+    private String path;
+
+
+    /**
+     * This constructor should be used with {@link #setPath(String)} and {@link #load()} methods.
+     */
+    public LoadableImage() {
+    }
 
     /**
      * Used to create image object but not load it.
@@ -61,6 +68,20 @@ public abstract class LoadableImage extends Image {
     public String getPath() {
         return path;
     }
+
+    /**
+     * Used to set path to image. Use this method with {@link #load()} method.
+     *
+     * @param path path to image.
+     */
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    /**
+     * Should be used to load image data from source.
+     */
+    public abstract void load();
 
     @Override
     public String toString() {

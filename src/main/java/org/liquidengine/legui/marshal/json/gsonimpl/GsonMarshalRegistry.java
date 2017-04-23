@@ -11,6 +11,8 @@ import org.liquidengine.legui.exception.LeguiExceptions;
 import org.liquidengine.legui.icon.CharIcon;
 import org.liquidengine.legui.icon.Icon;
 import org.liquidengine.legui.icon.ImageIcon;
+import org.liquidengine.legui.image.BufferedImage;
+import org.liquidengine.legui.image.LoadableImage;
 import org.liquidengine.legui.intersection.Intersector;
 import org.liquidengine.legui.marshal.json.JsonMarshalRegistry;
 import org.liquidengine.legui.marshal.json.JsonMarshaller;
@@ -21,6 +23,8 @@ import org.liquidengine.legui.marshal.json.gsonimpl.component.optional.GsonTextS
 import org.liquidengine.legui.marshal.json.gsonimpl.icon.GsonCharIconMarshaller;
 import org.liquidengine.legui.marshal.json.gsonimpl.icon.GsonIconMarshaller;
 import org.liquidengine.legui.marshal.json.gsonimpl.icon.GsonImageIconMarshaller;
+import org.liquidengine.legui.marshal.json.gsonimpl.image.GsonBufferedImageMarshaller;
+import org.liquidengine.legui.marshal.json.gsonimpl.image.GsonLoadableImageMarshaller;
 import org.liquidengine.legui.marshal.json.gsonimpl.intersector.GsonIntersectorMarshaller;
 
 import java.util.Map;
@@ -145,6 +149,10 @@ public class GsonMarshalRegistry implements JsonMarshalRegistry {
             I.registerMarshaller("Icon", Icon.class, new GsonIconMarshaller<>());
             I.registerMarshaller("ImageIcon", ImageIcon.class, new GsonImageIconMarshaller<>());
             I.registerMarshaller("CharIcon", CharIcon.class, new GsonCharIconMarshaller<>());
+
+            //image
+            I.registerMarshaller("LoadableImage", LoadableImage.class, new GsonLoadableImageMarshaller<>());
+            I.registerMarshaller("BufferedImage", BufferedImage.class, new GsonBufferedImageMarshaller<>());
 
             // textstate
             I.registerMarshaller("TextState", TextState.class, new GsonTextStateMarshaller<>());
