@@ -1,4 +1,4 @@
 {
-  "@type": "BufferedImage",
+  "@class": "org.liquidengine.legui.image.DummyImage",
   "path": "org/liquidengine/legui/marshal/json/gsonimpl/image/test.png"
 }

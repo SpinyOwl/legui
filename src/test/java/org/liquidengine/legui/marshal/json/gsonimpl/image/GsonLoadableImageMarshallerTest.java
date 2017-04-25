@@ -5,6 +5,8 @@ import com.google.gson.JsonObject;
 import org.junit.Assert;
 import org.junit.Test;
 import org.liquidengine.legui.image.BufferedImage;
+import org.liquidengine.legui.image.LoadableImage;
+import org.liquidengine.legui.image.loader.ImageLoader;
 import org.liquidengine.legui.marshal.json.JsonMarshalContext;
 import org.liquidengine.legui.marshal.json.gsonimpl.GsonMarshalContext;
 import org.liquidengine.legui.marshal.json.gsonimpl.GsonMarshallingTestBase;
@@ -12,10 +14,10 @@ import org.liquidengine.legui.marshal.json.gsonimpl.GsonMarshallingTestBase;
 /**
  * Test for ImageIcon Gson Marshaller.
  */
-public class GsonBufferedImageMarshallerTest extends GsonMarshallingTestBase {
+public class GsonLoadableImageMarshallerTest extends GsonMarshallingTestBase {
 
-    private BufferedImage                              icon       = new BufferedImage("org/liquidengine/legui/marshal/json/gsonimpl/image/test.png");
-    private GsonBufferedImageMarshaller<BufferedImage> marshaller = new GsonBufferedImageMarshaller<>();
+    private LoadableImage                              image      = ImageLoader.loadImage("org/liquidengine/legui/marshal/json/gsonimpl/image/test.png");
+    private GsonLoadableImageMarshaller<LoadableImage> marshaller = new GsonLoadableImageMarshaller<>();
     private String                                     pathToJson = "org/liquidengine/legui/marshal/json/gsonimpl/image/BufferedImage.json";
 
     /**
@@ -26,7 +28,7 @@ public class GsonBufferedImageMarshallerTest extends GsonMarshallingTestBase {
     @Test
     public void marshal() throws Exception {
         String expected = readJsonFromFile(pathToJson).toString();
-        String actual   = marshaller.marshal(icon, new GsonMarshalContext());
+        String actual   = marshaller.marshal(image, new GsonMarshalContext());
         Assert.assertEquals(expected, actual);
     }
 
@@ -38,7 +40,7 @@ public class GsonBufferedImageMarshallerTest extends GsonMarshallingTestBase {
     @Test
     public void unmarshal() throws Exception {
         JsonObject    jsonToUnmarshal = readJsonFromFile(pathToJson);
-        BufferedImage actual          = marshaller.unmarshal(jsonToUnmarshal, new GsonMarshalContext());
-        Assert.assertEquals(icon, actual);
+        LoadableImage actual          = marshaller.unmarshal(jsonToUnmarshal, new GsonMarshalContext());
+        Assert.assertEquals(image, actual);
     }
 }
