@@ -32,21 +32,7 @@ public class DefaultCallbackKeeper implements CallbackKeeper {
      * @param window window to bind.
      */
     public void registerCallbacks(long window) {
-        glfwSetCharCallback(window, chainCharCallback);
-        glfwSetDropCallback(window, chainDropCallback);
-        glfwSetKeyCallback(window, chainKeyCallback);
-        glfwSetScrollCallback(window, chainScrollCallback);
-        glfwSetCharModsCallback(window, chainCharModsCallback);
-        glfwSetCursorEnterCallback(window, chainCursorEnterCallback);
-        glfwSetFramebufferSizeCallback(window, chainFramebufferSizeCallback);
-        glfwSetMouseButtonCallback(window, chainMouseButtonCallback);
-        glfwSetCursorPosCallback(window, chainCursorPosCallback);
-        glfwSetWindowCloseCallback(window, chainWindowCloseCallback);
-        glfwSetWindowFocusCallback(window, chainWindowFocusCallback);
-        glfwSetWindowIconifyCallback(window, chainWindowIconifyCallback);
-        glfwSetWindowPosCallback(window, chainWindowPosCallback);
-        glfwSetWindowRefreshCallback(window, chainWindowRefreshCallback);
-        glfwSetWindowSizeCallback(window, chainWindowSizeCallback);
+        CallbackKeeper.registerCallbacks(window, this);
     }
 
     /**

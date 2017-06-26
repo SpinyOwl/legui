@@ -2,6 +2,10 @@ package org.liquidengine.legui.system.context;
 
 import org.liquidengine.cbchain.*;
 
+import static org.lwjgl.glfw.GLFW.*;
+import static org.lwjgl.glfw.GLFW.glfwSetWindowRefreshCallback;
+import static org.lwjgl.glfw.GLFW.glfwSetWindowSizeCallback;
+
 /**
  * Interface determines that class which implement it should provide chain callbacks.
  */
@@ -111,4 +115,28 @@ public interface CallbackKeeper {
      * @return chain char callback.
      */
     IChainWindowSizeCallback getChainWindowSizeCallback();
+
+
+    /**
+     * Used to bind callbacks to OpenGL window. This method could be called only from main thread (Main OpenGL thread).
+     *
+     * @param window window to bind.
+     */
+    static void registerCallbacks(long window, CallbackKeeper keeper) {
+        glfwSetCharCallback(window, keeper.getChainCharCallback());
+        glfwSetDropCallback(window, keeper.getChainDropCallback());
+        glfwSetKeyCallback(window, keeper.getChainKeyCallback());
+        glfwSetScrollCallback(window, keeper.getChainScrollCallback());
+        glfwSetCharModsCallback(window, keeper.getChainCharModsCallback());
+        glfwSetCursorEnterCallback(window, keeper.getChainCursorEnterCallback());
+        glfwSetFramebufferSizeCallback(window, keeper.getChainFramebufferSizeCallback());
+        glfwSetMouseButtonCallback(window, keeper.getChainMouseButtonCallback());
+        glfwSetCursorPosCallback(window, keeper.getChainCursorPosCallback());
+        glfwSetWindowCloseCallback(window, keeper.getChainWindowCloseCallback());
+        glfwSetWindowFocusCallback(window, keeper.getChainWindowFocusCallback());
+        glfwSetWindowIconifyCallback(window, keeper.getChainWindowIconifyCallback());
+        glfwSetWindowPosCallback(window, keeper.getChainWindowPosCallback());
+        glfwSetWindowRefreshCallback(window, keeper.getChainWindowRefreshCallback());
+        glfwSetWindowSizeCallback(window, keeper.getChainWindowSizeCallback());
+    }
 }
