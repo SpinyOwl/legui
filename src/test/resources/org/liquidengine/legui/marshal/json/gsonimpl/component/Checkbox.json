@@ -62,7 +62,7 @@
       "b": 0.0,
       "a": 1.0
     },
-    "charCode": ""
+    "charCode": "\uE834"
   },
   "iconUnchecked": {
     "@type": "CharIcon",
@@ -79,6 +79,6 @@
       "b": 0.0,
       "a": 1.0
     },
-    "charCode": ""
+    "charCode": "\uE835"
   }
 }
