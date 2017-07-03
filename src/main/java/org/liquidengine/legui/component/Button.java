@@ -112,7 +112,7 @@ public class Button extends Controller implements TextComponent {
     private void initialize(String text) {
         this.textState = new TextState(text);
         textState.setHorizontalAlign(HorizontalAlign.CENTER);
-        Themes.getDefaultTheme().getThemeManager().getComponentTheme(Button.class).applyAll(this);
+        Themes.getDefaultTheme().getThemeManager().applyAll(this);
     }
 
     /**

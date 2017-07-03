@@ -65,7 +65,7 @@ public abstract class Container<T extends Component> extends Controller {
     }
 
     private void initialize() {
-        Themes.getDefaultTheme().getThemeManager().getComponentTheme(Container.class).applyAll(this);
+        Themes.getDefaultTheme().getThemeManager().applyAll(this);
     }
 
     /**

@@ -15,7 +15,7 @@ public class Panel<T extends Component> extends Container<T> {
      * Json marshaller/unmarshaller component should contain empty constructor.
      */
     public Panel() {
-        Themes.getDefaultTheme().applyAll(this);
+        Themes.getDefaultTheme().getThemeManager().applyAll(this);
     }
 
     /**
@@ -28,7 +28,7 @@ public class Panel<T extends Component> extends Container<T> {
      */
     public Panel(float x, float y, float width, float height) {
         super(x, y, width, height);
-        Themes.getDefaultTheme().getThemeManager().getComponentTheme(Panel.class).applyAll(this);
+        Themes.getDefaultTheme().getThemeManager().applyAll(this);
     }
 
     /**
@@ -39,7 +39,7 @@ public class Panel<T extends Component> extends Container<T> {
      */
     public Panel(Vector2f position, Vector2f size) {
         super(position, size);
-        Themes.getDefaultTheme().applyAll(this);
+        Themes.getDefaultTheme().getThemeManager().applyAll(this);
     }
 
 }

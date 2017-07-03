@@ -69,7 +69,7 @@ public class ProgressBar extends Controller {
     }
 
     private void initialize() {
-        Themes.getDefaultTheme().getThemeManager().getComponentTheme(ProgressBar.class).applyAll(this);
+        Themes.getDefaultTheme().getThemeManager().applyAll(this);
     }
 
     /**

@@ -90,7 +90,7 @@ public class Dialog extends Widget {
 
         this.setMinimizable(false);
         this.getListenerMap().addListener(WidgetCloseEvent.class, new DialogCloseEventListener());
-        Themes.getDefaultTheme().getThemeManager().getComponentTheme(Dialog.class).applyAll(this);
+        Themes.getDefaultTheme().getThemeManager().applyAll(this);
     }
 
     /**

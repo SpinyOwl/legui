@@ -141,7 +141,7 @@ public class TextArea extends Controller implements TextComponent {
         getListenerMap().addListener(KeyEvent.class, new TextAreaKeyEventListener());
         getListenerMap().addListener(CharEvent.class, new TextAreaCharEventListener());
 
-        Themes.getDefaultTheme().getThemeManager().getComponentTheme(TextArea.class).applyAll(this);
+        Themes.getDefaultTheme().getThemeManager().applyAll(this);
     }
 
     /**

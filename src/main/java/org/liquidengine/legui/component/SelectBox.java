@@ -137,7 +137,7 @@ public class SelectBox extends Container {
         selectionButton.getListenerMap().getListeners(FocusEvent.class).add(focusEventListener);
         expandButton.getListenerMap().getListeners(FocusEvent.class).add(focusEventListener);
 
-        Themes.getDefaultTheme().getThemeManager().getComponentTheme(SelectBox.class).applyAll(this);
+        Themes.getDefaultTheme().getThemeManager().applyAll(this);
 
         resize();
     }

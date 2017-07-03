@@ -1,6 +1,7 @@
 package org.liquidengine.legui.component;
 
 import org.joml.Vector2f;
+import org.liquidengine.legui.theme.Themes;
 
 /**
  * This component used to enter passwords securely by users.
@@ -30,6 +31,7 @@ public class PasswordInput extends TextInput {
      */
     public PasswordInput(float x, float y, float width, float height) {
         super(x, y, width, height);
+        Themes.getDefaultTheme().getThemeManager().applyAll(this);
     }
 
     /**
@@ -40,6 +42,7 @@ public class PasswordInput extends TextInput {
      */
     public PasswordInput(Vector2f position, Vector2f size) {
         super(position, size);
+        Themes.getDefaultTheme().getThemeManager().applyAll(this);
     }
 
     /**
@@ -52,6 +55,7 @@ public class PasswordInput extends TextInput {
      */
     public PasswordInput(String text) {
         super(text);
+        Themes.getDefaultTheme().getThemeManager().applyAll(this);
     }
 
     /**
