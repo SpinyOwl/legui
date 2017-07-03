@@ -6,14 +6,15 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 import org.liquidengine.legui.component.optional.TextState;
-import org.liquidengine.legui.event.LeguiCharEvent;
-import org.liquidengine.legui.event.LeguiKeyEvent;
-import org.liquidengine.legui.event.LeguiMouseClickEvent;
-import org.liquidengine.legui.event.LeguiMouseDragEvent;
-import org.liquidengine.legui.listener.*;
-import org.liquidengine.legui.listener.LeguiKeyEventListener;
-import org.liquidengine.legui.listener.LeguiMouseClickEventListener;
-import org.liquidengine.legui.system.context.LeguiContext;
+import org.liquidengine.legui.event.CharEvent;
+import org.liquidengine.legui.event.KeyEvent;
+import org.liquidengine.legui.event.MouseClickEvent;
+import org.liquidengine.legui.event.MouseDragEvent;
+import org.liquidengine.legui.listener.CharEventListener;
+import org.liquidengine.legui.listener.KeyEventListener;
+import org.liquidengine.legui.listener.MouseClickEventListener;
+import org.liquidengine.legui.listener.MouseDragEventListener;
+import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.theme.Themes;
 
 import static org.liquidengine.legui.input.Mouse.MouseButton.MOUSE_BUTTON_LEFT;
@@ -135,10 +136,10 @@ public class TextArea extends Controller implements TextComponent {
         textState = new TextState(s);
         textState.getPadding().set(5, 10, 5, 10);
 
-        getListenerMap().addListener(LeguiMouseDragEvent.class, new LeguiTextAreaDragEventListener());
-        getListenerMap().addListener(LeguiMouseClickEvent.class, new LeguiTextAreaMouseClickEventListener());
-        getListenerMap().addListener(LeguiKeyEvent.class, new LeguiTextAreaKeyEventListener());
-        getListenerMap().addListener(LeguiCharEvent.class, new LeguiTextAreaCharEventListener());
+        getListenerMap().addListener(MouseDragEvent.class, new TextAreaDragEventListener());
+        getListenerMap().addListener(MouseClickEvent.class, new TextAreaMouseClickEventListener());
+        getListenerMap().addListener(KeyEvent.class, new TextAreaKeyEventListener());
+        getListenerMap().addListener(CharEvent.class, new TextAreaCharEventListener());
 
         Themes.getDefaultTheme().getThemeManager().getComponentTheme(TextArea.class).applyAll(this);
     }
@@ -306,15 +307,15 @@ public class TextArea extends Controller implements TextComponent {
     /**
      * Mouse drag event listener for text area. Used to update selection indices.
      */
-    public static class LeguiTextAreaDragEventListener implements LeguiMouseDragEventListener {
+    public static class TextAreaDragEventListener implements MouseDragEventListener {
 
         /**
-         * Used to handle {@link LeguiMouseDragEvent}.
+         * Used to handle {@link MouseDragEvent}.
          *
          * @param event event to handle.
          */
         @Override
-        public void process(LeguiMouseDragEvent event) {
+        public void process(MouseDragEvent event) {
             TextArea textArea = (TextArea) event.getComponent();
             if (MOUSE_BUTTON_LEFT.isPressed()) {
                 int mouseCaretPosition = textArea.getMouseCaretPosition();
@@ -332,17 +333,17 @@ public class TextArea extends Controller implements TextComponent {
     /**
      * Mouse click event listener for text area. Used to update caret position.
      */
-    public static class LeguiTextAreaMouseClickEventListener implements LeguiMouseClickEventListener {
+    public static class TextAreaMouseClickEventListener implements MouseClickEventListener {
 
         /**
-         * Used to handle {@link LeguiMouseClickEvent}.
+         * Used to handle {@link MouseClickEvent}.
          *
          * @param event event to handle.
          */
         @Override
-        public void process(LeguiMouseClickEvent event) {
+        public void process(MouseClickEvent event) {
             TextArea textArea = (TextArea) event.getComponent();
-            if (event.getAction() == LeguiMouseClickEvent.MouseClickAction.PRESS) {
+            if (event.getAction() == MouseClickEvent.MouseClickAction.PRESS) {
                 int mouseCaretPosition = textArea.getMouseCaretPosition();
                 textArea.setCaretPosition(mouseCaretPosition);
                 textArea.setStartSelectionIndex(mouseCaretPosition);
@@ -359,15 +360,15 @@ public class TextArea extends Controller implements TextComponent {
     /**
      * Key event listener. Used to provide some text operations by keyboard.
      */
-    public static class LeguiTextAreaKeyEventListener implements LeguiKeyEventListener {
+    public static class TextAreaKeyEventListener implements KeyEventListener {
 
         /**
-         * Used to handle {@link LeguiKeyEvent}.
+         * Used to handle {@link KeyEvent}.
          *
          * @param event event to handle.
          */
         @Override
-        public void process(LeguiKeyEvent event) {
+        public void process(KeyEvent event) {
             TextArea textArea = (TextArea) event.getComponent();
             if (textArea.isFocused() && textArea.isEditable()) {
                 int       key           = event.getKey();
@@ -409,7 +410,7 @@ public class TextArea extends Controller implements TextComponent {
          * @param leguiContext context.
          * @param textState    text state to work with.
          */
-        private void cutAction(TextArea gui, LeguiContext leguiContext, TextState textState) {
+        private void cutAction(TextArea gui, Context leguiContext, TextState textState) {
             if (gui.isEditable()) {
                 String s = gui.getSelection();
                 if (s != null) {
@@ -429,12 +430,12 @@ public class TextArea extends Controller implements TextComponent {
             }
         }
 
-        private void copyAction(TextArea gui, LeguiContext leguiContext) {
+        private void copyAction(TextArea gui, Context leguiContext) {
             String s = gui.getSelection();
             if (s != null) glfwSetClipboardString(leguiContext.getGlfwWindow(), s);
         }
 
-        private void pasteAction(TextArea gui, LeguiContext leguiContext, int caretPosition, TextState textState) {
+        private void pasteAction(TextArea gui, Context leguiContext, int caretPosition, TextState textState) {
             if (gui.isEditable()) {
                 String s = glfwGetClipboardString(leguiContext.getGlfwWindow());
                 if (s != null) {
@@ -628,15 +629,15 @@ public class TextArea extends Controller implements TextComponent {
     /**
      * Char event listener for text area. Used to fill text area with symbols entered via keyboard.
      */
-    public static class LeguiTextAreaCharEventListener implements LeguiCharEventListener {
+    public static class TextAreaCharEventListener implements CharEventListener {
 
         /**
-         * Used to handle {@link LeguiCharEvent}.
+         * Used to handle {@link CharEvent}.
          *
          * @param event event to handle.
          */
         @Override
-        public void process(LeguiCharEvent event) {
+        public void process(CharEvent event) {
             TextArea textArea = (TextArea) event.getComponent();
             if (textArea.isFocused() && textArea.isEditable() && !MOUSE_BUTTON_LEFT.isPressed()) {
                 String    str       = cpToStr(event.getCodepoint());

@@ -8,16 +8,18 @@ import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.color.ColorConstants;
 import org.liquidengine.legui.component.optional.Orientation;
-import org.liquidengine.legui.event.*;
-import org.liquidengine.legui.event.LeguiMouseClickEvent;
-import org.liquidengine.legui.event.LeguiMouseDragEvent;
+import org.liquidengine.legui.event.Event;
+import org.liquidengine.legui.event.MouseClickEvent;
+import org.liquidengine.legui.event.MouseDragEvent;
+import org.liquidengine.legui.event.ScrollEvent;
 import org.liquidengine.legui.input.Mouse;
 import org.liquidengine.legui.intersection.Intersector;
 import org.liquidengine.legui.intersection.RectangleIntersector;
-import org.liquidengine.legui.listener.*;
-import org.liquidengine.legui.listener.LeguiMouseClickEventListener;
-import org.liquidengine.legui.listener.LeguiScrollEventListener;
-import org.liquidengine.legui.system.context.LeguiContext;
+import org.liquidengine.legui.listener.EventListener;
+import org.liquidengine.legui.listener.MouseClickEventListener;
+import org.liquidengine.legui.listener.MouseDragEventListener;
+import org.liquidengine.legui.listener.ScrollEventListener;
+import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.theme.Themes;
 
 /**
@@ -113,9 +115,9 @@ public class Slider extends Controller {
         this.value = value;
         setBackgroundColor(ColorConstants.transparent());
         setBorder(null);
-        getListenerMap().addListener(LeguiScrollEvent.class, new LeguiSliderScrollEventListener());
-        getListenerMap().addListener(LeguiMouseClickEvent.class, new LeguiSliderMouseClickEventListener());
-        getListenerMap().addListener(LeguiMouseDragEvent.class, new LeguiSliderMouseDragEventListener());
+        getListenerMap().addListener(ScrollEvent.class, new SliderScrollEventListener());
+        getListenerMap().addListener(MouseClickEvent.class, new SliderMouseClickEventListener());
+        getListenerMap().addListener(MouseDragEvent.class, new SliderMouseDragEventListener());
         Themes.getDefaultTheme().getThemeManager().getComponentTheme(Slider.class).applyAll(this);
     }
 
@@ -207,14 +209,14 @@ public class Slider extends Controller {
                 .toString();
     }
 
-    public interface LeguiSliderChangeValueEventListener extends LeguiEventListener<LeguiSliderChangeValueEvent> {
-        void process(LeguiSliderChangeValueEvent event);
+    public interface SliderChangeValueEventListener extends EventListener<SliderChangeValueEvent> {
+        void process(SliderChangeValueEvent event);
     }
 
-    public static class LeguiSliderScrollEventListener implements LeguiScrollEventListener {
+    public static class SliderScrollEventListener implements ScrollEventListener {
 
         @Override
-        public void process(LeguiScrollEvent event) {
+        public void process(ScrollEvent event) {
             Slider slider   = (Slider) event.getComponent();
             float  curValue = slider.getValue();
             float  value    = (float) (curValue + event.getYoffset());
@@ -222,7 +224,7 @@ public class Slider extends Controller {
             if (value > MAX_VALUE) value = MAX_VALUE;
             if (value < MIN_VALUE) value = MIN_VALUE;
 
-            event.getContext().getEventProcessor().pushEvent(new LeguiSliderChangeValueEvent(slider, event.getContext(), slider.getValue(), value));
+            event.getContext().getEventProcessor().pushEvent(new SliderChangeValueEvent(slider, event.getContext(), slider.getValue(), value));
             slider.setValue(value);
         }
 
@@ -232,11 +234,11 @@ public class Slider extends Controller {
         }
     }
 
-    public static class LeguiSliderMouseClickEventListener implements LeguiMouseClickEventListener {
+    public static class SliderMouseClickEventListener implements MouseClickEventListener {
 
         @Override
-        public void process(LeguiMouseClickEvent event) {
-            if (event.getButton().equals(Mouse.MouseButton.MOUSE_BUTTON_LEFT) && event.getAction() == LeguiMouseClickEvent.MouseClickAction.PRESS) {
+        public void process(MouseClickEvent event) {
+            if (event.getButton().equals(Mouse.MouseButton.MOUSE_BUTTON_LEFT) && event.getAction() == MouseClickEvent.MouseClickAction.PRESS) {
                 Slider   slider = (Slider) event.getComponent();
                 Vector2f pos    = slider.getScreenPosition();
 
@@ -249,7 +251,7 @@ public class Slider extends Controller {
                 }
                 if (value > MAX_VALUE) value = MAX_VALUE;
                 if (value < MIN_VALUE) value = MIN_VALUE;
-                event.getContext().getEventProcessor().pushEvent(new LeguiSliderChangeValueEvent(slider, event.getContext(), slider.getValue(), value));
+                event.getContext().getEventProcessor().pushEvent(new SliderChangeValueEvent(slider, event.getContext(), slider.getValue(), value));
                 slider.setValue(value);
             }
         }
@@ -260,10 +262,10 @@ public class Slider extends Controller {
         }
     }
 
-    public static class LeguiSliderMouseDragEventListener implements LeguiMouseDragEventListener {
+    public static class SliderMouseDragEventListener implements MouseDragEventListener {
 
         @Override
-        public void process(LeguiMouseDragEvent event) {
+        public void process(MouseDragEvent event) {
             Slider slider = (Slider) event.getComponent();
             if (!Mouse.MouseButton.MOUSE_BUTTON_LEFT.isPressed()) return;
 
@@ -280,7 +282,7 @@ public class Slider extends Controller {
             if (value > MAX_VALUE) value = MAX_VALUE;
             if (value < MIN_VALUE) value = MIN_VALUE;
 
-            event.getContext().getEventProcessor().pushEvent(new LeguiSliderChangeValueEvent(slider, event.getContext(), slider.getValue(), value));
+            event.getContext().getEventProcessor().pushEvent(new SliderChangeValueEvent(slider, event.getContext(), slider.getValue(), value));
             slider.setValue(value);
         }
 
@@ -290,12 +292,12 @@ public class Slider extends Controller {
         }
     }
 
-    public static class LeguiSliderChangeValueEvent<T extends Slider> extends LeguiEvent<T> {
+    public static class SliderChangeValueEvent<T extends Slider> extends Event<T> {
 
         private final float oldValue;
         private final float newValue;
 
-        public LeguiSliderChangeValueEvent(T component, LeguiContext context, float oldValue, float newValue) {
+        public SliderChangeValueEvent(T component, Context context, float oldValue, float newValue) {
             super(component, context);
             this.oldValue = oldValue;
             this.newValue = newValue;

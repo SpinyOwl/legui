@@ -9,20 +9,20 @@ import java.util.concurrent.ConcurrentHashMap;
  * Created by Aliaksandr_Shcherbin on 1/25/2017.
  */
 public class SystemEventHandlerProvider {
-    private Map<Class<? extends LeguiSystemEvent>, LeguiSystemEventHandler<? extends LeguiSystemEvent>> processorMap = new ConcurrentHashMap<>();
+    private Map<Class<? extends SystemEvent>, SystemEventHandler<? extends SystemEvent>> processorMap = new ConcurrentHashMap<>();
 
     private SystemEventHandlerProvider() {
-        registerProcessor(LeguiSystemWindowCloseEvent.class, new WindowCloseEventHandlerLegui());
-        registerProcessor(LeguiSystemWindowIconifyEvent.class, new WindowIconifyEventHandlerLegui());
-        registerProcessor(LeguiSystemScrollEvent.class, new ScrollEventHandlerLegui());
-        registerProcessor(LeguiSystemWindowFocusEvent.class, new WindowFocusEventHandlerLegui());
-        registerProcessor(LeguiSystemWindowPosEvent.class, new WindowPosEventHandlerLegui());
-        registerProcessor(LeguiSystemWindowRefreshEvent.class, new WindowRefreshEventHandlerLegui());
-        registerProcessor(LeguiSystemWindowSizeEvent.class, new WindowSizeEventHandlerLegui());
-        registerProcessor(LeguiSystemCursorPosEvent.class, new CursorPosEventHandlerLegui());
-        registerProcessor(LeguiSystemMouseClickEvent.class, new MouseClickEventHandlerLegui());
-        registerProcessor(LeguiSystemKeyEvent.class, new KeyEventHandlerLegui());
-        registerProcessor(LeguiSystemCharEvent.class, new CharEventHandlerLegui());
+        registerProcessor(SystemWindowCloseEvent.class, new WindowCloseEventHandler());
+        registerProcessor(SystemWindowIconifyEvent.class, new WindowIconifyEventHandler());
+        registerProcessor(SystemScrollEvent.class, new ScrollEventHandler());
+        registerProcessor(SystemWindowFocusEvent.class, new WindowFocusEventHandler());
+        registerProcessor(SystemWindowPosEvent.class, new WindowPosEventHandler());
+        registerProcessor(SystemWindowRefreshEvent.class, new WindowRefreshEventHandler());
+        registerProcessor(SystemWindowSizeEvent.class, new WindowSizeEventHandler());
+        registerProcessor(SystemCursorPosEvent.class, new CursorPosEventHandler());
+        registerProcessor(SystemMouseClickEvent.class, new MouseClickEventHandler());
+        registerProcessor(SystemKeyEvent.class, new KeyEventHandler());
+        registerProcessor(SystemCharEvent.class, new CharEventHandler());
 
     }
 
@@ -30,12 +30,12 @@ public class SystemEventHandlerProvider {
         return LSEPPH.I;
     }
 
-    public <E extends LeguiSystemEvent> void registerProcessor(Class<E> eventClass, LeguiSystemEventHandler<E> processor) {
+    public <E extends SystemEvent> void registerProcessor(Class<E> eventClass, SystemEventHandler<E> processor) {
         processorMap.put(eventClass, processor);
     }
 
-    public <E extends LeguiSystemEvent> LeguiSystemEventHandler<E> getProcessor(Class<E> eventClass) {
-        return (LeguiSystemEventHandler<E>) processorMap.get(eventClass);
+    public <E extends SystemEvent> SystemEventHandler<E> getProcessor(Class<E> eventClass) {
+        return (SystemEventHandler<E>) processorMap.get(eventClass);
     }
 
     private static class LSEPPH {

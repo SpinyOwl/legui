@@ -8,15 +8,16 @@ import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.color.ColorConstants;
 import org.liquidengine.legui.component.optional.Orientation;
-import org.liquidengine.legui.event.*;
-import org.liquidengine.legui.event.LeguiEvent;
-import org.liquidengine.legui.event.LeguiMouseClickEvent;
+import org.liquidengine.legui.event.Event;
+import org.liquidengine.legui.event.MouseClickEvent;
+import org.liquidengine.legui.event.MouseDragEvent;
+import org.liquidengine.legui.event.ScrollEvent;
 import org.liquidengine.legui.input.Mouse;
-import org.liquidengine.legui.listener.LeguiEventListener;
-import org.liquidengine.legui.listener.LeguiMouseClickEventListener;
-import org.liquidengine.legui.listener.LeguiMouseDragEventListener;
-import org.liquidengine.legui.listener.LeguiScrollEventListener;
-import org.liquidengine.legui.system.context.LeguiContext;
+import org.liquidengine.legui.listener.EventListener;
+import org.liquidengine.legui.listener.MouseClickEventListener;
+import org.liquidengine.legui.listener.MouseDragEventListener;
+import org.liquidengine.legui.listener.ScrollEventListener;
+import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.theme.Themes;
 
 import static org.liquidengine.legui.input.Mouse.MouseButton.MOUSE_BUTTON_LEFT;
@@ -166,9 +167,9 @@ public class ScrollBar extends Controller {
      * Used to initialize listeners.
      */
     private void initialize() {
-        getListenerMap().addListener(LeguiScrollEvent.class, new LeguiScrollBarScrollListener());
-        getListenerMap().addListener(LeguiMouseDragEvent.class, new LeguiScrollBarMouseDragEventListener());
-        getListenerMap().addListener(LeguiMouseClickEvent.class, new LeguiScrollBarMouseClickEventListener());
+        getListenerMap().addListener(ScrollEvent.class, new ScrollBarScrollListener());
+        getListenerMap().addListener(MouseDragEvent.class, new ScrollBarMouseDragEventListener());
+        getListenerMap().addListener(MouseClickEvent.class, new ScrollBarMouseClickEventListener());
         Themes.getDefaultTheme().getThemeManager().getComponentTheme(ScrollBar.class).applyAll(this);
     }
 
@@ -469,17 +470,17 @@ public class ScrollBar extends Controller {
     }
 
     /**
-     * Defines contract for listener of {@link LeguiScrollBarChangeValueEvent} event.
+     * Defines contract for listener of {@link ScrollBarChangeValueEvent} event.
      */
-    public interface LeguiScrollBarChangeValueEventListener extends LeguiEventListener<LeguiScrollBarChangeValueEvent> {
-        void process(LeguiScrollBarChangeValueEvent event);
+    public interface ScrollBarChangeValueEventListener extends EventListener<ScrollBarChangeValueEvent> {
+        void process(ScrollBarChangeValueEvent event);
     }
 
     /**
-     * Default mouse scroll event listener for scrollbar. Generates {@link LeguiScrollBarChangeValueEvent} event.
+     * Default mouse scroll event listener for scrollbar. Generates {@link ScrollBarChangeValueEvent} event.
      */
-    public static class LeguiScrollBarScrollListener implements LeguiScrollEventListener {
-        public void process(LeguiScrollEvent event) {
+    public static class ScrollBarScrollListener implements ScrollEventListener {
+        public void process(ScrollEvent event) {
             ScrollBar scrollBar     = (ScrollBar) event.getComponent();
             float     maxValue      = scrollBar.getMaxValue();
             float     minValue      = scrollBar.getMinValue();
@@ -491,7 +492,7 @@ public class ScrollBar extends Controller {
             if (newVal > maxValue) newVal = maxValue;
             if (newVal < minValue) newVal = minValue;
 
-            event.getContext().getEventProcessor().pushEvent(new LeguiScrollBarChangeValueEvent<>(scrollBar, event.getContext(), curValue, newVal));
+            event.getContext().getEventProcessor().pushEvent(new ScrollBarChangeValueEvent<>(scrollBar, event.getContext(), curValue, newVal));
             scrollBar.setCurValue(newVal);
 
             Viewport viewport = scrollBar.getViewport();
@@ -507,12 +508,12 @@ public class ScrollBar extends Controller {
     }
 
     /**
-     * Default mouse drag event listener for scrollbar. Generates {@link LeguiScrollBarChangeValueEvent} event.
+     * Default mouse drag event listener for scrollbar. Generates {@link ScrollBarChangeValueEvent} event.
      */
-    public static class LeguiScrollBarMouseDragEventListener implements LeguiMouseDragEventListener {
+    public static class ScrollBarMouseDragEventListener implements MouseDragEventListener {
 
         @Override
-        public void process(LeguiMouseDragEvent event) {
+        public void process(MouseDragEvent event) {
             ScrollBar scrollBar = (ScrollBar) event.getComponent();
             if (!scrollBar.isScrolling()) return;
             if (!MOUSE_BUTTON_LEFT.isPressed()) return;
@@ -544,7 +545,7 @@ public class ScrollBar extends Controller {
             float newVal = valueRange * (curPos - (dpos + arrowSize + barSize / 2f)) / (scrollBarSize - barSize);
             if (newVal > maxValue) newVal = maxValue;
             else if (newVal < minValue) newVal = minValue;
-            event.getContext().getEventProcessor().pushEvent(new LeguiScrollBarChangeValueEvent<>(scrollBar, event.getContext(), scrollBar.getCurValue(), newVal));
+            event.getContext().getEventProcessor().pushEvent(new ScrollBarChangeValueEvent<>(scrollBar, event.getContext(), scrollBar.getCurValue(), newVal));
             scrollBar.setCurValue(newVal);
 
             Viewport viewport = scrollBar.getViewport();
@@ -561,14 +562,14 @@ public class ScrollBar extends Controller {
 
 
     /**
-     * Default mouse click event listener for scrollbar. Generates {@link LeguiScrollBarChangeValueEvent} event.
+     * Default mouse click event listener for scrollbar. Generates {@link ScrollBarChangeValueEvent} event.
      */
-    public static class LeguiScrollBarMouseClickEventListener implements LeguiMouseClickEventListener {
+    public static class ScrollBarMouseClickEventListener implements MouseClickEventListener {
 
         @Override
-        public void process(LeguiMouseClickEvent event) {
+        public void process(MouseClickEvent event) {
             ScrollBar scrollBar = (ScrollBar) event.getComponent();
-            boolean   released  = event.getAction() != LeguiMouseClickEvent.MouseClickAction.PRESS;
+            boolean   released  = event.getAction() != MouseClickEvent.MouseClickAction.PRESS;
             if (!event.getButton().equals(MOUSE_BUTTON_LEFT)) return;
 
             Vector2f pos            = scrollBar.getScreenPosition();
@@ -614,10 +615,10 @@ public class ScrollBar extends Controller {
             }
         }
 
-        private void updateViewport(LeguiEvent event, ScrollBar scrollBar, float maxValue, float minValue, float newVal) {
+        private void updateViewport(Event event, ScrollBar scrollBar, float maxValue, float minValue, float newVal) {
             if (newVal > maxValue) newVal = maxValue;
             else if (newVal < minValue) newVal = minValue;
-            event.getContext().getEventProcessor().pushEvent(new LeguiScrollBarChangeValueEvent<>(scrollBar, event.getContext(), scrollBar.getCurValue(), newVal));
+            event.getContext().getEventProcessor().pushEvent(new ScrollBarChangeValueEvent<>(scrollBar, event.getContext(), scrollBar.getCurValue(), newVal));
             scrollBar.setCurValue(newVal);
 
             Viewport viewport = scrollBar.getViewport();
@@ -633,14 +634,14 @@ public class ScrollBar extends Controller {
     }
 
     /**
-     * LeguiEvent generated by default event listeners which shows that scrollbar value was changed.
+     * Event generated by default event listeners which shows that scrollbar value was changed.
      */
-    public static class LeguiScrollBarChangeValueEvent<T extends ScrollBar> extends LeguiEvent<T> {
+    public static class ScrollBarChangeValueEvent<T extends ScrollBar> extends Event<T> {
 
         private final float oldValue;
         private final float newValue;
 
-        public LeguiScrollBarChangeValueEvent(T component, LeguiContext context, float oldValue, float newValue) {
+        public ScrollBarChangeValueEvent(T component, Context context, float oldValue, float newValue) {
             super(component, context);
             this.oldValue = oldValue;
             this.newValue = newValue;
@@ -670,7 +671,7 @@ public class ScrollBar extends Controller {
 
             if (o == null || getClass() != o.getClass()) return false;
 
-            LeguiScrollBarChangeValueEvent that = (LeguiScrollBarChangeValueEvent) o;
+            ScrollBarChangeValueEvent that = (ScrollBarChangeValueEvent) o;
 
             return new EqualsBuilder()
                     .append(getOldValue(), that.getOldValue())

@@ -10,7 +10,7 @@ import org.liquidengine.legui.border.Border;
 import org.liquidengine.legui.color.ColorConstants;
 import org.liquidengine.legui.intersection.Intersector;
 import org.liquidengine.legui.intersection.RectangleIntersector;
-import org.liquidengine.legui.listener.LeguiListenerMap;
+import org.liquidengine.legui.listener.ListenerMap;
 import org.liquidengine.legui.theme.Themes;
 
 import java.io.Serializable;
@@ -32,23 +32,23 @@ public abstract class Component implements Serializable {
     /**
      * Map for UI event listeners.
      */
-    private LeguiListenerMap listenerMap     = new LeguiListenerMap();
+    private ListenerMap listenerMap        = new ListenerMap();
     /**
      * Position of component relative top left corner in parent component.
      * <p>
      * If component is the root component then position calculated relative window top left corner.
      */
-    private Vector2f         position        = new Vector2f();
+    private Vector2f    position           = new Vector2f();
     /**
      * Size of component.
      */
-    private Vector2f         size            = new Vector2f();
+    private Vector2f    size               = new Vector2f();
     /**
      * Component background color.
      * <p>Represented by vector where (x=r,y=g,z=b,w=a).
      * <p>For example white = {@code new Vector4f(1,1,1,1)}
      */
-    private Vector4f         backgroundColor = ColorConstants.white();
+    private Vector4f    backgroundColor    = ColorConstants.white();
     /**
      * Stroke color. Used to render stroke if component is focused.
      */
@@ -153,7 +153,7 @@ public abstract class Component implements Serializable {
      *
      * @return event listeners map.
      */
-    public LeguiListenerMap getListenerMap() {
+    public ListenerMap getListenerMap() {
         return listenerMap;
     }
 
@@ -162,7 +162,7 @@ public abstract class Component implements Serializable {
      *
      * @param listenerMap map of event listeners.
      */
-    public void setListenerMap(LeguiListenerMap listenerMap) {
+    public void setListenerMap(ListenerMap listenerMap) {
         this.listenerMap = listenerMap;
     }
 

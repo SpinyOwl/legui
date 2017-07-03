@@ -89,7 +89,7 @@ public class Dialog extends Widget {
 
 
         this.setMinimizable(false);
-        this.getListenerMap().addListener(LeguiWidgetCloseEvent.class, new LeguiDialogCloseEventListener());
+        this.getListenerMap().addListener(WidgetCloseEvent.class, new DialogCloseEventListener());
         Themes.getDefaultTheme().getThemeManager().getComponentTheme(Dialog.class).applyAll(this);
     }
 
@@ -149,15 +149,15 @@ public class Dialog extends Widget {
      * When dialog closed dialog layer with dialog
      * should be removed from frame.
      */
-    public class LeguiDialogCloseEventListener implements LeguiWidgetCloseEventListener<LeguiWidgetCloseEvent> {
+    public class DialogCloseEventListener implements WidgetCloseEventListener<WidgetCloseEvent> {
 
         /**
-         * Used to handle {@link LeguiWidgetCloseEvent} event.
+         * Used to handle {@link WidgetCloseEvent} event.
          *
          * @param event event to handle.
          */
         @Override
-        public void process(LeguiWidgetCloseEvent event) {
+        public void process(WidgetCloseEvent event) {
             closeDialog();
         }
 

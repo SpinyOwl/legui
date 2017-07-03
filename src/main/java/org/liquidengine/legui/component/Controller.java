@@ -5,8 +5,8 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
-import org.liquidengine.legui.event.LeguiCursorEnterEvent;
-import org.liquidengine.legui.listener.LeguiCursorEnterEventListener;
+import org.liquidengine.legui.event.CursorEnterEvent;
+import org.liquidengine.legui.listener.CursorEnterEventListener;
 import org.liquidengine.legui.theme.Themes;
 
 /**
@@ -52,13 +52,13 @@ public abstract class Controller extends Component {
     }
 
     /**
-     * Initializes controller with default {@link LeguiCursorEnterEventListener} to show tooltip.
+     * Initializes controller with default {@link CursorEnterEventListener} to show tooltip.
      * <p>
-     * See {@link LeguiCursorEnterListenerForTooltip}.
+     * See {@link CursorEnterListenerForTooltip}.
      */
     private void initialize() {
-        LeguiCursorEnterEventListener listener = new LeguiCursorEnterListenerForTooltip();
-        getListenerMap().addListener(LeguiCursorEnterEvent.class, listener);
+        CursorEnterEventListener listener = new CursorEnterListenerForTooltip();
+        getListenerMap().addListener(CursorEnterEvent.class, listener);
         Themes.getDefaultTheme().getThemeManager().getComponentTheme(Controller.class).applyAll(this);
     }
 
@@ -138,17 +138,17 @@ public abstract class Controller extends Component {
     }
 
     /**
-     * Default event listener for {@link LeguiCursorEnterEvent} to add tooltip to tooltip layer and make it visible or not visible.
+     * Default event listener for {@link CursorEnterEvent} to add tooltip to tooltip layer and make it visible or not visible.
      */
-    public static class LeguiCursorEnterListenerForTooltip implements LeguiCursorEnterEventListener {
+    public static class CursorEnterListenerForTooltip implements CursorEnterEventListener {
 
         /**
-         * Used to process {@link LeguiCursorEnterEvent}.
+         * Used to process {@link CursorEnterEvent}.
          *
          * @param event event to process.
          */
         @Override
-        public void process(LeguiCursorEnterEvent event) {
+        public void process(CursorEnterEvent event) {
             Controller controller = (Controller) event.getComponent();
             Tooltip    tooltip    = controller.getTooltip();
             if (tooltip != null) {

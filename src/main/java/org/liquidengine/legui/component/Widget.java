@@ -10,19 +10,19 @@ import org.liquidengine.legui.color.ColorConstants;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
-import org.liquidengine.legui.event.LeguiEvent;
-import org.liquidengine.legui.event.LeguiMouseClickEvent;
-import org.liquidengine.legui.event.LeguiMouseDragEvent;
+import org.liquidengine.legui.event.Event;
+import org.liquidengine.legui.event.MouseClickEvent;
+import org.liquidengine.legui.event.MouseDragEvent;
 import org.liquidengine.legui.font.FontRegistry;
 import org.liquidengine.legui.icon.CharIcon;
 import org.liquidengine.legui.icon.Icon;
-import org.liquidengine.legui.listener.LeguiEventListener;
-import org.liquidengine.legui.listener.LeguiMouseClickEventListener;
-import org.liquidengine.legui.listener.LeguiMouseDragEventListener;
-import org.liquidengine.legui.system.context.LeguiContext;
+import org.liquidengine.legui.listener.EventListener;
+import org.liquidengine.legui.listener.MouseClickEventListener;
+import org.liquidengine.legui.listener.MouseDragEventListener;
+import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.theme.Themes;
 
-import static org.liquidengine.legui.event.LeguiMouseClickEvent.MouseClickAction.CLICK;
+import static org.liquidengine.legui.event.MouseClickEvent.MouseClickAction.CLICK;
 
 /**
  * Widget component is container which have predefined components such as container, title label, close and minimize buttons and predefined event listeners.
@@ -37,7 +37,7 @@ public class Widget extends Container<Component> {
     private static final int CLOSE_ICON_CHAR      = 0xF5AD;
     private static final int MINIMIZE_ICON_CHAR   = 0xF5B0;
     private static final int MAXIMIZE_ICON_CHAR   = 0xF5AF;
-    protected LeguiMouseDragEventListener mouseDragEventLeguiEventListener;
+    protected MouseDragEventListener mouseDragEventLeguiEventListener;
 
     private Icon closeIcon;
     private Icon minimizeIcon;
@@ -138,8 +138,8 @@ public class Widget extends Container<Component> {
         this.title.setBackgroundColor(ColorConstants.transparent());
         this.title.setBorder(null);
 
-        mouseDragEventLeguiEventListener = new LeguiWidgetDragListenerLegui();
-        this.title.getListenerMap().addListener(LeguiMouseDragEvent.class, mouseDragEventLeguiEventListener);
+        mouseDragEventLeguiEventListener = new WidgetDragListener();
+        this.title.getListenerMap().addListener(MouseDragEvent.class, mouseDragEventLeguiEventListener);
 
         this.closeButton = new Button("");
         this.closeButton.setBackgroundColor(ColorConstants.transparent());
@@ -148,7 +148,7 @@ public class Widget extends Container<Component> {
         closeIcon.setVerticalAlign(VerticalAlign.MIDDLE);
         this.closeButton.setBackgroundIcon(closeIcon);
 
-        this.closeButton.getListenerMap().addListener(LeguiMouseClickEvent.class, new LeguiWidgetCloseButtonMouseClickEventListener());
+        this.closeButton.getListenerMap().addListener(MouseClickEvent.class, new WidgetCloseButMouseClickEventListener());
         this.closeButton.setBorder(null);
         this.closeButton.getTextState().setVerticalAlign(VerticalAlign.MIDDLE);
         this.closeButton.getTextState().setHorizontalAlign(HorizontalAlign.CENTER);
@@ -166,7 +166,7 @@ public class Widget extends Container<Component> {
 
         this.minimizeButton.setBackgroundIcon(minimizeIcon);
 
-        this.minimizeButton.getListenerMap().addListener(LeguiMouseClickEvent.class, new LeguiWidgetMinimizeButtonMouseClickEventListener());
+        this.minimizeButton.getListenerMap().addListener(MouseClickEvent.class, new WidgetMinimizeButMouseClickEventListener());
         this.minimizeButton.setBorder(null);
         this.minimizeButton.getTextState().setVerticalAlign(VerticalAlign.MIDDLE);
         this.minimizeButton.getTextState().setHorizontalAlign(HorizontalAlign.CENTER);
@@ -433,9 +433,9 @@ public class Widget extends Container<Component> {
     public void setDraggable(boolean draggable) {
         if (this.draggable != draggable) {
             if (draggable) {
-                this.title.getListenerMap().addListener(LeguiMouseDragEvent.class, mouseDragEventLeguiEventListener);
+                this.title.getListenerMap().addListener(MouseDragEvent.class, mouseDragEventLeguiEventListener);
             } else {
-                this.title.getListenerMap().removeListener(LeguiMouseDragEvent.class, mouseDragEventLeguiEventListener);
+                this.title.getListenerMap().removeListener(MouseDragEvent.class, mouseDragEventLeguiEventListener);
             }
             this.draggable = draggable;
         }
@@ -636,19 +636,19 @@ public class Widget extends Container<Component> {
                 .toString();
     }
 
-    public interface LeguiWidgetCloseEventListener<T extends LeguiWidgetCloseEvent> extends LeguiEventListener<T> {
-        void process(LeguiWidgetCloseEvent event);
+    public interface WidgetCloseEventListener<T extends WidgetCloseEvent> extends EventListener<T> {
+        void process(WidgetCloseEvent event);
     }
 
-    public static class LeguiWidgetCloseEvent<T extends Widget> extends LeguiEvent<T> {
-        public LeguiWidgetCloseEvent(T component, LeguiContext context) {
+    public static class WidgetCloseEvent<T extends Widget> extends Event<T> {
+        public WidgetCloseEvent(T component, Context context) {
             super(component, context);
         }
     }
 
-    public class LeguiWidgetDragListenerLegui implements LeguiMouseDragEventListener {
+    public class WidgetDragListener implements MouseDragEventListener {
         @Override
-        public void process(LeguiMouseDragEvent event) {
+        public void process(MouseDragEvent event) {
             Widget.this.getPosition().add(event.getDelta());
         }
 
@@ -664,13 +664,13 @@ public class Widget extends Container<Component> {
         }
     }
 
-    public class LeguiWidgetCloseButtonMouseClickEventListener implements LeguiMouseClickEventListener {
+    public class WidgetCloseButMouseClickEventListener implements MouseClickEventListener {
 
         @Override
-        public void process(LeguiMouseClickEvent event) {
+        public void process(MouseClickEvent event) {
             if (CLICK == event.getAction()) {
                 Widget.this.setVisible(false);
-                event.getContext().getEventProcessor().pushEvent(new LeguiWidgetCloseEvent(Widget.this, event.getContext()));
+                event.getContext().getEventProcessor().pushEvent(new WidgetCloseEvent(Widget.this, event.getContext()));
             }
         }
 
@@ -680,8 +680,8 @@ public class Widget extends Container<Component> {
         }
     }
 
-    public class LeguiWidgetMinimizeButtonMouseClickEventListener implements LeguiMouseClickEventListener {
-        public void process(LeguiMouseClickEvent event) {
+    public class WidgetMinimizeButMouseClickEventListener implements MouseClickEventListener {
+        public void process(MouseClickEvent event) {
             if (CLICK == event.getAction()) {
                 boolean newValue = !Widget.this.isMinimized();
                 Widget.this.minimizeButton.setBackgroundIcon(newValue ? maximizeIcon : minimizeIcon);
