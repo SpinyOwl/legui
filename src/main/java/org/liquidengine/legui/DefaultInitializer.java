@@ -5,7 +5,7 @@ import org.liquidengine.legui.listener.LeguiEventProcessor;
 import org.liquidengine.legui.system.context.CallbackKeeper;
 import org.liquidengine.legui.system.context.LeguiContext;
 import org.liquidengine.legui.system.context.DefaultCallbackKeeper;
-import org.liquidengine.legui.system.processor.SystemEventProcessor;
+import org.liquidengine.legui.system.processor.LeguiSystemEventProcessor;
 import org.liquidengine.legui.system.renderer.LeguiRenderer;
 import org.liquidengine.legui.system.renderer.LeguiRendererProvider;
 import org.liquidengine.legui.system.renderer.nvg.NvgLeguiRenderer;
@@ -15,13 +15,13 @@ import org.liquidengine.legui.system.renderer.nvg.NvgLeguiRendererProvider;
  * Created by Aliaksandr_Shcherbin on 1/25/2017.
  */
 public class DefaultInitializer {
-    private long                 window;
-    private Frame                frame;
-    private LeguiContext         context;
-    private LeguiEventProcessor  eventProcessor;
-    private SystemEventProcessor systemEventProcessor;
-    private CallbackKeeper       callbackKeeper;
-    private LeguiRenderer        renderer;
+    private long                      window;
+    private Frame                     frame;
+    private LeguiContext              context;
+    private LeguiEventProcessor       eventProcessor;
+    private LeguiSystemEventProcessor systemEventProcessor;
+    private CallbackKeeper            callbackKeeper;
+    private LeguiRenderer             renderer;
 
     public DefaultInitializer(long window, Frame frame) {
         this.frame = frame;
@@ -33,13 +33,13 @@ public class DefaultInitializer {
 
         // We need to create callback keeper which will hold all of callbacks.
         // These callbacks will be used in initialization of system event processor
-        // (will be added callbacks which will push system events to event queue and after that processed by SystemEventProcessor)
+        // (will be added callbacks which will push system events to event queue and after that processed by LeguiSystemEventProcessor)
         callbackKeeper = new DefaultCallbackKeeper();
         // register callbacks for window. Note: all previously binded callbacks will be unbinded.
         ((DefaultCallbackKeeper) callbackKeeper).registerCallbacks(this.window);
 
         // LeguiEvent processor for system events. System events should be processed and translated to gui events.
-        systemEventProcessor = new SystemEventProcessor(this.frame, context, callbackKeeper);
+        systemEventProcessor = new LeguiSystemEventProcessor(this.frame, context, callbackKeeper);
 
         // Also we need to create initialize renderer provider
         // and create renderer which will render our ui components.
@@ -56,7 +56,7 @@ public class DefaultInitializer {
         return eventProcessor;
     }
 
-    public SystemEventProcessor getSystemEventProcessor() {
+    public LeguiSystemEventProcessor getSystemEventProcessor() {
         return systemEventProcessor;
     }
 

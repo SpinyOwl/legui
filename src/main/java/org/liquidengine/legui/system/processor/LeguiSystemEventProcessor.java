@@ -11,18 +11,18 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 /**
  * Created by Aliaksandr_Shcherbin on 1/25/2017.
  */
-public class SystemEventProcessor {
+public class LeguiSystemEventProcessor {
     private final Frame        frame;
     private final LeguiContext context;
     private Queue<LeguiSystemEvent> eventQueue = new ConcurrentLinkedQueue<>();
 
-    public SystemEventProcessor(Frame frame, LeguiContext context, CallbackKeeper keeper) {
+    public LeguiSystemEventProcessor(Frame frame, LeguiContext context, CallbackKeeper keeper) {
         this.frame = frame;
         this.context = context;
         addCallbacks(keeper);
     }
 
-    public SystemEventProcessor(Frame frame, LeguiContext context) {
+    public LeguiSystemEventProcessor(Frame frame, LeguiContext context) {
         this.frame = frame;
         this.context = context;
     }
