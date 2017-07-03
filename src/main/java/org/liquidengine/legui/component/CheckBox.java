@@ -8,13 +8,13 @@ import org.joml.Vector2f;
 import org.liquidengine.legui.color.ColorConstants;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
-import org.liquidengine.legui.event.MouseClickEvent;
+import org.liquidengine.legui.event.LeguiMouseClickEvent;
 import org.liquidengine.legui.icon.CharIcon;
 import org.liquidengine.legui.icon.Icon;
-import org.liquidengine.legui.listener.MouseClickEventListener;
+import org.liquidengine.legui.listener.LeguiMouseClickEventListener;
 import org.liquidengine.legui.theme.Themes;
 
-import static org.liquidengine.legui.event.MouseClickEvent.MouseClickAction.CLICK;
+import static org.liquidengine.legui.event.LeguiMouseClickEvent.MouseClickAction.CLICK;
 import static org.liquidengine.legui.font.FontRegistry.MATERIAL_ICONS_REGULAR;
 
 /**
@@ -120,7 +120,7 @@ public class CheckBox extends Controller implements TextComponent {
         setBackgroundColor(ColorConstants.transparent());
         setBorder(null);
 
-        getListenerMap().addListener(MouseClickEvent.class, new CheckBoxMouseClickEventListener());
+        getListenerMap().addListener(LeguiMouseClickEvent.class, new LeguiCheckBoxMouseClickEventListener());
         iconChecked.setHorizontalAlign(HorizontalAlign.LEFT);
         iconUnchecked.setHorizontalAlign(HorizontalAlign.LEFT);
         Themes.getDefaultTheme().getThemeManager().getComponentTheme(CheckBox.class).applyAll(this);
@@ -238,9 +238,9 @@ public class CheckBox extends Controller implements TextComponent {
     }
 
     /**
-     * MouseClickEventListener for checkbox, used to toggle checkbox state on mouse click.
+     * LeguiMouseClickEventListener for checkbox, used to toggle checkbox state on mouse click.
      */
-    public static class CheckBoxMouseClickEventListener implements MouseClickEventListener {
+    public static class LeguiCheckBoxMouseClickEventListener implements LeguiMouseClickEventListener {
 
         /**
          * Used to handle event.
@@ -248,7 +248,7 @@ public class CheckBox extends Controller implements TextComponent {
          * @param event event to handle.
          */
         @Override
-        public void process(MouseClickEvent event) {
+        public void process(LeguiMouseClickEvent event) {
             CheckBox checkBox = (CheckBox) event.getComponent();
             if (event.getAction() == CLICK) {
                 checkBox.setChecked(!checkBox.isChecked());
@@ -263,7 +263,7 @@ public class CheckBox extends Controller implements TextComponent {
          */
         @Override
         public boolean equals(Object obj) {
-            return obj == this || obj instanceof CheckBoxMouseClickEventListener;
+            return obj == this || obj instanceof LeguiCheckBoxMouseClickEventListener;
         }
     }
 }

@@ -3,12 +3,12 @@ package org.liquidengine.legui.component;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.color.ColorConstants;
-import org.liquidengine.legui.event.WindowSizeEvent;
-import org.liquidengine.legui.listener.WindowSizeEventListener;
+import org.liquidengine.legui.event.LeguiWindowSizeEvent;
+import org.liquidengine.legui.listener.LeguiWindowSizeEventListener;
 import org.liquidengine.legui.theme.Themes;
 
 /**
- * Layer container. By default it has {@link org.liquidengine.legui.listener.WindowSizeEventListener} which used to resize this container.
+ * Layer container. By default it has {@link LeguiWindowSizeEventListener} which used to resize this container.
  */
 public class LayerContainer<T extends Component> extends Container<T> {
 
@@ -95,7 +95,7 @@ public class LayerContainer<T extends Component> extends Container<T> {
      * Used to initialize Layer container with default background and border.
      */
     private void initialize() {
-        getListenerMap().addListener(WindowSizeEvent.class, new LayerContainerWindowSizeEventListener());
+        getListenerMap().addListener(LeguiWindowSizeEvent.class, new LeguiLayerContainerWindowSizeEventListener());
         setBackgroundColor(ColorConstants.transparent());
         setBorder(null);
         Themes.getDefaultTheme().getThemeManager().getComponentTheme(LayerContainer.class).applyAll(this);
@@ -104,15 +104,15 @@ public class LayerContainer<T extends Component> extends Container<T> {
     /**
      * Window size event listener for layer container. Used to update layer container size on window resize.
      */
-    public static class LayerContainerWindowSizeEventListener implements WindowSizeEventListener {
+    public static class LeguiLayerContainerWindowSizeEventListener implements LeguiWindowSizeEventListener {
 
         /**
-         * Used to process {@link WindowSizeEvent}.
+         * Used to process {@link LeguiWindowSizeEvent}.
          *
          * @param event event to process.
          */
         @Override
-        public void process(WindowSizeEvent event) {
+        public void process(LeguiWindowSizeEvent event) {
             event.getComponent().getSize().set(event.getWidth(), event.getHeight());
         }
 

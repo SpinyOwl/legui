@@ -7,13 +7,13 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
-import org.liquidengine.legui.event.MouseClickEvent;
+import org.liquidengine.legui.event.LeguiMouseClickEvent;
 import org.liquidengine.legui.icon.CharIcon;
 import org.liquidengine.legui.icon.Icon;
-import org.liquidengine.legui.listener.MouseClickEventListener;
+import org.liquidengine.legui.listener.LeguiMouseClickEventListener;
 import org.liquidengine.legui.theme.Themes;
 
-import static org.liquidengine.legui.event.MouseClickEvent.MouseClickAction.CLICK;
+import static org.liquidengine.legui.event.LeguiMouseClickEvent.MouseClickAction.CLICK;
 import static org.liquidengine.legui.font.FontRegistry.MATERIAL_ICONS_REGULAR;
 
 /**
@@ -135,7 +135,7 @@ public class RadioButton extends Controller implements TextComponent {
     private void initialize(String text) {
         textState = new TextState(text);
         setBorder(null);
-        getListenerMap().addListener(MouseClickEvent.class, new RadioButtonClickEventListener());
+        getListenerMap().addListener(LeguiMouseClickEvent.class, new LeguiRadioButtonClickEventListener());
         iconUnchecked.setHorizontalAlign(HorizontalAlign.LEFT);
         iconChecked.setHorizontalAlign(HorizontalAlign.LEFT);
         Themes.getDefaultTheme().getThemeManager().getComponentTheme(RadioButton.class).applyAll(this);
@@ -286,10 +286,10 @@ public class RadioButton extends Controller implements TextComponent {
                 .toString();
     }
 
-    public static class RadioButtonClickEventListener implements MouseClickEventListener {
+    public static class LeguiRadioButtonClickEventListener implements LeguiMouseClickEventListener {
 
         @Override
-        public void process(MouseClickEvent event) {
+        public void process(LeguiMouseClickEvent event) {
             if (event.getAction() == CLICK) {
                 RadioButton component = (RadioButton) event.getComponent();
                 component.setChecked(true);

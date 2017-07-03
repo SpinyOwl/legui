@@ -7,9 +7,9 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.color.ColorConstants;
-import org.liquidengine.legui.event.MouseClickEvent;
+import org.liquidengine.legui.event.LeguiMouseClickEvent;
 import org.liquidengine.legui.icon.Icon;
-import org.liquidengine.legui.listener.MouseClickEventListener;
+import org.liquidengine.legui.listener.LeguiMouseClickEventListener;
 import org.liquidengine.legui.theme.Themes;
 
 /**
@@ -82,8 +82,8 @@ public class ToggleButton extends Button {
     private void initialize() {
         setBackgroundColor(ColorConstants.red());
         toggledBackgroundColor = ColorConstants.green();
-        MouseClickEventListener toggleButtonClickListener = new ToggleButtonMouseClickListener();
-        getListenerMap().addListener(MouseClickEvent.class, toggleButtonClickListener);
+        LeguiMouseClickEventListener toggleButtonClickListener = new LeguiToggleButtonMouseClickEventListener();
+        getListenerMap().addListener(LeguiMouseClickEvent.class, toggleButtonClickListener);
 
         Themes.getDefaultTheme().getThemeManager().getComponentTheme(ToggleButton.class).applyAll(this);
     }
@@ -174,12 +174,12 @@ public class ToggleButton extends Button {
                 .toString();
     }
 
-    private static class ToggleButtonMouseClickListener implements MouseClickEventListener {
+    private static class LeguiToggleButtonMouseClickEventListener implements LeguiMouseClickEventListener {
 
         @Override
-        public void process(MouseClickEvent event) {
+        public void process(LeguiMouseClickEvent event) {
             ToggleButton toggleButton = (ToggleButton) event.getComponent();
-            if (event.getAction() == MouseClickEvent.MouseClickAction.CLICK) {
+            if (event.getAction() == LeguiMouseClickEvent.MouseClickAction.CLICK) {
                 toggleButton.setToggled(!toggleButton.isToggled());
             }
         }

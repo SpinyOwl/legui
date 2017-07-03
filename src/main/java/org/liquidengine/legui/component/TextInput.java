@@ -6,15 +6,13 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 import org.liquidengine.legui.component.optional.TextState;
-import org.liquidengine.legui.event.CharEvent;
-import org.liquidengine.legui.event.KeyEvent;
-import org.liquidengine.legui.event.MouseClickEvent;
-import org.liquidengine.legui.event.MouseDragEvent;
-import org.liquidengine.legui.listener.CharEventListener;
-import org.liquidengine.legui.listener.KeyEventListener;
-import org.liquidengine.legui.listener.MouseClickEventListener;
-import org.liquidengine.legui.listener.MouseDragEventListener;
-import org.liquidengine.legui.system.context.Context;
+import org.liquidengine.legui.event.*;
+import org.liquidengine.legui.event.LeguiKeyEvent;
+import org.liquidengine.legui.event.LeguiMouseClickEvent;
+import org.liquidengine.legui.listener.*;
+import org.liquidengine.legui.listener.LeguiCharEventListener;
+import org.liquidengine.legui.listener.LeguiMouseDragEventListener;
+import org.liquidengine.legui.system.context.LeguiContext;
 import org.liquidengine.legui.theme.Themes;
 
 import static org.liquidengine.legui.input.Mouse.MouseButton.MOUSE_BUTTON_LEFT;
@@ -138,10 +136,10 @@ public class TextInput extends Controller implements TextComponent {
         textState = new TextState(text);
         textState.getPadding().set(5, 1, 5, 1);
 
-        getListenerMap().addListener(KeyEvent.class, new TextInputKeyEventListener());
-        getListenerMap().addListener(MouseClickEvent.class, new TextInputMouseClickEventListener());
-        getListenerMap().addListener(MouseDragEvent.class, new TextInputDragEventListener());
-        getListenerMap().addListener(CharEvent.class, new TextInputCharEventListener());
+        getListenerMap().addListener(LeguiKeyEvent.class, new LeguiTextInputKeyEventListener());
+        getListenerMap().addListener(LeguiMouseClickEvent.class, new LeguiTextInputMouseClickEventListener());
+        getListenerMap().addListener(LeguiMouseDragEvent.class, new LeguiTextInputDragEventListener());
+        getListenerMap().addListener(LeguiCharEvent.class, new LeguiTextInputCharEventListener());
 
         Themes.getDefaultTheme().getThemeManager().getComponentTheme(TextInput.class).applyAll(this);
     }
@@ -309,15 +307,15 @@ public class TextInput extends Controller implements TextComponent {
     /**
      * Key event listener. Used to provide some text operations by keyboard.
      */
-    public static class TextInputKeyEventListener implements KeyEventListener {
+    public static class LeguiTextInputKeyEventListener implements LeguiKeyEventListener {
 
         /**
-         * Used to handle {@link KeyEvent}.
+         * Used to handle {@link LeguiKeyEvent}.
          *
          * @param event event to handle.
          */
         @Override
-        public void process(KeyEvent event) {
+        public void process(LeguiKeyEvent event) {
             TextInput gui           = (TextInput) event.getComponent();
             int       key           = event.getKey();
             int       caretPosition = gui.getCaretPosition();
@@ -344,7 +342,7 @@ public class TextInput extends Controller implements TextComponent {
             }
         }
 
-        private void cutAction(TextInput gui, Context leguiContext) {
+        private void cutAction(TextInput gui, LeguiContext leguiContext) {
             if (gui.isEditable()) {
                 String s = gui.getSelection();
                 if (s != null) {
@@ -366,12 +364,12 @@ public class TextInput extends Controller implements TextComponent {
             }
         }
 
-        private void copyAction(TextInput gui, Context leguiContext) {
+        private void copyAction(TextInput gui, LeguiContext leguiContext) {
             String s = gui.getSelection();
             if (s != null) glfwSetClipboardString(leguiContext.getGlfwWindow(), s);
         }
 
-        private void pasteAction(TextInput gui, Context leguiContext, int caretPosition, TextState textState) {
+        private void pasteAction(TextInput gui, LeguiContext leguiContext, int caretPosition, TextState textState) {
             if (gui.isEditable()) {
                 String s = glfwGetClipboardString(leguiContext.getGlfwWindow());
                 if (s != null) {
@@ -480,25 +478,25 @@ public class TextInput extends Controller implements TextComponent {
 
         @Override
         public boolean equals(Object obj) {
-            return obj == this || obj instanceof TextInputKeyEventListener;
+            return obj == this || obj instanceof LeguiTextInputKeyEventListener;
         }
     }
 
     /**
      * Mouse click event listener for text input. Used to update caret position.
      */
-    public static class TextInputMouseClickEventListener implements MouseClickEventListener {
+    public static class LeguiTextInputMouseClickEventListener implements LeguiMouseClickEventListener {
 
         /**
-         * Used to handle {@link MouseClickEvent}.
+         * Used to handle {@link LeguiMouseClickEvent}.
          *
          * @param event event to handle.
          */
         @Override
-        public void process(MouseClickEvent event) {
+        public void process(LeguiMouseClickEvent event) {
             TextInput gui                = (TextInput) event.getComponent();
             int       mouseCaretPosition = gui.getMouseCaretPosition();
-            if (event.getAction() == MouseClickEvent.MouseClickAction.PRESS) {
+            if (event.getAction() == LeguiMouseClickEvent.MouseClickAction.PRESS) {
                 gui.setCaretPosition(mouseCaretPosition);
                 gui.setStartSelectionIndex(mouseCaretPosition);
                 gui.setEndSelectionIndex(mouseCaretPosition);
@@ -514,10 +512,10 @@ public class TextInput extends Controller implements TextComponent {
     /**
      * Mouse drag event listener for text input. Used to update selection indices.
      */
-    public static class TextInputDragEventListener implements MouseDragEventListener {
+    public static class LeguiTextInputDragEventListener implements LeguiMouseDragEventListener {
 
         @Override
-        public void process(MouseDragEvent event) {
+        public void process(LeguiMouseDragEvent event) {
             TextInput textInput = (TextInput) event.getComponent();
             if (MOUSE_BUTTON_LEFT.isPressed()) {
                 int mouseCaretPosition = textInput.getMouseCaretPosition();
@@ -535,15 +533,15 @@ public class TextInput extends Controller implements TextComponent {
     /**
      * Char event listener for text input. Used to fill text area with symbols entered via keyboard.
      */
-    public static class TextInputCharEventListener implements CharEventListener {
+    public static class LeguiTextInputCharEventListener implements LeguiCharEventListener {
 
         /**
-         * Used to handle {@link CharEvent}.
+         * Used to handle {@link LeguiCharEvent}.
          *
          * @param event event to handle.
          */
         @Override
-        public void process(CharEvent event) {
+        public void process(LeguiCharEvent event) {
             TextInput textInput = (TextInput) event.getComponent();
             if (textInput.isFocused() && textInput.isEditable() && !MOUSE_BUTTON_LEFT.isPressed()) {
                 String    str       = cpToStr(event.getCodepoint());

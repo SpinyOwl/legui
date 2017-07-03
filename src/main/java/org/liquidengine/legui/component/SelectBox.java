@@ -5,14 +5,14 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
-import org.liquidengine.legui.event.FocusEvent;
-import org.liquidengine.legui.event.MouseClickEvent;
-import org.liquidengine.legui.event.ScrollEvent;
+import org.liquidengine.legui.event.LeguiFocusEvent;
+import org.liquidengine.legui.event.LeguiMouseClickEvent;
+import org.liquidengine.legui.event.LeguiScrollEvent;
 import org.liquidengine.legui.font.FontRegistry;
 import org.liquidengine.legui.input.Mouse;
-import org.liquidengine.legui.listener.FocusEventListener;
-import org.liquidengine.legui.listener.MouseClickEventListener;
-import org.liquidengine.legui.listener.ScrollEventListener;
+import org.liquidengine.legui.listener.LeguiFocusEventListener;
+import org.liquidengine.legui.listener.LeguiMouseClickEventListener;
+import org.liquidengine.legui.listener.LeguiScrollEventListener;
 import org.liquidengine.legui.theme.Themes;
 
 import java.util.List;
@@ -21,7 +21,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-import static org.liquidengine.legui.event.MouseClickEvent.MouseClickAction.CLICK;
+import static org.liquidengine.legui.event.LeguiMouseClickEvent.MouseClickAction.CLICK;
 import static org.liquidengine.legui.util.TextUtil.cpToStr;
 
 /**
@@ -37,14 +37,14 @@ public class SelectBox extends Container {
     private              List<SelectBoxElement> selectBoxElements = new CopyOnWriteArrayList<>();
     private              List<String>           elements          = new CopyOnWriteArrayList<>();
 
-    private       SelectBoxScrollablePanel selectionListPanel      = new SelectBoxScrollablePanel();
-    private final SelectBoxScrollListener  selectBoxScrollListener = new SelectBoxScrollListener(selectionListPanel.getVerticalScrollBar());
-    private       Button                   selectionButton         = new Button(NULL);
-    private       String                   selectedElement         = null;
-    private       float                    elementHeight           = 16;
-    private       float                    buttonWidth             = 15f;
-    private       int                      visibleCount            = 3;
-    private       Button                   expandButton            = new Button(COLLAPSED);
+    private       SelectBoxScrollablePanel     selectionListPanel      = new SelectBoxScrollablePanel();
+    private final LeguiSelectBoxScrollListener selectBoxScrollListener = new LeguiSelectBoxScrollListener(selectionListPanel.getVerticalScrollBar());
+    private       Button                       selectionButton         = new Button(NULL);
+    private       String                       selectedElement         = null;
+    private       float                        elementHeight           = 16;
+    private       float                        buttonWidth             = 15f;
+    private       int                          visibleCount            = 3;
+    private       Button                       expandButton            = new Button(COLLAPSED);
     private       boolean                  collapsed               = true;
     private       Lock                     lock                    = new ReentrantLock(false);
 
@@ -128,14 +128,14 @@ public class SelectBox extends Container {
         this.add(selectionButton);
 
         expandButton.getTextState().setFont(FontRegistry.MATERIAL_ICONS_REGULAR);
-        MouseClickEventListener mouseClickEventListener = new SelectBoxClickListener();
-        selectionButton.getListenerMap().addListener(MouseClickEvent.class, mouseClickEventListener);
-        expandButton.getListenerMap().addListener(MouseClickEvent.class, mouseClickEventListener);
+        LeguiMouseClickEventListener mouseClickEventListener = new LeguiSelectBoxClickListener();
+        selectionButton.getListenerMap().addListener(LeguiMouseClickEvent.class, mouseClickEventListener);
+        expandButton.getListenerMap().addListener(LeguiMouseClickEvent.class, mouseClickEventListener);
 
-        FocusEventListener focusEventListener = new SelectBoxFocusListener();
-        selectionListPanel.getVerticalScrollBar().getListenerMap().getListeners(FocusEvent.class).add(focusEventListener);
-        selectionButton.getListenerMap().getListeners(FocusEvent.class).add(focusEventListener);
-        expandButton.getListenerMap().getListeners(FocusEvent.class).add(focusEventListener);
+        LeguiFocusEventListener focusEventListener = new LeguiSelectBoxFocusListener();
+        selectionListPanel.getVerticalScrollBar().getListenerMap().getListeners(LeguiFocusEvent.class).add(focusEventListener);
+        selectionButton.getListenerMap().getListeners(LeguiFocusEvent.class).add(focusEventListener);
+        expandButton.getListenerMap().getListeners(LeguiFocusEvent.class).add(focusEventListener);
 
         Themes.getDefaultTheme().getThemeManager().getComponentTheme(SelectBox.class).applyAll(this);
 
@@ -247,7 +247,7 @@ public class SelectBox extends Container {
 
                 SelectBoxElement boxElement = createSelectBoxElement(element);
                 if (elements.isEmpty()) selectionButton.getTextState().setText(element);
-                boxElement.getListenerMap().addListener(ScrollEvent.class, selectBoxScrollListener);
+                boxElement.getListenerMap().addListener(LeguiScrollEvent.class, selectBoxScrollListener);
                 elements.add(element);
                 selectBoxElements.add(boxElement);
                 addSelectBoxComponent(boxElement);
@@ -268,7 +268,7 @@ public class SelectBox extends Container {
         SelectBoxElement boxElement = new SelectBoxElement(element, false);
         boxElement.setSize(new Vector2f(selectionListPanel.getContainer().getSize().x, elementHeight));
         boxElement.setPosition(0, selectionListPanel.getContainer().count() * elementHeight);
-        boxElement.getListenerMap().getListeners(MouseClickEvent.class).add(new SelectBoxElementClickEventListener());
+        boxElement.getListenerMap().getListeners(LeguiMouseClickEvent.class).add(new LeguiSelectBoxElementClickEventListener());
         return boxElement;
     }
 
@@ -458,10 +458,10 @@ public class SelectBox extends Container {
     /**
      * Default focus listener for selectbox. Used to collapse selectbox if it loses focus.
      */
-    public class SelectBoxFocusListener implements FocusEventListener {
+    public class LeguiSelectBoxFocusListener implements LeguiFocusEventListener {
 
         @Override
-        public void process(FocusEvent event) {
+        public void process(LeguiFocusEvent event) {
             if (!event.isFocused() && !SelectBox.this.isCollapsed()) {
                 boolean   collapse  = true;
                 Component nextFocus = event.getNextFocus();
@@ -491,10 +491,10 @@ public class SelectBox extends Container {
     /**
      * Default mouse click listener for selectbox. Used to collapse selectbox if it loses focus and to expand/collapse if clicked on it.
      */
-    public class SelectBoxClickListener implements MouseClickEventListener {
+    public class LeguiSelectBoxClickListener implements LeguiMouseClickEventListener {
 
         @Override
-        public void process(MouseClickEvent event) {
+        public void process(LeguiMouseClickEvent event) {
             SelectBox box = SelectBox.this;
             if (event.getAction() == CLICK) {
                 box.setCollapsed(!box.isCollapsed());
@@ -613,16 +613,16 @@ public class SelectBox extends Container {
     /**
      * Listener of scroll action which used to scroll expanded selectbox.
      */
-    public class SelectBoxScrollListener implements ScrollEventListener {
+    public class LeguiSelectBoxScrollListener implements LeguiScrollEventListener {
         private final ScrollBar bar;
 
-        public SelectBoxScrollListener(ScrollBar bar) {
+        public LeguiSelectBoxScrollListener(ScrollBar bar) {
             this.bar = bar;
         }
 
         @Override
-        public void process(ScrollEvent event) {
-            event.getContext().getEventProcessor().pushEvent(new ScrollEvent(bar, event.getContext(), event.getXoffset(), event.getYoffset()));
+        public void process(LeguiScrollEvent event) {
+            event.getContext().getEventProcessor().pushEvent(new LeguiScrollEvent(bar, event.getContext(), event.getXoffset(), event.getYoffset()));
         }
 
         @Override
@@ -631,7 +631,7 @@ public class SelectBox extends Container {
 
             if (o == null || getClass() != o.getClass()) return false;
 
-            SelectBoxScrollListener that = (SelectBoxScrollListener) o;
+            LeguiSelectBoxScrollListener that = (LeguiSelectBoxScrollListener) o;
 
             return new EqualsBuilder()
                     .append(bar, that.bar)
@@ -646,9 +646,9 @@ public class SelectBox extends Container {
         }
     }
 
-    public class SelectBoxElementClickEventListener implements MouseClickEventListener {
+    public class LeguiSelectBoxElementClickEventListener implements LeguiMouseClickEventListener {
         @Override
-        public void process(MouseClickEvent event) {
+        public void process(LeguiMouseClickEvent event) {
             SelectBoxElement component = (SelectBoxElement) event.getComponent();
             if (event.getAction() == CLICK && event.getButton().equals(Mouse.MouseButton.MOUSE_BUTTON_1)) {
                 SelectBox.this.setSelected(component.getText(), true);
