@@ -123,7 +123,7 @@ public class CheckBox extends Controller implements TextComponent {
         getListenerMap().addListener(MouseClickEvent.class, new CheckBoxMouseClickEventListener());
         iconChecked.setHorizontalAlign(HorizontalAlign.LEFT);
         iconUnchecked.setHorizontalAlign(HorizontalAlign.LEFT);
-        Themes.getDefaultTheme().getThemeManager().applyAll(this);
+        Themes.getDefaultTheme().getThemeManager().getComponentTheme(CheckBox.class).applyAll(this);
     }
 
     /**

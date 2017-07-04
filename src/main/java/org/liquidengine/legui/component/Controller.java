@@ -59,7 +59,7 @@ public abstract class Controller extends Component {
     private void initialize() {
         CursorEnterEventListener listener = new CursorEnterListenerForTooltip();
         getListenerMap().addListener(CursorEnterEvent.class, listener);
-        Themes.getDefaultTheme().getThemeManager().applyAll(this);
+        Themes.getDefaultTheme().getThemeManager().getComponentTheme(Controller.class).applyAll(this);
     }
 
 

@@ -180,7 +180,7 @@ public class Widget extends Container<Component> {
         this.add(this.titleContainer);
         this.add(this.container);
 
-        Themes.getDefaultTheme().getThemeManager().applyAll(this);
+        Themes.getDefaultTheme().getThemeManager().getComponentTheme(Widget.class).applyAll(this);
 
         resize();
     }

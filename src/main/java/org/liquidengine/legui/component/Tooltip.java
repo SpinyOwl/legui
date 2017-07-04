@@ -26,7 +26,7 @@ public class Tooltip extends Component implements TextComponent {
     private void initialize(String text) {
         this.textState = new TextState(text);
 
-        Themes.getDefaultTheme().getThemeManager().applyAll(this);
+        Themes.getDefaultTheme().getThemeManager().getComponentTheme(Tooltip.class).applyAll(this);
     }
 
     /**

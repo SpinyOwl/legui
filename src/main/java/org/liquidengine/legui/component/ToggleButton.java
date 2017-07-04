@@ -85,7 +85,7 @@ public class ToggleButton extends Button {
         MouseClickEventListener toggleButtonClickListener = new ToggleButtonMouseClickListener();
         getListenerMap().addListener(MouseClickEvent.class, toggleButtonClickListener);
 
-        Themes.getDefaultTheme().getThemeManager().applyAll(this);
+        Themes.getDefaultTheme().getThemeManager().getComponentTheme(ToggleButton.class).applyAll(this);
     }
 
     /**

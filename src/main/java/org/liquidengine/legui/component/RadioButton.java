@@ -138,7 +138,7 @@ public class RadioButton extends Controller implements TextComponent {
         getListenerMap().addListener(MouseClickEvent.class, new RadioButtonClickEventListener());
         iconUnchecked.setHorizontalAlign(HorizontalAlign.LEFT);
         iconChecked.setHorizontalAlign(HorizontalAlign.LEFT);
-        Themes.getDefaultTheme().getThemeManager().applyAll(this);
+        Themes.getDefaultTheme().getThemeManager().getComponentTheme(RadioButton.class).applyAll(this);
     }
 
     /**

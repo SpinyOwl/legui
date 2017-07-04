@@ -98,7 +98,7 @@ public class LayerContainer<T extends Component> extends Container<T> {
         getListenerMap().addListener(WindowSizeEvent.class, new LayerContainerWindowSizeEventListener());
         setBackgroundColor(ColorConstants.transparent());
         setBorder(null);
-        Themes.getDefaultTheme().getThemeManager().applyAll(this);
+        Themes.getDefaultTheme().getThemeManager().getComponentTheme(LayerContainer.class).applyAll(this);
     }
 
     /**

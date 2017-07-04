@@ -95,7 +95,7 @@ public class ScrollablePanel<T extends Component> extends Container implements V
         this.add(verticalScrollBar);
         this.add(horizontalScrollBar);
         this.setBackgroundColor(ColorConstants.transparent());
-        Themes.getDefaultTheme().getThemeManager().applyAll(this);
+        Themes.getDefaultTheme().getThemeManager().getComponentTheme(ScrollablePanel.class).applyAll(this);
 
         resize();
     }

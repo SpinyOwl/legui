@@ -143,7 +143,7 @@ public class TextInput extends Controller implements TextComponent {
         getListenerMap().addListener(MouseDragEvent.class, new TextInputDragEventListener());
         getListenerMap().addListener(CharEvent.class, new TextInputCharEventListener());
 
-        Themes.getDefaultTheme().getThemeManager().applyAll(this);
+        Themes.getDefaultTheme().getThemeManager().getComponentTheme(TextInput.class).applyAll(this);
     }
 
     /**
