@@ -9,14 +9,14 @@
   <tr>
     <td align="center"><img src="https://reposs.herokuapp.com/?path=LiquidEngine/legui"/></td>
     <td align="center"><a href="https://www.codacy.com/app/LiquidEngine/legui?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=LiquidEngine/legui&amp;utm_campaign=Badge_Grade"><img src="https://api.codacy.com/project/badge/Grade/e3a864cc6d6a4f08938a7b368bdb35da"/></a></td>
-    <td align="center"><a href="http://jenkins.liquidengine.tk/job/legui/job/develop/" target="_blank">
-      <img src="http://jenkins.liquidengine.tk/buildStatus/icon?job=legui/develop"/>
+    <td align="center"><a href="http://jenkins.liquidengine.tk/job/LEGUI_DEVELOP/" target="_blank">
+      <img src="http://jenkins.liquidengine.tk/buildStatus/icon?job=LEGUI_DEVELOP"/>
     </a></td>
-    <td align="center"><a href="http://jenkins.liquidengine.tk/job/legui/job/snapshots/" target="_blank">
-      <img src="http://jenkins.liquidengine.tk/buildStatus/icon?job=legui/snapshots"/>
+    <td align="center"><a href="http://jenkins.liquidengine.tk/job/LEGUI_SNAPSHOTS/" target="_blank">
+      <img src="http://jenkins.liquidengine.tk/buildStatus/icon?job=LEGUI_SNAPSHOTS"/>
     </a></td>
-    <td align="center"><a href="http://jenkins.liquidengine.tk/job/legui/job/releases/" target="_blank">
-      <img src="http://jenkins.liquidengine.tk/buildStatus/icon?job=legui/releases"/>
+    <td align="center"><a href="http://jenkins.liquidengine.tk/job/LEGUI_RELEASES/" target="_blank">
+      <img src="http://jenkins.liquidengine.tk/buildStatus/icon?job=LEGUI_RELEASES"/>
     </a></td>
   </tr>
 </table>
