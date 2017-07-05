@@ -3,9 +3,12 @@ package org.liquidengine.legui.util;
 import java.util.Arrays;
 
 /**
- * Created by Aliaksandr_Shcherbin on 2/6/2017.
+ * Text utility.
  */
 public class TextUtil {
+    /**
+     * Array of word breakers which used to split string into words.
+     */
     public static final char wordBreakers[] = {
             ' ', ',', '.', '!',
             '@', '#', '$', '%',
@@ -18,18 +21,32 @@ public class TextUtil {
             '\n', '\r', '\t'
     };
 
+
     static {
         Arrays.sort(wordBreakers);
     }
 
+    /**
+     * Private constructor to avoid creation instances of utility class.
+     */
     private TextUtil() {
     }
 
+    /**
+     * Used to find next word start index from current character index in provided string.
+     *
+     * @param text    string to search next word start index.
+     * @param current current character index(current caret position in text).
+     *
+     * @return character index where starts next word.
+     */
     public static int findNextWord(String text, int current) {
         int length = text.length();
-        if (current == length) return length;
+        if (current == length) {
+            return length;
+        }
 
-        int     next        = current + 1;
+        int next = current + 1;
         boolean word;
         boolean startedWord = false;
         while (next < length) {
@@ -40,16 +57,28 @@ public class TextUtil {
             } else {
                 word = false;
             }
-            if (!word && startedWord) break;
+            if (!word && startedWord) {
+                break;
+            }
             next++;
         }
         return next;
     }
 
+    /**
+     * Used to find previous word start index from current character index in provided string.
+     *
+     * @param text    string to search previous word start index.
+     * @param current current character index(current caret position in text).
+     *
+     * @return character index where starts previous word.
+     */
     public static int findPrevWord(String text, int current) {
-        if (current == 0) return 0;
+        if (current == 0) {
+            return 0;
+        }
 
-        int     prev        = current;
+        int prev = current;
         boolean word;
         boolean startedWord = false;
         while (prev > 0) {
@@ -60,12 +89,21 @@ public class TextUtil {
             } else {
                 word = false;
             }
-            if (!word && startedWord) break;
+            if (!word && startedWord) {
+                break;
+            }
             prev--;
         }
         return prev;
     }
 
+    /**
+     * Used to convert character codepoint to string.
+     *
+     * @param cp codepoint.
+     *
+     * @return string from codepoint.
+     */
     public static String cpToStr(int cp) {
         return new String(Character.toChars(cp));
     }

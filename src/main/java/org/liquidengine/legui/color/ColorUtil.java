@@ -14,7 +14,7 @@ public final class ColorUtil {
     private static final Random RANDOM = new Random(System.currentTimeMillis());
 
     /**
-     * private constructor to avoid creation instances of utility class
+     * Private constructor to avoid creation instances of utility class.
      */
     private ColorUtil() {
     }

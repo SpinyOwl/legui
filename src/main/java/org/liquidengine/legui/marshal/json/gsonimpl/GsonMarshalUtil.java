@@ -4,7 +4,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import org.liquidengine.legui.exception.LeguiException;
-import org.liquidengine.legui.exception.LeguiExceptions;
+import org.liquidengine.legui.exception.LeguiExceptionTemplate;
 import org.liquidengine.legui.marshal.JsonConstants;
 
 /**
@@ -17,7 +17,7 @@ public final class GsonMarshalUtil {
     public static <T> String marshal(T component) {
         if (component == null) return null;
         AbstractGsonMarshaller marshaller = GsonMarshalRegistry.getRegistry().getMarshaller(component.getClass());
-        if (marshaller == null) throw new LeguiException(LeguiExceptions.MARSHALLER_IS_NOT_EXIST.message(component.getClass().getName()));
+        if (marshaller == null) throw new LeguiException(LeguiExceptionTemplate.MARSHALLER_IS_NOT_EXIST.message(component.getClass().getName()));
         GsonMarshalContext context = new GsonMarshalContext();
         return marshaller.marshal(component, context);
     }
@@ -29,7 +29,7 @@ public final class GsonMarshalUtil {
     public static <T> JsonObject marshalToJson(T component, GsonMarshalContext context) {
         if (component == null) return null;
         AbstractGsonMarshaller marshaller = GsonMarshalRegistry.getRegistry().getMarshaller(component.getClass());
-        if (marshaller == null) throw new LeguiException(LeguiExceptions.MARSHALLER_IS_NOT_EXIST.message(component.getClass().getName()));
+        if (marshaller == null) throw new LeguiException(LeguiExceptionTemplate.MARSHALLER_IS_NOT_EXIST.message(component.getClass().getName()));
         return marshaller.jsonMarshal(component, context);
     }
 
@@ -59,7 +59,7 @@ public final class GsonMarshalUtil {
                 marshaller = GsonMarshalRegistry.getRegistry().getMarshallerByShortType(type);
             }
         }
-        if (type == null || marshaller == null) throw new LeguiException(LeguiExceptions.UNMARSHALLER_IS_NOT_EXIST.message(type));
+        if (type == null || marshaller == null) throw new LeguiException(LeguiExceptionTemplate.UNMARSHALLER_IS_NOT_EXIST.message(type));
         return marshaller;
     }
 

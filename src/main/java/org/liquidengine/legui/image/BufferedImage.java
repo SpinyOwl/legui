@@ -7,7 +7,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.liquidengine.legui.exception.LeguiException;
-import org.liquidengine.legui.exception.LeguiExceptions;
+import org.liquidengine.legui.exception.LeguiExceptionTemplate;
 import org.liquidengine.legui.util.IOUtil;
 import org.lwjgl.stb.STBImage;
 
@@ -62,10 +62,10 @@ public class BufferedImage extends LoadableImage {
                 this.channels = ImageChannels.instance(channels[0]);
                 this.imageData = imageData;
             } else { // if error occurs
-                throw LeguiExceptions.FAILED_TO_LOAD_IMAGE.create(STBImage.stbi_failure_reason());
+                throw LeguiExceptionTemplate.FAILED_TO_LOAD_IMAGE.create(STBImage.stbi_failure_reason());
             }
         } catch (IOException e) {
-            throw LeguiExceptions.FAILED_TO_LOAD_IMAGE.create(e, e.getMessage());
+            throw LeguiExceptionTemplate.FAILED_TO_LOAD_IMAGE.create(e, e.getMessage());
         }
     }
 

@@ -7,7 +7,7 @@ import org.liquidengine.legui.border.SimpleLineBorder;
 import org.liquidengine.legui.component.*;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.exception.LeguiException;
-import org.liquidengine.legui.exception.LeguiExceptions;
+import org.liquidengine.legui.exception.LeguiExceptionTemplate;
 import org.liquidengine.legui.icon.CharIcon;
 import org.liquidengine.legui.icon.Icon;
 import org.liquidengine.legui.icon.ImageIcon;
@@ -68,7 +68,7 @@ public class GsonMarshalRegistry implements JsonMarshalRegistry {
         try {
             if (typeName != null) {
                 if (typeMap.containsKey(typeName)) {
-                    throw new LeguiException(LeguiExceptions.GSON_REGISTRY_TYPE_EXIST.message(typeName));
+                    throw new LeguiException(LeguiExceptionTemplate.GSON_REGISTRY_TYPE_EXIST.message(typeName));
                 }
                 typeMap.put(typeName, tClass);
             }

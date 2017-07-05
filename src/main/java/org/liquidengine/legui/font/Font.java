@@ -5,19 +5,27 @@ import org.liquidengine.legui.util.IOUtil;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 
-import static org.liquidengine.legui.exception.LeguiExceptions.FAILED_TO_LOAD_FONT;
+import static org.liquidengine.legui.exception.LeguiExceptionTemplate.FAILED_TO_LOAD_FONT;
 
 /**
- * Created by Aliaksandr_Shcherbin on 1/26/2017.
+ * Representation of font. Used by text components to specify font to use by renderer.
  */
 public class Font {
-    private ByteBuffer data;
-    private String     path;
+    /**
+     * Font data.
+     */
+    private final ByteBuffer data;
 
-    public Font() {
+    /**
+     * Path to font.
+     */
+    private final String     path;
 
-    }
-
+    /**
+     * Used to create font by specified path. Loads font from specified path.
+     *
+     * @param path path to font data.
+     */
     public Font(String path) {
         this.path = path;
         try {
@@ -27,15 +35,31 @@ public class Font {
         }
     }
 
+    /**
+     * Used to create font with specified path and data.
+     *
+     * @param path path to font.
+     * @param data font data.
+     */
     public Font(String path, ByteBuffer data) {
         this.path = path;
         this.data = data;
     }
 
+    /**
+     * Returns font data.
+     *
+     * @return font data.
+     */
     public ByteBuffer getData() {
         return data;
     }
 
+    /**
+     * Returns font path.
+     *
+     * @return font path.
+     */
     public String getPath() {
         return path;
     }

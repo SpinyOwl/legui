@@ -2,7 +2,7 @@ package org.liquidengine.legui.util;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.liquidengine.legui.exception.LeguiExceptions;
+import org.liquidengine.legui.exception.LeguiExceptionTemplate;
 
 import java.io.*;
 import java.nio.ByteBuffer;
@@ -25,7 +25,7 @@ public final class IOUtil {
     private static final int    INITIAL_BUFFER_SIZE = 1024;
 
     /**
-     * private constructor.
+     * Private constructor to avoid creation instances of utility class.
      */
     private IOUtil() {
     }
@@ -162,7 +162,7 @@ public final class IOUtil {
         try {
             return ioResourceToByteBuffer(resource, bufferSize);
         } catch (IOException e) {
-            throw LeguiExceptions.UNHANDLED_EXCEPTION.create(e, e.getMessage());
+            throw LeguiExceptionTemplate.UNHANDLED_EXCEPTION.create(e, e.getMessage());
         }
     }
 
@@ -197,7 +197,7 @@ public final class IOUtil {
         try {
             return ioResourceToByteBuffer(resource, bufferSize);
         } catch (IOException e) {
-            throw LeguiExceptions.UNHANDLED_EXCEPTION.create(e, e.getMessage());
+            throw LeguiExceptionTemplate.UNHANDLED_EXCEPTION.create(e, e.getMessage());
         }
     }
 

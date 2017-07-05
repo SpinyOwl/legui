@@ -5,7 +5,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import org.liquidengine.legui.exception.LeguiException;
-import org.liquidengine.legui.exception.LeguiExceptions;
+import org.liquidengine.legui.exception.LeguiExceptionTemplate;
 import org.liquidengine.legui.marshal.json.JsonMarshalContext;
 import org.liquidengine.legui.marshal.json.JsonMarshaller;
 
@@ -13,7 +13,7 @@ import static org.liquidengine.legui.marshal.JsonConstants.CLASS_PARAMETER;
 import static org.liquidengine.legui.marshal.JsonConstants.TYPE_PARAMETER;
 
 /**
- * Created by Aliaksandr_Shcherbin on 2/24/2017.
+ * Abstract Gson Marshaller.
  */
 public abstract class AbstractGsonMarshaller<T> implements JsonMarshaller<T> {
 
@@ -57,7 +57,7 @@ public abstract class AbstractGsonMarshaller<T> implements JsonMarshaller<T> {
             unmarshal(jsonObject, component, context);
             return component;
         } catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
-            throw new LeguiException(LeguiExceptions.UNMARSHAL_EXCEPTION.message(), e);
+            throw new LeguiException(LeguiExceptionTemplate.UNMARSHAL_EXCEPTION.message(), e);
         }
     }
 
@@ -93,7 +93,7 @@ public abstract class AbstractGsonMarshaller<T> implements JsonMarshaller<T> {
             marshal(object, json, context);
             return json;
         } catch (Throwable e) {
-            throw new LeguiException(LeguiExceptions.MARSHAL_EXCEPTION.message(), e);
+            throw new LeguiException(LeguiExceptionTemplate.MARSHAL_EXCEPTION.message(), e);
         }
     }
 
