@@ -276,11 +276,23 @@ public class WhiteTheme extends Theme {
             super.apply(component);
             component.getExpandButton().setBorder(null);
             component.getExpandButton().setBackgroundColor(ColorConstants.transparent());
-            component.getExpandButton().getTextState().setTextColor(ColorConstants.black());
             component.getSelectionButton().setBorder(null);
             component.getSelectionButton().setBackgroundColor(ColorConstants.transparent());
             component.getSelectionButton().getTextState().setTextColor(ColorConstants.black());
-
+            Icon collapseIcon = component.getCollapseIcon();
+            if (collapseIcon != null && collapseIcon instanceof CharIcon) {
+                CharIcon bgIcon = (CharIcon) collapseIcon;
+                bgIcon.setColor(ColorConstants.black());
+                bgIcon.setHorizontalAlign(HorizontalAlign.CENTER);
+                bgIcon.setVerticalAlign(VerticalAlign.MIDDLE);
+            }
+            Icon expandIcon = component.getExpandIcon();
+            if (expandIcon != null && expandIcon instanceof CharIcon) {
+                CharIcon bgIcon = (CharIcon) expandIcon;
+                bgIcon.setColor(ColorConstants.black());
+                bgIcon.setHorizontalAlign(HorizontalAlign.CENTER);
+                bgIcon.setVerticalAlign(VerticalAlign.MIDDLE);
+            }
             Themes.getDefaultTheme().applyAll(component.getSelectionListPanel());
         }
 

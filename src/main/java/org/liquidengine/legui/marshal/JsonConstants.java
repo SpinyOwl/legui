@@ -74,6 +74,8 @@ public final class JsonConstants {
     public static final String ELEMENT_HEIGHT                = "elementHeight";
     public static final String BUTTON_WIDTH                  = "buttonWidth";
     public static final String VISIBLE_COUNT                 = "visibleCount";
+    public static final String COLLAPSE_ICON                 = "collapseIcon";
+    public static final String EXPAND_ICON                   = "expandIcon";
     // SLIDER
     public static final String SLIDER                        = "slider";
     public static final String SLIDER_ACTIVE_COLOR           = "sliderActiveColor";

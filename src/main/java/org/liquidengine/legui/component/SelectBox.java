@@ -5,10 +5,12 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
+import org.liquidengine.legui.color.ColorConstants;
 import org.liquidengine.legui.event.FocusEvent;
 import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.event.ScrollEvent;
-import org.liquidengine.legui.font.FontRegistry;
+import org.liquidengine.legui.icon.CharIcon;
+import org.liquidengine.legui.icon.Icon;
 import org.liquidengine.legui.input.Mouse;
 import org.liquidengine.legui.listener.FocusEventListener;
 import org.liquidengine.legui.listener.MouseClickEventListener;
@@ -22,20 +24,27 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 import static org.liquidengine.legui.event.MouseClickEvent.MouseClickAction.CLICK;
-import static org.liquidengine.legui.util.TextUtil.cpToStr;
+import static org.liquidengine.legui.font.FontRegistry.MATERIAL_ICONS_REGULAR;
 
 /**
- * Creates drop-down list with select options
+ * Creates drop-down list with select options.
  */
 public class SelectBox extends Container {
+    public static final  int    EXPAND_ICON_CHAR   = 0xE5C5;
+    public static final  int    COLLAPSE_ICON_CHAR = 0xE5C7;
+    public static final  String DEFAULT_ICON_FONT  = MATERIAL_ICONS_REGULAR;
     /**
-     * Default value for null element
+     * Default value for null element.
      */
-    public static final  String                 NULL              = "null";
-    private static final String                 EXPANDED          = cpToStr(0xE5C7);
-    private static final String                 COLLAPSED         = cpToStr(0xE5C5);
-    private              List<SelectBoxElement> selectBoxElements = new CopyOnWriteArrayList<>();
-    private              List<String>           elements          = new CopyOnWriteArrayList<>();
+    private static final String NULL               = "null";
+    /**
+     * Expand button icon (Char icon).
+     */
+    private Icon expandIcon;
+    private Icon collapseIcon;
+
+    private List<SelectBoxElement> selectBoxElements = new CopyOnWriteArrayList<>();
+    private List<String>           elements          = new CopyOnWriteArrayList<>();
 
     private       SelectBoxScrollablePanel selectionListPanel      = new SelectBoxScrollablePanel();
     private final SelectBoxScrollListener  selectBoxScrollListener = new SelectBoxScrollListener(selectionListPanel.getVerticalScrollBar());
@@ -44,7 +53,7 @@ public class SelectBox extends Container {
     private       float                    elementHeight           = 16;
     private       float                    buttonWidth             = 15f;
     private       int                      visibleCount            = 3;
-    private       Button                   expandButton            = new Button(COLLAPSED);
+    private       Button                   expandButton            = new Button("");
     private       boolean                  collapsed               = true;
     private       Lock                     lock                    = new ReentrantLock(false);
 
@@ -124,10 +133,13 @@ public class SelectBox extends Container {
     private void initialize() {
         selectionListPanel.getHorizontalScrollBar().setVisible(false);
 
+        expandIcon = new CharIcon(new Vector2f(expandButton.getSize()), DEFAULT_ICON_FONT, (char) EXPAND_ICON_CHAR, ColorConstants.black());
+        collapseIcon = new CharIcon(new Vector2f(expandButton.getSize()), DEFAULT_ICON_FONT, (char) COLLAPSE_ICON_CHAR, ColorConstants.black());
+        expandButton.setBackgroundIcon(expandIcon);
+
         this.add(expandButton);
         this.add(selectionButton);
 
-        expandButton.getTextState().setFont(FontRegistry.MATERIAL_ICONS_REGULAR);
         MouseClickEventListener mouseClickEventListener = new SelectBoxClickListener();
         selectionButton.getListenerMap().addListener(MouseClickEvent.class, mouseClickEventListener);
         expandButton.getListenerMap().addListener(MouseClickEvent.class, mouseClickEventListener);
@@ -140,6 +152,28 @@ public class SelectBox extends Container {
         Themes.getDefaultTheme().getThemeManager().getComponentTheme(SelectBox.class).applyAll(this);
 
         resize();
+    }
+
+    public Icon getCollapseIcon() {
+        return collapseIcon;
+    }
+
+    public void setCollapseIcon(Icon collapseIcon) {
+        this.collapseIcon = collapseIcon;
+        updateIcons();
+    }
+
+    public Icon getExpandIcon() {
+        return expandIcon;
+    }
+
+    public void setExpandIcon(Icon expandIcon) {
+        this.expandIcon = expandIcon;
+        updateIcons();
+    }
+
+    private void updateIcons() {
+        expandButton.setBackgroundIcon(collapsed ? expandIcon : collapseIcon);
     }
 
     public Button getExpandButton() {
@@ -205,9 +239,13 @@ public class SelectBox extends Container {
         selectionButton.setPosition(0, 0);
         selectionButton.setSize(getSize().x - buttonWidth, getSize().y);
 
-        expandButton.getTextState().setText(collapsed ? COLLAPSED : EXPANDED);
+        updateIcons();
         expandButton.setPosition(getSize().x - buttonWidth, 0);
         expandButton.setSize(buttonWidth, getSize().y);
+
+        collapseIcon.setSize(new Vector2f(buttonWidth, getSize().y).mul(2f/3f));
+        expandIcon.setSize(new Vector2f(buttonWidth, getSize().y).mul(2f/3f));
+
         selectionListPanel.getVerticalScrollBar().getSize().x = buttonWidth;
 
         for (int i = 0; i < selectBoxElements.size(); i++) {
@@ -219,7 +257,9 @@ public class SelectBox extends Container {
 
         Vector2f  psize  = new Vector2f();
         Container parent = getParent();
-        if (parent != null) psize.set(getParent().getSize());
+        if (parent != null) {
+            psize.set(getParent().getSize());
+        }
         Vector2f wsize = new Vector2f(this.getSize().x, visibleCount * elementHeight);
         Vector2f wpos  = new Vector2f();
         if (parent != null && getPosition().y + wsize.y > psize.y) {
@@ -235,6 +275,7 @@ public class SelectBox extends Container {
 
     }
 
+
     /**
      * Used to add element to selectbox.
      *
@@ -246,7 +287,9 @@ public class SelectBox extends Container {
             if (!elements.contains(element)) {
 
                 SelectBoxElement boxElement = createSelectBoxElement(element);
-                if (elements.isEmpty()) selectionButton.getTextState().setText(element);
+                if (elements.isEmpty()) {
+                    selectionButton.getTextState().setText(element);
+                }
                 boxElement.getListenerMap().addListener(ScrollEvent.class, selectBoxScrollListener);
                 elements.add(element);
                 selectBoxElements.add(boxElement);
@@ -262,6 +305,7 @@ public class SelectBox extends Container {
      * Used to create {@link SelectBoxElement}.
      *
      * @param element element.
+     *
      * @return {@link SelectBoxElement} created on base of element.
      */
     private SelectBoxElement createSelectBoxElement(String element) {
@@ -287,6 +331,7 @@ public class SelectBox extends Container {
      * Used to get element index.
      *
      * @param element element to find index.
+     *
      * @return index of element or -1 if no such element in selectbox.
      */
     public int getElementIndex(String element) {
@@ -359,7 +404,9 @@ public class SelectBox extends Container {
         } else {
             if (index != -1) {
                 selectBoxElements.get(index).selected = false;
-                if (Objects.equals(element, selectedElement)) selectionButton.getTextState().setText(NULL);
+                if (Objects.equals(element, selectedElement)) {
+                    selectionButton.getTextState().setText(NULL);
+                }
             } else {
                 addElement(element);
             }
@@ -406,13 +453,18 @@ public class SelectBox extends Container {
      * (non-Javadoc)
      *
      * @param o object to compare.
+     *
      * @see Object#equals(Object)
      */
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
+        if (this == o) {
+            return true;
+        }
 
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         SelectBox selectBox = (SelectBox) o;
 
@@ -552,9 +604,13 @@ public class SelectBox extends Container {
 
         @Override
         public boolean equals(Object o) {
-            if (this == o) return true;
+            if (this == o) {
+                return true;
+            }
 
-            if (o == null || getClass() != o.getClass()) return false;
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
 
             SelectBoxElement that = (SelectBoxElement) o;
 
@@ -627,9 +683,13 @@ public class SelectBox extends Container {
 
         @Override
         public boolean equals(Object o) {
-            if (this == o) return true;
+            if (this == o) {
+                return true;
+            }
 
-            if (o == null || getClass() != o.getClass()) return false;
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
 
             SelectBoxScrollListener that = (SelectBoxScrollListener) o;
 

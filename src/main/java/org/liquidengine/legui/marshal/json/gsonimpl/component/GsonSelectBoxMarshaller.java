@@ -5,6 +5,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.liquidengine.legui.component.SelectBox;
 import org.liquidengine.legui.marshal.json.gsonimpl.GsonMarshalContext;
+import org.liquidengine.legui.marshal.json.gsonimpl.GsonMarshalUtil;
 import org.liquidengine.legui.marshal.json.gsonimpl.GsonUtil;
 
 import java.util.List;
@@ -32,6 +33,8 @@ public class GsonSelectBoxMarshaller<T extends SelectBox> extends GsonController
                 .add(ELEMENT_HEIGHT, object.getElementHeight())
                 .add(BUTTON_WIDTH, object.getButtonWidth())
                 .add(VISIBLE_COUNT, object.getVisibleCount())
+                .add(COLLAPSE_ICON, GsonMarshalUtil.marshalToJson(object.getCollapseIcon(), context))
+                .add(EXPAND_ICON, GsonMarshalUtil.marshalToJson(object.getExpandIcon(), context))
         ;
         List<String> elements     = object.getElements();
         JsonArray    jsonElements = new JsonArray();
@@ -57,6 +60,8 @@ public class GsonSelectBoxMarshaller<T extends SelectBox> extends GsonController
         JsonElement elementHeight   = json.get(ELEMENT_HEIGHT);
         JsonElement buttonWidth     = json.get(BUTTON_WIDTH);
         JsonElement visibleCount    = json.get(VISIBLE_COUNT);
+        JsonElement collapseIcon    = json.get(COLLAPSE_ICON);
+        JsonElement expandIcon      = json.get(EXPAND_ICON);
 
         if (isNotNull(elements) && elements.isJsonArray()) {
             JsonArray el = elements.getAsJsonArray();
@@ -69,5 +74,8 @@ public class GsonSelectBoxMarshaller<T extends SelectBox> extends GsonController
         if (isNotNull(elementHeight)) object.setElementHeight(elementHeight.getAsFloat());
         if (isNotNull(buttonWidth)) object.setButtonWidth(buttonWidth.getAsFloat());
         if (isNotNull(visibleCount)) object.setVisibleCount(visibleCount.getAsInt());
+        if (isNotNull(collapseIcon)) object.setCollapseIcon(GsonMarshalUtil.unmarshal(collapseIcon.getAsJsonObject(), context));
+        if (isNotNull(expandIcon)) object.setExpandIcon(GsonMarshalUtil.unmarshal(expandIcon.getAsJsonObject(), context));
+
     }
 }

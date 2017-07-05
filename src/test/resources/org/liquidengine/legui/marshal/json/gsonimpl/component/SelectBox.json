@@ -34,6 +34,40 @@
   "elementHeight": 16.0,
   "buttonWidth": 15.0,
   "visibleCount": 3,
+  "collapseIcon": {
+    "@type": "CharIcon",
+    "size": {
+      "width": 10.0,
+      "height": 46.666668
+    },
+    "horizontalAlign": "CENTER",
+    "verticalAlign": "MIDDLE",
+    "font": "MaterialIcons-Regular",
+    "color": {
+      "r": 0.0,
+      "g": 0.0,
+      "b": 0.0,
+      "a": 1.0
+    },
+    "charCode": "\uE5C7"
+  },
+  "expandIcon": {
+    "@type": "CharIcon",
+    "size": {
+      "width": 10.0,
+      "height": 46.666668
+    },
+    "horizontalAlign": "CENTER",
+    "verticalAlign": "MIDDLE",
+    "font": "MaterialIcons-Regular",
+    "color": {
+      "r": 0.0,
+      "g": 0.0,
+      "b": 0.0,
+      "a": 1.0
+    },
+    "charCode": "\uE5C5"
+  },
   "elements": [
     "Hello",
     "World"

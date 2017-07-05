@@ -2,6 +2,10 @@ package org.liquidengine.legui.theme.dark.def;
 
 import org.liquidengine.legui.color.ColorConstants;
 import org.liquidengine.legui.component.SelectBox;
+import org.liquidengine.legui.component.optional.align.HorizontalAlign;
+import org.liquidengine.legui.component.optional.align.VerticalAlign;
+import org.liquidengine.legui.icon.CharIcon;
+import org.liquidengine.legui.icon.Icon;
 import org.liquidengine.legui.theme.AbstractTheme;
 import org.liquidengine.legui.theme.ThemeManager;
 
@@ -27,10 +31,23 @@ public class DarkSelectBoxTheme<T extends SelectBox> extends DarkControllerTheme
         super.apply(component);
         component.getExpandButton().setBorder(null);
         component.getExpandButton().setBackgroundColor(ColorConstants.transparent());
-        component.getExpandButton().getTextState().setTextColor(ColorConstants.white());
         component.getSelectionButton().setBorder(null);
         component.getSelectionButton().setBackgroundColor(ColorConstants.transparent());
         component.getSelectionButton().getTextState().setTextColor(ColorConstants.white());
+        Icon collapseIcon = component.getCollapseIcon();
+        if (collapseIcon != null && collapseIcon instanceof CharIcon) {
+            CharIcon bgIcon = (CharIcon) collapseIcon;
+            bgIcon.setColor(ColorConstants.white());
+            bgIcon.setHorizontalAlign(HorizontalAlign.CENTER);
+            bgIcon.setVerticalAlign(VerticalAlign.MIDDLE);
+        }
+        Icon expandIcon = component.getExpandIcon();
+        if (expandIcon != null && expandIcon instanceof CharIcon) {
+            CharIcon bgIcon = (CharIcon) expandIcon;
+            bgIcon.setColor(ColorConstants.white());
+            bgIcon.setHorizontalAlign(HorizontalAlign.CENTER);
+            bgIcon.setVerticalAlign(VerticalAlign.MIDDLE);
+        }
         AbstractTheme<SelectBox.SelectBoxScrollablePanel> componentTheme = (AbstractTheme<SelectBox.SelectBoxScrollablePanel>) themeManager.getComponentTheme(component.getSelectionListPanel().getClass());
         componentTheme.applyAll(component.getSelectionListPanel());
     }
