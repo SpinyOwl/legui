@@ -15,7 +15,9 @@ public abstract class AbstractTheme<T extends Component> {
      *
      * @param component component to apply theme.
      */
-    public void apply(T component){}
+    public void apply(T component) {
+        // this is default image marshaller. no need to implement this method.
+    }
 
     /**
      * Used to apply theme for component and for all children of this component.

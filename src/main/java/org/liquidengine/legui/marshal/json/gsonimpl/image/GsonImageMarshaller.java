@@ -18,7 +18,7 @@ public class GsonImageMarshaller<I extends Image> extends AbstractGsonMarshaller
      */
     @Override
     protected void marshal(I object, JsonObject json, GsonMarshalContext context) {
-
+        // this is default image marshaller. no need to implement this method.
     }
 
     /**
@@ -30,6 +30,6 @@ public class GsonImageMarshaller<I extends Image> extends AbstractGsonMarshaller
      */
     @Override
     protected void unmarshal(JsonObject json, I object, GsonMarshalContext context) {
-
-    }
+        // this is default image marshaller. no need to implement this method.
+        }
 }

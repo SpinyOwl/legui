@@ -4,7 +4,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.junit.Assert;
 import org.junit.Test;
-import org.liquidengine.legui.image.BufferedImage;
 import org.liquidengine.legui.image.LoadableImage;
 import org.liquidengine.legui.image.loader.ImageLoader;
 import org.liquidengine.legui.marshal.json.JsonMarshalContext;

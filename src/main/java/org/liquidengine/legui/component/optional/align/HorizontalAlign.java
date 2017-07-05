@@ -3,19 +3,19 @@ package org.liquidengine.legui.component.optional.align;
 import java.io.Serializable;
 
 /**
- * Alignment states.
+ * Horizontal alignment states.
  */
 public enum HorizontalAlign implements Serializable {
     /**
-     * Content should be aligned to left border.
+     * Content should be aligned to left border of container.
      */
     LEFT(0),
     /**
-     * Content should be aligned to center.
+     * Content should be aligned to center of container.
      */
     CENTER(1),
     /**
-     * Content should be aligned to right border.
+     * Content should be aligned to right border of container.
      */
     RIGHT(2);
 

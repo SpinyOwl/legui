@@ -3,7 +3,6 @@ package org.liquidengine.legui.marshal.json.gsonimpl.component;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.liquidengine.legui.component.ImageView;
-import org.liquidengine.legui.image.loader.ImageLoader;
 import org.liquidengine.legui.marshal.json.gsonimpl.GsonMarshalContext;
 import org.liquidengine.legui.marshal.json.gsonimpl.GsonMarshalUtil;
 import org.liquidengine.legui.marshal.json.gsonimpl.GsonUtil;
