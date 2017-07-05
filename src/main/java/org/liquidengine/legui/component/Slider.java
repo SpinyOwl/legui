@@ -26,17 +26,39 @@ import org.liquidengine.legui.theme.Themes;
  * Implementation of slider controller.
  */
 public class Slider extends Controller {
-
+    /**
+     * Maximum value of slider.
+     */
     public static final float MAX_VALUE = 100f;
+
+    /**
+     * Minimum value of slider.
+     */
     public static final float MIN_VALUE = 0f;
 
+    /**
+     * Slider value.
+     */
     private float value;
 
+    /**
+     * Slider orientation.
+     */
     private Orientation orientation = Orientation.HORIZONTAL;
 
+    /**
+     * Slider active color.
+     */
     private Vector4f sliderActiveColor = new Vector4f(0, 0, 1, 1);
-    private Vector4f sliderColor       = new Vector4f(0.7f, 0.7f, 0.7f, 0.4f);
 
+    /**
+     * Slider color.
+     */
+    private Vector4f sliderColor = new Vector4f(0.7f, 0.7f, 0.7f, 0.4f);
+
+    /**
+     * Slider size. Size of slider knob. (Knob size).
+     */
     private float sliderSize = 10f;
 
     /**
@@ -121,58 +143,118 @@ public class Slider extends Controller {
         Themes.getDefaultTheme().getThemeManager().getComponentTheme(Slider.class).applyAll(this);
     }
 
+    /**
+     * Used to set slider intersector.
+     *
+     * @param intersector intersector.
+     */
     @Override
     public void setIntersector(Intersector intersector) {
-        if (intersector == null || !(intersector instanceof RectangleIntersector)) return;
+        if (intersector == null || !(intersector instanceof RectangleIntersector)) {
+            return;
+        }
         super.setIntersector(intersector);
     }
 
+    /**
+     * Returns slider value.
+     *
+     * @return slider value.
+     */
     public float getValue() {
         return value;
     }
 
+    /**
+     * Used to set slider value.
+     *
+     * @param value new slider value.
+     */
     public void setValue(float value) {
         this.value = value < MIN_VALUE ? MIN_VALUE : value > MAX_VALUE ? MAX_VALUE : value;
     }
 
+    /**
+     * Returns slider color. (Inactive slider color).
+     *
+     * @return slider color.
+     */
     public Vector4f getSliderColor() {
         return sliderColor;
     }
 
+    /**
+     * Used to set slider color. (Inactive slider color).
+     *
+     * @param sliderColor new slider color.
+     */
     public void setSliderColor(Vector4f sliderColor) {
         this.sliderColor = sliderColor;
     }
 
+    /**
+     * Returns slider size. (Knob size).
+     *
+     * @return slider size.
+     */
     public float getSliderSize() {
         return sliderSize;
     }
 
+    /**
+     * Used to set slider size. (Knob size).
+     *
+     * @param sliderSize new slider size.
+     */
     public void setSliderSize(float sliderSize) {
         this.sliderSize = sliderSize;
     }
 
-
+    /**
+     * Returns slider active color.
+     *
+     * @return slider active color.
+     */
     public Vector4f getSliderActiveColor() {
         return sliderActiveColor;
     }
 
+    /**
+     * Used to set slider active color.
+     *
+     * @param sliderActiveColor new slider active color.
+     */
     public void setSliderActiveColor(Vector4f sliderActiveColor) {
         this.sliderActiveColor = sliderActiveColor;
     }
 
+    /**
+     * Returns slider orientation.
+     *
+     * @return slider orientation.
+     */
     public Orientation getOrientation() {
         return orientation;
     }
 
+    /**
+     * Used to set slider orientation.
+     *
+     * @param orientation new slider orientation.
+     */
     public void setOrientation(Orientation orientation) {
         this.orientation = orientation;
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
+        if (this == o) {
+            return true;
+        }
 
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         Slider slider = (Slider) o;
 
@@ -209,10 +291,16 @@ public class Slider extends Controller {
                 .toString();
     }
 
+    /**
+     * Slider change value event listener. Used to change slider value. Generates slider value change event.
+     */
     public interface SliderChangeValueEventListener extends EventListener<SliderChangeValueEvent> {
         void process(SliderChangeValueEvent event);
     }
 
+    /**
+     * Slider mouse scroll event listener.
+     */
     public static class SliderScrollEventListener implements ScrollEventListener {
 
         @Override
@@ -221,8 +309,12 @@ public class Slider extends Controller {
             float  curValue = slider.getValue();
             float  value    = (float) (curValue + event.getYoffset());
 
-            if (value > MAX_VALUE) value = MAX_VALUE;
-            if (value < MIN_VALUE) value = MIN_VALUE;
+            if (value > MAX_VALUE) {
+                value = MAX_VALUE;
+            }
+            if (value < MIN_VALUE) {
+                value = MIN_VALUE;
+            }
 
             event.getContext().getEventProcessor().pushEvent(new SliderChangeValueEvent(slider, event.getContext(), slider.getValue(), value));
             slider.setValue(value);
@@ -234,6 +326,9 @@ public class Slider extends Controller {
         }
     }
 
+    /**
+     * Slider mouse click event listener. Used to change slider value. Generates slider value change event.
+     */
     public static class SliderMouseClickEventListener implements MouseClickEventListener {
 
         @Override
@@ -249,8 +344,12 @@ public class Slider extends Controller {
                 } else {
                     value = 100f * (cursorPosition.x - pos.x - slider.sliderSize / 2f) / (slider.getSize().x - slider.sliderSize);
                 }
-                if (value > MAX_VALUE) value = MAX_VALUE;
-                if (value < MIN_VALUE) value = MIN_VALUE;
+                if (value > MAX_VALUE) {
+                    value = MAX_VALUE;
+                }
+                if (value < MIN_VALUE) {
+                    value = MIN_VALUE;
+                }
                 event.getContext().getEventProcessor().pushEvent(new SliderChangeValueEvent(slider, event.getContext(), slider.getValue(), value));
                 slider.setValue(value);
             }
@@ -262,12 +361,17 @@ public class Slider extends Controller {
         }
     }
 
+    /**
+     * Slider mouse drag event listener. Used to change slider value. Generates slider value change event.
+     */
     public static class SliderMouseDragEventListener implements MouseDragEventListener {
 
         @Override
         public void process(MouseDragEvent event) {
             Slider slider = (Slider) event.getComponent();
-            if (!Mouse.MouseButton.MOUSE_BUTTON_LEFT.isPressed()) return;
+            if (!Mouse.MouseButton.MOUSE_BUTTON_LEFT.isPressed()) {
+                return;
+            }
 
             Vector2f pos = slider.getScreenPosition();
 
@@ -279,8 +383,12 @@ public class Slider extends Controller {
                 value = 100f * (cursorPosition.x - pos.x - slider.sliderSize / 2f) / (slider.getSize().x - slider.sliderSize);
             }
 
-            if (value > MAX_VALUE) value = MAX_VALUE;
-            if (value < MIN_VALUE) value = MIN_VALUE;
+            if (value > MAX_VALUE) {
+                value = MAX_VALUE;
+            }
+            if (value < MIN_VALUE) {
+                value = MIN_VALUE;
+            }
 
             event.getContext().getEventProcessor().pushEvent(new SliderChangeValueEvent(slider, event.getContext(), slider.getValue(), value));
             slider.setValue(value);
@@ -292,21 +400,50 @@ public class Slider extends Controller {
         }
     }
 
+    /**
+     * Slider value change event.
+     *
+     * @param <T> type of slider.
+     */
     public static class SliderChangeValueEvent<T extends Slider> extends Event<T> {
 
+        /**
+         * Old slider value.
+         */
         private final float oldValue;
+        /**
+         * New slider value.
+         */
         private final float newValue;
 
+        /**
+         * Constructor. Used to create event.
+         *
+         * @param component slider component.
+         * @param context   legui context.
+         * @param oldValue  old slider value.
+         * @param newValue  new slider value.
+         */
         public SliderChangeValueEvent(T component, Context context, float oldValue, float newValue) {
             super(component, context);
             this.oldValue = oldValue;
             this.newValue = newValue;
         }
 
+        /**
+         * Returns new slider value.
+         *
+         * @return new slider value.
+         */
         public float getNewValue() {
             return newValue;
         }
 
+        /**
+         * Returns old slider value.
+         *
+         * @return old slider value.
+         */
         public float getOldValue() {
             return oldValue;
         }
