@@ -111,10 +111,10 @@ task publishArchives {
     doLast {
         def publishUrl
         def buildType
-        def publishUsername = System.getenv("publishUsername") ?: publishUsername
-        def publishPassword = System.getenv("publishPassword") ?: publishPassword
-        def releasesPublishUrl = System.getenv("releasesPublishUrl") ?: releasesPublishUrl
-        def snapshotsPublishUrl = System.getenv("snapshotsPublishUrl") ?: snapshotsPublishUrl
+        def publishUsername = System.getProperty("publishUsername") ?: System.getenv("publishUsername") ?: publishUsername
+        def publishPassword = System.getProperty("publishPassword") ?: System.getenv("publishPassword") ?: publishPassword
+        def releasesPublishUrl = System.getProperty("releasesPublishUrl") ?: System.getenv("releasesPublishUrl") ?: releasesPublishUrl
+        def snapshotsPublishUrl = System.getProperty("snapshotsPublishUrl") ?: System.getenv("snapshotsPublishUrl") ?: snapshotsPublishUrl
         println("-------------------------------------")
         println("PUBLISH ARCHIVES TASK " + build_type)
         println("-------------------------------------")
