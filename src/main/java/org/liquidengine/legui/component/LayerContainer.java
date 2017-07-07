@@ -116,11 +116,6 @@ public class LayerContainer<T extends Component> extends Container<T> {
             event.getComponent().getSize().set(event.getWidth(), event.getHeight());
         }
 
-        /**
-         * (non-Javadoc)
-         *
-         * @see Object#equals(Object)
-         */
         @Override
         public boolean equals(Object obj) {
             return (obj != null) && ((obj == this) || ((obj != this) && (obj.getClass() == this.getClass())));

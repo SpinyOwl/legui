@@ -199,11 +199,6 @@ public class Frame {
         return componentLayer.getContainer();
     }
 
-    /**
-     * (non-Javadoc)
-     *
-     * @see Object#hashCode()
-     */
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
@@ -213,11 +208,6 @@ public class Frame {
                 .toHashCode();
     }
 
-    /**
-     * (non-Javadoc)
-     *
-     * @see Object#equals(Object)
-     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
@@ -233,11 +223,6 @@ public class Frame {
                 .isEquals();
     }
 
-    /**
-     * (non-Javadoc)
-     *
-     * @see Object#toString()
-     */
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)

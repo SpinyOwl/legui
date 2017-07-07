@@ -302,11 +302,6 @@ public abstract class Container<T extends Component> extends Controller {
                 .isEquals();
     }
 
-    /**
-     * (non-Javadoc)
-     *
-     * @see Object#hashCode()
-     */
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
@@ -315,11 +310,6 @@ public abstract class Container<T extends Component> extends Controller {
                 .toHashCode();
     }
 
-    /**
-     * (non-Javadoc)
-     *
-     * @see Object#toString()
-     */
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)

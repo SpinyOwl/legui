@@ -92,12 +92,6 @@ public abstract class Controller extends Component {
         tooltip.setController(this);
     }
 
-    /**
-     * (non-Javadoc)
-     *
-     * @param o object to compare.
-     * @see Object#equals(Object)
-     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -112,11 +106,6 @@ public abstract class Controller extends Component {
                 .isEquals();
     }
 
-    /**
-     * (non-Javadoc)
-     *
-     * @see Object#hashCode()
-     */
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
@@ -125,11 +114,6 @@ public abstract class Controller extends Component {
                 .toHashCode();
     }
 
-    /**
-     * (non-Javadoc)
-     *
-     * @see Object#toString()
-     */
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)

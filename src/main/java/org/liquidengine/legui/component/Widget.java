@@ -25,8 +25,8 @@ import org.liquidengine.legui.theme.Themes;
 import static org.liquidengine.legui.event.MouseClickEvent.MouseClickAction.CLICK;
 
 /**
- * Widget component is container which have predefined components such as container, title label, close and minimize buttons and predefined event listeners.
- * This component can be moved, minimized and restored, closed. Also now you can enable or disable title.
+ * Widget component is container which have predefined components such as container, title label, close and minimize buttons and predefined
+ * event listeners. This component can be moved, minimized and restored, closed. Also now you can enable or disable title.
  */
 public class Widget extends Container<Component> {
 
@@ -194,7 +194,7 @@ public class Widget extends Container<Component> {
             titleContainer.getPosition().set(0);
 
             float widgetWidth = getSize().x;
-            float titleWidth  = widgetWidth;
+            float titleWidth = widgetWidth;
 
             titleContainer.getSize().set(titleWidth, titHei);
             if (closeButton.isVisible()) {
@@ -283,7 +283,9 @@ public class Widget extends Container<Component> {
      * @param titleEnabled title state (enable or not) to set.
      */
     public void setTitleEnabled(boolean titleEnabled) {
-        if (minimized) return;
+        if (minimized) {
+            return;
+        }
         this.titleContainer.setVisible(titleEnabled);
         resize();
     }
@@ -572,17 +574,15 @@ public class Widget extends Container<Component> {
         minimizeButton.setBackgroundIcon(minimized ? maximizeIcon : minimizeIcon);
     }
 
-    /**
-     * (non-Javadoc)
-     *
-     * @param o object to compare.
-     * @see Object#equals(Object)
-     */
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
+        if (this == o) {
+            return true;
+        }
 
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         Widget widget = (Widget) o;
 
@@ -598,11 +598,6 @@ public class Widget extends Container<Component> {
                 .isEquals();
     }
 
-    /**
-     * (non-Javadoc)
-     *
-     * @see Object#hashCode()
-     */
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
@@ -617,12 +612,6 @@ public class Widget extends Container<Component> {
                 .toHashCode();
     }
 
-
-    /**
-     * (non-Javadoc)
-     *
-     * @see Object#toString()
-     */
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)

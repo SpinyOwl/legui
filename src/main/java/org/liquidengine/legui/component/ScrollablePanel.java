@@ -217,11 +217,6 @@ public class ScrollablePanel<T extends Component> extends Container implements V
         viewport.add(this.container);
     }
 
-    /**
-     * (non-Javadoc)
-     *
-     * @see Object#equals(Object)
-     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -239,11 +234,6 @@ public class ScrollablePanel<T extends Component> extends Container implements V
                 .isEquals();
     }
 
-    /**
-     * (non-Javadoc)
-     *
-     * @see Object#toString()
-     */
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
@@ -254,11 +244,6 @@ public class ScrollablePanel<T extends Component> extends Container implements V
                 .toString();
     }
 
-    /**
-     * (non-Javadoc)
-     *
-     * @see Object#hashCode()
-     */
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)

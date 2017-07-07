@@ -58,11 +58,6 @@ public class ImageView extends Controller {
         this.image = image;
     }
 
-    /**
-     * (non-Javadoc)
-     *
-     * @see Object#equals(Object)
-     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -78,11 +73,6 @@ public class ImageView extends Controller {
     }
 
 
-    /**
-     * (non-Javadoc)
-     *
-     * @see Object#hashCode()
-     */
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
@@ -91,11 +81,6 @@ public class ImageView extends Controller {
                 .toHashCode();
     }
 
-    /**
-     * (non-Javadoc)
-     *
-     * @see Object#toString()
-     */
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)

@@ -161,12 +161,6 @@ public class Dialog extends Widget {
             closeDialog();
         }
 
-        /**
-         * (non-Javadoc)
-         *
-         * @param obj object to compare.
-         * @see Object#equals(Object)
-         */
         @Override
         public boolean equals(Object obj) {
             return (obj != null) && ((obj == this) || ((obj != this) && (obj.getClass() == this.getClass())));

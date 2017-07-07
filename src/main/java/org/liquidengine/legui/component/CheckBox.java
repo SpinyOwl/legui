@@ -190,11 +190,6 @@ public class CheckBox extends Controller implements TextComponent {
         this.checked = checked;
     }
 
-    /**
-     * (non-Javadoc)
-     *
-     * @see Object#equals(Object)
-     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -210,11 +205,6 @@ public class CheckBox extends Controller implements TextComponent {
                 .isEquals();
     }
 
-    /**
-     * (non-Javadoc)
-     *
-     * @see Object#hashCode()
-     */
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
@@ -224,11 +214,6 @@ public class CheckBox extends Controller implements TextComponent {
                 .toHashCode();
     }
 
-    /**
-     * (non-Javadoc)
-     *
-     * @see Object#toString()
-     */
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
