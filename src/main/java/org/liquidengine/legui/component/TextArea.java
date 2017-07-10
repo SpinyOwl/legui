@@ -410,25 +410,25 @@ public class TextArea extends Controller implements TextComponent {
         /**
          * Used to cut some string from text area and put it to clipboard.
          *
-         * @param textArea     text area to work with.
+         * @param gui     text area to work with.
          * @param leguiContext context.
          */
-        private void cutAction(TextArea textArea, Context leguiContext) {
-            if (textArea.isEditable()) {
-                TextState textState = textArea.getTextState();
-                String s = textArea.getSelection();
+        private void cutAction(TextArea gui, Context leguiContext) {
+            if (gui.isEditable()) {
+                TextState textState = gui.getTextState();
+                String s = gui.getSelection();
                 if (s != null) {
-                    int start = textArea.getStartSelectionIndex();
-                    int end = textArea.getEndSelectionIndex();
+                    int start = gui.getStartSelectionIndex();
+                    int end = gui.getEndSelectionIndex();
                     if (start > end) {
                         int swap = start;
                         start = end;
                         end = swap;
                     }
                     textState.delete(start, end);
-                    textArea.setCaretPosition(start);
-                    textArea.setStartSelectionIndex(start);
-                    textArea.setEndSelectionIndex(start);
+                    gui.setCaretPosition(start);
+                    gui.setStartSelectionIndex(start);
+                    gui.setEndSelectionIndex(start);
                     glfwSetClipboardString(leguiContext.getGlfwWindow(), s);
                 }
             }

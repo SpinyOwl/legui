@@ -348,6 +348,12 @@ public class TextInput extends Controller implements TextComponent {
             }
         }
 
+        /**
+         * Used to cut some string from text input and put it to clipboard.
+         *
+         * @param gui          gui to work with.
+         * @param leguiContext context.
+         */
         private void cutAction(TextInput gui, Context leguiContext) {
             if (gui.isEditable()) {
                 String s = gui.getSelection();
@@ -370,6 +376,12 @@ public class TextInput extends Controller implements TextComponent {
             }
         }
 
+        /**
+         * Used to copy selected text to clipboard.
+         *
+         * @param gui          gui.
+         * @param leguiContext context.
+         */
         private void copyAction(TextInput gui, Context leguiContext) {
             String s = gui.getSelection();
             if (s != null) {
@@ -377,6 +389,12 @@ public class TextInput extends Controller implements TextComponent {
             }
         }
 
+        /**
+         * Used to paste clipboard data to gui element.
+         *
+         * @param gui          gui to paste
+         * @param leguiContext context.
+         */
         private void pasteAction(TextInput gui, Context leguiContext) {
             if (gui.isEditable()) {
                 TextState textState = gui.getTextState();
@@ -389,6 +407,12 @@ public class TextInput extends Controller implements TextComponent {
             }
         }
 
+        /**
+         * Delete action. Used to delete selected text or symbol after caret or word after caret.
+         *
+         * @param gui  gui to remove data from text state.
+         * @param mods key mods.
+         */
         private void keyDeleteAction(TextInput gui, int mods) {
             if (gui.isEditable()) {
                 TextState textState = gui.getTextState();
@@ -420,6 +444,12 @@ public class TextInput extends Controller implements TextComponent {
             }
         }
 
+        /**
+         * Backspace action. Deletes selected text or symbol before caret or words before caret.
+         *
+         * @param gui  gui to remove text data.
+         * @param mods key mods.
+         */
         private void keyBackSpaceAction(TextInput gui, int mods) {
             if (gui.isEditable()) {
                 TextState textState = gui.getTextState();
