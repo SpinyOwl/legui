@@ -46,12 +46,12 @@ public class TextUtil {
             return length;
         }
 
-        int next = current + 1;
+        int next = current;
         boolean word;
         boolean startedWord = false;
         while (next < length) {
             int i = Arrays.binarySearch(wordBreakers, text.charAt(next));
-            // if char at (next) is word breaker
+            // if char at (next) is not word breaker
             if (i < 0) {
                 startedWord = word = true;
             } else {

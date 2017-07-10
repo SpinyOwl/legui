@@ -250,7 +250,9 @@ public class TextArea extends Controller implements TextComponent {
      * @return selected text.
      */
     public String getSelection() {
-        if (startSelectionIndex < 0 || endSelectionIndex < 0) return null;
+        if (startSelectionIndex < 0 || endSelectionIndex < 0) {
+            return null;
+        }
         String selection;
         if (startSelectionIndex > endSelectionIndex) {
             selection = textState.substring(endSelectionIndex, startSelectionIndex);
@@ -262,9 +264,13 @@ public class TextArea extends Controller implements TextComponent {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
+        if (this == o) {
+            return true;
+        }
 
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         TextArea textArea = (TextArea) o;
 
@@ -371,34 +377,32 @@ public class TextArea extends Controller implements TextComponent {
         public void process(KeyEvent event) {
             TextArea textArea = (TextArea) event.getComponent();
             if (textArea.isFocused() && textArea.isEditable()) {
-                int       key           = event.getKey();
-                int       caretPosition = textArea.getCaretPosition();
-                boolean   pressed       = event.getAction() != GLFW_RELEASE;
-                TextState textState     = textArea.getTextState();
+                int key = event.getKey();
+                boolean pressed = event.getAction() != GLFW_RELEASE;
                 if (key == GLFW_KEY_LEFT && pressed) {
-                    keyLeftAction(textArea, caretPosition, event.getMods());
+                    keyLeftAction(textArea, event.getMods());
                 } else if (key == GLFW_KEY_RIGHT && pressed) {
-                    keyRightAction(textArea, caretPosition, textState, event.getMods());
+                    keyRightAction(textArea, event.getMods());
                 } else if (key == GLFW_KEY_UP && pressed) {
-                    keyUpAction(textArea, caretPosition, textState, event.getMods());
+                    keyUpAction(textArea, event.getMods());
                 } else if (key == GLFW_KEY_DOWN && pressed) {
-                    keyDownAction(textArea, caretPosition, textState, event.getMods());
+                    keyDownAction(textArea, event.getMods());
                 } else if (key == GLFW_KEY_HOME && pressed) {
-                    keyHomeAction(textArea, caretPosition, textState, event.getMods());
+                    keyHomeAction(textArea, event.getMods());
                 } else if (key == GLFW_KEY_END && pressed) {
-                    keyEndAction(textArea, caretPosition, textState, event.getMods());
+                    keyEndAction(textArea, event.getMods());
                 } else if ((key == GLFW_KEY_ENTER || key == GLFW_KEY_KP_ENTER) && pressed) {
-                    keyEnterAction(textArea, caretPosition);
+                    keyEnterAction(textArea);
                 } else if (key == GLFW_KEY_BACKSPACE && pressed) {
-                    keyBackSpaceAction(textArea, caretPosition, textState, event.getMods());
+                    keyBackSpaceAction(textArea, event.getMods());
                 } else if (key == GLFW_KEY_DELETE && pressed) {
-                    keyDeleteAction(textArea, caretPosition, textState, event.getMods());
+                    keyDeleteAction(textArea, event.getMods());
                 } else if (key == GLFW_KEY_V && pressed && event.getMods() == GLFW_MOD_CONTROL) {
-                    pasteAction(textArea, event.getContext(), caretPosition, textState);
+                    pasteAction(textArea, event.getContext());
                 } else if (key == GLFW_KEY_C && pressed && event.getMods() == GLFW_MOD_CONTROL) {
                     copyAction(textArea, event.getContext());
                 } else if (key == GLFW_KEY_X && pressed && event.getMods() == GLFW_MOD_CONTROL) {
-                    cutAction(textArea, event.getContext(), textState);
+                    cutAction(textArea, event.getContext());
                 }
             }
         }
@@ -406,37 +410,53 @@ public class TextArea extends Controller implements TextComponent {
         /**
          * Used to cut some string from text area and put it to clipboard.
          *
-         * @param gui          text area to work with.
+         * @param textArea     text area to work with.
          * @param leguiContext context.
-         * @param textState    text state to work with.
          */
-        private void cutAction(TextArea gui, Context leguiContext, TextState textState) {
-            if (gui.isEditable()) {
-                String s = gui.getSelection();
+        private void cutAction(TextArea textArea, Context leguiContext) {
+            if (textArea.isEditable()) {
+                TextState textState = textArea.getTextState();
+                String s = textArea.getSelection();
                 if (s != null) {
-                    int start = gui.getStartSelectionIndex();
-                    int end   = gui.getEndSelectionIndex();
+                    int start = textArea.getStartSelectionIndex();
+                    int end = textArea.getEndSelectionIndex();
                     if (start > end) {
                         int swap = start;
                         start = end;
                         end = swap;
                     }
                     textState.delete(start, end);
-                    gui.setCaretPosition(start);
-                    gui.setStartSelectionIndex(start);
-                    gui.setEndSelectionIndex(start);
+                    textArea.setCaretPosition(start);
+                    textArea.setStartSelectionIndex(start);
+                    textArea.setEndSelectionIndex(start);
                     glfwSetClipboardString(leguiContext.getGlfwWindow(), s);
                 }
             }
         }
 
+        /**
+         * Used to copy selected text to clipboard.
+         *
+         * @param gui          gui.
+         * @param leguiContext context.
+         */
         private void copyAction(TextArea gui, Context leguiContext) {
             String s = gui.getSelection();
-            if (s != null) glfwSetClipboardString(leguiContext.getGlfwWindow(), s);
+            if (s != null) {
+                glfwSetClipboardString(leguiContext.getGlfwWindow(), s);
+            }
         }
 
-        private void pasteAction(TextArea gui, Context leguiContext, int caretPosition, TextState textState) {
+        /**
+         * Used to paste clipboard data to gui element.
+         *
+         * @param gui          gui to paste
+         * @param leguiContext context.
+         */
+        private void pasteAction(TextArea gui, Context leguiContext) {
             if (gui.isEditable()) {
+                TextState textState = gui.getTextState();
+                int caretPosition = gui.getCaretPosition();
                 String s = glfwGetClipboardString(leguiContext.getGlfwWindow());
                 if (s != null) {
                     textState.insert(caretPosition, s);
@@ -445,19 +465,34 @@ public class TextArea extends Controller implements TextComponent {
             }
         }
 
-        private void keyDeleteAction(TextArea gui, int caretPosition, TextState textState, int mods) {
+        /**
+         * Delete action. Used to delete selected text or symbol after caret or word after caret.
+         *
+         * @param gui  gui to remove data from text state.
+         * @param mods key mods.
+         */
+        private void keyDeleteAction(TextArea gui, int mods) {
             if (gui.isEditable()) {
-                if ((mods & GLFW_MOD_CONTROL) != 0) {
-                    gui.setEndSelectionIndex(findNextWord(textState.getText(), caretPosition));
-                }
+                TextState textState = gui.getTextState();
+                int caretPosition = gui.getCaretPosition();
                 int start = gui.getStartSelectionIndex();
-                int end   = gui.getEndSelectionIndex();
+                int end = gui.getEndSelectionIndex();
                 if (start > end) {
                     start = gui.getEndSelectionIndex();
                     end = gui.getStartSelectionIndex();
                 }
                 if (start == end && caretPosition != textState.length()) {
-                    textState.deleteCharAt(caretPosition);
+                    if ((mods & GLFW_MOD_CONTROL) != 0) {
+                        end = findNextWord(textState.getText(), caretPosition);
+                        textState.delete(start, end);
+                        gui.setCaretPosition(start);
+                        gui.setStartSelectionIndex(start);
+                        gui.setEndSelectionIndex(start);
+                    } else {
+                        textState.deleteCharAt(caretPosition);
+                        gui.setStartSelectionIndex(caretPosition);
+                        gui.setEndSelectionIndex(caretPosition);
+                    }
                 } else {
                     textState.delete(start, end);
                     gui.setCaretPosition(start);
@@ -467,20 +502,36 @@ public class TextArea extends Controller implements TextComponent {
             }
         }
 
-        private void keyBackSpaceAction(TextArea gui, int caretPosition, TextState textState, int mods) {
+        /**
+         * Backspace action. Deletes selected text or symbol before caret or words before caret.
+         *
+         * @param gui  gui to remove text data.
+         * @param mods key mods.
+         */
+        private void keyBackSpaceAction(TextArea gui, int mods) {
             if (gui.isEditable()) {
-                if ((mods & GLFW_MOD_CONTROL) != 0) {
-                    gui.setEndSelectionIndex(findPrevWord(textState.getText(), caretPosition));
-                }
+                TextState textState = gui.getTextState();
+                int caretPosition = gui.getCaretPosition();
                 int start = gui.getStartSelectionIndex();
-                int end   = gui.getEndSelectionIndex();
+                int end = gui.getEndSelectionIndex();
                 if (start > end) {
                     start = gui.getEndSelectionIndex();
                     end = gui.getStartSelectionIndex();
                 }
                 if (start == end && caretPosition != 0) {
-                    textState.deleteCharAt(caretPosition - 1);
-                    gui.setCaretPosition(caretPosition - 1);
+                    if ((mods & GLFW_MOD_CONTROL) != 0) {
+                        start = findPrevWord(textState.getText(), caretPosition);
+                        textState.delete(start, end);
+                        gui.setCaretPosition(start);
+                        gui.setStartSelectionIndex(start);
+                        gui.setEndSelectionIndex(start);
+                    } else {
+                        int newCaretPosition = caretPosition - 1;
+                        textState.deleteCharAt(newCaretPosition);
+                        gui.setCaretPosition(newCaretPosition);
+                        gui.setStartSelectionIndex(newCaretPosition);
+                        gui.setEndSelectionIndex(newCaretPosition);
+                    }
                 } else {
                     textState.delete(start, end);
                     gui.setCaretPosition(start);
@@ -490,47 +541,77 @@ public class TextArea extends Controller implements TextComponent {
             }
         }
 
-        private void keyEnterAction(TextArea gui, int caretPosition) {
+        /**
+         * Action on Enter key. Adds new line symbol on caret position.
+         *
+         * @param gui gui to add new line.
+         */
+        private void keyEnterAction(TextArea gui) {
             if (gui.isEditable()) {
+                int start = gui.getStartSelectionIndex();
+                int end = gui.getEndSelectionIndex();
+                if (start != end) {
+                    if (start > end) {
+                        start = gui.getEndSelectionIndex();
+                        end = gui.getStartSelectionIndex();
+                    }
+                    gui.getTextState().delete(start, end);
+                    gui.setCaretPosition(start);
+                    gui.setStartSelectionIndex(start);
+                    gui.setEndSelectionIndex(start);
+                }
+
+                int caretPosition = gui.getCaretPosition();
                 gui.getTextState().insert(caretPosition, "\n");
-                gui.setCaretPosition(caretPosition + 1);
+                int newCaretPosition = caretPosition + 1;
+                gui.setStartSelectionIndex(newCaretPosition);
+                gui.setEndSelectionIndex(newCaretPosition);
+                gui.setCaretPosition(newCaretPosition);
             }
         }
 
-        private void keyEndAction(TextArea gui, int caretPosition, TextState textState, int mods) {
-            String   text  = textState.getText();
+        private void keyEndAction(TextArea gui, int mods) {
+            TextState textState = gui.getTextState();
+            int caretPosition = gui.getCaretPosition();
+            String text = textState.getText();
             String[] lines = text.split("\n", -1);
-            LineData some  = getStartLineIndexAndLineNumber(lines, caretPosition);
-            int      cl    = lines[some.lineIndex].length();
-            int      delta = cl - some.caretPositionInLine;
+            LineData currentLine = getStartLineIndexAndLineNumber(lines, caretPosition);
+            int cl = lines[currentLine.lineIndex].length();
+            int delta = cl - currentLine.caretPositionInLine;
 
             int newCaretPosition = caretPosition + delta;
             gui.setEndSelectionIndex(newCaretPosition);
+            //update start selection index if SHIFT was not pressed.
             if ((mods & GLFW_MOD_SHIFT) == 0) {
                 gui.setStartSelectionIndex(newCaretPosition);
             }
             gui.setCaretPosition(newCaretPosition);
         }
 
-        private void keyHomeAction(TextArea gui, int caretPosition, TextState textState, int mods) {
-            String   text  = textState.getText();
+        private void keyHomeAction(TextArea gui, int mods) {
+            TextState textState = gui.getTextState();
+            int caretPosition = gui.getCaretPosition();
+            String text = textState.getText();
             String[] lines = text.split("\n", -1);
-            LineData some  = getStartLineIndexAndLineNumber(lines, caretPosition);
+            LineData some = getStartLineIndexAndLineNumber(lines, caretPosition);
 
             int newCaretPosition = caretPosition - some.caretPositionInLine;
             gui.setEndSelectionIndex(newCaretPosition);
+            //update start selection index if SHIFT was not pressed.
             if ((mods & GLFW_MOD_SHIFT) == 0) {
                 gui.setStartSelectionIndex(newCaretPosition);
             }
             gui.setCaretPosition(newCaretPosition);
         }
 
-        private void keyDownAction(TextArea gui, int caretPosition, TextState textState, int mods) {
+        private void keyDownAction(TextArea gui, int mods) {
+            TextState textState = gui.getTextState();
+            int caretPosition = gui.getCaretPosition();
             if (caretPosition < textState.length()) {
-                String   text             = textState.getText();
-                String[] lines            = text.split("\n", -1);
-                LineData some             = getStartLineIndexAndLineNumber(lines, caretPosition);
-                int      newCaretPosition = text.length();
+                String text = textState.getText();
+                String[] lines = text.split("\n", -1);
+                LineData some = getStartLineIndexAndLineNumber(lines, caretPosition);
+                int newCaretPosition = text.length();
 
                 if (some.lineIndex < lines.length - 1) {
                     int nl = lines[some.lineIndex + 1].length() + 1;
@@ -549,12 +630,14 @@ public class TextArea extends Controller implements TextComponent {
             }
         }
 
-        private void keyUpAction(TextArea gui, int caretPosition, TextState textState, int mods) {
+        private void keyUpAction(TextArea gui, int mods) {
+            int caretPosition = gui.getCaretPosition();
             if (caretPosition > 0) {
-                String   text             = textState.getText();
-                String[] lines            = text.split("\n", -1);
-                LineData some             = getStartLineIndexAndLineNumber(lines, caretPosition);
-                int      newCaretPosition = 0;
+                TextState textState = gui.getTextState();
+                String text = textState.getText();
+                String[] lines = text.split("\n", -1);
+                LineData some = getStartLineIndexAndLineNumber(lines, caretPosition);
+                int newCaretPosition = 0;
                 if (some.lineIndex > 0) {
                     int nl = lines[some.lineIndex - 1].length() + 1;
                     newCaretPosition = caretPosition - (some.caretPositionInLine >= nl - 1 ? some.caretPositionInLine + 1 : nl);
@@ -568,36 +651,44 @@ public class TextArea extends Controller implements TextComponent {
             }
         }
 
-        private void keyRightAction(TextArea gui, int caretPosition, TextState textState, int mods) {
-            if (caretPosition < textState.length()) {
-                int newCaretPosition = caretPosition + 1;
-                if ((mods & GLFW_MOD_CONTROL) != 0) {
-                    newCaretPosition = findNextWord(gui.getTextState().getText(), caretPosition);
-                }
-                gui.setEndSelectionIndex(newCaretPosition);
-                if ((mods & GLFW_MOD_SHIFT) == 0) {
-                    gui.setStartSelectionIndex(newCaretPosition);
-                }
-                gui.setCaretPosition(newCaretPosition);
+        private void keyRightAction(TextArea gui, int mods) {
+            TextState textState = gui.getTextState();
+            int caretPosition = gui.getCaretPosition();
+            int newCaretPosition = caretPosition + 1;
+            // reset if out of bounds
+            if (newCaretPosition >= textState.length()) {
+                newCaretPosition = textState.length();
             }
+            if ((mods & GLFW_MOD_CONTROL) != 0) {
+                newCaretPosition = findNextWord(gui.getTextState().getText(), caretPosition);
+            }
+            gui.setEndSelectionIndex(newCaretPosition);
+            if ((mods & GLFW_MOD_SHIFT) == 0) {
+                gui.setStartSelectionIndex(newCaretPosition);
+            }
+            gui.setCaretPosition(newCaretPosition);
         }
 
-        private void keyLeftAction(TextArea gui, int caretPosition, int mods) {
-            if (caretPosition > 0) {
-                int newCaretPosition = caretPosition - 1;
-                if ((mods & GLFW_MOD_CONTROL) != 0) {
-                    newCaretPosition = findPrevWord(gui.getTextState().getText(), caretPosition);
-                }
-                gui.setEndSelectionIndex(newCaretPosition);
-                if ((mods & GLFW_MOD_SHIFT) == 0) {
-                    gui.setStartSelectionIndex(newCaretPosition);
-                }
-                gui.setCaretPosition(newCaretPosition);
+        private void keyLeftAction(TextArea gui, int mods) {
+            int caretPosition = gui.getCaretPosition();
+            int newCaretPosition = caretPosition - 1;
+            // reset if out of bounds.
+            if (newCaretPosition <= 0) {
+                newCaretPosition = 0;
             }
+            if ((mods & GLFW_MOD_CONTROL) != 0) {
+                newCaretPosition = findPrevWord(gui.getTextState().getText(), caretPosition);
+            }
+            gui.setEndSelectionIndex(newCaretPosition);
+            if ((mods & GLFW_MOD_SHIFT) == 0) {
+                gui.setStartSelectionIndex(newCaretPosition);
+            }
+            gui.setCaretPosition(newCaretPosition);
+
         }
 
         private LineData getStartLineIndexAndLineNumber(String[] lines, int caretPosition) {
-            int caretLine   = 0;
+            int caretLine = 0;
             int caretOffset = 0;
             for (String line : lines) {
                 int newOffset = caretOffset + line.length();
@@ -619,7 +710,7 @@ public class TextArea extends Controller implements TextComponent {
             private int caretPositionInLine;
             private int lineIndex;
 
-            public LineData(int caretPositionInLine, int lineIndex) {
+            private LineData(int caretPositionInLine, int lineIndex) {
                 this.caretPositionInLine = caretPositionInLine;
                 this.lineIndex = lineIndex;
             }
@@ -640,10 +731,10 @@ public class TextArea extends Controller implements TextComponent {
         public void process(CharEvent event) {
             TextArea textArea = (TextArea) event.getComponent();
             if (textArea.isFocused() && textArea.isEditable() && !MOUSE_BUTTON_LEFT.isPressed()) {
-                String    str       = cpToStr(event.getCodepoint());
+                String str = cpToStr(event.getCodepoint());
                 TextState textState = textArea.getTextState();
-                int       start     = textArea.getStartSelectionIndex();
-                int       end       = textArea.getEndSelectionIndex();
+                int start = textArea.getStartSelectionIndex();
+                int end = textArea.getEndSelectionIndex();
                 if (start > end) {
                     start = textArea.getEndSelectionIndex();
                     end = textArea.getStartSelectionIndex();

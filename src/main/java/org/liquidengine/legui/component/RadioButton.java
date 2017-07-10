@@ -238,9 +238,13 @@ public class RadioButton extends Controller implements TextComponent {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
+        if (this == o) {
+            return true;
+        }
 
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         RadioButton that = (RadioButton) o;
 
@@ -271,8 +275,16 @@ public class RadioButton extends Controller implements TextComponent {
                 .toString();
     }
 
+    /**
+     * RadioButton {@link MouseClickEvent} event listener. Used to update state of radio buttons in current radio button group.
+     */
     public static class RadioButtonClickEventListener implements MouseClickEventListener {
 
+        /**
+         * Used to handle {@link MouseClickEvent}
+         *
+         * @param event event to handle.
+         */
         @Override
         public void process(MouseClickEvent event) {
             if (event.getAction() == CLICK) {
