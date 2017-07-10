@@ -7,19 +7,18 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.color.ColorConstants;
+import org.liquidengine.legui.component.misc.widget.WidgetCloseButMouseClickEventListener;
+import org.liquidengine.legui.component.misc.widget.WidgetDragListener;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
-import org.liquidengine.legui.event.Event;
 import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.event.MouseDragEvent;
 import org.liquidengine.legui.font.FontRegistry;
 import org.liquidengine.legui.icon.CharIcon;
 import org.liquidengine.legui.icon.Icon;
-import org.liquidengine.legui.listener.EventListener;
 import org.liquidengine.legui.listener.MouseClickEventListener;
 import org.liquidengine.legui.listener.MouseDragEventListener;
-import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.theme.Themes;
 
 import static org.liquidengine.legui.event.MouseClickEvent.MouseClickAction.CLICK;
@@ -33,11 +32,11 @@ public class Widget extends Container<Component> {
     /**
      * Initial height of title. Used to initialize title components.
      */
-    public static final  int INITIAL_TITLE_HEIGHT = 20;
+    private static final int INITIAL_TITLE_HEIGHT = 20;
     private static final int CLOSE_ICON_CHAR      = 0xF5AD;
     private static final int MINIMIZE_ICON_CHAR   = 0xF5B0;
     private static final int MAXIMIZE_ICON_CHAR   = 0xF5AF;
-    protected MouseDragEventListener mouseDragEventLeguiEventListener;
+    private MouseDragEventListener mouseDragEventLeguiEventListener;
 
     private Icon closeIcon;
     private Icon minimizeIcon;
@@ -138,7 +137,7 @@ public class Widget extends Container<Component> {
         this.title.setBackgroundColor(ColorConstants.transparent());
         this.title.setBorder(null);
 
-        mouseDragEventLeguiEventListener = new WidgetDragListener();
+        mouseDragEventLeguiEventListener = new WidgetDragListener(this);
         this.title.getListenerMap().addListener(MouseDragEvent.class, mouseDragEventLeguiEventListener);
 
         this.closeButton = new Button("");
@@ -148,7 +147,7 @@ public class Widget extends Container<Component> {
         closeIcon.setVerticalAlign(VerticalAlign.MIDDLE);
         this.closeButton.setBackgroundIcon(closeIcon);
 
-        this.closeButton.getListenerMap().addListener(MouseClickEvent.class, new WidgetCloseButMouseClickEventListener());
+        this.closeButton.getListenerMap().addListener(MouseClickEvent.class, new WidgetCloseButMouseClickEventListener(this));
         this.closeButton.setBorder(null);
         this.closeButton.getTextState().setVerticalAlign(VerticalAlign.MIDDLE);
         this.closeButton.getTextState().setHorizontalAlign(HorizontalAlign.CENTER);
@@ -171,7 +170,7 @@ public class Widget extends Container<Component> {
         this.minimizeButton.getTextState().setVerticalAlign(VerticalAlign.MIDDLE);
         this.minimizeButton.getTextState().setHorizontalAlign(HorizontalAlign.CENTER);
 
-        this.container = new Panel();
+        this.container = new Panel<>();
 
         titleContainer.add(this.title);
         titleContainer.add(this.closeButton);
@@ -332,7 +331,7 @@ public class Widget extends Container<Component> {
      *
      * @return title container.
      */
-    public Container getTitleContainer() {
+    public Container<Component> getTitleContainer() {
         return titleContainer;
     }
 
@@ -404,7 +403,7 @@ public class Widget extends Container<Component> {
      *
      * @return widget container.
      */
-    public Container getContainer() {
+    public Container<Component> getContainer() {
         return container;
     }
 
@@ -623,50 +622,6 @@ public class Widget extends Container<Component> {
                 .append("closeButton", closeButton)
                 .append("minimizeButton", minimizeButton)
                 .toString();
-    }
-
-    public interface WidgetCloseEventListener<T extends WidgetCloseEvent> extends EventListener<T> {
-        void process(WidgetCloseEvent event);
-    }
-
-    public static class WidgetCloseEvent<T extends Widget> extends Event<T> {
-        public WidgetCloseEvent(T component, Context context) {
-            super(component, context);
-        }
-    }
-
-    public class WidgetDragListener implements MouseDragEventListener {
-        @Override
-        public void process(MouseDragEvent event) {
-            Widget.this.getPosition().add(event.getDelta());
-        }
-
-        @Override
-        public String toString() {
-            return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                    .toString();
-        }
-
-        @Override
-        public boolean equals(Object obj) {
-            return (obj != null) && ((obj == this) || ((obj != this) && (obj.getClass() == this.getClass())));
-        }
-    }
-
-    public class WidgetCloseButMouseClickEventListener implements MouseClickEventListener {
-
-        @Override
-        public void process(MouseClickEvent event) {
-            if (CLICK == event.getAction()) {
-                Widget.this.setVisible(false);
-                event.getContext().getEventProcessor().pushEvent(new WidgetCloseEvent(Widget.this, event.getContext()));
-            }
-        }
-
-        @Override
-        public boolean equals(Object obj) {
-            return (obj != null) && ((obj == this) || ((obj != this) && (obj.getClass() == this.getClass())));
-        }
     }
 
     public class WidgetMinimizeButMouseClickEventListener implements MouseClickEventListener {

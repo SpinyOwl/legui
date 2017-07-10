@@ -5,6 +5,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
+import org.liquidengine.legui.component.misc.controller.CursorEnterListenerForTooltip;
 import org.liquidengine.legui.event.CursorEnterEvent;
 import org.liquidengine.legui.listener.CursorEnterEventListener;
 import org.liquidengine.legui.theme.Themes;
@@ -121,38 +122,4 @@ public abstract class Controller extends Component {
                 .toString();
     }
 
-    /**
-     * Default event listener for {@link CursorEnterEvent} to add tooltip to tooltip layer and make it visible or not visible.
-     */
-    public static class CursorEnterListenerForTooltip implements CursorEnterEventListener {
-
-        /**
-         * Used to process {@link CursorEnterEvent}.
-         *
-         * @param event event to process.
-         */
-        @Override
-        public void process(CursorEnterEvent event) {
-            Controller controller = (Controller) event.getComponent();
-            Tooltip    tooltip    = controller.getTooltip();
-            if (tooltip != null) {
-                if (event.isEntered()) {
-                    event.getContext().getFrame().getTooltipLayer().getContainer().add(tooltip);
-                } else {
-                    event.getContext().getFrame().getTooltipLayer().getContainer().remove(tooltip);
-                }
-            }
-        }
-
-        /**
-         * (non-Javadoc)
-         *
-         * @param obj object to compare.
-         * @see Object#equals(Object)
-         */
-        @Override
-        public boolean equals(Object obj) {
-            return (obj != null) && ((obj == this) || ((obj != this) && (obj.getClass() == this.getClass())));
-        }
-    }
 }

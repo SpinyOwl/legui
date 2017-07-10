@@ -1,6 +1,8 @@
 package org.liquidengine.legui.component;
 
 import org.joml.Vector2f;
+import org.liquidengine.legui.component.misc.dialog.DialogCloseEventListener;
+import org.liquidengine.legui.component.misc.widget.WidgetCloseEvent;
 import org.liquidengine.legui.theme.Themes;
 
 /**
@@ -89,7 +91,7 @@ public class Dialog extends Widget {
 
 
         this.setMinimizable(false);
-        this.getListenerMap().addListener(WidgetCloseEvent.class, new DialogCloseEventListener());
+        this.getListenerMap().addListener(WidgetCloseEvent.class, new DialogCloseEventListener(this));
         Themes.getDefaultTheme().getThemeManager().getComponentTheme(Dialog.class).applyAll(this);
     }
 
@@ -117,54 +119,8 @@ public class Dialog extends Widget {
      * Used to close dialog.
      */
     public void close() {
-        closeDialog();
-    }
-
-    /**
-     * Used to close dialog.
-     */
-    private void closeDialog() {
         if (frame != null) {
             frame.removeLayer(dialogLayer);
         }
-    }
-
-    /**
-     * Dialog layer used to hold dialog window.
-     */
-    public static class DialogLayer extends Layer<Dialog> {
-
-        /**
-         * Default constructor of dialog layer.
-         */
-        public DialogLayer() {
-            setEventPassable(false);
-            setEventReceivable(true);
-            getContainer().setBackgroundColor(0, 0, 0, 0.2f);
-        }
-    }
-
-    /**
-     * Close event listener for dialog.
-     * When dialog closed dialog layer with dialog
-     * should be removed from frame.
-     */
-    public class DialogCloseEventListener implements WidgetCloseEventListener<WidgetCloseEvent> {
-
-        /**
-         * Used to handle {@link WidgetCloseEvent} event.
-         *
-         * @param event event to handle.
-         */
-        @Override
-        public void process(WidgetCloseEvent event) {
-            closeDialog();
-        }
-
-        @Override
-        public boolean equals(Object obj) {
-            return (obj != null) && ((obj == this) || ((obj != this) && (obj.getClass() == this.getClass())));
-        }
-
     }
 }

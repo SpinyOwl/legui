@@ -5,15 +5,14 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
+import org.liquidengine.legui.component.misc.radiobutton.RadioButtonClickEventListener;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.icon.CharIcon;
 import org.liquidengine.legui.icon.Icon;
-import org.liquidengine.legui.listener.MouseClickEventListener;
 import org.liquidengine.legui.theme.Themes;
 
-import static org.liquidengine.legui.event.MouseClickEvent.MouseClickAction.CLICK;
 import static org.liquidengine.legui.font.FontRegistry.MATERIAL_ICONS_REGULAR;
 
 /**
@@ -275,27 +274,4 @@ public class RadioButton extends Controller implements TextComponent {
                 .toString();
     }
 
-    /**
-     * RadioButton {@link MouseClickEvent} event listener. Used to update state of radio buttons in current radio button group.
-     */
-    public static class RadioButtonClickEventListener implements MouseClickEventListener {
-
-        /**
-         * Used to handle {@link MouseClickEvent}
-         *
-         * @param event event to handle.
-         */
-        @Override
-        public void process(MouseClickEvent event) {
-            if (event.getAction() == CLICK) {
-                RadioButton component = (RadioButton) event.getComponent();
-                component.setChecked(true);
-            }
-        }
-
-        @Override
-        public boolean equals(Object obj) {
-            return (obj != null) && ((obj == this) || ((obj != this) && (obj.getClass() == this.getClass())));
-        }
-    }
 }

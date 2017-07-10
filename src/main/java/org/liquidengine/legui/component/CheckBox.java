@@ -6,15 +6,14 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 import org.liquidengine.legui.color.ColorConstants;
+import org.liquidengine.legui.component.misc.checkbox.CheckBoxMouseClickEventListener;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.icon.CharIcon;
 import org.liquidengine.legui.icon.Icon;
-import org.liquidengine.legui.listener.MouseClickEventListener;
 import org.liquidengine.legui.theme.Themes;
 
-import static org.liquidengine.legui.event.MouseClickEvent.MouseClickAction.CLICK;
 import static org.liquidengine.legui.font.FontRegistry.MATERIAL_ICONS_REGULAR;
 
 /**
@@ -222,33 +221,4 @@ public class CheckBox extends Controller implements TextComponent {
                 .toString();
     }
 
-    /**
-     * MouseClickEventListener for checkbox, used to toggle checkbox state on mouse click.
-     */
-    public static class CheckBoxMouseClickEventListener implements MouseClickEventListener {
-
-        /**
-         * Used to handle event.
-         *
-         * @param event event to handle.
-         */
-        @Override
-        public void process(MouseClickEvent event) {
-            CheckBox checkBox = (CheckBox) event.getComponent();
-            if (event.getAction() == CLICK) {
-                checkBox.setChecked(!checkBox.isChecked());
-            }
-        }
-
-        /**
-         * Used to compare instances of this event listener.
-         *
-         * @param obj object to compare.
-         * @return true if equals.
-         */
-        @Override
-        public boolean equals(Object obj) {
-            return obj == this || obj instanceof CheckBoxMouseClickEventListener;
-        }
-    }
 }
