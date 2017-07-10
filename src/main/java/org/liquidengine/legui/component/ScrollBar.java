@@ -11,11 +11,9 @@ import org.liquidengine.legui.component.misc.scrollbar.ScrollBarMouseClickEventL
 import org.liquidengine.legui.component.misc.scrollbar.ScrollBarMouseDragEventListener;
 import org.liquidengine.legui.component.misc.scrollbar.ScrollBarScrollListener;
 import org.liquidengine.legui.component.optional.Orientation;
-import org.liquidengine.legui.event.Event;
 import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.event.MouseDragEvent;
 import org.liquidengine.legui.event.ScrollEvent;
-import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.theme.Themes;
 
 /**
