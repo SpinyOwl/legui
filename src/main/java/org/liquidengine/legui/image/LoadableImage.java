@@ -8,7 +8,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import java.nio.ByteBuffer;
 
 /**
- * Represent image source
+ * Represent image source.
  */
 public abstract class LoadableImage extends Image {
     /**

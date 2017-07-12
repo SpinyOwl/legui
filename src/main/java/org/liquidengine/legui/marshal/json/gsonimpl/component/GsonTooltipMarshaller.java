@@ -15,11 +15,11 @@ import static org.liquidengine.legui.marshal.json.gsonimpl.GsonUtil.isNotNull;
  */
 public class GsonTooltipMarshaller<T extends Tooltip> extends GsonComponentMarshaller<T> {
     /**
-     * Reads data from object and puts it to json object
+     * Reads data from object and puts it to json object.
      *
-     * @param object  object to read
-     * @param json    json object to fill
-     * @param context marshal context
+     * @param object  object to read.
+     * @param json    json object to fill.
+     * @param context marshal context.
      */
     @Override
     protected void marshal(T object, JsonObject json, GsonMarshalContext context) {
@@ -30,11 +30,11 @@ public class GsonTooltipMarshaller<T extends Tooltip> extends GsonComponentMarsh
     }
 
     /**
-     * Reads data from json object and puts it to object
+     * Reads data from json object and puts it to object.
      *
-     * @param json    json object to read
-     * @param object  object to fill
-     * @param context marshal context
+     * @param json    json object to read.
+     * @param object  object to fill.
+     * @param context marshal context.
      */
     @Override
     protected void unmarshal(JsonObject json, T object, GsonMarshalContext context) {

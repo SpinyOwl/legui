@@ -15,7 +15,7 @@ import org.liquidengine.legui.theme.Themes;
 
 /**
  * An implementation of "toggle" button.
- * Behavior the same as checkbox but have not any text
+ * Behavior the same as checkbox but have not any text.
  */
 public class ToggleButton extends Button {
     protected Icon     togglededBackgroundIcon;
@@ -26,10 +26,10 @@ public class ToggleButton extends Button {
      * Creates a button with specified text and specified position and size.
      *
      * @param text   button text.
-     * @param x      x position in parent
-     * @param y      y position in parent
-     * @param width  width of component
-     * @param height height of component
+     * @param x      x position in parent.
+     * @param y      y position in parent.
+     * @param width  width of component.
+     * @param height height of component.
      */
     public ToggleButton(String text, float x, float y, float width, float height) {
         super(text, x, y, width, height);
@@ -56,10 +56,10 @@ public class ToggleButton extends Button {
     /**
      * Creates a button with specified position and size and default bg color and default toggled bg color.
      *
-     * @param x      x position in parent
-     * @param y      y position in parent
-     * @param width  width of component
-     * @param height height of component
+     * @param x      x position in parent.
+     * @param y      y position in parent.
+     * @param width  width of component.
+     * @param height height of component.
      */
     public ToggleButton(float x, float y, float width, float height) {
         super(x, y, width, height);
@@ -69,8 +69,8 @@ public class ToggleButton extends Button {
     /**
      * Creates a button with specified position and size and default bg color and default toggled bg color.
      *
-     * @param position position in parent
-     * @param size     size of component
+     * @param position position in parent.
+     * @param size     size of component.
      */
     public ToggleButton(Vector2f position, Vector2f size) {
         super(position, size);
@@ -78,7 +78,7 @@ public class ToggleButton extends Button {
     }
 
     /**
-     * Initialize toggle button with default states
+     * Initialize toggle button with default states.
      */
     private void initialize() {
         setBackgroundColor(ColorConstants.red());
@@ -101,16 +101,16 @@ public class ToggleButton extends Button {
     /**
      * Used to change toggled state.
      *
-     * @param toggled new value
+     * @param toggled new value.
      */
     public void setToggled(boolean toggled) {
         this.toggled = toggled;
     }
 
     /**
-     * Returns background color which will be used as background color if button toggled
+     * Returns background color which will be used as background color if button toggled.
      *
-     * @return toggled button color
+     * @return toggled button color.
      */
     public Vector4f getToggledBackgroundColor() {
         return toggledBackgroundColor;
@@ -119,25 +119,25 @@ public class ToggleButton extends Button {
     /**
      * Used to change background color which will be used as background color if button toggled.
      *
-     * @param toggledBackgroundColor new value
+     * @param toggledBackgroundColor new value.
      */
     public void setToggledBackgroundColor(Vector4f toggledBackgroundColor) {
         this.toggledBackgroundColor = toggledBackgroundColor;
     }
 
     /**
-     * Returns toggled background icon
+     * Returns toggled background icon.
      *
-     * @return toggled background icon
+     * @return toggled background icon.
      */
     public Icon getTogglededBackgroundIcon() {
         return togglededBackgroundIcon;
     }
 
     /**
-     * Used to change toggled background icon
+     * Used to change toggled background icon.
      *
-     * @param togglededBackgroundIcon toggled background icon
+     * @param togglededBackgroundIcon toggled background icon.
      */
     public void setTogglededBackgroundIcon(Icon togglededBackgroundIcon) {
         this.togglededBackgroundIcon = togglededBackgroundIcon;

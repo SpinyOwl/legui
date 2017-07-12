@@ -16,11 +16,11 @@ import static org.liquidengine.legui.marshal.json.gsonimpl.GsonUtil.isNotNull;
 public class GsonSimpleLineBorderMarshaller extends GsonBorderMarshaller<SimpleLineBorder> {
 
     /**
-     * Reads data from object and puts it to json object
+     * Reads data from object and puts it to json object.
      *
-     * @param object  object to read
-     * @param json    json object to fill
-     * @param context marshal context
+     * @param object  object to read.
+     * @param json    json object to fill.
+     * @param context marshal context.
      */
     @Override
     protected void marshal(SimpleLineBorder object, JsonObject json, GsonMarshalContext context) {
@@ -31,11 +31,11 @@ public class GsonSimpleLineBorderMarshaller extends GsonBorderMarshaller<SimpleL
     }
 
     /**
-     * Reads data from json object and puts it to object
+     * Reads data from json object and puts it to object.
      *
-     * @param json    json object to read
-     * @param object  object to fill
-     * @param context marshal context
+     * @param json    json object to read.
+     * @param object  object to fill.
+     * @param context marshal context.
      */
     @Override
     protected void unmarshal(JsonObject json, SimpleLineBorder object, GsonMarshalContext context) {

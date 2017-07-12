@@ -15,11 +15,11 @@ import static org.liquidengine.legui.marshal.json.gsonimpl.GsonUtil.isNotNull;
  */
 public class GsonCharIconMarshaller<I extends CharIcon> extends GsonIconMarshaller<I> {
     /**
-     * Reads data from object and puts it to json object
+     * Reads data from object and puts it to json object.
      *
-     * @param object  object to read
-     * @param json    json object to fill
-     * @param context marshal context
+     * @param object  object to read.
+     * @param json    json object to fill.
+     * @param context marshal context.
      */
     @Override
     protected void marshal(I object, JsonObject json, GsonMarshalContext context) {
@@ -32,11 +32,11 @@ public class GsonCharIconMarshaller<I extends CharIcon> extends GsonIconMarshall
     }
 
     /**
-     * Reads data from json object and puts it to object
+     * Reads data from json object and puts it to object.
      *
-     * @param json    json object to read
-     * @param object  object to fill
-     * @param context marshal context
+     * @param json    json object to read.
+     * @param object  object to fill.
+     * @param context marshal context.
      */
     @Override
     protected void unmarshal(JsonObject json, I object, GsonMarshalContext context) {

@@ -103,21 +103,21 @@ public final class NvgRenderUtils {
 
 
     /**
-     * Used to renderNvg textState to rectangle bounds
+     * Used to renderNvg textState to rectangle bounds.
      *
-     * @param context         nanovg context
-     * @param x               x position of rectangle
-     * @param y               y position of rectangle
-     * @param w               width of rectangle
-     * @param h               height of rectangle
-     * @param fontSize        titleFont size
-     * @param font            titleFont name which contains in titleFont register
-     * @param textColor       textState color
-     * @param nvgColor        nvg textState color
-     * @param text            textState
-     * @param horizontalAlign horizontal align
-     * @param verticalAlign   vertical align
-     * @param hide            true if need to hide out of bounds textState
+     * @param context         nanovg context.
+     * @param x               x position of rectangle.
+     * @param y               y position of rectangle.
+     * @param w               width of rectangle.
+     * @param h               height of rectangle.
+     * @param fontSize        titleFont size.
+     * @param font            titleFont name which contains in titleFont register.
+     * @param textColor       textState color.
+     * @param nvgColor        nvg textState color.
+     * @param text            textState.
+     * @param horizontalAlign horizontal align.
+     * @param verticalAlign   vertical align.
+     * @param hide            true if need to hide out of bounds textState.
      */
     public static void renderTextLineToBounds(long context,
                                               float x, float y, float w, float h,
