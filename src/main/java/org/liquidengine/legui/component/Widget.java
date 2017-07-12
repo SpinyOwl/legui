@@ -9,6 +9,7 @@ import org.joml.Vector4f;
 import org.liquidengine.legui.color.ColorConstants;
 import org.liquidengine.legui.component.misc.widget.WidgetCloseButMouseClickEventListener;
 import org.liquidengine.legui.component.misc.widget.WidgetDragListener;
+import org.liquidengine.legui.component.misc.widget.WidgetMinimizeButMouseClickEventListener;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
@@ -17,11 +18,8 @@ import org.liquidengine.legui.event.MouseDragEvent;
 import org.liquidengine.legui.font.FontRegistry;
 import org.liquidengine.legui.icon.CharIcon;
 import org.liquidengine.legui.icon.Icon;
-import org.liquidengine.legui.listener.MouseClickEventListener;
 import org.liquidengine.legui.listener.MouseDragEventListener;
 import org.liquidengine.legui.theme.Themes;
-
-import static org.liquidengine.legui.event.MouseClickEvent.MouseClickAction.CLICK;
 
 /**
  * Widget component is container which have predefined components such as container, title label, close and minimize buttons and predefined
@@ -165,7 +163,7 @@ public class Widget extends Container<Component> {
 
         this.minimizeButton.setBackgroundIcon(minimizeIcon);
 
-        this.minimizeButton.getListenerMap().addListener(MouseClickEvent.class, new WidgetMinimizeButMouseClickEventListener());
+        this.minimizeButton.getListenerMap().addListener(MouseClickEvent.class, new WidgetMinimizeButMouseClickEventListener(this));
         this.minimizeButton.setBorder(null);
         this.minimizeButton.getTextState().setVerticalAlign(VerticalAlign.MIDDLE);
         this.minimizeButton.getTextState().setHorizontalAlign(HorizontalAlign.CENTER);
@@ -624,18 +622,4 @@ public class Widget extends Container<Component> {
                 .toString();
     }
 
-    public class WidgetMinimizeButMouseClickEventListener implements MouseClickEventListener {
-        public void process(MouseClickEvent event) {
-            if (CLICK == event.getAction()) {
-                boolean newValue = !Widget.this.isMinimized();
-                Widget.this.minimizeButton.setBackgroundIcon(newValue ? maximizeIcon : minimizeIcon);
-                Widget.this.setMinimized(newValue);
-            }
-        }
-
-        @Override
-        public boolean equals(Object obj) {
-            return (obj != null) && ((obj == this) || ((obj != this) && (obj.getClass() == this.getClass())));
-        }
-    }
 }

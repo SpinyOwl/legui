@@ -7,6 +7,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.color.ColorConstants;
+import org.liquidengine.legui.component.misc.togglebutton.ToggleButtonMouseClickListener;
 import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.icon.Icon;
 import org.liquidengine.legui.listener.MouseClickEventListener;
@@ -174,19 +175,4 @@ public class ToggleButton extends Button {
                 .toString();
     }
 
-    private static class ToggleButtonMouseClickListener implements MouseClickEventListener {
-
-        @Override
-        public void process(MouseClickEvent event) {
-            ToggleButton toggleButton = (ToggleButton) event.getComponent();
-            if (event.getAction() == MouseClickEvent.MouseClickAction.CLICK) {
-                toggleButton.setToggled(!toggleButton.isToggled());
-            }
-        }
-
-        @Override
-        public boolean equals(Object obj) {
-            return (obj != null) && ((obj == this) || ((obj != this) && (obj.getClass() == this.getClass())));
-        }
-    }
 }

@@ -6,15 +6,17 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 import org.liquidengine.legui.color.ColorConstants;
+import org.liquidengine.legui.component.misc.selectbox.SelectBoxClickListener;
+import org.liquidengine.legui.component.misc.selectbox.SelectBoxElementClickEventListener;
+import org.liquidengine.legui.component.misc.selectbox.SelectBoxFocusListener;
+import org.liquidengine.legui.component.misc.selectbox.SelectBoxScrollListener;
 import org.liquidengine.legui.event.FocusEvent;
 import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.event.ScrollEvent;
 import org.liquidengine.legui.icon.CharIcon;
 import org.liquidengine.legui.icon.Icon;
-import org.liquidengine.legui.input.Mouse;
 import org.liquidengine.legui.listener.FocusEventListener;
 import org.liquidengine.legui.listener.MouseClickEventListener;
-import org.liquidengine.legui.listener.ScrollEventListener;
 import org.liquidengine.legui.theme.Themes;
 
 import java.util.List;
@@ -23,7 +25,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-import static org.liquidengine.legui.event.MouseClickEvent.MouseClickAction.CLICK;
 import static org.liquidengine.legui.font.FontRegistry.MATERIAL_ICONS_REGULAR;
 
 /**
@@ -140,11 +141,11 @@ public class SelectBox extends Container {
         this.add(expandButton);
         this.add(selectionButton);
 
-        MouseClickEventListener mouseClickEventListener = new SelectBoxClickListener();
+        MouseClickEventListener mouseClickEventListener = new SelectBoxClickListener(this);
         selectionButton.getListenerMap().addListener(MouseClickEvent.class, mouseClickEventListener);
         expandButton.getListenerMap().addListener(MouseClickEvent.class, mouseClickEventListener);
 
-        FocusEventListener focusEventListener = new SelectBoxFocusListener();
+        FocusEventListener focusEventListener = new SelectBoxFocusListener(this);
         selectionListPanel.getVerticalScrollBar().getListenerMap().getListeners(FocusEvent.class).add(focusEventListener);
         selectionButton.getListenerMap().getListeners(FocusEvent.class).add(focusEventListener);
         expandButton.getListenerMap().getListeners(FocusEvent.class).add(focusEventListener);
@@ -243,8 +244,8 @@ public class SelectBox extends Container {
         expandButton.setPosition(getSize().x - buttonWidth, 0);
         expandButton.setSize(buttonWidth, getSize().y);
 
-        collapseIcon.setSize(new Vector2f(buttonWidth, getSize().y).mul(2f/3f));
-        expandIcon.setSize(new Vector2f(buttonWidth, getSize().y).mul(2f/3f));
+        collapseIcon.setSize(new Vector2f(buttonWidth, getSize().y).mul(2f / 3f));
+        expandIcon.setSize(new Vector2f(buttonWidth, getSize().y).mul(2f / 3f));
 
         selectionListPanel.getVerticalScrollBar().getSize().x = buttonWidth;
 
@@ -255,13 +256,13 @@ public class SelectBox extends Container {
         }
 
 
-        Vector2f  psize  = new Vector2f();
+        Vector2f psize = new Vector2f();
         Container parent = getParent();
         if (parent != null) {
             psize.set(getParent().getSize());
         }
         Vector2f wsize = new Vector2f(this.getSize().x, visibleCount * elementHeight);
-        Vector2f wpos  = new Vector2f();
+        Vector2f wpos = new Vector2f();
         if (parent != null && getPosition().y + wsize.y > psize.y) {
             wpos.set(getPosition().x, getPosition().y - wsize.y);
         } else {
@@ -312,7 +313,7 @@ public class SelectBox extends Container {
         SelectBoxElement boxElement = new SelectBoxElement(element, false);
         boxElement.setSize(new Vector2f(selectionListPanel.getContainer().getSize().x, elementHeight));
         boxElement.setPosition(0, selectionListPanel.getContainer().count() * elementHeight);
-        boxElement.getListenerMap().getListeners(MouseClickEvent.class).add(new SelectBoxElementClickEventListener());
+        boxElement.getListenerMap().getListeners(MouseClickEvent.class).add(new SelectBoxElementClickEventListener(this));
         return boxElement;
     }
 
@@ -472,6 +473,15 @@ public class SelectBox extends Container {
                 .isEquals();
     }
 
+    /**
+     * Gets select box elements.
+     *
+     * @return the select box elements
+     */
+    public List<SelectBoxElement> getSelectBoxElements() {
+        return selectBoxElements;
+    }
+
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
@@ -488,58 +498,6 @@ public class SelectBox extends Container {
                 .append(expandButton)
                 .append(collapsed)
                 .toHashCode();
-    }
-
-    /**
-     * Default focus listener for selectbox. Used to collapse selectbox if it loses focus.
-     */
-    public class SelectBoxFocusListener implements FocusEventListener {
-
-        @Override
-        public void process(FocusEvent event) {
-            if (!event.isFocused() && !SelectBox.this.isCollapsed()) {
-                boolean   collapse  = true;
-                Component nextFocus = event.getNextFocus();
-                for (SelectBoxElement selectBoxElement : SelectBox.this.selectBoxElements) {
-                    if (nextFocus == selectBoxElement) {
-                        collapse = false;
-                    }
-                }
-                if (nextFocus == expandButton ||
-                        nextFocus == selectionButton ||
-                        nextFocus == selectionListPanel ||
-                        nextFocus == selectionListPanel.getVerticalScrollBar()) {
-                    collapse = false;
-                }
-                if (SelectBox.this.collapsed != collapse) {
-                    SelectBox.this.setCollapsed(collapse);
-                }
-            }
-        }
-
-        @Override
-        public boolean equals(Object obj) {
-            return (obj != null) && ((obj == this) || ((obj != this) && (obj.getClass() == this.getClass())));
-        }
-    }
-
-    /**
-     * Default mouse click listener for selectbox. Used to collapse selectbox if it loses focus and to expand/collapse if clicked on it.
-     */
-    public class SelectBoxClickListener implements MouseClickEventListener {
-
-        @Override
-        public void process(MouseClickEvent event) {
-            SelectBox box = SelectBox.this;
-            if (event.getAction() == CLICK) {
-                box.setCollapsed(!box.isCollapsed());
-            }
-        }
-
-        @Override
-        public boolean equals(Object obj) {
-            return (obj != null) && ((obj == this) || ((obj != this) && (obj.getClass() == this.getClass())));
-        }
     }
 
     /**
@@ -649,59 +607,4 @@ public class SelectBox extends Container {
         }
     }
 
-    /**
-     * Listener of scroll action which used to scroll expanded selectbox.
-     */
-    public class SelectBoxScrollListener implements ScrollEventListener {
-        private final ScrollBar bar;
-
-        public SelectBoxScrollListener(ScrollBar bar) {
-            this.bar = bar;
-        }
-
-        @Override
-        public void process(ScrollEvent event) {
-            event.getContext().getEventProcessor().pushEvent(new ScrollEvent(bar, event.getContext(), event.getXoffset(), event.getYoffset()));
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) {
-                return true;
-            }
-
-            if (o == null || getClass() != o.getClass()) {
-                return false;
-            }
-
-            SelectBoxScrollListener that = (SelectBoxScrollListener) o;
-
-            return new EqualsBuilder()
-                    .append(bar, that.bar)
-                    .isEquals();
-        }
-
-        @Override
-        public int hashCode() {
-            return new HashCodeBuilder(17, 37)
-                    .append(bar)
-                    .toHashCode();
-        }
-    }
-
-    public class SelectBoxElementClickEventListener implements MouseClickEventListener {
-        @Override
-        public void process(MouseClickEvent event) {
-            SelectBoxElement component = (SelectBoxElement) event.getComponent();
-            if (event.getAction() == CLICK && event.getButton().equals(Mouse.MouseButton.MOUSE_BUTTON_1)) {
-                SelectBox.this.setSelected(component.getText(), true);
-                SelectBox.this.setCollapsed(true);
-            }
-        }
-
-        @Override
-        public boolean equals(Object obj) {
-            return (obj != null) && ((obj == this) || ((obj != this) && (obj.getClass() == this.getClass())));
-        }
-    }
 }
