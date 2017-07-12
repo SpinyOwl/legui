@@ -153,9 +153,9 @@ public class NvgPasswordInputRenderer extends NvgComponentRenderer<PasswordInput
                 mouseCaretX = caretx;
             } else {
                 float mx = Mouse.getCursorPosition().x + poffset;
-                if (mx <= glyphs.get(0).minx()) {
+                if (mx <= glyphs.get(0).x()) {
                     mouseCaretPosition = 0;
-                    mouseCaretX = glyphs.get(0).minx();
+                    mouseCaretX = glyphs.get(0).x();
                 } else if (mx >= glyphs.get(ng - 1).maxx()) {
                     mouseCaretPosition = ng;
                     mouseCaretX = glyphs.get(ng - 1).maxx();
@@ -297,7 +297,7 @@ public class NvgPasswordInputRenderer extends NvgComponentRenderer<PasswordInput
         float caretx = 0;
         if (caretPosition < ng) {
             try {
-                caretx = caretPosition == 0 ? glyphs.get(caretPosition).minx() : glyphs.get(caretPosition).x();
+                caretx = glyphs.get(caretPosition).x();
             } catch (IndexOutOfBoundsException e) {
                 e.printStackTrace();
             }

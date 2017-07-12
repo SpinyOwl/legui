@@ -182,9 +182,9 @@ public class NvgTextAreaRenderer extends NvgComponentRenderer<TextArea> {
                         mouseCaretX = caretx;
                     } else {
                         float mx = mouseX + poffsetx;
-                        if (mx <= glyphs.get(0).minx()) {
+                        if (mx <= glyphs.get(0).x()) {
                             mouseCaretPositionInLine = 0;
-                            mouseCaretX = glyphs.get(0).minx();
+                            mouseCaretX = glyphs.get(0).x();
                         } else if (mx >= glyphs.get(ng - 1).maxx()) {
                             mouseCaretPositionInLine = ng;
                             mouseCaretX = glyphs.get(ng - 1).maxx();
@@ -196,7 +196,7 @@ public class NvgTextAreaRenderer extends NvgComponentRenderer<TextArea> {
                             boolean found = false;
                             do {
                                 int   index = (upper + lower) / 2;
-                                float left  = index == 0 ? glyphs.get(index).minx() : glyphs.get(index).x();
+                                float left  = glyphs.get(index).x();
                                 float right = index >= ng - 1 ? glyphs.get(ng - 1).maxx() : glyphs.get(index + 1).x();
                                 float mid   = (left + right) / 2f;
                                 if (mx >= left && mx < right) {
@@ -394,7 +394,7 @@ public class NvgTextAreaRenderer extends NvgComponentRenderer<TextArea> {
         float caretx = 0;
         if (caretPosition < ng) {
             try {
-                caretx = caretPosition == 0 ? glyphs.get(caretPosition).minx() : glyphs.get(caretPosition).x();
+                caretx = glyphs.get(caretPosition).x();
             } catch (IndexOutOfBoundsException e) {
                 e.printStackTrace();
             }
