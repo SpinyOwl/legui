@@ -460,18 +460,18 @@ public class Widget extends Container<Component> {
     }
 
     /**
-     * Returns true if widget minimized
+     * Returns true if widget minimized.
      *
-     * @return true if widget minimized
+     * @return true if widget minimized.
      */
     public boolean isMinimized() {
         return minimized;
     }
 
     /**
-     * Used to minimize/maximize widget
+     * Used to minimize/maximize widget.
      *
-     * @param minimized true to minimize, false to maximize
+     * @param minimized true to minimize, false to maximize.
      */
     public void setMinimized(boolean minimized) {
         if (this.minimized != minimized) {

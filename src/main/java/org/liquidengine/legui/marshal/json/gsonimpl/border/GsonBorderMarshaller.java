@@ -11,7 +11,7 @@ import static org.liquidengine.legui.marshal.JsonConstants.ENABLED;
 import static org.liquidengine.legui.marshal.json.gsonimpl.GsonUtil.isNotNull;
 
 /**
- * Marshaller for {@link Border}
+ * Marshaller for {@link Border}.
  */
 public class GsonBorderMarshaller<T extends Border> extends AbstractGsonMarshaller<T> {
 

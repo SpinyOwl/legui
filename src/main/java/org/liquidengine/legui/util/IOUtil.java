@@ -105,7 +105,7 @@ public final class IOUtil {
      *
      * @param buffer      source buffer.
      * @param newCapacity new capacity. If new capacity is lower then used capacity of source buffer to avoid {@link
-     *                    java.nio.BufferOverflowException}
+     *                    java.nio.BufferOverflowException}.
      *
      * @return new buffer filled with data form source buffer.
      */
@@ -150,13 +150,13 @@ public final class IOUtil {
      * <p>
      * (Resource could be file or java resource. Search starts from files.)
      *
-     * @param resource   path to resource to initialize
-     * @param bufferSize initial buffer size
+     * @param resource   path to resource to initialize.
+     * @param bufferSize initial buffer size.
      *
-     * @return Created ByteBuffer
+     * @return Created ByteBuffer.
      *
-     * @throws RuntimeException if any exception occurs
-     * @see IOUtil#ioResourceToByteBuffer(String, int)
+     * @throws RuntimeException if any exception occurs.
+     * @see IOUtil#ioResourceToByteBuffer(String, int).
      */
     public static ByteBuffer loadResourceToByteBuffer(final String resource, final int bufferSize) throws RuntimeException {
         try {
@@ -185,13 +185,15 @@ public final class IOUtil {
     }
 
     /**
-     * @param resource   Resource Stream
-     * @param bufferSize initial buffer size
+     * Used to load resource to byte buffer from input stream.
      *
-     * @return Created ByteBuffer
+     * @param resource   Resource Stream.
+     * @param bufferSize initial buffer size.
      *
-     * @throws RuntimeException if an IO error occurs
-     * @see IOUtil#ioResourceToByteBuffer(String, int)
+     * @return Created ByteBuffer.
+     *
+     * @throws RuntimeException if an IO error occurs.
+     * @see IOUtil#ioResourceToByteBuffer(String, int).
      */
     public static ByteBuffer loadResourceToByteBuffer(final InputStream resource, final int bufferSize) throws RuntimeException {
         try {
@@ -224,12 +226,12 @@ public final class IOUtil {
     /**
      * Reads the specified resource and returns the raw data as a ByteBuffer.
      *
-     * @param resource   the resource to read
-     * @param bufferSize the initial buffer size
+     * @param resource   the resource to read.
+     * @param bufferSize the initial buffer size.
      *
-     * @return the resource data
+     * @return the resource data.
      *
-     * @throws IOException if an IO error occurs
+     * @throws IOException if an IO error occurs.
      */
     public static ByteBuffer ioResourceToByteBuffer(final String resource, final int bufferSize) throws IOException {
         ByteBuffer buffer;

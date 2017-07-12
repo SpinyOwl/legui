@@ -17,12 +17,12 @@ import java.util.concurrent.*;
 public class NvgLoadableImageReferenceManager {
 
     /**
-     * BufferedImage queue to remove
+     * BufferedImage queue to remove.
      */
     private Queue<String> imagesToRemove = new ConcurrentLinkedQueue<>();
 
     /**
-     * Removal listener
+     * Removal listener.
      */
     private RemovalListener<String, Integer> removalListener = removal -> imagesToRemove.add(removal.getKey());
 
@@ -30,10 +30,9 @@ public class NvgLoadableImageReferenceManager {
     /**
      * Cache of loaded images. If image is reached only by soft reference it will be deleted.
      */
-    private Cache<String, Integer>   imageCache          = CacheBuilder.newBuilder().initialCapacity(200)
-            .expireAfterAccess(300, TimeUnit.SECONDS).removalListener(removalListener).build();
+    private Cache<String, Integer> imageCache;
     /**
-     * Cleanup scheduler
+     * Cleanup scheduler.
      */
     private ScheduledExecutorService cleanup             = Executors.newSingleThreadScheduledExecutor();
     private Map<String, Integer>     imageAssociationMap = new ConcurrentHashMap<>();
@@ -42,6 +41,33 @@ public class NvgLoadableImageReferenceManager {
      * Used to create image reference manager.
      */
     protected NvgLoadableImageReferenceManager() {
+        imageCache = CacheBuilder.newBuilder().initialCapacity(200)
+                .expireAfterAccess(300, TimeUnit.SECONDS).removalListener(removalListener).build();
+        cleanup.scheduleAtFixedRate(() -> imageCache.cleanUp(), 1, 1, TimeUnit.SECONDS);
+    }
+
+    /**
+     * Used to create image reference manager.
+     *
+     * @param expireCleanupEnabled the expire cleanup enabled.
+     */
+    protected NvgLoadableImageReferenceManager(boolean expireCleanupEnabled) {
+        CacheBuilder<String, Integer> cacheBuilder = CacheBuilder.newBuilder().initialCapacity(200).removalListener(removalListener);
+        if (expireCleanupEnabled) {
+            cacheBuilder.expireAfterAccess(300, TimeUnit.SECONDS);
+        }
+        imageCache = cacheBuilder.build();
+        cleanup.scheduleAtFixedRate(() -> imageCache.cleanUp(), 1, 1, TimeUnit.SECONDS);
+    }
+
+    /**
+     * Used to create image reference manager.
+     *
+     * @param duration the duration after which cache should clean unused references.
+     */
+    protected NvgLoadableImageReferenceManager(int duration) {
+        imageCache = CacheBuilder.newBuilder().initialCapacity(200)
+                .removalListener(removalListener).expireAfterAccess(duration, TimeUnit.SECONDS).build();
         cleanup.scheduleAtFixedRate(() -> imageCache.cleanUp(), 1, 1, TimeUnit.SECONDS);
     }
 
@@ -53,7 +79,9 @@ public class NvgLoadableImageReferenceManager {
      */
     protected void removeOldImages(long context) {
         String path = imagesToRemove.poll();
-        if (path == null) return;
+        if (path == null) {
+            return;
+        }
         Integer imageRef = imageAssociationMap.remove(path);
         if (imageRef != null) {
             NanoVG.nvgDeleteImage(context, imageRef);
@@ -65,6 +93,7 @@ public class NvgLoadableImageReferenceManager {
      *
      * @param image   image to get reference.
      * @param context nanovg context.
+     *
      * @return reference of provided image or 0 if not found.
      */
     public int getImageReference(LoadableImage image, long context) {
@@ -77,7 +106,7 @@ public class NvgLoadableImageReferenceManager {
                 if (imageRef == null) {
                     ByteBuffer imageData = image.getImageData();
                     if (imageData != null) {
-                        int width  = image.getWidth();
+                        int width = image.getWidth();
                         int height = image.getHeight();
                         imageRef = NanoVG.nvgCreateImageRGBA(context, width, height, 0, imageData);
                     } else {

@@ -1,7 +1,7 @@
 package org.liquidengine.legui.system.event;
 
 /**
- * Interface
+ * Marker interface that defines tree of system events.
  */
 public interface SystemEvent {
 }

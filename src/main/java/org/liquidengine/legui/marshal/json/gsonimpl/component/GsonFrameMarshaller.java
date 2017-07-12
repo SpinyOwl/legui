@@ -16,7 +16,7 @@ import static org.liquidengine.legui.marshal.JsonConstants.*;
 import static org.liquidengine.legui.marshal.json.gsonimpl.GsonUtil.isNotNull;
 
 /**
- * Used to marshal and unmarshal {@link Frame}
+ * Used to marshal and unmarshal {@link Frame}.
  */
 public class GsonFrameMarshaller<T extends Frame> extends AbstractGsonMarshaller<T> {
 

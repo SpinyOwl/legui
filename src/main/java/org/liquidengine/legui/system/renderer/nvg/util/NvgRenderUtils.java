@@ -217,19 +217,19 @@ public final class NvgRenderUtils {
     }
 
     /**
-     * Used to renderNvg textState to rectangle bounds
+     * Used to renderNvg textState to rectangle bounds.
      *
-     * @param context         nanovg context
-     * @param x               x position of rectangle
-     * @param y               y position of rectangle
-     * @param w               width of rectangle
-     * @param h               height of rectangle
-     * @param fontSize        titleFont size
-     * @param font            titleFont name which contains in titleFont register
-     * @param textColor       textState color
-     * @param text            textState
-     * @param horizontalAlign horizontal align
-     * @param verticalAlign   vertical align
+     * @param context         nanovg context.
+     * @param x               x position of rectangle.
+     * @param y               y position of rectangle.
+     * @param w               width of rectangle.
+     * @param h               height of rectangle.
+     * @param fontSize        titleFont size.
+     * @param font            titleFont name which contains in titleFont register.
+     * @param textColor       textState color.
+     * @param text            textState.
+     * @param horizontalAlign horizontal align.
+     * @param verticalAlign   vertical align.
      */
     public static void renderTextLineToBounds(long context, float x, float y, float w, float h, float fontSize,
                                               String font, Vector4f textColor, String text, HorizontalAlign horizontalAlign, VerticalAlign verticalAlign) {
@@ -340,10 +340,10 @@ public final class NvgRenderUtils {
     }
 
     /**
-     * Creates scissor for provided component by it's parent components
+     * Creates scissor for provided component by it's parent components.
      *
-     * @param context nanovg context
-     * @param gui     {@link Component}
+     * @param context nanovg context.
+     * @param gui     {@link Component}.
      */
     public static void createScissor(long context, Component gui) {
         Component parent = gui.getParent();
@@ -351,30 +351,30 @@ public final class NvgRenderUtils {
     }
 
     /**
-     * Creates scissor for provided bounds
+     * Creates scissor for provided bounds.
      *
-     * @param context nanovg context
-     * @param bounds  bounds
+     * @param context nanovg context.
+     * @param bounds  bounds.
      */
     public static void createScissor(long context, Vector4f bounds) {
         nvgScissor(context, bounds.x, bounds.y, bounds.z, bounds.w);
     }
 
     /**
-     * Intersects scissor for provided bounds
+     * Intersects scissor for provided bounds.
      *
-     * @param context nanovg context
-     * @param bounds  bounds
+     * @param context nanovg context.
+     * @param bounds  bounds.
      */
     public static void intersectScissor(long context, Vector4f bounds) {
         nvgIntersectScissor(context, bounds.x, bounds.y, bounds.z, bounds.w);
     }
 
     /**
-     * Creates scissor by provided component and it's parent components
+     * Creates scissor by provided component and it's parent components.
      *
-     * @param context nanovg context
-     * @param parent  parent component
+     * @param context nanovg context.
+     * @param parent  parent component.
      */
     public static void createScissorByParent(long context, Component parent) {
         if (parent != null) {
@@ -393,7 +393,7 @@ public final class NvgRenderUtils {
     /**
      * Used to reset scissor.
      *
-     * @param context nanovg context pointer
+     * @param context nanovg context pointer.
      */
     public static void resetScissor(long context) {
         nvgResetScissor(context);

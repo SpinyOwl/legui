@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Marshal context for GsonMarshaller
+ * Marshal context for GsonMarshaller.
  */
 public final class GsonMarshalContext implements JsonMarshalContext {
     private Map<String, Object>            contextMap               = new HashMap<>();

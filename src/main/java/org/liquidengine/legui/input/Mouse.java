@@ -32,15 +32,15 @@ public class Mouse {
      */
     public enum MouseButton {
         /**
-         * LEFT BUTTON
+         * LEFT BUTTON.
          */
         MOUSE_BUTTON_1(GLFW_MOUSE_BUTTON_1),     //= 0,
         /**
-         * RIGHT BUTTON
+         * RIGHT BUTTON.
          */
         MOUSE_BUTTON_2(GLFW_MOUSE_BUTTON_2),     //= 1,
         /**
-         * MIDDLE BUTTON
+         * MIDDLE BUTTON.
          */
         MOUSE_BUTTON_3(GLFW_MOUSE_BUTTON_3),     //= 2,
         MOUSE_BUTTON_4(GLFW_MOUSE_BUTTON_4),     //= 3,

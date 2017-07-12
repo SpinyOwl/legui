@@ -20,27 +20,27 @@ public interface JsonMarshalRegistry {
     <T> void registerMarshaller(String typeName, Class<T> tClass, JsonMarshaller<T> marshaller);
 
     /**
-     * Returns marshaller for specified class
+     * Returns marshaller for specified class.
      *
-     * @param tClass class
-     * @param <T>    type of marshalled/demarshalled class
-     * @return json marshaller for specified class
+     * @param tClass class.
+     * @param <T>    type of marshalled/demarshalled class.
+     * @return json marshaller for specified class.
      */
     <T> JsonMarshaller<T> getMarshaller(Class<T> tClass);
 
     /**
-     * Returns marshaller for specified classname
+     * Returns marshaller for specified classname.
      *
-     * @param classname full classname
-     * @return json marshaller for specified classname
+     * @param classname full classname.
+     * @return json marshaller for specified classname.
      */
     JsonMarshaller getMarshaller(String classname);
 
     /**
-     * Returns marshaller for specified type
+     * Returns marshaller for specified type.
      *
-     * @param typeName type name
-     * @return json marshaller for specified type
+     * @param typeName type name.
+     * @return json marshaller for specified type.
      */
     JsonMarshaller getMarshallerByShortType(String typeName);
 }
