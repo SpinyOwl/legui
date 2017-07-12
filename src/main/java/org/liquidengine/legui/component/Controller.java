@@ -5,7 +5,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
-import org.liquidengine.legui.component.misc.controller.CursorEnterListenerForTooltip;
+import org.liquidengine.legui.component.misc.listener.controller.TooltipCursorEnterListener;
 import org.liquidengine.legui.event.CursorEnterEvent;
 import org.liquidengine.legui.listener.CursorEnterEventListener;
 import org.liquidengine.legui.theme.Themes;
@@ -55,10 +55,10 @@ public abstract class Controller extends Component {
     /**
      * Initializes controller with default {@link CursorEnterEventListener} to show tooltip.
      * <p>
-     * See {@link CursorEnterListenerForTooltip}.
+     * See {@link TooltipCursorEnterListener}.
      */
     private void initialize() {
-        CursorEnterEventListener listener = new CursorEnterListenerForTooltip();
+        CursorEnterEventListener listener = new TooltipCursorEnterListener();
         getListenerMap().addListener(CursorEnterEvent.class, listener);
         Themes.getDefaultTheme().getThemeManager().getComponentTheme(Controller.class).applyAll(this);
     }

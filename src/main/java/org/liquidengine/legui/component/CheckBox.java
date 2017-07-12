@@ -6,7 +6,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 import org.liquidengine.legui.color.ColorConstants;
-import org.liquidengine.legui.component.misc.checkbox.CheckBoxMouseClickEventListener;
+import org.liquidengine.legui.component.misc.listener.checkbox.CheckBoxMouseClickEventListener;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.event.MouseClickEvent;

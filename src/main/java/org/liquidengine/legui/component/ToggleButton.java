@@ -7,7 +7,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.color.ColorConstants;
-import org.liquidengine.legui.component.misc.togglebutton.ToggleButtonMouseClickListener;
+import org.liquidengine.legui.component.misc.listener.togglebutton.ToggleButtonMouseClickListener;
 import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.icon.Icon;
 import org.liquidengine.legui.listener.MouseClickEventListener;
