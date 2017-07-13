@@ -124,7 +124,7 @@ public class ScrollablePanel<T extends Component> extends Container implements V
         horizontalScrollBar.setVisibleAmount(containerSize.x >= viewportSize.x ? (horizontalRange * viewportSize.x / containerSize.x) : horizontalRange);
 
         float verticalRange = verticalScrollBar.getMaxValue() - verticalScrollBar.getMinValue();
-        verticalScrollBar.setVisibleAmount(containerSize.x >= viewportSize.x ? (verticalRange * viewportSize.y / containerSize.y) : verticalRange);
+        verticalScrollBar.setVisibleAmount(containerSize.y >= viewportSize.y ? (verticalRange * viewportSize.y / containerSize.y) : verticalRange);
 
         updateViewport();
     }
