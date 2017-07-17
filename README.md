@@ -55,9 +55,7 @@ And add this dependency to your build script:
     <artifactId>legui</artifactId>
     <version>${legui_version}-SNAPSHOT</version>
 </dependency>
- ```
- Or
- ```xml
+<!-- OR -->
 <!-- LEGUI - RELEASE - https://github.com/LiquidEngine/legui -->
 <dependency>
     <groupId>org.liquidengine</groupId>
@@ -69,9 +67,7 @@ And add this dependency to your build script:
   ```groovy
 // LEGUI - SNAPSHOT - https://github.com/LiquidEngine/legui
 compile group: 'org.liquidengine', name: 'legui', version: legui_version + '-SNAPSHOT', changing: true;
-  ```
-  Or
-  ```groovy
+// OR
 // LEGUI - RELEASE - https://github.com/LiquidEngine/legui
 compile group: 'org.liquidengine', name: 'legui', version: legui_version, changing: true;
   ```
