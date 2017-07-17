@@ -76,7 +76,6 @@ compile group: 'org.liquidengine', name: 'legui', version: legui_version, changi
   Current `RELEASE` version you can find in [RELEASE version.properties](https://github.com/LiquidEngine/legui/blob/releases/version.properties)  
 
 ## Links
--------------------------------
 [LWJGL - Lightweight Java Game Library 3](https://github.com/LWJGL/lwjgl3)
 
 [JOML – Java OpenGL Math Library](https://github.com/JOML-CI/JOML)
