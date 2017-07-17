@@ -30,11 +30,17 @@ GUI implementation for using with LWJGL3
 # Contribution
 1. To contribute you can add your proposals in **issues** or fork and create pull request.
 2. I can add you as developer to this project and you can implement some features. But you should follow previous rule.
+3. You can talk to me in Discord channel.
+
+<a href="https://discord.gg/6wfqXpJ" target="_blank">
+  <img src="https://discordapp.com/assets/fc0b01fe10a0b8c602fb0106d8189d9b.png" height="100"/>
+</a>
 
 ## Dependencies
 For using this library you should add these urls as repositories:  
 For **[LWJGL](https://github.com/LWJGL/lwjgl3)** and **[JOML](https://github.com/JOML-CI/JOML)** dependencies  
 `https://oss.sonatype.org/content/repositories/snapshots/`
+Also you can add your own versions of these libraries using [LWJGL form](https://www.lwjgl.org/download).
 
 For **LEGUI** and **[CBCHAIN](https://github.com/LiquidEngine/cbchain)** dependency  
 `https://raw.github.com/LiquidEngine/repo/releases` or  
@@ -50,6 +56,7 @@ And add this dependency to your build script:
     <version>${legui_version}-SNAPSHOT</version>
 </dependency>
  ```
+ Or
  ```xml
 <!-- LEGUI - RELEASE - https://github.com/LiquidEngine/legui -->
 <dependency>
@@ -63,6 +70,7 @@ And add this dependency to your build script:
 // LEGUI - SNAPSHOT - https://github.com/LiquidEngine/legui
 compile group: 'org.liquidengine', name: 'legui', version: legui_version + '-SNAPSHOT', changing: true;
   ```
+  Or
   ```groovy
 // LEGUI - RELEASE - https://github.com/LiquidEngine/legui
 compile group: 'org.liquidengine', name: 'legui', version: legui_version, changing: true;
