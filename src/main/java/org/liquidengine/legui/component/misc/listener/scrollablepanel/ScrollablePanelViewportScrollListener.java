@@ -54,4 +54,9 @@ public class ScrollablePanelViewportScrollListener implements EventListener<Scro
             viewport.updateViewport();
         }
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        return (obj != null) && ((obj == this) || ((obj != this) && (obj.getClass() == this.getClass())));
+    }
 }

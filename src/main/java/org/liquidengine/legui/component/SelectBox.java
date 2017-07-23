@@ -291,7 +291,6 @@ public class SelectBox extends Container {
                 if (elements.isEmpty()) {
                     selectionButton.getTextState().setText(element);
                 }
-                boxElement.getListenerMap().addListener(ScrollEvent.class, selectBoxScrollListener);
                 elements.add(element);
                 selectBoxElements.add(boxElement);
                 addSelectBoxComponent(boxElement);
