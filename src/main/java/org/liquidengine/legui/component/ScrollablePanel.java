@@ -6,36 +6,43 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 import org.liquidengine.legui.color.ColorConstants;
+import org.liquidengine.legui.component.misc.listener.scrollablepanel.ScrollablePanelViewportScrollListener;
 import org.liquidengine.legui.component.optional.Orientation;
+import org.liquidengine.legui.event.ScrollEvent;
 import org.liquidengine.legui.theme.Themes;
 
 /**
  * Panel with scroll bars.
  */
 public class ScrollablePanel<T extends Component> extends Container implements Viewport {
-    public static final float INITIAL_SCROLL_SIZE = 8f;
+
+
+    private static final float INITIAL_SCROLL_SIZE = 8f;
+
     /**
      * Used to scroll panel vertically.
      */
-    private ScrollBar            verticalScrollBar;
+    private ScrollBar verticalScrollBar;
+
     /**
      * Used to scroll panel horizontally.
      */
-    private ScrollBar            horizontalScrollBar;
+    private ScrollBar horizontalScrollBar;
+
     /**
-     * Base container which holds scroll bars and content panel.
+     * Base container which holds component container. Viewport size is limited by scroll bars and parent ScrollablePanel size.
      */
     private Container<Component> viewport;
+
     /**
      * Used to hold components added by user.
      */
-    private Container<T>         container;
+    private Container<T> container;
 
     /**
      * Default constructor. Used to create component instance without any parameters.
      * <p>
-     * Also if you want to make it easy to use with
-     * Json marshaller/unmarshaller component should contain empty constructor.
+     * Also if you want to make it easy to use with Json marshaller/unmarshaller component should contain empty constructor.
      */
     public ScrollablePanel() {
         initialize();
@@ -67,7 +74,7 @@ public class ScrollablePanel<T extends Component> extends Container implements V
 
     private void initialize() {
 
-        float viewportWidth  = getSize().x - INITIAL_SCROLL_SIZE;
+        float viewportWidth = getSize().x - INITIAL_SCROLL_SIZE;
         float viewportHeight = getSize().y - INITIAL_SCROLL_SIZE;
 
         verticalScrollBar = new ScrollBar();
@@ -82,12 +89,13 @@ public class ScrollablePanel<T extends Component> extends Container implements V
         horizontalScrollBar.setOrientation(Orientation.HORIZONTAL);
         horizontalScrollBar.setViewport(this);
 
-        viewport = new Panel(0, 0, viewportWidth, viewportHeight);
+        viewport = new Panel<>(0, 0, viewportWidth, viewportHeight);
         viewport.setBackgroundColor(1, 1, 1, 0);
         viewport.setBorder(null);
+        viewport.getListenerMap().addListener(ScrollEvent.class, new ScrollablePanelViewportScrollListener());
 
 
-        container = new Panel(0, 0, viewportWidth, viewportHeight);
+        container = new Panel<>(0, 0, viewportWidth, viewportHeight);
         container.setBorder(null);
         viewport.add(container);
 
@@ -105,11 +113,11 @@ public class ScrollablePanel<T extends Component> extends Container implements V
      */
     public void resize() {
         boolean horizontalScrollBarVisible = horizontalScrollBar.isVisible();
-        boolean verticalScrollBarVisible   = verticalScrollBar.isVisible();
+        boolean verticalScrollBarVisible = verticalScrollBar.isVisible();
 
         Vector2f scrollablePanelSize = new Vector2f(getSize());
-        Vector2f containerSize       = new Vector2f(container.getSize());
-        Vector2f viewportSize        = new Vector2f(getSize());
+        Vector2f containerSize = new Vector2f(container.getSize());
+        Vector2f viewportSize = new Vector2f(getSize());
 
         if (horizontalScrollBarVisible) {
             horizontalScrollBar.getPosition().y = viewportSize.y = scrollablePanelSize.y - horizontalScrollBar.getSize().y;

@@ -11,13 +11,13 @@ import org.liquidengine.legui.listener.ScrollEventListener;
  */
 public class ScrollBarScrollListener implements ScrollEventListener {
     public void process(ScrollEvent event) {
-        ScrollBar scrollBar     = (ScrollBar) event.getComponent();
-        float     maxValue      = scrollBar.getMaxValue();
-        float     minValue      = scrollBar.getMinValue();
-        float     curValue      = scrollBar.getCurValue();
-        float     visibleAmount = scrollBar.getVisibleAmount();
-        float     valueRange    = scrollBar.getMaxValue() - scrollBar.getMinValue();
-        float     newVal        = (float) (curValue - scrollBar.getScrollStep() * event.getYoffset() * visibleAmount * valueRange / (valueRange - visibleAmount));
+        ScrollBar scrollBar = (ScrollBar) event.getComponent();
+        float maxValue = scrollBar.getMaxValue();
+        float minValue = scrollBar.getMinValue();
+        float curValue = scrollBar.getCurValue();
+        float visibleAmount = scrollBar.getVisibleAmount();
+        float valueRange = scrollBar.getMaxValue() - scrollBar.getMinValue();
+        float newVal = (float) (curValue - scrollBar.getScrollStep() * event.getYoffset() * visibleAmount * valueRange / (valueRange - visibleAmount));
 
         if (newVal > maxValue) newVal = maxValue;
         if (newVal < minValue) newVal = minValue;
