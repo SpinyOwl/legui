@@ -1,5 +1,6 @@
 package org.liquidengine.legui.component.misc.listener.textinput;
 
+import org.liquidengine.legui.component.TextArea;
 import org.liquidengine.legui.component.TextInput;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.event.KeyEvent;
@@ -43,7 +44,21 @@ public class TextInputKeyEventListener implements KeyEventListener {
             copyAction(gui, event.getContext());
         } else if (key == GLFW_KEY_X && pressed && event.getMods() == GLFW_MOD_CONTROL) {
             cutAction(gui, event.getContext());
+        } else if (key == GLFW_KEY_A && pressed && event.getMods() == GLFW_MOD_CONTROL) {
+            selectAllAction(gui);
         }
+    }
+
+    /**
+     * Selects all text.
+     *
+     * @param gui text input to work with.
+     */
+    private void selectAllAction(TextInput gui) {
+        TextState textState = gui.getTextState();
+        gui.setStartSelectionIndex(0);
+        gui.setEndSelectionIndex(textState.length());
+        gui.setCaretPosition(textState.length());
     }
 
     /**

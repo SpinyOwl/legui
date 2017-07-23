@@ -50,14 +50,28 @@ public class TextAreaKeyEventListener implements KeyEventListener {
                 copyAction(textArea, event.getContext());
             } else if (key == GLFW_KEY_X && pressed && event.getMods() == GLFW_MOD_CONTROL) {
                 cutAction(textArea, event.getContext());
+            } else if (key == GLFW_KEY_A && pressed && event.getMods() == GLFW_MOD_CONTROL) {
+                selectAllAction(textArea);
             }
         }
     }
 
     /**
+     * Selects all text.
+     *
+     * @param gui text area to work with.
+     */
+    private void selectAllAction(TextArea gui) {
+        TextState textState = gui.getTextState();
+        gui.setStartSelectionIndex(0);
+        gui.setEndSelectionIndex(textState.length());
+        gui.setCaretPosition(textState.length());
+    }
+
+    /**
      * Used to cut some string from text area and put it to clipboard.
      *
-     * @param gui     text area to work with.
+     * @param gui          text area to work with.
      * @param leguiContext context.
      */
     private void cutAction(TextArea gui, Context leguiContext) {
