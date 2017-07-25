@@ -1,5 +1,7 @@
 package org.liquidengine.legui.font;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.liquidengine.legui.util.IOUtil;
 
 import java.io.IOException;
@@ -62,5 +64,31 @@ public class Font {
      */
     public String getPath() {
         return path;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Font font = (Font) o;
+
+        return new EqualsBuilder()
+                .append(getData(), font.getData())
+                .append(getPath(), font.getPath())
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37)
+                .append(getData())
+                .append(getPath())
+                .toHashCode();
     }
 }

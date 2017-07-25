@@ -16,6 +16,7 @@ import org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils;
 import org.lwjgl.nanovg.NanoVGGL3;
 
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import static org.lwjgl.nanovg.NanoVG.*;
 import static org.lwjgl.opengl.GL11.*;
@@ -29,6 +30,8 @@ public class NvgRenderer extends Renderer {
 
     protected long                nvgContext;
     protected NvgRendererProvider provider;
+
+    protected Map<String, Font> loadedFonts = new ConcurrentHashMap<>();
 
     public NvgRenderer(Context context, NvgRendererProvider provider) {
         super(context);
@@ -96,16 +99,25 @@ public class NvgRenderer extends Renderer {
     public void initialize() {
         int flags = NanoVGGL3.NVG_STENCIL_STROKES | NanoVGGL3.NVG_ANTIALIAS;
         nvgContext = NanoVGGL3.nvgCreate(flags);
-        Map<String, Font> fontRegister = FontRegistry.getFontRegister();
 
-        for (Map.Entry<String, Font> fontDataEntry : fontRegister.entrySet()) {
-            nvgCreateFontMem(nvgContext, fontDataEntry.getKey(), fontDataEntry.getValue().getData(), 0);
-        }
+        loadFontsToNvg();
 
         context.getContextData().put(NVG_CONTEXT, nvgContext);
         context.getContextData().put(IMAGE_REFERENCE_MANAGER, new NvgLoadableImageReferenceManager());
 
         provider.getComponentRenderers().forEach(ComponentRenderer::initialize);
+    }
+
+    private void loadFontsToNvg() {
+        Map<String, Font> fontRegister = FontRegistry.getFontRegister();
+        for (Map.Entry<String, Font> fontDataEntry : fontRegister.entrySet()) {
+            String fontName = fontDataEntry.getKey();
+            Font font = fontDataEntry.getValue();
+            if (loadedFonts.get(fontName) == null || !loadedFonts.get(fontName).equals(font)) {
+                nvgCreateFontMem(nvgContext, fontName, fontDataEntry.getValue().getData(), 0);
+                loadedFonts.put(fontName, font);
+            }
+        }
     }
 
     @Override
@@ -128,6 +140,7 @@ public class NvgRenderer extends Renderer {
         NvgLoadableImageReferenceManager manager = (NvgLoadableImageReferenceManager) context.getContextData().get(IMAGE_REFERENCE_MANAGER);
         manager.removeOldImages(nvgContext);
 
+        loadFontsToNvg();
     }
 
     @Override
