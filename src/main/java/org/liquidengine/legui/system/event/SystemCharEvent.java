@@ -9,7 +9,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 public class SystemCharEvent implements SystemEvent {
 
     public final long window;
-    public final int  codepoint;
+    public final int codepoint;
 
     public SystemCharEvent(long window, int codepoint) {
         this.window = window;

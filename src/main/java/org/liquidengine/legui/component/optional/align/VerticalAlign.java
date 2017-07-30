@@ -29,8 +29,7 @@ public enum VerticalAlign implements Serializable {
     public final int index;
 
     /**
-     * Used to initialize align with index.
-     * Index could be used to calculate some different offsets or something else by renderers and etc.
+     * Used to initialize align with index. Index could be used to calculate some different offsets or something else by renderers and etc.
      *
      * @param index index to set.
      */

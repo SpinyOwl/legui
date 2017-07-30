@@ -1,20 +1,19 @@
 package org.liquidengine.legui.component;
 
 import org.joml.Vector2f;
-import org.liquidengine.legui.component.misc.listener.dialog.DialogCloseEventListener;
 import org.liquidengine.legui.component.misc.event.widget.WidgetCloseEvent;
+import org.liquidengine.legui.component.misc.listener.dialog.DialogCloseEventListener;
 import org.liquidengine.legui.theme.Themes;
 
 /**
- * Dialog component is component which extended from {@link Widget} and have some additional functionality.
- * On {@link #show(Frame)} method it added to new created {@link DialogLayer}
- * which forbid underlying layers to receive mouse click and keyboard events.
+ * Dialog component is component which extended from {@link Widget} and have some additional functionality. On {@link #show(Frame)} method
+ * it added to new created {@link DialogLayer} which forbid underlying layers to receive mouse click and keyboard events.
  */
 public class Dialog extends Widget {
     /**
      * Used to hold dialog layer with dialog.
      */
-    private Frame       frame;
+    private Frame frame;
     /**
      * Used to hold dialog.
      */

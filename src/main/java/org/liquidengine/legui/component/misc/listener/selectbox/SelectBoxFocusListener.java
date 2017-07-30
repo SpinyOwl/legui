@@ -19,7 +19,7 @@ public class SelectBoxFocusListener implements FocusEventListener {
     @Override
     public void process(FocusEvent event) {
         if (!event.isFocused() && !selectBox.isCollapsed()) {
-            boolean   collapse  = true;
+            boolean collapse = true;
             Component nextFocus = event.getNextFocus();
             for (SelectBox.SelectBoxElement selectBoxElement : selectBox.getSelectBoxElements()) {
                 if (nextFocus == selectBoxElement) {

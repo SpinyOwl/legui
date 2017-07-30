@@ -27,13 +27,13 @@ public class GsonScrollablePanelMarshaller<T extends ScrollablePanel> extends Gs
     protected void marshal(T object, JsonObject json, GsonMarshalContext context) {
         super.marshal(object, json, context);
 
-        ScrollBar verticalScrollBar   = object.getVerticalScrollBar();
+        ScrollBar verticalScrollBar = object.getVerticalScrollBar();
         ScrollBar horizontalScrollBar = object.getHorizontalScrollBar();
-        Container container           = object.getContainer();
+        Container container = object.getContainer();
 
         JsonObject vScrollBar = GsonMarshalUtil.marshalToJson(verticalScrollBar, context);
         JsonObject hScrollBar = GsonMarshalUtil.marshalToJson(horizontalScrollBar, context);
-        JsonObject cont       = GsonMarshalUtil.marshalToJson(container, context);
+        JsonObject cont = GsonMarshalUtil.marshalToJson(container, context);
 
         GsonUtil.fill(json)
                 .add(HORIZONTAL_SCROLL_BAR, hScrollBar)
@@ -55,7 +55,7 @@ public class GsonScrollablePanelMarshaller<T extends ScrollablePanel> extends Gs
 
         JsonElement hScrollBar = json.get(HORIZONTAL_SCROLL_BAR);
         JsonElement vScrollBar = json.get(VERTICAL_SCROLL_BAR);
-        JsonElement container  = json.get(CONTAINER);
+        JsonElement container = json.get(CONTAINER);
 
         // this order is very important because container of Scrollable panel contains elements in such order.
         if (isNotNull(vScrollBar)) object.setVerticalScrollBar(GsonMarshalUtil.unmarshal(vScrollBar.getAsJsonObject(), context));

@@ -14,7 +14,7 @@ public class SimpleLineBorder extends Border {
     /**
      * Thickness of border.
      */
-    private float    thickness;
+    private float thickness;
     /**
      * Border color.
      */

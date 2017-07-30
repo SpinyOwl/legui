@@ -34,8 +34,8 @@ public class NvgLoadableImageReferenceManager {
     /**
      * Cleanup scheduler.
      */
-    private ScheduledExecutorService cleanup             = Executors.newSingleThreadScheduledExecutor();
-    private Map<String, Integer>     imageAssociationMap = new ConcurrentHashMap<>();
+    private ScheduledExecutorService cleanup = Executors.newSingleThreadScheduledExecutor();
+    private Map<String, Integer> imageAssociationMap = new ConcurrentHashMap<>();
 
     /**
      * Used to create image reference manager.

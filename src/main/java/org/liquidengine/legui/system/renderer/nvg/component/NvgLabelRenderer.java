@@ -23,8 +23,8 @@ public class NvgLabelRenderer extends NvgComponentRenderer<Label> {
     public void renderComponent(Label label, Context context, long nanovg) {
         createScissor(nanovg, label);
         {
-            Vector2f pos             = label.getScreenPosition();
-            Vector2f size            = label.getSize();
+            Vector2f pos = label.getScreenPosition();
+            Vector2f size = label.getSize();
             Vector4f backgroundColor = new Vector4f(label.getBackgroundColor());
 
             /*Draw background rectangle*/

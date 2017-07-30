@@ -30,10 +30,10 @@ public class NvgDefaultComponentRenderer extends NvgComponentRenderer {
             Vector2f s = component.getSize();
 
             Vector4f color = component.getBackgroundColor();
-            float    x     = p.x;
-            float    y     = p.y;
-            float    w     = s.x;
-            float    h     = s.y;
+            float x = p.x;
+            float y = p.y;
+            float w = s.x;
+            float h = s.y;
 
             Controller controller = (Controller) component;
             if (controller.isPressed()) {
@@ -48,8 +48,8 @@ public class NvgDefaultComponentRenderer extends NvgComponentRenderer {
 
 
         if (component instanceof Container) {
-            Container       container = (Container) component;
-            List<Component> all       = container.getChilds();
+            Container container = (Container) component;
+            List<Component> all = container.getChilds();
             for (Component child : all) {
                 RendererProvider.getInstance().
                         getComponentRenderer(child.getClass()).render(child, context);

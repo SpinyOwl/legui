@@ -22,7 +22,7 @@ public class NvgButtonRenderer extends NvgComponentRenderer<Button> {
     protected void renderComponent(Button button, Context context, long nanovg) {
         createScissor(nanovg, button);
         {
-            Vector2f pos  = button.getScreenPosition();
+            Vector2f pos = button.getScreenPosition();
             Vector2f size = button.getSize();
 
             nvgSave(nanovg);
@@ -45,9 +45,9 @@ public class NvgButtonRenderer extends NvgComponentRenderer<Button> {
     }
 
     private void renderBackground(long nvg, Button button, Vector2f pos, Vector2f size, Context context) {
-        boolean  focused         = button.isFocused();
-        boolean  hovered         = button.isHovered();
-        boolean  pressed         = button.isPressed();
+        boolean focused = button.isFocused();
+        boolean hovered = button.isHovered();
+        boolean pressed = button.isPressed();
         Vector4f backgroundColor = new Vector4f(button.getBackgroundColor());
 
         Icon bgIcon = button.getBackgroundIcon();

@@ -1,9 +1,7 @@
 package org.liquidengine.legui.system.processor;
 
 import org.liquidengine.legui.component.Component;
-import org.liquidengine.legui.component.Container;
 import org.liquidengine.legui.component.Layer;
-import org.liquidengine.legui.component.LayerContainer;
 import org.liquidengine.legui.event.ScrollEvent;
 import org.liquidengine.legui.input.Mouse;
 import org.liquidengine.legui.system.context.Context;

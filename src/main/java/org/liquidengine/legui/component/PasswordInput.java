@@ -14,8 +14,7 @@ public class PasswordInput extends TextInput {
     /**
      * Default constructor. Used to create component instance without any parameters.
      * <p>
-     * Also if you want to make it easy to use with
-     * Json marshaller/unmarshaller component should contain empty constructor.
+     * Also if you want to make it easy to use with Json marshaller/unmarshaller component should contain empty constructor.
      */
     public PasswordInput() {
     }
@@ -45,8 +44,7 @@ public class PasswordInput extends TextInput {
     /**
      * Default constructor with text to set.
      * <p>
-     * Also if you want to make it easy to use with
-     * Json marshaller/unmarshaller component should contain empty constructor.
+     * Also if you want to make it easy to use with Json marshaller/unmarshaller component should contain empty constructor.
      *
      * @param text text to set.
      */

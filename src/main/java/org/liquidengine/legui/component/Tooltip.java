@@ -12,7 +12,7 @@ import org.liquidengine.legui.theme.Themes;
  * Created by Aliaksandr_Shcherbin on 1/24/2017.
  */
 public class Tooltip extends Component implements TextComponent {
-    private TextState  textState;
+    private TextState textState;
     private Controller controller;
 
     public Tooltip() {

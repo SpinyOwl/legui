@@ -37,8 +37,8 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 public class GsonMarshalRegistry implements JsonMarshalRegistry {
     private Map<Class<?>, JsonMarshaller<?>> marshallerMap = new ConcurrentHashMap<>();
-    private BidiMap<String, Class<?>>        typeMap       = new DualHashBidiMap<>();
-    private Lock                             lock          = new ReentrantLock(false);
+    private BidiMap<String, Class<?>> typeMap = new DualHashBidiMap<>();
+    private Lock lock = new ReentrantLock(false);
 
     private GsonMarshalRegistry() {
     }
@@ -58,7 +58,8 @@ public class GsonMarshalRegistry implements JsonMarshalRegistry {
     /**
      * Register marshaller for specified class.
      *
-     * @param typeName   short type name, can be null, in that case {@link GsonMarshalRegistry#getShortTypeByClass(Class)} will return null.
+     * @param typeName   short type name, can be null, in that case {@link GsonMarshalRegistry#getShortTypeByClass(Class)} will return
+     *                   null.
      * @param tClass     class.
      * @param marshaller marshaller.
      * @param <T>        type parameter to prevent error in marshal registry..
@@ -83,6 +84,7 @@ public class GsonMarshalRegistry implements JsonMarshalRegistry {
      *
      * @param tClass class.
      * @param <T>    type of marshaled/demarshaled class.
+     *
      * @return json marshaller for specified class.
      */
     public <T> AbstractGsonMarshaller<T> getMarshaller(Class<T> tClass) {
@@ -93,6 +95,7 @@ public class GsonMarshalRegistry implements JsonMarshalRegistry {
      * Returns marshaller for specified classname.
      *
      * @param classname full classname.
+     *
      * @return json marshaller for specified classname.
      */
     public AbstractGsonMarshaller getMarshaller(String classname) {
@@ -109,6 +112,7 @@ public class GsonMarshalRegistry implements JsonMarshalRegistry {
      * Returns marshaller for specified type.
      *
      * @param typeName type name.
+     *
      * @return json marshaller for specified type.
      */
     public AbstractGsonMarshaller getMarshallerByShortType(String typeName) {
@@ -124,11 +128,12 @@ public class GsonMarshalRegistry implements JsonMarshalRegistry {
      * Returns marshaller for specified class.
      *
      * @param tClass class.
+     *
      * @return json marshaller for specified class.
      */
     private <T> AbstractGsonMarshaller<T> treeGetMarshaller(Class<T> tClass) {
         AbstractGsonMarshaller<T> marshaller = (AbstractGsonMarshaller<T>) marshallerMap.get(tClass);
-        Class                     cClass     = tClass.getSuperclass();
+        Class cClass = tClass.getSuperclass();
         while (marshaller == null) {
             marshaller = (AbstractGsonMarshaller<T>) marshallerMap.get(cClass);
             if (cClass.isAssignableFrom(Object.class)) break;

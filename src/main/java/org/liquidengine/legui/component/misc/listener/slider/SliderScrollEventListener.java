@@ -12,9 +12,9 @@ public class SliderScrollEventListener implements ScrollEventListener {
 
     @Override
     public void process(ScrollEvent event) {
-        Slider slider   = (Slider) event.getComponent();
-        float  curValue = slider.getValue();
-        float  value    = (float) (curValue + event.getYoffset());
+        Slider slider = (Slider) event.getComponent();
+        float curValue = slider.getValue();
+        float value = (float) (curValue + event.getYoffset());
 
         if (value > Slider.MAX_VALUE) {
             value = Slider.MAX_VALUE;

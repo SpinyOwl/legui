@@ -19,10 +19,10 @@ import java.nio.ByteBuffer;
  */
 public class BufferedImage extends LoadableImage {
     private static final Logger LOGGER = LogManager.getLogger();
-    private int           width;
-    private int           height;
+    private int width;
+    private int height;
     private ImageChannels channels;
-    private ByteBuffer    imageData;
+    private ByteBuffer imageData;
 
     /**
      * This constructor should be used with {@link #setPath(String)} and {@link #load()} methods.
@@ -51,10 +51,10 @@ public class BufferedImage extends LoadableImage {
     public void load() {
         try {
             ByteBuffer byteBuffer = IOUtil.ioResourceToByteBuffer(getPath(), 1024);
-            int[]      width      = {0};
-            int[]      height     = {0};
-            int[]      channels   = {0};
-            ByteBuffer imageData  = STBImage.stbi_load_from_memory(byteBuffer, width, height, channels, 4);
+            int[] width = {0};
+            int[] height = {0};
+            int[] channels = {0};
+            ByteBuffer imageData = STBImage.stbi_load_from_memory(byteBuffer, width, height, channels, 4);
 
             if (imageData != null) {
                 this.width = width[0];

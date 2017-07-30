@@ -33,17 +33,17 @@ public class NvgTooltipRenderer extends NvgComponentRenderer<Tooltip> {
     public void renderComponent(Tooltip tooltip, Context leguiContext, long context) {
         createScissor(context, tooltip);
         {
-            TextState       textState       = tooltip.getTextState();
-            Vector2f        pos             = tooltip.getScreenPosition();
-            Vector2f        size            = tooltip.getSize();
-            float           fontSize        = textState.getFontSize();
-            String          font            = textState.getFont();
-            String          text            = textState.getText();
+            TextState textState = tooltip.getTextState();
+            Vector2f pos = tooltip.getScreenPosition();
+            Vector2f size = tooltip.getSize();
+            float fontSize = textState.getFontSize();
+            String font = textState.getFont();
+            String text = textState.getText();
             HorizontalAlign horizontalAlign = textState.getHorizontalAlign();
-            VerticalAlign   verticalAlign   = textState.getVerticalAlign();
-            Vector4f        textColor       = textState.getTextColor();
-            Vector4f        backgroundColor = tooltip.getBackgroundColor();
-            Vector4f        padding         = new Vector4f(textState.getPadding());
+            VerticalAlign verticalAlign = textState.getVerticalAlign();
+            Vector4f textColor = textState.getTextColor();
+            Vector4f backgroundColor = tooltip.getBackgroundColor();
+            Vector4f padding = new Vector4f(textState.getPadding());
 
             renderBackground(tooltip, context, pos, size, backgroundColor);
 
@@ -55,7 +55,7 @@ public class NvgTooltipRenderer extends NvgComponentRenderer<Tooltip> {
 
                 byteText = memUTF8(text, false);
                 long start = memAddress(byteText);
-                long end   = start + byteText.remaining();
+                long end = start + byteText.remaining();
 
                 float x = pos.x + padding.x;
                 float y = pos.y + padding.y;
@@ -64,8 +64,8 @@ public class NvgTooltipRenderer extends NvgComponentRenderer<Tooltip> {
 
                 intersectScissor(context, new Vector4f(x, y, w, h));
 
-                List<float[]> boundList   = new ArrayList<>();
-                List<long[]>  indicesList = new ArrayList<>();
+                List<float[]> boundList = new ArrayList<>();
+                List<long[]> indicesList = new ArrayList<>();
 
                 alignTextInBox(context, HorizontalAlign.LEFT, VerticalAlign.MIDDLE);
                 nvgFontSize(context, fontSize);
@@ -74,10 +74,10 @@ public class NvgTooltipRenderer extends NvgComponentRenderer<Tooltip> {
 
                 // calculate text bounds for every line and start/end indices
                 NVGTextRow.Buffer buffer = NVGTextRow.calloc(1);
-                int               rows   = 0;
+                int rows = 0;
                 while (nnvgTextBreakLines(context, start, end, size.x, memAddress(buffer), 1) != 0) {
-                    NVGTextRow row    = buffer.get(0);
-                    float[]    bounds = createBounds(x, y + rows * fontSize, w, h, horizontalAlign, verticalAlign, row.width(), fontSize);
+                    NVGTextRow row = buffer.get(0);
+                    float[] bounds = createBounds(x, y + rows * fontSize, w, h, horizontalAlign, verticalAlign, row.width(), fontSize);
                     boundList.add(bounds);
                     indicesList.add(new long[]{row.start(), row.end()});
                     start = row.next();
@@ -90,8 +90,8 @@ public class NvgTooltipRenderer extends NvgComponentRenderer<Tooltip> {
                 // render text lines
                 nvgFillColor(context, rgba(textColor, colorA));
                 for (int i = 0; i < rows; i++) {
-                    float[] bounds  = boundList.get(i);
-                    long[]  indices = indicesList.get(i);
+                    float[] bounds = boundList.get(i);
+                    long[] indices = indicesList.get(i);
 
                     nvgBeginPath(context);
                     nnvgText(context, bounds[4], bounds[5] - offsetY, indices[0], indices[1]);
@@ -113,7 +113,7 @@ public class NvgTooltipRenderer extends NvgComponentRenderer<Tooltip> {
     private void renderBackground(Component component, long context, Vector2f pos, Vector2f size, Vector4f backgroundColor) {
         // render background rectangle
         NVGColor nvgColor = NVGColor.calloc();
-        NVGColor rgba     = rgba(backgroundColor, nvgColor);
+        NVGColor rgba = rgba(backgroundColor, nvgColor);
         nvgBeginPath(context);
         nvgFillColor(context, rgba);
         nvgRoundedRect(context, pos.x, pos.y, size.x, size.y, component.getCornerRadius());

@@ -16,12 +16,8 @@ import org.liquidengine.legui.theme.Themes;
 import static org.liquidengine.legui.font.FontRegistry.MATERIAL_ICONS_REGULAR;
 
 /**
- * RadioButtons create a series of items where only one item can be
- * checked.
- * <p>
- * By default all created radio buttons have no group
- * so all of them can be checked.
- * <p>Usage example:</p>
+ * RadioButtons create a series of items where only one item can be checked. <p> By default all created radio buttons have no group so all
+ * of them can be checked. <p>Usage example:</p>
  * <pre>{@code
  * RadioButtonGroup rbg = new RadioButtonGroup();
  * RadioButton      rb1 = new RadioButton();
@@ -50,7 +46,7 @@ public class RadioButton extends Controller implements TextComponent {
     /**
      * Used to represent if radio button checked or not.
      */
-    private boolean          checked;
+    private boolean checked;
     /**
      * Used to determine group of radio buttons where only one can be checked.
      */
@@ -59,8 +55,7 @@ public class RadioButton extends Controller implements TextComponent {
     /**
      * Default constructor. Used to create component instance without any parameters.
      * <p>
-     * Also if you want to make it easy to use with
-     * Json marshaller/unmarshaller component should contain empty constructor.
+     * Also if you want to make it easy to use with Json marshaller/unmarshaller component should contain empty constructor.
      */
     public RadioButton() {
         this("RadioButton");
@@ -91,8 +86,7 @@ public class RadioButton extends Controller implements TextComponent {
     /**
      * Default constructor. Used to create component instance without any parameters.
      * <p>
-     * Also if you want to make it easy to use with
-     * Json marshaller/unmarshaller component should contain empty constructor.
+     * Also if you want to make it easy to use with Json marshaller/unmarshaller component should contain empty constructor.
      *
      * @param text text to set.
      */

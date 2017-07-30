@@ -17,12 +17,11 @@ import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 /**
- * Basic abstract Container object is a component
- * that can contain other components.
+ * Basic abstract Container object is a component that can contain other components.
  * <p>
- * The base of container is <b><span style="color:red">SetUniqueList</span>
- * created on base of <span style="color:red">CopyOnWriteArrayList</span></b>,
- * that's little restriction which determines that child can exist in parent only one time.
+ * The base of container is <b><span style="color:red">SetUniqueList</span> created on base of <span
+ * style="color:red">CopyOnWriteArrayList</span></b>, that's little restriction which determines that child can exist in parent only one
+ * time.
  */
 public abstract class Container<T extends Component> extends Controller {
     /**
@@ -33,8 +32,7 @@ public abstract class Container<T extends Component> extends Controller {
     /**
      * Default constructor. Used to create component instance without any parameters.
      * <p>
-     * Also if you want to make it easy to use with
-     * Json marshaller/unmarshaller component should contain empty constructor.
+     * Also if you want to make it easy to use with Json marshaller/unmarshaller component should contain empty constructor.
      */
     public Container() {
         initialize();
@@ -72,6 +70,7 @@ public abstract class Container<T extends Component> extends Controller {
      * Returns count of child components.
      *
      * @return count of child components.
+     *
      * @see List#size()
      */
     public int count() {
@@ -82,6 +81,7 @@ public abstract class Container<T extends Component> extends Controller {
      * Returns true if layerFrame contains no elements.
      *
      * @return true if layerFrame contains no elements.
+     *
      * @see List#isEmpty()
      */
     public boolean isEmpty() {
@@ -92,7 +92,9 @@ public abstract class Container<T extends Component> extends Controller {
      * Returns true if layerFrame contains specified component.
      *
      * @param component component to check.
+     *
      * @return true if layerFrame contains specified component.
+     *
      * @see List#contains(Object)
      */
     public boolean contains(T component) {
@@ -100,10 +102,10 @@ public abstract class Container<T extends Component> extends Controller {
     }
 
     /**
-     * Returns an iterator over the elements in this layerFrame.
-     * The elements are returned in no particular order.
+     * Returns an iterator over the elements in this layerFrame. The elements are returned in no particular order.
      *
      * @return an iterator over the elements in this layerFrame.
+     *
      * @see List#iterator()
      */
     public Iterator<T> containerIterator() {
@@ -114,7 +116,9 @@ public abstract class Container<T extends Component> extends Controller {
      * Used to add component to layerFrame.
      *
      * @param component component to add.
+     *
      * @return true if component is added.
+     *
      * @see List#add(Object)
      */
     public boolean add(T component) {
@@ -127,6 +131,7 @@ public abstract class Container<T extends Component> extends Controller {
      * Used to check if component collection contains component or not. Checked by reference.
      *
      * @param component component to check.
+     *
      * @return true if collection contains provided component.
      */
     private boolean isContains(T component) {
@@ -137,7 +142,9 @@ public abstract class Container<T extends Component> extends Controller {
      * Used to add components.
      *
      * @param components components nodes to add.
+     *
      * @return true if added.
+     *
      * @see List#addAll(Collection)
      */
     public boolean addAll(Collection<? extends T> components) {
@@ -172,7 +179,9 @@ public abstract class Container<T extends Component> extends Controller {
      * Used to remove component.
      *
      * @param component component to remove.
+     *
      * @return true if removed.
+     *
      * @see List#remove(Object)
      */
     public boolean remove(T component) {
@@ -190,6 +199,7 @@ public abstract class Container<T extends Component> extends Controller {
      * Used to remove components.
      *
      * @param components components to remove.
+     *
      * @see List#removeAll(Collection)
      */
     public void removeAll(Collection<? extends T> components) {
@@ -204,14 +214,13 @@ public abstract class Container<T extends Component> extends Controller {
     }
 
     /**
-     * Removes all of the elements of this layerFrame
-     * that satisfy the given predicate.
-     * Errors or runtime exceptions
-     * thrown during iteration or by
-     * the predicate are relayed to the caller.
+     * Removes all of the elements of this layerFrame that satisfy the given predicate. Errors or runtime exceptions thrown during iteration
+     * or by the predicate are relayed to the caller.
      *
      * @param filter a predicate which returns true for elements to be removed.
+     *
      * @return true if any components were removed.
+     *
      * @see List#removeIf(Predicate)
      */
     public boolean removeIf(Predicate<? super T> filter) {
@@ -233,7 +242,9 @@ public abstract class Container<T extends Component> extends Controller {
      * Returns true if this Container contains all of the elements of the specified collection.
      *
      * @param components components collection to check.
+     *
      * @return true if this Container contains all of the elements of the specified collection.
+     *
      * @see List#containsAll(Collection)
      */
     public boolean containsAll(Collection<T> components) {
@@ -244,6 +255,7 @@ public abstract class Container<T extends Component> extends Controller {
      * Returns a sequential Stream with this collection as its source.
      *
      * @return a sequential Stream with this collection as its source.
+     *
      * @see List#stream()
      */
     public Stream<T> stream() {
@@ -251,10 +263,11 @@ public abstract class Container<T extends Component> extends Controller {
     }
 
     /**
-     * Returns a possibly parallel Stream with this collection as its source.
-     * It is allowable for this method to return a sequential stream.
+     * Returns a possibly parallel Stream with this collection as its source. It is allowable for this method to return a sequential
+     * stream.
      *
      * @return possibly parallel Stream with this collection as its source.
+     *
      * @see List#parallelStream()
      */
     public Stream<T> parallelStream() {
@@ -262,8 +275,7 @@ public abstract class Container<T extends Component> extends Controller {
     }
 
     /**
-     * Performs the given action for each element of the Iterable
-     * until all elements have been processed or the action throws an exception.
+     * Performs the given action for each element of the Iterable until all elements have been processed or the action throws an exception.
      *
      * @param action The action to be performed for each element.
      */
@@ -286,6 +298,7 @@ public abstract class Container<T extends Component> extends Controller {
      * (non-Javadoc)
      *
      * @param o object to compare.
+     *
      * @see Object#equals(Object)
      */
     @Override

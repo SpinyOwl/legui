@@ -26,7 +26,7 @@ public class NvgRadioButtonRenderer extends NvgComponentRenderer<RadioButton> {
         createScissor(nanovg, radioButton);
         {
             // default renderer used
-            Vector2f pos  = radioButton.getScreenPosition();
+            Vector2f pos = radioButton.getScreenPosition();
             Vector2f size = radioButton.getSize();
 
             float px = pos.x;
@@ -42,8 +42,8 @@ public class NvgRadioButtonRenderer extends NvgComponentRenderer<RadioButton> {
             }
 
             TextState textState = radioButton.getTextState();
-            Icon      icon      = radioButton.isChecked() ? radioButton.getIconChecked() : radioButton.getIconUnchecked();
-            float     iconWid   = icon.getSize().x;
+            Icon icon = radioButton.isChecked() ? radioButton.getIconChecked() : radioButton.getIconUnchecked();
+            float iconWid = icon.getSize().x;
 
             Vector4f pad = textState.getPadding();
 

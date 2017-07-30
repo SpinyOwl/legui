@@ -42,8 +42,8 @@ public class GsonCharIconMarshaller<I extends CharIcon> extends GsonIconMarshall
     protected void unmarshal(JsonObject json, I object, GsonMarshalContext context) {
         super.unmarshal(json, object, context);
 
-        JsonElement font     = json.get(FONT);
-        JsonElement color    = json.get(COLOR);
+        JsonElement font = json.get(FONT);
+        JsonElement color = json.get(COLOR);
         JsonElement charCode = json.get(CHAR_CODE);
 
         if (isNotNull(font)) object.setFont(font.getAsString());

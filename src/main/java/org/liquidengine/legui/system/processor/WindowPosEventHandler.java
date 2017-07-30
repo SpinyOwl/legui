@@ -20,6 +20,7 @@ public class WindowPosEventHandler extends AbstractSystemEventHandler<SystemWind
      * @param event   event to be processed.
      * @param layer   target event layer.
      * @param context context.
+     *
      * @return true if this event was handled and should not be handled more.
      */
     @Override
@@ -29,7 +30,8 @@ public class WindowPosEventHandler extends AbstractSystemEventHandler<SystemWind
     }
 
     /**
-     * Used to push {@link WindowPosEvent} instance of {@link org.liquidengine.legui.event.Event} to {@link org.liquidengine.legui.listener.EventProcessor}.
+     * Used to push {@link WindowPosEvent} instance of {@link org.liquidengine.legui.event.Event} to {@link
+     * org.liquidengine.legui.listener.EventProcessor}.
      *
      * @param component component for which should be created {@link WindowPosEvent}
      * @param event     event to push.

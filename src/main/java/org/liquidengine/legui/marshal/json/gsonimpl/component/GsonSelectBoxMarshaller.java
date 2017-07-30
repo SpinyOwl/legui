@@ -36,8 +36,8 @@ public class GsonSelectBoxMarshaller<T extends SelectBox> extends GsonController
                 .add(COLLAPSE_ICON, GsonMarshalUtil.marshalToJson(object.getCollapseIcon(), context))
                 .add(EXPAND_ICON, GsonMarshalUtil.marshalToJson(object.getExpandIcon(), context))
         ;
-        List<String> elements     = object.getElements();
-        JsonArray    jsonElements = new JsonArray();
+        List<String> elements = object.getElements();
+        JsonArray jsonElements = new JsonArray();
         for (String element : elements) {
             jsonElements.add(element);
         }
@@ -55,13 +55,13 @@ public class GsonSelectBoxMarshaller<T extends SelectBox> extends GsonController
     protected void unmarshal(JsonObject json, T object, GsonMarshalContext context) {
         super.unmarshal(json, object, context);
 
-        JsonElement elements        = json.get(ELEMENTS);
+        JsonElement elements = json.get(ELEMENTS);
         JsonElement selectedElement = json.get(SELECTED_ELEMENT);
-        JsonElement elementHeight   = json.get(ELEMENT_HEIGHT);
-        JsonElement buttonWidth     = json.get(BUTTON_WIDTH);
-        JsonElement visibleCount    = json.get(VISIBLE_COUNT);
-        JsonElement collapseIcon    = json.get(COLLAPSE_ICON);
-        JsonElement expandIcon      = json.get(EXPAND_ICON);
+        JsonElement elementHeight = json.get(ELEMENT_HEIGHT);
+        JsonElement buttonWidth = json.get(BUTTON_WIDTH);
+        JsonElement visibleCount = json.get(VISIBLE_COUNT);
+        JsonElement collapseIcon = json.get(COLLAPSE_ICON);
+        JsonElement expandIcon = json.get(EXPAND_ICON);
 
         if (isNotNull(elements) && elements.isJsonArray()) {
             JsonArray el = elements.getAsJsonArray();

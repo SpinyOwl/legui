@@ -15,8 +15,8 @@ import java.util.List;
 public abstract class AbstractSystemEventHandler<E extends SystemEvent> implements SystemEventHandler<E> {
 
     /**
-     * Default implementation of event handler {@link SystemEventHandler#handle(SystemEvent, Frame, Context)} method.
-     * Used to handle events and check if event should be passed to underlying layer or not.
+     * Default implementation of event handler {@link SystemEventHandler#handle(SystemEvent, Frame, Context)} method. Used to handle events
+     * and check if event should be passed to underlying layer or not.
      *
      * @param event   event to handle.
      * @param frame   target frame for event.
@@ -50,12 +50,12 @@ public abstract class AbstractSystemEventHandler<E extends SystemEvent> implemen
     }
 
     /**
-     * This method used to handle some {@link SystemEvent}
-     * and produce (or not) {@link Event} instances (which are UI events)
+     * This method used to handle some {@link SystemEvent} and produce (or not) {@link Event} instances (which are UI events)
      *
      * @param event   event to be processed.
      * @param layer   target event layer.
      * @param context context.
+     *
      * @return true if event processed and it shouldn't be processed for other underlying layers.
      */
     protected boolean handle(E event, Layer layer, Context context) {

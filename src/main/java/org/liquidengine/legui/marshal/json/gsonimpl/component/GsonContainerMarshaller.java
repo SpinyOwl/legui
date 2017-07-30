@@ -29,7 +29,7 @@ public class GsonContainerMarshaller<T extends Container> extends GsonController
     protected void marshal(T object, JsonObject json, GsonMarshalContext context) {
         super.marshal(object, json, context);
         List<Component> components = object.getChilds();
-        JsonArray       comps      = new JsonArray();
+        JsonArray comps = new JsonArray();
         for (Component component : components) {
             comps.add(GsonMarshalUtil.marshalToJson(component, context));
         }
@@ -48,7 +48,7 @@ public class GsonContainerMarshaller<T extends Container> extends GsonController
         super.unmarshal(json, object, context);
 
         List<Component> componentList = new ArrayList<>();
-        JsonElement     components    = json.get(COMPONENTS);
+        JsonElement components = json.get(COMPONENTS);
         if (isNotNull(components) && components.isJsonArray()) {
             JsonArray comps = components.getAsJsonArray();
             for (JsonElement comp : comps) {

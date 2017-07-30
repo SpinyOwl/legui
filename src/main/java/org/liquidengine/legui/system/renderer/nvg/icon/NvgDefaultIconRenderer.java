@@ -36,7 +36,7 @@ public class NvgDefaultIconRenderer extends NvgIconRenderer {
         if (!component.isVisible()) return;
         // render simple rectangle border
         Vector2f position = component.getScreenPosition();
-        Vector2f size     = component.getSize();
+        Vector2f size = component.getSize();
         Vector2f iconSize = icon.getSize();
 
         float x = position.x + icon.getHorizontalAlign().index * (size.x - iconSize.x) / 2f;

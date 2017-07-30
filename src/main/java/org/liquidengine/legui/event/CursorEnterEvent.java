@@ -10,7 +10,7 @@ import org.liquidengine.legui.system.context.Context;
  * Created by Aliaksandr_Shcherbin on 2/9/2017.
  */
 public class CursorEnterEvent<T extends Component> extends Event<T> {
-    private final boolean  entered;
+    private final boolean entered;
     private final Vector2f delta;
     private final Vector2f cursorPosition;
 

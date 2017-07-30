@@ -23,7 +23,7 @@ public class SliderMouseDragEventListener implements MouseDragEventListener {
         Vector2f pos = slider.getScreenPosition();
 
         Vector2f cursorPosition = Mouse.getCursorPosition();
-        float    value;
+        float value;
         float sliderSize = slider.getSliderSize();
         if (Orientation.VERTICAL.equals(slider.getOrientation())) {
             value = 100f * ((pos.y + slider.getSize().y) - cursorPosition.y - sliderSize / 2f) / (slider.getSize().y - sliderSize);

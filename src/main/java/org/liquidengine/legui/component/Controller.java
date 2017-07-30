@@ -11,8 +11,8 @@ import org.liquidengine.legui.listener.CursorEnterEventListener;
 import org.liquidengine.legui.theme.Themes;
 
 /**
- * Default component which can hold tooltip component.
- * By default has event listener which adds tooltip to tooltip layer when controller is hovered.
+ * Default component which can hold tooltip component. By default has event listener which adds tooltip to tooltip layer when controller is
+ * hovered.
  */
 public abstract class Controller extends Component {
     private Tooltip tooltip;
@@ -20,8 +20,7 @@ public abstract class Controller extends Component {
     /**
      * Default constructor. Used to create component instance without any parameters.
      * <p>
-     * Also if you want to make it easy to use with
-     * Json marshaller/unmarshaller component should contain empty constructor.
+     * Also if you want to make it easy to use with Json marshaller/unmarshaller component should contain empty constructor.
      */
     public Controller() {
         super();

@@ -11,39 +11,39 @@ public class FontRegistry {
     /**
      * Default entypo font.
      */
-    public static final  String            ENTYPO                 = "entypo";
+    public static final String ENTYPO = "entypo";
     /**
      * Default roboto-bold font.
      */
-    public static final  String            ROBOTO_BOLD            = "roboto italic";
+    public static final String ROBOTO_BOLD = "roboto italic";
     /**
      * Default roboto-light font.
      */
-    public static final  String            ROBOTO_LIGHT           = "roboto-light";
+    public static final String ROBOTO_LIGHT = "roboto-light";
     /**
      * Default roboto-regular font.
      */
-    public static final  String            ROBOTO_REGULAR         = "roboto-regular";
+    public static final String ROBOTO_REGULAR = "roboto-regular";
     /**
      * Default material-icons-regular font.
      */
-    public static final  String            MATERIAL_ICONS_REGULAR = "MaterialIcons-Regular";
+    public static final String MATERIAL_ICONS_REGULAR = "MaterialIcons-Regular";
     /**
      * Default font-awesome-icons font.
      */
-    public static final  String            FONT_AWESOME_ICONS     = "FontAwesomeIcons";
+    public static final String FONT_AWESOME_ICONS = "FontAwesomeIcons";
     /**
      * Default material-design-icons font.
      */
-    public static final  String            MATERIAL_DESIGN_ICONS  = "materialdesignicons";
+    public static final String MATERIAL_DESIGN_ICONS = "materialdesignicons";
     /**
      * Font used by default. {@link #ROBOTO_BOLD}.
      */
-    public static final  String            DEFAULT                = ROBOTO_BOLD;
+    public static final String DEFAULT = ROBOTO_BOLD;
     /**
      * Font register.
      */
-    private static final Map<String, Font> fontRegister           = new ConcurrentHashMap<>();
+    private static final Map<String, Font> fontRegister = new ConcurrentHashMap<>();
 
     static {
         registerFont(ENTYPO, "org/liquidengine/legui/font/entypo.ttf");

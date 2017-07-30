@@ -41,9 +41,9 @@ public class GsonIconMarshaller<I extends Icon> extends AbstractGsonMarshaller<I
      */
     @Override
     protected void unmarshal(JsonObject json, I object, GsonMarshalContext context) {
-        JsonObject  size            = json.getAsJsonObject(SIZE);
+        JsonObject size = json.getAsJsonObject(SIZE);
         JsonElement horizontalAlign = json.get(HORIZONTAL_ALIGN);
-        JsonElement verticalAlign   = json.get(VERTICAL_ALIGN);
+        JsonElement verticalAlign = json.get(VERTICAL_ALIGN);
         if (isNotNull(horizontalAlign)) object.setHorizontalAlign(HorizontalAlign.valueOf(horizontalAlign.getAsString()));
 
         if (isNotNull(verticalAlign)) object.setVerticalAlign(VerticalAlign.valueOf(verticalAlign.getAsString()));

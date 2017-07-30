@@ -28,14 +28,14 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class NvgRendererProvider extends RendererProvider {
     private Map<Class<? extends Component>, NvgComponentRenderer<? extends Component>> componentRendererMap = new ConcurrentHashMap<>();
-    private Map<Class<? extends Border>, NvgBorderRenderer<? extends Border>>          borderRendererMap    = new ConcurrentHashMap<>();
-    private Map<Class<? extends Icon>, NvgIconRenderer<? extends Icon>>                iconRendererMap      = new ConcurrentHashMap<>();
-    private Map<Class<? extends Image>, NvgImageRenderer<? extends Image>>             imageRendererMap     = new ConcurrentHashMap<>();
+    private Map<Class<? extends Border>, NvgBorderRenderer<? extends Border>> borderRendererMap = new ConcurrentHashMap<>();
+    private Map<Class<? extends Icon>, NvgIconRenderer<? extends Icon>> iconRendererMap = new ConcurrentHashMap<>();
+    private Map<Class<? extends Image>, NvgImageRenderer<? extends Image>> imageRendererMap = new ConcurrentHashMap<>();
 
     private NvgComponentRenderer defaultComponentRenderer = new NvgDefaultComponentRenderer();
-    private NvgBorderRenderer    defaultBorderRenderer    = new NvgDefaultBorderRenderer();
-    private NvgIconRenderer      defaultIconRenderer      = new NvgDefaultIconRenderer();
-    private NvgImageRenderer     defaultImageRenderer     = new NvgDefaultImageRenderer();
+    private NvgBorderRenderer defaultBorderRenderer = new NvgDefaultBorderRenderer();
+    private NvgIconRenderer defaultIconRenderer = new NvgDefaultIconRenderer();
+    private NvgImageRenderer defaultImageRenderer = new NvgDefaultImageRenderer();
 
     private NvgRendererProvider() {
 
@@ -91,8 +91,8 @@ public class NvgRendererProvider extends RendererProvider {
     }
 
     private <C, R> R cycledSearchOfRenderer(Class<C> componentClass, Map map, R defaultRenderer) {
-        R     renderer = null;
-        Class cClass   = componentClass;
+        R renderer = null;
+        Class cClass = componentClass;
         while (renderer == null) {
             renderer = ((Map<Class<C>, R>) map).get(cClass);
             if (cClass.isAssignableFrom(Component.class)) break;

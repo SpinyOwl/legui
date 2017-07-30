@@ -25,10 +25,10 @@ import static org.lwjgl.opengl.GL11.*;
  * Created by Aliaksandr_Shcherbin on 1/26/2017.
  */
 public class NvgRenderer extends Renderer {
-    public static final String NVG_CONTEXT             = "NVG_CONTEXT";
+    public static final String NVG_CONTEXT = "NVG_CONTEXT";
     public static final String IMAGE_REFERENCE_MANAGER = "IMAGE_REFERENCE_MANAGER";
 
-    protected long                nvgContext;
+    protected long nvgContext;
     protected NvgRendererProvider provider;
 
     protected Map<String, Font> loadedFonts = new ConcurrentHashMap<>();

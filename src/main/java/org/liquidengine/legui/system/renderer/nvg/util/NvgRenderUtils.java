@@ -47,10 +47,10 @@ public final class NvgRenderUtils {
      * @param hide       true if need to hide out of bounds textState.
      */
     public static void renderTextStateLineToBounds(long nvgContext, Vector2f pos, Vector2f size, TextState textState, boolean hide) {
-        Vector4f        pad             = textState.getPadding();
-        String          font            = textState.getFont() == null ? FontRegistry.DEFAULT : textState.getFont();
+        Vector4f pad = textState.getPadding();
+        String font = textState.getFont() == null ? FontRegistry.DEFAULT : textState.getFont();
         HorizontalAlign horizontalAlign = textState.getHorizontalAlign();
-        VerticalAlign   verticalAlign   = textState.getVerticalAlign();
+        VerticalAlign verticalAlign = textState.getVerticalAlign();
         renderTextLineToBounds(nvgContext,
             /* X position             */ pos.x + 0.5f + pad.x,
             /* Y position             */ pos.y + pad.y,
@@ -135,14 +135,14 @@ public final class NvgRenderUtils {
             alignTextInBox(context, horizontalAlign, verticalAlign);
             if (hide) {
                 byteText = memUTF8(text, false);
-                long              start  = memAddress(byteText);
-                long              end    = start + byteText.remaining();
+                long start = memAddress(byteText);
+                long end = start + byteText.remaining();
                 NVGTextRow.Buffer buffer = NVGTextRow.calloc(1);
-                int               rows   = nnvgTextBreakLines(context, start, end, w, memAddress(buffer), 1);
-                NVGTextRow        row    = buffer.get(0);
+                int rows = nnvgTextBreakLines(context, start, end, w, memAddress(buffer), 1);
+                NVGTextRow row = buffer.get(0);
                 if (rows != 0) {
                     long rowStart = row.start();
-                    long rowEnd   = row.end();
+                    long rowEnd = row.end();
 
                     renderTextLine(context, x, y, w, h, textColor, nvgColor, horizontalAlign, verticalAlign, rowStart, rowEnd);
                 }
@@ -150,7 +150,7 @@ public final class NvgRenderUtils {
             } else {
                 byteText = memUTF8(text, false);
                 long start = memAddress(byteText);
-                long end   = start + byteText.remaining();
+                long end = start + byteText.remaining();
 
                 renderTextLine(context, x, y, w, h, textColor, nvgColor, horizontalAlign, verticalAlign, start, end);
             }
@@ -198,7 +198,7 @@ public final class NvgRenderUtils {
      */
     public static void drawRectangle(long context, Vector4fc color, float x, float y, float w, float h) {
         NVGColor nvgColor = NVGColor.calloc();
-        NVGColor rgba     = NVGUtils.rgba(color, nvgColor);
+        NVGColor rgba = NVGUtils.rgba(color, nvgColor);
         nvgBeginPath(context);
         nvgFillColor(context, rgba);
         nvgRect(context, x, y, w, h);
@@ -267,13 +267,13 @@ public final class NvgRenderUtils {
     }
 
     public static float[] createBounds(float w, float h, HorizontalAlign horizontalAlign, VerticalAlign verticalAlign, float[] bounds, float ww, float hh) {
-        int   hp = horizontalAlign == HorizontalAlign.LEFT ? 0 : horizontalAlign == HorizontalAlign.CENTER ? 1 : 2;
-        int   vp = verticalAlign == VerticalAlign.TOP ? 0 : verticalAlign == VerticalAlign.MIDDLE ? 1 : verticalAlign == VerticalAlign.BOTTOM ? 2 : 3;
+        int hp = horizontalAlign == HorizontalAlign.LEFT ? 0 : horizontalAlign == HorizontalAlign.CENTER ? 1 : 2;
+        int vp = verticalAlign == VerticalAlign.TOP ? 0 : verticalAlign == VerticalAlign.MIDDLE ? 1 : verticalAlign == VerticalAlign.BOTTOM ? 2 : 3;
         float x1 = bounds[0] + (w + ww) * 0.5f * hp;
 
         float baseline = (vp > 2 ? hh / 4.0f : 0);
-        float vv       = (vp == 3 ? 1 : vp);
-        float y1       = bounds[1] + (h + hh) * 0.5f * vv + (vp > 2 ? (+baseline) : 0);
+        float vv = (vp == 3 ? 1 : vp);
+        float y1 = bounds[1] + (h + hh) * 0.5f * vv + (vp > 2 ? (+baseline) : 0);
         return new float[]{
                 x1, y1, ww, hh,
                 x1 - (ww * 0.5f * hp), y1 - (hh * 0.5f * vv) - baseline, ww, hh
@@ -287,8 +287,8 @@ public final class NvgRenderUtils {
         float x1 = x + w * 0.5f * hp;
 
         float baseline = (vp > 2 ? th / 4.0f : 0);
-        float vv       = (vp == 3 ? 1 : vp);
-        float y1       = y + h * 0.5f * vv + (vp > 2 ? (+baseline) : 0);
+        float vv = (vp == 3 ? 1 : vp);
+        float y1 = y + h * 0.5f * vv + (vp > 2 ? (+baseline) : 0);
         return new float[]{
                 x1, y1, tw, th,
                 x1 - (tw * 0.5f * hp), y1 - (th * 0.5f * vv) - baseline, tw, th
@@ -299,7 +299,7 @@ public final class NvgRenderUtils {
     public static void alignTextInBox(long context, HorizontalAlign hAlig, VerticalAlign vAlig) {
         int hAlign = hAlig == HorizontalAlign.CENTER ? NVG_ALIGN_CENTER : hAlig == HorizontalAlign.LEFT ? NVG_ALIGN_LEFT : NVG_ALIGN_RIGHT;
         int vAlign = vAlig == VerticalAlign.TOP ? NVG_ALIGN_TOP : vAlig == VerticalAlign.BOTTOM ?
-                                                                  NVG_ALIGN_BOTTOM : vAlig == VerticalAlign.MIDDLE ? NVG_ALIGN_MIDDLE : NVG_ALIGN_BASELINE;
+                NVG_ALIGN_BOTTOM : vAlig == VerticalAlign.MIDDLE ? NVG_ALIGN_MIDDLE : NVG_ALIGN_BASELINE;
         nvgTextAlign(context, hAlign | vAlign);
     }
 
@@ -323,8 +323,8 @@ public final class NvgRenderUtils {
 
     public static void dropShadow(long context, float x, float y, float w, float h, float cornerRadius, Vector4f shadowColor) {
         NVGPaint shadowPaint = NVGPaint.calloc();
-        NVGColor colorA      = NVGColor.calloc();
-        NVGColor colorB      = NVGColor.calloc();
+        NVGColor colorA = NVGColor.calloc();
+        NVGColor colorB = NVGColor.calloc();
 
         nvgBoxGradient(context, x, y + 2, w, h, cornerRadius * 2, 10, NVGUtils.rgba(shadowColor, colorA), NVGUtils.rgba(0, 0, 0, 0, colorB), shadowPaint);
         nvgBeginPath(context);

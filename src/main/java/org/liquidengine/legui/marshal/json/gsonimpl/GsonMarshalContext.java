@@ -10,8 +10,8 @@ import java.util.Map;
  * Marshal context for GsonMarshaller.
  */
 public final class GsonMarshalContext implements JsonMarshalContext {
-    private Map<String, Object>            contextMap               = new HashMap<>();
-    private Map<RadioButtonGroup, Integer> serializeRadioGroupMap   = new HashMap<>();
+    private Map<String, Object> contextMap = new HashMap<>();
+    private Map<RadioButtonGroup, Integer> serializeRadioGroupMap = new HashMap<>();
     private Map<Integer, RadioButtonGroup> deserializeRadioGroupMap = new HashMap<>();
 
 

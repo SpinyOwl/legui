@@ -17,8 +17,7 @@ import org.liquidengine.legui.theme.Themes;
 import static org.liquidengine.legui.font.FontRegistry.MATERIAL_ICONS_REGULAR;
 
 /**
- * An implementation of a check box -- an item that can be selected or
- * deselected, and which displays its state to the user.
+ * An implementation of a check box -- an item that can be selected or deselected, and which displays its state to the user.
  */
 public class CheckBox extends Controller implements TextComponent {
 
@@ -29,7 +28,7 @@ public class CheckBox extends Controller implements TextComponent {
     /**
      * Checkbox state.
      */
-    private boolean   checked;
+    private boolean checked;
 
     /**
      * Icon used to show checked state of checkbox.
@@ -49,8 +48,7 @@ public class CheckBox extends Controller implements TextComponent {
     }
 
     /**
-     * Constructor with position and size parameters.
-     * Initialize checkbox with "CheckBox" text.
+     * Constructor with position and size parameters. Initialize checkbox with "CheckBox" text.
      *
      * @param x      x position position in parent component.
      * @param y      y position position in parent component.
@@ -62,8 +60,7 @@ public class CheckBox extends Controller implements TextComponent {
     }
 
     /**
-     * Constructor with position and size parameters.
-     * Initialize checkbox with "CheckBox" text.
+     * Constructor with position and size parameters. Initialize checkbox with "CheckBox" text.
      *
      * @param position position position in parent component.
      * @param size     size of component.
@@ -82,8 +79,7 @@ public class CheckBox extends Controller implements TextComponent {
     }
 
     /**
-     * Constructor with position and size parameters.
-     * Initialize checkbox with "CheckBox" text.
+     * Constructor with position and size parameters. Initialize checkbox with "CheckBox" text.
      *
      * @param text   specified text for checkbox.
      * @param x      x position position in parent component.
@@ -97,8 +93,7 @@ public class CheckBox extends Controller implements TextComponent {
     }
 
     /**
-     * Constructor with position and size parameters.
-     * Initialize checkbox with "CheckBox" text.
+     * Constructor with position and size parameters. Initialize checkbox with "CheckBox" text.
      *
      * @param text     specified text for checkbox.
      * @param position position position in parent component.

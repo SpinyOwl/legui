@@ -41,7 +41,7 @@ public class GsonSimpleLineBorderMarshaller extends GsonBorderMarshaller<SimpleL
     protected void unmarshal(JsonObject json, SimpleLineBorder object, GsonMarshalContext context) {
         super.unmarshal(json, object, context);
 
-        JsonElement thickness   = json.get(THICKNESS);
+        JsonElement thickness = json.get(THICKNESS);
         JsonElement borderColor = json.get(BORDER_COLOR);
         if (isNotNull(thickness)) object.setThickness(thickness.getAsFloat());
         if (isNotNull(borderColor)) object.setColor(GsonUtil.readColor(borderColor.getAsJsonObject()));

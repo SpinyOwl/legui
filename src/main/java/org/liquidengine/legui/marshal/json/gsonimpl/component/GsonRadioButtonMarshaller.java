@@ -42,7 +42,7 @@ public class GsonRadioButtonMarshaller<T extends RadioButton> extends GsonContro
         RadioButtonGroup rbg = object.getRadioButtonGroup();
         if (rbg != null) {
             Map<RadioButtonGroup, Integer> sgm = context.getSerializeRadioGroupMap();
-            Integer                        group;
+            Integer group;
             if (sgm.containsKey(rbg)) {
                 group = sgm.get(rbg);
             } else {
@@ -66,24 +66,24 @@ public class GsonRadioButtonMarshaller<T extends RadioButton> extends GsonContro
     protected void unmarshal(JsonObject json, T object, GsonMarshalContext context) {
         super.unmarshal(json, object, context);
 
-        JsonElement textState     = json.get(TEXT_STATE);
-        JsonElement selected      = json.get(SELECTED);
-        JsonElement group         = json.get(GROUP);
-        JsonElement iconChecked   = json.get(ICON_CHECKED);
+        JsonElement textState = json.get(TEXT_STATE);
+        JsonElement selected = json.get(SELECTED);
+        JsonElement group = json.get(GROUP);
+        JsonElement iconChecked = json.get(ICON_CHECKED);
         JsonElement iconUnchecked = json.get(ICON_UNCHECKED);
 
         if (isNotNull(iconChecked)) object.setIconChecked(GsonMarshalUtil.unmarshal(iconChecked.getAsJsonObject(), context));
         if (isNotNull(iconUnchecked)) object.setIconUnchecked(GsonMarshalUtil.unmarshal(iconUnchecked.getAsJsonObject(), context));
         if (isNotNull(textState)) {
             JsonObject asJsonObject = textState.getAsJsonObject();
-            TextState  state        = GsonMarshalUtil.unmarshal(asJsonObject, context);
+            TextState state = GsonMarshalUtil.unmarshal(asJsonObject, context);
             object.getTextState().copy(state);
         }
         if (isNotNull(selected)) object.setChecked(selected.getAsBoolean());
         if (isNotNull(group)) {
-            Map<Integer, RadioButtonGroup> drg     = context.getDeserializeRadioGroupMap();
-            int                            groupId = group.getAsInt();
-            RadioButtonGroup               g;
+            Map<Integer, RadioButtonGroup> drg = context.getDeserializeRadioGroupMap();
+            int groupId = group.getAsInt();
+            RadioButtonGroup g;
             if (drg.containsKey(groupId)) {
                 g = drg.get(groupId);
             } else {

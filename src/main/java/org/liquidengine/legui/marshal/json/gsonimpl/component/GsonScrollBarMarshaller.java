@@ -50,15 +50,15 @@ public class GsonScrollBarMarshaller<T extends ScrollBar> extends GsonController
     protected void unmarshal(JsonObject json, T object, GsonMarshalContext context) {
         super.unmarshal(json, object, context);
 
-        JsonElement orientation   = json.get(ORIENTATION);
-        JsonElement minValue      = json.get(MIN_VALUE);
-        JsonElement maxValue      = json.get(MAX_VALUE);
-        JsonElement curValue      = json.get(CUR_VALUE);
+        JsonElement orientation = json.get(ORIENTATION);
+        JsonElement minValue = json.get(MIN_VALUE);
+        JsonElement maxValue = json.get(MAX_VALUE);
+        JsonElement curValue = json.get(CUR_VALUE);
         JsonElement visibleAmount = json.get(VISIBLE_AMOUNT);
         JsonElement arrowsEnabled = json.get(ARROWS_ENABLED);
-        JsonElement arrowSize     = json.get(ARROW_SIZE);
-        JsonElement arrowColor    = json.get(ARROW_COLOR);
-        JsonElement scrollColor   = json.get(SCROLL_COLOR);
+        JsonElement arrowSize = json.get(ARROW_SIZE);
+        JsonElement arrowColor = json.get(ARROW_COLOR);
+        JsonElement scrollColor = json.get(SCROLL_COLOR);
 
         if (isNotNull(orientation)) object.setOrientation(Orientation.valueOf(orientation.getAsString()));
         if (isNotNull(minValue)) object.setMinValue(minValue.getAsFloat());

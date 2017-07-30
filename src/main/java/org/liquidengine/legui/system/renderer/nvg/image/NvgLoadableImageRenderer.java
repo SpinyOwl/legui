@@ -43,12 +43,12 @@ public class NvgLoadableImageRenderer<I extends LoadableImage> extends NvgImageR
     protected void renderImage(I image, Vector2fc position, Vector2fc size, Map<String, Object> properties, Context context, long nanovg) {
         NvgLoadableImageReferenceManager manager = (NvgLoadableImageReferenceManager) context.getContextData().get(IMAGE_REFERENCE_MANAGER);
 
-        int   imageRef = manager.getImageReference(image, nanovg);
-        float x        = position.x();
-        float y        = position.y();
-        float w        = size.x();
-        float h        = size.y();
-        float r        = (float) properties.getOrDefault(C_RADIUS, 0);
+        int imageRef = manager.getImageReference(image, nanovg);
+        float x = position.x();
+        float y = position.y();
+        float w = size.x();
+        float h = size.y();
+        float r = (float) properties.getOrDefault(C_RADIUS, 0);
 
         nvgBeginPath(nanovg);
         nvgImagePattern(nanovg, x, y, w, h, 0, imageRef, 1, imagePaint);

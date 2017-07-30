@@ -38,6 +38,7 @@ public class GsonControllerMarshaller<T extends Controller> extends GsonComponen
         super.unmarshal(json, object, context);
 
         JsonElement tooltip = json.get("tooltip");
-        if (GsonUtil.isNotNull(tooltip) && tooltip.isJsonObject()) object.setTooltipComponent(GsonMarshalUtil.unmarshal((JsonObject) tooltip));
+        if (GsonUtil.isNotNull(tooltip) && tooltip.isJsonObject())
+            object.setTooltipComponent(GsonMarshalUtil.unmarshal((JsonObject) tooltip));
     }
 }

@@ -17,8 +17,8 @@ import static org.lwjgl.nanovg.NanoVG.*;
  * Renderer for Slider components.
  */
 public class NvgSliderRenderer<T extends Slider> extends NvgComponentRenderer<T> {
-    public static final float    SLIDER_WIDTH = 4.0f;
-    private             NVGColor colorA       = NVGColor.malloc();
+    public static final float SLIDER_WIDTH = 4.0f;
+    private NVGColor colorA = NVGColor.malloc();
 
     /**
      * Used to render slider component.
@@ -32,20 +32,20 @@ public class NvgSliderRenderer<T extends Slider> extends NvgComponentRenderer<T>
         createScissor(context, slider);
         {
             nvgSave(context);
-            Vector2f pos             = slider.getScreenPosition();
-            Vector2f size            = slider.getSize();
-            float    x               = pos.x;
-            float    y               = pos.y;
-            float    w               = size.x;
-            float    h               = size.y;
+            Vector2f pos = slider.getScreenPosition();
+            Vector2f size = slider.getSize();
+            float x = pos.x;
+            float y = pos.y;
+            float w = size.x;
+            float h = size.y;
             Vector4f backgroundColor = new Vector4f(slider.getBackgroundColor());
 
-            float    value               = slider.getValue();
-            boolean  vertical            = Orientation.VERTICAL.equals(slider.getOrientation());
+            float value = slider.getValue();
+            boolean vertical = Orientation.VERTICAL.equals(slider.getOrientation());
             Vector4f sliderInactiveColor = slider.getSliderColor();
-            Vector4f sliderColor         = slider.getSliderActiveColor();
-            float    cornerRadius        = slider.getCornerRadius();
-            float    sliderSize          = slider.getSliderSize();
+            Vector4f sliderColor = slider.getSliderActiveColor();
+            float cornerRadius = slider.getCornerRadius();
+            float sliderSize = slider.getSliderSize();
 
             nvgBeginPath(context);
             nvgRoundedRect(context, x, y, w, h, cornerRadius);

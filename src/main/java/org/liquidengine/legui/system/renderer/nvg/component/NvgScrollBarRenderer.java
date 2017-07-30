@@ -28,40 +28,40 @@ import static org.lwjgl.system.MemoryUtil.memAddress;
  */
 public class NvgScrollBarRenderer extends NvgComponentRenderer<ScrollBar> {
     // TODO: It would be nice to add Icon here to render arrows.
-    private static final String   B      = cpToStr(0xE5CF);
-    private static final String   L      = cpToStr(0xE5CB);
-    private static final String   R      = cpToStr(0xE5CC);
-    private static final String   T      = cpToStr(0xE5CE);
-    private              NVGColor colorA = NVGColor.malloc();
+    private static final String B = cpToStr(0xE5CF);
+    private static final String L = cpToStr(0xE5CB);
+    private static final String R = cpToStr(0xE5CC);
+    private static final String T = cpToStr(0xE5CE);
+    private NVGColor colorA = NVGColor.malloc();
 
     @Override
     public void renderComponent(ScrollBar scrollBar, Context leguiContext, long context) {
         createScissor(context, scrollBar);
         {
             nvgSave(context);
-            Vector2f pos             = scrollBar.getScreenPosition();
-            Vector2f size            = scrollBar.getSize();
-            float    x               = pos.x;
-            float    y               = pos.y;
-            float    w               = size.x;
-            float    h               = size.y;
+            Vector2f pos = scrollBar.getScreenPosition();
+            Vector2f size = scrollBar.getSize();
+            float x = pos.x;
+            float y = pos.y;
+            float w = size.x;
+            float h = size.y;
             Vector4f backgroundColor = new Vector4f(scrollBar.getBackgroundColor());
 
             float visibleAmount = scrollBar.getVisibleAmount();
 
-            float minValue  = scrollBar.getMinValue();
-            float maxValue  = scrollBar.getMaxValue();
+            float minValue = scrollBar.getMinValue();
+            float maxValue = scrollBar.getMaxValue();
             float arrowSize = scrollBar.getArrowSize();
 
             boolean arrowsEnabled = scrollBar.isArrowsEnabled();
-            float   diff          = arrowsEnabled ? arrowSize : 0;
+            float diff = arrowsEnabled ? arrowSize : 0;
 
             float offset = 1f;
 
-            float    curValue                 = scrollBar.getCurValue();
-            boolean  vertical                 = VERTICAL.equals(scrollBar.getOrientation());
+            float curValue = scrollBar.getCurValue();
+            boolean vertical = VERTICAL.equals(scrollBar.getOrientation());
             Vector4f scrollBarBackgroundColor = scrollBar.getBackgroundColor();
-            Vector4f scrollColor              = scrollBar.getScrollColor();
+            Vector4f scrollColor = scrollBar.getScrollColor();
 
             float cornerRadius = scrollBar.getCornerRadius();
 
@@ -118,11 +118,11 @@ public class NvgScrollBarRenderer extends NvgComponentRenderer<ScrollBar> {
                                   float maxValue, float diff, float offset,
                                   float curValue, boolean vertical,
                                   Vector4f scrollColor, float cornerRadius) {
-        float scrollBarSize           = (vertical ? scrollBar.getSize().y : scrollBar.getSize().x) - 2 * diff;
+        float scrollBarSize = (vertical ? scrollBar.getSize().y : scrollBar.getSize().x) - 2 * diff;
         float scrollBarPercentageSize = visibleAmount / (maxValue - minValue);
-        float barSize                 = scrollBarSize * scrollBarPercentageSize;
+        float barSize = scrollBarSize * scrollBarPercentageSize;
         if (barSize < ScrollBar.MIN_SCROLL_SIZE) barSize = ScrollBar.MIN_SCROLL_SIZE;
-        float rangeToScroll                    = scrollBarSize - barSize;
+        float rangeToScroll = scrollBarSize - barSize;
         float scrollPosAccordingToScrollBounds = diff + rangeToScroll * curValue / (maxValue - minValue);
 
         float xx,
@@ -148,9 +148,9 @@ public class NvgScrollBarRenderer extends NvgComponentRenderer<ScrollBar> {
     }
 
     private void drawArrows(long context, ScrollBar scrollBar, float x, float y, float w, float h) {
-        boolean  vertical   = VERTICAL.equals(scrollBar.getOrientation());
+        boolean vertical = VERTICAL.equals(scrollBar.getOrientation());
         Vector4f arrowColor = scrollBar.getArrowColor();
-        float    arrowSize  = scrollBar.getArrowSize();
+        float arrowSize = scrollBar.getArrowSize();
         float x1,
                 y1,
                 w1,
@@ -197,9 +197,9 @@ public class NvgScrollBarRenderer extends NvgComponentRenderer<ScrollBar> {
         } else {
             fontSize = arrowSize > h1 ? h1 : arrowSize;
         }
-        String          font            = FontRegistry.MATERIAL_ICONS_REGULAR;
+        String font = FontRegistry.MATERIAL_ICONS_REGULAR;
         HorizontalAlign horizontalAlign = HorizontalAlign.CENTER;
-        VerticalAlign   verticalAlign   = VerticalAlign.MIDDLE;
+        VerticalAlign verticalAlign = VerticalAlign.MIDDLE;
 
         {
             nvgFontSize(context, fontSize);
@@ -218,10 +218,10 @@ public class NvgScrollBarRenderer extends NvgComponentRenderer<ScrollBar> {
             NVGTextRow.Buffer buffer = NVGTextRow.calloc(1);
             {
                 long start = memAddress(byteText);
-                long end   = start + byteText.remaining() - 1;
+                long end = start + byteText.remaining() - 1;
                 nnvgTextBreakLines(context, start, end, w1, memAddress(buffer), 1);
-                NVGTextRow row    = buffer.get(0);
-                float[]    bounds = createBounds(x1, y1, w1, h1, horizontalAlign, verticalAlign, row.width(), fontSize);
+                NVGTextRow row = buffer.get(0);
+                float[] bounds = createBounds(x1, y1, w1, h1, horizontalAlign, verticalAlign, row.width(), fontSize);
                 nvgBeginPath(context);
                 nvgFillColor(context, rgba(blackOrWhite, colorA));
                 nnvgText(context, bounds[0], bounds[1], row.start(), row.end());

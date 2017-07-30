@@ -11,19 +11,15 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
- * Default structure which should be associated with OpenGL window.
- * Contains two default layers:
- * <ul>
- * <li>Component layer - holds components and always on bottom of all layers.</li>
- * <li>Tooltip layer - holds tooltips and always on top of all layers.</li>
- * </ul>
- * <span style="color:red;">NOTE: layers processed in reverse order - from top to bottom.</span>
+ * Default structure which should be associated with OpenGL window. Contains two default layers: <ul> <li>Component layer - holds components
+ * and always on bottom of all layers.</li> <li>Tooltip layer - holds tooltips and always on top of all layers.</li> </ul> <span
+ * style="color:red;">NOTE: layers processed in reverse order - from top to bottom.</span>
  */
 public class Frame {
     /**
      * Used to hold tooltips.
      */
-    private TooltipLayer   tooltipLayer;
+    private TooltipLayer tooltipLayer;
     /**
      * Used to hold components.
      */
@@ -95,8 +91,7 @@ public class Frame {
     }
 
     /**
-     * Used to add layer to frame.
-     * <span style="color:red;">NOTE: layers processed in reverse order - from top to bottom.</span>
+     * Used to add layer to frame. <span style="color:red;">NOTE: layers processed in reverse order - from top to bottom.</span>
      *
      * @param layer layer to add.
      */
@@ -134,6 +129,7 @@ public class Frame {
      * Used to check if layer list contains provided layer.
      *
      * @param layer layer to check.
+     *
      * @return true if layer list contains provided layer.
      */
     public boolean containsLayer(Layer layer) {
@@ -141,8 +137,8 @@ public class Frame {
     }
 
     /**
-     * Used to retrieve default component layer.
-     * <span style="color:red;">NOTE: layers processed in reverse order - from top to bottom.</span>
+     * Used to retrieve default component layer. <span style="color:red;">NOTE: layers processed in reverse order - from top to
+     * bottom.</span>
      *
      * @return default component layer.
      */
@@ -151,8 +147,8 @@ public class Frame {
     }
 
     /**
-     * Used to retrieve default tooltip layer.
-     * <span style="color:red;">NOTE: layers processed in reverse order - from top to bottom.</span>
+     * Used to retrieve default tooltip layer. <span style="color:red;">NOTE: layers processed in reverse order - from top to
+     * bottom.</span>
      *
      * @return default tooltip layer.
      */
@@ -161,8 +157,8 @@ public class Frame {
     }
 
     /**
-     * Used to retrieve layers added by developer.
-     * <span style="color:red;">NOTE: layers processed in reverse order - from top to bottom.</span>
+     * Used to retrieve layers added by developer. <span style="color:red;">NOTE: layers processed in reverse order - from top to
+     * bottom.</span>
      *
      * @return layers added by developer.
      */
@@ -171,12 +167,8 @@ public class Frame {
     }
 
     /**
-     * Used to retrieve all layers where
-     * <ul>
-     * <li><b>List[0]</b> - default component layer.</li>
-     * <li><b>List[1]-List[length-2]</b> - layers added by developer.</li>
-     * <li><b>List[length-1]</b> - default tooltip layer.</li>
-     * </ul>
+     * Used to retrieve all layers where <ul> <li><b>List[0]</b> - default component layer.</li> <li><b>List[1]-List[length-2]</b> - layers
+     * added by developer.</li> <li><b>List[length-1]</b> - default tooltip layer.</li> </ul>
      * <p>
      * <span style="color:red;">NOTE: layers processed in reverse order - from top to bottom.</span>
      *

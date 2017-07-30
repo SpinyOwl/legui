@@ -26,7 +26,7 @@ public class NvgCheckBoxRenderer extends NvgComponentRenderer<CheckBox> {
     public void renderComponent(CheckBox checkBox, Context context, long nanovg) {
         createScissor(nanovg, checkBox);
         {
-            Vector2f pos  = checkBox.getScreenPosition();
+            Vector2f pos = checkBox.getScreenPosition();
             Vector2f size = checkBox.getSize();
 
             float px = pos.x;
@@ -42,8 +42,8 @@ public class NvgCheckBoxRenderer extends NvgComponentRenderer<CheckBox> {
             }
 
             TextState textState = checkBox.getTextState();
-            Icon      icon      = checkBox.isChecked() ? checkBox.getIconChecked() : checkBox.getIconUnchecked();
-            float     iconWid   = icon.getSize().x;
+            Icon icon = checkBox.isChecked() ? checkBox.getIconChecked() : checkBox.getIconUnchecked();
+            float iconWid = icon.getSize().x;
 
             Vector4f pad = textState.getPadding();
 

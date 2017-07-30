@@ -4,27 +4,25 @@ import org.liquidengine.cbchain.*;
 import org.liquidengine.cbchain.impl.*;
 import org.lwjgl.glfw.*;
 
-import static org.lwjgl.glfw.GLFW.*;
-
 /**
  * Used to hold all callbacks for specified window.
  */
 public class DefaultCallbackKeeper implements CallbackKeeper {
-    private IChainCharCallback            chainCharCallback            = new ChainCharCallback();
-    private IChainDropCallback            chainDropCallback            = new ChainDropCallback();
-    private IChainKeyCallback             chainKeyCallback             = new ChainKeyCallback();
-    private IChainScrollCallback          chainScrollCallback          = new ChainScrollCallback();
-    private IChainCharModsCallback        chainCharModsCallback        = new ChainCharModsCallback();
-    private IChainCursorEnterCallback     chainCursorEnterCallback     = new ChainCursorEnterCallback();
+    private IChainCharCallback chainCharCallback = new ChainCharCallback();
+    private IChainDropCallback chainDropCallback = new ChainDropCallback();
+    private IChainKeyCallback chainKeyCallback = new ChainKeyCallback();
+    private IChainScrollCallback chainScrollCallback = new ChainScrollCallback();
+    private IChainCharModsCallback chainCharModsCallback = new ChainCharModsCallback();
+    private IChainCursorEnterCallback chainCursorEnterCallback = new ChainCursorEnterCallback();
     private IChainFramebufferSizeCallback chainFramebufferSizeCallback = new ChainFramebufferSizeCallback();
-    private IChainMouseButtonCallback     chainMouseButtonCallback     = new ChainMouseButtonCallback();
-    private IChainCursorPosCallback       chainCursorPosCallback       = new ChainCursorPosCallback();
-    private IChainWindowCloseCallback     chainWindowCloseCallback     = new ChainWindowCloseCallback();
-    private IChainWindowFocusCallback     chainWindowFocusCallback     = new ChainWindowFocusCallback();
-    private IChainWindowIconifyCallback   chainWindowIconifyCallback   = new ChainWindowIconifyCallback();
-    private IChainWindowPosCallback       chainWindowPosCallback       = new ChainWindowPosCallback();
-    private IChainWindowRefreshCallback   chainWindowRefreshCallback   = new ChainWindowRefreshCallback();
-    private IChainWindowSizeCallback      chainWindowSizeCallback      = new ChainWindowSizeCallback();
+    private IChainMouseButtonCallback chainMouseButtonCallback = new ChainMouseButtonCallback();
+    private IChainCursorPosCallback chainCursorPosCallback = new ChainCursorPosCallback();
+    private IChainWindowCloseCallback chainWindowCloseCallback = new ChainWindowCloseCallback();
+    private IChainWindowFocusCallback chainWindowFocusCallback = new ChainWindowFocusCallback();
+    private IChainWindowIconifyCallback chainWindowIconifyCallback = new ChainWindowIconifyCallback();
+    private IChainWindowPosCallback chainWindowPosCallback = new ChainWindowPosCallback();
+    private IChainWindowRefreshCallback chainWindowRefreshCallback = new ChainWindowRefreshCallback();
+    private IChainWindowSizeCallback chainWindowSizeCallback = new ChainWindowSizeCallback();
 
     /**
      * Used to bind callbacks to OpenGL window.

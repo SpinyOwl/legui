@@ -27,8 +27,8 @@ public class DarkWidgetTheme<T extends Widget> extends DarkControllerTheme<T> {
     }
 
     /**
-     * Used to apply theme for component and for all children of this component.
-     * Should be reimplemented for components that contains other child components.
+     * Used to apply theme for component and for all children of this component. Should be reimplemented for components that contains other
+     * child components.
      *
      * @param component component to apply theme.
      */

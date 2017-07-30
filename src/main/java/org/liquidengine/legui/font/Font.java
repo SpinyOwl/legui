@@ -21,7 +21,7 @@ public class Font {
     /**
      * Path to font.
      */
-    private final String     path;
+    private final String path;
 
     /**
      * Used to create font by specified path. Loads font from specified path.

@@ -19,7 +19,7 @@ import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.res
 public class NvgImageViewRenderer extends NvgComponentRenderer<ImageView> {
     @Override
     protected void renderComponent(ImageView imageView, Context context, long nanovg) {
-        Vector2f size     = imageView.getSize();
+        Vector2f size = imageView.getSize();
         Vector2f position = imageView.getScreenPosition();
 
         createScissor(nanovg, imageView);

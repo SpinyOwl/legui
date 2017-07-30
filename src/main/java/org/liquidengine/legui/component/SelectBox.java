@@ -12,7 +12,6 @@ import org.liquidengine.legui.component.misc.listener.selectbox.SelectBoxFocusLi
 import org.liquidengine.legui.component.misc.listener.selectbox.SelectBoxScrollListener;
 import org.liquidengine.legui.event.FocusEvent;
 import org.liquidengine.legui.event.MouseClickEvent;
-import org.liquidengine.legui.event.ScrollEvent;
 import org.liquidengine.legui.icon.CharIcon;
 import org.liquidengine.legui.icon.Icon;
 import org.liquidengine.legui.listener.FocusEventListener;
@@ -31,13 +30,13 @@ import static org.liquidengine.legui.font.FontRegistry.MATERIAL_ICONS_REGULAR;
  * Creates drop-down list with select options.
  */
 public class SelectBox extends Container {
-    public static final  int    EXPAND_ICON_CHAR   = 0xE5C5;
-    public static final  int    COLLAPSE_ICON_CHAR = 0xE5C7;
-    public static final  String DEFAULT_ICON_FONT  = MATERIAL_ICONS_REGULAR;
+    public static final int EXPAND_ICON_CHAR = 0xE5C5;
+    public static final int COLLAPSE_ICON_CHAR = 0xE5C7;
+    public static final String DEFAULT_ICON_FONT = MATERIAL_ICONS_REGULAR;
     /**
      * Default value for null element.
      */
-    private static final String NULL               = "null";
+    private static final String NULL = "null";
     /**
      * Expand button icon (Char icon).
      */
@@ -45,24 +44,23 @@ public class SelectBox extends Container {
     private Icon collapseIcon;
 
     private List<SelectBoxElement> selectBoxElements = new CopyOnWriteArrayList<>();
-    private List<String>           elements          = new CopyOnWriteArrayList<>();
+    private List<String> elements = new CopyOnWriteArrayList<>();
 
-    private       SelectBoxScrollablePanel selectionListPanel      = new SelectBoxScrollablePanel();
-    private final SelectBoxScrollListener  selectBoxScrollListener = new SelectBoxScrollListener(selectionListPanel.getVerticalScrollBar());
-    private       Button                   selectionButton         = new Button(NULL);
-    private       String                   selectedElement         = null;
-    private       float                    elementHeight           = 16;
-    private       float                    buttonWidth             = 15f;
-    private       int                      visibleCount            = 3;
-    private       Button                   expandButton            = new Button("");
-    private       boolean                  collapsed               = true;
-    private       Lock                     lock                    = new ReentrantLock(false);
+    private SelectBoxScrollablePanel selectionListPanel = new SelectBoxScrollablePanel();
+    private final SelectBoxScrollListener selectBoxScrollListener = new SelectBoxScrollListener(selectionListPanel.getVerticalScrollBar());
+    private Button selectionButton = new Button(NULL);
+    private String selectedElement = null;
+    private float elementHeight = 16;
+    private float buttonWidth = 15f;
+    private int visibleCount = 3;
+    private Button expandButton = new Button("");
+    private boolean collapsed = true;
+    private Lock lock = new ReentrantLock(false);
 
     /**
      * Default constructor. Used to create component instance without any parameters.
      * <p>
-     * Also if you want to make it easy to use with
-     * Json marshaller/unmarshaller component should contain empty constructor.
+     * Also if you want to make it easy to use with Json marshaller/unmarshaller component should contain empty constructor.
      */
     public SelectBox() {
         initialize();
@@ -504,7 +502,7 @@ public class SelectBox extends Container {
      */
     public class SelectBoxElement extends Button {
         private boolean selected;
-        private String  text;
+        private String text;
 
         private SelectBoxElement(String text, boolean selected) {
             super(text == null ? "null" : text);
@@ -577,8 +575,7 @@ public class SelectBox extends Container {
         /**
          * Default constructor. Used to create component instance without any parameters.
          * <p>
-         * Also if you want to make it easy to use with
-         * Json marshaller/unmarshaller component should contain empty constructor.
+         * Also if you want to make it easy to use with Json marshaller/unmarshaller component should contain empty constructor.
          */
         public SelectBoxScrollablePanel() {
         }

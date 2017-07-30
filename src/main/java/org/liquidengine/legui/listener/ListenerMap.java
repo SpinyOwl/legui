@@ -17,8 +17,8 @@ import java.util.concurrent.locks.ReentrantLock;
  * Used to hold event listeners.
  */
 public class ListenerMap {
-    private final Lock                                                       lock        = new ReentrantLock();
-    private       Map<Class<? extends Event>, List<? extends EventListener>> listenerMap = new ConcurrentHashMap<>();
+    private final Lock lock = new ReentrantLock();
+    private Map<Class<? extends Event>, List<? extends EventListener>> listenerMap = new ConcurrentHashMap<>();
 
     /**
      * Used to add event listener for specified event type.
@@ -36,6 +36,7 @@ public class ListenerMap {
      *
      * @param eventClass event class for which registered listeners.
      * @param <E>        event type.
+     *
      * @return event listeners for specified event type.
      */
     public <E extends Event> List<EventListener<E>> getListeners(Class<E> eventClass) {

@@ -31,7 +31,7 @@ public class GsonFrameMarshaller<T extends Frame> extends AbstractGsonMarshaller
     @Override
     protected void marshal(T object, JsonObject json, GsonMarshalContext context) {
         JsonObject componentLayer = GsonMarshalUtil.marshalToJson(object.getComponentLayer());
-        JsonArray  layers         = new JsonArray();
+        JsonArray layers = new JsonArray();
         for (Layer l : object.getLayers()) {
             layers.add(GsonMarshalUtil.marshalToJson(l, context));
         }

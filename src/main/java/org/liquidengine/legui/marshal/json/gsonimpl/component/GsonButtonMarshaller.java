@@ -44,20 +44,23 @@ public class GsonButtonMarshaller<T extends Button> extends GsonControllerMarsha
     protected void unmarshal(JsonObject json, T object, GsonMarshalContext context) {
         super.unmarshal(json, object, context);
 
-        JsonElement backgroundIcon        = json.get(BACKGROUND_ICON);
+        JsonElement backgroundIcon = json.get(BACKGROUND_ICON);
         JsonElement focusedBackgroundIcon = json.get(FOCUSED_BACKGROUND_ICON);
         JsonElement pressedBackgroundIcon = json.get(PRESSED_BACKGROUND_ICON);
         JsonElement hoveredBackgroundIcon = json.get(HOVERED_BACKGROUND_ICON);
 
         if (isNotNull(backgroundIcon)) object.setBackgroundIcon(GsonMarshalUtil.unmarshal(backgroundIcon.getAsJsonObject(), context));
-        if (isNotNull(focusedBackgroundIcon)) object.setFocusedBackgroundIcon(GsonMarshalUtil.unmarshal(focusedBackgroundIcon.getAsJsonObject(), context));
-        if (isNotNull(pressedBackgroundIcon)) object.setPressedBackgroundIcon(GsonMarshalUtil.unmarshal(pressedBackgroundIcon.getAsJsonObject(), context));
-        if (isNotNull(hoveredBackgroundIcon)) object.setHoveredBackgroundIcon(GsonMarshalUtil.unmarshal(hoveredBackgroundIcon.getAsJsonObject(), context));
+        if (isNotNull(focusedBackgroundIcon))
+            object.setFocusedBackgroundIcon(GsonMarshalUtil.unmarshal(focusedBackgroundIcon.getAsJsonObject(), context));
+        if (isNotNull(pressedBackgroundIcon))
+            object.setPressedBackgroundIcon(GsonMarshalUtil.unmarshal(pressedBackgroundIcon.getAsJsonObject(), context));
+        if (isNotNull(hoveredBackgroundIcon))
+            object.setHoveredBackgroundIcon(GsonMarshalUtil.unmarshal(hoveredBackgroundIcon.getAsJsonObject(), context));
 
         JsonElement textState = json.get(TEXT_STATE);
         if (isNotNull(textState)) {
             JsonObject asJsonObject = textState.getAsJsonObject();
-            TextState  state        = GsonMarshalUtil.unmarshal(asJsonObject, context);
+            TextState state = GsonMarshalUtil.unmarshal(asJsonObject, context);
             object.getTextState().copy(state);
         }
 

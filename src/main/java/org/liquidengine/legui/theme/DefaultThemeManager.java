@@ -35,8 +35,8 @@ public class DefaultThemeManager extends ThemeManager {
     }
 
     protected <C, R> R cycledSearch(Class<C> componentClass, Map map, R defaultComponentTheme) {
-        R     componentTheme = null;
-        Class cClass         = componentClass;
+        R componentTheme = null;
+        Class cClass = componentClass;
         while (componentTheme == null) {
             componentTheme = ((Map<Class<C>, R>) map).get(cClass);
             if (cClass.isAssignableFrom(Component.class)) break;

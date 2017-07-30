@@ -43,7 +43,7 @@ public class GsonTooltipMarshaller<T extends Tooltip> extends GsonComponentMarsh
         JsonElement textState = json.get(TEXT_STATE);
         if (isNotNull(textState)) {
             JsonObject asJsonObject = textState.getAsJsonObject();
-            TextState  state        = GsonMarshalUtil.unmarshal(asJsonObject, context);
+            TextState state = GsonMarshalUtil.unmarshal(asJsonObject, context);
             object.getTextState().copy(state);
         }
     }

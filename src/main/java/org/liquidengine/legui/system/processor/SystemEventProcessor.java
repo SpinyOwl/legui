@@ -12,7 +12,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  * Created by Aliaksandr_Shcherbin on 1/25/2017.
  */
 public class SystemEventProcessor {
-    private final Frame   frame;
+    private final Frame frame;
     private final Context context;
     private Queue<SystemEvent> eventQueue = new ConcurrentLinkedQueue<>();
 

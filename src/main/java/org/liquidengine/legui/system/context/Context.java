@@ -16,15 +16,15 @@ import static org.lwjgl.glfw.GLFW.*;
  */
 public class Context {
 
-    private final long  glfwWindow;
+    private final long glfwWindow;
     private final Frame frame;
 
-    private           Vector2f  windowPosition;
-    private           Vector2i  windowSize;
-    private           Vector2f  framebufferSize;
-    private transient float     pixelRatio;
-    private           Component mouseTargetGui;
-    private           Component focusedGui;
+    private Vector2f windowPosition;
+    private Vector2i windowSize;
+    private Vector2f framebufferSize;
+    private transient float pixelRatio;
+    private Component mouseTargetGui;
+    private Component focusedGui;
 
     private boolean debugEnabled;
 

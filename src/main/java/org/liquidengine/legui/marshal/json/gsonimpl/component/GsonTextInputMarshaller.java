@@ -45,12 +45,12 @@ public class GsonTextInputMarshaller<T extends TextInput> extends GsonController
     protected void unmarshal(JsonObject json, T object, GsonMarshalContext context) {
         super.unmarshal(json, object, context);
 
-        JsonElement editable  = json.get(EDITABLE);
+        JsonElement editable = json.get(EDITABLE);
         JsonElement textState = json.get(TEXT_STATE);
 
         if (isNotNull(textState)) {
             JsonObject asJsonObject = textState.getAsJsonObject();
-            TextState  state        = GsonMarshalUtil.unmarshal(asJsonObject, context);
+            TextState state = GsonMarshalUtil.unmarshal(asJsonObject, context);
             object.getTextState().copy(state);
         }
         if (isNotNull(editable)) object.setEditable(editable.getAsBoolean());

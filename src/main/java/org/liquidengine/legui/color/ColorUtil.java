@@ -20,8 +20,7 @@ public final class ColorUtil {
     }
 
     /**
-     * Used to create negative color for provided color.
-     * Alpha value will be the same as in source color.
+     * Used to create negative color for provided color. Alpha value will be the same as in source color.
      *
      * @param color color to negotiate.
      *
@@ -34,8 +33,7 @@ public final class ColorUtil {
     }
 
     /**
-     * Used to create negative color and set it to dest.
-     * Alpha value will be the same as in source color.
+     * Used to create negative color and set it to dest. Alpha value will be the same as in source color.
      *
      * @param color color to negotiate.
      * @param dest  target color object to set.
@@ -46,8 +44,7 @@ public final class ColorUtil {
     }
 
     /**
-     * Used to negotiate only rgb part.
-     * Alpha value will be setted to 1.
+     * Used to negotiate only rgb part. Alpha value will be setted to 1.
      *
      * @param color color to negotiate.
      *
@@ -60,8 +57,7 @@ public final class ColorUtil {
     }
 
     /**
-     * Used to create negative color and set it to dest.
-     * Alpha value will be setted to 1.
+     * Used to create negative color and set it to dest. Alpha value will be setted to 1.
      *
      * @param color color to negotiate.
      * @param dest  target color object to set.
@@ -83,8 +79,7 @@ public final class ColorUtil {
     }
 
     /**
-     * Used to return black or white color based on source color. for example for white source color it should return
-     * black.
+     * Used to return black or white color based on source color. for example for white source color it should return black.
      *
      * @param color color to find opposite black or white color.
      *
@@ -95,8 +90,7 @@ public final class ColorUtil {
     }
 
     /**
-     * Used to return black or white color based on source color. for example for white source color it should return
-     * black.
+     * Used to return black or white color based on source color. for example for white source color it should return black.
      *
      * @param color       color to find opposite black or white color.
      * @param targetColor color to set result.

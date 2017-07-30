@@ -32,49 +32,45 @@ public abstract class Component implements Serializable {
     /**
      * Map for UI event listeners.
      */
-    private ListenerMap listenerMap        = new ListenerMap();
+    private ListenerMap listenerMap = new ListenerMap();
     /**
      * Position of component relative top left corner in parent component.
      * <p>
      * If component is the root component then position calculated relative window top left corner.
      */
-    private Vector2f    position           = new Vector2f();
+    private Vector2f position = new Vector2f();
     /**
      * Size of component.
      */
-    private Vector2f    size               = new Vector2f();
+    private Vector2f size = new Vector2f();
     /**
-     * Component background color.
-     * <p>Represented by vector where (x=r,y=g,z=b,w=a).
-     * <p>For example white = {@code new Vector4f(1,1,1,1)}
+     * Component background color. <p>Represented by vector where (x=r,y=g,z=b,w=a). <p>For example white = {@code new Vector4f(1,1,1,1)}
      */
-    private Vector4f    backgroundColor    = ColorConstants.white();
+    private Vector4f backgroundColor = ColorConstants.white();
     /**
      * Stroke color. Used to render stroke if component is focused.
      */
-    private Vector4f    focusedStrokeColor = ColorConstants.lightBlue();
+    private Vector4f focusedStrokeColor = ColorConstants.lightBlue();
     /**
      * Component border.
      */
-    private Border      border             = null;
+    private Border border = null;
     /**
      * Used to store corner radius of component.
      */
-    private float       cornerRadius       = 0;
+    private float cornerRadius = 0;
     /**
-     * Used to enable and disable event processing for this component.
-     * If enabled==false then component won't receive events.
+     * Used to enable and disable event processing for this component. If enabled==false then component won't receive events.
      */
-    private boolean     enabled            = true;
+    private boolean enabled = true;
     /**
-     * Determines whether this component should be visible when its
-     * parent is visible. Components are initially visible.
+     * Determines whether this component should be visible when its parent is visible. Components are initially visible.
      */
-    private boolean     visible            = true;
+    private boolean visible = true;
     /**
      * Intersector which used to determine for example if cursor intersects component or not. Cannot be null.
      */
-    private Intersector intersector        = new RectangleIntersector();
+    private Intersector intersector = new RectangleIntersector();
 
     /**
      * Determines whether this component hovered or not (cursor is over this component).
@@ -95,8 +91,7 @@ public abstract class Component implements Serializable {
     /**
      * Default constructor. Used to create component instance without any parameters.
      * <p>
-     * Also if you want to make it easy to use with
-     * Json marshaller/unmarshaller component should contain empty constructor.
+     * Also if you want to make it easy to use with Json marshaller/unmarshaller component should contain empty constructor.
      */
     public Component() {
         this(0, 0, 10, 10);
@@ -136,11 +131,10 @@ public abstract class Component implements Serializable {
     }
 
     /**
-     * Used to set parent component. By default used by containers to attach component to container.
-     * Parent component used by renderers and event listeners and processors.
+     * Used to set parent component. By default used by containers to attach component to container. Parent component used by renderers and
+     * event listeners and processors.
      * <p>
-     * Don't use this method if you want to attach component to container.
-     * In this case use {@link Container#add(Component)} method.
+     * Don't use this method if you want to attach component to container. In this case use {@link Container#add(Component)} method.
      *
      * @param parent component container.
      */
@@ -167,8 +161,7 @@ public abstract class Component implements Serializable {
     }
 
     /**
-     * Returns position vector.
-     * Be careful during changing this vector.
+     * Returns position vector. Be careful during changing this vector.
      *
      * @return position vector.
      */
@@ -200,8 +193,7 @@ public abstract class Component implements Serializable {
     }
 
     /**
-     * Returns size vector of component.
-     * So to get width you can use.
+     * Returns size vector of component. So to get width you can use.
      * <pre>
      * {@code
      * Vector2f size = component.getSize();
@@ -253,13 +245,8 @@ public abstract class Component implements Serializable {
     }
 
     /**
-     * Returns {@link Vector4f} background color vector where x,y,z,w mapped to r,g,b,a values.
-     * <ul>
-     * <li>vector.x - red.</li>
-     * <li>vector.y - green.</li>
-     * <li>vector.z - blue.</li>
-     * <li>vector.a - alpha.</li>
-     * </ul>
+     * Returns {@link Vector4f} background color vector where x,y,z,w mapped to r,g,b,a values. <ul> <li>vector.x - red.</li> <li>vector.y -
+     * green.</li> <li>vector.z - blue.</li> <li>vector.a - alpha.</li> </ul>
      *
      * @return background color vector.
      */
@@ -268,13 +255,8 @@ public abstract class Component implements Serializable {
     }
 
     /**
-     * Used to set background color vector where x,y,z,w mapped to r,g,b,a values.
-     * <ul>
-     * <li>vector.x - red.</li>
-     * <li>vector.y - green.</li>
-     * <li>vector.z - blue.</li>
-     * <li>vector.a - alpha.</li>
-     * </ul>
+     * Used to set background color vector where x,y,z,w mapped to r,g,b,a values. <ul> <li>vector.x - red.</li> <li>vector.y - green.</li>
+     * <li>vector.z - blue.</li> <li>vector.a - alpha.</li> </ul>
      *
      * @param backgroundColor background color vector.
      */
@@ -295,13 +277,8 @@ public abstract class Component implements Serializable {
     }
 
     /**
-     * Returns {@link Vector4f} focused stroke color vector where x,y,z,w mapped to r,g,b,a values.
-     * <ul>
-     * <li>vector.x - red.</li>
-     * <li>vector.y - green.</li>
-     * <li>vector.z - blue.</li>
-     * <li>vector.a - alpha.</li>
-     * </ul>
+     * Returns {@link Vector4f} focused stroke color vector where x,y,z,w mapped to r,g,b,a values. <ul> <li>vector.x - red.</li>
+     * <li>vector.y - green.</li> <li>vector.z - blue.</li> <li>vector.a - alpha.</li> </ul>
      *
      * @return background color vector.
      */
@@ -310,13 +287,8 @@ public abstract class Component implements Serializable {
     }
 
     /**
-     * Used to set focused stroke color vector where x,y,z,w mapped to r,g,b,a values.
-     * <ul>
-     * <li>vector.x - red.</li>
-     * <li>vector.y - green.</li>
-     * <li>vector.z - blue.</li>
-     * <li>vector.a - alpha.</li>
-     * </ul>
+     * Used to set focused stroke color vector where x,y,z,w mapped to r,g,b,a values. <ul> <li>vector.x - red.</li> <li>vector.y -
+     * green.</li> <li>vector.z - blue.</li> <li>vector.a - alpha.</li> </ul>
      *
      * @param focusedStrokeColor focused stroke color vector.
      */
@@ -355,8 +327,7 @@ public abstract class Component implements Serializable {
     }
 
     /**
-     * Returns true if component visible.
-     * By default if component visible it will be rendered and will receive events.
+     * Returns true if component visible. By default if component visible it will be rendered and will receive events.
      *
      * @return true if component visible. default value is {@link Boolean#TRUE}.
      */
@@ -365,8 +336,7 @@ public abstract class Component implements Serializable {
     }
 
     /**
-     * Used to make component visible or invisible.
-     * By default if component visible it will be rendered and will receive events.
+     * Used to make component visible or invisible. By default if component visible it will be rendered and will receive events.
      *
      * @param visible flag to set.
      */
@@ -375,10 +345,10 @@ public abstract class Component implements Serializable {
     }
 
     /**
-     * Used to determine if point intersects component (in screen space).
-     * This method uses component intersector.
+     * Used to determine if point intersects component (in screen space). This method uses component intersector.
      *
      * @param point point to check.
+     *
      * @return true if component intersected by point.
      */
     public boolean intersects(Vector2f point) {

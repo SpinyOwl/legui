@@ -23,7 +23,7 @@ public class NvgProgressBarRenderer extends NvgComponentRenderer<ProgressBar> {
         createScissor(context, progressBar);
         {
             nvgSave(context);
-            Vector2f pos  = progressBar.getScreenPosition();
+            Vector2f pos = progressBar.getScreenPosition();
             Vector2f size = progressBar.getSize();
 
             float cornerRadius = progressBar.getCornerRadius();

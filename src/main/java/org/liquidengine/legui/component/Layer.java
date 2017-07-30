@@ -7,16 +7,13 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 
 /**
- * Layer one of base structures.
- * Holds layer containers which are used to hold all of other components.
+ * Layer one of base structures. Holds layer containers which are used to hold all of other components.
  * <p>
- * Layer can be eventPassable - that's mean that current layer allow to
- * pass events to bottom layer if event wasn't handled
- * by components of this layer.
+ * Layer can be eventPassable - that's mean that current layer allow to pass events to bottom layer if event wasn't handled by components of
+ * this layer.
  * <p>
- * Also layer can be eventReceivable - that's mean that current layer
- * and all of it components can receive events.
- * For example {@link TooltipLayer} is eventPassable and isn't eventReceivable.
+ * Also layer can be eventReceivable - that's mean that current layer and all of it components can receive events. For example {@link
+ * TooltipLayer} is eventPassable and isn't eventReceivable.
  *
  * @param <T> type of components for {@link LayerContainer}
  */
@@ -30,11 +27,9 @@ public class Layer<T extends Component> {
      */
     private Frame frame;
     /**
-     * Determines if  current layer allow to
-     * pass events to bottom layer if event wasn't handled
-     * by components of this layer.
+     * Determines if  current layer allow to pass events to bottom layer if event wasn't handled by components of this layer.
      */
-    private boolean eventPassable   = true;
+    private boolean eventPassable = true;
     /**
      * Determines if current layer and all of it components can receive events.
      */

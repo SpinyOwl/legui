@@ -15,7 +15,7 @@ public class EventProcessor {
 
     public void processEvent() {
         for (Event event = eventQueue.poll(); event != null; event = eventQueue.poll()) {
-            Component                     component = event.getComponent();
+            Component component = event.getComponent();
             List<? extends EventListener> listeners = component.getListenerMap().getListeners(event.getClass());
             for (EventListener listener : listeners) {
                 listener.process(event);

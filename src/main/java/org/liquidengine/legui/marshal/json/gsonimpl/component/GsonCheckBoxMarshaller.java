@@ -45,16 +45,16 @@ public class GsonCheckBoxMarshaller<T extends CheckBox> extends GsonControllerMa
     protected void unmarshal(JsonObject json, T object, GsonMarshalContext context) {
         super.unmarshal(json, object, context);
 
-        JsonElement textState     = json.get(TEXT_STATE);
-        JsonElement checked       = json.get(CHECKED);
-        JsonElement iconChecked   = json.get(ICON_CHECKED);
+        JsonElement textState = json.get(TEXT_STATE);
+        JsonElement checked = json.get(CHECKED);
+        JsonElement iconChecked = json.get(ICON_CHECKED);
         JsonElement iconUnchecked = json.get(ICON_UNCHECKED);
 
         if (isNotNull(iconChecked)) object.setIconChecked(GsonMarshalUtil.unmarshal(iconChecked.getAsJsonObject(), context));
         if (isNotNull(iconUnchecked)) object.setIconUnchecked(GsonMarshalUtil.unmarshal(iconUnchecked.getAsJsonObject(), context));
         if (isNotNull(textState)) {
             JsonObject asJsonObject = textState.getAsJsonObject();
-            TextState  state        = GsonMarshalUtil.unmarshal(asJsonObject, context);
+            TextState state = GsonMarshalUtil.unmarshal(asJsonObject, context);
             object.getTextState().copy(state);
         }
         if (isNotNull(checked)) object.setChecked(checked.getAsBoolean());

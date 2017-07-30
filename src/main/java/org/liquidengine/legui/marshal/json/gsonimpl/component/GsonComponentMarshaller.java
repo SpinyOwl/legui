@@ -53,14 +53,14 @@ public class GsonComponentMarshaller<T extends Component> extends AbstractGsonMa
      */
     @Override
     protected void unmarshal(JsonObject json, T object, GsonMarshalContext context) {
-        JsonObject  position     = json.getAsJsonObject(POSITION);
-        JsonObject  size         = json.getAsJsonObject(SIZE);
-        JsonObject  bg           = json.getAsJsonObject(BACKGROUND_COLOR);
-        JsonElement enabled      = json.get(ENABLED);
-        JsonElement visible      = json.get(VISIBLE);
+        JsonObject position = json.getAsJsonObject(POSITION);
+        JsonObject size = json.getAsJsonObject(SIZE);
+        JsonObject bg = json.getAsJsonObject(BACKGROUND_COLOR);
+        JsonElement enabled = json.get(ENABLED);
+        JsonElement visible = json.get(VISIBLE);
         JsonElement cornerRadius = json.get(CORNER_RADIUS);
-        JsonElement border       = json.get(BORDER);
-        JsonElement intersector  = json.get(INTERSECTOR);
+        JsonElement border = json.get(BORDER);
+        JsonElement intersector = json.get(INTERSECTOR);
 
         if (isNotNull(position)) {
             JsonElement x = position.get(X);

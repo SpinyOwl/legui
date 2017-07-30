@@ -8,7 +8,7 @@ import static org.lwjgl.glfw.GLFW.*;
  * Created by Aliaksandr_Shcherbin on 2/9/2017.
  */
 public class Mouse {
-    private static Vector2f cursorPosition     = new Vector2f();
+    private static Vector2f cursorPosition = new Vector2f();
     private static Vector2f cursorPositionPrev = new Vector2f();
 
     public static Vector2f getCursorPosition() {
@@ -51,11 +51,11 @@ public class Mouse {
         MOUSE_BUTTON_UNKNOWN(-1),     //= UNKNOWN,
 
         ;
-        public static final MouseButton MOUSE_BUTTON_LEFT   = MOUSE_BUTTON_1;
-        public static final MouseButton MOUSE_BUTTON_RIGHT  = MOUSE_BUTTON_2;
+        public static final MouseButton MOUSE_BUTTON_LEFT = MOUSE_BUTTON_1;
+        public static final MouseButton MOUSE_BUTTON_RIGHT = MOUSE_BUTTON_2;
         public static final MouseButton MOUSE_BUTTON_MIDDLE = MOUSE_BUTTON_3;
-        private int      code;
-        private boolean  pressed;
+        private int code;
+        private boolean pressed;
         private Vector2f pressPosition;
         private Vector2f releasePosition;
 

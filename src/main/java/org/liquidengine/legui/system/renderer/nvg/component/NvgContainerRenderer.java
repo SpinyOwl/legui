@@ -29,10 +29,10 @@ public class NvgContainerRenderer extends NvgComponentRenderer<Container> {
             Vector2f s = component.getSize();
 
             Vector4f color = component.getBackgroundColor();
-            float    x     = p.x;
-            float    y     = p.y;
-            float    w     = s.x;
-            float    h     = s.y;
+            float x = p.x;
+            float y = p.y;
+            float w = s.x;
+            float h = s.y;
 
             drawRectBackground(nanovg, color, x, y, w, h);
         }

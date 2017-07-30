@@ -11,8 +11,7 @@ public class Panel<T extends Component> extends Container<T> {
     /**
      * Default constructor. Used to create component instance without any parameters.
      * <p>
-     * Also if you want to make it easy to use with
-     * Json marshaller/unmarshaller component should contain empty constructor.
+     * Also if you want to make it easy to use with Json marshaller/unmarshaller component should contain empty constructor.
      */
     public Panel() {
         Themes.getDefaultTheme().applyAll(this);

@@ -32,8 +32,7 @@ public class TextInput extends Controller implements TextComponent {
     private int caretPosition;
 
     /**
-     * Used to store caret position calculated on mouse position base.
-     * Updated by renderers.
+     * Used to store caret position calculated on mouse position base. Updated by renderers.
      */
     private int mouseCaretPosition;
 
@@ -55,8 +54,7 @@ public class TextInput extends Controller implements TextComponent {
     /**
      * Default constructor. Used to create component instance without any parameters.
      * <p>
-     * Also if you want to make it easy to use with
-     * Json marshaller/unmarshaller component should contain empty constructor.
+     * Also if you want to make it easy to use with Json marshaller/unmarshaller component should contain empty constructor.
      */
     public TextInput() {
         initialize("");
@@ -89,8 +87,7 @@ public class TextInput extends Controller implements TextComponent {
     /**
      * Default constructor with text to set.
      * <p>
-     * Also if you want to make it easy to use with
-     * Json marshaller/unmarshaller component should contain empty constructor.
+     * Also if you want to make it easy to use with Json marshaller/unmarshaller component should contain empty constructor.
      *
      * @param text text to set.
      */

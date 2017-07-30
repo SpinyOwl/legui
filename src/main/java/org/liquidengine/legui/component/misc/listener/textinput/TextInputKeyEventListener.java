@@ -1,6 +1,5 @@
 package org.liquidengine.legui.component.misc.listener.textinput;
 
-import org.liquidengine.legui.component.TextArea;
 import org.liquidengine.legui.component.TextInput;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.event.KeyEvent;

@@ -11,8 +11,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * Image renderer.
  */
 public abstract class ImageRenderer<I extends Image> {
-    public static final String        C_RADIUS    = "C_RADIUS";
-    private             AtomicBoolean initialized = new AtomicBoolean(false);
+    public static final String C_RADIUS = "C_RADIUS";
+    private AtomicBoolean initialized = new AtomicBoolean(false);
 
     /**
      * This method called by base abstract image renderer.

@@ -18,7 +18,7 @@ public class TooltipCursorEnterListener implements CursorEnterEventListener {
     @Override
     public void process(CursorEnterEvent event) {
         Controller controller = (Controller) event.getComponent();
-        Tooltip tooltip    = controller.getTooltip();
+        Tooltip tooltip = controller.getTooltip();
         if (tooltip != null) {
             if (event.isEntered()) {
                 event.getContext().getFrame().getTooltipLayer().getContainer().add(tooltip);
@@ -32,6 +32,7 @@ public class TooltipCursorEnterListener implements CursorEnterEventListener {
      * (non-Javadoc)
      *
      * @param obj object to compare.
+     *
      * @see Object#equals(Object)
      */
     @Override

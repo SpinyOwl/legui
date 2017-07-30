@@ -11,7 +11,7 @@ import org.liquidengine.legui.system.context.Context;
  * Created by Aliaksandr_Shcherbin on 1/25/2017.
  */
 public abstract class Event<T extends Component> {
-    private final T       component;
+    private final T component;
     private final Context context;
 
     public Event(T component, Context context) {

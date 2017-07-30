@@ -22,19 +22,19 @@ public class ScrollBarMouseDragEventListener implements MouseDragEventListener {
         if (!scrollBar.isScrolling()) return;
         if (!MOUSE_BUTTON_LEFT.isPressed()) return;
 
-        Vector2f pos            = scrollBar.getScreenPosition();
+        Vector2f pos = scrollBar.getScreenPosition();
         Vector2f cursorPosition = Mouse.getCursorPosition();
 
-        float   visibleAmount = scrollBar.getVisibleAmount();
-        boolean vertical      = Orientation.VERTICAL.equals(scrollBar.getOrientation());
+        float visibleAmount = scrollBar.getVisibleAmount();
+        boolean vertical = Orientation.VERTICAL.equals(scrollBar.getOrientation());
 
-        Vector2f guiSize       = scrollBar.getSize();
-        float    arrowSize     = scrollBar.isArrowsEnabled() ? scrollBar.getArrowSize() : 0;
-        float    scrollBarSize = (vertical ? guiSize.y : guiSize.x) - 2 * arrowSize;
-        float    maxValue      = scrollBar.getMaxValue();
-        float    minValue      = scrollBar.getMinValue();
-        float    valueRange    = maxValue - minValue;
-        float    barSize       = scrollBarSize * visibleAmount / valueRange;
+        Vector2f guiSize = scrollBar.getSize();
+        float arrowSize = scrollBar.isArrowsEnabled() ? scrollBar.getArrowSize() : 0;
+        float scrollBarSize = (vertical ? guiSize.y : guiSize.x) - 2 * arrowSize;
+        float maxValue = scrollBar.getMaxValue();
+        float minValue = scrollBar.getMinValue();
+        float valueRange = maxValue - minValue;
+        float barSize = scrollBarSize * visibleAmount / valueRange;
         if (barSize < ScrollBar.MIN_SCROLL_SIZE) barSize = ScrollBar.MIN_SCROLL_SIZE;
 
         float curPos,

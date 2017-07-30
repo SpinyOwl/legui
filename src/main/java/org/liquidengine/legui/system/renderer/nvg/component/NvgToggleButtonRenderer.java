@@ -23,7 +23,7 @@ public class NvgToggleButtonRenderer extends NvgComponentRenderer<ToggleButton> 
     protected void renderComponent(ToggleButton toggleButton, Context context, long nanovg) {
         createScissor(nanovg, toggleButton);
         {
-            Vector2f pos  = toggleButton.getScreenPosition();
+            Vector2f pos = toggleButton.getScreenPosition();
             Vector2f size = toggleButton.getSize();
 
             nvgSave(nanovg);
@@ -37,10 +37,10 @@ public class NvgToggleButtonRenderer extends NvgComponentRenderer<ToggleButton> 
     }
 
     private void renderBackground(long nvg, ToggleButton agui, Vector2f pos, Vector2f size, Context context) {
-        boolean  focused         = agui.isFocused();
-        boolean  hovered         = agui.isHovered();
-        boolean  pressed         = agui.isPressed();
-        boolean  toggled         = agui.isToggled();
+        boolean focused = agui.isFocused();
+        boolean hovered = agui.isHovered();
+        boolean pressed = agui.isPressed();
+        boolean toggled = agui.isToggled();
         Vector4f backgroundColor = new Vector4f(toggled ? agui.getToggledBackgroundColor() : agui.getBackgroundColor());
 
         Icon bgIcon = toggled ? agui.getTogglededBackgroundIcon() : agui.getBackgroundIcon();

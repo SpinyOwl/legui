@@ -31,26 +31,26 @@ public class Widget extends Container<Component> {
      * Initial height of title. Used to initialize title components.
      */
     private static final int INITIAL_TITLE_HEIGHT = 20;
-    private static final int CLOSE_ICON_CHAR      = 0xF5AD;
-    private static final int MINIMIZE_ICON_CHAR   = 0xF5B0;
-    private static final int MAXIMIZE_ICON_CHAR   = 0xF5AF;
+    private static final int CLOSE_ICON_CHAR = 0xF5AD;
+    private static final int MINIMIZE_ICON_CHAR = 0xF5B0;
+    private static final int MAXIMIZE_ICON_CHAR = 0xF5AF;
     private MouseDragEventListener mouseDragEventLeguiEventListener;
 
     private Icon closeIcon;
     private Icon minimizeIcon;
     private Icon maximizeIcon;
 
-    private boolean  draggable     = true;
-    private boolean  minimized     = false;
+    private boolean draggable = true;
+    private boolean minimized = false;
     /**
      * Used to store widget size in maximized state when minimizing widget.
      */
     private Vector2f maximizedSize = new Vector2f();
     private Container<Component> container;
     private Container<Component> titleContainer;
-    private Label                title;
-    private Button               closeButton;
-    private Button               minimizeButton;
+    private Label title;
+    private Button closeButton;
+    private Button minimizeButton;
 
     /**
      * Creates a widget with default title text.

@@ -28,7 +28,7 @@ public class MouseClickEventHandler implements SystemEventHandler<SystemMouseCli
         List<Layer> layers = frame.getLayers();
         layers.add(frame.getComponentLayer());
 
-        Component focusedGui      = context.getFocusedGui();
+        Component focusedGui = context.getFocusedGui();
         Component targetComponent = null;
         for (Layer layer : layers) {
             if (layer.isEventReceivable()) {
@@ -101,7 +101,7 @@ public class MouseClickEventHandler implements SystemEventHandler<SystemMouseCli
     }
 
     private void pushWidgetsUp(Component gui) {
-        Container parent  = gui.getParent();
+        Container parent = gui.getParent();
         Component current = gui;
         if (parent != null) {
             boolean push = false;

@@ -15,8 +15,7 @@ public class LayerContainer<T extends Component> extends Container<T> {
     /**
      * Default constructor. Used to create component instance without any parameters.
      * <p>
-     * Also if you want to make it easy to use with
-     * Json marshaller/unmarshaller component should contain empty constructor.
+     * Also if you want to make it easy to use with Json marshaller/unmarshaller component should contain empty constructor.
      */
     public LayerContainer() {
         initialize();
@@ -47,13 +46,8 @@ public class LayerContainer<T extends Component> extends Container<T> {
     }
 
     /**
-     * Returns {@link Vector4f} background color vector where x,y,z,w mapped to r,g,b,a values.
-     * <ul>
-     * <li>vector.x - red.</li>
-     * <li>vector.y - green.</li>
-     * <li>vector.z - blue.</li>
-     * <li>vector.a - alpha.</li>
-     * </ul>
+     * Returns {@link Vector4f} background color vector where x,y,z,w mapped to r,g,b,a values. <ul> <li>vector.x - red.</li> <li>vector.y -
+     * green.</li> <li>vector.z - blue.</li> <li>vector.a - alpha.</li> </ul>
      *
      * @return background color vector.
      */
@@ -63,13 +57,8 @@ public class LayerContainer<T extends Component> extends Container<T> {
     }
 
     /**
-     * Used to set background color vector where x,y,z,w mapped to r,g,b,a values.
-     * <ul>
-     * <li>vector.x - red.</li>
-     * <li>vector.y - green.</li>
-     * <li>vector.z - blue.</li>
-     * <li>vector.a - alpha.</li>
-     * </ul>
+     * Used to set background color vector where x,y,z,w mapped to r,g,b,a values. <ul> <li>vector.x - red.</li> <li>vector.y - green.</li>
+     * <li>vector.z - blue.</li> <li>vector.a - alpha.</li> </ul>
      *
      * @param backgroundColor background color vector.
      */

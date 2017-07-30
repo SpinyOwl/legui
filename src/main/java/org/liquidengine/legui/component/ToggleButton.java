@@ -14,13 +14,12 @@ import org.liquidengine.legui.listener.MouseClickEventListener;
 import org.liquidengine.legui.theme.Themes;
 
 /**
- * An implementation of "toggle" button.
- * Behavior the same as checkbox but have not any text.
+ * An implementation of "toggle" button. Behavior the same as checkbox but have not any text.
  */
 public class ToggleButton extends Button {
-    protected Icon     togglededBackgroundIcon;
-    private   boolean  toggled;
-    private   Vector4f toggledBackgroundColor;
+    private Icon togglededBackgroundIcon;
+    private boolean toggled;
+    private Vector4f toggledBackgroundColor;
 
     /**
      * Creates a button with specified text and specified position and size.

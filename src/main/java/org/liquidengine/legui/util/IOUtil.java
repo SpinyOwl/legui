@@ -18,11 +18,11 @@ public final class IOUtil {
     /**
      * Used to log errors.
      */
-    private static final Logger LOGGER              = LogManager.getLogger(IOUtil.class);
+    private static final Logger LOGGER = LogManager.getLogger(IOUtil.class);
     /**
      * Initial buffer size.
      */
-    private static final int    INITIAL_BUFFER_SIZE = 1024;
+    private static final int INITIAL_BUFFER_SIZE = 1024;
 
     /**
      * Private constructor to avoid creation instances of utility class.
@@ -86,7 +86,7 @@ public final class IOUtil {
             throw new IllegalArgumentException();
         }
         LOGGER.debug("loading resource: " + stream);
-        StringBuilder     result       = new StringBuilder();
+        StringBuilder result = new StringBuilder();
         InputStreamReader streamReader = new InputStreamReader(stream);
         try (BufferedReader reader = new BufferedReader(streamReader)) {
             String buffer;
@@ -131,8 +131,8 @@ public final class IOUtil {
      * @throws IOException if any exception occurs
      */
     private static ByteBuffer readToBuffer(final ByteBuffer buffer, final InputStream source) throws IOException {
-        ByteBuffer          bufferToWork = buffer;
-        ReadableByteChannel rbc          = Channels.newChannel(source);
+        ByteBuffer bufferToWork = buffer;
+        ReadableByteChannel rbc = Channels.newChannel(source);
         while (true) {
             int bytes = rbc.read(bufferToWork);
             if (bytes == -1) {
@@ -148,8 +148,7 @@ public final class IOUtil {
     /**
      * Used to read resource to byte buffer.
      * <p>
-     * (Resource could be file or java resource. Search starts from files.)
-     * See also {@link #ioResourceToByteBuffer(String, int)}.
+     * (Resource could be file or java resource. Search starts from files.) See also {@link #ioResourceToByteBuffer(String, int)}.
      *
      * @param resource   path to resource to initialize.
      * @param bufferSize initial buffer size.
@@ -179,14 +178,13 @@ public final class IOUtil {
      */
     public static String loadResourceAsString(final String resource) throws RuntimeException {
         ByteBuffer byteBuffer = loadResourceToByteBuffer(resource, INITIAL_BUFFER_SIZE);
-        byte[]     b          = new byte[byteBuffer.limit()];
+        byte[] b = new byte[byteBuffer.limit()];
         byteBuffer.get(b);
         return new String(b);
     }
 
     /**
-     * Used to load resource to byte buffer from input stream.
-     * See also {@link #ioResourceToByteBuffer(String, int)}.
+     * Used to load resource to byte buffer from input stream. See also {@link #ioResourceToByteBuffer(String, int)}.
      *
      * @param resource   Resource Stream.
      * @param bufferSize initial buffer size.
@@ -262,7 +260,7 @@ public final class IOUtil {
     public static String getParentFolder(final String path) {
         int delimL = path.lastIndexOf('/');
         int delimR = path.lastIndexOf('\\');
-        int delim  = delimL > delimR ? delimL : delimR;
+        int delim = delimL > delimR ? delimL : delimR;
         return path.substring(0, delim) + "/";
     }
 
@@ -274,10 +272,10 @@ public final class IOUtil {
      * @return filename or null(if path ends with '/' or '\').
      */
     public static String getChildFile(final String path) {
-        int    delimL = path.lastIndexOf('/');
-        int    delimR = path.lastIndexOf('\\');
-        int    delim  = (delimL > delimR ? delimL : delimR) + 1;
-        String file   = path.substring(delim);
+        int delimL = path.lastIndexOf('/');
+        int delimR = path.lastIndexOf('\\');
+        int delim = (delimL > delimR ? delimL : delimR) + 1;
+        String file = path.substring(delim);
         if (file.isEmpty()) {
             return null;
         }

@@ -12,10 +12,10 @@ import org.liquidengine.legui.system.context.Context;
  */
 public class MouseClickEvent<T extends Component> extends Event<T> {
 
-    private final MouseClickAction  action;
+    private final MouseClickAction action;
     private final Mouse.MouseButton button;
-    private final Vector2f          position;
-    private final Vector2f          absolutePosition;
+    private final Vector2f position;
+    private final Vector2f absolutePosition;
 
     public MouseClickEvent(T component, Context context, MouseClickAction action, Mouse.MouseButton button, Vector2f position, Vector2f absolutePosition) {
         super(component, context);

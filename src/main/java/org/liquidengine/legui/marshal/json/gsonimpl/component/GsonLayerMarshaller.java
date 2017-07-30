@@ -40,8 +40,8 @@ public class GsonLayerMarshaller<T extends Layer> extends AbstractGsonMarshaller
      */
     @Override
     protected void unmarshal(JsonObject json, T object, GsonMarshalContext context) {
-        JsonElement container       = json.get(CONTAINER);
-        JsonElement eventPassable   = json.get(EVENT_PASSABLE);
+        JsonElement container = json.get(CONTAINER);
+        JsonElement eventPassable = json.get(EVENT_PASSABLE);
         JsonElement eventReceivable = json.get(EVENT_RECEIVABLE);
 
         if (isNotNull(container)) object.setContainer(GsonMarshalUtil.unmarshal(container.getAsJsonObject(), context));

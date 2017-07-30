@@ -30,8 +30,7 @@ public class CharIcon extends Icon {
     private char charCode;
 
     /**
-     * Used to create char icon with default font and color.
-     * Default font is {@link FontRegistry#MATERIAL_DESIGN_ICONS}.
+     * Used to create char icon with default font and color. Default font is {@link FontRegistry#MATERIAL_DESIGN_ICONS}.
      */
     public CharIcon() {
         this.font = FontRegistry.MATERIAL_DESIGN_ICONS;

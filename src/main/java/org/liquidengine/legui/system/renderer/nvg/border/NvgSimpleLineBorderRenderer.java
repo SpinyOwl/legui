@@ -18,12 +18,12 @@ public class NvgSimpleLineBorderRenderer extends NvgBorderRenderer<SimpleLineBor
         if (border.isEnabled()) {
             if (border.getThickness() <= 0 || border.getColor().w == 0) return;
 
-            Vector2f pos  = component.getScreenPosition();
+            Vector2f pos = component.getScreenPosition();
             Vector2f size = component.getSize();
 
-            Vector4f borderColor  = border.getColor();
-            float    cornerRadius = component.getCornerRadius();
-            float    thickness    = border.getThickness();
+            Vector4f borderColor = border.getColor();
+            float cornerRadius = component.getCornerRadius();
+            float thickness = border.getThickness();
 
             drawRectStroke(nanovg, pos, size, borderColor, cornerRadius, thickness);
         }

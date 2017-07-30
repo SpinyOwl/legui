@@ -31,7 +31,7 @@ public class NvgCharIconRenderer<I extends CharIcon> extends NvgIconRenderer<I> 
         if (!component.isVisible() || icon == null || icon.getFont() == null) return;
         // render simple rectangle border
         Vector2f position = component.getScreenPosition();
-        Vector2f size     = component.getSize();
+        Vector2f size = component.getSize();
         Vector2f iconSize = icon.getSize();
 
         float x = position.x + icon.getHorizontalAlign().index * (size.x - iconSize.x) / 2f;

@@ -10,7 +10,7 @@ import org.liquidengine.legui.system.context.Context;
  */
 public class FocusEvent<T extends Component> extends Event<T> {
 
-    private final boolean   focused;
+    private final boolean focused;
     private final Component nextFocus;
 
     /**

@@ -52,8 +52,8 @@ public abstract class AbstractGsonMarshaller<T> implements JsonMarshaller<T> {
     public final T unmarshal(JsonElement json, GsonMarshalContext context) {
         try {
             JsonObject jsonObject = json.getAsJsonObject();
-            Class<?>   aClass     = findClass(jsonObject);
-            T          component  = (T) aClass.newInstance();
+            Class<?> aClass = findClass(jsonObject);
+            T component = (T) aClass.newInstance();
             unmarshal(jsonObject, component, context);
             return component;
         } catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
@@ -75,16 +75,16 @@ public abstract class AbstractGsonMarshaller<T> implements JsonMarshaller<T> {
 
     @Override
     public final String marshal(T object, JsonMarshalContext context) {
-        Gson       gson = new Gson();
+        Gson gson = new Gson();
         JsonObject json = jsonMarshal(object, (GsonMarshalContext) context);
         return gson.toJson(json);
     }
 
     public final JsonObject jsonMarshal(T object, GsonMarshalContext context) {
         try {
-            JsonObject json             = new JsonObject();
-            Class<?>   aClass           = object.getClass();
-            String     shortTypeByClass = GsonMarshalRegistry.getRegistry().getShortTypeByClass(aClass);
+            JsonObject json = new JsonObject();
+            Class<?> aClass = object.getClass();
+            String shortTypeByClass = GsonMarshalRegistry.getRegistry().getShortTypeByClass(aClass);
             if (shortTypeByClass != null) {
                 json.addProperty(TYPE_PARAMETER, shortTypeByClass);
             } else {

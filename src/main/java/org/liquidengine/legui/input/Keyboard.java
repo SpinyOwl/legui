@@ -131,8 +131,8 @@ public final class Keyboard {
         KEY_RIGHT_SUPER(GLFW_KEY_RIGHT_SUPER),
         KEY_MENU(GLFW_KEY_MENU);
 
-        private final int     code;
-        private       boolean pressed;
+        private final int code;
+        private boolean pressed;
 
         Key(int code) {
             this.code = code;

@@ -5,9 +5,7 @@ import org.liquidengine.legui.component.misc.event.widget.WidgetCloseEvent;
 import org.liquidengine.legui.component.misc.listener.widget.WidgetCloseEventListener;
 
 /**
- * Close event listener for dialog.
- * When dialog closed dialog layer with dialog
- * should be removed from frame.
+ * Close event listener for dialog. When dialog closed dialog layer with dialog should be removed from frame.
  */
 public class DialogCloseEventListener implements WidgetCloseEventListener<WidgetCloseEvent> {
 

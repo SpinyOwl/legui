@@ -25,8 +25,8 @@ public class GsonWidgetMarshaller<T extends Widget> extends GsonControllerMarsha
     protected void marshal(T object, JsonObject json, GsonMarshalContext context) {
         super.marshal(object, json, context);
 
-        Container  container = object.getContainer();
-        JsonObject cont      = GsonMarshalUtil.marshalToJson(container, context);
+        Container container = object.getContainer();
+        JsonObject cont = GsonMarshalUtil.marshalToJson(container, context);
         fill(json)
                 .add(CONTAINER, cont)
 //                .add(RESIZABLE, object.isResizable())
@@ -60,19 +60,19 @@ public class GsonWidgetMarshaller<T extends Widget> extends GsonControllerMarsha
 
         JsonElement container = json.get(CONTAINER);
 //        JsonElement resizable = json.get(RESIZABLE);
-        JsonElement draggable                  = json.get(DRAGGABLE);
-        JsonElement minimized                  = json.get(MINIMIZED);
-        JsonElement minimizable                = json.get(MINIMIZABLE);
-        JsonElement closeable                  = json.get(CLOSEABLE);
-        JsonElement titleEnabled               = json.get(TITLE_ENABLED);
-        JsonElement titleHeight                = json.get(TITLE_HEIGHT);
-        JsonElement titleBackgroundColor       = json.get(TITLE_BACKGROUND_COLOR);
-        JsonElement closeButtonColor           = json.get(CLOSE_BUTTON_COLOR);
+        JsonElement draggable = json.get(DRAGGABLE);
+        JsonElement minimized = json.get(MINIMIZED);
+        JsonElement minimizable = json.get(MINIMIZABLE);
+        JsonElement closeable = json.get(CLOSEABLE);
+        JsonElement titleEnabled = json.get(TITLE_ENABLED);
+        JsonElement titleHeight = json.get(TITLE_HEIGHT);
+        JsonElement titleBackgroundColor = json.get(TITLE_BACKGROUND_COLOR);
+        JsonElement closeButtonColor = json.get(CLOSE_BUTTON_COLOR);
         JsonElement closeButtonBackgroundColor = json.get(CLOSE_BUTTON_BACKGROUND_COLOR);
-        JsonElement title                      = json.get(TITLE);
-        JsonElement closeIcon                  = json.get(CLOSE_ICON);
-        JsonElement minimizeIcon               = json.get(MINIMIZE_ICON);
-        JsonElement maximizeIcon               = json.get(MAXIMIZE_ICON);
+        JsonElement title = json.get(TITLE);
+        JsonElement closeIcon = json.get(CLOSE_ICON);
+        JsonElement minimizeIcon = json.get(MINIMIZE_ICON);
+        JsonElement maximizeIcon = json.get(MAXIMIZE_ICON);
 
 
         if (isNotNull(container)) object.setContainer(GsonMarshalUtil.unmarshal(container.getAsJsonObject(), context));
@@ -81,7 +81,8 @@ public class GsonWidgetMarshaller<T extends Widget> extends GsonControllerMarsha
         if (isNotNull(titleHeight)) object.setTitleHeight(titleHeight.getAsFloat());
         if (isNotNull(titleBackgroundColor)) object.setTitleBackgroundColor(readColor(titleBackgroundColor.getAsJsonObject()));
         if (isNotNull(closeButtonColor)) object.setCloseButtonColor(readColor(closeButtonColor.getAsJsonObject()));
-        if (isNotNull(closeButtonBackgroundColor)) object.setCloseButtonBackgroundColor(readColor(closeButtonBackgroundColor.getAsJsonObject()));
+        if (isNotNull(closeButtonBackgroundColor))
+            object.setCloseButtonBackgroundColor(readColor(closeButtonBackgroundColor.getAsJsonObject()));
         if (isNotNull(draggable)) object.setDraggable(draggable.getAsBoolean());
         if (isNotNull(closeable)) object.setCloseable(closeable.getAsBoolean());
         if (isNotNull(titleEnabled)) object.setTitleEnabled(titleEnabled.getAsBoolean());

@@ -17,10 +17,10 @@ public class SliderMouseClickEventListener implements MouseClickEventListener {
     public void process(MouseClickEvent event) {
         if (event.getButton().equals(Mouse.MouseButton.MOUSE_BUTTON_LEFT) && event.getAction() == MouseClickEvent.MouseClickAction.PRESS) {
             Slider slider = (Slider) event.getComponent();
-            Vector2f pos    = slider.getScreenPosition();
+            Vector2f pos = slider.getScreenPosition();
 
             Vector2f cursorPosition = Mouse.getCursorPosition();
-            float    value;
+            float value;
             float sliderSize = slider.getSliderSize();
             if (Orientation.VERTICAL.equals(slider.getOrientation())) {
                 value = 100f * (pos.y + slider.getSize().y - cursorPosition.y - sliderSize / 2f) / (slider.getSize().y - sliderSize);

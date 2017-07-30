@@ -27,22 +27,22 @@ import static org.lwjgl.system.MemoryUtil.*;
  * Created by ShchAlexander on 13.02.2017.
  */
 public class NvgTextInputRenderer extends NvgComponentRenderer<TextInput> {
-    public static final String                  PRATIO        = "pratio";
-    public static final String                  PALIGN        = "palign";
-    public static final String                  POFFSET       = "poffset";
-    private final       Vector4f                caretColor    = new Vector4f(0, 0, 0, 0.5f);
-    private final       int                     maxGlyphCount = 1024;
-    private             NVGGlyphPosition.Buffer glyphs        = NVGGlyphPosition.create(maxGlyphCount);
-    private             NVGColor                colorA        = NVGColor.create();
+    public static final String PRATIO = "pratio";
+    public static final String PALIGN = "palign";
+    public static final String POFFSET = "poffset";
+    private final Vector4f caretColor = new Vector4f(0, 0, 0, 0.5f);
+    private final int maxGlyphCount = 1024;
+    private NVGGlyphPosition.Buffer glyphs = NVGGlyphPosition.create(maxGlyphCount);
+    private NVGColor colorA = NVGColor.create();
 
     @Override
     public void renderComponent(TextInput textInput, Context leguiContext, long context) {
         createScissor(context, textInput);
         {
-            Vector2f pos     = textInput.getScreenPosition();
-            Vector2f size    = textInput.getSize();
-            boolean  enabled = textInput.isEnabled();
-            Vector4f bc      = new Vector4f(textInput.getBackgroundColor());
+            Vector2f pos = textInput.getScreenPosition();
+            Vector2f size = textInput.getSize();
+            boolean enabled = textInput.isEnabled();
+            Vector4f bc = new Vector4f(textInput.getBackgroundColor());
 
             if (enabled && textInput.isFocused()) {
                 bc.w *= 1.1f;
@@ -55,7 +55,7 @@ public class NvgTextInputRenderer extends NvgComponentRenderer<TextInput> {
             drawBackground(context, pos.x, pos.y, size.x, size.y, textInput.getCornerRadius(), bc);
 
             TextState textState = textInput.getTextState();
-            Vector4f  p         = new Vector4f(textState.getPadding()).add(2, 2, 2, 2);
+            Vector4f p = new Vector4f(textState.getPadding()).add(2, 2, 2, 2);
 
             Vector4f intersectRect = new Vector4f(pos.x + p.x, pos.y + p.y, size.x - p.x - p.z, size.y - p.y - p.w);
             intersectScissor(context, new Vector4f(intersectRect).sub(1, 1, -2, -2));
@@ -71,19 +71,19 @@ public class NvgTextInputRenderer extends NvgComponentRenderer<TextInput> {
     }
 
     private void renderText(Context leguiContext, long context, TextInput gui, Vector2f size, Vector4f rect, Vector4f bc) {
-        TextState           textState           = gui.getTextState();
-        String              text                = textState.getText();
-        String              font                = textState.getFont();
-        float               fontSize            = textState.getFontSize();
-        Vector4f            highlightColor      = textState.getHighlightColor();
-        HorizontalAlign     halign              = textState.getHorizontalAlign();
-        VerticalAlign       valign              = textState.getVerticalAlign();
-        Vector4f            textColor           = textState.getTextColor();
-        int                 caretPosition       = gui.getCaretPosition();
-        Map<String, Object> metadata            = gui.getMetadata();
-        int                 startSelectionIndex = gui.getStartSelectionIndex();
-        int                 endSelectionIndex   = gui.getEndSelectionIndex();
-        boolean             focused             = gui.isFocused();
+        TextState textState = gui.getTextState();
+        String text = textState.getText();
+        String font = textState.getFont();
+        float fontSize = textState.getFontSize();
+        Vector4f highlightColor = textState.getHighlightColor();
+        HorizontalAlign halign = textState.getHorizontalAlign();
+        VerticalAlign valign = textState.getVerticalAlign();
+        Vector4f textColor = textState.getTextColor();
+        int caretPosition = gui.getCaretPosition();
+        Map<String, Object> metadata = gui.getMetadata();
+        int startSelectionIndex = gui.getStartSelectionIndex();
+        int endSelectionIndex = gui.getEndSelectionIndex();
+        boolean focused = gui.isFocused();
         if (focused) {
             updateCaret(bc);
         }
@@ -113,13 +113,13 @@ public class NvgTextInputRenderer extends NvgComponentRenderer<TextInput> {
         float[] textBounds = calculateTextBoundsRect(context, rect, text, halign, valign);
 
         // calculate caret coordinate and mouse caret coordinate
-        float      caretx;
-        float      startSelectionX;
-        float      endSelectionX;
-        float      mouseCaretX        = 0;
-        int        mouseCaretPosition = 0;
-        float      ratio              = size.y * size.x;
-        ByteBuffer textBytes          = null;
+        float caretx;
+        float startSelectionX;
+        float endSelectionX;
+        float mouseCaretX = 0;
+        int mouseCaretPosition = 0;
+        float ratio = size.y * size.x;
+        ByteBuffer textBytes = null;
         try {
             // allocate ofheap memory and fill it with text
             textBytes = memUTF8(text);
@@ -165,14 +165,14 @@ public class NvgTextInputRenderer extends NvgComponentRenderer<TextInput> {
                     // if window not minimized
                 } else if (!leguiContext.isIconified()) {
                     // binary search mouse caret position
-                    int     upper = ng;
-                    int     lower = 0;
+                    int upper = ng;
+                    int lower = 0;
                     boolean found = false;
                     do {
-                        int   index = (upper + lower) / 2;
-                        float left  = index == 0 ? glyphs.get(index).minx() : glyphs.get(index).x();
+                        int index = (upper + lower) / 2;
+                        float left = index == 0 ? glyphs.get(index).minx() : glyphs.get(index).x();
                         float right = index >= ng - 1 ? glyphs.get(ng - 1).maxx() : glyphs.get(index + 1).x();
-                        float mid   = (left + right) / 2f;
+                        float mid = (left + right) / 2f;
                         if (mx >= left && mx < right) {
                             found = true;
                             if (mx > mid) {
