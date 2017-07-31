@@ -6,6 +6,8 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
+import org.liquidengine.legui.animation.Animated;
+import org.liquidengine.legui.animation.Animation;
 import org.liquidengine.legui.border.Border;
 import org.liquidengine.legui.color.ColorConstants;
 import org.liquidengine.legui.intersection.Intersector;
@@ -15,12 +17,19 @@ import org.liquidengine.legui.theme.Themes;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
  * Component is an object that have graphical representation in legui system.
  */
-public abstract class Component implements Serializable {
+public abstract class Component implements Serializable, Animated {
+
+    /**
+     * Animation list. Executed one by one from first to last element.
+     */
+    private List<Animation> animations;
+
     /**
      * Metadata map, place where renderers or event processors can store state of component.
      */
@@ -71,22 +80,18 @@ public abstract class Component implements Serializable {
      * Intersector which used to determine for example if cursor intersects component or not. Cannot be null.
      */
     private Intersector intersector = new RectangleIntersector();
-
     /**
      * Determines whether this component hovered or not (cursor is over this component).
      */
     private boolean hovered;
-
     /**
      * Determines whether this component focused or not.
      */
     private boolean focused;
-
     /**
      * Determines whether this component pressed or not (Mouse button is down and on this component).
      */
     private boolean pressed;
-
 
     /**
      * Default constructor. Used to create component instance without any parameters.
@@ -96,6 +101,7 @@ public abstract class Component implements Serializable {
     public Component() {
         this(0, 0, 10, 10);
     }
+
 
     /**
      * Constructor with position and size parameters.
@@ -119,6 +125,16 @@ public abstract class Component implements Serializable {
         this.position = position;
         this.size = size;
         Themes.getDefaultTheme().getThemeManager().getComponentTheme(Component.class).applyAll(this);
+    }
+
+    /**
+     * Returns list of animations.
+     *
+     * @return list of animations.
+     */
+    @Override
+    public List<Animation> getAnimations() {
+        return animations;
     }
 
     /**
