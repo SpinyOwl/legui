@@ -6,8 +6,6 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
-import org.liquidengine.legui.animation.Animated;
-import org.liquidengine.legui.animation.Animation;
 import org.liquidengine.legui.border.Border;
 import org.liquidengine.legui.color.ColorConstants;
 import org.liquidengine.legui.intersection.Intersector;
@@ -17,18 +15,12 @@ import org.liquidengine.legui.theme.Themes;
 
 import java.io.Serializable;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
  * Component is an object that have graphical representation in legui system.
  */
-public abstract class Component implements Serializable, Animated {
-
-    /**
-     * Animation list. Executed one by one from first to last element.
-     */
-    private List<Animation> animations;
+public abstract class Component implements Serializable {
 
     /**
      * Metadata map, place where renderers or event processors can store state of component.
@@ -125,16 +117,6 @@ public abstract class Component implements Serializable, Animated {
         this.position = position;
         this.size = size;
         Themes.getDefaultTheme().getThemeManager().getComponentTheme(Component.class).applyAll(this);
-    }
-
-    /**
-     * Returns list of animations.
-     *
-     * @return list of animations.
-     */
-    @Override
-    public List<Animation> getAnimations() {
-        return animations;
     }
 
     /**
