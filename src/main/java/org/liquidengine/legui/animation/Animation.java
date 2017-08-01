@@ -16,6 +16,7 @@ public abstract class Animation {
      * Called one time before animate loop.
      */
     protected void initialize() {
+        // Could be implemented later.
     }
 
     /**
@@ -32,6 +33,7 @@ public abstract class Animation {
      * Called one time when animation ended.
      */
     protected void destroy() {
+        // Could be implemented later.
     }
 
 }

@@ -80,7 +80,7 @@ public class Animator {
      *
      * @param animation animation to add.
      */
-    void pushAnimation(Animation animation) {
+    protected void pushAnimation(Animation animation) {
         animationsToInitialize.add(animation);
     }
 

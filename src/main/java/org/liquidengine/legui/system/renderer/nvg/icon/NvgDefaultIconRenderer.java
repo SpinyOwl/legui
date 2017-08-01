@@ -47,8 +47,8 @@ public class NvgDefaultIconRenderer extends NvgIconRenderer {
             x += icon.getHorizontalAlign().index * (size.x - iconSize.x) / 2f;
             y += icon.getVerticalAlign().index * (size.y - iconSize.y) / 2f;
         } else {
-            x+= icon.getPosition().x;
-            y+= icon.getPosition().y;
+            x += icon.getPosition().x;
+            y += icon.getPosition().y;
         }
         float w = iconSize.x;
         float h = iconSize.y;

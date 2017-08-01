@@ -17,7 +17,7 @@ public abstract class Icon {
      */
     private Vector2f size;
     /**
-     * Icon size.
+     * Icon position.
      */
     private Vector2f position;
     /**
@@ -45,10 +45,20 @@ public abstract class Icon {
         setSize(size);
     }
 
+    /**
+     * Gets position of icon.
+     *
+     * @return position of icon.
+     */
     public Vector2f getPosition() {
         return position;
     }
 
+    /**
+     * Used to set icon position.
+     *
+     * @param position the position.
+     */
     public void setPosition(Vector2f position) {
         this.position = position;
     }

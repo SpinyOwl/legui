@@ -6,7 +6,6 @@ import org.liquidengine.legui.icon.ImageIcon;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.ImageRenderer;
 import org.liquidengine.legui.system.renderer.nvg.NvgIconRenderer;
-import org.liquidengine.legui.system.renderer.nvg.util.NVGUtils;
 import org.lwjgl.nanovg.NVGPaint;
 
 import java.util.HashMap;
@@ -43,8 +42,8 @@ public class NvgImageIconRenderer<I extends ImageIcon> extends NvgIconRenderer<I
             x += icon.getHorizontalAlign().index * (size.x - iconSize.x) / 2f;
             y += icon.getVerticalAlign().index * (size.y - iconSize.y) / 2f;
         } else {
-            x+= icon.getPosition().x;
-            y+= icon.getPosition().y;
+            x += icon.getPosition().x;
+            y += icon.getPosition().y;
         }
 
         HashMap<String, Object> p = new HashMap<>();
