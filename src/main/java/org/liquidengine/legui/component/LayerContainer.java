@@ -45,40 +45,40 @@ public class LayerContainer<T extends Component> extends Container<T> {
         initialize();
     }
 
-    /**
-     * Returns {@link Vector4f} background color vector where x,y,z,w mapped to r,g,b,a values. <ul> <li>vector.x - red.</li> <li>vector.y -
-     * green.</li> <li>vector.z - blue.</li> <li>vector.a - alpha.</li> </ul>
-     *
-     * @return background color vector.
-     */
-    @Override
-    public Vector4f getBackgroundColor() {
-        return new Vector4f(0, 0, 0, 0);
-    }
-
-    /**
-     * Used to set background color vector where x,y,z,w mapped to r,g,b,a values. <ul> <li>vector.x - red.</li> <li>vector.y - green.</li>
-     * <li>vector.z - blue.</li> <li>vector.a - alpha.</li> </ul>
-     *
-     * @param backgroundColor background color vector.
-     */
-    @Override
-    public void setBackgroundColor(Vector4f backgroundColor) {
-        // forbid to change background color
-    }
-
-    /**
-     * Used to set background color vector.
-     *
-     * @param r red value.
-     * @param g green value.
-     * @param b blue value.
-     * @param a alpha value.
-     */
-    @Override
-    public void setBackgroundColor(float r, float g, float b, float a) {
-        // forbid to change background color
-    }
+//    /**
+//     * Returns {@link Vector4f} background color vector where x,y,z,w mapped to r,g,b,a values. <ul> <li>vector.x - red.</li> <li>vector.y -
+//     * green.</li> <li>vector.z - blue.</li> <li>vector.a - alpha.</li> </ul>
+//     *
+//     * @return background color vector.
+//     */
+//    @Override
+//    public Vector4f getBackgroundColor() {
+//        return new Vector4f(0, 0, 0, 0);
+//    }
+//
+//    /**
+//     * Used to set background color vector where x,y,z,w mapped to r,g,b,a values. <ul> <li>vector.x - red.</li> <li>vector.y - green.</li>
+//     * <li>vector.z - blue.</li> <li>vector.a - alpha.</li> </ul>
+//     *
+//     * @param backgroundColor background color vector.
+//     */
+//    @Override
+//    public void setBackgroundColor(Vector4f backgroundColor) {
+//         forbid to change background color
+//    }
+//
+//    /**
+//     * Used to set background color vector.
+//     *
+//     * @param r red value.
+//     * @param g green value.
+//     * @param b blue value.
+//     * @param a alpha value.
+//     */
+//    @Override
+//    public void setBackgroundColor(float r, float g, float b, float a) {
+//         forbid to change background color
+//    }
 
     /**
      * Used to initialize Layer container with default background and border.
