@@ -29,6 +29,7 @@ public class CursorPosEventHandler extends AbstractSystemEventHandler<SystemCurs
         Collections.reverse(allLayers);
         Component targetComponent = null;
         for (Layer layer : allLayers) {
+            if (!layer.isEventReceivable() || !layer.getContainer().isVisible() || !layer.getContainer().isEnabled()) continue;
             targetComponent = SehUtil.getTargetComponent(layer, cursorPosition);
             if (targetComponent != null || !layer.isEventPassable()) break;
         }

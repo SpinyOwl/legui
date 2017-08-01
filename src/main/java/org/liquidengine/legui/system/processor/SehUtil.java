@@ -22,8 +22,8 @@ public final class SehUtil {
      * @return top component from layer intersected by vector.
      */
     public static Component getTargetComponent(Layer layer, Vector2f vector) {
-        Component target = null;
         LayerContainer container = layer.getContainer();
+        Component target = container;
         List<Component> childs = container.getChilds();
         for (Component child : childs) {
             target = recursiveTargetComponentSearch(vector, child, target);

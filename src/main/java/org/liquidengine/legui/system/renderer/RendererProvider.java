@@ -4,6 +4,7 @@ import org.liquidengine.legui.border.Border;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.icon.Icon;
 import org.liquidengine.legui.image.Image;
+import org.liquidengine.legui.system.renderer.nvg.NvgRendererProvider;
 
 import java.util.List;
 
@@ -30,7 +31,7 @@ public abstract class RendererProvider {
     public abstract List<ComponentRenderer> getComponentRenderers();
 
     private static class RPH {
-        private static RendererProvider I = null;
+        private static RendererProvider I = NvgRendererProvider.getInstance();
     }
 
 
