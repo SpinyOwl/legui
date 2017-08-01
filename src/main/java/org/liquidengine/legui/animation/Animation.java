@@ -3,40 +3,35 @@ package org.liquidengine.legui.animation;
 /**
  * Created by ShchAlexander on 31.07.2017.
  */
-public abstract class Animation<T extends Animated> {
+public abstract class Animation {
 
-    public T target;
-
+    /**
+     * Adds animation to animator.
+     */
     public void startAnimation() {
         Animator.getInstance().pushAnimation(this);
     }
 
-    protected void beforeAnimation(){}
+    /**
+     * Called one time before animate loop.
+     */
+    protected void initialize() {
+    }
 
     /**
+     * This method used to update animated object. Called by animator every frame. Removed from animator and stops when this method returns
+     * true.
+     * <p>
      * Returns true if animation is finished and could be removed from animator.
      *
      * @return true if animation is finished and could be removed from animator.
      */
     protected abstract boolean animate(double delta);
 
-    protected void afterAnimation(){}
-
     /**
-     * Gets target.
-     *
-     * @return the target
+     * Called one time when animation ended.
      */
-    public T getTarget() {
-        return target;
+    protected void destroy() {
     }
 
-    /**
-     * Sets target.
-     *
-     * @param target the target
-     */
-    public void setTarget(T target) {
-        this.target = target;
-    }
 }
