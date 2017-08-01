@@ -25,6 +25,7 @@ public abstract class Animation {
      * <p>
      * Returns true if animation is finished and could be removed from animator.
      *
+     * @param delta delta time (from previous call).
      * @return true if animation is finished and could be removed from animator.
      */
     protected abstract boolean animate(double delta);
