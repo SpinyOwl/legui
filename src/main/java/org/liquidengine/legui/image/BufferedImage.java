@@ -58,7 +58,7 @@ public class BufferedImage extends LoadableImage {
 
             if (imageData != null) {
                 this.width = width[0];
-                this.height = width[0];
+                this.height = height[0];
                 this.channels = ImageChannels.instance(channels[0]);
                 this.imageData = imageData;
             } else { // if error occurs

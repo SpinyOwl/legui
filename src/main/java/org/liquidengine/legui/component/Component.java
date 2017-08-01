@@ -21,6 +21,7 @@ import java.util.Map;
  * Component is an object that have graphical representation in legui system.
  */
 public abstract class Component implements Serializable {
+
     /**
      * Metadata map, place where renderers or event processors can store state of component.
      */
@@ -71,22 +72,18 @@ public abstract class Component implements Serializable {
      * Intersector which used to determine for example if cursor intersects component or not. Cannot be null.
      */
     private Intersector intersector = new RectangleIntersector();
-
     /**
      * Determines whether this component hovered or not (cursor is over this component).
      */
     private boolean hovered;
-
     /**
      * Determines whether this component focused or not.
      */
     private boolean focused;
-
     /**
      * Determines whether this component pressed or not (Mouse button is down and on this component).
      */
     private boolean pressed;
-
 
     /**
      * Default constructor. Used to create component instance without any parameters.
@@ -96,6 +93,7 @@ public abstract class Component implements Serializable {
     public Component() {
         this(0, 0, 10, 10);
     }
+
 
     /**
      * Constructor with position and size parameters.

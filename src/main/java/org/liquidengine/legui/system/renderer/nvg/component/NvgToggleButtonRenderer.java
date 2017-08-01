@@ -11,8 +11,6 @@ import org.liquidengine.legui.system.renderer.nvg.NvgComponentRenderer;
 import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderBorder;
 import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderIcon;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.*;
-import static org.lwjgl.nanovg.NanoVG.nvgRestore;
-import static org.lwjgl.nanovg.NanoVG.nvgSave;
 
 /**
  * Created by ShchAlexander on 11.02.2017.
@@ -26,14 +24,14 @@ public class NvgToggleButtonRenderer extends NvgComponentRenderer<ToggleButton> 
             Vector2f pos = toggleButton.getScreenPosition();
             Vector2f size = toggleButton.getSize();
 
-            nvgSave(nanovg);
+//            nvgSave(nanovg);
             // render background
             renderBackground(nanovg, toggleButton, pos, size, context);
             renderBorder(toggleButton, context);
         }
         resetScissor(nanovg);
 
-        nvgRestore(nanovg);
+//        nvgRestore(nanovg);
     }
 
     private void renderBackground(long nvg, ToggleButton agui, Vector2f pos, Vector2f size, Context context) {
@@ -43,16 +41,20 @@ public class NvgToggleButtonRenderer extends NvgComponentRenderer<ToggleButton> 
         boolean toggled = agui.isToggled();
         Vector4f backgroundColor = new Vector4f(toggled ? agui.getToggledBackgroundColor() : agui.getBackgroundColor());
 
-        Icon bgIcon = toggled ? agui.getTogglededBackgroundIcon() : agui.getBackgroundIcon();
-        Icon image;
+        Icon togglededBackgroundIcon = agui.getTogglededBackgroundIcon();
+        Icon bgIcon = agui.getBackgroundIcon();
+        if (toggled && togglededBackgroundIcon != null) {
+            bgIcon = togglededBackgroundIcon;
+        }
+        Icon icon;
         if (!focused && !hovered && !pressed) {
-            image = bgIcon;
+            icon = bgIcon;
         } else if (hovered && !pressed) {
-            image = (image = agui.getHoveredBackgroundIcon()) == null ? bgIcon : image;
+            icon = (icon = agui.getHoveredBackgroundIcon()) == null ? bgIcon : icon;
         } else if (pressed) {
-            image = (image = agui.getPressedBackgroundIcon()) == null ? bgIcon : image;
+            icon = (icon = agui.getPressedBackgroundIcon()) == null ? bgIcon : icon;
         } else {
-            image = (image = agui.getFocusedBackgroundIcon()) == null ? bgIcon : image;
+            icon = (icon = agui.getFocusedBackgroundIcon()) == null ? bgIcon : icon;
         }
 
         drawRectangle(nvg, backgroundColor, pos, size);
@@ -68,8 +70,9 @@ public class NvgToggleButtonRenderer extends NvgComponentRenderer<ToggleButton> 
             }
         }
 
-        if (image != null) {
-            renderIcon(image, agui, context);
+        if (icon != null) {
+            createScissorByParent(nvg, agui);
+            renderIcon(icon, agui, context);
         }
     }
 }

@@ -16,12 +16,14 @@ public abstract class Icon {
      * Icon size.
      */
     private Vector2f size;
-
+    /**
+     * Icon position.
+     */
+    private Vector2f position;
     /**
      * Icon horizontal alignment in component.
      */
     private HorizontalAlign horizontalAlign = HorizontalAlign.CENTER;
-
     /**
      * Icon vertical alignment in component.
      */
@@ -44,6 +46,24 @@ public abstract class Icon {
     }
 
     /**
+     * Gets position of icon.
+     *
+     * @return position of icon.
+     */
+    public Vector2f getPosition() {
+        return position;
+    }
+
+    /**
+     * Used to set icon position.
+     *
+     * @param position the position.
+     */
+    public void setPosition(Vector2f position) {
+        this.position = position;
+    }
+
+    /**
      * Returns size of icon.
      *
      * @return size of icon.
@@ -58,8 +78,11 @@ public abstract class Icon {
      * @param size size to set.
      */
     public void setSize(Vector2f size) {
-        if (size != null) this.size = size;
-        else this.size = new Vector2f();
+        if (size != null) {
+            this.size = size;
+        } else {
+            this.size = new Vector2f();
+        }
     }
 
     /**
@@ -100,9 +123,13 @@ public abstract class Icon {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
+        if (this == o) {
+            return true;
+        }
 
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         Icon icon = (Icon) o;
 

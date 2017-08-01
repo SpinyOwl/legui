@@ -33,14 +33,23 @@ public class NvgDefaultIconRenderer extends NvgIconRenderer {
 
     @Override
     protected void renderIcon(Icon icon, Component component, Context context, long nanovg) {
-        if (!component.isVisible()) return;
+        if (!component.isVisible()) {
+            return;
+        }
         // render simple rectangle border
         Vector2f position = component.getScreenPosition();
         Vector2f size = component.getSize();
         Vector2f iconSize = icon.getSize();
 
-        float x = position.x + icon.getHorizontalAlign().index * (size.x - iconSize.x) / 2f;
-        float y = position.y + icon.getVerticalAlign().index * (size.y - iconSize.y) / 2f;
+        float x = position.x;
+        float y = position.y;
+        if (icon.getPosition() == null) {
+            x += icon.getHorizontalAlign().index * (size.x - iconSize.x) / 2f;
+            y += icon.getVerticalAlign().index * (size.y - iconSize.y) / 2f;
+        } else {
+            x += icon.getPosition().x;
+            y += icon.getPosition().y;
+        }
         float w = iconSize.x;
         float h = iconSize.y;
 
