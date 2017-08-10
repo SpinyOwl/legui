@@ -9,30 +9,29 @@ import org.liquidengine.legui.system.context.Context;
  * Base of main renderer which called by renderer thread.
  */
 public abstract class Renderer {
-    protected Context context;
-
-    public Renderer(Context context) {
-        this.context = context;
-    }
-
+//    protected Context context;
+//
+//    public Renderer(Context context) {
+//        this.context = context;
+//    }
     public abstract void initialize();
 
-    public abstract void preRender();
+    protected abstract void preRender(Context context);
 
-    public abstract void postRender();
+    protected abstract void postRender(Context context);
 
-    public void render(Frame display) {
-        preRender();
+    public void render(Frame display, Context context) {
+        preRender(context);
         for (Layer layer : display.getAllLayers()) {
             LayerContainer container = layer.getContainer();
             RendererProvider.getInstance().getComponentRenderer(container.getClass()).render(container, context);
         }
-        postRender();
+        postRender(context);
     }
 
     public abstract void destroy();
 
-    public Context getContext() {
-        return context;
-    }
+//    public Context getContext() {
+//        return context;
+//    }
 }

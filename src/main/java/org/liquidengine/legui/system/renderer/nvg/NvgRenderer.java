@@ -28,13 +28,14 @@ public class NvgRenderer extends Renderer {
     public static final String NVG_CONTEXT = "NVG_CONTEXT";
     public static final String IMAGE_REFERENCE_MANAGER = "IMAGE_REFERENCE_MANAGER";
 
-    protected long nvgContext;
+    protected long                nvgContext;
     protected NvgRendererProvider provider;
 
     protected Map<String, Font> loadedFonts = new ConcurrentHashMap<>();
+    private NvgLoadableImageReferenceManager imageReferenceManager;
 
-    public NvgRenderer(Context context, NvgRendererProvider provider) {
-        super(context);
+    public NvgRenderer(/*Context context, */NvgRendererProvider provider) {
+//        super(context);
         this.provider = provider;
     }
 
@@ -99,11 +100,9 @@ public class NvgRenderer extends Renderer {
     public void initialize() {
         int flags = NanoVGGL3.NVG_STENCIL_STROKES | NanoVGGL3.NVG_ANTIALIAS;
         nvgContext = NanoVGGL3.nvgCreate(flags);
+        imageReferenceManager = new NvgLoadableImageReferenceManager();
 
-        loadFontsToNvg();
-
-        context.getContextData().put(NVG_CONTEXT, nvgContext);
-        context.getContextData().put(IMAGE_REFERENCE_MANAGER, new NvgLoadableImageReferenceManager());
+//        loadFontsToNvg();
 
         provider.getComponentRenderers().forEach(ComponentRenderer::initialize);
     }
@@ -121,7 +120,11 @@ public class NvgRenderer extends Renderer {
     }
 
     @Override
-    public void preRender() {
+    protected void preRender(Context context) {
+        loadFontsToNvg();
+        context.getContextData().put(NVG_CONTEXT, nvgContext);
+        context.getContextData().put(IMAGE_REFERENCE_MANAGER, imageReferenceManager);
+
         glDisable(GL_DEPTH_TEST);
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -131,22 +134,21 @@ public class NvgRenderer extends Renderer {
     }
 
     @Override
-    public void postRender() {
+    protected void postRender(Context context) {
         nvgEndFrame(nvgContext);
 
         glDisable(GL_BLEND);
         glEnable(GL_DEPTH_TEST);
 
-        NvgLoadableImageReferenceManager manager = (NvgLoadableImageReferenceManager) context.getContextData().get(IMAGE_REFERENCE_MANAGER);
-        manager.removeOldImages(nvgContext);
-
-        loadFontsToNvg();
+        imageReferenceManager.removeOldImages(nvgContext);
+        context.getContextData().remove(NVG_CONTEXT, nvgContext);
+        context.getContextData().remove(IMAGE_REFERENCE_MANAGER, imageReferenceManager);
     }
 
     @Override
     public void destroy() {
         NanoVGGL3.nnvgDeleteGL3(nvgContext);
         provider.getComponentRenderers().forEach(ComponentRenderer::destroy);
-        ((NvgLoadableImageReferenceManager) context.getContextData().get(IMAGE_REFERENCE_MANAGER)).destroy();
+        imageReferenceManager.destroy();
     }
 }

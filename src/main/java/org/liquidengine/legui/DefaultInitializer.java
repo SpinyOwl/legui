@@ -45,7 +45,7 @@ public class DefaultInitializer {
         // and create renderer which will render our ui components.
         NvgRendererProvider provider = NvgRendererProvider.getInstance();
         RendererProvider.setRendererProvider(provider);
-        renderer = new NvgRenderer(context, provider);
+        renderer = new NvgRenderer(provider);
     }
 
     public Context getContext() {
