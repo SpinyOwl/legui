@@ -46,7 +46,7 @@ public class ScrollablePanelViewportScrollListener implements EventListener<Scro
         if (newVal > maxValue) newVal = maxValue;
         if (newVal < minValue) newVal = minValue;
 
-        event.getContext().getEventProcessor().pushEvent(new ScrollBarChangeValueEvent<>(scrollBar, event.getContext(), curValue, newVal));
+        event.getContext().getEventProcessor().pushEvent(new ScrollBarChangeValueEvent<>(scrollBar, event.getContext(), event.getFrame(), curValue, newVal));
         scrollBar.setCurValue(newVal);
 
         Viewport viewport = scrollBar.getViewport();

@@ -26,6 +26,6 @@ public class KeyEventHandler implements SystemEventHandler<SystemKeyEvent> {
         Component focusedGui = context.getFocusedGui();
         if (focusedGui == null) return;
 
-        context.getEventProcessor().pushEvent(new KeyEvent(focusedGui, context, event.action, keyCode, event.mods, event.scancode));
+        context.getEventProcessor().pushEvent(new KeyEvent(focusedGui, context, frame, event.action, keyCode, event.mods, event.scancode));
     }
 }

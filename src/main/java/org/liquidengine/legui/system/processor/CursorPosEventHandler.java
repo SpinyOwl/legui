@@ -39,10 +39,12 @@ public class CursorPosEventHandler extends AbstractSystemEventHandler<SystemCurs
                 context.setMouseTargetGui(targetComponent);
                 targetComponent.setHovered(true);
                 Vector2f curPosInComponent = targetComponent.getScreenPosition().sub(cursorPosition).negate();
-                context.getEventProcessor().pushEvent(new CursorEnterEvent(targetComponent, context, true, curPosInComponent, cursorPosition));
+                CursorEnterEvent enterEvent = new CursorEnterEvent(targetComponent, context, frame, true, curPosInComponent, cursorPosition);
+                context.getEventProcessor().pushEvent(enterEvent);
                 if (prevTarget != null) {
                     Vector2f curPosInPrevTarget = prevTarget.getScreenPosition().sub(cursorPosition).negate();
-                    context.getEventProcessor().pushEvent(new CursorEnterEvent(prevTarget, context, false, curPosInPrevTarget, cursorPosition));
+                    CursorEnterEvent exitEvent = new CursorEnterEvent(prevTarget, context, frame, false, curPosInPrevTarget, cursorPosition);
+                    context.getEventProcessor().pushEvent(exitEvent);
                     prevTarget.setHovered(false);
                 }
             }
@@ -50,39 +52,39 @@ public class CursorPosEventHandler extends AbstractSystemEventHandler<SystemCurs
     }
 
     @Override
-    protected boolean handle(SystemCursorPosEvent event, Layer layer, Context context) {
+    protected boolean handle(SystemCursorPosEvent event, Layer layer, Context context, Frame frame) {
         List<Component> childs = layer.getContainer().getChilds();
         for (Component child : childs) {
-            update(event, child, context);
+            update(event, child, context, frame);
         }
         return false;
     }
 
-    private void update(SystemCursorPosEvent event, Component component, Context context) {
+    private void update(SystemCursorPosEvent event, Component component, Context context, Frame frame) {
         if (component instanceof Container) {
-            processAsContainer(event, component, context);
+            processAsContainer(event, component, context, frame);
         } else {
-            processAsComponent(component, context);
+            processAsComponent(component, context, frame);
         }
     }
 
-    private void processAsContainer(SystemCursorPosEvent event, Component component, Context context) {
+    private void processAsContainer(SystemCursorPosEvent event, Component component, Context context, Frame frame) {
         Container container = (Container) component;
         if (container.isEmpty()) {
-            processAsComponent(component, context);
+            processAsComponent(component, context, frame);
         } else {
             List<Component> childs = container.getChilds();
             for (Component child : childs) {
-                update(event, child, context);
+                update(event, child, context, frame);
             }
         }
     }
 
-    private void processAsComponent(Component component, Context context) {
+    private void processAsComponent(Component component, Context context, Frame frame) {
         EventProcessor eventProcessor = context.getEventProcessor();
         if (Mouse.MouseButton.MOUSE_BUTTON_1.isPressed() && component == context.getFocusedGui()) {
             Vector2f delta = Mouse.getCursorPosition().sub(Mouse.getCursorPositionPrev());
-            eventProcessor.pushEvent(new MouseDragEvent(component, context, delta));
+            eventProcessor.pushEvent(new MouseDragEvent(component, context, frame, delta));
         }
     }
 }

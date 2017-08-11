@@ -21,7 +21,7 @@ public class WidgetCloseButMouseClickEventListener implements MouseClickEventLis
     public void process(MouseClickEvent event) {
         if (CLICK == event.getAction()) {
             widget.setVisible(false);
-            event.getContext().getEventProcessor().pushEvent(new WidgetCloseEvent<>(widget, event.getContext()));
+            event.getContext().getEventProcessor().pushEvent(new WidgetCloseEvent<>(widget, event.getContext(), event.getFrame()));
         }
     }
 

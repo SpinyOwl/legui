@@ -1,6 +1,7 @@
 package org.liquidengine.legui.event;
 
 import org.liquidengine.legui.component.Component;
+import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.system.context.Context;
 
 /**
@@ -10,8 +11,8 @@ public class WindowPosEvent<T extends Component> extends Event<T> {
     private final int xpos;
     private final int ypos;
 
-    public WindowPosEvent(T component, Context context, int xpos, int ypos) {
-        super(component, context);
+    public WindowPosEvent(T component, Context context, Frame frame, int xpos, int ypos) {
+        super(component, context, frame);
         this.xpos = xpos;
         this.ypos = ypos;
     }

@@ -2,6 +2,7 @@ package org.liquidengine.legui.component.misc.event.scrollbar;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.component.ScrollBar;
 import org.liquidengine.legui.event.Event;
 import org.liquidengine.legui.system.context.Context;
@@ -14,8 +15,8 @@ public class ScrollBarChangeValueEvent<T extends ScrollBar> extends Event<T> {
     private final float oldValue;
     private final float newValue;
 
-    public ScrollBarChangeValueEvent(T component, Context context, float oldValue, float newValue) {
-        super(component, context);
+    public ScrollBarChangeValueEvent(T component, Context context, Frame frame, float oldValue, float newValue) {
+        super(component, context, frame);
         this.oldValue = oldValue;
         this.newValue = newValue;
     }

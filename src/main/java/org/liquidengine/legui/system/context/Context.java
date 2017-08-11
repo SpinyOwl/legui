@@ -17,7 +17,6 @@ import static org.lwjgl.glfw.GLFW.*;
 public class Context {
 
     private final long glfwWindow;
-    private final Frame frame;
 
     private Vector2f windowPosition;
     private Vector2i windowSize;
@@ -33,9 +32,8 @@ public class Context {
     private Map<String, Object> contextData = new ConcurrentHashMap<>();
     private EventProcessor eventProcessor;
 
-    public Context(long glfwWindow, Frame frame, EventProcessor eventProcessor) {
+    public Context(long glfwWindow, EventProcessor eventProcessor) {
         this.glfwWindow = glfwWindow;
-        this.frame = frame;
         this.eventProcessor = eventProcessor;
     }
 
@@ -84,10 +82,6 @@ public class Context {
 
     public void setPixelRatio(float pixelRatio) {
         this.pixelRatio = pixelRatio;
-    }
-
-    public Frame getFrame() {
-        return frame;
     }
 
     public long getGlfwWindow() {

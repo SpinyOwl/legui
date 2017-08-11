@@ -98,7 +98,7 @@ public class ScrollBarMouseClickEventListener implements MouseClickEventListener
             valueToUse = minValue;
         }
         EventProcessor processor = event.getContext().getEventProcessor();
-        processor.pushEvent(new ScrollBarChangeValueEvent<>(scrollBar, event.getContext(), scrollBar.getCurValue(), valueToUse));
+        processor.pushEvent(new ScrollBarChangeValueEvent<>(scrollBar, event.getContext(), event.getFrame(), scrollBar.getCurValue(), valueToUse));
         scrollBar.setCurValue(valueToUse);
 
         Viewport viewport = scrollBar.getViewport();

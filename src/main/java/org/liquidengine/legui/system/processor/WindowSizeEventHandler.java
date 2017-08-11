@@ -22,18 +22,18 @@ public class WindowSizeEventHandler implements SystemEventHandler<SystemWindowSi
         for (Layer layer : layers) {
             if (layer.isEventReceivable()) {
                 if (!layer.getContainer().isVisible() || !layer.getContainer().isEnabled()) continue;
-                pushEvent(layer.getContainer(), event, context);
+                pushEvent(layer.getContainer(), event, context, frame);
             }
         }
     }
 
-    private void pushEvent(Component component, SystemWindowSizeEvent event, Context context) {
+    private void pushEvent(Component component, SystemWindowSizeEvent event, Context context, Frame frame) {
         if (!component.isVisible() || !component.isEnabled()) return;
-        context.getEventProcessor().pushEvent(new WindowSizeEvent(component, context, event.width, event.height));
+        context.getEventProcessor().pushEvent(new WindowSizeEvent(component, context, frame, event.width, event.height));
         if (component instanceof Container) {
             List<Component> childs = ((Container) component).getChilds();
             for (Component child : childs) {
-                pushEvent(child, event, context);
+                pushEvent(child, event, context, frame);
             }
         }
     }

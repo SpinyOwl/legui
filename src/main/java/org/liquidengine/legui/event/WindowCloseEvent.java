@@ -1,6 +1,7 @@
 package org.liquidengine.legui.event;
 
 import org.liquidengine.legui.component.Component;
+import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.system.context.Context;
 
 /**
@@ -8,8 +9,8 @@ import org.liquidengine.legui.system.context.Context;
  */
 public class WindowCloseEvent<T extends Component> extends Event<T> {
 
-    public WindowCloseEvent(T component, Context context) {
-        super(component, context);
+    public WindowCloseEvent(T component, Context context, Frame frame) {
+        super(component, context, frame);
     }
 
 }

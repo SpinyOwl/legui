@@ -1,6 +1,7 @@
 package org.liquidengine.legui.event;
 
 import org.liquidengine.legui.component.Component;
+import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.system.context.Context;
 
 /**
@@ -9,8 +10,8 @@ import org.liquidengine.legui.system.context.Context;
 public class WindowFocusEvent<T extends Component> extends Event<T> {
     private final boolean focused;
 
-    public WindowFocusEvent(T component, Context context, boolean focused) {
-        super(component, context);
+    public WindowFocusEvent(T component, Context context, Frame frame, boolean focused) {
+        super(component, context, frame);
         this.focused = focused;
     }
 

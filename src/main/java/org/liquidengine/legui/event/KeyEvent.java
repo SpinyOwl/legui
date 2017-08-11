@@ -1,6 +1,7 @@
 package org.liquidengine.legui.event;
 
 import org.liquidengine.legui.component.Component;
+import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.system.context.Context;
 
 /**
@@ -13,8 +14,8 @@ public class KeyEvent<T extends Component> extends Event<T> {
     private final int mods;
     private final int scancode;
 
-    public KeyEvent(T component, Context context, int action, int key, int mods, int scancode) {
-        super(component, context);
+    public KeyEvent(T component, Context context, Frame frame, int action, int key, int mods, int scancode) {
+        super(component, context, frame);
         this.action = action;
         this.key = key;
         this.mods = mods;

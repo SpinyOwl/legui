@@ -1,5 +1,6 @@
 package org.liquidengine.legui.component.misc.event.slider;
 
+import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.component.Slider;
 import org.liquidengine.legui.event.Event;
 import org.liquidengine.legui.system.context.Context;
@@ -28,8 +29,8 @@ public class SliderChangeValueEvent<T extends Slider> extends Event<T> {
      * @param oldValue  old slider value.
      * @param newValue  new slider value.
      */
-    public SliderChangeValueEvent(T component, Context context, float oldValue, float newValue) {
-        super(component, context);
+    public SliderChangeValueEvent(T component, Context context, Frame frame, float oldValue, float newValue) {
+        super(component, context, frame);
         this.oldValue = oldValue;
         this.newValue = newValue;
     }

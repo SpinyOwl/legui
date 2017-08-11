@@ -23,7 +23,7 @@ public class SliderScrollEventListener implements ScrollEventListener {
             value = Slider.MIN_VALUE;
         }
 
-        event.getContext().getEventProcessor().pushEvent(new SliderChangeValueEvent(slider, event.getContext(), slider.getValue(), value));
+        event.getContext().getEventProcessor().pushEvent(new SliderChangeValueEvent(slider, event.getContext(), event.getFrame(), slider.getValue(), value));
         slider.setValue(value);
     }
 

@@ -1,6 +1,7 @@
 package org.liquidengine.legui.system.processor;
 
 import org.liquidengine.legui.component.Component;
+import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.component.Layer;
 import org.liquidengine.legui.event.ScrollEvent;
 import org.liquidengine.legui.input.Mouse;
@@ -14,10 +15,10 @@ import java.util.List;
  */
 public class ScrollEventHandler extends AbstractSystemEventHandler<SystemScrollEvent> {
     @Override
-    protected boolean handle(SystemScrollEvent event, Layer layer, Context context) {
+    protected boolean handle(SystemScrollEvent event, Layer layer, Context context, Frame frame) {
         List<Component> targetComponentList = SehUtil.getTargetComponentList(layer, Mouse.getCursorPosition());
         for (Component component : targetComponentList) {
-            context.getEventProcessor().pushEvent(new ScrollEvent<>(component, context, event.xoffset, event.yoffset));
+            context.getEventProcessor().pushEvent(new ScrollEvent<>(component, context, frame, event.xoffset, event.yoffset));
         }
         return false;
     }

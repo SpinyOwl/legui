@@ -3,6 +3,7 @@ package org.liquidengine.legui.event;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.liquidengine.legui.component.Component;
+import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.system.context.Context;
 
 /**
@@ -21,8 +22,8 @@ public class FocusEvent<T extends Component> extends Event<T> {
      * @param nextFocus focus receiver.
      * @param focused   state of component.
      */
-    public FocusEvent(T component, Context context, Component nextFocus, boolean focused) {
-        super(component, context);
+    public FocusEvent(T component, Context context, Frame frame, Component nextFocus, boolean focused) {
+        super(component, context, frame);
         this.focused = focused;
         this.nextFocus = nextFocus;
     }

@@ -15,6 +15,6 @@ public class CharEventHandler implements SystemEventHandler<SystemCharEvent> {
         Component focusedGui = context.getFocusedGui();
         if (focusedGui == null) return;
 
-        context.getEventProcessor().pushEvent(new CharEvent(focusedGui, context, event.codepoint));
+        context.getEventProcessor().pushEvent(new CharEvent(focusedGui, context, frame, event.codepoint));
     }
 }

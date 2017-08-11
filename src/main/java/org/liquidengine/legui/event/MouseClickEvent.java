@@ -4,6 +4,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 import org.liquidengine.legui.component.Component;
+import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.input.Mouse;
 import org.liquidengine.legui.system.context.Context;
 
@@ -17,8 +18,8 @@ public class MouseClickEvent<T extends Component> extends Event<T> {
     private final Vector2f position;
     private final Vector2f absolutePosition;
 
-    public MouseClickEvent(T component, Context context, MouseClickAction action, Mouse.MouseButton button, Vector2f position, Vector2f absolutePosition) {
-        super(component, context);
+    public MouseClickEvent(T component, Context context, Frame frame, MouseClickAction action, Mouse.MouseButton button, Vector2f position, Vector2f absolutePosition) {
+        super(component, context, frame);
         this.action = action;
         this.button = button;
         this.position = position;

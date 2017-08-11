@@ -49,7 +49,7 @@ public class ScrollBarMouseDragEventListener implements MouseDragEventListener {
         float newVal = valueRange * (curPos - (dpos + arrowSize + barSize / 2f)) / (scrollBarSize - barSize);
         if (newVal > maxValue) newVal = maxValue;
         else if (newVal < minValue) newVal = minValue;
-        event.getContext().getEventProcessor().pushEvent(new ScrollBarChangeValueEvent<>(scrollBar, event.getContext(), scrollBar.getCurValue(), newVal));
+        event.getContext().getEventProcessor().pushEvent(new ScrollBarChangeValueEvent<>(scrollBar, event.getContext(), event.getFrame(), scrollBar.getCurValue(), newVal));
         scrollBar.setCurValue(newVal);
 
         Viewport viewport = scrollBar.getViewport();

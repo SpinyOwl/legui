@@ -52,18 +52,18 @@ public class MouseClickEventHandler implements SystemEventHandler<SystemMouseCli
                 if (focusedGui != targetComponent) {
                     targetComponent.setFocused(true);
                     context.setFocusedGui(targetComponent);
-                    context.getEventProcessor().pushEvent(new FocusEvent(targetComponent, context, targetComponent, true));
+                    context.getEventProcessor().pushEvent(new FocusEvent(targetComponent, context, frame, targetComponent, true));
                 }
                 Vector2f position = targetComponent.getScreenPosition().sub(cursorPosition).negate();
-                context.getEventProcessor().pushEvent(new MouseClickEvent(targetComponent, context, MouseClickEvent.MouseClickAction.PRESS, button, position, cursorPosition));
+                context.getEventProcessor().pushEvent(new MouseClickEvent(targetComponent, context, frame, MouseClickEvent.MouseClickAction.PRESS, button, position, cursorPosition));
             } else {
                 updateReleasePosAndFocusedGui(button, cursorPosition, focusedGui);
 
                 Vector2f position = targetComponent.getScreenPosition().sub(cursorPosition).negate();
                 if (focusedGui != null && focusedGui == targetComponent) {
-                    context.getEventProcessor().pushEvent(new MouseClickEvent(targetComponent, context, MouseClickEvent.MouseClickAction.CLICK, button, position, cursorPosition));
+                    context.getEventProcessor().pushEvent(new MouseClickEvent(targetComponent, context, frame, MouseClickEvent.MouseClickAction.CLICK, button, position, cursorPosition));
                 }
-                context.getEventProcessor().pushEvent(new MouseClickEvent(targetComponent, context, MouseClickEvent.MouseClickAction.RELEASE, button, position, cursorPosition));
+                context.getEventProcessor().pushEvent(new MouseClickEvent(targetComponent, context, frame, MouseClickEvent.MouseClickAction.RELEASE, button, position, cursorPosition));
             }
             pushWidgetsUp(targetComponent);
         }
@@ -81,21 +81,21 @@ public class MouseClickEventHandler implements SystemEventHandler<SystemMouseCli
         for (Layer layer : allLayers) {
             List<Component> childs = layer.getContainer().getChilds();
             for (Component child : childs) {
-                removeFocus(targetComponent, child, context);
+                removeFocus(targetComponent, child, context, frame);
             }
         }
     }
 
-    private void removeFocus(Component focused, Component component, Context context) {
+    private void removeFocus(Component focused, Component component, Context context, Frame frame) {
         if (component != focused && component.isVisible() && component.isFocused()) {
             component.setFocused(false);
             component.setPressed(false);
-            context.getEventProcessor().pushEvent(new FocusEvent<>(component, context, focused, false));
+            context.getEventProcessor().pushEvent(new FocusEvent<>(component, context, frame, focused, false));
         }
         if (component instanceof Container) {
             List<? extends Component> childs = ((Container) component).getChilds();
             for (Component child : childs) {
-                removeFocus(focused, child, context);
+                removeFocus(focused, child, context, frame);
             }
         }
     }

@@ -21,9 +21,9 @@ public class TooltipCursorEnterListener implements CursorEnterEventListener {
         Tooltip tooltip = controller.getTooltip();
         if (tooltip != null) {
             if (event.isEntered()) {
-                event.getContext().getFrame().getTooltipLayer().getContainer().add(tooltip);
+                event.getFrame().getTooltipLayer().getContainer().add(tooltip);
             } else {
-                event.getContext().getFrame().getTooltipLayer().getContainer().remove(tooltip);
+                event.getFrame().getTooltipLayer().getContainer().remove(tooltip);
             }
         }
     }

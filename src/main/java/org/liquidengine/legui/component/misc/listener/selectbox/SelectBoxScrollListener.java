@@ -18,7 +18,8 @@ public class SelectBoxScrollListener implements ScrollEventListener {
 
     @Override
     public void process(ScrollEvent event) {
-        event.getContext().getEventProcessor().pushEvent(new ScrollEvent(bar, event.getContext(), event.getXoffset(), event.getYoffset()));
+        ScrollEvent newEvent = new ScrollEvent(bar, event.getContext(), event.getFrame(), event.getXoffset(), event.getYoffset());
+        event.getContext().getEventProcessor().pushEvent(newEvent);
     }
 
     @Override

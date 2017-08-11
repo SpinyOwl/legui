@@ -5,6 +5,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.liquidengine.legui.component.Component;
+import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.system.context.Context;
 
 /**
@@ -13,10 +14,16 @@ import org.liquidengine.legui.system.context.Context;
 public abstract class Event<T extends Component> {
     private final T component;
     private final Context context;
+    private final Frame frame;
 
-    public Event(T component, Context context) {
+    public Event(T component, Context context, Frame frame) {
         this.component = component;
         this.context = context;
+        this.frame = frame;
+    }
+
+    public Frame getFrame() {
+        return frame;
     }
 
     public T getComponent() {

@@ -2,6 +2,7 @@ package org.liquidengine.legui.system.processor;
 
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.Container;
+import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.component.Layer;
 import org.liquidengine.legui.event.WindowIconifyEvent;
 import org.liquidengine.legui.system.context.Context;
@@ -14,19 +15,19 @@ import java.util.List;
  */
 public class WindowIconifyEventHandler extends AbstractSystemEventHandler<SystemWindowIconifyEvent> {
     @Override
-    protected boolean handle(SystemWindowIconifyEvent event, Layer layer, Context context) {
-        pushEvent(layer.getContainer(), event, context);
+    protected boolean handle(SystemWindowIconifyEvent event, Layer layer, Context context, Frame frame) {
+        pushEvent(layer.getContainer(), event, context, frame);
         return false;
     }
 
 
-    private void pushEvent(Component component, SystemWindowIconifyEvent event, Context context) {
+    private void pushEvent(Component component, SystemWindowIconifyEvent event, Context context, Frame frame) {
         if (!(component.isVisible())) return;
-        context.getEventProcessor().pushEvent(new WindowIconifyEvent(component, context, event.iconified));
+        context.getEventProcessor().pushEvent(new WindowIconifyEvent(component, context, frame, event.iconified));
         if (component instanceof Container) {
             List<Component> childs = ((Container) component).getChilds();
             for (Component child : childs) {
-                pushEvent(child, event, context);
+                pushEvent(child, event, context, frame);
             }
         }
     }

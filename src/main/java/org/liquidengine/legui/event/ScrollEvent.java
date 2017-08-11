@@ -1,6 +1,7 @@
 package org.liquidengine.legui.event;
 
 import org.liquidengine.legui.component.Component;
+import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.system.context.Context;
 
 /**
@@ -10,8 +11,8 @@ public class ScrollEvent<T extends Component> extends Event<T> {
     private final double xoffset;
     private final double yoffset;
 
-    public ScrollEvent(T component, Context context, double xoffset, double yoffset) {
-        super(component, context);
+    public ScrollEvent(T component, Context context, Frame frame, double xoffset, double yoffset) {
+        super(component, context, frame);
         this.xoffset = xoffset;
         this.yoffset = yoffset;
     }
