@@ -19,7 +19,6 @@ import static org.lwjgl.nanovg.NanoVG.*;
  * Created by ShchAlexander on 11.02.2017.
  */
 public class NvgRadioButtonRenderer extends NvgComponentRenderer<RadioButton> {
-    private NVGColor colorA = NVGColor.create();
 
     @Override
     public void renderComponent(RadioButton radioButton, Context context, long nanovg) {
@@ -35,10 +34,12 @@ public class NvgRadioButtonRenderer extends NvgComponentRenderer<RadioButton> {
             float sh = size.y;
                 /*Draw background rectangle*/
             {
+                NVGColor colorA = NVGColor.calloc();
                 nvgBeginPath(nanovg);
                 nvgRoundedRect(nanovg, px, py, sw, sh, 0);
                 nvgFillColor(nanovg, rgba(radioButton.getBackgroundColor(), colorA));
                 nvgFill(nanovg);
+                colorA.free();
             }
 
             TextState textState = radioButton.getTextState();

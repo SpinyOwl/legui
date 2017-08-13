@@ -17,7 +17,6 @@ import static org.lwjgl.nanovg.NanoVG.*;
  * Created by ShchAlexander on 11.02.2017.
  */
 public class NvgLabelRenderer extends NvgComponentRenderer<Label> {
-    private NVGColor colorA = NVGColor.create();
 
     @Override
     public void renderComponent(Label label, Context context, long nanovg) {
@@ -29,10 +28,12 @@ public class NvgLabelRenderer extends NvgComponentRenderer<Label> {
 
             /*Draw background rectangle*/
             {
+                NVGColor colorA = NVGColor.calloc();
                 nvgBeginPath(nanovg);
                 nvgRoundedRect(nanovg, pos.x, pos.y, size.x, size.y, 0);
                 nvgFillColor(nanovg, rgba(backgroundColor, colorA));
                 nvgFill(nanovg);
+                colorA.free();
             }
 
             // draw text into box

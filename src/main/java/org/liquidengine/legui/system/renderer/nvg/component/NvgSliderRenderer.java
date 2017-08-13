@@ -1,5 +1,24 @@
 package org.liquidengine.legui.system.renderer.nvg.component;
 
+import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderBorder;
+import static org.liquidengine.legui.system.renderer.nvg.util.NVGUtils.rgba;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.createScissor;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.drawRectStroke;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.resetScissor;
+import static org.lwjgl.nanovg.NanoVG.NVG_ROUND;
+import static org.lwjgl.nanovg.NanoVG.nvgBeginPath;
+import static org.lwjgl.nanovg.NanoVG.nvgFill;
+import static org.lwjgl.nanovg.NanoVG.nvgFillColor;
+import static org.lwjgl.nanovg.NanoVG.nvgLineCap;
+import static org.lwjgl.nanovg.NanoVG.nvgLineJoin;
+import static org.lwjgl.nanovg.NanoVG.nvgLineTo;
+import static org.lwjgl.nanovg.NanoVG.nvgMoveTo;
+import static org.lwjgl.nanovg.NanoVG.nvgRoundedRect;
+import static org.lwjgl.nanovg.NanoVG.nvgSave;
+import static org.lwjgl.nanovg.NanoVG.nvgStroke;
+import static org.lwjgl.nanovg.NanoVG.nvgStrokeColor;
+import static org.lwjgl.nanovg.NanoVG.nvgStrokeWidth;
+
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.Slider;
@@ -8,24 +27,19 @@ import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.nvg.NvgComponentRenderer;
 import org.lwjgl.nanovg.NVGColor;
 
-import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderBorder;
-import static org.liquidengine.legui.system.renderer.nvg.util.NVGUtils.rgba;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.*;
-import static org.lwjgl.nanovg.NanoVG.*;
-
 /**
  * Renderer for Slider components.
  */
 public class NvgSliderRenderer<T extends Slider> extends NvgComponentRenderer<T> {
+
     public static final float SLIDER_WIDTH = 4.0f;
-    private NVGColor colorA = NVGColor.malloc();
 
     /**
      * Used to render slider component.
      *
-     * @param slider       slider to render.
+     * @param slider slider to render.
      * @param leguiContext context.
-     * @param context      nanoVG context.
+     * @param context nanoVG context.
      */
     @Override
     public void renderComponent(T slider, Context leguiContext, long context) {
@@ -47,17 +61,14 @@ public class NvgSliderRenderer<T extends Slider> extends NvgComponentRenderer<T>
             float cornerRadius = slider.getCornerRadius();
             float sliderSize = slider.getSliderSize();
 
-            nvgBeginPath(context);
-            nvgRoundedRect(context, x, y, w, h, cornerRadius);
-            nvgFillColor(context, rgba(backgroundColor, colorA));
-            nvgFill(context);
+            drawBackground(context, x, y, w, h, backgroundColor, cornerRadius);
 
             float lx,
-                    rx,
-                    ty,
-                    by,
-                    px,
-                    py;
+                rx,
+                ty,
+                by,
+                px,
+                py;
             if (vertical) {
                 px = lx = rx = x + (w) / 2f;
                 ty = y + sliderSize / 2f;
@@ -80,10 +91,7 @@ public class NvgSliderRenderer<T extends Slider> extends NvgComponentRenderer<T>
             float xx = px - sliderSize / 2f;
             float yy = py - sliderSize / 2f;
 
-            nvgBeginPath(context);
-            nvgRoundedRect(context, xx, yy, sliderSize, sliderSize, cornerRadius);
-            nvgFillColor(context, rgba(sliderColor, colorA));
-            nvgFill(context);
+            drawBackground(context, xx, yy, sliderSize, sliderSize, sliderColor, cornerRadius);
 
             drawRectStroke(context, xx + 0.5f, yy + 0.5f, sliderSize, sliderSize, sliderInactiveColor, cornerRadius, 1);
 
@@ -92,18 +100,29 @@ public class NvgSliderRenderer<T extends Slider> extends NvgComponentRenderer<T>
         resetScissor(context);
     }
 
+    private void drawBackground(long context, float x, float y, float w, float h, Vector4f backgroundColor, float cornerRadius) {
+        NVGColor colorA = NVGColor.calloc();
+        nvgBeginPath(context);
+        nvgRoundedRect(context, x, y, w, h, cornerRadius);
+        nvgFillColor(context, rgba(backgroundColor, colorA));
+        nvgFill(context);
+        colorA.free();
+    }
+
     /**
      * Used to render line.
      *
      * @param context nanoVG context.
-     * @param color   color to render
-     * @param x1      left x
-     * @param x2      right x
-     * @param y2      top y
-     * @param y1      bottom y
-     * @param width   line width
+     * @param color color to render
+     * @param x1 left x
+     * @param x2 right x
+     * @param y2 top y
+     * @param y1 bottom y
+     * @param width line width
      */
     private void drawLine(long context, Vector4f color, float x1, float y1, float x2, float y2, float width) {
+
+        NVGColor colorA = NVGColor.calloc();
         nvgLineCap(context, NVG_ROUND);
         nvgLineJoin(context, NVG_ROUND);
         nvgStrokeWidth(context, width);
@@ -112,6 +131,7 @@ public class NvgSliderRenderer<T extends Slider> extends NvgComponentRenderer<T>
         nvgMoveTo(context, x1, y1);
         nvgLineTo(context, x2, y2);
         nvgStroke(context);
+        colorA.free();
     }
 
 }

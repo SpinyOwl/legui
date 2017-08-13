@@ -1,5 +1,30 @@
 package org.liquidengine.legui.system.renderer.nvg.component;
 
+import static org.liquidengine.legui.color.ColorUtil.oppositeBlackOrWhite;
+import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderBorder;
+import static org.liquidengine.legui.system.renderer.nvg.util.NVGUtils.rgba;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.alignTextInBox;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.calculateTextBoundsRect;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.createScissor;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.drawRectStroke;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.drawRectangle;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.intersectScissor;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.renderTextLineToBounds;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.resetScissor;
+import static org.lwjgl.nanovg.NanoVG.nnvgTextGlyphPositions;
+import static org.lwjgl.nanovg.NanoVG.nvgBeginPath;
+import static org.lwjgl.nanovg.NanoVG.nvgFill;
+import static org.lwjgl.nanovg.NanoVG.nvgFillColor;
+import static org.lwjgl.nanovg.NanoVG.nvgFontFace;
+import static org.lwjgl.nanovg.NanoVG.nvgFontSize;
+import static org.lwjgl.nanovg.NanoVG.nvgRoundedRect;
+import static org.lwjgl.nanovg.NanoVG.nvgSave;
+import static org.lwjgl.system.MemoryUtil.memAddress;
+import static org.lwjgl.system.MemoryUtil.memFree;
+import static org.lwjgl.system.MemoryUtil.memUTF8;
+
+import java.nio.ByteBuffer;
+import java.util.Map;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.TextArea;
@@ -13,20 +38,11 @@ import org.lwjgl.glfw.GLFW;
 import org.lwjgl.nanovg.NVGColor;
 import org.lwjgl.nanovg.NVGGlyphPosition;
 
-import java.nio.ByteBuffer;
-import java.util.Map;
-
-import static org.liquidengine.legui.color.ColorUtil.oppositeBlackOrWhite;
-import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderBorder;
-import static org.liquidengine.legui.system.renderer.nvg.util.NVGUtils.rgba;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.*;
-import static org.lwjgl.nanovg.NanoVG.*;
-import static org.lwjgl.system.MemoryUtil.*;
-
 /**
  * NanoVG Text area renderer.
  */
 public class NvgTextAreaRenderer extends NvgComponentRenderer<TextArea> {
+
     private static final String PRATIO = "pratio";
     private static final String POFFSETX = "poffsetx";
     private static final String PHALIGN = "phalign";
@@ -36,8 +52,6 @@ public class NvgTextAreaRenderer extends NvgComponentRenderer<TextArea> {
     private final Vector4f caretColor = new Vector4f(0, 0, 0, 0.5f);
     private final int maxGlyphCount = 2048;
 
-    private NVGColor colorA = NVGColor.create();
-    private NVGGlyphPosition.Buffer glyphs = NVGGlyphPosition.create(maxGlyphCount);
 
     @Override
     public void renderComponent(TextArea component, Context leguiContext, long context) {
@@ -67,6 +81,9 @@ public class NvgTextAreaRenderer extends NvgComponentRenderer<TextArea> {
     }
 
     private void renderText(Context leguiContext, long context, TextArea gui, Vector2f size, Vector4f rect, Vector4f bc) {
+
+        NVGGlyphPosition.Buffer glyphs = NVGGlyphPosition.calloc(maxGlyphCount);
+
         TextState textState = gui.getTextState();
         String text = textState.getText();
         String font = textState.getFont();
@@ -114,7 +131,7 @@ public class NvgTextAreaRenderer extends NvgComponentRenderer<TextArea> {
         float mouseY = cursorPosition.y;
         float rat = size.y * size.x;
 
-        preinitializeTextRendering(context, font, fontSize, halign, valign, textColor);
+        preinitializeTextRendering(context, font, fontSize, halign, valign, textColor, glyphs);
 
         // we need to calculate x and y offsets
         String caretLineText = lines[caretLine];
@@ -125,7 +142,7 @@ public class NvgTextAreaRenderer extends NvgComponentRenderer<TextArea> {
 
         // also we need to calculate offset x // caretLine
         float offsetX = 0;
-        caretx = getCaretx(context, lineCaretPosition, caretLineText, caretLineBounds);
+        caretx = getCaretx(context, lineCaretPosition, caretLineText, caretLineBounds, glyphs);
         offsetX = calculateOffsetX(rect, caretx, offsetX);
 
         Float poffsetx = /*offsetX;//*/(Float) metadata.getOrDefault(POFFSETX, 0f);
@@ -140,7 +157,7 @@ public class NvgTextAreaRenderer extends NvgComponentRenderer<TextArea> {
         // Check if we should recalculate offset x
         poffsetx = recalculateOffsetX(rect, halign, caretx, rat, offsetX, poffsetx, pratio, phalign);
 
-        preinitializeTextRendering(context, font, fontSize, halign, valign, textColor);
+        preinitializeTextRendering(context, font, fontSize, halign, valign, textColor, glyphs);
 
         float[][] bounds = new float[lineCount][8];
         for (int i = 0; i < lineCount; i++) {
@@ -151,7 +168,9 @@ public class NvgTextAreaRenderer extends NvgComponentRenderer<TextArea> {
         // calculate default mouse line index
         if (lineCount > 0) {
             float llineY = bounds[lineCount - 1][5] - poffsety + voffset + fontSize * (lineCount - 1);
-            if (mouseY > llineY) mouseLineIndex = lineCount - 1;
+            if (mouseY > llineY) {
+                mouseLineIndex = lineCount - 1;
+            }
         }
 
         // calculate caret color based on time
@@ -161,7 +180,8 @@ public class NvgTextAreaRenderer extends NvgComponentRenderer<TextArea> {
         }
 
         // render selection background
-        renderSelectionBackground(context, gui, fontSize, focused, highlightColor, lines, lineCount, lineStartIndeces, voffset, poffsetx, poffsety, bounds);
+        renderSelectionBackground(context, gui, fontSize, focused, highlightColor, lines, lineCount, lineStartIndeces, voffset, poffsetx, poffsety, bounds,
+            glyphs);
 
         // render every line of text
         for (int i = 0; i < lineCount; i++) {
@@ -239,7 +259,8 @@ public class NvgTextAreaRenderer extends NvgComponentRenderer<TextArea> {
                 // render current line background
                 renderCurrentLineBackground(context, rect, bc, fontSize, focused, caretLine, i, lineY);
 
-                renderTextLineToBounds(context, lineX, lineY, bounds[i][6], bounds[i][7], fontSize, font, textColor, line, HorizontalAlign.LEFT, VerticalAlign.MIDDLE, false);
+                renderTextLineToBounds(context, lineX, lineY, bounds[i][6], bounds[i][7], fontSize, font, textColor, line, HorizontalAlign.LEFT,
+                    VerticalAlign.MIDDLE, false);
                 if (i == caretLine && focused) {
                     // render caret
                     drawRectStroke(context, caretx - poffsetx - 1, lineY, 1, bounds[i][7], caretColor, 0, 1);
@@ -259,6 +280,8 @@ public class NvgTextAreaRenderer extends NvgComponentRenderer<TextArea> {
         metadata.put(POFFSETX, poffsetx);
         metadata.put(PVALIGN, valign);
         metadata.put(PHALIGN, halign);
+
+        glyphs.free();
     }
 
     private void renderCurrentLineBackground(long context, Vector4f rect, Vector4f bc, float fontSize, boolean focused, int caretLine, int i, float lineY) {
@@ -269,7 +292,8 @@ public class NvgTextAreaRenderer extends NvgComponentRenderer<TextArea> {
         }
     }
 
-    private void renderSelectionBackground(long context, TextArea gui, float fontSize, boolean focused, Vector4f selectionColor, String[] lines, int lineCount, int[] lineStartIndeces, float voffset, Float poffsetx, Float poffsety, float[][] bounds) {
+    private void renderSelectionBackground(long context, TextArea gui, float fontSize, boolean focused, Vector4f selectionColor, String[] lines, int lineCount,
+        int[] lineStartIndeces, float voffset, Float poffsetx, Float poffsety, float[][] bounds, NVGGlyphPosition.Buffer glyphs) {
         if (focused) {
             int startSelectionIndex = gui.getStartSelectionIndex();
             int endSelectionIndex = gui.getEndSelectionIndex();
@@ -295,8 +319,8 @@ public class NvgTextAreaRenderer extends NvgComponentRenderer<TextArea> {
                 startSelectionIndexInLine = startSelectionIndex - lineStartIndeces[startSelectionLine];
                 endSelectionIndexInLine = endSelectionIndex - lineStartIndeces[endSelectionLine];
 
-                float startSelectionCaretX = getCaretx(context, startSelectionIndexInLine, lines[startSelectionLine], bounds[startSelectionLine]);
-                float endSelectionCaretX = getCaretx(context, endSelectionIndexInLine, lines[endSelectionLine], bounds[endSelectionLine]);
+                float startSelectionCaretX = getCaretx(context, startSelectionIndexInLine, lines[startSelectionLine], bounds[startSelectionLine], glyphs);
+                float endSelectionCaretX = getCaretx(context, endSelectionIndexInLine, lines[endSelectionLine], bounds[endSelectionLine], glyphs);
 
                 for (int i = 0; i < lineCount; i++) {
                     if (i >= startSelectionLine && i <= endSelectionLine) {
@@ -337,7 +361,8 @@ public class NvgTextAreaRenderer extends NvgComponentRenderer<TextArea> {
         return newOffsetY;
     }
 
-    private Float recalculateOffsetX(Vector4f rect, HorizontalAlign halign, float caretx, float rat, float offsetX, Float poffsetx, Float pratio, HorizontalAlign phalign) {
+    private Float recalculateOffsetX(Vector4f rect, HorizontalAlign halign, float caretx, float rat, float offsetX, Float poffsetx, Float pratio,
+        HorizontalAlign phalign) {
         float newPOffsetX = poffsetx;
         if (pratio != rat || phalign != halign) {
             newPOffsetX = offsetX;
@@ -352,7 +377,8 @@ public class NvgTextAreaRenderer extends NvgComponentRenderer<TextArea> {
         return newPOffsetX;
     }
 
-    private Float recalculateOffsetY(Vector4f rect, float fontSize, VerticalAlign valign, float rat, float carety, float offsetY, Float poffsety, Float pratio, VerticalAlign pvalign) {
+    private Float recalculateOffsetY(Vector4f rect, float fontSize, VerticalAlign valign, float rat, float carety, float offsetY, Float poffsety, Float pratio,
+        VerticalAlign pvalign) {
         float newPOffsetY = poffsety;
         if (pratio != rat || pvalign != valign) {
             newPOffsetY = offsetY;
@@ -367,7 +393,7 @@ public class NvgTextAreaRenderer extends NvgComponentRenderer<TextArea> {
         return newPOffsetY;
     }
 
-    private float getCaretx(long context, int lineCaretPosition, String caretLineText, float[] caretLineBounds) {
+    private float getCaretx(long context, int lineCaretPosition, String caretLineText, float[] caretLineBounds, NVGGlyphPosition.Buffer glyphs) {
         float caretx;
         ByteBuffer caretLineBytes = null;
         try {
@@ -376,21 +402,25 @@ public class NvgTextAreaRenderer extends NvgComponentRenderer<TextArea> {
             // align text for calculations
             alignTextInBox(context, HorizontalAlign.LEFT, VerticalAlign.MIDDLE);
             int ng = nnvgTextGlyphPositions(context, caretLineBounds[4], 0, memAddress(caretLineBytes), 0, memAddress(glyphs), maxGlyphCount);
-            caretx = calculateCaretPos(lineCaretPosition, caretLineBounds, ng);
+            caretx = calculateCaretPos(lineCaretPosition, caretLineBounds, ng, glyphs);
         } finally {
             memFree(caretLineBytes);
         }
         return caretx;
     }
 
-    private void preinitializeTextRendering(long context, String font, float fontSize, HorizontalAlign halign, VerticalAlign valign, Vector4f textColor) {
+    private void preinitializeTextRendering(long context, String font, float fontSize,
+        HorizontalAlign halign, VerticalAlign valign, Vector4f textColor,
+        NVGGlyphPosition.Buffer glyphs) {
+        NVGColor colorA = NVGColor.calloc();
         alignTextInBox(context, halign, valign);
         nvgFontSize(context, fontSize);
         nvgFontFace(context, font);
         nvgFillColor(context, rgba(textColor, colorA));
+        colorA.free();
     }
 
-    private float calculateCaretPos(int caretPosition, float[] textBounds, int ng) {
+    private float calculateCaretPos(int caretPosition, float[] textBounds, int ng, NVGGlyphPosition.Buffer glyphs) {
         float caretx = 0;
         if (caretPosition < ng) {
             try {
@@ -410,11 +440,13 @@ public class NvgTextAreaRenderer extends NvgComponentRenderer<TextArea> {
 
     private void drawBackground(long context, float x, float y, float w, float h, float br, Vector4f bc) {
         if (bc.w != 0) {
+            NVGColor colorA = NVGColor.calloc();
             nvgSave(context);
             nvgBeginPath(context);
             nvgRoundedRect(context, x, y, w, h, br);
             nvgFillColor(context, rgba(bc, colorA));
             nvgFill(context);
+            colorA.free();
         }
     }
 }

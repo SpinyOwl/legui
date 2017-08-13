@@ -1,5 +1,27 @@
 package org.liquidengine.legui.system.renderer.nvg.component;
 
+import static org.liquidengine.legui.color.ColorUtil.oppositeBlackOrWhite;
+import static org.liquidengine.legui.component.optional.Orientation.VERTICAL;
+import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderBorder;
+import static org.liquidengine.legui.system.renderer.nvg.util.NVGUtils.rgba;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.alignTextInBox;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.createBounds;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.createScissor;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.drawRectangle;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.resetScissor;
+import static org.liquidengine.legui.util.TextUtil.cpToStr;
+import static org.lwjgl.nanovg.NanoVG.nnvgText;
+import static org.lwjgl.nanovg.NanoVG.nnvgTextBreakLines;
+import static org.lwjgl.nanovg.NanoVG.nvgBeginPath;
+import static org.lwjgl.nanovg.NanoVG.nvgFill;
+import static org.lwjgl.nanovg.NanoVG.nvgFillColor;
+import static org.lwjgl.nanovg.NanoVG.nvgFontFace;
+import static org.lwjgl.nanovg.NanoVG.nvgFontSize;
+import static org.lwjgl.nanovg.NanoVG.nvgRoundedRect;
+import static org.lwjgl.nanovg.NanoVG.nvgSave;
+import static org.lwjgl.system.MemoryUtil.memAddress;
+
+import java.nio.ByteBuffer;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.ScrollBar;
@@ -12,27 +34,16 @@ import org.lwjgl.nanovg.NVGColor;
 import org.lwjgl.nanovg.NVGTextRow;
 import org.lwjgl.system.MemoryUtil;
 
-import java.nio.ByteBuffer;
-
-import static org.liquidengine.legui.color.ColorUtil.oppositeBlackOrWhite;
-import static org.liquidengine.legui.component.optional.Orientation.VERTICAL;
-import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderBorder;
-import static org.liquidengine.legui.system.renderer.nvg.util.NVGUtils.rgba;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.*;
-import static org.liquidengine.legui.util.TextUtil.cpToStr;
-import static org.lwjgl.nanovg.NanoVG.*;
-import static org.lwjgl.system.MemoryUtil.memAddress;
-
 /**
  * Created by ShchAlexander on 12.02.2017.
  */
 public class NvgScrollBarRenderer extends NvgComponentRenderer<ScrollBar> {
+
     // TODO: It would be nice to add Icon here to render arrows.
     private static final String B = cpToStr(0xE5CF);
     private static final String L = cpToStr(0xE5CB);
     private static final String R = cpToStr(0xE5CC);
     private static final String T = cpToStr(0xE5CE);
-    private NVGColor colorA = NVGColor.malloc();
 
     @Override
     public void renderComponent(ScrollBar scrollBar, Context leguiContext, long context) {
@@ -66,10 +77,7 @@ public class NvgScrollBarRenderer extends NvgComponentRenderer<ScrollBar> {
             float cornerRadius = scrollBar.getCornerRadius();
 
             // draw background
-            nvgBeginPath(context);
-            nvgRoundedRect(context, x, y, w, h, cornerRadius);
-            nvgFillColor(context, rgba(backgroundColor, colorA));
-            nvgFill(context);
+            drawBackground(context, x, y, w, h, backgroundColor, cornerRadius);
 
             // draw scroll bar back
             drawScrollBackground(scrollBar, context, x, y, w, h, arrowsEnabled, diff, vertical, scrollBarBackgroundColor, cornerRadius);
@@ -84,11 +92,21 @@ public class NvgScrollBarRenderer extends NvgComponentRenderer<ScrollBar> {
         resetScissor(context);
     }
 
-    private void drawScrollBackground(ScrollBar scrollBar, long context, float x, float y, float w, float h, boolean arrowsEnabled, float diff, boolean vertical, Vector4f scrollBarBackgroundColor, float cornerRadius) {
+    private void drawBackground(long context, float x, float y, float w, float h, Vector4f backgroundColor, float cornerRadius) {
+        NVGColor colorA = NVGColor.calloc();
+        nvgBeginPath(context);
+        nvgRoundedRect(context, x, y, w, h, cornerRadius);
+        nvgFillColor(context, rgba(backgroundColor, colorA));
+        nvgFill(context);
+        colorA.free();
+    }
+
+    private void drawScrollBackground(ScrollBar scrollBar, long context, float x, float y, float w, float h, boolean arrowsEnabled, float diff,
+        boolean vertical, Vector4f scrollBarBackgroundColor, float cornerRadius) {
         float lx,
-                ly,
-                wx,
-                hy;
+            ly,
+            wx,
+            hy;
         if (vertical) {
             lx = x;
             ly = y + diff;
@@ -101,10 +119,7 @@ public class NvgScrollBarRenderer extends NvgComponentRenderer<ScrollBar> {
             hy = h;
         }
 
-        nvgBeginPath(context);
-        nvgRoundedRect(context, lx, ly, wx, hy, arrowsEnabled ? 0 : cornerRadius);
-        nvgFillColor(context, rgba(scrollBarBackgroundColor, colorA));
-        nvgFill(context);
+        drawBackground(context, lx, ly, wx, hy, scrollBarBackgroundColor, arrowsEnabled ? 0 : cornerRadius);
 
         if (arrowsEnabled) {
             drawArrows(context, scrollBar, x, y, w, h);
@@ -112,23 +127,25 @@ public class NvgScrollBarRenderer extends NvgComponentRenderer<ScrollBar> {
     }
 
     private void drawScrollButton(ScrollBar scrollBar,
-                                  long context,
-                                  float x, float y, float w, float h,
-                                  float visibleAmount, float minValue,
-                                  float maxValue, float diff, float offset,
-                                  float curValue, boolean vertical,
-                                  Vector4f scrollColor, float cornerRadius) {
+        long context,
+        float x, float y, float w, float h,
+        float visibleAmount, float minValue,
+        float maxValue, float diff, float offset,
+        float curValue, boolean vertical,
+        Vector4f scrollColor, float cornerRadius) {
         float scrollBarSize = (vertical ? scrollBar.getSize().y : scrollBar.getSize().x) - 2 * diff;
         float scrollBarPercentageSize = visibleAmount / (maxValue - minValue);
         float barSize = scrollBarSize * scrollBarPercentageSize;
-        if (barSize < ScrollBar.MIN_SCROLL_SIZE) barSize = ScrollBar.MIN_SCROLL_SIZE;
+        if (barSize < ScrollBar.MIN_SCROLL_SIZE) {
+            barSize = ScrollBar.MIN_SCROLL_SIZE;
+        }
         float rangeToScroll = scrollBarSize - barSize;
         float scrollPosAccordingToScrollBounds = diff + rangeToScroll * curValue / (maxValue - minValue);
 
         float xx,
-                yy,
-                ww,
-                hh;
+            yy,
+            ww,
+            hh;
         if (vertical) {
             xx = x + offset;
             yy = y + offset + scrollPosAccordingToScrollBounds;
@@ -141,10 +158,7 @@ public class NvgScrollBarRenderer extends NvgComponentRenderer<ScrollBar> {
             hh = h - 2 * offset;
         }
 
-        nvgBeginPath(context);
-        nvgRoundedRect(context, xx, yy, ww, hh, cornerRadius);
-        nvgFillColor(context, rgba(scrollColor, colorA));
-        nvgFill(context);
+        drawBackground(context, xx, yy, ww, hh, scrollColor, cornerRadius);
     }
 
     private void drawArrows(long context, ScrollBar scrollBar, float x, float y, float w, float h) {
@@ -152,15 +166,15 @@ public class NvgScrollBarRenderer extends NvgComponentRenderer<ScrollBar> {
         Vector4f arrowColor = scrollBar.getArrowColor();
         float arrowSize = scrollBar.getArrowSize();
         float x1,
-                y1,
-                w1,
-                h1,
-                x2,
-                y2,
-                w2,
-                h2;
+            y1,
+            w1,
+            h1,
+            x2,
+            y2,
+            w2,
+            h2;
         String first,
-                second;
+            second;
         if (vertical) {
             x1 = x;
             y1 = y;
@@ -190,7 +204,6 @@ public class NvgScrollBarRenderer extends NvgComponentRenderer<ScrollBar> {
         // second arrow bg
         drawRectangle(context, arrowColor, x2, y2, w2, h2);
 
-
         float fontSize;
         if (vertical) {
             fontSize = arrowSize > w1 ? w1 : arrowSize;
@@ -211,7 +224,8 @@ public class NvgScrollBarRenderer extends NvgComponentRenderer<ScrollBar> {
         }
     }
 
-    private void drawArr(long context, float x1, float y1, float w1, float h1, String first, Vector4f blackOrWhite, float fontSize, HorizontalAlign horizontalAlign, VerticalAlign verticalAlign) {
+    private void drawArr(long context, float x1, float y1, float w1, float h1, String first, Vector4f blackOrWhite, float fontSize,
+        HorizontalAlign horizontalAlign, VerticalAlign verticalAlign) {
         ByteBuffer byteText = null;
         try {
             byteText = MemoryUtil.memUTF8(first);
@@ -222,9 +236,12 @@ public class NvgScrollBarRenderer extends NvgComponentRenderer<ScrollBar> {
                 nnvgTextBreakLines(context, start, end, w1, memAddress(buffer), 1);
                 NVGTextRow row = buffer.get(0);
                 float[] bounds = createBounds(x1, y1, w1, h1, horizontalAlign, verticalAlign, row.width(), fontSize);
+
+                NVGColor colorA = NVGColor.calloc();
                 nvgBeginPath(context);
                 nvgFillColor(context, rgba(blackOrWhite, colorA));
                 nnvgText(context, bounds[0], bounds[1], row.start(), row.end());
+                colorA.free();
             }
             buffer.free();
         } finally {

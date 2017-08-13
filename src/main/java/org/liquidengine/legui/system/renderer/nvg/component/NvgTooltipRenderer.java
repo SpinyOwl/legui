@@ -1,5 +1,27 @@
 package org.liquidengine.legui.system.renderer.nvg.component;
 
+import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderBorder;
+import static org.liquidengine.legui.system.renderer.nvg.util.NVGUtils.rgba;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.alignTextInBox;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.createBounds;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.createScissor;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.intersectScissor;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.resetScissor;
+import static org.lwjgl.nanovg.NanoVG.nnvgText;
+import static org.lwjgl.nanovg.NanoVG.nnvgTextBreakLines;
+import static org.lwjgl.nanovg.NanoVG.nvgBeginPath;
+import static org.lwjgl.nanovg.NanoVG.nvgFill;
+import static org.lwjgl.nanovg.NanoVG.nvgFillColor;
+import static org.lwjgl.nanovg.NanoVG.nvgFontFace;
+import static org.lwjgl.nanovg.NanoVG.nvgFontSize;
+import static org.lwjgl.nanovg.NanoVG.nvgRoundedRect;
+import static org.lwjgl.system.MemoryUtil.memAddress;
+import static org.lwjgl.system.MemoryUtil.memFree;
+import static org.lwjgl.system.MemoryUtil.memUTF8;
+
+import java.nio.ByteBuffer;
+import java.util.ArrayList;
+import java.util.List;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.Component;
@@ -12,21 +34,10 @@ import org.liquidengine.legui.system.renderer.nvg.NvgComponentRenderer;
 import org.lwjgl.nanovg.NVGColor;
 import org.lwjgl.nanovg.NVGTextRow;
 
-import java.nio.ByteBuffer;
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderBorder;
-import static org.liquidengine.legui.system.renderer.nvg.util.NVGUtils.rgba;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.*;
-import static org.lwjgl.nanovg.NanoVG.*;
-import static org.lwjgl.system.MemoryUtil.*;
-
 /**
  * Created by ShchAlexander on 13.02.2017.
  */
 public class NvgTooltipRenderer extends NvgComponentRenderer<Tooltip> {
-    private NVGColor colorA = NVGColor.create();
 
 
     @Override
@@ -51,6 +62,8 @@ public class NvgTooltipRenderer extends NvgComponentRenderer<Tooltip> {
             nvgFontFace(context, font);
 
             ByteBuffer byteText = null;
+            NVGColor colorA = null;
+            NVGTextRow.Buffer buffer = null;
             try {
 
                 byteText = memUTF8(text, false);
@@ -67,13 +80,14 @@ public class NvgTooltipRenderer extends NvgComponentRenderer<Tooltip> {
                 List<float[]> boundList = new ArrayList<>();
                 List<long[]> indicesList = new ArrayList<>();
 
+                colorA = NVGColor.calloc();
                 alignTextInBox(context, HorizontalAlign.LEFT, VerticalAlign.MIDDLE);
                 nvgFontSize(context, fontSize);
                 nvgFontFace(context, font);
                 nvgFillColor(context, rgba(textColor, colorA));
 
                 // calculate text bounds for every line and start/end indices
-                NVGTextRow.Buffer buffer = NVGTextRow.calloc(1);
+                buffer = NVGTextRow.calloc(1);
                 int rows = 0;
                 while (nnvgTextBreakLines(context, start, end, size.x, memAddress(buffer), 1) != 0) {
                     NVGTextRow row = buffer.get(0);
@@ -97,9 +111,14 @@ public class NvgTooltipRenderer extends NvgComponentRenderer<Tooltip> {
                     nnvgText(context, bounds[4], bounds[5] - offsetY, indices[0], indices[1]);
                 }
 
-                buffer.free();
             } finally {
                 memFree(byteText);
+                if (buffer != null) {
+                    buffer.free();
+                }
+                if (colorA != null) {
+                    colorA.free();
+                }
             }
         }
         resetScissor(context);
