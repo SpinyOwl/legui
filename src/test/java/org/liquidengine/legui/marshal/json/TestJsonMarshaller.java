@@ -1,5 +1,12 @@
 package org.liquidengine.legui.marshal.json;
 
+import static org.liquidengine.legui.component.optional.align.HorizontalAlign.CENTER;
+import static org.liquidengine.legui.component.optional.align.HorizontalAlign.RIGHT;
+import static org.liquidengine.legui.component.optional.align.VerticalAlign.BOTTOM;
+import static org.liquidengine.legui.component.optional.align.VerticalAlign.MIDDLE;
+
+import java.util.ArrayList;
+import java.util.List;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.junit.Assert;
@@ -8,7 +15,24 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.liquidengine.legui.border.SimpleLineBorder;
 import org.liquidengine.legui.color.ColorConstants;
-import org.liquidengine.legui.component.*;
+import org.liquidengine.legui.component.Button;
+import org.liquidengine.legui.component.CheckBox;
+import org.liquidengine.legui.component.Component;
+import org.liquidengine.legui.component.Frame;
+import org.liquidengine.legui.component.ImageView;
+import org.liquidengine.legui.component.Label;
+import org.liquidengine.legui.component.Panel;
+import org.liquidengine.legui.component.ProgressBar;
+import org.liquidengine.legui.component.RadioButton;
+import org.liquidengine.legui.component.RadioButtonGroup;
+import org.liquidengine.legui.component.ScrollBar;
+import org.liquidengine.legui.component.ScrollablePanel;
+import org.liquidengine.legui.component.SelectBox;
+import org.liquidengine.legui.component.Slider;
+import org.liquidengine.legui.component.TextArea;
+import org.liquidengine.legui.component.TextInput;
+import org.liquidengine.legui.component.ToggleButton;
+import org.liquidengine.legui.component.Widget;
 import org.liquidengine.legui.component.optional.Orientation;
 import org.liquidengine.legui.font.FontRegistry;
 import org.liquidengine.legui.icon.Icon;
@@ -18,14 +42,6 @@ import org.liquidengine.legui.image.DummyImageLoader;
 import org.liquidengine.legui.image.loader.ImageLoader;
 import org.liquidengine.legui.marshal.json.gsonimpl.GsonMarshalUtil;
 import org.liquidengine.legui.util.TextUtil;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.liquidengine.legui.component.optional.align.HorizontalAlign.CENTER;
-import static org.liquidengine.legui.component.optional.align.HorizontalAlign.RIGHT;
-import static org.liquidengine.legui.component.optional.align.VerticalAlign.BOTTOM;
-import static org.liquidengine.legui.component.optional.align.VerticalAlign.MIDDLE;
 
 public class TestJsonMarshaller {
 
@@ -43,18 +59,15 @@ public class TestJsonMarshaller {
         Frame frame = new Frame();
         frame.getContainer().addAll(createComponents(0, 0));
 
-        String marshalled   = GsonMarshalUtil.marshal(frame);
-        Frame  unmarshaled  = GsonMarshalUtil.unmarshal(marshalled);
+        String marshalled = GsonMarshalUtil.marshal(frame);
+        Frame unmarshaled = GsonMarshalUtil.unmarshal(marshalled);
         String remarshalled = GsonMarshalUtil.marshal(unmarshaled);
-
 
         toMarshal = frame;
         unMarshalled = unmarshaled;
 
-
         String jsonOne = marshalled;
         String jsonTwo = remarshalled;
-
 
         System.out.println(jsonOne);
         System.out.println(jsonTwo);
@@ -66,7 +79,7 @@ public class TestJsonMarshaller {
 
     private List<Component> createComponents(int width, int height) {
         List<Component> toReturn = new ArrayList<>();
-        Panel           p1       = new Panel(1 * 20, 10, 10, 10);
+        Panel p1 = new Panel(1 * 20, 10, 10, 10);
         toReturn.add(p1);
         Panel p2 = new Panel(2 * 20, 10, 10, 10);
         toReturn.add(p2);
@@ -131,7 +144,7 @@ public class TestJsonMarshaller {
         toReturn.add(progressBar);
 
         RadioButtonGroup radioButtonGroup = new RadioButtonGroup();
-        RadioButton      radioButton1     = new RadioButton(250, 30, 100, 20);
+        RadioButton radioButton1 = new RadioButton(250, 30, 100, 20);
         toReturn.add(radioButton1);
         radioButton1.setChecked(true);
         radioButton1.setRadioButtonGroup(radioButtonGroup);
@@ -156,7 +169,7 @@ public class TestJsonMarshaller {
         widget.setTitleBackgroundColor(ColorConstants.lightGreen());
 
         Button turnWidVisible = new Button("", 360, 280, 20, 20);
-        Icon   bgIm           = new ImageIcon(new DummyImage("org/liquidengine/legui/example/1.png"));
+        Icon bgIm = new ImageIcon(new DummyImage("org/liquidengine/legui/example/1.png"));
         bgIm.setSize(new Vector2f(20, 20));
         turnWidVisible.setBackgroundIcon(bgIm);
         Icon hbgIm = new ImageIcon(new DummyImage("org/liquidengine/legui/example/2.png"));
@@ -323,12 +336,10 @@ public class TestJsonMarshaller {
 
         ToggleButton toggleButton = new ToggleButton("", 100, 170, 40, 40);
         toReturn.add(toggleButton);
-        Icon bgImageNormal  = new ImageIcon(new DummyImage("org/liquidengine/legui/example/normal.png"));
+        Icon bgImageNormal = new ImageIcon(new DummyImage("org/liquidengine/legui/example/normal.png"));
         Icon bgImageToggled = new ImageIcon(new DummyImage("org/liquidengine/legui/example/toggled.png"));
 
-
         toggleButton.setTooltip("Just toggle button with long tooltipText text");
-
 
         toggleButton.getTooltip().setPosition(45, 0);
         toggleButton.getTooltip().getSize().set(140, 40);

@@ -10,6 +10,7 @@ import org.liquidengine.legui.component.Button;
  * @param <T> {@link Button} subclasses.
  */
 public class DarkButtonTheme<T extends Button> extends DarkControllerTheme<T> {
+
     /**
      * Used to apply theme only for component and not apply for child components.
      *

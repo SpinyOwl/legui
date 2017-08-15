@@ -1,5 +1,12 @@
 package org.liquidengine.legui.system.renderer.nvg.component;
 
+import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderBorderWScissor;
+import static org.lwjgl.nanovg.NanoVG.nvgBeginPath;
+import static org.lwjgl.nanovg.NanoVG.nvgFill;
+import static org.lwjgl.nanovg.NanoVG.nvgFillColor;
+import static org.lwjgl.nanovg.NanoVG.nvgRect;
+
+import java.util.List;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.Component;
@@ -10,11 +17,6 @@ import org.liquidengine.legui.system.renderer.nvg.NvgComponentRenderer;
 import org.liquidengine.legui.system.renderer.nvg.util.NVGUtils;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils;
 import org.lwjgl.nanovg.NVGColor;
-
-import java.util.List;
-
-import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderBorderWScissor;
-import static org.lwjgl.nanovg.NanoVG.*;
 
 /**
  * Created by Aliaksandr_Shcherbin on 2/15/2017.
@@ -41,7 +43,7 @@ public class NvgContainerRenderer extends NvgComponentRenderer<Container> {
         List<Component> all = component.getChilds();
         for (Component child : all) {
             RendererProvider.getInstance().
-                    getComponentRenderer(child.getClass()).render(child, context);
+                getComponentRenderer(child.getClass()).render(child, context);
         }
 
         renderBorderWScissor(component, context, nanovg);

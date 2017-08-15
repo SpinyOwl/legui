@@ -1,5 +1,18 @@
 package org.liquidengine.legui.system.renderer.nvg;
 
+import static org.lwjgl.nanovg.NanoVG.nvgBeginFrame;
+import static org.lwjgl.nanovg.NanoVG.nvgCreateFontMem;
+import static org.lwjgl.nanovg.NanoVG.nvgEndFrame;
+import static org.lwjgl.opengl.GL11.GL_BLEND;
+import static org.lwjgl.opengl.GL11.GL_DEPTH_TEST;
+import static org.lwjgl.opengl.GL11.GL_ONE_MINUS_SRC_ALPHA;
+import static org.lwjgl.opengl.GL11.GL_SRC_ALPHA;
+import static org.lwjgl.opengl.GL11.glBlendFunc;
+import static org.lwjgl.opengl.GL11.glDisable;
+import static org.lwjgl.opengl.GL11.glEnable;
+
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import org.joml.Vector2fc;
 import org.joml.Vector2i;
 import org.liquidengine.legui.border.Border;
@@ -15,20 +28,15 @@ import org.liquidengine.legui.system.renderer.Renderer;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils;
 import org.lwjgl.nanovg.NanoVGGL3;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
-import static org.lwjgl.nanovg.NanoVG.*;
-import static org.lwjgl.opengl.GL11.*;
-
 /**
  * Created by Aliaksandr_Shcherbin on 1/26/2017.
  */
 public class NvgRenderer extends Renderer {
+
     public static final String NVG_CONTEXT = "NVG_CONTEXT";
     public static final String IMAGE_REFERENCE_MANAGER = "IMAGE_REFERENCE_MANAGER";
 
-    protected long                nvgContext;
+    protected long nvgContext;
     protected NvgRendererProvider provider;
 
     protected Map<String, Font> loadedFonts = new ConcurrentHashMap<>();
@@ -43,7 +51,7 @@ public class NvgRenderer extends Renderer {
      * Used to render border.
      *
      * @param component component for which should be rendered border.
-     * @param context   context.
+     * @param context context.
      */
     public static void renderBorder(Component component, Context context) {
         Border border = component.getBorder();
@@ -58,8 +66,8 @@ public class NvgRenderer extends Renderer {
      * Used to render border with scissor.
      *
      * @param component component for which should be rendered border.
-     * @param context   context.
-     * @param nanovg    nanovg context.
+     * @param context context.
+     * @param nanovg nanovg context.
      */
     public static void renderBorderWScissor(Component component, Context context, long nanovg) {
         NvgRenderUtils.createScissor(nanovg, component);
@@ -72,9 +80,9 @@ public class NvgRenderer extends Renderer {
     /**
      * Used to render icon of component.
      *
-     * @param icon      icon to render.
+     * @param icon icon to render.
      * @param component icon owner.
-     * @param context   context.
+     * @param context context.
      */
     public static void renderIcon(Icon icon, Component component, Context context) {
         if (icon != null && component != null) {
@@ -85,10 +93,10 @@ public class NvgRenderer extends Renderer {
     /**
      * Used to render image of component.
      *
-     * @param image    image to render.
+     * @param image image to render.
      * @param position image position.
-     * @param size     image size.
-     * @param context  context.
+     * @param size image size.
+     * @param context context.
      */
     public static void renderImage(Image image, Vector2fc position, Vector2fc size, Map<String, Object> properties, Context context) {
         if (image != null) {

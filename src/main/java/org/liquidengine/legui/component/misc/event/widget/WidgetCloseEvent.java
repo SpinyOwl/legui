@@ -9,6 +9,7 @@ import org.liquidengine.legui.system.context.Context;
  * @author Aliaksandr_Shcherbin.
  */
 public class WidgetCloseEvent<T extends Widget> extends Event<T> {
+
     public WidgetCloseEvent(T component, Context context, Frame frame) {
         super(component, context, frame);
     }

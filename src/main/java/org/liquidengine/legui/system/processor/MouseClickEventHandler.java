@@ -1,17 +1,20 @@
 package org.liquidengine.legui.system.processor;
 
+import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
+
+import java.util.List;
 import org.joml.Vector2f;
-import org.liquidengine.legui.component.*;
+import org.liquidengine.legui.component.Component;
+import org.liquidengine.legui.component.Container;
+import org.liquidengine.legui.component.Frame;
+import org.liquidengine.legui.component.Layer;
+import org.liquidengine.legui.component.Widget;
 import org.liquidengine.legui.event.FocusEvent;
 import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.input.Mouse;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.event.SystemMouseClickEvent;
 import org.lwjgl.glfw.GLFW;
-
-import java.util.List;
-
-import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
 
 /**
  * Created by ShchAlexander on 04.02.2017.
@@ -32,11 +35,17 @@ public class MouseClickEventHandler implements SystemEventHandler<SystemMouseCli
         Component targetComponent = null;
         for (Layer layer : layers) {
             if (layer.isEventReceivable()) {
-                if (!layer.getContainer().isVisible() || !layer.getContainer().isEnabled()) continue;
+                if (!layer.getContainer().isVisible() || !layer.getContainer().isEnabled()) {
+                    continue;
+                }
                 targetComponent = SehUtil.getTargetComponent(layer, cursorPosition);
-                if (targetComponent != null) break;
+                if (targetComponent != null) {
+                    break;
+                }
             }
-            if (!layer.isEventPassable()) break;
+            if (!layer.isEventPassable()) {
+                break;
+            }
         }
         if (targetComponent == null) {
             if (event.action == GLFW_RELEASE) {
@@ -55,15 +64,18 @@ public class MouseClickEventHandler implements SystemEventHandler<SystemMouseCli
                     context.getEventProcessor().pushEvent(new FocusEvent(targetComponent, context, frame, targetComponent, true));
                 }
                 Vector2f position = targetComponent.getScreenPosition().sub(cursorPosition).negate();
-                context.getEventProcessor().pushEvent(new MouseClickEvent(targetComponent, context, frame, MouseClickEvent.MouseClickAction.PRESS, button, position, cursorPosition));
+                context.getEventProcessor()
+                    .pushEvent(new MouseClickEvent(targetComponent, context, frame, MouseClickEvent.MouseClickAction.PRESS, button, position, cursorPosition));
             } else {
                 updateReleasePosAndFocusedGui(button, cursorPosition, focusedGui);
 
                 Vector2f position = targetComponent.getScreenPosition().sub(cursorPosition).negate();
                 if (focusedGui != null && focusedGui == targetComponent) {
-                    context.getEventProcessor().pushEvent(new MouseClickEvent(targetComponent, context, frame, MouseClickEvent.MouseClickAction.CLICK, button, position, cursorPosition));
+                    context.getEventProcessor().pushEvent(
+                        new MouseClickEvent(targetComponent, context, frame, MouseClickEvent.MouseClickAction.CLICK, button, position, cursorPosition));
                 }
-                context.getEventProcessor().pushEvent(new MouseClickEvent(targetComponent, context, frame, MouseClickEvent.MouseClickAction.RELEASE, button, position, cursorPosition));
+                context.getEventProcessor().pushEvent(
+                    new MouseClickEvent(targetComponent, context, frame, MouseClickEvent.MouseClickAction.RELEASE, button, position, cursorPosition));
             }
             pushWidgetsUp(targetComponent);
         }
@@ -109,7 +121,9 @@ public class MouseClickEventHandler implements SystemEventHandler<SystemMouseCli
                 push = parent instanceof Widget;
                 current = parent;
                 parent = parent.getParent();
-                if (push) break;
+                if (push) {
+                    break;
+                }
             }
             if (push) {
                 parent.remove(current);

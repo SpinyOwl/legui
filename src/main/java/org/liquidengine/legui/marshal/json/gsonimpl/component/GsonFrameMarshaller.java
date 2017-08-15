@@ -1,5 +1,10 @@
 package org.liquidengine.legui.marshal.json.gsonimpl.component;
 
+import static org.liquidengine.legui.marshal.JsonConstants.COMPONENT_LAYER;
+import static org.liquidengine.legui.marshal.JsonConstants.LAYERS;
+import static org.liquidengine.legui.marshal.JsonConstants.TOOLTIP_LAYER;
+import static org.liquidengine.legui.marshal.json.gsonimpl.GsonUtil.isNotNull;
+
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -12,9 +17,6 @@ import org.liquidengine.legui.marshal.json.gsonimpl.GsonMarshalContext;
 import org.liquidengine.legui.marshal.json.gsonimpl.GsonMarshalUtil;
 import org.liquidengine.legui.marshal.json.gsonimpl.GsonUtil;
 
-import static org.liquidengine.legui.marshal.JsonConstants.*;
-import static org.liquidengine.legui.marshal.json.gsonimpl.GsonUtil.isNotNull;
-
 /**
  * Used to marshal and unmarshal {@link Frame}.
  */
@@ -24,8 +26,8 @@ public class GsonFrameMarshaller<T extends Frame> extends AbstractGsonMarshaller
     /**
      * Reads data from object and puts it to json object.
      *
-     * @param object  object to read.
-     * @param json    json object to fill.
+     * @param object object to read.
+     * @param json json object to fill.
      * @param context marshal context.
      */
     @Override
@@ -37,17 +39,17 @@ public class GsonFrameMarshaller<T extends Frame> extends AbstractGsonMarshaller
         }
         JsonObject tooltipLayer = GsonMarshalUtil.marshalToJson(object.getTooltipLayer());
         GsonUtil.fill(json)
-                .add(COMPONENT_LAYER, componentLayer)
-                .add(LAYERS, layers)
-                .add(TOOLTIP_LAYER, tooltipLayer)
+            .add(COMPONENT_LAYER, componentLayer)
+            .add(LAYERS, layers)
+            .add(TOOLTIP_LAYER, tooltipLayer)
         ;
     }
 
     /**
      * Reads data from json object and puts it to object.
      *
-     * @param json    json object to read.
-     * @param object  object to fill.
+     * @param json json object to read.
+     * @param object object to fill.
      * @param context marshal context.
      */
     @Override
@@ -84,7 +86,9 @@ public class GsonFrameMarshaller<T extends Frame> extends AbstractGsonMarshaller
     private void processLayer(T object, JsonElement layer, GsonMarshalContext context) {
         if (isNotNull(layer) && layer.isJsonObject()) {
             Object l = GsonMarshalUtil.unmarshal(layer.getAsJsonObject(), context);
-            if (l instanceof Layer) object.addLayer((Layer) l);
+            if (l instanceof Layer) {
+                object.addLayer((Layer) l);
+            }
         }
     }
 }

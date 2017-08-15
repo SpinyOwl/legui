@@ -1,5 +1,7 @@
 package org.liquidengine.legui.image;
 
+import java.io.IOException;
+import java.nio.ByteBuffer;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -11,13 +13,11 @@ import org.liquidengine.legui.exception.LeguiExceptionTemplate;
 import org.liquidengine.legui.util.IOUtil;
 import org.lwjgl.stb.STBImage;
 
-import java.io.IOException;
-import java.nio.ByteBuffer;
-
 /**
  * Created by Aliaksandr_Shcherbin on 2/6/2017.
  */
 public class BufferedImage extends LoadableImage {
+
     private static final Logger LOGGER = LogManager.getLogger();
     private int width;
     private int height;
@@ -40,7 +40,9 @@ public class BufferedImage extends LoadableImage {
         try {
             load();
         } catch (LeguiException e) {
-            if (LOGGER.isErrorEnabled()) LOGGER.error(e);
+            if (LOGGER.isErrorEnabled()) {
+                LOGGER.error(e);
+            }
         }
     }
 
@@ -108,37 +110,41 @@ public class BufferedImage extends LoadableImage {
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("path", getPath())
-                .append("width", width)
-                .append("height", height)
-                .append("channels", channels)
-                .toString();
+            .append("path", getPath())
+            .append("width", width)
+            .append("height", height)
+            .append("channels", channels)
+            .toString();
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) return true;
+        if (this == obj) {
+            return true;
+        }
 
-        if (obj == null || getClass() != obj.getClass()) return false;
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
 
         BufferedImage image = (BufferedImage) obj;
 
         return new EqualsBuilder()
-                .append(width, image.width)
-                .append(height, image.height)
-                .append(getPath(), image.getPath())
-                .append(channels, image.channels)
-                .isEquals();
+            .append(width, image.width)
+            .append(height, image.height)
+            .append(getPath(), image.getPath())
+            .append(channels, image.channels)
+            .isEquals();
     }
 
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
-                .append(getPath())
-                .append(width)
-                .append(height)
-                .append(channels)
-                .toHashCode();
+            .append(getPath())
+            .append(width)
+            .append(height)
+            .append(channels)
+            .toHashCode();
     }
 
 }

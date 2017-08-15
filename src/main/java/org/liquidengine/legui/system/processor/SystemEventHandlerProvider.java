@@ -1,14 +1,25 @@
 package org.liquidengine.legui.system.processor;
 
-import org.liquidengine.legui.system.event.*;
-
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import org.liquidengine.legui.system.event.SystemCharEvent;
+import org.liquidengine.legui.system.event.SystemCursorPosEvent;
+import org.liquidengine.legui.system.event.SystemEvent;
+import org.liquidengine.legui.system.event.SystemKeyEvent;
+import org.liquidengine.legui.system.event.SystemMouseClickEvent;
+import org.liquidengine.legui.system.event.SystemScrollEvent;
+import org.liquidengine.legui.system.event.SystemWindowCloseEvent;
+import org.liquidengine.legui.system.event.SystemWindowFocusEvent;
+import org.liquidengine.legui.system.event.SystemWindowIconifyEvent;
+import org.liquidengine.legui.system.event.SystemWindowPosEvent;
+import org.liquidengine.legui.system.event.SystemWindowRefreshEvent;
+import org.liquidengine.legui.system.event.SystemWindowSizeEvent;
 
 /**
  * Created by Aliaksandr_Shcherbin on 1/25/2017.
  */
 public class SystemEventHandlerProvider {
+
     private Map<Class<? extends SystemEvent>, SystemEventHandler<? extends SystemEvent>> processorMap = new ConcurrentHashMap<>();
 
     private SystemEventHandlerProvider() {
@@ -39,6 +50,7 @@ public class SystemEventHandlerProvider {
     }
 
     private static class LSEPPH {
+
         private static final SystemEventHandlerProvider I = new SystemEventHandlerProvider();
     }
 }

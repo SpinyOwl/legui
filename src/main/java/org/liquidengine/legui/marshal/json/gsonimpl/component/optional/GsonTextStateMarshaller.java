@@ -1,5 +1,24 @@
 package org.liquidengine.legui.marshal.json.gsonimpl.component.optional;
 
+import static org.liquidengine.legui.marshal.JsonConstants.A;
+import static org.liquidengine.legui.marshal.JsonConstants.B;
+import static org.liquidengine.legui.marshal.JsonConstants.BOTTOM;
+import static org.liquidengine.legui.marshal.JsonConstants.FONT;
+import static org.liquidengine.legui.marshal.JsonConstants.FONT_SIZE;
+import static org.liquidengine.legui.marshal.JsonConstants.G;
+import static org.liquidengine.legui.marshal.JsonConstants.HIGHLIGHT_COLOR;
+import static org.liquidengine.legui.marshal.JsonConstants.HORIZONTAL_ALIGN;
+import static org.liquidengine.legui.marshal.JsonConstants.LEFT;
+import static org.liquidengine.legui.marshal.JsonConstants.PADDING;
+import static org.liquidengine.legui.marshal.JsonConstants.R;
+import static org.liquidengine.legui.marshal.JsonConstants.RIGHT;
+import static org.liquidengine.legui.marshal.JsonConstants.TEXT;
+import static org.liquidengine.legui.marshal.JsonConstants.TEXT_COLOR;
+import static org.liquidengine.legui.marshal.JsonConstants.TOP;
+import static org.liquidengine.legui.marshal.JsonConstants.VERTICAL_ALIGN;
+import static org.liquidengine.legui.marshal.json.gsonimpl.GsonUtil.isNotNull;
+import static org.liquidengine.legui.marshal.json.gsonimpl.GsonUtil.readColor;
+
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.liquidengine.legui.component.optional.TextState;
@@ -9,10 +28,6 @@ import org.liquidengine.legui.marshal.json.gsonimpl.AbstractGsonMarshaller;
 import org.liquidengine.legui.marshal.json.gsonimpl.GsonMarshalContext;
 import org.liquidengine.legui.marshal.json.gsonimpl.GsonUtil;
 
-import static org.liquidengine.legui.marshal.JsonConstants.*;
-import static org.liquidengine.legui.marshal.json.gsonimpl.GsonUtil.isNotNull;
-import static org.liquidengine.legui.marshal.json.gsonimpl.GsonUtil.readColor;
-
 /**
  * Json marshaller for {@link TextState} component.
  */
@@ -21,47 +36,47 @@ public class GsonTextStateMarshaller<T extends TextState> extends AbstractGsonMa
     /**
      * Reads data from object and puts it to json object.
      *
-     * @param object  object to read.
-     * @param json    json object to fill.
+     * @param object object to read.
+     * @param json json object to fill.
      * @param context marshal context.
      */
     @Override
     protected void marshal(T object, JsonObject json, GsonMarshalContext context) {
         GsonUtil.fill(json)
-                .add(FONT, object.getFont())
-                .add(TEXT, object.getText())
-                .add(FONT_SIZE, object.getFontSize())
-                .add(HORIZONTAL_ALIGN, object.getHorizontalAlign().name())
-                .add(VERTICAL_ALIGN, object.getVerticalAlign().name())
-                .add(TEXT_COLOR, GsonUtil.create()
-                        .add(R, object.getTextColor().x)
-                        .add(G, object.getTextColor().y)
-                        .add(B, object.getTextColor().z)
-                        .add(A, object.getTextColor().w)
-                        .get()
-                )
-                .add(HIGHLIGHT_COLOR, GsonUtil.create()
-                        .add(R, object.getHighlightColor().x)
-                        .add(G, object.getHighlightColor().y)
-                        .add(B, object.getHighlightColor().z)
-                        .add(A, object.getHighlightColor().w)
-                        .get()
-                )
-                .add(PADDING, GsonUtil.create()
-                        .add(LEFT, object.getPadding().x)
-                        .add(TOP, object.getPadding().y)
-                        .add(RIGHT, object.getPadding().z)
-                        .add(BOTTOM, object.getPadding().w)
-                        .get()
-                )
+            .add(FONT, object.getFont())
+            .add(TEXT, object.getText())
+            .add(FONT_SIZE, object.getFontSize())
+            .add(HORIZONTAL_ALIGN, object.getHorizontalAlign().name())
+            .add(VERTICAL_ALIGN, object.getVerticalAlign().name())
+            .add(TEXT_COLOR, GsonUtil.create()
+                .add(R, object.getTextColor().x)
+                .add(G, object.getTextColor().y)
+                .add(B, object.getTextColor().z)
+                .add(A, object.getTextColor().w)
+                .get()
+            )
+            .add(HIGHLIGHT_COLOR, GsonUtil.create()
+                .add(R, object.getHighlightColor().x)
+                .add(G, object.getHighlightColor().y)
+                .add(B, object.getHighlightColor().z)
+                .add(A, object.getHighlightColor().w)
+                .get()
+            )
+            .add(PADDING, GsonUtil.create()
+                .add(LEFT, object.getPadding().x)
+                .add(TOP, object.getPadding().y)
+                .add(RIGHT, object.getPadding().z)
+                .add(BOTTOM, object.getPadding().w)
+                .get()
+            )
         ;
     }
 
     /**
      * Reads data from json object and puts it to object.
      *
-     * @param json    json object to read.
-     * @param object  object to fill.
+     * @param json json object to read.
+     * @param object object to fill.
      * @param context marshal context.
      */
     @Override
@@ -75,21 +90,35 @@ public class GsonTextStateMarshaller<T extends TextState> extends AbstractGsonMa
         JsonElement highlightColor = json.getAsJsonObject(HIGHLIGHT_COLOR);
         JsonElement padding = json.getAsJsonObject(PADDING);
 
-        if (isNotNull(font)) object.setFont(font.getAsString());
+        if (isNotNull(font)) {
+            object.setFont(font.getAsString());
+        }
 
-        if (isNotNull(text)) object.setText(text.getAsString());
-        else if (text.isJsonNull()) object.setText("");
+        if (isNotNull(text)) {
+            object.setText(text.getAsString());
+        } else if (text.isJsonNull()) {
+            object.setText("");
+        }
 
-        if (isNotNull(fontSize)) object.setFontSize(fontSize.getAsFloat());
+        if (isNotNull(fontSize)) {
+            object.setFontSize(fontSize.getAsFloat());
+        }
 
-        if (isNotNull(horizontalAlign)) object.setHorizontalAlign(HorizontalAlign.valueOf(horizontalAlign.getAsString()));
+        if (isNotNull(horizontalAlign)) {
+            object.setHorizontalAlign(HorizontalAlign.valueOf(horizontalAlign.getAsString()));
+        }
 
-        if (isNotNull(verticalAlign)) object.setVerticalAlign(VerticalAlign.valueOf(verticalAlign.getAsString()));
+        if (isNotNull(verticalAlign)) {
+            object.setVerticalAlign(VerticalAlign.valueOf(verticalAlign.getAsString()));
+        }
 
-        if (isNotNull(textColor)) object.setTextColor(readColor(textColor.getAsJsonObject()));
+        if (isNotNull(textColor)) {
+            object.setTextColor(readColor(textColor.getAsJsonObject()));
+        }
 
-        if (isNotNull(highlightColor)) object.setHighlightColor(readColor(highlightColor.getAsJsonObject()));
-
+        if (isNotNull(highlightColor)) {
+            object.setHighlightColor(readColor(highlightColor.getAsJsonObject()));
+        }
 
         if (isNotNull(padding)) {
             JsonObject p = padding.getAsJsonObject();
@@ -98,10 +127,10 @@ public class GsonTextStateMarshaller<T extends TextState> extends AbstractGsonMa
             JsonElement right = p.get(RIGHT);
             JsonElement bottom = p.get(BOTTOM);
             object.setPadding(
-                    isNotNull(left) ? left.getAsFloat() : 0,
-                    isNotNull(top) ? top.getAsFloat() : 0,
-                    isNotNull(right) ? right.getAsFloat() : 0,
-                    isNotNull(bottom) ? bottom.getAsFloat() : 0
+                isNotNull(left) ? left.getAsFloat() : 0,
+                isNotNull(top) ? top.getAsFloat() : 0,
+                isNotNull(right) ? right.getAsFloat() : 0,
+                isNotNull(bottom) ? bottom.getAsFloat() : 0
             );
         }
 

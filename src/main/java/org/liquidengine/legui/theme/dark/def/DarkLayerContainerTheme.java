@@ -9,6 +9,7 @@ import org.liquidengine.legui.component.LayerContainer;
  * @param <T> {@link LayerContainer} subclasses.
  */
 public class DarkLayerContainerTheme<T extends LayerContainer> extends DarkContainerTheme<T> {
+
     /**
      * Used to apply theme only for component and not apply for child components.
      *

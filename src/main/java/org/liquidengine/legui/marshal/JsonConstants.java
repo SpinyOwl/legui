@@ -4,6 +4,7 @@ package org.liquidengine.legui.marshal;
  * Holds constants of components and fields names for marshaller.
  */
 public final class JsonConstants {
+
     public static final String TYPE_PARAMETER = "@type";
     public static final String CLASS_PARAMETER = "@class";
     // COLOR

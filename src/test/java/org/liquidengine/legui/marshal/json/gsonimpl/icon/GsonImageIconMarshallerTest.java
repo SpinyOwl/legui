@@ -16,9 +16,9 @@ import org.liquidengine.legui.marshal.json.gsonimpl.GsonMarshallingTestBase;
  */
 public class GsonImageIconMarshallerTest extends GsonMarshallingTestBase {
 
-    private ImageIcon                          icon       = new ImageIcon(new Vector2f(16), ImageLoader.loadImage("test/image.png"));
+    private ImageIcon icon = new ImageIcon(new Vector2f(16), ImageLoader.loadImage("test/image.png"));
     private GsonImageIconMarshaller<ImageIcon> marshaller = new GsonImageIconMarshaller<>();
-    private String                             pathToJson = "org/liquidengine/legui/marshal/json/gsonimpl/icon/ImageIcon.json";
+    private String pathToJson = "org/liquidengine/legui/marshal/json/gsonimpl/icon/ImageIcon.json";
 
     /**
      * Used to test {@link GsonImageIconMarshaller#marshal(Object, JsonMarshalContext)} method of marshaller.
@@ -28,7 +28,7 @@ public class GsonImageIconMarshallerTest extends GsonMarshallingTestBase {
     @Test
     public void marshal() throws Exception {
         String expected = readJsonFromFile(pathToJson).toString();
-        String actual   = marshaller.marshal(icon, new GsonMarshalContext());
+        String actual = marshaller.marshal(icon, new GsonMarshalContext());
         Assert.assertEquals(expected, actual);
     }
 
@@ -40,7 +40,7 @@ public class GsonImageIconMarshallerTest extends GsonMarshallingTestBase {
     @Test
     public void unmarshal() throws Exception {
         JsonObject jsonToUnmarshal = readJsonFromFile(pathToJson);
-        ImageIcon  actual          = marshaller.unmarshal(jsonToUnmarshal, new GsonMarshalContext());
+        ImageIcon actual = marshaller.unmarshal(jsonToUnmarshal, new GsonMarshalContext());
         Assert.assertEquals(icon, actual);
     }
 

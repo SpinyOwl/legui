@@ -35,9 +35,8 @@ public class ProgressBar extends Controller {
     private Vector4f progressColor = ColorConstants.green();
 
     /**
-     * Default constructor. Used to create component instance without any parameters.
-     * <p>
-     * Also if you want to make it easy to use with Json marshaller/unmarshaller component should contain empty constructor.
+     * Default constructor. Used to create component instance without any parameters. <p> Also if you want to make it easy to use with Json
+     * marshaller/unmarshaller component should contain empty constructor.
      */
     public ProgressBar() {
         initialize();
@@ -46,9 +45,9 @@ public class ProgressBar extends Controller {
     /**
      * Constructor with position and size parameters.
      *
-     * @param x      x position position in parent component.
-     * @param y      y position position in parent component.
-     * @param width  width of component.
+     * @param x x position position in parent component.
+     * @param y y position position in parent component.
+     * @param width width of component.
      * @param height height of component.
      */
     public ProgressBar(float x, float y, float width, float height) {
@@ -60,7 +59,7 @@ public class ProgressBar extends Controller {
      * Constructor with position and size parameters.
      *
      * @param position position position in parent component.
-     * @param size     size of component.
+     * @param size size of component.
      */
     public ProgressBar(Vector2f position, Vector2f size) {
         super(position, size);
@@ -109,33 +108,37 @@ public class ProgressBar extends Controller {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
+        if (this == o) {
+            return true;
+        }
 
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         ProgressBar that = (ProgressBar) o;
 
         return new EqualsBuilder()
-                .appendSuper(super.equals(o))
-                .append(value, that.value)
-                .append(progressColor, that.progressColor)
-                .isEquals();
+            .appendSuper(super.equals(o))
+            .append(value, that.value)
+            .append(progressColor, that.progressColor)
+            .isEquals();
     }
 
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
-                .appendSuper(super.hashCode())
-                .append(value)
-                .append(progressColor)
-                .toHashCode();
+            .appendSuper(super.hashCode())
+            .append(value)
+            .append(progressColor)
+            .toHashCode();
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("value", value)
-                .append("progressColor", progressColor)
-                .toString();
+            .append("value", value)
+            .append("progressColor", progressColor)
+            .toString();
     }
 }

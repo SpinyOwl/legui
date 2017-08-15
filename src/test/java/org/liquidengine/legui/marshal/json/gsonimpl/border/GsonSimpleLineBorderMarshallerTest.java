@@ -7,16 +7,17 @@ import org.junit.Test;
 import org.liquidengine.legui.border.SimpleLineBorder;
 import org.liquidengine.legui.color.ColorConstants;
 import org.liquidengine.legui.marshal.json.JsonMarshalContext;
-import org.liquidengine.legui.marshal.json.gsonimpl.GsonMarshallingTestBase;
 import org.liquidengine.legui.marshal.json.gsonimpl.GsonMarshalContext;
+import org.liquidengine.legui.marshal.json.gsonimpl.GsonMarshallingTestBase;
 
 /**
  * Test for SimpleLineBorder Gson Marshaller.
  */
 public class GsonSimpleLineBorderMarshallerTest extends GsonMarshallingTestBase {
-    private SimpleLineBorder               border     = new SimpleLineBorder(ColorConstants.red(), 1.2f);
+
+    private SimpleLineBorder border = new SimpleLineBorder(ColorConstants.red(), 1.2f);
     private GsonSimpleLineBorderMarshaller marshaller = new GsonSimpleLineBorderMarshaller();
-    private String                         pathToJson = "org/liquidengine/legui/marshal/json/gsonimpl/border/SimpleLineBorder.json";
+    private String pathToJson = "org/liquidengine/legui/marshal/json/gsonimpl/border/SimpleLineBorder.json";
 
     /**
      * Used to test {@link GsonSimpleLineBorderMarshaller#marshal(Object, JsonMarshalContext)}.
@@ -26,7 +27,7 @@ public class GsonSimpleLineBorderMarshallerTest extends GsonMarshallingTestBase 
     @Test
     public void marshal() throws Exception {
         String expected = readJsonFromFile(pathToJson).toString();
-        String actual   = marshaller.marshal(border, new GsonMarshalContext());
+        String actual = marshaller.marshal(border, new GsonMarshalContext());
         Assert.assertEquals(expected, actual);
     }
 
@@ -38,8 +39,8 @@ public class GsonSimpleLineBorderMarshallerTest extends GsonMarshallingTestBase 
      */
     @Test
     public void unmarshal() throws Exception {
-        JsonObject       jsonToUnmarshal = readJsonFromFile(pathToJson);
-        SimpleLineBorder actual          = marshaller.unmarshal(jsonToUnmarshal, new GsonMarshalContext());
+        JsonObject jsonToUnmarshal = readJsonFromFile(pathToJson);
+        SimpleLineBorder actual = marshaller.unmarshal(jsonToUnmarshal, new GsonMarshalContext());
         Assert.assertEquals(border, actual);
     }
 

@@ -1,5 +1,10 @@
 package org.liquidengine.legui.marshal.json.gsonimpl.component;
 
+import static org.liquidengine.legui.marshal.JsonConstants.CARET_POSITION;
+import static org.liquidengine.legui.marshal.JsonConstants.EDITABLE;
+import static org.liquidengine.legui.marshal.JsonConstants.TEXT_STATE;
+import static org.liquidengine.legui.marshal.json.gsonimpl.GsonUtil.isNotNull;
+
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.liquidengine.legui.component.TextArea;
@@ -8,18 +13,16 @@ import org.liquidengine.legui.marshal.json.gsonimpl.GsonMarshalContext;
 import org.liquidengine.legui.marshal.json.gsonimpl.GsonMarshalUtil;
 import org.liquidengine.legui.marshal.json.gsonimpl.GsonUtil;
 
-import static org.liquidengine.legui.marshal.JsonConstants.*;
-import static org.liquidengine.legui.marshal.json.gsonimpl.GsonUtil.isNotNull;
-
 /**
  * Marshaller for {@link TextArea}.
  */
 public class GsonTextAreaMarshaller<T extends TextArea> extends GsonControllerMarshaller<T> {
+
     /**
      * Reads data from object and puts it to json object.
      *
-     * @param object  object to read.
-     * @param json    json object to fill.
+     * @param object object to read.
+     * @param json json object to fill.
      * @param context marshal context.
      */
     @Override
@@ -28,17 +31,17 @@ public class GsonTextAreaMarshaller<T extends TextArea> extends GsonControllerMa
 
         JsonObject textState = GsonMarshalUtil.marshalToJson(object.getTextState(), context);
         GsonUtil.fill(json)
-                .add(EDITABLE, object.isEditable())
-                .add(TEXT_STATE, textState)
-                .add(CARET_POSITION, object.getCaretPosition())
+            .add(EDITABLE, object.isEditable())
+            .add(TEXT_STATE, textState)
+            .add(CARET_POSITION, object.getCaretPosition())
         ;
     }
 
     /**
      * Reads data from json object and puts it to object.
      *
-     * @param json    json object to read.
-     * @param object  object to fill.
+     * @param json json object to read.
+     * @param object object to fill.
      * @param context marshal context.
      */
     @Override
@@ -54,7 +57,11 @@ public class GsonTextAreaMarshaller<T extends TextArea> extends GsonControllerMa
             TextState state = GsonMarshalUtil.unmarshal(asJsonObject, context);
             object.getTextState().copy(state);
         }
-        if (isNotNull(editable)) object.setEditable(editable.getAsBoolean());
-        if (isNotNull(caretPosition)) object.setCaretPosition(caretPosition.getAsInt());
+        if (isNotNull(editable)) {
+            object.setEditable(editable.getAsBoolean());
+        }
+        if (isNotNull(caretPosition)) {
+            object.setCaretPosition(caretPosition.getAsInt());
+        }
     }
 }

@@ -11,6 +11,7 @@ import org.liquidengine.legui.component.Tooltip;
  * @param <T> tooltip subclasses.
  */
 public class DarkTooltipTheme<T extends Tooltip> extends DarkComponentTheme<T> {
+
     /**
      * Used to apply theme only for component and not apply for child components.
      *

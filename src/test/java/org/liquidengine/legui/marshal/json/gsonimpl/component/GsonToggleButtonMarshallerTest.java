@@ -13,9 +13,10 @@ import org.liquidengine.legui.marshal.json.gsonimpl.GsonMarshallingTestBase;
  * Test for ToggleButton Gson Marshaller.
  */
 public class GsonToggleButtonMarshallerTest extends GsonMarshallingTestBase {
-    private ToggleButton                             toggleButton = new ToggleButton("Test toggleButton", 10, 30, 50, 70);
-    private GsonToggleButtonMarshaller<ToggleButton> marshaller   = new GsonToggleButtonMarshaller<>();
-    private String                                   pathToJson   = "org/liquidengine/legui/marshal/json/gsonimpl/component/ToggleButton.json";
+
+    private ToggleButton toggleButton = new ToggleButton("Test toggleButton", 10, 30, 50, 70);
+    private GsonToggleButtonMarshaller<ToggleButton> marshaller = new GsonToggleButtonMarshaller<>();
+    private String pathToJson = "org/liquidengine/legui/marshal/json/gsonimpl/component/ToggleButton.json";
 
     /**
      * Used to test {@link GsonToggleButtonMarshaller#marshal(Object, JsonMarshalContext)} method of marshaller.
@@ -25,7 +26,7 @@ public class GsonToggleButtonMarshallerTest extends GsonMarshallingTestBase {
     @Test
     public void marshal() throws Exception {
         String expected = readJsonFromFile(pathToJson).toString();
-        String actual   = marshaller.marshal(toggleButton, new GsonMarshalContext());
+        String actual = marshaller.marshal(toggleButton, new GsonMarshalContext());
         Assert.assertEquals(expected, actual);
     }
 
@@ -36,8 +37,8 @@ public class GsonToggleButtonMarshallerTest extends GsonMarshallingTestBase {
      */
     @Test
     public void unmarshal() throws Exception {
-        JsonObject   jsonToUnmarshal = readJsonFromFile(pathToJson);
-        ToggleButton actual          = marshaller.unmarshal(jsonToUnmarshal, new GsonMarshalContext());
+        JsonObject jsonToUnmarshal = readJsonFromFile(pathToJson);
+        ToggleButton actual = marshaller.unmarshal(jsonToUnmarshal, new GsonMarshalContext());
         Assert.assertEquals(toggleButton, actual);
     }
 

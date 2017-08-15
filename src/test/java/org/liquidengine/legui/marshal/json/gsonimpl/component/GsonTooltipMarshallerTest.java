@@ -14,9 +14,10 @@ import org.liquidengine.legui.marshal.json.gsonimpl.GsonMarshallingTestBase;
  * Test for Label Gson Marshaller.
  */
 public class GsonTooltipMarshallerTest extends GsonMarshallingTestBase {
-    private Tooltip                        label      = new Tooltip("Test Tooltip");
+
+    private Tooltip label = new Tooltip("Test Tooltip");
     private GsonTooltipMarshaller<Tooltip> marshaller = new GsonTooltipMarshaller<>();
-    private String                         pathToJson = "org/liquidengine/legui/marshal/json/gsonimpl/component/Tooltip.json";
+    private String pathToJson = "org/liquidengine/legui/marshal/json/gsonimpl/component/Tooltip.json";
 
     /**
      * Used to test {@link GsonTooltipMarshaller#marshal(Object, JsonMarshalContext)} method of marshaller.
@@ -26,7 +27,7 @@ public class GsonTooltipMarshallerTest extends GsonMarshallingTestBase {
     @Test
     public void marshal() throws Exception {
         String expected = readJsonFromFile(pathToJson).toString();
-        String actual   = marshaller.marshal(label, new GsonMarshalContext());
+        String actual = marshaller.marshal(label, new GsonMarshalContext());
         Assert.assertEquals(expected, actual);
     }
 
@@ -38,7 +39,7 @@ public class GsonTooltipMarshallerTest extends GsonMarshallingTestBase {
     @Test
     public void unmarshal() throws Exception {
         JsonObject jsonToUnmarshal = readJsonFromFile(pathToJson);
-        Tooltip    actual          = marshaller.unmarshal(jsonToUnmarshal, new GsonMarshalContext());
+        Tooltip actual = marshaller.unmarshal(jsonToUnmarshal, new GsonMarshalContext());
         Assert.assertEquals(label, actual);
     }
 

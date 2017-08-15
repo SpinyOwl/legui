@@ -1,5 +1,7 @@
 package org.liquidengine.legui.component;
 
+import static org.liquidengine.legui.font.FontRegistry.MATERIAL_ICONS_REGULAR;
+
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -13,11 +15,9 @@ import org.liquidengine.legui.icon.CharIcon;
 import org.liquidengine.legui.icon.Icon;
 import org.liquidengine.legui.theme.Themes;
 
-import static org.liquidengine.legui.font.FontRegistry.MATERIAL_ICONS_REGULAR;
-
 /**
- * RadioButtons create a series of items where only one item can be checked. <p> By default all created radio buttons have no group so all
- * of them can be checked. <p>Usage example:</p>
+ * RadioButtons create a series of items where only one item can be checked. <p> By default all created radio buttons have no group so all of them can be
+ * checked. <p>Usage example:</p>
  * <pre>{@code
  * RadioButtonGroup rbg = new RadioButtonGroup();
  * RadioButton      rb1 = new RadioButton();
@@ -53,9 +53,8 @@ public class RadioButton extends Controller implements TextComponent {
     private RadioButtonGroup radioButtonGroup;
 
     /**
-     * Default constructor. Used to create component instance without any parameters.
-     * <p>
-     * Also if you want to make it easy to use with Json marshaller/unmarshaller component should contain empty constructor.
+     * Default constructor. Used to create component instance without any parameters. <p> Also if you want to make it easy to use with Json
+     * marshaller/unmarshaller component should contain empty constructor.
      */
     public RadioButton() {
         this("RadioButton");
@@ -64,9 +63,9 @@ public class RadioButton extends Controller implements TextComponent {
     /**
      * Constructor with position and size parameters.
      *
-     * @param x      x position position in parent component.
-     * @param y      y position position in parent component.
-     * @param width  width of component.
+     * @param x x position position in parent component.
+     * @param y y position position in parent component.
+     * @param width width of component.
      * @param height height of component.
      */
     public RadioButton(float x, float y, float width, float height) {
@@ -77,16 +76,15 @@ public class RadioButton extends Controller implements TextComponent {
      * Constructor with position and size parameters.
      *
      * @param position position position in parent component.
-     * @param size     size of component.
+     * @param size size of component.
      */
     public RadioButton(Vector2f position, Vector2f size) {
         this("RadioButton", position, size);
     }
 
     /**
-     * Default constructor. Used to create component instance without any parameters.
-     * <p>
-     * Also if you want to make it easy to use with Json marshaller/unmarshaller component should contain empty constructor.
+     * Default constructor. Used to create component instance without any parameters. <p> Also if you want to make it easy to use with Json
+     * marshaller/unmarshaller component should contain empty constructor.
      *
      * @param text text to set.
      */
@@ -97,10 +95,10 @@ public class RadioButton extends Controller implements TextComponent {
     /**
      * Constructor with position and size parameters.
      *
-     * @param text   text to set.
-     * @param x      x position position in parent component.
-     * @param y      y position position in parent component.
-     * @param width  width of component.
+     * @param text text to set.
+     * @param x x position position in parent component.
+     * @param y y position position in parent component.
+     * @param width width of component.
      * @param height height of component.
      */
     public RadioButton(String text, float x, float y, float width, float height) {
@@ -111,9 +109,9 @@ public class RadioButton extends Controller implements TextComponent {
     /**
      * Constructor with position and size parameters.
      *
-     * @param text     text to set.
+     * @param text text to set.
      * @param position position position in parent component.
-     * @param size     size of component.
+     * @param size size of component.
      */
     public RadioButton(String text, Vector2f position, Vector2f size) {
         super(position, size);
@@ -242,30 +240,30 @@ public class RadioButton extends Controller implements TextComponent {
         RadioButton that = (RadioButton) o;
 
         return new EqualsBuilder()
-                .appendSuper(super.equals(o))
-                .append(checked, that.checked)
-                .append(textState, that.textState)
-                .append(radioButtonGroup, that.radioButtonGroup)
-                .isEquals();
+            .appendSuper(super.equals(o))
+            .append(checked, that.checked)
+            .append(textState, that.textState)
+            .append(radioButtonGroup, that.radioButtonGroup)
+            .isEquals();
     }
 
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
-                .appendSuper(super.hashCode())
-                .append(textState)
-                .append(checked)
-                .append(radioButtonGroup)
-                .toHashCode();
+            .appendSuper(super.hashCode())
+            .append(textState)
+            .append(checked)
+            .append(radioButtonGroup)
+            .toHashCode();
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("textState", textState)
-                .append("checked", checked)
-                .append("radioButtonGroup", radioButtonGroup)
-                .toString();
+            .append("textState", textState)
+            .append("checked", checked)
+            .append("radioButtonGroup", radioButtonGroup)
+            .toString();
     }
 
 }

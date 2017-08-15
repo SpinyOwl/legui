@@ -8,11 +8,12 @@ import org.liquidengine.legui.marshal.json.gsonimpl.GsonMarshalContext;
  * Marshaller for {@link BufferedImage} instances.
  */
 public class GsonBufferedImageMarshaller<I extends BufferedImage> extends GsonLoadableImageMarshaller<I> {
+
     /**
      * Reads data from object and puts it to json object.
      *
-     * @param object  object to read.
-     * @param json    json object to fill.
+     * @param object object to read.
+     * @param json json object to fill.
      * @param context marshal context.
      */
     @Override
@@ -23,8 +24,8 @@ public class GsonBufferedImageMarshaller<I extends BufferedImage> extends GsonLo
     /**
      * Reads data from json object and puts it to object.
      *
-     * @param json    json object to read.
-     * @param object  object to fill.
+     * @param json json object to read.
+     * @param object object to fill.
      * @param context marshal context.
      */
     @Override

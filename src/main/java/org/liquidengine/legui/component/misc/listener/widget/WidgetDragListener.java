@@ -10,6 +10,7 @@ import org.liquidengine.legui.listener.MouseDragEventListener;
  * @author Aliaksandr_Shcherbin.
  */
 public class WidgetDragListener implements MouseDragEventListener {
+
     private Widget widget;
 
     public WidgetDragListener(Widget widget) {
@@ -24,7 +25,7 @@ public class WidgetDragListener implements MouseDragEventListener {
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .toString();
+            .toString();
     }
 
     @Override

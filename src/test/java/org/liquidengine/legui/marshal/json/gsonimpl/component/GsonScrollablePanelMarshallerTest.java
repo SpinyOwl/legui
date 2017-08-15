@@ -13,9 +13,10 @@ import org.liquidengine.legui.marshal.json.gsonimpl.GsonMarshallingTestBase;
  * Test for ScrollablePanel Gson Marshaller.
  */
 public class GsonScrollablePanelMarshallerTest extends GsonMarshallingTestBase {
-    private ScrollablePanel                                scrollablePanel = new ScrollablePanel(10,30,20,40);
-    private GsonScrollablePanelMarshaller<ScrollablePanel> marshaller      = new GsonScrollablePanelMarshaller<>();
-    private String                                         pathToJson      = "org/liquidengine/legui/marshal/json/gsonimpl/component/ScrollablePanel.json";
+
+    private ScrollablePanel scrollablePanel = new ScrollablePanel(10, 30, 20, 40);
+    private GsonScrollablePanelMarshaller<ScrollablePanel> marshaller = new GsonScrollablePanelMarshaller<>();
+    private String pathToJson = "org/liquidengine/legui/marshal/json/gsonimpl/component/ScrollablePanel.json";
 
     /**
      * Used to test {@link GsonScrollablePanelMarshaller#marshal(Object, JsonMarshalContext)} method of marshaller.
@@ -25,7 +26,7 @@ public class GsonScrollablePanelMarshallerTest extends GsonMarshallingTestBase {
     @Test
     public void marshal() throws Exception {
         String expected = readJsonFromFile(pathToJson).toString();
-        String actual   = marshaller.marshal(scrollablePanel, new GsonMarshalContext());
+        String actual = marshaller.marshal(scrollablePanel, new GsonMarshalContext());
         Assert.assertEquals(expected, actual);
     }
 
@@ -37,7 +38,7 @@ public class GsonScrollablePanelMarshallerTest extends GsonMarshallingTestBase {
     @Test
     public void unmarshal() throws Exception {
         JsonObject jsonToUnmarshal = readJsonFromFile(pathToJson);
-        ScrollablePanel     actual          = marshaller.unmarshal(jsonToUnmarshal, new GsonMarshalContext());
+        ScrollablePanel actual = marshaller.unmarshal(jsonToUnmarshal, new GsonMarshalContext());
         Assert.assertEquals(scrollablePanel, actual);
     }
 }

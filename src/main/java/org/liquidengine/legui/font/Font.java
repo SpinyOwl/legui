@@ -1,18 +1,18 @@
 package org.liquidengine.legui.font;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.liquidengine.legui.util.IOUtil;
+import static org.liquidengine.legui.exception.LeguiExceptionTemplate.FAILED_TO_LOAD_FONT;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
-
-import static org.liquidengine.legui.exception.LeguiExceptionTemplate.FAILED_TO_LOAD_FONT;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.liquidengine.legui.util.IOUtil;
 
 /**
  * Representation of font. Used by text components to specify font to use by renderer.
  */
 public class Font {
+
     /**
      * Font data.
      */
@@ -79,16 +79,16 @@ public class Font {
         Font font = (Font) o;
 
         return new EqualsBuilder()
-                .append(getData(), font.getData())
-                .append(getPath(), font.getPath())
-                .isEquals();
+            .append(getData(), font.getData())
+            .append(getPath(), font.getPath())
+            .isEquals();
     }
 
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
-                .append(getData())
-                .append(getPath())
-                .toHashCode();
+            .append(getData())
+            .append(getPath())
+            .toHashCode();
     }
 }

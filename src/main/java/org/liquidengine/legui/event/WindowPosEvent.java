@@ -8,6 +8,7 @@ import org.liquidengine.legui.system.context.Context;
  * Created by ShchAlexander on 03.02.2017.
  */
 public class WindowPosEvent<T extends Component> extends Event<T> {
+
     private final int xpos;
     private final int ypos;
 

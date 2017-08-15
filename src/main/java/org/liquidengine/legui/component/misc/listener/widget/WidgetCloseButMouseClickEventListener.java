@@ -1,16 +1,17 @@
 package org.liquidengine.legui.component.misc.listener.widget;
 
+import static org.liquidengine.legui.event.MouseClickEvent.MouseClickAction.CLICK;
+
 import org.liquidengine.legui.component.Widget;
 import org.liquidengine.legui.component.misc.event.widget.WidgetCloseEvent;
 import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.listener.MouseClickEventListener;
 
-import static org.liquidengine.legui.event.MouseClickEvent.MouseClickAction.CLICK;
-
 /**
  * @author Aliaksandr_Shcherbin.
  */
 public class WidgetCloseButMouseClickEventListener implements MouseClickEventListener {
+
     private Widget widget;
 
     public WidgetCloseButMouseClickEventListener(Widget widget) {

@@ -18,9 +18,9 @@ public class FocusEvent<T extends Component> extends Event<T> {
      * Used to create focus event.
      *
      * @param component event receiver.
-     * @param context   context.
+     * @param context context.
      * @param nextFocus focus receiver.
-     * @param focused   state of component.
+     * @param focused state of component.
      */
     public FocusEvent(T component, Context context, Frame frame, Component nextFocus, boolean focused) {
         super(component, context, frame);
@@ -49,8 +49,8 @@ public class FocusEvent<T extends Component> extends Event<T> {
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("focused", focused)
-                .append("nextFocus", nextFocus)
-                .toString();
+            .append("focused", focused)
+            .append("nextFocus", nextFocus)
+            .toString();
     }
 }

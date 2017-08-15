@@ -11,6 +11,7 @@ import org.liquidengine.legui.theme.Themes;
  * This class represents image view component.
  */
 public class ImageView extends Controller {
+
     /**
      * BufferedImage (or image data).
      */
@@ -60,31 +61,35 @@ public class ImageView extends Controller {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
+        if (this == o) {
+            return true;
+        }
 
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         ImageView imageView = (ImageView) o;
 
         return new EqualsBuilder()
-                .appendSuper(super.equals(o))
-                .append(image, imageView.image)
-                .isEquals();
+            .appendSuper(super.equals(o))
+            .append(image, imageView.image)
+            .isEquals();
     }
 
 
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
-                .appendSuper(super.hashCode())
-                .append(image)
-                .toHashCode();
+            .appendSuper(super.hashCode())
+            .append(image)
+            .toHashCode();
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("image", image)
-                .toString();
+            .append("image", image)
+            .toString();
     }
 }

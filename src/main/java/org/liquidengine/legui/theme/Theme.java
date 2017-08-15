@@ -1,15 +1,15 @@
 package org.liquidengine.legui.theme;
 
+import java.util.List;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.component.Layer;
-
-import java.util.List;
 
 /**
  * Created by Aliaksandr_Shcherbin on 2/6/2017.
  */
 public abstract class Theme {
+
     private ThemeManager themeManager;
 
     protected Theme(ThemeManager themeManager) {

@@ -40,9 +40,8 @@ public class ScrollablePanel<T extends Component> extends Container implements V
     private Container<T> container;
 
     /**
-     * Default constructor. Used to create component instance without any parameters.
-     * <p>
-     * Also if you want to make it easy to use with Json marshaller/unmarshaller component should contain empty constructor.
+     * Default constructor. Used to create component instance without any parameters. <p> Also if you want to make it easy to use with Json
+     * marshaller/unmarshaller component should contain empty constructor.
      */
     public ScrollablePanel() {
         initialize();
@@ -51,9 +50,9 @@ public class ScrollablePanel<T extends Component> extends Container implements V
     /**
      * Constructor with position and size parameters.
      *
-     * @param x      x position position in parent component.
-     * @param y      y position position in parent component.
-     * @param width  width of component.
+     * @param x x position position in parent component.
+     * @param y y position position in parent component.
+     * @param width width of component.
      * @param height height of component.
      */
     public ScrollablePanel(float x, float y, float width, float height) {
@@ -65,7 +64,7 @@ public class ScrollablePanel<T extends Component> extends Container implements V
      * Constructor with position and size parameters.
      *
      * @param position position position in parent component.
-     * @param size     size of component.
+     * @param size size of component.
      */
     public ScrollablePanel(Vector2f position, Vector2f size) {
         super(position, size);
@@ -93,7 +92,6 @@ public class ScrollablePanel<T extends Component> extends Container implements V
         viewport.setBackgroundColor(1, 1, 1, 0);
         viewport.setBorder(null);
         viewport.getListenerMap().addListener(ScrollEvent.class, new ScrollablePanelViewportScrollListener());
-
 
         container = new Panel<>(0, 0, viewportWidth, viewportHeight);
         container.setBorder(null);
@@ -227,40 +225,44 @@ public class ScrollablePanel<T extends Component> extends Container implements V
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
+        if (this == o) {
+            return true;
+        }
 
-        if (!(o instanceof ScrollablePanel)) return false;
+        if (!(o instanceof ScrollablePanel)) {
+            return false;
+        }
 
         ScrollablePanel panel = (ScrollablePanel) o;
 
         return new EqualsBuilder()
-                .appendSuper(super.equals(o))
-                .append(verticalScrollBar, panel.verticalScrollBar)
-                .append(horizontalScrollBar, panel.horizontalScrollBar)
-                .append(viewport, panel.viewport)
-                .append(container, panel.container)
-                .isEquals();
+            .appendSuper(super.equals(o))
+            .append(verticalScrollBar, panel.verticalScrollBar)
+            .append(horizontalScrollBar, panel.horizontalScrollBar)
+            .append(viewport, panel.viewport)
+            .append(container, panel.container)
+            .isEquals();
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("verticalScrollBar", verticalScrollBar)
-                .append("horizontalScrollBar", horizontalScrollBar)
-                .append("viewport", viewport)
-                .append("container", container)
-                .toString();
+            .append("verticalScrollBar", verticalScrollBar)
+            .append("horizontalScrollBar", horizontalScrollBar)
+            .append("viewport", viewport)
+            .append("container", container)
+            .toString();
     }
 
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
-                .appendSuper(super.hashCode())
-                .append(verticalScrollBar)
-                .append(horizontalScrollBar)
-                .append(viewport)
-                .append(container)
-                .toHashCode();
+            .appendSuper(super.hashCode())
+            .append(verticalScrollBar)
+            .append(horizontalScrollBar)
+            .append(viewport)
+            .append(container)
+            .toHashCode();
     }
 
     public Container<Component> getViewport() {

@@ -27,9 +27,9 @@ public class SelectBoxFocusListener implements FocusEventListener {
                 }
             }
             if (nextFocus == selectBox.getExpandButton() ||
-                    nextFocus == selectBox.getSelectionButton() ||
-                    nextFocus == selectBox.getSelectionListPanel() ||
-                    nextFocus == selectBox.getSelectionListPanel().getVerticalScrollBar()) {
+                nextFocus == selectBox.getSelectionButton() ||
+                nextFocus == selectBox.getSelectionListPanel() ||
+                nextFocus == selectBox.getSelectionListPanel().getVerticalScrollBar()) {
                 collapse = false;
             }
             if (selectBox.isCollapsed() != collapse) {

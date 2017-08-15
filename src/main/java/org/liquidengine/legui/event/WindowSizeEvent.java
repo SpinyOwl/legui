@@ -8,6 +8,7 @@ import org.liquidengine.legui.system.context.Context;
  * Created by Aliaksandr_Shcherbin on 2/2/2017.
  */
 public class WindowSizeEvent<T extends Component> extends Event<T> {
+
     private final int width;
     private final int height;
 

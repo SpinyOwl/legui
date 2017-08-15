@@ -1,5 +1,11 @@
 package org.liquidengine.legui.system.renderer.nvg.border;
 
+import static org.lwjgl.nanovg.NanoVG.nvgBeginPath;
+import static org.lwjgl.nanovg.NanoVG.nvgRoundedRect;
+import static org.lwjgl.nanovg.NanoVG.nvgStroke;
+import static org.lwjgl.nanovg.NanoVG.nvgStrokeColor;
+import static org.lwjgl.nanovg.NanoVG.nvgStrokeWidth;
+
 import org.joml.Vector2f;
 import org.liquidengine.legui.border.Border;
 import org.liquidengine.legui.border.SimpleLineBorder;
@@ -11,15 +17,16 @@ import org.liquidengine.legui.system.renderer.nvg.NvgBorderRenderer;
 import org.liquidengine.legui.system.renderer.nvg.util.NVGUtils;
 import org.lwjgl.nanovg.NVGColor;
 
-import static org.lwjgl.nanovg.NanoVG.*;
-
 /**
  * Created by ShchAlexander on 11.02.2017.
  */
 public class NvgDefaultBorderRenderer extends NvgBorderRenderer {
+
     @Override
     protected void renderBorder(Border border, Component component, Context context, long nanovg) {
-        if (!component.isVisible()) return;
+        if (!component.isVisible()) {
+            return;
+        }
         // render simple rectangle border
         Vector2f position = component.getScreenPosition();
         Vector2f size = component.getSize();
@@ -28,7 +35,6 @@ public class NvgDefaultBorderRenderer extends NvgBorderRenderer {
         float y = position.y;
         float w = size.x;
         float h = size.y;
-
 
         drawRectStroke(component, nanovg, x, y, w, h, new SimpleLineBorder(ColorConstants.black(), 1));
 

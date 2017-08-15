@@ -1,5 +1,12 @@
 package org.liquidengine.legui.component;
 
+import static org.liquidengine.legui.font.FontRegistry.MATERIAL_ICONS_REGULAR;
+
+import java.util.List;
+import java.util.Objects;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -18,18 +25,11 @@ import org.liquidengine.legui.listener.FocusEventListener;
 import org.liquidengine.legui.listener.MouseClickEventListener;
 import org.liquidengine.legui.theme.Themes;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
-
-import static org.liquidengine.legui.font.FontRegistry.MATERIAL_ICONS_REGULAR;
-
 /**
  * Creates drop-down list with select options.
  */
 public class SelectBox extends Container {
+
     public static final int EXPAND_ICON_CHAR = 0xE5C5;
     public static final int COLLAPSE_ICON_CHAR = 0xE5C7;
     public static final String DEFAULT_ICON_FONT = MATERIAL_ICONS_REGULAR;
@@ -58,9 +58,8 @@ public class SelectBox extends Container {
     private Lock lock = new ReentrantLock(false);
 
     /**
-     * Default constructor. Used to create component instance without any parameters.
-     * <p>
-     * Also if you want to make it easy to use with Json marshaller/unmarshaller component should contain empty constructor.
+     * Default constructor. Used to create component instance without any parameters. <p> Also if you want to make it easy to use with Json
+     * marshaller/unmarshaller component should contain empty constructor.
      */
     public SelectBox() {
         initialize();
@@ -69,9 +68,9 @@ public class SelectBox extends Container {
     /**
      * Constructor with position and size parameters.
      *
-     * @param x      x position position in parent component.
-     * @param y      y position position in parent component.
-     * @param width  width of component.
+     * @param x x position position in parent component.
+     * @param y y position position in parent component.
+     * @param width width of component.
      * @param height height of component.
      */
     public SelectBox(float x, float y, float width, float height) {
@@ -83,7 +82,7 @@ public class SelectBox extends Container {
      * Constructor with position and size parameters.
      *
      * @param position position position in parent component.
-     * @param size     size of component.
+     * @param size size of component.
      */
     public SelectBox(Vector2f position, Vector2f size) {
         super(position, size);
@@ -253,7 +252,6 @@ public class SelectBox extends Container {
             selectBoxElement.setPosition(0, i * elementHeight);
         }
 
-
         Vector2f psize = new Vector2f();
         Container parent = getParent();
         if (parent != null) {
@@ -303,7 +301,6 @@ public class SelectBox extends Container {
      * Used to create {@link SelectBoxElement}.
      *
      * @param element element.
-     *
      * @return {@link SelectBoxElement} created on base of element.
      */
     private SelectBoxElement createSelectBoxElement(String element) {
@@ -329,7 +326,6 @@ public class SelectBox extends Container {
      * Used to get element index.
      *
      * @param element element to find index.
-     *
      * @return index of element or -1 if no such element in selectbox.
      */
     public int getElementIndex(String element) {
@@ -365,7 +361,7 @@ public class SelectBox extends Container {
     /**
      * Used to set selected state of element.
      *
-     * @param element  element to set state.
+     * @param element element to set state.
      * @param selected state of element to set.
      */
     public void setSelected(String element, boolean selected) {
@@ -376,7 +372,7 @@ public class SelectBox extends Container {
     /**
      * Used to set selected state of element on specified index.
      *
-     * @param index    index of element to set state.
+     * @param index index of element to set state.
      * @param selected state of element to set.
      */
     public void setSelected(int index, boolean selected) {
@@ -433,13 +429,13 @@ public class SelectBox extends Container {
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("elements", elements)
-                .append("selectedElement", selectedElement)
-                .append("elementHeight", elementHeight)
-                .append("buttonWidth", buttonWidth)
-                .append("visibleCount", visibleCount)
-                .append("collapsed", collapsed)
-                .toString();
+            .append("elements", elements)
+            .append("selectedElement", selectedElement)
+            .append("elementHeight", elementHeight)
+            .append("buttonWidth", buttonWidth)
+            .append("visibleCount", visibleCount)
+            .append("collapsed", collapsed)
+            .toString();
     }
 
     @Override
@@ -455,19 +451,19 @@ public class SelectBox extends Container {
         SelectBox selectBox = (SelectBox) o;
 
         return new EqualsBuilder()
-                .appendSuper(super.equals(o))
-                .append(elementHeight, selectBox.elementHeight)
-                .append(buttonWidth, selectBox.buttonWidth)
-                .append(visibleCount, selectBox.visibleCount)
-                .append(collapsed, selectBox.collapsed)
-                .append(selectBoxElements, selectBox.selectBoxElements)
-                .append(elements, selectBox.elements)
-                .append(selectionListPanel, selectBox.selectionListPanel)
-                .append(selectBoxScrollListener, selectBox.selectBoxScrollListener)
-                .append(selectionButton, selectBox.selectionButton)
-                .append(selectedElement, selectBox.selectedElement)
-                .append(expandButton, selectBox.expandButton)
-                .isEquals();
+            .appendSuper(super.equals(o))
+            .append(elementHeight, selectBox.elementHeight)
+            .append(buttonWidth, selectBox.buttonWidth)
+            .append(visibleCount, selectBox.visibleCount)
+            .append(collapsed, selectBox.collapsed)
+            .append(selectBoxElements, selectBox.selectBoxElements)
+            .append(elements, selectBox.elements)
+            .append(selectionListPanel, selectBox.selectionListPanel)
+            .append(selectBoxScrollListener, selectBox.selectBoxScrollListener)
+            .append(selectionButton, selectBox.selectionButton)
+            .append(selectedElement, selectBox.selectedElement)
+            .append(expandButton, selectBox.expandButton)
+            .isEquals();
     }
 
     /**
@@ -482,25 +478,26 @@ public class SelectBox extends Container {
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
-                .appendSuper(super.hashCode())
-                .append(selectBoxElements)
-                .append(elements)
-                .append(selectionListPanel)
-                .append(selectBoxScrollListener)
-                .append(selectionButton)
-                .append(selectedElement)
-                .append(elementHeight)
-                .append(buttonWidth)
-                .append(visibleCount)
-                .append(expandButton)
-                .append(collapsed)
-                .toHashCode();
+            .appendSuper(super.hashCode())
+            .append(selectBoxElements)
+            .append(elements)
+            .append(selectionListPanel)
+            .append(selectBoxScrollListener)
+            .append(selectionButton)
+            .append(selectedElement)
+            .append(elementHeight)
+            .append(buttonWidth)
+            .append(visibleCount)
+            .append(expandButton)
+            .append(collapsed)
+            .toHashCode();
     }
 
     /**
      * Selectbox element which is subclass of button.
      */
     public class SelectBoxElement extends Button {
+
         private boolean selected;
         private String text;
 
@@ -536,8 +533,8 @@ public class SelectBox extends Container {
         @Override
         public String toString() {
             return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                    .append("selected", selected)
-                    .toString();
+                .append("selected", selected)
+                .toString();
         }
 
         @Override
@@ -553,18 +550,18 @@ public class SelectBox extends Container {
             SelectBoxElement that = (SelectBoxElement) o;
 
             return new EqualsBuilder()
-                    .appendSuper(super.equals(o))
-                    .append(selected, that.selected)
-                    .append(text, that.text)
-                    .isEquals();
+                .appendSuper(super.equals(o))
+                .append(selected, that.selected)
+                .append(text, that.text)
+                .isEquals();
         }
 
         @Override
         public int hashCode() {
             return new HashCodeBuilder(17, 37)
-                    .appendSuper(super.hashCode())
-                    .append(selected)
-                    .toHashCode();
+                .appendSuper(super.hashCode())
+                .append(selected)
+                .toHashCode();
         }
     }
 
@@ -572,10 +569,10 @@ public class SelectBox extends Container {
      * Scrollable panel of selectbox.
      */
     public class SelectBoxScrollablePanel extends ScrollablePanel<SelectBoxElement> {
+
         /**
-         * Default constructor. Used to create component instance without any parameters.
-         * <p>
-         * Also if you want to make it easy to use with Json marshaller/unmarshaller component should contain empty constructor.
+         * Default constructor. Used to create component instance without any parameters. <p> Also if you want to make it easy to use with Json
+         * marshaller/unmarshaller component should contain empty constructor.
          */
         public SelectBoxScrollablePanel() {
         }
@@ -583,9 +580,9 @@ public class SelectBox extends Container {
         /**
          * Constructor with position and size parameters.
          *
-         * @param x      x position position in parent component.
-         * @param y      y position position in parent component.
-         * @param width  width of component.
+         * @param x x position position in parent component.
+         * @param y y position position in parent component.
+         * @param width width of component.
          * @param height height of component.
          */
         public SelectBoxScrollablePanel(float x, float y, float width, float height) {
@@ -596,7 +593,7 @@ public class SelectBox extends Container {
          * Constructor with position and size parameters.
          *
          * @param position position position in parent component.
-         * @param size     size of component.
+         * @param size size of component.
          */
         public SelectBoxScrollablePanel(Vector2f position, Vector2f size) {
             super(position, size);

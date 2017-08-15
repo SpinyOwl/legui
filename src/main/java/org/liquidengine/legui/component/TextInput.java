@@ -52,9 +52,8 @@ public class TextInput extends Controller implements TextComponent {
     private boolean editable = true;
 
     /**
-     * Default constructor. Used to create component instance without any parameters.
-     * <p>
-     * Also if you want to make it easy to use with Json marshaller/unmarshaller component should contain empty constructor.
+     * Default constructor. Used to create component instance without any parameters. <p> Also if you want to make it easy to use with Json
+     * marshaller/unmarshaller component should contain empty constructor.
      */
     public TextInput() {
         initialize("");
@@ -63,9 +62,9 @@ public class TextInput extends Controller implements TextComponent {
     /**
      * Constructor with position and size parameters.
      *
-     * @param x      x position position in parent component.
-     * @param y      y position position in parent component.
-     * @param width  width of component.
+     * @param x x position position in parent component.
+     * @param y y position position in parent component.
+     * @param width width of component.
      * @param height height of component.
      */
     public TextInput(float x, float y, float width, float height) {
@@ -77,7 +76,7 @@ public class TextInput extends Controller implements TextComponent {
      * Constructor with position and size parameters.
      *
      * @param position position position in parent component.
-     * @param size     size of component.
+     * @param size size of component.
      */
     public TextInput(Vector2f position, Vector2f size) {
         super(position, size);
@@ -85,9 +84,8 @@ public class TextInput extends Controller implements TextComponent {
     }
 
     /**
-     * Default constructor with text to set.
-     * <p>
-     * Also if you want to make it easy to use with Json marshaller/unmarshaller component should contain empty constructor.
+     * Default constructor with text to set. <p> Also if you want to make it easy to use with Json marshaller/unmarshaller component should contain empty
+     * constructor.
      *
      * @param text text to set.
      */
@@ -98,10 +96,10 @@ public class TextInput extends Controller implements TextComponent {
     /**
      * Constructor with text, position and size parameters.
      *
-     * @param text   text to set.
-     * @param x      x position position in parent component.
-     * @param y      y position position in parent component.
-     * @param width  width of component.
+     * @param text text to set.
+     * @param x x position position in parent component.
+     * @param y y position position in parent component.
+     * @param width width of component.
      * @param height height of component.
      */
     public TextInput(String text, float x, float y, float width, float height) {
@@ -112,9 +110,9 @@ public class TextInput extends Controller implements TextComponent {
     /**
      * Constructor with text, position and size parameters.
      *
-     * @param text     text to set.
+     * @param text text to set.
      * @param position position position in parent component.
-     * @param size     size of component.
+     * @param size size of component.
      */
     public TextInput(String text, Vector2f position, Vector2f size) {
         super(position, size);
@@ -259,13 +257,13 @@ public class TextInput extends Controller implements TextComponent {
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("textState", textState)
-                .append("caretPosition", caretPosition)
-                .append("mouseCaretPosition", mouseCaretPosition)
-                .append("startSelectionIndex", startSelectionIndex)
-                .append("endSelectionIndex", endSelectionIndex)
-                .append("editable", editable)
-                .toString();
+            .append("textState", textState)
+            .append("caretPosition", caretPosition)
+            .append("mouseCaretPosition", mouseCaretPosition)
+            .append("startSelectionIndex", startSelectionIndex)
+            .append("endSelectionIndex", endSelectionIndex)
+            .append("editable", editable)
+            .toString();
     }
 
     @Override
@@ -281,27 +279,27 @@ public class TextInput extends Controller implements TextComponent {
         TextInput input = (TextInput) o;
 
         return new EqualsBuilder()
-                .appendSuper(super.equals(o))
-                .append(caretPosition, input.caretPosition)
-                .append(mouseCaretPosition, input.mouseCaretPosition)
-                .append(startSelectionIndex, input.startSelectionIndex)
-                .append(endSelectionIndex, input.endSelectionIndex)
-                .append(editable, input.editable)
-                .append(textState, input.textState)
-                .isEquals();
+            .appendSuper(super.equals(o))
+            .append(caretPosition, input.caretPosition)
+            .append(mouseCaretPosition, input.mouseCaretPosition)
+            .append(startSelectionIndex, input.startSelectionIndex)
+            .append(endSelectionIndex, input.endSelectionIndex)
+            .append(editable, input.editable)
+            .append(textState, input.textState)
+            .isEquals();
     }
 
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
-                .appendSuper(super.hashCode())
-                .append(textState)
-                .append(caretPosition)
-                .append(mouseCaretPosition)
-                .append(startSelectionIndex)
-                .append(endSelectionIndex)
-                .append(editable)
-                .toHashCode();
+            .appendSuper(super.hashCode())
+            .append(textState)
+            .append(caretPosition)
+            .append(mouseCaretPosition)
+            .append(startSelectionIndex)
+            .append(endSelectionIndex)
+            .append(editable)
+            .toHashCode();
     }
 
 }

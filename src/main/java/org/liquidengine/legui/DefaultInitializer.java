@@ -15,6 +15,7 @@ import org.liquidengine.legui.system.renderer.nvg.NvgRendererProvider;
  * Created by Aliaksandr_Shcherbin on 1/25/2017.
  */
 public class DefaultInitializer {
+
     private long window;
     private Frame frame;
     private Context context;

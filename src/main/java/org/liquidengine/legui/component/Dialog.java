@@ -6,10 +6,11 @@ import org.liquidengine.legui.component.misc.listener.dialog.DialogCloseEventLis
 import org.liquidengine.legui.theme.Themes;
 
 /**
- * Dialog component is component which extended from {@link Widget} and have some additional functionality. On {@link #show(Frame)} method
- * it added to new created {@link DialogLayer} which forbid underlying layers to receive mouse click and keyboard events.
+ * Dialog component is component which extended from {@link Widget} and have some additional functionality. On {@link #show(Frame)} method it added to new
+ * created {@link DialogLayer} which forbid underlying layers to receive mouse click and keyboard events.
  */
 public class Dialog extends Widget {
+
     /**
      * Used to hold dialog layer with dialog.
      */
@@ -29,7 +30,7 @@ public class Dialog extends Widget {
     /**
      * Creates a dialog with default title text and specified position and size.
      *
-     * @param width  width of component.
+     * @param width width of component.
      * @param height height of component.
      */
     public Dialog(float width, float height) {
@@ -58,8 +59,8 @@ public class Dialog extends Widget {
     /**
      * Creates a dialog with specified title text and specified position and size.
      *
-     * @param title  dialog text.
-     * @param width  width of component.
+     * @param title dialog text.
+     * @param width width of component.
      * @param height height of component.
      */
     public Dialog(String title, float width, float height) {
@@ -70,7 +71,7 @@ public class Dialog extends Widget {
      * Creates a dialog with specified title text and specified position and size.
      *
      * @param title widget text.
-     * @param size  size of component.
+     * @param size size of component.
      */
     public Dialog(String title, Vector2f size) {
         initialize(size, title);
@@ -79,7 +80,7 @@ public class Dialog extends Widget {
     /**
      * Used to initialize dialog with title and size
      *
-     * @param size  size of component.
+     * @param size size of component.
      * @param title dialog text.
      */
     private void initialize(Vector2f size, String title) {
@@ -87,7 +88,6 @@ public class Dialog extends Widget {
         if (size != null) {
             setSize(size);
         }
-
 
         this.setMinimizable(false);
         this.getListenerMap().addListener(WidgetCloseEvent.class, new DialogCloseEventListener(this));

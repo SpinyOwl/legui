@@ -41,23 +41,27 @@ public class ScrollBarChangeValueEvent<T extends ScrollBar> extends Event<T> {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
+        if (this == o) {
+            return true;
+        }
 
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         ScrollBarChangeValueEvent that = (ScrollBarChangeValueEvent) o;
 
         return new EqualsBuilder()
-                .append(getOldValue(), that.getOldValue())
-                .append(getNewValue(), that.getNewValue())
-                .isEquals();
+            .append(getOldValue(), that.getOldValue())
+            .append(getNewValue(), that.getNewValue())
+            .isEquals();
     }
 
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
-                .append(getOldValue())
-                .append(getNewValue())
-                .toHashCode();
+            .append(getOldValue())
+            .append(getNewValue())
+            .toHashCode();
     }
 }

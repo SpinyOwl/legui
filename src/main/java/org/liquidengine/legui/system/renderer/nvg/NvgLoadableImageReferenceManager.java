@@ -3,13 +3,16 @@ package org.liquidengine.legui.system.renderer.nvg;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.RemovalListener;
-import org.liquidengine.legui.image.LoadableImage;
-import org.lwjgl.nanovg.NanoVG;
-
 import java.nio.ByteBuffer;
 import java.util.Map;
 import java.util.Queue;
-import java.util.concurrent.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+import org.liquidengine.legui.image.LoadableImage;
+import org.lwjgl.nanovg.NanoVG;
 
 /**
  * Created by Aliaksandr_Shcherbin on 1/26/2017.
@@ -42,7 +45,7 @@ public class NvgLoadableImageReferenceManager {
      */
     protected NvgLoadableImageReferenceManager() {
         imageCache = CacheBuilder.newBuilder().initialCapacity(200)
-                .expireAfterAccess(300, TimeUnit.SECONDS).removalListener(removalListener).build();
+            .expireAfterAccess(300, TimeUnit.SECONDS).removalListener(removalListener).build();
         cleanup.scheduleAtFixedRate(() -> imageCache.cleanUp(), 1, 1, TimeUnit.SECONDS);
     }
 
@@ -67,7 +70,7 @@ public class NvgLoadableImageReferenceManager {
      */
     protected NvgLoadableImageReferenceManager(int duration) {
         imageCache = CacheBuilder.newBuilder().initialCapacity(200)
-                .removalListener(removalListener).expireAfterAccess(duration, TimeUnit.SECONDS).build();
+            .removalListener(removalListener).expireAfterAccess(duration, TimeUnit.SECONDS).build();
         cleanup.scheduleAtFixedRate(() -> imageCache.cleanUp(), 1, 1, TimeUnit.SECONDS);
     }
 
@@ -91,9 +94,8 @@ public class NvgLoadableImageReferenceManager {
     /**
      * Used to obtain image reference by image.
      *
-     * @param image   image to get reference.
+     * @param image image to get reference.
      * @param context nanovg context.
-     *
      * @return reference of provided image or 0 if not found.
      */
     public int getImageReference(LoadableImage image, long context) {

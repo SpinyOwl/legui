@@ -8,6 +8,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * Created by Aliaksandr_Shcherbin on 1/26/2017.
  */
 public class FontRegistry {
+
     /**
      * Default entypo font.
      */
@@ -85,7 +86,6 @@ public class FontRegistry {
      * Used to retrieve font by name
      *
      * @param name font name.
-     *
      * @return font or null.
      */
     public static Font getFont(String name) {

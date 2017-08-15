@@ -1,22 +1,22 @@
 package org.liquidengine.legui.system.renderer.nvg.component;
 
-import org.joml.Vector2f;
-import org.liquidengine.legui.component.ImageView;
-import org.liquidengine.legui.system.context.Context;
-import org.liquidengine.legui.system.renderer.nvg.NvgComponentRenderer;
-
-import java.util.HashMap;
-
 import static org.liquidengine.legui.system.renderer.ImageRenderer.C_RADIUS;
 import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderBorder;
 import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderImage;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.createScissor;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.resetScissor;
 
+import java.util.HashMap;
+import org.joml.Vector2f;
+import org.liquidengine.legui.component.ImageView;
+import org.liquidengine.legui.system.context.Context;
+import org.liquidengine.legui.system.renderer.nvg.NvgComponentRenderer;
+
 /**
  * Created by ShchAlexander on 11.02.2017.
  */
 public class NvgImageViewRenderer extends NvgComponentRenderer<ImageView> {
+
     @Override
     protected void renderComponent(ImageView imageView, Context context, long nanovg) {
         Vector2f size = imageView.getSize();

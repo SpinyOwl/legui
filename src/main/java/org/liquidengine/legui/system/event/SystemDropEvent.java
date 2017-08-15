@@ -7,6 +7,7 @@ import org.lwjgl.PointerBuffer;
  * Created by Shcherbin Alexander on 6/10/2016.
  */
 public class SystemDropEvent implements SystemEvent {
+
     public final long window;
     public final int count;
     public final long names;
@@ -18,7 +19,9 @@ public class SystemDropEvent implements SystemEvent {
         this.names = names;
         PointerBuffer pb = PointerBuffer.create(names, count);
         strings = new String[count];
-        for (int i = 0; i < count; i++) strings[i] = pb.getStringUTF8(i);
+        for (int i = 0; i < count; i++) {
+            strings[i] = pb.getStringUTF8(i);
+        }
     }
 
     @Override

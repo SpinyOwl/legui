@@ -29,9 +29,9 @@ public class Label extends Controller implements TextComponent {
     /**
      * Creates label with specified size and on specified position.
      *
-     * @param x      x position.
-     * @param y      y position.
-     * @param width  label width.
+     * @param x x position.
+     * @param y y position.
+     * @param width label width.
      * @param height label height.
      */
     public Label(float x, float y, float width, float height) {
@@ -42,7 +42,7 @@ public class Label extends Controller implements TextComponent {
      * Creates label with specified size and on specified position.
      *
      * @param position label position.
-     * @param size     label size.
+     * @param size label size.
      */
     public Label(Vector2f position, Vector2f size) {
         this("Label", position, size);
@@ -60,10 +60,10 @@ public class Label extends Controller implements TextComponent {
     /**
      * Creates label with specified text, size and on specified position.
      *
-     * @param text   text to set.
-     * @param x      x position.
-     * @param y      y position.
-     * @param width  label width.
+     * @param text text to set.
+     * @param x x position.
+     * @param y y position.
+     * @param width label width.
      * @param height label height.
      */
     public Label(String text, float x, float y, float width, float height) {
@@ -74,9 +74,9 @@ public class Label extends Controller implements TextComponent {
     /**
      * Creates label with specified text, size and on specified position.
      *
-     * @param text     text to set.
+     * @param text text to set.
      * @param position label position.
-     * @param size     label size.
+     * @param size label size.
      */
     public Label(String text, Vector2f position, Vector2f size) {
         super(position, size);
@@ -106,31 +106,35 @@ public class Label extends Controller implements TextComponent {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
+        if (this == o) {
+            return true;
+        }
 
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         Label label = (Label) o;
 
         return new EqualsBuilder()
-                .appendSuper(super.equals(o))
-                .append(textState, label.textState)
-                .isEquals();
+            .appendSuper(super.equals(o))
+            .append(textState, label.textState)
+            .isEquals();
     }
 
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
-                .appendSuper(super.hashCode())
-                .append(textState)
-                .toHashCode();
+            .appendSuper(super.hashCode())
+            .append(textState)
+            .toHashCode();
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("textState", textState)
-                .toString();
+            .append("textState", textState)
+            .toString();
     }
 
 }

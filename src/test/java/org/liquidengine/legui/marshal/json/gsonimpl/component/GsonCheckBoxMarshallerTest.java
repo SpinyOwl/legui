@@ -13,9 +13,10 @@ import org.liquidengine.legui.marshal.json.gsonimpl.GsonMarshallingTestBase;
  * Test for CheckBox Gson Marshaller.
  */
 public class GsonCheckBoxMarshallerTest extends GsonMarshallingTestBase {
-    private CheckBox                         checkbox   = new CheckBox("Test Checkbox", 10, 30, 50, 70);
+
+    private CheckBox checkbox = new CheckBox("Test Checkbox", 10, 30, 50, 70);
     private GsonCheckBoxMarshaller<CheckBox> marshaller = new GsonCheckBoxMarshaller<>();
-    private String                           pathToJson = "org/liquidengine/legui/marshal/json/gsonimpl/component/Checkbox.json";
+    private String pathToJson = "org/liquidengine/legui/marshal/json/gsonimpl/component/Checkbox.json";
 
     /**
      * Used to test {@link GsonCheckBoxMarshaller#marshal(Object, JsonMarshalContext)} method of marshaller.
@@ -25,7 +26,7 @@ public class GsonCheckBoxMarshallerTest extends GsonMarshallingTestBase {
     @Test
     public void marshal() throws Exception {
         String expected = readJsonFromFile(pathToJson).toString();
-        String actual   = marshaller.marshal(checkbox, new GsonMarshalContext());
+        String actual = marshaller.marshal(checkbox, new GsonMarshalContext());
         Assert.assertEquals(expected, actual);
     }
 
@@ -37,7 +38,7 @@ public class GsonCheckBoxMarshallerTest extends GsonMarshallingTestBase {
     @Test
     public void unmarshal() throws Exception {
         JsonObject jsonToUnmarshal = readJsonFromFile(pathToJson);
-        CheckBox   actual          = marshaller.unmarshal(jsonToUnmarshal, new GsonMarshalContext());
+        CheckBox actual = marshaller.unmarshal(jsonToUnmarshal, new GsonMarshalContext());
         Assert.assertEquals(checkbox, actual);
     }
 

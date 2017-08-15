@@ -18,7 +18,8 @@ public class MouseClickEvent<T extends Component> extends Event<T> {
     private final Vector2f position;
     private final Vector2f absolutePosition;
 
-    public MouseClickEvent(T component, Context context, Frame frame, MouseClickAction action, Mouse.MouseButton button, Vector2f position, Vector2f absolutePosition) {
+    public MouseClickEvent(T component, Context context, Frame frame, MouseClickAction action, Mouse.MouseButton button, Vector2f position,
+        Vector2f absolutePosition) {
         super(component, context, frame);
         this.action = action;
         this.button = button;
@@ -29,11 +30,11 @@ public class MouseClickEvent<T extends Component> extends Event<T> {
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("action", action)
-                .append("button", button)
-                .append("position", position)
-                .append("absolutePosition", absolutePosition)
-                .toString();
+            .append("action", action)
+            .append("button", button)
+            .append("position", position)
+            .append("absolutePosition", absolutePosition)
+            .toString();
     }
 
     public MouseClickAction getAction() {

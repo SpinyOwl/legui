@@ -6,15 +6,15 @@ import org.joml.Vector2f;
  * This component used to enter passwords securely by users.
  */
 public class PasswordInput extends TextInput {
+
     /**
      * Used to mask password.
      */
     private int maskCharacter = 0x002A;
 
     /**
-     * Default constructor. Used to create component instance without any parameters.
-     * <p>
-     * Also if you want to make it easy to use with Json marshaller/unmarshaller component should contain empty constructor.
+     * Default constructor. Used to create component instance without any parameters. <p> Also if you want to make it easy to use with Json
+     * marshaller/unmarshaller component should contain empty constructor.
      */
     public PasswordInput() {
     }
@@ -22,9 +22,9 @@ public class PasswordInput extends TextInput {
     /**
      * Constructor with position and size parameters.
      *
-     * @param x      x position position in parent component.
-     * @param y      y position position in parent component.
-     * @param width  width of component.
+     * @param x x position position in parent component.
+     * @param y y position position in parent component.
+     * @param width width of component.
      * @param height height of component.
      */
     public PasswordInput(float x, float y, float width, float height) {
@@ -35,16 +35,15 @@ public class PasswordInput extends TextInput {
      * Constructor with position and size parameters.
      *
      * @param position position position in parent component.
-     * @param size     size of component.
+     * @param size size of component.
      */
     public PasswordInput(Vector2f position, Vector2f size) {
         super(position, size);
     }
 
     /**
-     * Default constructor with text to set.
-     * <p>
-     * Also if you want to make it easy to use with Json marshaller/unmarshaller component should contain empty constructor.
+     * Default constructor with text to set. <p> Also if you want to make it easy to use with Json marshaller/unmarshaller component should contain empty
+     * constructor.
      *
      * @param text text to set.
      */
@@ -55,10 +54,10 @@ public class PasswordInput extends TextInput {
     /**
      * Constructor with text, position and size parameters.
      *
-     * @param text   text to set.
-     * @param x      x position position in parent component.
-     * @param y      y position position in parent component.
-     * @param width  width of component.
+     * @param text text to set.
+     * @param x x position position in parent component.
+     * @param y y position position in parent component.
+     * @param width width of component.
      * @param height height of component.
      */
     public PasswordInput(String text, float x, float y, float width, float height) {
@@ -68,9 +67,9 @@ public class PasswordInput extends TextInput {
     /**
      * Constructor with text, position and size parameters.
      *
-     * @param text     text to set.
+     * @param text text to set.
      * @param position position position in parent component.
-     * @param size     size of component.
+     * @param size size of component.
      */
     public PasswordInput(String text, Vector2f position, Vector2f size) {
         super(text, position, size);

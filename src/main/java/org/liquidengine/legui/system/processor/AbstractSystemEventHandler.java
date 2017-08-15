@@ -1,13 +1,12 @@
 package org.liquidengine.legui.system.processor;
 
+import java.util.Collections;
+import java.util.List;
 import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.component.Layer;
 import org.liquidengine.legui.event.Event;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.event.SystemEvent;
-
-import java.util.Collections;
-import java.util.List;
 
 /**
  * Abstract handler for {@link SystemEvent}s. Used to handle events and transform them to UI events (Subclasses of {@link Event})
@@ -15,11 +14,11 @@ import java.util.List;
 public abstract class AbstractSystemEventHandler<E extends SystemEvent> implements SystemEventHandler<E> {
 
     /**
-     * Default implementation of event handler {@link SystemEventHandler#handle(SystemEvent, Frame, Context)} method. Used to handle events
-     * and check if event should be passed to underlying layer or not.
+     * Default implementation of event handler {@link SystemEventHandler#handle(SystemEvent, Frame, Context)} method. Used to handle events and check if event
+     * should be passed to underlying layer or not.
      *
-     * @param event   event to handle.
-     * @param frame   target frame for event.
+     * @param event event to handle.
+     * @param frame target frame for event.
      * @param context context.
      */
     public final void handle(E event, Frame frame, Context context) {
@@ -28,12 +27,16 @@ public abstract class AbstractSystemEventHandler<E extends SystemEvent> implemen
         Collections.reverse(layers);
         for (Layer layer : layers) {
             if (layer.isEventReceivable()) {
-                if (!layer.getContainer().isVisible() || !layer.getContainer().isEnabled()) continue;
+                if (!layer.getContainer().isVisible() || !layer.getContainer().isEnabled()) {
+                    continue;
+                }
                 if (handle(event, layer, context, frame)) {
                     return;
                 }
             }
-            if (!layer.isEventPassable()) return;
+            if (!layer.isEventPassable()) {
+                return;
+            }
         }
         postHandle(event, frame, context);
     }
@@ -41,8 +44,8 @@ public abstract class AbstractSystemEventHandler<E extends SystemEvent> implemen
     /**
      * This method should be overrided to pre-handle some event.
      *
-     * @param event   event which should be pre-processed.
-     * @param frame   target frame for event.
+     * @param event event which should be pre-processed.
+     * @param frame target frame for event.
      * @param context context
      */
     protected void preHandle(E event, Frame frame, Context context) {
@@ -52,10 +55,9 @@ public abstract class AbstractSystemEventHandler<E extends SystemEvent> implemen
     /**
      * This method used to handle some {@link SystemEvent} and produce (or not) {@link Event} instances (which are UI events)
      *
-     * @param event   event to be processed.
-     * @param layer   target event layer.
+     * @param event event to be processed.
+     * @param layer target event layer.
      * @param context context.
-     *
      * @return true if event processed and it shouldn't be processed for other underlying layers.
      */
     protected boolean handle(E event, Layer layer, Context context, Frame frame) {
@@ -65,8 +67,8 @@ public abstract class AbstractSystemEventHandler<E extends SystemEvent> implemen
     /**
      * This method should be overrided to post-handle some event.
      *
-     * @param event   event which should be post-processed.
-     * @param frame   target frame for event.
+     * @param event event which should be post-processed.
+     * @param frame target frame for event.
      * @param context context
      */
     protected void postHandle(E event, Frame frame, Context context) {

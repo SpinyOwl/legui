@@ -33,7 +33,8 @@ public class SliderMouseClickEventListener implements MouseClickEventListener {
             if (value < Slider.MIN_VALUE) {
                 value = Slider.MIN_VALUE;
             }
-            event.getContext().getEventProcessor().pushEvent(new SliderChangeValueEvent(slider, event.getContext(), event.getFrame(), slider.getValue(), value));
+            event.getContext().getEventProcessor()
+                .pushEvent(new SliderChangeValueEvent(slider, event.getContext(), event.getFrame(), slider.getValue(), value));
             slider.setValue(value);
         }
     }

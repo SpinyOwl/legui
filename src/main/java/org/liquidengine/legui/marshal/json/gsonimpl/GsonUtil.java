@@ -1,10 +1,13 @@
 package org.liquidengine.legui.marshal.json.gsonimpl;
 
+import static org.liquidengine.legui.marshal.JsonConstants.A;
+import static org.liquidengine.legui.marshal.JsonConstants.B;
+import static org.liquidengine.legui.marshal.JsonConstants.G;
+import static org.liquidengine.legui.marshal.JsonConstants.R;
+
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.joml.Vector4f;
-
-import static org.liquidengine.legui.marshal.JsonConstants.*;
 
 /**
  * Created by Aliaksandr_Shcherbin on 2/24/2017.
@@ -27,15 +30,17 @@ public final class GsonUtil {
 
     public static JsonObject createColor(Vector4f color) {
         return GsonUtil.create()
-                .add(R, color.x)
-                .add(G, color.y)
-                .add(B, color.z)
-                .add(A, color.w)
-                .get();
+            .add(R, color.x)
+            .add(G, color.y)
+            .add(B, color.z)
+            .add(A, color.w)
+            .get();
     }
 
     public static Vector4f readColor(JsonObject color) {
-        if (color == null || color.isJsonNull()) return null;
+        if (color == null || color.isJsonNull()) {
+            return null;
+        }
         Vector4f bgc = new Vector4f();
 
         JsonElement r = color.get(R);
@@ -43,10 +48,18 @@ public final class GsonUtil {
         JsonElement b = color.get(B);
         JsonElement a = color.get(A);
 
-        if (isNotNull(r)) bgc.x = r.getAsFloat();
-        if (isNotNull(g)) bgc.y = g.getAsFloat();
-        if (isNotNull(b)) bgc.z = b.getAsFloat();
-        if (isNotNull(a)) bgc.w = a.getAsFloat();
+        if (isNotNull(r)) {
+            bgc.x = r.getAsFloat();
+        }
+        if (isNotNull(g)) {
+            bgc.y = g.getAsFloat();
+        }
+        if (isNotNull(b)) {
+            bgc.z = b.getAsFloat();
+        }
+        if (isNotNull(a)) {
+            bgc.w = a.getAsFloat();
+        }
 
         return bgc;
     }

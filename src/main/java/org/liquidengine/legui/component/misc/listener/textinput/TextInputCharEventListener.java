@@ -1,12 +1,12 @@
 package org.liquidengine.legui.component.misc.listener.textinput;
 
+import static org.liquidengine.legui.input.Mouse.MouseButton.MOUSE_BUTTON_LEFT;
+import static org.liquidengine.legui.util.TextUtil.cpToStr;
+
 import org.liquidengine.legui.component.TextInput;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.event.CharEvent;
 import org.liquidengine.legui.listener.CharEventListener;
-
-import static org.liquidengine.legui.input.Mouse.MouseButton.MOUSE_BUTTON_LEFT;
-import static org.liquidengine.legui.util.TextUtil.cpToStr;
 
 /**
  * Char event listener for text input. Used to fill text area with symbols entered via keyboard.

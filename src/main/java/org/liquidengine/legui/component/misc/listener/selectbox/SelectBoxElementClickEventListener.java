@@ -1,16 +1,17 @@
 package org.liquidengine.legui.component.misc.listener.selectbox;
 
+import static org.liquidengine.legui.event.MouseClickEvent.MouseClickAction.CLICK;
+
 import org.liquidengine.legui.component.SelectBox;
 import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.input.Mouse;
 import org.liquidengine.legui.listener.MouseClickEventListener;
 
-import static org.liquidengine.legui.event.MouseClickEvent.MouseClickAction.CLICK;
-
 /**
  * @author Aliaksandr_Shcherbin.
  */
 public class SelectBoxElementClickEventListener implements MouseClickEventListener {
+
     private SelectBox selectBox;
 
     public SelectBoxElementClickEventListener(SelectBox selectBox) {

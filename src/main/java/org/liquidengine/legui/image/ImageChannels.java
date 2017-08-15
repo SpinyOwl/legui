@@ -20,7 +20,9 @@ public enum ImageChannels {
 
     public static ImageChannels instance(int channels) {
         for (ImageChannels value : values()) {
-            if (value.channels == channels) return value;
+            if (value.channels == channels) {
+                return value;
+            }
         }
         return null;
     }
@@ -31,15 +33,15 @@ public enum ImageChannels {
 
 
     /**
-     * Returns the name of this enum constant, as contained in the declaration.  This method may be overridden, though it typically isn't
-     * necessary or desirable.  An enum type should override this method when a more "programmer-friendly" string form exists.
+     * Returns the name of this enum constant, as contained in the declaration.  This method may be overridden, though it typically isn't necessary or
+     * desirable.  An enum type should override this method when a more "programmer-friendly" string form exists.
      *
      * @return the name of this enum constant
      */
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("channels", channels)
-                .toString();
+            .append("channels", channels)
+            .toString();
     }
 }

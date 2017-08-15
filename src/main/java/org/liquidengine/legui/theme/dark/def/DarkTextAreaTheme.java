@@ -10,6 +10,7 @@ import org.liquidengine.legui.component.optional.align.HorizontalAlign;
  * @param <T> {@link TextArea} subclasses.
  */
 public class DarkTextAreaTheme<T extends TextArea> extends DarkControllerTheme<T> {
+
     /**
      * Used to apply theme only for component and not apply for child components.
      *

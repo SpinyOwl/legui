@@ -14,9 +14,10 @@ import org.liquidengine.legui.marshal.json.gsonimpl.GsonMarshallingTestBase;
  * Test for SelectBox Gson Marshaller.
  */
 public class GsonSelectBoxMarshallerTest extends GsonMarshallingTestBase {
-    private SelectBox                          selectBox  = new SelectBox(10, 30, 50, 70);
+
+    private SelectBox selectBox = new SelectBox(10, 30, 50, 70);
     private GsonSelectBoxMarshaller<SelectBox> marshaller = new GsonSelectBoxMarshaller<>();
-    private String                             pathToJson = "org/liquidengine/legui/marshal/json/gsonimpl/component/SelectBox.json";
+    private String pathToJson = "org/liquidengine/legui/marshal/json/gsonimpl/component/SelectBox.json";
 
     /**
      * Initialize select box with two elements.
@@ -35,7 +36,7 @@ public class GsonSelectBoxMarshallerTest extends GsonMarshallingTestBase {
     @Test
     public void marshal() throws Exception {
         String expected = readJsonFromFile(pathToJson).toString();
-        String actual   = marshaller.marshal(selectBox, new GsonMarshalContext());
+        String actual = marshaller.marshal(selectBox, new GsonMarshalContext());
         Assert.assertEquals(expected, actual);
     }
 
@@ -47,7 +48,7 @@ public class GsonSelectBoxMarshallerTest extends GsonMarshallingTestBase {
     @Test
     public void unmarshal() throws Exception {
         JsonObject jsonToUnmarshal = readJsonFromFile(pathToJson);
-        SelectBox  actual          = marshaller.unmarshal(jsonToUnmarshal, new GsonMarshalContext());
+        SelectBox actual = marshaller.unmarshal(jsonToUnmarshal, new GsonMarshalContext());
         Assert.assertEquals(selectBox, actual);
     }
 

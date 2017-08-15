@@ -1,5 +1,6 @@
 package org.liquidengine.legui.component.misc.listener.scrollablepanel;
 
+import java.util.ArrayList;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.ScrollBar;
 import org.liquidengine.legui.component.ScrollablePanel;
@@ -11,12 +12,11 @@ import org.liquidengine.legui.input.Mouse;
 import org.liquidengine.legui.listener.EventListener;
 import org.liquidengine.legui.system.processor.SehUtil;
 
-import java.util.ArrayList;
-
 /**
  * Created by ShchAlexander on 23.07.2017.
  */
 public class ScrollablePanelViewportScrollListener implements EventListener<ScrollEvent> {
+
     private ScrollBarScrollListener l = new ScrollBarScrollListener();
 
     /**
@@ -43,8 +43,12 @@ public class ScrollablePanelViewportScrollListener implements EventListener<Scro
         float valueRange = scrollBar.getMaxValue() - scrollBar.getMinValue();
         float newVal = (float) (curValue - scrollBar.getScrollStep() * event.getYoffset() * visibleAmount * valueRange / (valueRange - visibleAmount));
 
-        if (newVal > maxValue) newVal = maxValue;
-        if (newVal < minValue) newVal = minValue;
+        if (newVal > maxValue) {
+            newVal = maxValue;
+        }
+        if (newVal < minValue) {
+            newVal = minValue;
+        }
 
         event.getContext().getEventProcessor().pushEvent(new ScrollBarChangeValueEvent<>(scrollBar, event.getContext(), event.getFrame(), curValue, newVal));
         scrollBar.setCurValue(newVal);

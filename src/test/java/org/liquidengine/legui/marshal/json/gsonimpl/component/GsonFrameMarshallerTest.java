@@ -13,9 +13,10 @@ import org.liquidengine.legui.marshal.json.gsonimpl.GsonMarshallingTestBase;
  * Test for Frame Gson Marshaller.
  */
 public class GsonFrameMarshallerTest extends GsonMarshallingTestBase {
-    private Frame                      frame      = new Frame();
+
+    private Frame frame = new Frame();
     private GsonFrameMarshaller<Frame> marshaller = new GsonFrameMarshaller<>();
-    private String                     pathToJson = "org/liquidengine/legui/marshal/json/gsonimpl/component/Frame.json";
+    private String pathToJson = "org/liquidengine/legui/marshal/json/gsonimpl/component/Frame.json";
 
     /**
      * Used to test {@link GsonFrameMarshaller#marshal(Object, JsonMarshalContext)} method of marshaller.
@@ -25,7 +26,7 @@ public class GsonFrameMarshallerTest extends GsonMarshallingTestBase {
     @Test
     public void marshal() throws Exception {
         String expected = readJsonFromFile(pathToJson).toString();
-        String actual   = marshaller.marshal(frame, new GsonMarshalContext());
+        String actual = marshaller.marshal(frame, new GsonMarshalContext());
         Assert.assertEquals(expected, actual);
     }
 
@@ -37,7 +38,7 @@ public class GsonFrameMarshallerTest extends GsonMarshallingTestBase {
     @Test
     public void unmarshal() throws Exception {
         JsonObject jsonToUnmarshal = readJsonFromFile(pathToJson);
-        Frame      actual          = marshaller.unmarshal(jsonToUnmarshal, new GsonMarshalContext());
+        Frame actual = marshaller.unmarshal(jsonToUnmarshal, new GsonMarshalContext());
         Assert.assertEquals(frame, actual);
     }
 

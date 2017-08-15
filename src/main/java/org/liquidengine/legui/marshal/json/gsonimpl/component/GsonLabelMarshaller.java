@@ -1,5 +1,8 @@
 package org.liquidengine.legui.marshal.json.gsonimpl.component;
 
+import static org.liquidengine.legui.marshal.JsonConstants.TEXT_STATE;
+import static org.liquidengine.legui.marshal.json.gsonimpl.GsonUtil.isNotNull;
+
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.liquidengine.legui.component.Label;
@@ -7,24 +10,21 @@ import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.marshal.json.gsonimpl.GsonMarshalContext;
 import org.liquidengine.legui.marshal.json.gsonimpl.GsonMarshalUtil;
 
-import static org.liquidengine.legui.marshal.JsonConstants.TEXT_STATE;
-import static org.liquidengine.legui.marshal.json.gsonimpl.GsonUtil.isNotNull;
-
 /**
  * Marshaller for {@link Label}.
  */
 public class GsonLabelMarshaller<T extends Label> extends GsonControllerMarshaller<T> {
+
     /**
      * Reads data from object and puts it to json object.
      *
-     * @param object  object to read.
-     * @param json    json object to fill.
+     * @param object object to read.
+     * @param json json object to fill.
      * @param context marshal context.
      */
     @Override
     protected void marshal(T object, JsonObject json, GsonMarshalContext context) {
         super.marshal(object, json, context);
-
 
         JsonObject textState = GsonMarshalUtil.marshalToJson(object.getTextState(), context);
         json.add(TEXT_STATE, textState);
@@ -33,8 +33,8 @@ public class GsonLabelMarshaller<T extends Label> extends GsonControllerMarshall
     /**
      * Reads data from json object and puts it to object.
      *
-     * @param json    json object to read.
-     * @param object  object to fill.
+     * @param json json object to read.
+     * @param object object to fill.
      * @param context marshal context.
      */
     @Override

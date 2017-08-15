@@ -1,20 +1,27 @@
 package org.liquidengine.legui.util;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.liquidengine.legui.exception.LeguiExceptionTemplate;
+import static org.lwjgl.BufferUtils.createByteBuffer;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.nio.ByteBuffer;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
-
-import static org.lwjgl.BufferUtils.createByteBuffer;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.liquidengine.legui.exception.LeguiExceptionTemplate;
 
 /**
  * Input/output utility.
  */
 public final class IOUtil {
+
     /**
      * Used to log errors.
      */
@@ -34,7 +41,6 @@ public final class IOUtil {
      * Used to read file content as String.
      *
      * @param file file path to read.
-     *
      * @return content of file or null if error occurs.
      */
     public static String loadAsString(final String file) {
@@ -56,7 +62,6 @@ public final class IOUtil {
      * Used to read file content as String.
      *
      * @param file file to read.
-     *
      * @return content of file or null if error occurs.
      */
     public static String loadAsString(final File file) {
@@ -78,7 +83,6 @@ public final class IOUtil {
      * Used to read stream content as String.
      *
      * @param stream stream to read.
-     *
      * @return content of file or null if error occurs.
      */
     public static String loadAsString(final InputStream stream) {
@@ -103,10 +107,8 @@ public final class IOUtil {
     /**
      * Used to create new buffer with specified capacity and fill it with existing buffer data.
      *
-     * @param buffer      source buffer.
-     * @param newCapacity new capacity. If new capacity is lower then used capacity of source buffer to avoid {@link
-     *                    java.nio.BufferOverflowException}.
-     *
+     * @param buffer source buffer.
+     * @param newCapacity new capacity. If new capacity is lower then used capacity of source buffer to avoid {@link java.nio.BufferOverflowException}.
      * @return new buffer filled with data form source buffer.
      */
     private static ByteBuffer resizeBuffer(final ByteBuffer buffer, final int newCapacity) {
@@ -125,9 +127,7 @@ public final class IOUtil {
      *
      * @param buffer initial buffer to fill with source data.
      * @param source source to read.
-     *
      * @return filled in byte buffer with source data.
-     *
      * @throws IOException if any exception occurs
      */
     private static ByteBuffer readToBuffer(final ByteBuffer buffer, final InputStream source) throws IOException {
@@ -146,15 +146,12 @@ public final class IOUtil {
     }
 
     /**
-     * Used to read resource to byte buffer.
-     * <p>
-     * (Resource could be file or java resource. Search starts from files.) See also {@link #ioResourceToByteBuffer(String, int)}.
+     * Used to read resource to byte buffer. <p> (Resource could be file or java resource. Search starts from files.) See also {@link
+     * #ioResourceToByteBuffer(String, int)}.
      *
-     * @param resource   path to resource to initialize.
+     * @param resource path to resource to initialize.
      * @param bufferSize initial buffer size.
-     *
      * @return Created ByteBuffer.
-     *
      * @throws RuntimeException if any exception occurs.
      */
     public static ByteBuffer loadResourceToByteBuffer(final String resource, final int bufferSize) throws RuntimeException {
@@ -166,14 +163,10 @@ public final class IOUtil {
     }
 
     /**
-     * Used to load resource as String.
-     * <p>
-     * (Resource could be file or java resource. Search starts from files.)
+     * Used to load resource as String. <p> (Resource could be file or java resource. Search starts from files.)
      *
      * @param resource path to resource to initialize
-     *
      * @return Created String from resources.
-     *
      * @throws RuntimeException if any exception occurs.
      */
     public static String loadResourceAsString(final String resource) throws RuntimeException {
@@ -186,11 +179,9 @@ public final class IOUtil {
     /**
      * Used to load resource to byte buffer from input stream. See also {@link #ioResourceToByteBuffer(String, int)}.
      *
-     * @param resource   Resource Stream.
+     * @param resource Resource Stream.
      * @param bufferSize initial buffer size.
-     *
      * @return Created ByteBuffer.
-     *
      * @throws RuntimeException if an IO error occurs.
      */
     public static ByteBuffer loadResourceToByteBuffer(final InputStream resource, final int bufferSize) throws RuntimeException {
@@ -204,11 +195,9 @@ public final class IOUtil {
     /**
      * Reads the specified resource and returns the raw data as a ByteBuffer.
      *
-     * @param resource   the resource to read
+     * @param resource the resource to read
      * @param bufferSize the initial buffer size
-     *
      * @return the resource data
-     *
      * @throws IOException if an IO error occurs
      */
     public static ByteBuffer ioResourceToByteBuffer(final InputStream resource, final int bufferSize) throws IOException {
@@ -224,11 +213,9 @@ public final class IOUtil {
     /**
      * Reads the specified resource and returns the raw data as a ByteBuffer.
      *
-     * @param resource   the resource to read.
+     * @param resource the resource to read.
      * @param bufferSize the initial buffer size.
-     *
      * @return the resource data.
-     *
      * @throws IOException if an IO error occurs.
      */
     public static ByteBuffer ioResourceToByteBuffer(final String resource, final int bufferSize) throws IOException {
@@ -254,7 +241,6 @@ public final class IOUtil {
      * Used to find parent folder from path.
      *
      * @param path path to process.
-     *
      * @return parent folder from specified path.
      */
     public static String getParentFolder(final String path) {
@@ -268,7 +254,6 @@ public final class IOUtil {
      * Used to get filename from path.
      *
      * @param path path to process.
-     *
      * @return filename or null(if path ends with '/' or '\').
      */
     public static String getChildFile(final String path) {

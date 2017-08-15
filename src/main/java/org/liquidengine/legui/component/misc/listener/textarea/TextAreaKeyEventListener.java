@@ -1,14 +1,32 @@
 package org.liquidengine.legui.component.misc.listener.textarea;
 
+import static org.liquidengine.legui.util.TextUtil.findNextWord;
+import static org.liquidengine.legui.util.TextUtil.findPrevWord;
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_A;
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_BACKSPACE;
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_C;
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_DELETE;
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_DOWN;
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_END;
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_ENTER;
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_HOME;
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_KP_ENTER;
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_LEFT;
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_RIGHT;
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_UP;
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_V;
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_X;
+import static org.lwjgl.glfw.GLFW.GLFW_MOD_CONTROL;
+import static org.lwjgl.glfw.GLFW.GLFW_MOD_SHIFT;
+import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
+import static org.lwjgl.glfw.GLFW.glfwGetClipboardString;
+import static org.lwjgl.glfw.GLFW.glfwSetClipboardString;
+
 import org.liquidengine.legui.component.TextArea;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.event.KeyEvent;
 import org.liquidengine.legui.listener.KeyEventListener;
 import org.liquidengine.legui.system.context.Context;
-
-import static org.liquidengine.legui.util.TextUtil.findNextWord;
-import static org.liquidengine.legui.util.TextUtil.findPrevWord;
-import static org.lwjgl.glfw.GLFW.*;
 
 /**
  * Key event listener. Used to provide some text operations by keyboard.
@@ -71,7 +89,7 @@ public class TextAreaKeyEventListener implements KeyEventListener {
     /**
      * Used to cut some string from text area and put it to clipboard.
      *
-     * @param gui          text area to work with.
+     * @param gui text area to work with.
      * @param leguiContext context.
      */
     private void cutAction(TextArea gui, Context leguiContext) {
@@ -98,7 +116,7 @@ public class TextAreaKeyEventListener implements KeyEventListener {
     /**
      * Used to copy selected text to clipboard.
      *
-     * @param gui          gui.
+     * @param gui gui.
      * @param leguiContext context.
      */
     private void copyAction(TextArea gui, Context leguiContext) {
@@ -111,7 +129,7 @@ public class TextAreaKeyEventListener implements KeyEventListener {
     /**
      * Used to paste clipboard data to gui element.
      *
-     * @param gui          gui to paste
+     * @param gui gui to paste
      * @param leguiContext context.
      */
     private void pasteAction(TextArea gui, Context leguiContext) {
@@ -129,7 +147,7 @@ public class TextAreaKeyEventListener implements KeyEventListener {
     /**
      * Delete action. Used to delete selected text or symbol after caret or word after caret.
      *
-     * @param gui  gui to remove data from text state.
+     * @param gui gui to remove data from text state.
      * @param mods key mods.
      */
     private void keyDeleteAction(TextArea gui, int mods) {
@@ -166,7 +184,7 @@ public class TextAreaKeyEventListener implements KeyEventListener {
     /**
      * Backspace action. Deletes selected text or symbol before caret or words before caret.
      *
-     * @param gui  gui to remove text data.
+     * @param gui gui to remove text data.
      * @param mods key mods.
      */
     private void keyBackSpaceAction(TextArea gui, int mods) {
@@ -368,6 +386,7 @@ public class TextAreaKeyEventListener implements KeyEventListener {
     }
 
     private static class LineData {
+
         private int caretPositionInLine;
         private int lineIndex;
 

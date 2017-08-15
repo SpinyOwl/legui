@@ -9,6 +9,7 @@ import org.liquidengine.legui.component.Slider;
  * @param <T> {@link Slider} subclasses.
  */
 public class DarkSliderTheme<T extends Slider> extends DarkControllerTheme<T> {
+
     /**
      * Used to apply theme only for component and not apply for child components.
      *

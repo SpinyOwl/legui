@@ -1,5 +1,10 @@
 package org.liquidengine.legui.marshal.json.gsonimpl.component;
 
+import static org.liquidengine.legui.marshal.JsonConstants.CONTAINER;
+import static org.liquidengine.legui.marshal.JsonConstants.HORIZONTAL_SCROLL_BAR;
+import static org.liquidengine.legui.marshal.JsonConstants.VERTICAL_SCROLL_BAR;
+import static org.liquidengine.legui.marshal.json.gsonimpl.GsonUtil.isNotNull;
+
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.liquidengine.legui.component.Container;
@@ -9,18 +14,16 @@ import org.liquidengine.legui.marshal.json.gsonimpl.GsonMarshalContext;
 import org.liquidengine.legui.marshal.json.gsonimpl.GsonMarshalUtil;
 import org.liquidengine.legui.marshal.json.gsonimpl.GsonUtil;
 
-import static org.liquidengine.legui.marshal.JsonConstants.*;
-import static org.liquidengine.legui.marshal.json.gsonimpl.GsonUtil.isNotNull;
-
 /**
  * Marshaller for {@link ScrollablePanel}.
  */
 public class GsonScrollablePanelMarshaller<T extends ScrollablePanel> extends GsonControllerMarshaller<T> {
+
     /**
      * Reads data from object and puts it to json object.
      *
-     * @param object  object to read.
-     * @param json    json object to fill.
+     * @param object object to read.
+     * @param json json object to fill.
      * @param context marshal context.
      */
     @Override
@@ -36,17 +39,17 @@ public class GsonScrollablePanelMarshaller<T extends ScrollablePanel> extends Gs
         JsonObject cont = GsonMarshalUtil.marshalToJson(container, context);
 
         GsonUtil.fill(json)
-                .add(HORIZONTAL_SCROLL_BAR, hScrollBar)
-                .add(VERTICAL_SCROLL_BAR, vScrollBar)
-                .add(CONTAINER, cont)
+            .add(HORIZONTAL_SCROLL_BAR, hScrollBar)
+            .add(VERTICAL_SCROLL_BAR, vScrollBar)
+            .add(CONTAINER, cont)
         ;
     }
 
     /**
      * Reads data from json object and puts it to object.
      *
-     * @param json    json object to read.
-     * @param object  object to fill.
+     * @param json json object to read.
+     * @param object object to fill.
      * @param context marshal context.
      */
     @Override
@@ -58,9 +61,15 @@ public class GsonScrollablePanelMarshaller<T extends ScrollablePanel> extends Gs
         JsonElement container = json.get(CONTAINER);
 
         // this order is very important because container of Scrollable panel contains elements in such order.
-        if (isNotNull(vScrollBar)) object.setVerticalScrollBar(GsonMarshalUtil.unmarshal(vScrollBar.getAsJsonObject(), context));
-        if (isNotNull(hScrollBar)) object.setHorizontalScrollBar(GsonMarshalUtil.unmarshal(hScrollBar.getAsJsonObject(), context));
-        if (isNotNull(container)) object.setContainer(GsonMarshalUtil.unmarshal(container.getAsJsonObject(), context));
+        if (isNotNull(vScrollBar)) {
+            object.setVerticalScrollBar(GsonMarshalUtil.unmarshal(vScrollBar.getAsJsonObject(), context));
+        }
+        if (isNotNull(hScrollBar)) {
+            object.setHorizontalScrollBar(GsonMarshalUtil.unmarshal(hScrollBar.getAsJsonObject(), context));
+        }
+        if (isNotNull(container)) {
+            object.setContainer(GsonMarshalUtil.unmarshal(container.getAsJsonObject(), context));
+        }
         object.resize();
     }
 }

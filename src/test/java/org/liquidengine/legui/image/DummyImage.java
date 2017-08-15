@@ -1,14 +1,14 @@
 package org.liquidengine.legui.image;
 
+import java.nio.ByteBuffer;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
-
-import java.nio.ByteBuffer;
 
 /**
  * Created by Aliaksandr_Shcherbin on 3/2/2017.
  */
 public class DummyImage extends LoadableImage {
+
     public DummyImage() {
     }
 
@@ -47,7 +47,7 @@ public class DummyImage extends LoadableImage {
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .toString();
+            .toString();
     }
 
     @Override

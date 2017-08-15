@@ -1,12 +1,5 @@
 package org.liquidengine.legui.component;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-import org.joml.Vector2f;
-import org.liquidengine.legui.theme.Themes;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -15,24 +8,28 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+import org.joml.Vector2f;
+import org.liquidengine.legui.theme.Themes;
 
 /**
- * Basic abstract Container object is a component that can contain other components.
- * <p>
- * The base of container is <b><span style="color:red">SetUniqueList</span> created on base of <span
- * style="color:red">CopyOnWriteArrayList</span></b>, that's little restriction which determines that child can exist in parent only one
- * time.
+ * Basic abstract Container object is a component that can contain other components. <p> The base of container is <b><span
+ * style="color:red">SetUniqueList</span> created on base of <span style="color:red">CopyOnWriteArrayList</span></b>, that's little restriction which determines
+ * that child can exist in parent only one time.
  */
 public abstract class Container<T extends Component> extends Controller {
+
     /**
      * List of child components.
      */
     private List<T> components = new CopyOnWriteArrayList<>();
 
     /**
-     * Default constructor. Used to create component instance without any parameters.
-     * <p>
-     * Also if you want to make it easy to use with Json marshaller/unmarshaller component should contain empty constructor.
+     * Default constructor. Used to create component instance without any parameters. <p> Also if you want to make it easy to use with Json
+     * marshaller/unmarshaller component should contain empty constructor.
      */
     public Container() {
         initialize();
@@ -41,9 +38,9 @@ public abstract class Container<T extends Component> extends Controller {
     /**
      * Constructor with position and size parameters.
      *
-     * @param x      x position position in parent component.
-     * @param y      y position position in parent component.
-     * @param width  width of component.
+     * @param x x position position in parent component.
+     * @param y y position position in parent component.
+     * @param width width of component.
      * @param height height of component.
      */
     public Container(float x, float y, float width, float height) {
@@ -55,7 +52,7 @@ public abstract class Container<T extends Component> extends Controller {
      * Constructor with position and size parameters.
      *
      * @param position position position in parent component.
-     * @param size     size of component.
+     * @param size size of component.
      */
     public Container(Vector2f position, Vector2f size) {
         super(position, size);
@@ -70,7 +67,6 @@ public abstract class Container<T extends Component> extends Controller {
      * Returns count of child components.
      *
      * @return count of child components.
-     *
      * @see List#size()
      */
     public int count() {
@@ -81,7 +77,6 @@ public abstract class Container<T extends Component> extends Controller {
      * Returns true if layerFrame contains no elements.
      *
      * @return true if layerFrame contains no elements.
-     *
      * @see List#isEmpty()
      */
     public boolean isEmpty() {
@@ -92,9 +87,7 @@ public abstract class Container<T extends Component> extends Controller {
      * Returns true if layerFrame contains specified component.
      *
      * @param component component to check.
-     *
      * @return true if layerFrame contains specified component.
-     *
      * @see List#contains(Object)
      */
     public boolean contains(T component) {
@@ -105,7 +98,6 @@ public abstract class Container<T extends Component> extends Controller {
      * Returns an iterator over the elements in this layerFrame. The elements are returned in no particular order.
      *
      * @return an iterator over the elements in this layerFrame.
-     *
      * @see List#iterator()
      */
     public Iterator<T> containerIterator() {
@@ -116,13 +108,13 @@ public abstract class Container<T extends Component> extends Controller {
      * Used to add component to layerFrame.
      *
      * @param component component to add.
-     *
      * @return true if component is added.
-     *
      * @see List#add(Object)
      */
     public boolean add(T component) {
-        if (component == null || component == this || isContains(component)) return false;
+        if (component == null || component == this || isContains(component)) {
+            return false;
+        }
         changeParent(component);
         return components.add(component);
     }
@@ -131,7 +123,6 @@ public abstract class Container<T extends Component> extends Controller {
      * Used to check if component collection contains component or not. Checked by reference.
      *
      * @param component component to check.
-     *
      * @return true if collection contains provided component.
      */
     private boolean isContains(T component) {
@@ -142,9 +133,7 @@ public abstract class Container<T extends Component> extends Controller {
      * Used to add components.
      *
      * @param components components nodes to add.
-     *
      * @return true if added.
-     *
      * @see List#addAll(Collection)
      */
     public boolean addAll(Collection<? extends T> components) {
@@ -179,9 +168,7 @@ public abstract class Container<T extends Component> extends Controller {
      * Used to remove component.
      *
      * @param component component to remove.
-     *
      * @return true if removed.
-     *
      * @see List#remove(Object)
      */
     public boolean remove(T component) {
@@ -199,7 +186,6 @@ public abstract class Container<T extends Component> extends Controller {
      * Used to remove components.
      *
      * @param components components to remove.
-     *
      * @see List#removeAll(Collection)
      */
     public void removeAll(Collection<? extends T> components) {
@@ -214,13 +200,11 @@ public abstract class Container<T extends Component> extends Controller {
     }
 
     /**
-     * Removes all of the elements of this layerFrame that satisfy the given predicate. Errors or runtime exceptions thrown during iteration
-     * or by the predicate are relayed to the caller.
+     * Removes all of the elements of this layerFrame that satisfy the given predicate. Errors or runtime exceptions thrown during iteration or by the predicate
+     * are relayed to the caller.
      *
      * @param filter a predicate which returns true for elements to be removed.
-     *
      * @return true if any components were removed.
-     *
      * @see List#removeIf(Predicate)
      */
     public boolean removeIf(Predicate<? super T> filter) {
@@ -242,9 +226,7 @@ public abstract class Container<T extends Component> extends Controller {
      * Returns true if this Container contains all of the elements of the specified collection.
      *
      * @param components components collection to check.
-     *
      * @return true if this Container contains all of the elements of the specified collection.
-     *
      * @see List#containsAll(Collection)
      */
     public boolean containsAll(Collection<T> components) {
@@ -255,7 +237,6 @@ public abstract class Container<T extends Component> extends Controller {
      * Returns a sequential Stream with this collection as its source.
      *
      * @return a sequential Stream with this collection as its source.
-     *
      * @see List#stream()
      */
     public Stream<T> stream() {
@@ -263,11 +244,9 @@ public abstract class Container<T extends Component> extends Controller {
     }
 
     /**
-     * Returns a possibly parallel Stream with this collection as its source. It is allowable for this method to return a sequential
-     * stream.
+     * Returns a possibly parallel Stream with this collection as its source. It is allowable for this method to return a sequential stream.
      *
      * @return possibly parallel Stream with this collection as its source.
-     *
      * @see List#parallelStream()
      */
     public Stream<T> parallelStream() {
@@ -284,9 +263,7 @@ public abstract class Container<T extends Component> extends Controller {
     }
 
     /**
-     * Used to retrieve child components as {@link List}
-     * <p>
-     * <span style="color:red">NOTE: this method returns NEW {@link List} of components</span>.
+     * Used to retrieve child components as {@link List} <p> <span style="color:red">NOTE: this method returns NEW {@link List} of components</span>.
      *
      * @return list of child components.
      */
@@ -298,34 +275,37 @@ public abstract class Container<T extends Component> extends Controller {
      * (non-Javadoc)
      *
      * @param o object to compare.
-     *
      * @see Object#equals(Object)
      */
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
+        if (this == o) {
+            return true;
+        }
 
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         Container<?> container = (Container<?>) o;
 
         return new EqualsBuilder()
-                .appendSuper(super.equals(o))
-                .append(components, container.components)
-                .isEquals();
+            .appendSuper(super.equals(o))
+            .append(components, container.components)
+            .isEquals();
     }
 
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
-                .appendSuper(super.hashCode())
-                .append(components)
-                .toHashCode();
+            .appendSuper(super.hashCode())
+            .append(components)
+            .toHashCode();
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .toString();
+            .toString();
     }
 }

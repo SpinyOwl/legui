@@ -1,19 +1,39 @@
 package org.liquidengine.legui.theme.white.def;
 
+import static org.liquidengine.legui.font.FontRegistry.MATERIAL_ICONS_REGULAR;
+
+import java.util.List;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.border.SimpleLineBorder;
 import org.liquidengine.legui.color.ColorConstants;
-import org.liquidengine.legui.component.*;
+import org.liquidengine.legui.component.Button;
+import org.liquidengine.legui.component.CheckBox;
+import org.liquidengine.legui.component.Component;
+import org.liquidengine.legui.component.Container;
+import org.liquidengine.legui.component.Controller;
+import org.liquidengine.legui.component.Label;
+import org.liquidengine.legui.component.LayerContainer;
+import org.liquidengine.legui.component.ProgressBar;
+import org.liquidengine.legui.component.RadioButton;
+import org.liquidengine.legui.component.ScrollBar;
+import org.liquidengine.legui.component.ScrollablePanel;
+import org.liquidengine.legui.component.SelectBox;
+import org.liquidengine.legui.component.Slider;
+import org.liquidengine.legui.component.TextArea;
+import org.liquidengine.legui.component.TextInput;
+import org.liquidengine.legui.component.ToggleButton;
+import org.liquidengine.legui.component.Tooltip;
+import org.liquidengine.legui.component.Widget;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
 import org.liquidengine.legui.icon.CharIcon;
 import org.liquidengine.legui.icon.Icon;
-import org.liquidengine.legui.theme.*;
-
-import java.util.List;
-
-import static org.liquidengine.legui.font.FontRegistry.MATERIAL_ICONS_REGULAR;
+import org.liquidengine.legui.theme.AbstractTheme;
+import org.liquidengine.legui.theme.DefaultThemeManager;
+import org.liquidengine.legui.theme.Theme;
+import org.liquidengine.legui.theme.ThemeManager;
+import org.liquidengine.legui.theme.Themes;
 
 /**
  * Default white theme which used by ThemeManager as default theme.
@@ -53,6 +73,7 @@ public class WhiteTheme extends Theme {
     }
 
     private static class DefaultComponentTheme<T extends Component> extends AbstractTheme<T> {
+
         @Override
         public void apply(T component) {
             component.setBorder(new SimpleLineBorder(ColorConstants.darkGray(), .7f));
@@ -62,6 +83,7 @@ public class WhiteTheme extends Theme {
     }
 
     private static class DefaultRadioButtonTheme<T extends RadioButton> extends DefaultControllerTheme<T> {
+
         @Override
         public void apply(T component) {
             super.apply(component);
@@ -77,6 +99,7 @@ public class WhiteTheme extends Theme {
     }
 
     private static class DefaultButtonTheme<T extends Button> extends DefaultControllerTheme<T> {
+
         @Override
         public void apply(T component) {
             super.apply(component);
@@ -85,6 +108,7 @@ public class WhiteTheme extends Theme {
     }
 
     private static class DefaultCheckBoxTheme<T extends CheckBox> extends DefaultControllerTheme<T> {
+
         @Override
         public void apply(T component) {
             super.apply(component);
@@ -100,6 +124,7 @@ public class WhiteTheme extends Theme {
     }
 
     private static class DefaultLabelTheme<T extends Label> extends DefaultControllerTheme<T> {
+
         @Override
         public void apply(T component) {
             super.apply(component);
@@ -111,6 +136,7 @@ public class WhiteTheme extends Theme {
     }
 
     private static class DefaultSliderTheme<T extends Slider> extends DefaultControllerTheme<T> {
+
         @Override
         public void apply(T component) {
             super.apply(component);
@@ -122,6 +148,7 @@ public class WhiteTheme extends Theme {
     }
 
     private static class DefaultContainerTheme<T extends Container> extends DefaultControllerTheme<T> {
+
         @Override
         public void apply(T component) {
             super.apply(component);
@@ -138,6 +165,7 @@ public class WhiteTheme extends Theme {
     }
 
     private static class DefaultTextInputTheme<T extends TextInput> extends DefaultControllerTheme<T> {
+
         @Override
         public void apply(T component) {
             super.apply(component);
@@ -148,6 +176,7 @@ public class WhiteTheme extends Theme {
     }
 
     private static class DefaultTextAreaTheme<T extends TextArea> extends DefaultControllerTheme<T> {
+
         @Override
         public void apply(T component) {
             super.apply(component);
@@ -159,6 +188,7 @@ public class WhiteTheme extends Theme {
 
 
     private static class DefaultScrollBarTheme<T extends ScrollBar> extends DefaultControllerTheme<T> {
+
         @Override
         public void apply(T component) {
             super.apply(component);
@@ -169,6 +199,7 @@ public class WhiteTheme extends Theme {
     }
 
     private static class DefaultWidgetTheme<T extends Widget> extends DefaultControllerTheme<T> {
+
         @Override
         public void applyAll(T component) {
             super.applyAll(component);
@@ -210,6 +241,7 @@ public class WhiteTheme extends Theme {
     }
 
     private static class DefaultControllerTheme<T extends Controller> extends DefaultComponentTheme<T> {
+
         @Override
         public void applyAll(T component) {
             super.applyAll(component);
@@ -221,6 +253,7 @@ public class WhiteTheme extends Theme {
     }
 
     private static class DefaultTooltipTheme<T extends Tooltip> extends DefaultComponentTheme<T> {
+
         @Override
         public void apply(T component) {
             super.apply(component);
@@ -231,6 +264,7 @@ public class WhiteTheme extends Theme {
     }
 
     private static class DefaultLayerContainerTheme<T extends LayerContainer> extends DefaultContainerTheme<T> {
+
         @Override
         public void apply(T component) {
             super.apply(component);
@@ -240,6 +274,7 @@ public class WhiteTheme extends Theme {
     }
 
     private static class DefaultProgressBarTheme<T extends ProgressBar> extends DefaultControllerTheme<T> {
+
         @Override
         public void apply(T component) {
             super.apply(component);
@@ -248,6 +283,7 @@ public class WhiteTheme extends Theme {
     }
 
     private static class DefaultScrollablePanelTheme<T extends ScrollablePanel> extends DefaultControllerTheme<T> {
+
         @Override
         public void apply(T component) {
             super.apply(component);
@@ -272,6 +308,7 @@ public class WhiteTheme extends Theme {
     }
 
     private static class DefaultSelectBoxTheme<T extends SelectBox> extends DefaultControllerTheme<T> {
+
         @Override
         public void apply(T component) {
             super.apply(component);
@@ -306,6 +343,7 @@ public class WhiteTheme extends Theme {
     }
 
     private static class DefaultSelectBoxScrollablePanelTheme<T extends SelectBox.SelectBoxScrollablePanel> extends DefaultControllerTheme<T> {
+
         @Override
         public void apply(T component) {
             super.apply(component);
@@ -321,6 +359,7 @@ public class WhiteTheme extends Theme {
     }
 
     private static class DefaultSelectBoxElementTheme<T extends SelectBox.SelectBoxElement> extends DefaultControllerTheme<T> {
+
         @Override
         public void apply(T component) {
             super.apply(component);
@@ -331,6 +370,7 @@ public class WhiteTheme extends Theme {
     }
 
     private static class DefaultToggleButtonTheme<T extends ToggleButton> extends DefaultControllerTheme<T> {
+
         @Override
         public void apply(T component) {
             super.apply(component);

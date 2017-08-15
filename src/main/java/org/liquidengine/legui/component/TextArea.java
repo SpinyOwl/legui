@@ -20,6 +20,7 @@ import org.liquidengine.legui.theme.Themes;
  * TextArea is multiline text component which allow to enter text.
  */
 public class TextArea extends Controller implements TextComponent {
+
     /**
      * Used to hold text state of text area.
      */
@@ -51,9 +52,8 @@ public class TextArea extends Controller implements TextComponent {
     private boolean editable = true;
 
     /**
-     * Default constructor. Used to create component instance without any parameters.
-     * <p>
-     * Also if you want to make it easy to use with Json marshaller/unmarshaller component should contain empty constructor.
+     * Default constructor. Used to create component instance without any parameters. <p> Also if you want to make it easy to use with Json
+     * marshaller/unmarshaller component should contain empty constructor.
      */
     public TextArea() {
         initialize("");
@@ -62,9 +62,9 @@ public class TextArea extends Controller implements TextComponent {
     /**
      * Constructor with position and size parameters.
      *
-     * @param x      x position position in parent component.
-     * @param y      y position position in parent component.
-     * @param width  width of component.
+     * @param x x position position in parent component.
+     * @param y y position position in parent component.
+     * @param width width of component.
      * @param height height of component.
      */
     public TextArea(float x, float y, float width, float height) {
@@ -76,7 +76,7 @@ public class TextArea extends Controller implements TextComponent {
      * Constructor with position and size parameters.
      *
      * @param position position position in parent component.
-     * @param size     size of component.
+     * @param size size of component.
      */
     public TextArea(Vector2f position, Vector2f size) {
         super(position, size);
@@ -84,9 +84,7 @@ public class TextArea extends Controller implements TextComponent {
     }
 
     /**
-     * Default constructor with text.
-     * <p>
-     * Also if you want to make it easy to use with Json marshaller/unmarshaller component should contain empty constructor.
+     * Default constructor with text. <p> Also if you want to make it easy to use with Json marshaller/unmarshaller component should contain empty constructor.
      *
      * @param text text to set.
      */
@@ -97,10 +95,10 @@ public class TextArea extends Controller implements TextComponent {
     /**
      * Constructor with text, position and size parameters.
      *
-     * @param text   text to set.
-     * @param x      x position position in parent component.
-     * @param y      y position position in parent component.
-     * @param width  width of component.
+     * @param text text to set.
+     * @param x x position position in parent component.
+     * @param y y position position in parent component.
+     * @param width width of component.
      * @param height height of component.
      */
     public TextArea(String text, float x, float y, float width, float height) {
@@ -111,9 +109,9 @@ public class TextArea extends Controller implements TextComponent {
     /**
      * Constructor with text, position and size parameters.
      *
-     * @param text     text to set.
+     * @param text text to set.
      * @param position position position in parent component.
-     * @param size     size of component.
+     * @param size size of component.
      */
     public TextArea(String text, Vector2f position, Vector2f size) {
         super(position, size);
@@ -268,39 +266,39 @@ public class TextArea extends Controller implements TextComponent {
         TextArea textArea = (TextArea) o;
 
         return new EqualsBuilder()
-                .appendSuper(super.equals(o))
-                .append(caretPosition, textArea.caretPosition)
-                .append(mouseCaretPosition, textArea.mouseCaretPosition)
-                .append(editable, textArea.editable)
-                .append(startSelectionIndex, textArea.startSelectionIndex)
-                .append(endSelectionIndex, textArea.endSelectionIndex)
-                .append(textState, textArea.textState)
-                .isEquals();
+            .appendSuper(super.equals(o))
+            .append(caretPosition, textArea.caretPosition)
+            .append(mouseCaretPosition, textArea.mouseCaretPosition)
+            .append(editable, textArea.editable)
+            .append(startSelectionIndex, textArea.startSelectionIndex)
+            .append(endSelectionIndex, textArea.endSelectionIndex)
+            .append(textState, textArea.textState)
+            .isEquals();
     }
 
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
-                .appendSuper(super.hashCode())
-                .append(textState)
-                .append(caretPosition)
-                .append(mouseCaretPosition)
-                .append(editable)
-                .append(startSelectionIndex)
-                .append(endSelectionIndex)
-                .toHashCode();
+            .appendSuper(super.hashCode())
+            .append(textState)
+            .append(caretPosition)
+            .append(mouseCaretPosition)
+            .append(editable)
+            .append(startSelectionIndex)
+            .append(endSelectionIndex)
+            .toHashCode();
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("textState", textState)
-                .append("caretPosition", caretPosition)
-                .append("mouseCaretPosition", mouseCaretPosition)
-                .append("editable", editable)
-                .append("startSelectionIndex", startSelectionIndex)
-                .append("endSelectionIndex", endSelectionIndex)
-                .toString();
+            .append("textState", textState)
+            .append("caretPosition", caretPosition)
+            .append("mouseCaretPosition", mouseCaretPosition)
+            .append("editable", editable)
+            .append("startSelectionIndex", startSelectionIndex)
+            .append("endSelectionIndex", endSelectionIndex)
+            .toString();
     }
 
 }

@@ -15,6 +15,7 @@ import org.liquidengine.legui.theme.ThemeManager;
  * @param <T> {@link SelectBox} subclasses.
  */
 public class DarkSelectBoxTheme<T extends SelectBox> extends DarkControllerTheme<T> {
+
     private ThemeManager themeManager;
 
     public DarkSelectBoxTheme(ThemeManager themeManager) {
@@ -48,20 +49,21 @@ public class DarkSelectBoxTheme<T extends SelectBox> extends DarkControllerTheme
             bgIcon.setHorizontalAlign(HorizontalAlign.CENTER);
             bgIcon.setVerticalAlign(VerticalAlign.MIDDLE);
         }
-        AbstractTheme<SelectBox.SelectBoxScrollablePanel> componentTheme = (AbstractTheme<SelectBox.SelectBoxScrollablePanel>) themeManager.getComponentTheme(component.getSelectionListPanel().getClass());
+        AbstractTheme<SelectBox.SelectBoxScrollablePanel> componentTheme = (AbstractTheme<SelectBox.SelectBoxScrollablePanel>) themeManager
+            .getComponentTheme(component.getSelectionListPanel().getClass());
         componentTheme.applyAll(component.getSelectionListPanel());
     }
 
     /**
-     * Used to apply theme for component and for all children of this component. Should be reimplemented for components that contains other
-     * child components.
+     * Used to apply theme for component and for all children of this component. Should be reimplemented for components that contains other child components.
      *
      * @param component component to apply theme.
      */
     @Override
     public void applyAll(T component) {
         super.applyAll(component);
-        AbstractTheme<SelectBox.SelectBoxScrollablePanel> componentTheme = (AbstractTheme<SelectBox.SelectBoxScrollablePanel>) themeManager.getComponentTheme(component.getSelectionListPanel().getClass());
+        AbstractTheme<SelectBox.SelectBoxScrollablePanel> componentTheme = (AbstractTheme<SelectBox.SelectBoxScrollablePanel>) themeManager
+            .getComponentTheme(component.getSelectionListPanel().getClass());
         componentTheme.applyAll(component.getSelectionListPanel());
     }
 }

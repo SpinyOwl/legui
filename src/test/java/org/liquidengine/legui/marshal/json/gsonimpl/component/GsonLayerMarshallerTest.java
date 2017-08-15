@@ -13,9 +13,10 @@ import org.liquidengine.legui.marshal.json.gsonimpl.GsonMarshallingTestBase;
  * Test for Layer Gson Marshaller.
  */
 public class GsonLayerMarshallerTest extends GsonMarshallingTestBase {
-    private Layer                      layer      = new Layer();
+
+    private Layer layer = new Layer();
     private GsonLayerMarshaller<Layer> marshaller = new GsonLayerMarshaller<>();
-    private String                     pathToJson = "org/liquidengine/legui/marshal/json/gsonimpl/component/Layer.json";
+    private String pathToJson = "org/liquidengine/legui/marshal/json/gsonimpl/component/Layer.json";
 
     /**
      * Used to test {@link GsonLayerMarshaller#marshal(Object, JsonMarshalContext)} method of marshaller.
@@ -25,7 +26,7 @@ public class GsonLayerMarshallerTest extends GsonMarshallingTestBase {
     @Test
     public void marshal() throws Exception {
         String expected = readJsonFromFile(pathToJson).toString();
-        String actual   = marshaller.marshal(layer, new GsonMarshalContext());
+        String actual = marshaller.marshal(layer, new GsonMarshalContext());
         Assert.assertEquals(expected, actual);
     }
 
@@ -37,7 +38,7 @@ public class GsonLayerMarshallerTest extends GsonMarshallingTestBase {
     @Test
     public void unmarshal() throws Exception {
         JsonObject jsonToUnmarshal = readJsonFromFile(pathToJson);
-        Layer      actual          = marshaller.unmarshal(jsonToUnmarshal, new GsonMarshalContext());
+        Layer actual = marshaller.unmarshal(jsonToUnmarshal, new GsonMarshalContext());
         Assert.assertEquals(layer, actual);
     }
 

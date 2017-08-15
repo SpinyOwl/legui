@@ -1,14 +1,14 @@
 package org.liquidengine.legui.system.renderer;
 
+import java.util.concurrent.atomic.AtomicBoolean;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.system.context.Context;
-
-import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Component renderer base.
  */
 public abstract class ComponentRenderer<C extends Component> {
+
     private AtomicBoolean initialized = new AtomicBoolean(false);
 
     public void initialize() {

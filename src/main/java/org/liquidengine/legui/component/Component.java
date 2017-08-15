@@ -1,5 +1,8 @@
 package org.liquidengine.legui.component;
 
+import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -12,10 +15,6 @@ import org.liquidengine.legui.intersection.Intersector;
 import org.liquidengine.legui.intersection.RectangleIntersector;
 import org.liquidengine.legui.listener.ListenerMap;
 import org.liquidengine.legui.theme.Themes;
-
-import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Component is an object that have graphical representation in legui system.
@@ -35,9 +34,8 @@ public abstract class Component implements Serializable {
      */
     private ListenerMap listenerMap = new ListenerMap();
     /**
-     * Position of component relative top left corner in parent component.
-     * <p>
-     * If component is the root component then position calculated relative window top left corner.
+     * Position of component relative top left corner in parent component. <p> If component is the root component then position calculated relative window top
+     * left corner.
      */
     private Vector2f position = new Vector2f();
     /**
@@ -86,9 +84,8 @@ public abstract class Component implements Serializable {
     private boolean pressed;
 
     /**
-     * Default constructor. Used to create component instance without any parameters.
-     * <p>
-     * Also if you want to make it easy to use with Json marshaller/unmarshaller component should contain empty constructor.
+     * Default constructor. Used to create component instance without any parameters. <p> Also if you want to make it easy to use with Json
+     * marshaller/unmarshaller component should contain empty constructor.
      */
     public Component() {
         this(0, 0, 10, 10);
@@ -98,9 +95,9 @@ public abstract class Component implements Serializable {
     /**
      * Constructor with position and size parameters.
      *
-     * @param x      x position position in parent component.
-     * @param y      y position position in parent component.
-     * @param width  width of component.
+     * @param x x position position in parent component.
+     * @param y y position position in parent component.
+     * @param width width of component.
      * @param height height of component.
      */
     public Component(float x, float y, float width, float height) {
@@ -111,7 +108,7 @@ public abstract class Component implements Serializable {
      * Constructor with position and size parameters.
      *
      * @param position position position in parent component.
-     * @param size     size of component.
+     * @param size size of component.
      */
     public Component(Vector2f position, Vector2f size) {
         this.position = position;
@@ -129,10 +126,8 @@ public abstract class Component implements Serializable {
     }
 
     /**
-     * Used to set parent component. By default used by containers to attach component to container. Parent component used by renderers and
-     * event listeners and processors.
-     * <p>
-     * Don't use this method if you want to attach component to container. In this case use {@link Container#add(Component)} method.
+     * Used to set parent component. By default used by containers to attach component to container. Parent component used by renderers and event listeners and
+     * processors. <p> Don't use this method if you want to attach component to container. In this case use {@link Container#add(Component)} method.
      *
      * @param parent component container.
      */
@@ -222,7 +217,7 @@ public abstract class Component implements Serializable {
     /**
      * Used to set size vector.
      *
-     * @param width  width to set.
+     * @param width width to set.
      * @param height height to set.
      */
     public void setSize(float width, float height) {
@@ -243,8 +238,8 @@ public abstract class Component implements Serializable {
     }
 
     /**
-     * Returns {@link Vector4f} background color vector where x,y,z,w mapped to r,g,b,a values. <ul> <li>vector.x - red.</li> <li>vector.y -
-     * green.</li> <li>vector.z - blue.</li> <li>vector.a - alpha.</li> </ul>
+     * Returns {@link Vector4f} background color vector where x,y,z,w mapped to r,g,b,a values. <ul> <li>vector.x - red.</li> <li>vector.y - green.</li>
+     * <li>vector.z - blue.</li> <li>vector.a - alpha.</li> </ul>
      *
      * @return background color vector.
      */
@@ -253,8 +248,8 @@ public abstract class Component implements Serializable {
     }
 
     /**
-     * Used to set background color vector where x,y,z,w mapped to r,g,b,a values. <ul> <li>vector.x - red.</li> <li>vector.y - green.</li>
-     * <li>vector.z - blue.</li> <li>vector.a - alpha.</li> </ul>
+     * Used to set background color vector where x,y,z,w mapped to r,g,b,a values. <ul> <li>vector.x - red.</li> <li>vector.y - green.</li> <li>vector.z -
+     * blue.</li> <li>vector.a - alpha.</li> </ul>
      *
      * @param backgroundColor background color vector.
      */
@@ -275,8 +270,8 @@ public abstract class Component implements Serializable {
     }
 
     /**
-     * Returns {@link Vector4f} focused stroke color vector where x,y,z,w mapped to r,g,b,a values. <ul> <li>vector.x - red.</li>
-     * <li>vector.y - green.</li> <li>vector.z - blue.</li> <li>vector.a - alpha.</li> </ul>
+     * Returns {@link Vector4f} focused stroke color vector where x,y,z,w mapped to r,g,b,a values. <ul> <li>vector.x - red.</li> <li>vector.y - green.</li>
+     * <li>vector.z - blue.</li> <li>vector.a - alpha.</li> </ul>
      *
      * @return background color vector.
      */
@@ -285,8 +280,8 @@ public abstract class Component implements Serializable {
     }
 
     /**
-     * Used to set focused stroke color vector where x,y,z,w mapped to r,g,b,a values. <ul> <li>vector.x - red.</li> <li>vector.y -
-     * green.</li> <li>vector.z - blue.</li> <li>vector.a - alpha.</li> </ul>
+     * Used to set focused stroke color vector where x,y,z,w mapped to r,g,b,a values. <ul> <li>vector.x - red.</li> <li>vector.y - green.</li> <li>vector.z -
+     * blue.</li> <li>vector.a - alpha.</li> </ul>
      *
      * @param focusedStrokeColor focused stroke color vector.
      */
@@ -346,7 +341,6 @@ public abstract class Component implements Serializable {
      * Used to determine if point intersects component (in screen space). This method uses component intersector.
      *
      * @param point point to check.
-     *
      * @return true if component intersected by point.
      */
     public boolean intersects(Vector2f point) {
@@ -368,7 +362,9 @@ public abstract class Component implements Serializable {
      * @param intersector intersector.
      */
     public void setIntersector(Intersector intersector) {
-        if (intersector == null) return;
+        if (intersector == null) {
+            return;
+        }
         this.intersector = intersector;
     }
 
@@ -473,61 +469,65 @@ public abstract class Component implements Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
+        if (this == o) {
+            return true;
+        }
 
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         Component component = (Component) o;
 
         return new EqualsBuilder()
-                .append(this.getCornerRadius(), component.getCornerRadius())
-                .append(this.isEnabled(), component.isEnabled())
-                .append(this.isVisible(), component.isVisible())
-                .append(this.isHovered(), component.isHovered())
-                .append(this.isFocused(), component.isFocused())
-                .append(this.isPressed(), component.isPressed())
-                .append(this.getListenerMap(), component.getListenerMap())
-                .append(this.getPosition(), component.getPosition())
-                .append(this.getSize(), component.getSize())
-                .append(this.getBackgroundColor(), component.getBackgroundColor())
-                .append(this.getBorder(), component.getBorder())
-                .append(this.getIntersector(), component.getIntersector())
-                .isEquals();
+            .append(this.getCornerRadius(), component.getCornerRadius())
+            .append(this.isEnabled(), component.isEnabled())
+            .append(this.isVisible(), component.isVisible())
+            .append(this.isHovered(), component.isHovered())
+            .append(this.isFocused(), component.isFocused())
+            .append(this.isPressed(), component.isPressed())
+            .append(this.getListenerMap(), component.getListenerMap())
+            .append(this.getPosition(), component.getPosition())
+            .append(this.getSize(), component.getSize())
+            .append(this.getBackgroundColor(), component.getBackgroundColor())
+            .append(this.getBorder(), component.getBorder())
+            .append(this.getIntersector(), component.getIntersector())
+            .isEquals();
     }
 
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
-                .append(getCornerRadius())
-                .append(getListenerMap())
-                .append(getPosition())
-                .append(getSize())
-                .append(getBackgroundColor())
-                .append(getBorder())
-                .append(isEnabled())
-                .append(isVisible())
-                .append(getIntersector())
-                .append(isHovered())
-                .append(isFocused())
-                .append(isPressed())
-                .toHashCode();
+            .append(getCornerRadius())
+            .append(getListenerMap())
+            .append(getPosition())
+            .append(getSize())
+            .append(getBackgroundColor())
+            .append(getBorder())
+            .append(isEnabled())
+            .append(isVisible())
+            .append(getIntersector())
+            .append(isHovered())
+            .append(isFocused())
+            .append(isPressed())
+            .toHashCode();
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("cornerRadius", cornerRadius)
-                .append("listenerMap", listenerMap)
-                .append("position", position)
-                .append("size", size)
-                .append("backgroundColor", backgroundColor)
-                .append("border", border)
-                .append("enabled", enabled)
-                .append("visible", visible)
-                .append("intersector", intersector)
-                .append("hovered", hovered)
-                .append("focused", focused)
-                .append("pressed", pressed)
-                .toString();
+            .append("cornerRadius", cornerRadius)
+            .append("listenerMap", listenerMap)
+            .append("position", position)
+            .append("size", size)
+            .append("backgroundColor", backgroundColor)
+            .append("border", border)
+            .append("enabled", enabled)
+            .append("visible", visible)
+            .append("intersector", intersector)
+            .append("hovered", hovered)
+            .append("focused", focused)
+            .append("pressed", pressed)
+            .toString();
     }
 }

@@ -13,9 +13,10 @@ import org.liquidengine.legui.marshal.json.gsonimpl.GsonMarshallingTestBase;
  * Test for ProgressBar Gson Marshaller.
  */
 public class GsonProgressBarMarshallerTest extends GsonMarshallingTestBase {
-    private ProgressBar                            progressBar = new ProgressBar();
-    private GsonProgressBarMarshaller<ProgressBar> marshaller  = new GsonProgressBarMarshaller<>();
-    private String                                 pathToJson  = "org/liquidengine/legui/marshal/json/gsonimpl/component/ProgressBar.json";
+
+    private ProgressBar progressBar = new ProgressBar();
+    private GsonProgressBarMarshaller<ProgressBar> marshaller = new GsonProgressBarMarshaller<>();
+    private String pathToJson = "org/liquidengine/legui/marshal/json/gsonimpl/component/ProgressBar.json";
 
     /**
      * Used to test {@link GsonProgressBarMarshaller#marshal(Object, JsonMarshalContext)} method of marshaller.
@@ -25,7 +26,7 @@ public class GsonProgressBarMarshallerTest extends GsonMarshallingTestBase {
     @Test
     public void marshal() throws Exception {
         String expected = readJsonFromFile(pathToJson).toString();
-        String actual   = marshaller.marshal(progressBar, new GsonMarshalContext());
+        String actual = marshaller.marshal(progressBar, new GsonMarshalContext());
         Assert.assertEquals(expected, actual);
     }
 
@@ -36,8 +37,8 @@ public class GsonProgressBarMarshallerTest extends GsonMarshallingTestBase {
      */
     @Test
     public void unmarshal() throws Exception {
-        JsonObject  jsonToUnmarshal = readJsonFromFile(pathToJson);
-        ProgressBar actual          = marshaller.unmarshal(jsonToUnmarshal, new GsonMarshalContext());
+        JsonObject jsonToUnmarshal = readJsonFromFile(pathToJson);
+        ProgressBar actual = marshaller.unmarshal(jsonToUnmarshal, new GsonMarshalContext());
         Assert.assertEquals(progressBar, actual);
     }
 

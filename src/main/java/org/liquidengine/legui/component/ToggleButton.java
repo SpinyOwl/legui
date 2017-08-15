@@ -17,6 +17,7 @@ import org.liquidengine.legui.theme.Themes;
  * An implementation of "toggle" button. Behavior the same as checkbox but have not any text.
  */
 public class ToggleButton extends Button {
+
     private Icon togglededBackgroundIcon;
     private boolean toggled;
     private Vector4f toggledBackgroundColor;
@@ -24,10 +25,10 @@ public class ToggleButton extends Button {
     /**
      * Creates a button with specified text and specified position and size.
      *
-     * @param text   button text.
-     * @param x      x position in parent.
-     * @param y      y position in parent.
-     * @param width  width of component.
+     * @param text button text.
+     * @param x x position in parent.
+     * @param y y position in parent.
+     * @param width width of component.
      * @param height height of component.
      */
     public ToggleButton(String text, float x, float y, float width, float height) {
@@ -55,9 +56,9 @@ public class ToggleButton extends Button {
     /**
      * Creates a button with specified position and size and default bg color and default toggled bg color.
      *
-     * @param x      x position in parent.
-     * @param y      y position in parent.
-     * @param width  width of component.
+     * @param x x position in parent.
+     * @param y y position in parent.
+     * @param width width of component.
      * @param height height of component.
      */
     public ToggleButton(float x, float y, float width, float height) {
@@ -69,7 +70,7 @@ public class ToggleButton extends Button {
      * Creates a button with specified position and size and default bg color and default toggled bg color.
      *
      * @param position position in parent.
-     * @param size     size of component.
+     * @param size size of component.
      */
     public ToggleButton(Vector2f position, Vector2f size) {
         super(position, size);
@@ -144,34 +145,38 @@ public class ToggleButton extends Button {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
+        if (this == o) {
+            return true;
+        }
 
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         ToggleButton button = (ToggleButton) o;
 
         return new EqualsBuilder()
-                .appendSuper(super.equals(o))
-                .append(toggledBackgroundColor, button.toggledBackgroundColor)
-                .append(toggled, button.toggled)
-                .isEquals();
+            .appendSuper(super.equals(o))
+            .append(toggledBackgroundColor, button.toggledBackgroundColor)
+            .append(toggled, button.toggled)
+            .isEquals();
     }
 
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
-                .appendSuper(super.hashCode())
-                .append(toggledBackgroundColor)
-                .append(toggled)
-                .toHashCode();
+            .appendSuper(super.hashCode())
+            .append(toggledBackgroundColor)
+            .append(toggled)
+            .toHashCode();
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("toggledBackgroundColor", toggledBackgroundColor)
-                .append("toggled", toggled)
-                .toString();
+            .append("toggledBackgroundColor", toggledBackgroundColor)
+            .append("toggled", toggled)
+            .toString();
     }
 
 }

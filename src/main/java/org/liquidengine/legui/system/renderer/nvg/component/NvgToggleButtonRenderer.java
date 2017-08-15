@@ -1,5 +1,12 @@
 package org.liquidengine.legui.system.renderer.nvg.component;
 
+import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderBorder;
+import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderIcon;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.createScissor;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.createScissorByParent;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.drawRectangle;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.resetScissor;
+
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.color.ColorUtil;
@@ -7,10 +14,6 @@ import org.liquidengine.legui.component.ToggleButton;
 import org.liquidengine.legui.icon.Icon;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.nvg.NvgComponentRenderer;
-
-import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderBorder;
-import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderIcon;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.*;
 
 /**
  * Created by ShchAlexander on 11.02.2017.

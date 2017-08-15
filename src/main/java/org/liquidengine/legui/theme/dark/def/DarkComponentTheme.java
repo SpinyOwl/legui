@@ -11,6 +11,7 @@ import org.liquidengine.legui.theme.AbstractTheme;
  * @param <T> {@link Component} subclasses.
  */
 public class DarkComponentTheme<T extends Component> extends AbstractTheme<T> {
+
     /**
      * Used to apply theme only for component and not apply for child components.
      *

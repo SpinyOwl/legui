@@ -1,13 +1,21 @@
 package org.liquidengine.legui.input;
 
-import org.joml.Vector2f;
+import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_1;
+import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_2;
+import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_3;
+import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_4;
+import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_5;
+import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_6;
+import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_7;
+import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_8;
 
-import static org.lwjgl.glfw.GLFW.*;
+import org.joml.Vector2f;
 
 /**
  * Created by Aliaksandr_Shcherbin on 2/9/2017.
  */
 public class Mouse {
+
     private static Vector2f cursorPosition = new Vector2f();
     private static Vector2f cursorPositionPrev = new Vector2f();
 
@@ -65,7 +73,9 @@ public class Mouse {
 
         public static MouseButton getByCode(int code) {
             for (MouseButton mouseButton : MouseButton.values()) {
-                if (mouseButton.getCode() == code) return mouseButton;
+                if (mouseButton.getCode() == code) {
+                    return mouseButton;
+                }
             }
             return MOUSE_BUTTON_UNKNOWN;
         }

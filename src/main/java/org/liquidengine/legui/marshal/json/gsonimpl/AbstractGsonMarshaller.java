@@ -1,5 +1,8 @@
 package org.liquidengine.legui.marshal.json.gsonimpl;
 
+import static org.liquidengine.legui.marshal.JsonConstants.CLASS_PARAMETER;
+import static org.liquidengine.legui.marshal.JsonConstants.TYPE_PARAMETER;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -8,9 +11,6 @@ import org.liquidengine.legui.exception.LeguiException;
 import org.liquidengine.legui.exception.LeguiExceptionTemplate;
 import org.liquidengine.legui.marshal.json.JsonMarshalContext;
 import org.liquidengine.legui.marshal.json.JsonMarshaller;
-
-import static org.liquidengine.legui.marshal.JsonConstants.CLASS_PARAMETER;
-import static org.liquidengine.legui.marshal.JsonConstants.TYPE_PARAMETER;
 
 /**
  * Abstract Gson Marshaller.
@@ -100,8 +100,8 @@ public abstract class AbstractGsonMarshaller<T> implements JsonMarshaller<T> {
     /**
      * Reads data from object and puts it to json object.
      *
-     * @param object  object to read.
-     * @param json    json object to fill.
+     * @param object object to read.
+     * @param json json object to fill.
      * @param context marshal context.
      */
     protected abstract void marshal(T object, JsonObject json, GsonMarshalContext context);
@@ -109,8 +109,8 @@ public abstract class AbstractGsonMarshaller<T> implements JsonMarshaller<T> {
     /**
      * Reads data from json object and puts it to object.
      *
-     * @param json    json object to read.
-     * @param object  object to fill.
+     * @param json json object to read.
+     * @param object object to fill.
      * @param context marshal context.
      */
     protected abstract void unmarshal(JsonObject json, T object, GsonMarshalContext context);

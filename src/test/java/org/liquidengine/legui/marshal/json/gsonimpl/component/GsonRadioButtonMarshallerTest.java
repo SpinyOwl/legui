@@ -13,9 +13,10 @@ import org.liquidengine.legui.marshal.json.gsonimpl.GsonMarshallingTestBase;
  * Test for RadioButton Gson Marshaller.
  */
 public class GsonRadioButtonMarshallerTest extends GsonMarshallingTestBase {
-    private RadioButton                            button     = new RadioButton("Test Button", 10, 20, 30, 40);
+
+    private RadioButton button = new RadioButton("Test Button", 10, 20, 30, 40);
     private GsonRadioButtonMarshaller<RadioButton> marshaller = new GsonRadioButtonMarshaller<>();
-    private String                                 pathToJson = "org/liquidengine/legui/marshal/json/gsonimpl/component/RadioButton.json";
+    private String pathToJson = "org/liquidengine/legui/marshal/json/gsonimpl/component/RadioButton.json";
 
     /**
      * Used to test {@link GsonRadioButtonMarshaller#marshal(Object, JsonMarshalContext)} method of marshaller.
@@ -25,7 +26,7 @@ public class GsonRadioButtonMarshallerTest extends GsonMarshallingTestBase {
     @Test
     public void marshal() throws Exception {
         String expected = readJsonFromFile(pathToJson).toString();
-        String actual   = marshaller.marshal(button, new GsonMarshalContext());
+        String actual = marshaller.marshal(button, new GsonMarshalContext());
         Assert.assertEquals(expected, actual);
     }
 
@@ -36,8 +37,8 @@ public class GsonRadioButtonMarshallerTest extends GsonMarshallingTestBase {
      */
     @Test
     public void unmarshal() throws Exception {
-        JsonObject  jsonToUnmarshal = readJsonFromFile(pathToJson);
-        RadioButton actual          = marshaller.unmarshal(jsonToUnmarshal, new GsonMarshalContext());
+        JsonObject jsonToUnmarshal = readJsonFromFile(pathToJson);
+        RadioButton actual = marshaller.unmarshal(jsonToUnmarshal, new GsonMarshalContext());
         Assert.assertEquals(button, actual);
     }
 

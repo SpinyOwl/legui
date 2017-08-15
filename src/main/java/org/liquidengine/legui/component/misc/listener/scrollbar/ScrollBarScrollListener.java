@@ -10,6 +10,7 @@ import org.liquidengine.legui.listener.ScrollEventListener;
  * Default mouse scroll event listener for scrollbar. Generates {@link ScrollBarChangeValueEvent} event.
  */
 public class ScrollBarScrollListener implements ScrollEventListener {
+
     public void process(ScrollEvent event) {
         ScrollBar scrollBar = (ScrollBar) event.getComponent();
         float maxValue = scrollBar.getMaxValue();
@@ -19,8 +20,12 @@ public class ScrollBarScrollListener implements ScrollEventListener {
         float valueRange = scrollBar.getMaxValue() - scrollBar.getMinValue();
         float newVal = (float) (curValue - scrollBar.getScrollStep() * event.getYoffset() * visibleAmount * valueRange / (valueRange - visibleAmount));
 
-        if (newVal > maxValue) newVal = maxValue;
-        if (newVal < minValue) newVal = minValue;
+        if (newVal > maxValue) {
+            newVal = maxValue;
+        }
+        if (newVal < minValue) {
+            newVal = minValue;
+        }
 
         event.getContext().getEventProcessor().pushEvent(new ScrollBarChangeValueEvent<>(scrollBar, event.getContext(), event.getFrame(), curValue, newVal));
         scrollBar.setCurValue(newVal);

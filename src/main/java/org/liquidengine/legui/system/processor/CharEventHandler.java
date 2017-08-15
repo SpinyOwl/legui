@@ -10,10 +10,13 @@ import org.liquidengine.legui.system.event.SystemCharEvent;
  * Created by Aliaksandr_Shcherbin on 2/14/2017.
  */
 public class CharEventHandler implements SystemEventHandler<SystemCharEvent> {
+
     @Override
     public void handle(SystemCharEvent event, Frame frame, Context context) {
         Component focusedGui = context.getFocusedGui();
-        if (focusedGui == null) return;
+        if (focusedGui == null) {
+            return;
+        }
 
         context.getEventProcessor().pushEvent(new CharEvent(focusedGui, context, frame, event.codepoint));
     }

@@ -1,16 +1,16 @@
 package org.liquidengine.legui.listener;
 
-import org.liquidengine.legui.component.Component;
-import org.liquidengine.legui.event.Event;
-
 import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import org.liquidengine.legui.component.Component;
+import org.liquidengine.legui.event.Event;
 
 /**
  * Created by Aliaksandr_Shcherbin on 1/25/2017.
  */
 public class EventProcessor {
+
     private Queue<Event> eventQueue = new ConcurrentLinkedQueue<>();
 
     public void processEvent() {

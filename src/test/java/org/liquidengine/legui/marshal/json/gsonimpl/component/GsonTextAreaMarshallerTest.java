@@ -13,9 +13,10 @@ import org.liquidengine.legui.marshal.json.gsonimpl.GsonMarshallingTestBase;
  * Test for TextArea Gson Marshaller.
  */
 public class GsonTextAreaMarshallerTest extends GsonMarshallingTestBase {
-    private TextArea                         textArea   = new TextArea("Test text area", 10, 30, 50, 70);
+
+    private TextArea textArea = new TextArea("Test text area", 10, 30, 50, 70);
     private GsonTextAreaMarshaller<TextArea> marshaller = new GsonTextAreaMarshaller<>();
-    private String                           pathToJson = "org/liquidengine/legui/marshal/json/gsonimpl/component/TextArea.json";
+    private String pathToJson = "org/liquidengine/legui/marshal/json/gsonimpl/component/TextArea.json";
 
     /**
      * Used to test {@link GsonTextAreaMarshaller#marshal(Object, JsonMarshalContext)} method of marshaller.
@@ -25,7 +26,7 @@ public class GsonTextAreaMarshallerTest extends GsonMarshallingTestBase {
     @Test
     public void marshal() throws Exception {
         String expected = readJsonFromFile(pathToJson).toString();
-        String actual   = marshaller.marshal(textArea, new GsonMarshalContext());
+        String actual = marshaller.marshal(textArea, new GsonMarshalContext());
         Assert.assertEquals(expected, actual);
     }
 
@@ -37,7 +38,7 @@ public class GsonTextAreaMarshallerTest extends GsonMarshallingTestBase {
     @Test
     public void unmarshal() throws Exception {
         JsonObject jsonToUnmarshal = readJsonFromFile(pathToJson);
-        TextArea      actual          = marshaller.unmarshal(jsonToUnmarshal, new GsonMarshalContext());
+        TextArea actual = marshaller.unmarshal(jsonToUnmarshal, new GsonMarshalContext());
         Assert.assertEquals(textArea, actual);
     }
 

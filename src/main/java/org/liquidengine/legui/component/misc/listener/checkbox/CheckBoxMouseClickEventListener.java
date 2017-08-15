@@ -1,10 +1,10 @@
 package org.liquidengine.legui.component.misc.listener.checkbox;
 
+import static org.liquidengine.legui.event.MouseClickEvent.MouseClickAction.CLICK;
+
 import org.liquidengine.legui.component.CheckBox;
 import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.listener.MouseClickEventListener;
-
-import static org.liquidengine.legui.event.MouseClickEvent.MouseClickAction.CLICK;
 
 /**
  * MouseClickEventListener for checkbox, used to toggle checkbox state on mouse click.
@@ -28,7 +28,6 @@ public class CheckBoxMouseClickEventListener implements MouseClickEventListener 
      * Used to compare instances of this event listener.
      *
      * @param obj object to compare.
-     *
      * @return true if equals.
      */
     @Override

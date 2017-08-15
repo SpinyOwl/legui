@@ -1,12 +1,12 @@
 package org.liquidengine.legui.theme.dark.def;
 
+import static org.liquidengine.legui.font.FontRegistry.MATERIAL_ICONS_REGULAR;
+
 import org.joml.Vector2f;
 import org.liquidengine.legui.color.ColorConstants;
 import org.liquidengine.legui.component.CheckBox;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.icon.CharIcon;
-
-import static org.liquidengine.legui.font.FontRegistry.MATERIAL_ICONS_REGULAR;
 
 /**
  * Dark CheckBox Theme for all check boxes. Used to make check box dark.
@@ -14,6 +14,7 @@ import static org.liquidengine.legui.font.FontRegistry.MATERIAL_ICONS_REGULAR;
  * @param <T> {@link CheckBox} subclasses.
  */
 public class DarkCheckBoxTheme<T extends CheckBox> extends DarkControllerTheme<T> {
+
     /**
      * Used to apply theme only for component and not apply for child components.
      *

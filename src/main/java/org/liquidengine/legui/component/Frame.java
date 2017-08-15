@@ -1,21 +1,21 @@
 package org.liquidengine.legui.component;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
-
 /**
- * Default structure which should be associated with OpenGL window. Contains two default layers: <ul> <li>Component layer - holds components
- * and always on bottom of all layers.</li> <li>Tooltip layer - holds tooltips and always on top of all layers.</li> </ul> <span
- * style="color:red;">NOTE: layers processed in reverse order - from top to bottom.</span>
+ * Default structure which should be associated with OpenGL window. Contains two default layers: <ul> <li>Component layer - holds components and always on
+ * bottom of all layers.</li> <li>Tooltip layer - holds tooltips and always on top of all layers.</li> </ul> <span style="color:red;">NOTE: layers processed in
+ * reverse order - from top to bottom.</span>
  */
 public class Frame {
+
     /**
      * Used to hold tooltips.
      */
@@ -32,7 +32,7 @@ public class Frame {
     /**
      * Used to create frame and initialize layers with specified size.
      *
-     * @param width  width.
+     * @param width width.
      * @param height height.
      */
     public Frame(float width, float height) {
@@ -58,7 +58,7 @@ public class Frame {
     /**
      * Used to initialize frame and layers.
      *
-     * @param width  initial window width.
+     * @param width initial window width.
      * @param height initial window height.
      */
     private void initialize(float width, float height) {
@@ -81,7 +81,7 @@ public class Frame {
     /**
      * Used to set frame size (if frame created with default constructor).
      *
-     * @param width  width.
+     * @param width width.
      * @param height height.
      */
     public void setSize(float width, float height) {
@@ -97,9 +97,9 @@ public class Frame {
      */
     public void addLayer(Layer layer) {
         if (layer == null ||
-                layer == tooltipLayer ||
-                layer == componentLayer ||
-                layer.getFrame() == this) {
+            layer == tooltipLayer ||
+            layer == componentLayer ||
+            layer.getFrame() == this) {
             return;
         }
 
@@ -129,7 +129,6 @@ public class Frame {
      * Used to check if layer list contains provided layer.
      *
      * @param layer layer to check.
-     *
      * @return true if layer list contains provided layer.
      */
     public boolean containsLayer(Layer layer) {
@@ -137,8 +136,7 @@ public class Frame {
     }
 
     /**
-     * Used to retrieve default component layer. <span style="color:red;">NOTE: layers processed in reverse order - from top to
-     * bottom.</span>
+     * Used to retrieve default component layer. <span style="color:red;">NOTE: layers processed in reverse order - from top to bottom.</span>
      *
      * @return default component layer.
      */
@@ -147,8 +145,7 @@ public class Frame {
     }
 
     /**
-     * Used to retrieve default tooltip layer. <span style="color:red;">NOTE: layers processed in reverse order - from top to
-     * bottom.</span>
+     * Used to retrieve default tooltip layer. <span style="color:red;">NOTE: layers processed in reverse order - from top to bottom.</span>
      *
      * @return default tooltip layer.
      */
@@ -157,8 +154,7 @@ public class Frame {
     }
 
     /**
-     * Used to retrieve layers added by developer. <span style="color:red;">NOTE: layers processed in reverse order - from top to
-     * bottom.</span>
+     * Used to retrieve layers added by developer. <span style="color:red;">NOTE: layers processed in reverse order - from top to bottom.</span>
      *
      * @return layers added by developer.
      */
@@ -167,10 +163,9 @@ public class Frame {
     }
 
     /**
-     * Used to retrieve all layers where <ul> <li><b>List[0]</b> - default component layer.</li> <li><b>List[1]-List[length-2]</b> - layers
-     * added by developer.</li> <li><b>List[length-1]</b> - default tooltip layer.</li> </ul>
-     * <p>
-     * <span style="color:red;">NOTE: layers processed in reverse order - from top to bottom.</span>
+     * Used to retrieve all layers where <ul> <li><b>List[0]</b> - default component layer.</li> <li><b>List[1]-List[length-2]</b> - layers added by
+     * developer.</li> <li><b>List[length-1]</b> - default tooltip layer.</li> </ul> <p> <span style="color:red;">NOTE: layers processed in reverse order - from
+     * top to bottom.</span>
      *
      * @return all layers.
      */
@@ -194,33 +189,37 @@ public class Frame {
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
-                .append(tooltipLayer)
-                .append(componentLayer)
-                .append(layers)
-                .toHashCode();
+            .append(tooltipLayer)
+            .append(componentLayer)
+            .append(layers)
+            .toHashCode();
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) return true;
+        if (this == obj) {
+            return true;
+        }
 
-        if (obj == null || getClass() != obj.getClass()) return false;
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
 
         Frame frame = (Frame) obj;
 
         return new EqualsBuilder()
-                .append(tooltipLayer, frame.tooltipLayer)
-                .append(componentLayer, frame.componentLayer)
-                .append(layers, frame.layers)
-                .isEquals();
+            .append(tooltipLayer, frame.tooltipLayer)
+            .append(componentLayer, frame.componentLayer)
+            .append(layers, frame.layers)
+            .isEquals();
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("tooltipLayer", tooltipLayer)
-                .append("componentLayer", componentLayer)
-                .append("layers", layers)
-                .toString();
+            .append("tooltipLayer", tooltipLayer)
+            .append("componentLayer", componentLayer)
+            .append("layers", layers)
+            .toString();
     }
 }

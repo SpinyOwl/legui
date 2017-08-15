@@ -7,17 +7,14 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 
 /**
- * Layer one of base structures. Holds layer containers which are used to hold all of other components.
- * <p>
- * Layer can be eventPassable - that's mean that current layer allow to pass events to bottom layer if event wasn't handled by components of
- * this layer.
- * <p>
- * Also layer can be eventReceivable - that's mean that current layer and all of it components can receive events. For example {@link
- * TooltipLayer} is eventPassable and isn't eventReceivable.
+ * Layer one of base structures. Holds layer containers which are used to hold all of other components. <p> Layer can be eventPassable - that's mean that
+ * current layer allow to pass events to bottom layer if event wasn't handled by components of this layer. <p> Also layer can be eventReceivable - that's mean
+ * that current layer and all of it components can receive events. For example {@link TooltipLayer} is eventPassable and isn't eventReceivable.
  *
  * @param <T> type of components for {@link LayerContainer}
  */
 public class Layer<T extends Component> {
+
     /**
      * Used to hold all components of layer.
      */
@@ -130,39 +127,43 @@ public class Layer<T extends Component> {
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
-                .append(getContainer())
-                .append(isEventPassable())
-                .append(isEventReceivable())
+            .append(getContainer())
+            .append(isEventPassable())
+            .append(isEventReceivable())
 //                .append(enabled)
 //                .append(visible)
-                .toHashCode();
+            .toHashCode();
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) return true;
+        if (this == obj) {
+            return true;
+        }
 
-        if (obj == null || getClass() != obj.getClass()) return false;
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
 
         Layer<?> layer = (Layer<?>) obj;
 
         return new EqualsBuilder()
-                .append(isEventPassable(), layer.isEventPassable())
-                .append(isEventReceivable(), layer.isEventReceivable())
+            .append(isEventPassable(), layer.isEventPassable())
+            .append(isEventReceivable(), layer.isEventReceivable())
 //                .append(enabled, layer.enabled)
 //                .append(visible, layer.visible)
-                .append(getContainer(), layer.getContainer())
-                .isEquals();
+            .append(getContainer(), layer.getContainer())
+            .isEquals();
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("container", getContainer())
-                .append("eventPassable", isEventPassable())
-                .append("eventReceivable", isEventReceivable())
+            .append("container", getContainer())
+            .append("eventPassable", isEventPassable())
+            .append("eventReceivable", isEventReceivable())
 //                .append("enabled", enabled)
 //                .append("visible", visible)
-                .toString();
+            .toString();
     }
 }

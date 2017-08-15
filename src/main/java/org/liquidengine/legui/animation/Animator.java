@@ -1,10 +1,9 @@
 package org.liquidengine.legui.animation;
 
-import org.lwjgl.glfw.GLFW;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+import org.lwjgl.glfw.GLFW;
 
 /**
  * Animation processor.
@@ -12,6 +11,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * @author Aliaksandr_Shcherbin.
  */
 public class Animator {
+
     /**
      * List of animations to initialize.
      */
@@ -88,6 +88,7 @@ public class Animator {
      * Instance holder.
      */
     private static class AnimatorHolder {
+
         private static final Animator INSTANCE = new Animator();
     }
 }

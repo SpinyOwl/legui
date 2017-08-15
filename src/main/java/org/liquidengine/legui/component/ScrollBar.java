@@ -20,6 +20,7 @@ import org.liquidengine.legui.theme.Themes;
  * An implementation of a scrollbar.
  */
 public class ScrollBar extends Controller {
+
     // TODO: It would be nice to add Icon here to render arrows.
     public static final float MIN_SCROLL_SIZE = 1f;
 
@@ -84,9 +85,8 @@ public class ScrollBar extends Controller {
     private Viewport viewport;
 
     /**
-     * Default constructor. Used to create component instance without any parameters.
-     * <p>
-     * Also if you want to make it easy to use with Json marshaller/unmarshaller component should contain empty constructor.
+     * Default constructor. Used to create component instance without any parameters. <p> Also if you want to make it easy to use with Json
+     * marshaller/unmarshaller component should contain empty constructor.
      */
     public ScrollBar() {
         initialize();
@@ -95,9 +95,9 @@ public class ScrollBar extends Controller {
     /**
      * Constructor with position and size parameters.
      *
-     * @param x      x position position in parent component.
-     * @param y      y position position in parent component.
-     * @param width  width of component.
+     * @param x x position position in parent component.
+     * @param y y position position in parent component.
+     * @param width width of component.
      * @param height height of component.
      */
     public ScrollBar(float x, float y, float width, float height) {
@@ -109,7 +109,7 @@ public class ScrollBar extends Controller {
      * Constructor with position and size parameters.
      *
      * @param position position position in parent component.
-     * @param size     size of component.
+     * @param size size of component.
      */
     public ScrollBar(Vector2f position, Vector2f size) {
         super(position, size);
@@ -118,9 +118,8 @@ public class ScrollBar extends Controller {
 
 
     /**
-     * Default constructor with current value parameter.
-     * <p>
-     * Also if you want to make it easy to use with Json marshaller/unmarshaller component should contain empty constructor.
+     * Default constructor with current value parameter. <p> Also if you want to make it easy to use with Json marshaller/unmarshaller component should contain
+     * empty constructor.
      *
      * @param curValue current scroll bar value to set.
      */
@@ -132,10 +131,10 @@ public class ScrollBar extends Controller {
     /**
      * Constructor with position, size and current value parameters.
      *
-     * @param x        x position position in parent component.
-     * @param y        y position position in parent component.
-     * @param width    width of component.
-     * @param height   height of component.
+     * @param x x position position in parent component.
+     * @param y y position position in parent component.
+     * @param width width of component.
+     * @param height height of component.
      * @param curValue current scroll bar value to set.
      */
     public ScrollBar(float x, float y, float width, float height, float curValue) {
@@ -147,7 +146,7 @@ public class ScrollBar extends Controller {
      * Constructor with position, size and current value parameters.
      *
      * @param position position position in parent component.
-     * @param size     size of component.
+     * @param size size of component.
      * @param curValue current scroll bar value to set.
      */
     public ScrollBar(Vector2f position, Vector2f size, float curValue) {
@@ -393,57 +392,61 @@ public class ScrollBar extends Controller {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
+        if (this == o) {
+            return true;
+        }
 
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         ScrollBar scrollBar = (ScrollBar) o;
 
         return new EqualsBuilder()
-                .appendSuper(super.equals(o))
-                .append(minValue, scrollBar.minValue)
-                .append(maxValue, scrollBar.maxValue)
-                .append(curValue, scrollBar.curValue)
-                .append(scrollStep, scrollBar.scrollStep)
-                .append(visibleAmount, scrollBar.visibleAmount)
-                .append(arrowsEnabled, scrollBar.arrowsEnabled)
-                .append(arrowSize, scrollBar.arrowSize)
-                .append(orientation, scrollBar.orientation)
-                .append(arrowColor, scrollBar.arrowColor)
-                .append(scrollColor, scrollBar.scrollColor)
-                .isEquals();
+            .appendSuper(super.equals(o))
+            .append(minValue, scrollBar.minValue)
+            .append(maxValue, scrollBar.maxValue)
+            .append(curValue, scrollBar.curValue)
+            .append(scrollStep, scrollBar.scrollStep)
+            .append(visibleAmount, scrollBar.visibleAmount)
+            .append(arrowsEnabled, scrollBar.arrowsEnabled)
+            .append(arrowSize, scrollBar.arrowSize)
+            .append(orientation, scrollBar.orientation)
+            .append(arrowColor, scrollBar.arrowColor)
+            .append(scrollColor, scrollBar.scrollColor)
+            .isEquals();
     }
 
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
-                .appendSuper(super.hashCode())
-                .append(orientation)
-                .append(minValue)
-                .append(maxValue)
-                .append(curValue)
-                .append(scrollStep)
-                .append(visibleAmount)
-                .append(arrowsEnabled)
-                .append(arrowSize)
-                .append(arrowColor)
-                .append(scrollColor)
-                .toHashCode();
+            .appendSuper(super.hashCode())
+            .append(orientation)
+            .append(minValue)
+            .append(maxValue)
+            .append(curValue)
+            .append(scrollStep)
+            .append(visibleAmount)
+            .append(arrowsEnabled)
+            .append(arrowSize)
+            .append(arrowColor)
+            .append(scrollColor)
+            .toHashCode();
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("orientation", orientation)
-                .append("minValue", minValue)
-                .append("maxValue", maxValue)
-                .append("curValue", curValue)
-                .append("visibleAmount", visibleAmount)
-                .append("arrowsEnabled", arrowsEnabled)
-                .append("arrowSize", arrowSize)
-                .append("arrowColor", arrowColor)
-                .append("scrollColor", scrollColor)
-                .toString();
+            .append("orientation", orientation)
+            .append("minValue", minValue)
+            .append("maxValue", maxValue)
+            .append("curValue", curValue)
+            .append("visibleAmount", visibleAmount)
+            .append("arrowsEnabled", arrowsEnabled)
+            .append("arrowSize", arrowSize)
+            .append("arrowColor", arrowColor)
+            .append("scrollColor", scrollColor)
+            .toString();
     }
 
 

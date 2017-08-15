@@ -13,9 +13,10 @@ import org.liquidengine.legui.marshal.json.gsonimpl.GsonMarshallingTestBase;
  * Test for ScrollBar Gson Marshaller.
  */
 public class GsonScrollBarMarshallerTest extends GsonMarshallingTestBase {
-    private ScrollBar                          scrollBar  = new ScrollBar(10, 20, 310, 40);
+
+    private ScrollBar scrollBar = new ScrollBar(10, 20, 310, 40);
     private GsonScrollBarMarshaller<ScrollBar> marshaller = new GsonScrollBarMarshaller<>();
-    private String                             pathToJson = "org/liquidengine/legui/marshal/json/gsonimpl/component/ScrollBar.json";
+    private String pathToJson = "org/liquidengine/legui/marshal/json/gsonimpl/component/ScrollBar.json";
 
     /**
      * Used to test {@link GsonScrollBarMarshaller#marshal(Object, JsonMarshalContext)} method of marshaller.
@@ -25,7 +26,7 @@ public class GsonScrollBarMarshallerTest extends GsonMarshallingTestBase {
     @Test
     public void marshal() throws Exception {
         String expected = readJsonFromFile(pathToJson).toString();
-        String actual   = marshaller.marshal(scrollBar, new GsonMarshalContext());
+        String actual = marshaller.marshal(scrollBar, new GsonMarshalContext());
         Assert.assertEquals(expected, actual);
     }
 
@@ -37,7 +38,7 @@ public class GsonScrollBarMarshallerTest extends GsonMarshallingTestBase {
     @Test
     public void unmarshal() throws Exception {
         JsonObject jsonToUnmarshal = readJsonFromFile(pathToJson);
-        ScrollBar  actual          = marshaller.unmarshal(jsonToUnmarshal, new GsonMarshalContext());
+        ScrollBar actual = marshaller.unmarshal(jsonToUnmarshal, new GsonMarshalContext());
         Assert.assertEquals(scrollBar, actual);
     }
 

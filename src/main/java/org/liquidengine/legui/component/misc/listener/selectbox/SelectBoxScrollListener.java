@@ -10,6 +10,7 @@ import org.liquidengine.legui.listener.ScrollEventListener;
  * Listener of scroll action which used to scroll expanded selectbox.
  */
 public class SelectBoxScrollListener implements ScrollEventListener {
+
     private final ScrollBar bar;
 
     public SelectBoxScrollListener(ScrollBar bar) {
@@ -35,14 +36,14 @@ public class SelectBoxScrollListener implements ScrollEventListener {
         SelectBoxScrollListener that = (SelectBoxScrollListener) o;
 
         return new EqualsBuilder()
-                .append(bar, that.bar)
-                .isEquals();
+            .append(bar, that.bar)
+            .isEquals();
     }
 
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
-                .append(bar)
-                .toHashCode();
+            .append(bar)
+            .toHashCode();
     }
 }

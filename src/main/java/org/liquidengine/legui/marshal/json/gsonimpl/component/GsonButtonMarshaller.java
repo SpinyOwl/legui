@@ -1,5 +1,12 @@
 package org.liquidengine.legui.marshal.json.gsonimpl.component;
 
+import static org.liquidengine.legui.marshal.JsonConstants.BACKGROUND_ICON;
+import static org.liquidengine.legui.marshal.JsonConstants.FOCUSED_BACKGROUND_ICON;
+import static org.liquidengine.legui.marshal.JsonConstants.HOVERED_BACKGROUND_ICON;
+import static org.liquidengine.legui.marshal.JsonConstants.PRESSED_BACKGROUND_ICON;
+import static org.liquidengine.legui.marshal.JsonConstants.TEXT_STATE;
+import static org.liquidengine.legui.marshal.json.gsonimpl.GsonUtil.isNotNull;
+
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.liquidengine.legui.component.Button;
@@ -7,18 +14,16 @@ import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.marshal.json.gsonimpl.GsonMarshalContext;
 import org.liquidengine.legui.marshal.json.gsonimpl.GsonMarshalUtil;
 
-import static org.liquidengine.legui.marshal.JsonConstants.*;
-import static org.liquidengine.legui.marshal.json.gsonimpl.GsonUtil.isNotNull;
-
 /**
  * Marshaller for {@link Button}.
  */
 public class GsonButtonMarshaller<T extends Button> extends GsonControllerMarshaller<T> {
+
     /**
      * Reads data from object and puts it to json object.
      *
-     * @param object  object to read.
-     * @param json    json object to fill.
+     * @param object object to read.
+     * @param json json object to fill.
      * @param context marshal context.
      */
     @Override
@@ -36,8 +41,8 @@ public class GsonButtonMarshaller<T extends Button> extends GsonControllerMarsha
     /**
      * Reads data from json object and puts it to object.
      *
-     * @param json    json object to read.
-     * @param object  object to fill.
+     * @param json json object to read.
+     * @param object object to fill.
      * @param context marshal context.
      */
     @Override
@@ -49,13 +54,18 @@ public class GsonButtonMarshaller<T extends Button> extends GsonControllerMarsha
         JsonElement pressedBackgroundIcon = json.get(PRESSED_BACKGROUND_ICON);
         JsonElement hoveredBackgroundIcon = json.get(HOVERED_BACKGROUND_ICON);
 
-        if (isNotNull(backgroundIcon)) object.setBackgroundIcon(GsonMarshalUtil.unmarshal(backgroundIcon.getAsJsonObject(), context));
-        if (isNotNull(focusedBackgroundIcon))
+        if (isNotNull(backgroundIcon)) {
+            object.setBackgroundIcon(GsonMarshalUtil.unmarshal(backgroundIcon.getAsJsonObject(), context));
+        }
+        if (isNotNull(focusedBackgroundIcon)) {
             object.setFocusedBackgroundIcon(GsonMarshalUtil.unmarshal(focusedBackgroundIcon.getAsJsonObject(), context));
-        if (isNotNull(pressedBackgroundIcon))
+        }
+        if (isNotNull(pressedBackgroundIcon)) {
             object.setPressedBackgroundIcon(GsonMarshalUtil.unmarshal(pressedBackgroundIcon.getAsJsonObject(), context));
-        if (isNotNull(hoveredBackgroundIcon))
+        }
+        if (isNotNull(hoveredBackgroundIcon)) {
             object.setHoveredBackgroundIcon(GsonMarshalUtil.unmarshal(hoveredBackgroundIcon.getAsJsonObject(), context));
+        }
 
         JsonElement textState = json.get(TEXT_STATE);
         if (isNotNull(textState)) {

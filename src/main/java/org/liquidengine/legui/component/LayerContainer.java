@@ -1,7 +1,6 @@
 package org.liquidengine.legui.component;
 
 import org.joml.Vector2f;
-import org.joml.Vector4f;
 import org.liquidengine.legui.color.ColorConstants;
 import org.liquidengine.legui.component.misc.listener.layercontainer.LayerContainerWindowSizeEventListener;
 import org.liquidengine.legui.event.WindowSizeEvent;
@@ -13,9 +12,8 @@ import org.liquidengine.legui.theme.Themes;
 public class LayerContainer<T extends Component> extends Container<T> {
 
     /**
-     * Default constructor. Used to create component instance without any parameters.
-     * <p>
-     * Also if you want to make it easy to use with Json marshaller/unmarshaller component should contain empty constructor.
+     * Default constructor. Used to create component instance without any parameters. <p> Also if you want to make it easy to use with Json
+     * marshaller/unmarshaller component should contain empty constructor.
      */
     public LayerContainer() {
         initialize();
@@ -24,9 +22,9 @@ public class LayerContainer<T extends Component> extends Container<T> {
     /**
      * Constructor with position and size parameters.
      *
-     * @param x      x position position in parent component.
-     * @param y      y position position in parent component.
-     * @param width  width of component.
+     * @param x x position position in parent component.
+     * @param y y position position in parent component.
+     * @param width width of component.
      * @param height height of component.
      */
     public LayerContainer(float x, float y, float width, float height) {
@@ -38,7 +36,7 @@ public class LayerContainer<T extends Component> extends Container<T> {
      * Constructor with position and size parameters.
      *
      * @param position position position in parent component.
-     * @param size     size of component.
+     * @param size size of component.
      */
     public LayerContainer(Vector2f position, Vector2f size) {
         super(position, size);

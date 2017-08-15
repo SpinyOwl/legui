@@ -84,36 +84,40 @@ public class CharIcon extends Icon {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
+        if (this == o) {
+            return true;
+        }
 
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         CharIcon charIcon = (CharIcon) o;
 
         return new EqualsBuilder()
-                .appendSuper(super.equals(o))
-                .append(getCharCode(), charIcon.getCharCode())
-                .append(getColor(), charIcon.getColor())
-                .append(getFont(), charIcon.getFont())
-                .isEquals();
+            .appendSuper(super.equals(o))
+            .append(getCharCode(), charIcon.getCharCode())
+            .append(getColor(), charIcon.getColor())
+            .append(getFont(), charIcon.getFont())
+            .isEquals();
     }
 
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
-                .appendSuper(super.hashCode())
-                .append(getColor())
-                .append(getFont())
-                .append(getCharCode())
-                .toHashCode();
+            .appendSuper(super.hashCode())
+            .append(getColor())
+            .append(getFont())
+            .append(getCharCode())
+            .toHashCode();
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("color", color)
-                .append("font", font)
-                .append("charCode", charCode)
-                .toString();
+            .append("color", color)
+            .append("font", font)
+            .append("charCode", charCode)
+            .toString();
     }
 }

@@ -1,11 +1,11 @@
 package org.liquidengine.legui.theme;
 
-import org.liquidengine.legui.component.Component;
-
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import org.liquidengine.legui.component.Component;
 
 public class DefaultThemeManager extends ThemeManager {
+
     private Map<Class<? extends Component>, AbstractTheme<? extends Component>> themeMap = new ConcurrentHashMap<>();
 
     private AbstractTheme defaultComponentTheme = new AbstractTheme() {
@@ -39,10 +39,14 @@ public class DefaultThemeManager extends ThemeManager {
         Class cClass = componentClass;
         while (componentTheme == null) {
             componentTheme = ((Map<Class<C>, R>) map).get(cClass);
-            if (cClass.isAssignableFrom(Component.class)) break;
+            if (cClass.isAssignableFrom(Component.class)) {
+                break;
+            }
             cClass = cClass.getSuperclass();
         }
-        if (componentTheme == null) componentTheme = defaultComponentTheme;
+        if (componentTheme == null) {
+            componentTheme = defaultComponentTheme;
+        }
         return componentTheme;
     }
 

@@ -1,5 +1,7 @@
 package org.liquidengine.legui.component.misc.listener.scrollbar;
 
+import static org.liquidengine.legui.input.Mouse.MouseButton.MOUSE_BUTTON_LEFT;
+
 import org.joml.Vector2f;
 import org.liquidengine.legui.component.ScrollBar;
 import org.liquidengine.legui.component.Viewport;
@@ -10,8 +12,6 @@ import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.input.Mouse;
 import org.liquidengine.legui.listener.EventProcessor;
 import org.liquidengine.legui.listener.MouseClickEventListener;
-
-import static org.liquidengine.legui.input.Mouse.MouseButton.MOUSE_BUTTON_LEFT;
 
 /**
  * Default mouse click event listener for scrollbar. Generates {@link ScrollBarChangeValueEvent} event.
@@ -84,11 +84,11 @@ public class ScrollBarMouseClickEventListener implements MouseClickEventListener
     /**
      * Used to update viewport.
      *
-     * @param event     event.
+     * @param event event.
      * @param scrollBar scrollbar.
-     * @param maxValue  maximum scrollbar value.
-     * @param minValue  minimum scrollbar value.
-     * @param newValue  new scrollbar value.
+     * @param maxValue maximum scrollbar value.
+     * @param minValue minimum scrollbar value.
+     * @param newValue new scrollbar value.
      */
     private void updateViewport(Event event, ScrollBar scrollBar, float maxValue, float minValue, float newValue) {
         float valueToUse = newValue;

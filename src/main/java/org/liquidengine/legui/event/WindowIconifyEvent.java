@@ -8,6 +8,7 @@ import org.liquidengine.legui.system.context.Context;
  * Created by ShchAlexander on 03.02.2017.
  */
 public class WindowIconifyEvent<T extends Component> extends Event<T> {
+
     private final boolean iconified;
 
     public WindowIconifyEvent(T component, Context context, Frame frame, boolean iconified) {

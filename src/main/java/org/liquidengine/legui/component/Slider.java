@@ -22,6 +22,7 @@ import org.liquidengine.legui.theme.Themes;
  * Implementation of slider controller.
  */
 public class Slider extends Controller {
+
     /**
      * Maximum value of slider.
      */
@@ -70,8 +71,8 @@ public class Slider extends Controller {
      * Constructor with position and size parameters and predefined value.
      *
      * @param position position position in parent component.
-     * @param size     size of component.
-     * @param value    value to set.
+     * @param size size of component.
+     * @param value value to set.
      */
     public Slider(Vector2f position, Vector2f size, float value) {
         super(position, size);
@@ -81,11 +82,11 @@ public class Slider extends Controller {
     /**
      * Constructor with position and size parameters and predefined value.
      *
-     * @param x      x position position in parent component.
-     * @param y      y position position in parent component.
-     * @param width  width of component.
+     * @param x x position position in parent component.
+     * @param y y position position in parent component.
+     * @param width width of component.
      * @param height height of component.
-     * @param value  value to set.
+     * @param value value to set.
      */
     public Slider(float x, float y, float width, float height, float value) {
         super(x, y, width, height);
@@ -93,9 +94,8 @@ public class Slider extends Controller {
     }
 
     /**
-     * Default constructor. Used to create component instance without any parameters.
-     * <p>
-     * Also if you want to make it easy to use with Json marshaller/unmarshaller component should contain empty constructor.
+     * Default constructor. Used to create component instance without any parameters. <p> Also if you want to make it easy to use with Json
+     * marshaller/unmarshaller component should contain empty constructor.
      */
     public Slider() {
         this(0f);
@@ -104,9 +104,9 @@ public class Slider extends Controller {
     /**
      * Constructor with position and size parameters.
      *
-     * @param x      x position position in parent component.
-     * @param y      y position position in parent component.
-     * @param width  width of component.
+     * @param x x position position in parent component.
+     * @param y y position position in parent component.
+     * @param width width of component.
      * @param height height of component.
      */
     public Slider(float x, float y, float width, float height) {
@@ -117,7 +117,7 @@ public class Slider extends Controller {
      * Constructor with position and size parameters.
      *
      * @param position position position in parent component.
-     * @param size     size of component.
+     * @param size size of component.
      */
     public Slider(Vector2f position, Vector2f size) {
         this(position, size, 0);
@@ -254,36 +254,36 @@ public class Slider extends Controller {
         Slider slider = (Slider) o;
 
         return new EqualsBuilder()
-                .appendSuper(super.equals(o))
-                .append(value, slider.value)
-                .append(sliderSize, slider.sliderSize)
-                .append(orientation, slider.orientation)
-                .append(sliderActiveColor, slider.sliderActiveColor)
-                .append(sliderColor, slider.sliderColor)
-                .isEquals();
+            .appendSuper(super.equals(o))
+            .append(value, slider.value)
+            .append(sliderSize, slider.sliderSize)
+            .append(orientation, slider.orientation)
+            .append(sliderActiveColor, slider.sliderActiveColor)
+            .append(sliderColor, slider.sliderColor)
+            .isEquals();
     }
 
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
-                .appendSuper(super.hashCode())
-                .append(value)
-                .append(orientation)
-                .append(sliderActiveColor)
-                .append(sliderColor)
-                .append(sliderSize)
-                .toHashCode();
+            .appendSuper(super.hashCode())
+            .append(value)
+            .append(orientation)
+            .append(sliderActiveColor)
+            .append(sliderColor)
+            .append(sliderSize)
+            .toHashCode();
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("value", value)
-                .append("orientation", orientation)
-                .append("sliderActiveColor", sliderActiveColor)
-                .append("sliderColor", sliderColor)
-                .append("sliderSize", sliderSize)
-                .toString();
+            .append("value", value)
+            .append("orientation", orientation)
+            .append("sliderActiveColor", sliderActiveColor)
+            .append("sliderColor", sliderColor)
+            .append("sliderSize", sliderSize)
+            .toString();
     }
 
 }

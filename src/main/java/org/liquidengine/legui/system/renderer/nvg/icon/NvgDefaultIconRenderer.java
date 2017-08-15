@@ -1,5 +1,11 @@
 package org.liquidengine.legui.system.renderer.nvg.icon;
 
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.drawRectStroke;
+import static org.lwjgl.nanovg.NanoVG.nvgBeginPath;
+import static org.lwjgl.nanovg.NanoVG.nvgFill;
+import static org.lwjgl.nanovg.NanoVG.nvgFillColor;
+import static org.lwjgl.nanovg.NanoVG.nvgRect;
+
 import org.joml.Vector2f;
 import org.liquidengine.legui.color.ColorConstants;
 import org.liquidengine.legui.component.Component;
@@ -8,13 +14,11 @@ import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.nvg.NvgIconRenderer;
 import org.lwjgl.nanovg.NVGColor;
 
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.drawRectStroke;
-import static org.lwjgl.nanovg.NanoVG.*;
-
 /**
  * Created by ShchAlexander on 11.02.2017.
  */
 public class NvgDefaultIconRenderer extends NvgIconRenderer {
+
     private NVGColor def;
 
     @Override
@@ -52,7 +56,6 @@ public class NvgDefaultIconRenderer extends NvgIconRenderer {
         }
         float w = iconSize.x;
         float h = iconSize.y;
-
 
         nvgBeginPath(nanovg);
         nvgFillColor(nanovg, def);

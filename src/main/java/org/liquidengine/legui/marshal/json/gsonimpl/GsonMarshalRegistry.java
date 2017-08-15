@@ -1,10 +1,35 @@
 package org.liquidengine.legui.marshal.json.gsonimpl;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 import org.apache.commons.collections4.BidiMap;
 import org.apache.commons.collections4.bidimap.DualHashBidiMap;
 import org.liquidengine.legui.border.Border;
 import org.liquidengine.legui.border.SimpleLineBorder;
-import org.liquidengine.legui.component.*;
+import org.liquidengine.legui.component.Button;
+import org.liquidengine.legui.component.CheckBox;
+import org.liquidengine.legui.component.Component;
+import org.liquidengine.legui.component.Container;
+import org.liquidengine.legui.component.Controller;
+import org.liquidengine.legui.component.Frame;
+import org.liquidengine.legui.component.ImageView;
+import org.liquidengine.legui.component.Label;
+import org.liquidengine.legui.component.Layer;
+import org.liquidengine.legui.component.LayerContainer;
+import org.liquidengine.legui.component.Panel;
+import org.liquidengine.legui.component.ProgressBar;
+import org.liquidengine.legui.component.RadioButton;
+import org.liquidengine.legui.component.ScrollBar;
+import org.liquidengine.legui.component.ScrollablePanel;
+import org.liquidengine.legui.component.SelectBox;
+import org.liquidengine.legui.component.Slider;
+import org.liquidengine.legui.component.TextArea;
+import org.liquidengine.legui.component.TextInput;
+import org.liquidengine.legui.component.ToggleButton;
+import org.liquidengine.legui.component.Tooltip;
+import org.liquidengine.legui.component.Widget;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.exception.LeguiException;
 import org.liquidengine.legui.exception.LeguiExceptionTemplate;
@@ -18,7 +43,28 @@ import org.liquidengine.legui.marshal.json.JsonMarshalRegistry;
 import org.liquidengine.legui.marshal.json.JsonMarshaller;
 import org.liquidengine.legui.marshal.json.gsonimpl.border.GsonBorderMarshaller;
 import org.liquidengine.legui.marshal.json.gsonimpl.border.GsonSimpleLineBorderMarshaller;
-import org.liquidengine.legui.marshal.json.gsonimpl.component.*;
+import org.liquidengine.legui.marshal.json.gsonimpl.component.GsonButtonMarshaller;
+import org.liquidengine.legui.marshal.json.gsonimpl.component.GsonCheckBoxMarshaller;
+import org.liquidengine.legui.marshal.json.gsonimpl.component.GsonComponentMarshaller;
+import org.liquidengine.legui.marshal.json.gsonimpl.component.GsonContainerMarshaller;
+import org.liquidengine.legui.marshal.json.gsonimpl.component.GsonControllerMarshaller;
+import org.liquidengine.legui.marshal.json.gsonimpl.component.GsonFrameMarshaller;
+import org.liquidengine.legui.marshal.json.gsonimpl.component.GsonImageViewMarshaller;
+import org.liquidengine.legui.marshal.json.gsonimpl.component.GsonLabelMarshaller;
+import org.liquidengine.legui.marshal.json.gsonimpl.component.GsonLayerContainerMarshaller;
+import org.liquidengine.legui.marshal.json.gsonimpl.component.GsonLayerMarshaller;
+import org.liquidengine.legui.marshal.json.gsonimpl.component.GsonPanelMarshaller;
+import org.liquidengine.legui.marshal.json.gsonimpl.component.GsonProgressBarMarshaller;
+import org.liquidengine.legui.marshal.json.gsonimpl.component.GsonRadioButtonMarshaller;
+import org.liquidengine.legui.marshal.json.gsonimpl.component.GsonScrollBarMarshaller;
+import org.liquidengine.legui.marshal.json.gsonimpl.component.GsonScrollablePanelMarshaller;
+import org.liquidengine.legui.marshal.json.gsonimpl.component.GsonSelectBoxMarshaller;
+import org.liquidengine.legui.marshal.json.gsonimpl.component.GsonSliderMarshaller;
+import org.liquidengine.legui.marshal.json.gsonimpl.component.GsonTextAreaMarshaller;
+import org.liquidengine.legui.marshal.json.gsonimpl.component.GsonTextInputMarshaller;
+import org.liquidengine.legui.marshal.json.gsonimpl.component.GsonToggleButtonMarshaller;
+import org.liquidengine.legui.marshal.json.gsonimpl.component.GsonTooltipMarshaller;
+import org.liquidengine.legui.marshal.json.gsonimpl.component.GsonWidgetMarshaller;
 import org.liquidengine.legui.marshal.json.gsonimpl.component.optional.GsonTextStateMarshaller;
 import org.liquidengine.legui.marshal.json.gsonimpl.icon.GsonCharIconMarshaller;
 import org.liquidengine.legui.marshal.json.gsonimpl.icon.GsonIconMarshaller;
@@ -27,15 +73,11 @@ import org.liquidengine.legui.marshal.json.gsonimpl.image.GsonBufferedImageMarsh
 import org.liquidengine.legui.marshal.json.gsonimpl.image.GsonLoadableImageMarshaller;
 import org.liquidengine.legui.marshal.json.gsonimpl.intersector.GsonIntersectorMarshaller;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
-
 /**
  * Created by Aliaksandr_Shcherbin on 2/24/2017.
  */
 public class GsonMarshalRegistry implements JsonMarshalRegistry {
+
     private Map<Class<?>, JsonMarshaller<?>> marshallerMap = new ConcurrentHashMap<>();
     private BidiMap<String, Class<?>> typeMap = new DualHashBidiMap<>();
     private Lock lock = new ReentrantLock(false);
@@ -58,11 +100,10 @@ public class GsonMarshalRegistry implements JsonMarshalRegistry {
     /**
      * Register marshaller for specified class.
      *
-     * @param typeName   short type name, can be null, in that case {@link GsonMarshalRegistry#getShortTypeByClass(Class)} will return
-     *                   null.
-     * @param tClass     class.
+     * @param typeName short type name, can be null, in that case {@link GsonMarshalRegistry#getShortTypeByClass(Class)} will return null.
+     * @param tClass class.
      * @param marshaller marshaller.
-     * @param <T>        type parameter to prevent error in marshal registry..
+     * @param <T> type parameter to prevent error in marshal registry..
      */
     public <T> void registerMarshaller(String typeName, Class<T> tClass, JsonMarshaller<T> marshaller) {
         lock.lock();
@@ -83,8 +124,7 @@ public class GsonMarshalRegistry implements JsonMarshalRegistry {
      * Returns marshaller for specified class.
      *
      * @param tClass class.
-     * @param <T>    type of marshaled/demarshaled class.
-     *
+     * @param <T> type of marshaled/demarshaled class.
      * @return json marshaller for specified class.
      */
     public <T> AbstractGsonMarshaller<T> getMarshaller(Class<T> tClass) {
@@ -95,7 +135,6 @@ public class GsonMarshalRegistry implements JsonMarshalRegistry {
      * Returns marshaller for specified classname.
      *
      * @param classname full classname.
-     *
      * @return json marshaller for specified classname.
      */
     public AbstractGsonMarshaller getMarshaller(String classname) {
@@ -112,7 +151,6 @@ public class GsonMarshalRegistry implements JsonMarshalRegistry {
      * Returns marshaller for specified type.
      *
      * @param typeName type name.
-     *
      * @return json marshaller for specified type.
      */
     public AbstractGsonMarshaller getMarshallerByShortType(String typeName) {
@@ -128,7 +166,6 @@ public class GsonMarshalRegistry implements JsonMarshalRegistry {
      * Returns marshaller for specified class.
      *
      * @param tClass class.
-     *
      * @return json marshaller for specified class.
      */
     private <T> AbstractGsonMarshaller<T> treeGetMarshaller(Class<T> tClass) {
@@ -136,7 +173,9 @@ public class GsonMarshalRegistry implements JsonMarshalRegistry {
         Class cClass = tClass.getSuperclass();
         while (marshaller == null) {
             marshaller = (AbstractGsonMarshaller<T>) marshallerMap.get(cClass);
-            if (cClass.isAssignableFrom(Object.class)) break;
+            if (cClass.isAssignableFrom(Object.class)) {
+                break;
+            }
             cClass = cClass.getSuperclass();
         }
         return marshaller;
@@ -146,6 +185,7 @@ public class GsonMarshalRegistry implements JsonMarshalRegistry {
      * Singleton implementation "On demand holder".
      */
     private static class JSRIH {
+
         private static final GsonMarshalRegistry I = new GsonMarshalRegistry();
 
         static {

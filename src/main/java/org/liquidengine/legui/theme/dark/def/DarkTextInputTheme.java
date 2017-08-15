@@ -10,6 +10,7 @@ import org.liquidengine.legui.component.optional.align.HorizontalAlign;
  * @param <T> {@link TextInput} subclasses.
  */
 public class DarkTextInputTheme<T extends TextInput> extends DarkControllerTheme<T> {
+
     /**
      * Used to apply theme only for component and not apply for child components.
      *

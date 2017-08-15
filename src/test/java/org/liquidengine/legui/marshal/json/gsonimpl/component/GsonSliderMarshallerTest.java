@@ -13,9 +13,10 @@ import org.liquidengine.legui.marshal.json.gsonimpl.GsonMarshallingTestBase;
  * Test for Slider Gson Marshaller.
  */
 public class GsonSliderMarshallerTest extends GsonMarshallingTestBase {
-    private Slider                       slider     = new Slider(10, 30, 50, 70);
+
+    private Slider slider = new Slider(10, 30, 50, 70);
     private GsonSliderMarshaller<Slider> marshaller = new GsonSliderMarshaller<>();
-    private String                       pathToJson = "org/liquidengine/legui/marshal/json/gsonimpl/component/Slider.json";
+    private String pathToJson = "org/liquidengine/legui/marshal/json/gsonimpl/component/Slider.json";
 
     /**
      * Used to test {@link GsonSliderMarshaller#marshal(Object, JsonMarshalContext)} method of marshaller.
@@ -25,7 +26,7 @@ public class GsonSliderMarshallerTest extends GsonMarshallingTestBase {
     @Test
     public void marshal() throws Exception {
         String expected = readJsonFromFile(pathToJson).toString();
-        String actual   = marshaller.marshal(slider, new GsonMarshalContext());
+        String actual = marshaller.marshal(slider, new GsonMarshalContext());
         Assert.assertEquals(expected, actual);
     }
 
@@ -37,7 +38,7 @@ public class GsonSliderMarshallerTest extends GsonMarshallingTestBase {
     @Test
     public void unmarshal() throws Exception {
         JsonObject jsonToUnmarshal = readJsonFromFile(pathToJson);
-        Slider     actual          = marshaller.unmarshal(jsonToUnmarshal, new GsonMarshalContext());
+        Slider actual = marshaller.unmarshal(jsonToUnmarshal, new GsonMarshalContext());
         Assert.assertEquals(slider, actual);
     }
 

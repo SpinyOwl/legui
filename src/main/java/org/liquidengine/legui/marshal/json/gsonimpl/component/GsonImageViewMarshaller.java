@@ -1,5 +1,7 @@
 package org.liquidengine.legui.marshal.json.gsonimpl.component;
 
+import static org.liquidengine.legui.marshal.json.gsonimpl.GsonUtil.isNotNull;
+
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.liquidengine.legui.component.ImageView;
@@ -7,17 +9,16 @@ import org.liquidengine.legui.marshal.json.gsonimpl.GsonMarshalContext;
 import org.liquidengine.legui.marshal.json.gsonimpl.GsonMarshalUtil;
 import org.liquidengine.legui.marshal.json.gsonimpl.GsonUtil;
 
-import static org.liquidengine.legui.marshal.json.gsonimpl.GsonUtil.isNotNull;
-
 /**
  * Marshaller for {@link ImageView}.
  */
 public class GsonImageViewMarshaller<T extends ImageView> extends GsonControllerMarshaller<T> {
+
     /**
      * Reads data from object and puts it to json object.
      *
-     * @param object  object to read.
-     * @param json    json object to fill.
+     * @param object object to read.
+     * @param json json object to fill.
      * @param context marshal context.
      */
     @Override
@@ -29,8 +30,8 @@ public class GsonImageViewMarshaller<T extends ImageView> extends GsonController
     /**
      * Reads data from json object and puts it to object.
      *
-     * @param json    json object to read.
-     * @param object  object to fill.
+     * @param json json object to read.
+     * @param object object to fill.
      * @param context marshal context.
      */
     @Override
@@ -38,6 +39,8 @@ public class GsonImageViewMarshaller<T extends ImageView> extends GsonController
         super.unmarshal(json, object, context);
 
         JsonElement path = json.get("image");
-        if (isNotNull(path)) object.setImage(GsonMarshalUtil.unmarshal(path.getAsJsonObject()));
+        if (isNotNull(path)) {
+            object.setImage(GsonMarshalUtil.unmarshal(path.getAsJsonObject()));
+        }
     }
 }

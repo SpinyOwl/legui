@@ -11,6 +11,7 @@ import org.liquidengine.legui.color.ColorConstants;
  * Simple one line rectangle border with specified thickness and color.
  */
 public class SimpleLineBorder extends Border {
+
     /**
      * Thickness of border.
      */
@@ -31,7 +32,7 @@ public class SimpleLineBorder extends Border {
     /**
      * Creates border with specified color and thickness.
      *
-     * @param color     color.
+     * @param color color.
      * @param thickness thickness.
      */
     public SimpleLineBorder(Vector4f color, float thickness) {
@@ -78,30 +79,34 @@ public class SimpleLineBorder extends Border {
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("thickness", thickness)
-                .append("color", color)
-                .toString();
+            .append("thickness", thickness)
+            .append("color", color)
+            .toString();
     }
 
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
-                .append(thickness)
-                .append(color)
-                .toHashCode();
+            .append(thickness)
+            .append(color)
+            .toHashCode();
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) return true;
+        if (this == obj) {
+            return true;
+        }
 
-        if (obj == null || getClass() != obj.getClass()) return false;
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
 
         SimpleLineBorder that = (SimpleLineBorder) obj;
 
         return new EqualsBuilder()
-                .append(thickness, that.thickness)
-                .append(color, that.color)
-                .isEquals();
+            .append(thickness, that.thickness)
+            .append(color, that.color)
+            .isEquals();
     }
 }

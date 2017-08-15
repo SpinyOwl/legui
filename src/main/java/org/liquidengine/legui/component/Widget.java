@@ -22,8 +22,8 @@ import org.liquidengine.legui.listener.MouseDragEventListener;
 import org.liquidengine.legui.theme.Themes;
 
 /**
- * Widget component is container which have predefined components such as container, title label, close and minimize buttons and predefined
- * event listeners. This component can be moved, minimized and restored, closed. Also now you can enable or disable title.
+ * Widget component is container which have predefined components such as container, title label, close and minimize buttons and predefined event listeners.
+ * This component can be moved, minimized and restored, closed. Also now you can enable or disable title.
  */
 public class Widget extends Container<Component> {
 
@@ -62,9 +62,9 @@ public class Widget extends Container<Component> {
     /**
      * Creates a widget with default title text and specified position and size.
      *
-     * @param x      x position in parent.
-     * @param y      y position in parent.
-     * @param width  width of component.
+     * @param x x position in parent.
+     * @param y y position in parent.
+     * @param width width of component.
      * @param height height of component.
      */
     public Widget(float x, float y, float width, float height) {
@@ -76,7 +76,7 @@ public class Widget extends Container<Component> {
      * Creates a widget with default title text and specified position and size.
      *
      * @param position position in parent.
-     * @param size     size of component.
+     * @param size size of component.
      */
     public Widget(Vector2f position, Vector2f size) {
         super(position, size);
@@ -95,10 +95,10 @@ public class Widget extends Container<Component> {
     /**
      * Creates a widget with specified title text and specified position and size.
      *
-     * @param title  widget text.
-     * @param x      x position in parent.
-     * @param y      y position in parent.
-     * @param width  width of component.
+     * @param title widget text.
+     * @param x x position in parent.
+     * @param y y position in parent.
+     * @param width width of component.
      * @param height height of component.
      */
     public Widget(String title, float x, float y, float width, float height) {
@@ -109,9 +109,9 @@ public class Widget extends Container<Component> {
     /**
      * Creates a widget with specified title text and specified position and size.
      *
-     * @param title    widget text.
+     * @param title widget text.
      * @param position position in parent.
-     * @param size     size of component.
+     * @param size size of component.
      */
     public Widget(String title, Vector2f position, Vector2f size) {
         super(position, size);
@@ -140,7 +140,8 @@ public class Widget extends Container<Component> {
 
         this.closeButton = new Button("");
         this.closeButton.setBackgroundColor(ColorConstants.transparent());
-        closeIcon = new CharIcon(new Vector2f(INITIAL_TITLE_HEIGHT * 2 / 3), FontRegistry.MATERIAL_DESIGN_ICONS, (char) CLOSE_ICON_CHAR, ColorConstants.black());
+        closeIcon = new CharIcon(new Vector2f(INITIAL_TITLE_HEIGHT * 2 / 3), FontRegistry.MATERIAL_DESIGN_ICONS, (char) CLOSE_ICON_CHAR,
+            ColorConstants.black());
         closeIcon.setHorizontalAlign(HorizontalAlign.CENTER);
         closeIcon.setVerticalAlign(VerticalAlign.MIDDLE);
         this.closeButton.setBackgroundIcon(closeIcon);
@@ -153,11 +154,13 @@ public class Widget extends Container<Component> {
         this.minimizeButton = new Button("");
         this.minimizeButton.setBackgroundColor(ColorConstants.transparent());
 
-        minimizeIcon = new CharIcon(new Vector2f(INITIAL_TITLE_HEIGHT * 2 / 3), FontRegistry.MATERIAL_DESIGN_ICONS, (char) MINIMIZE_ICON_CHAR, ColorConstants.black());
+        minimizeIcon = new CharIcon(new Vector2f(INITIAL_TITLE_HEIGHT * 2 / 3), FontRegistry.MATERIAL_DESIGN_ICONS, (char) MINIMIZE_ICON_CHAR,
+            ColorConstants.black());
         minimizeIcon.setHorizontalAlign(HorizontalAlign.CENTER);
         minimizeIcon.setVerticalAlign(VerticalAlign.MIDDLE);
 
-        maximizeIcon = new CharIcon(new Vector2f(INITIAL_TITLE_HEIGHT * 2 / 3), FontRegistry.MATERIAL_DESIGN_ICONS, (char) MAXIMIZE_ICON_CHAR, ColorConstants.black());
+        maximizeIcon = new CharIcon(new Vector2f(INITIAL_TITLE_HEIGHT * 2 / 3), FontRegistry.MATERIAL_DESIGN_ICONS, (char) MAXIMIZE_ICON_CHAR,
+            ColorConstants.black());
         maximizeIcon.setHorizontalAlign(HorizontalAlign.CENTER);
         maximizeIcon.setVerticalAlign(VerticalAlign.MIDDLE);
 
@@ -235,7 +238,7 @@ public class Widget extends Container<Component> {
     /**
      * Used to set size of widget.
      *
-     * @param width  width to set.
+     * @param width width to set.
      * @param height height to set.
      */
     @Override
@@ -584,42 +587,42 @@ public class Widget extends Container<Component> {
         Widget widget = (Widget) o;
 
         return new EqualsBuilder()
-                .appendSuper(super.equals(o))
-                .append(draggable, widget.draggable)
-                .append(minimized, widget.minimized)
-                .append(maximizedSize, widget.maximizedSize)
-                .append(container, widget.container)
-                .append(title, widget.title)
-                .append(closeButton, widget.closeButton)
-                .append(minimizeButton, widget.minimizeButton)
-                .isEquals();
+            .appendSuper(super.equals(o))
+            .append(draggable, widget.draggable)
+            .append(minimized, widget.minimized)
+            .append(maximizedSize, widget.maximizedSize)
+            .append(container, widget.container)
+            .append(title, widget.title)
+            .append(closeButton, widget.closeButton)
+            .append(minimizeButton, widget.minimizeButton)
+            .isEquals();
     }
 
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
-                .appendSuper(super.hashCode())
-                .append(draggable)
-                .append(minimized)
-                .append(maximizedSize)
-                .append(container)
-                .append(title)
-                .append(closeButton)
-                .append(minimizeButton)
-                .toHashCode();
+            .appendSuper(super.hashCode())
+            .append(draggable)
+            .append(minimized)
+            .append(maximizedSize)
+            .append(container)
+            .append(title)
+            .append(closeButton)
+            .append(minimizeButton)
+            .toHashCode();
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("draggable", draggable)
-                .append("minimized", minimized)
-                .append("maximizedSize", maximizedSize)
-                .append("container", container)
-                .append("title", title)
-                .append("closeButton", closeButton)
-                .append("minimizeButton", minimizeButton)
-                .toString();
+            .append("draggable", draggable)
+            .append("minimized", minimized)
+            .append("maximizedSize", maximizedSize)
+            .append("container", container)
+            .append("title", title)
+            .append("closeButton", closeButton)
+            .append("minimizeButton", minimizeButton)
+            .toString();
     }
 
 }

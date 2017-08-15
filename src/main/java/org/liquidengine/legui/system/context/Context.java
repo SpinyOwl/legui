@@ -1,15 +1,18 @@
 package org.liquidengine.legui.system.context;
 
-import org.joml.Vector2f;
-import org.joml.Vector2i;
-import org.liquidengine.legui.component.Component;
-import org.liquidengine.legui.component.Frame;
-import org.liquidengine.legui.listener.EventProcessor;
+import static org.lwjgl.glfw.GLFW.GLFW_ICONIFIED;
+import static org.lwjgl.glfw.GLFW.GLFW_TRUE;
+import static org.lwjgl.glfw.GLFW.glfwGetFramebufferSize;
+import static org.lwjgl.glfw.GLFW.glfwGetWindowAttrib;
+import static org.lwjgl.glfw.GLFW.glfwGetWindowPos;
+import static org.lwjgl.glfw.GLFW.glfwGetWindowSize;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
-import static org.lwjgl.glfw.GLFW.*;
+import org.joml.Vector2f;
+import org.joml.Vector2i;
+import org.liquidengine.legui.component.Component;
+import org.liquidengine.legui.listener.EventProcessor;
 
 /**
  * Created by Aliaksandr_Shcherbin on 1/25/2017.
@@ -51,24 +54,24 @@ public class Context {
 
     public void updateGlfwWindow() {
         int[] windowWidth = {0},
-                windowHeight = {0};
+            windowHeight = {0};
         int[] frameBufferWidth = {0},
-                frameBufferHeight = {0};
+            frameBufferHeight = {0};
         int[] xpos = {0},
-                ypos = {0};
+            ypos = {0};
         glfwGetWindowSize(glfwWindow, windowWidth, windowHeight);
         glfwGetFramebufferSize(glfwWindow, frameBufferWidth, frameBufferHeight);
         glfwGetWindowPos(glfwWindow, xpos, ypos);
 
         update(windowWidth[0], windowHeight[0],
-                frameBufferWidth[0], frameBufferHeight[0],
-                xpos[0], ypos[0],
-                glfwGetWindowAttrib(glfwWindow, GLFW_ICONIFIED) == GLFW_TRUE
+            frameBufferWidth[0], frameBufferHeight[0],
+            xpos[0], ypos[0],
+            glfwGetWindowAttrib(glfwWindow, GLFW_ICONIFIED) == GLFW_TRUE
         );
     }
 
     public void update(int targetWidth, int targetHeight, int framebufferWidth, int framebufferHeight,
-                       int targetPosX, int targetPosY, boolean iconified) {
+        int targetPosX, int targetPosY, boolean iconified) {
         setWindowSize(new Vector2i(targetWidth, targetHeight));
         setFramebufferSize(new Vector2f(framebufferWidth, framebufferHeight));
         setPixelRatio((float) framebufferWidth / (float) targetWidth);

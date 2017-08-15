@@ -7,6 +7,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  * Created by Shcherbin Alexander on 6/10/2016.
  */
 public class SystemWindowCloseEvent implements SystemEvent {
+
     public final long window;
 
     public SystemWindowCloseEvent(long window) {
@@ -20,7 +21,7 @@ public class SystemWindowCloseEvent implements SystemEvent {
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("window", window)
-                .toString();
+            .append("window", window)
+            .toString();
     }
 }

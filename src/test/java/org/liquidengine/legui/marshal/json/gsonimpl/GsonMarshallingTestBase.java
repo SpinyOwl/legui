@@ -10,6 +10,7 @@ import org.liquidengine.legui.util.IOUtil;
  * Used implement tests for Gson marshallers.
  */
 public class GsonMarshallingTestBase {
+
     static {
         ImageLoader.setLoader(new DummyImageLoader());
     }

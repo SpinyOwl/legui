@@ -11,11 +11,12 @@ import org.liquidengine.legui.marshal.json.gsonimpl.GsonUtil;
  * Marshaller for {@link Controller}.
  */
 public class GsonControllerMarshaller<T extends Controller> extends GsonComponentMarshaller<T> {
+
     /**
      * Reads data from object and puts it to json object.
      *
-     * @param object  object to read.
-     * @param json    json object to fill.
+     * @param object object to read.
+     * @param json json object to fill.
      * @param context marshal context.
      */
     @Override
@@ -29,8 +30,8 @@ public class GsonControllerMarshaller<T extends Controller> extends GsonComponen
     /**
      * Reads data from json object and puts it to object.
      *
-     * @param json    json object to read.
-     * @param object  object to fill.
+     * @param json json object to read.
+     * @param object object to fill.
      * @param context marshal context.
      */
     @Override
@@ -38,7 +39,8 @@ public class GsonControllerMarshaller<T extends Controller> extends GsonComponen
         super.unmarshal(json, object, context);
 
         JsonElement tooltip = json.get("tooltip");
-        if (GsonUtil.isNotNull(tooltip) && tooltip.isJsonObject())
+        if (GsonUtil.isNotNull(tooltip) && tooltip.isJsonObject()) {
             object.setTooltipComponent(GsonMarshalUtil.unmarshal((JsonObject) tooltip));
+        }
     }
 }

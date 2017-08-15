@@ -12,6 +12,7 @@ import org.liquidengine.legui.component.optional.align.VerticalAlign;
  * Icon. Used to draw component icons.
  */
 public abstract class Icon {
+
     /**
      * Icon size.
      */
@@ -134,27 +135,27 @@ public abstract class Icon {
         Icon icon = (Icon) o;
 
         return new EqualsBuilder()
-                .append(getSize(), icon.getSize())
-                .append(getHorizontalAlign(), icon.getHorizontalAlign())
-                .append(getVerticalAlign(), icon.getVerticalAlign())
-                .isEquals();
+            .append(getSize(), icon.getSize())
+            .append(getHorizontalAlign(), icon.getHorizontalAlign())
+            .append(getVerticalAlign(), icon.getVerticalAlign())
+            .isEquals();
     }
 
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
-                .append(getSize())
-                .append(getHorizontalAlign())
-                .append(getVerticalAlign())
-                .toHashCode();
+            .append(getSize())
+            .append(getHorizontalAlign())
+            .append(getVerticalAlign())
+            .toHashCode();
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("size", size)
-                .append("horizontalAlign", horizontalAlign)
-                .append("verticalAlign", verticalAlign)
-                .toString();
+            .append("size", size)
+            .append("horizontalAlign", horizontalAlign)
+            .append("verticalAlign", verticalAlign)
+            .toString();
     }
 }

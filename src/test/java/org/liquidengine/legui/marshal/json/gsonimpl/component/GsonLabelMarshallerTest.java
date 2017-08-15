@@ -13,9 +13,10 @@ import org.liquidengine.legui.marshal.json.gsonimpl.GsonMarshallingTestBase;
  * Test for Label Gson Marshaller.
  */
 public class GsonLabelMarshallerTest extends GsonMarshallingTestBase {
-    private Label                      label      = new Label("Test Label", 10, 30, 50, 70);
+
+    private Label label = new Label("Test Label", 10, 30, 50, 70);
     private GsonLabelMarshaller<Label> marshaller = new GsonLabelMarshaller<>();
-    private String                     pathToJson = "org/liquidengine/legui/marshal/json/gsonimpl/component/Label.json";
+    private String pathToJson = "org/liquidengine/legui/marshal/json/gsonimpl/component/Label.json";
 
     /**
      * Used to test {@link GsonLabelMarshaller#marshal(Object, JsonMarshalContext)} method of marshaller.
@@ -25,7 +26,7 @@ public class GsonLabelMarshallerTest extends GsonMarshallingTestBase {
     @Test
     public void marshal() throws Exception {
         String expected = readJsonFromFile(pathToJson).toString();
-        String actual   = marshaller.marshal(label, new GsonMarshalContext());
+        String actual = marshaller.marshal(label, new GsonMarshalContext());
         Assert.assertEquals(expected, actual);
     }
 
@@ -37,7 +38,7 @@ public class GsonLabelMarshallerTest extends GsonMarshallingTestBase {
     @Test
     public void unmarshal() throws Exception {
         JsonObject jsonToUnmarshal = readJsonFromFile(pathToJson);
-        Label      actual          = marshaller.unmarshal(jsonToUnmarshal, new GsonMarshalContext());
+        Label actual = marshaller.unmarshal(jsonToUnmarshal, new GsonMarshalContext());
         Assert.assertEquals(label, actual);
     }
 

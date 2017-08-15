@@ -1,14 +1,13 @@
 package org.liquidengine.legui.component;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
  * Group of radio buttons which determines that only one radio button can be selected in group.
@@ -30,7 +29,9 @@ public class RadioButtonGroup implements Serializable {
      * @param radioButton radio button to add.
      */
     protected void add(RadioButton radioButton) {
-        if (radioButtons.contains(radioButton)) return;
+        if (radioButtons.contains(radioButton)) {
+            return;
+        }
         radioButtons.add(radioButton);
         if (radioButton.isChecked()) {
             if (selection != null) {
@@ -77,7 +78,7 @@ public class RadioButtonGroup implements Serializable {
      * Used to change selected radio button.
      *
      * @param radioButton radio button to select.
-     * @param selected    flag to set for provider radio button.
+     * @param selected flag to set for provider radio button.
      */
     public void setSelection(RadioButton radioButton, boolean selected) {
         if (selected && radioButton != null && radioButton != selection) {
@@ -94,7 +95,6 @@ public class RadioButtonGroup implements Serializable {
      * Returns true if provided radio button selected.
      *
      * @param radioButton radio button to check.
-     *
      * @return true if provided radio button selected.
      */
     public boolean isSelected(RadioButton radioButton) {
@@ -113,24 +113,28 @@ public class RadioButtonGroup implements Serializable {
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .toString();
+            .toString();
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
+        if (this == o) {
+            return true;
+        }
 
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
 //        RadioButtonGroup that = (RadioButtonGroup) o;
 
         return new EqualsBuilder()
-                .isEquals();
+            .isEquals();
     }
 
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
-                .toHashCode();
+            .toHashCode();
     }
 }

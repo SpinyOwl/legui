@@ -9,7 +9,8 @@ import org.liquidengine.legui.system.context.Context;
  * Base of main renderer which called by renderer thread.
  */
 public abstract class Renderer {
-//    protected Context context;
+
+    //    protected Context context;
 //
 //    public Renderer(Context context) {
 //        this.context = context;

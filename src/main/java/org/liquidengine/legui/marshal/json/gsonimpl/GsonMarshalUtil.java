@@ -11,14 +11,18 @@ import org.liquidengine.legui.marshal.JsonConstants;
  * Created by Aliaksandr_Shcherbin on 2/24/2017.
  */
 public final class GsonMarshalUtil {
+
     private GsonMarshalUtil() {
     }
 
     public static <T> String marshal(T component) {
-        if (component == null) return null;
+        if (component == null) {
+            return null;
+        }
         AbstractGsonMarshaller marshaller = GsonMarshalRegistry.getRegistry().getMarshaller(component.getClass());
-        if (marshaller == null)
+        if (marshaller == null) {
             throw new LeguiException(LeguiExceptionTemplate.MARSHALLER_IS_NOT_EXIST.message(component.getClass().getName()));
+        }
         GsonMarshalContext context = new GsonMarshalContext();
         return marshaller.marshal(component, context);
     }
@@ -28,10 +32,13 @@ public final class GsonMarshalUtil {
     }
 
     public static <T> JsonObject marshalToJson(T component, GsonMarshalContext context) {
-        if (component == null) return null;
+        if (component == null) {
+            return null;
+        }
         AbstractGsonMarshaller marshaller = GsonMarshalRegistry.getRegistry().getMarshaller(component.getClass());
-        if (marshaller == null)
+        if (marshaller == null) {
             throw new LeguiException(LeguiExceptionTemplate.MARSHALLER_IS_NOT_EXIST.message(component.getClass().getName()));
+        }
         return marshaller.jsonMarshal(component, context);
     }
 
@@ -61,7 +68,9 @@ public final class GsonMarshalUtil {
                 marshaller = GsonMarshalRegistry.getRegistry().getMarshallerByShortType(type);
             }
         }
-        if (type == null || marshaller == null) throw new LeguiException(LeguiExceptionTemplate.UNMARSHALLER_IS_NOT_EXIST.message(type));
+        if (type == null || marshaller == null) {
+            throw new LeguiException(LeguiExceptionTemplate.UNMARSHALLER_IS_NOT_EXIST.message(type));
+        }
         return marshaller;
     }
 
