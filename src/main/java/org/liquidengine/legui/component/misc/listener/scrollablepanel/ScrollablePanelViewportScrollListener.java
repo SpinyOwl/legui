@@ -6,7 +6,6 @@ import org.liquidengine.legui.component.ScrollBar;
 import org.liquidengine.legui.component.ScrollablePanel;
 import org.liquidengine.legui.component.Viewport;
 import org.liquidengine.legui.component.misc.event.scrollbar.ScrollBarChangeValueEvent;
-import org.liquidengine.legui.component.misc.listener.scrollbar.ScrollBarScrollListener;
 import org.liquidengine.legui.event.ScrollEvent;
 import org.liquidengine.legui.input.Mouse;
 import org.liquidengine.legui.listener.EventListener;
@@ -16,8 +15,6 @@ import org.liquidengine.legui.system.processor.SehUtil;
  * Created by ShchAlexander on 23.07.2017.
  */
 public class ScrollablePanelViewportScrollListener implements EventListener<ScrollEvent> {
-
-    private ScrollBarScrollListener l = new ScrollBarScrollListener();
 
     /**
      * Used to handle specific event.

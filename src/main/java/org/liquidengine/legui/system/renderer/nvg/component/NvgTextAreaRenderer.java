@@ -131,7 +131,7 @@ public class NvgTextAreaRenderer extends NvgComponentRenderer<TextArea> {
         float mouseY = cursorPosition.y;
         float rat = size.y * size.x;
 
-        preinitializeTextRendering(context, font, fontSize, halign, valign, textColor, glyphs);
+        preinitializeTextRendering(context, font, fontSize, halign, valign, textColor);
 
         // we need to calculate x and y offsets
         String caretLineText = lines[caretLine];
@@ -157,7 +157,7 @@ public class NvgTextAreaRenderer extends NvgComponentRenderer<TextArea> {
         // Check if we should recalculate offset x
         poffsetx = recalculateOffsetX(rect, halign, caretx, rat, offsetX, poffsetx, pratio, phalign);
 
-        preinitializeTextRendering(context, font, fontSize, halign, valign, textColor, glyphs);
+        preinitializeTextRendering(context, font, fontSize, halign, valign, textColor);
 
         float[][] bounds = new float[lineCount][8];
         for (int i = 0; i < lineCount; i++) {
@@ -410,8 +410,7 @@ public class NvgTextAreaRenderer extends NvgComponentRenderer<TextArea> {
     }
 
     private void preinitializeTextRendering(long context, String font, float fontSize,
-        HorizontalAlign halign, VerticalAlign valign, Vector4f textColor,
-        NVGGlyphPosition.Buffer glyphs) {
+        HorizontalAlign halign, VerticalAlign valign, Vector4f textColor) {
         NVGColor colorA = NVGColor.calloc();
         alignTextInBox(context, halign, valign);
         nvgFontSize(context, fontSize);

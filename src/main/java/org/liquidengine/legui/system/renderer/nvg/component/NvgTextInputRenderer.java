@@ -93,8 +93,8 @@ public class NvgTextInputRenderer extends NvgComponentRenderer<TextInput> {
 
     private void renderText(Context leguiContext, long context, TextInput gui, Vector2f size, Vector4f rect, Vector4f bc) {
 
-        NVGGlyphPosition.Buffer glyphs = NVGGlyphPosition.create(maxGlyphCount);
-        NVGColor colorA = NVGColor.create();
+        NVGGlyphPosition.Buffer glyphs = NVGGlyphPosition.calloc(maxGlyphCount);
+        NVGColor colorA = NVGColor.calloc();
 
         TextState textState = gui.getTextState();
         String text = textState.getText();
@@ -228,7 +228,7 @@ public class NvgTextInputRenderer extends NvgComponentRenderer<TextInput> {
             mouseCaretX -= poffset;
             float nCaretX = caretx - poffset;
 
-            drawSelection(context, rect, bc, highlightColor,
+            drawSelection(context, rect, highlightColor,
                 startSelectionIndex, endSelectionIndex,
                 focused, startSelectionX, endSelectionX, poffset);
             // render text
@@ -265,12 +265,10 @@ public class NvgTextInputRenderer extends NvgComponentRenderer<TextInput> {
         metadata.put(PRATIO, ratio);
     }
 
-    private void drawSelection(long context, Vector4f rect, Vector4f bc, Vector4f highlightColor,
+    private void drawSelection(long context, Vector4f rect, Vector4f highlightColor,
         int startSelectionIndex, int endSelectionIndex, boolean focused,
         float startSelectionX, float endSelectionX, Float poffset) {
         if (focused) {
-            // calculate caret color based on time
-
             // draw selection
             if (startSelectionIndex != endSelectionIndex) {
                 drawRectangle(context, highlightColor, startSelectionX - poffset, rect.y, endSelectionX - startSelectionX, rect.w);

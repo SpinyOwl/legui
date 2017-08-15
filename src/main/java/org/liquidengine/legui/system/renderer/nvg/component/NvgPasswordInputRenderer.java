@@ -103,8 +103,8 @@ public class NvgPasswordInputRenderer extends NvgComponentRenderer<PasswordInput
      */
     private void renderText(Context leguiContext, long context, PasswordInput gui, Vector2f size, Vector4f rect, Vector4f bc) {
 
-        NVGGlyphPosition.Buffer glyphs = NVGGlyphPosition.create(maxGlyphCount);
-        NVGColor colorA = NVGColor.create();
+        NVGGlyphPosition.Buffer glyphs = NVGGlyphPosition.calloc(maxGlyphCount);
+        NVGColor colorA = NVGColor.calloc();
 
         TextState textState = gui.getTextState();
         String text = textState.getText();
