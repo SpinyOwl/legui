@@ -32,22 +32,6 @@ public class Layer<T extends Component> {
      */
     private boolean eventReceivable = true;
 
-//    private boolean enabled;
-//    private boolean visible;
-
-//    /**
-//     * Default constructor.
-//     */
-//    public Layer() {
-//        initialize();
-//    }
-
-//    /**
-//     * Used to initialize layer and layer container.
-//     */
-//    private void initialize() {
-//    }
-
     /**
      * Returns frame to which attached this layer.
      *
@@ -130,8 +114,6 @@ public class Layer<T extends Component> {
             .append(getContainer())
             .append(isEventPassable())
             .append(isEventReceivable())
-//                .append(enabled)
-//                .append(visible)
             .toHashCode();
     }
 
@@ -150,8 +132,6 @@ public class Layer<T extends Component> {
         return new EqualsBuilder()
             .append(isEventPassable(), layer.isEventPassable())
             .append(isEventReceivable(), layer.isEventReceivable())
-//                .append(enabled, layer.enabled)
-//                .append(visible, layer.visible)
             .append(getContainer(), layer.getContainer())
             .isEquals();
     }
@@ -162,8 +142,6 @@ public class Layer<T extends Component> {
             .append("container", getContainer())
             .append("eventPassable", isEventPassable())
             .append("eventReceivable", isEventReceivable())
-//                .append("enabled", enabled)
-//                .append("visible", visible)
             .toString();
     }
 }

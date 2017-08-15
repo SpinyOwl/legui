@@ -56,9 +56,17 @@ public class NvgTextInputRenderer extends NvgComponentRenderer<TextInput> {
     private final Vector4f caretColor = new Vector4f(0, 0, 0, 0.5f);
     private final int maxGlyphCount = 1024;
 
+
+    /**
+     * Used to render textInput.
+     *
+     * @param textInput textInput to render.
+     * @param context legui context.
+     * @param nanovg nanovg context pointer.
+     */
     @Override
-    public void renderComponent(TextInput textInput, Context leguiContext, long context) {
-        createScissor(context, textInput);
+    protected void renderComponent(TextInput textInput, Context context, long nanovg) {
+        createScissor(nanovg, textInput);
         {
             Vector2f pos = textInput.getScreenPosition();
             Vector2f size = textInput.getSize();
@@ -73,22 +81,22 @@ public class NvgTextInputRenderer extends NvgComponentRenderer<TextInput> {
             if (!textInput.isEditable()) {
                 bc.w *= 0.3f;
             }
-            drawBackground(context, pos.x, pos.y, size.x, size.y, textInput.getCornerRadius(), bc);
+            drawBackground(nanovg, pos.x, pos.y, size.x, size.y, textInput.getCornerRadius(), bc);
 
             TextState textState = textInput.getTextState();
             Vector4f p = new Vector4f(textState.getPadding()).add(2, 2, 2, 2);
 
             Vector4f intersectRect = new Vector4f(pos.x + p.x, pos.y + p.y, size.x - p.x - p.z, size.y - p.y - p.w);
-            intersectScissor(context, new Vector4f(intersectRect).sub(1, 1, -2, -2));
-            renderText(leguiContext, context, textInput, size, intersectRect, bc);
+            intersectScissor(nanovg, new Vector4f(intersectRect).sub(1, 1, -2, -2));
+            renderText(context, nanovg, textInput, size, intersectRect, bc);
         }
-        resetScissor(context);
+        resetScissor(nanovg);
 
-        createScissor(context, textInput);
+        createScissor(nanovg, textInput);
         {
-            renderBorder(textInput, leguiContext);
+            renderBorder(textInput, context);
         }
-        resetScissor(context);
+        resetScissor(nanovg);
     }
 
     private void renderText(Context leguiContext, long context, TextInput gui, Vector2f size, Vector4f rect, Vector4f bc) {
@@ -348,5 +356,4 @@ public class NvgTextInputRenderer extends NvgComponentRenderer<TextInput> {
             colorA.free();
         }
     }
-
 }
