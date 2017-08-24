@@ -3,6 +3,7 @@ package org.liquidengine.legui.system.processor;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.event.CharEvent;
+import org.liquidengine.legui.listener.EventProcessor;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.event.SystemCharEvent;
 
@@ -18,6 +19,6 @@ public class CharEventHandler implements SystemEventHandler<SystemCharEvent> {
             return;
         }
 
-        context.getEventProcessor().pushEvent(new CharEvent(focusedGui, context, frame, event.codepoint));
+        EventProcessor.getInstance().pushEvent(new CharEvent(focusedGui, context, frame, event.codepoint));
     }
 }

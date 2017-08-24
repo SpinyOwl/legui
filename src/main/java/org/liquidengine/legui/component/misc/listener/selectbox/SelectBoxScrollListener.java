@@ -4,6 +4,7 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.liquidengine.legui.component.ScrollBar;
 import org.liquidengine.legui.event.ScrollEvent;
+import org.liquidengine.legui.listener.EventProcessor;
 import org.liquidengine.legui.listener.ScrollEventListener;
 
 /**
@@ -19,8 +20,9 @@ public class SelectBoxScrollListener implements ScrollEventListener {
 
     @Override
     public void process(ScrollEvent event) {
-        ScrollEvent newEvent = new ScrollEvent(bar, event.getContext(), event.getFrame(), event.getXoffset(), event.getYoffset());
-        event.getContext().getEventProcessor().pushEvent(newEvent);
+        ScrollEvent<ScrollBar> newEvent
+                = new ScrollEvent<>(bar, event.getContext(), event.getFrame(), event.getXoffset(), event.getYoffset());
+        EventProcessor.getInstance().pushEvent(newEvent);
     }
 
     @Override
@@ -36,14 +38,14 @@ public class SelectBoxScrollListener implements ScrollEventListener {
         SelectBoxScrollListener that = (SelectBoxScrollListener) o;
 
         return new EqualsBuilder()
-            .append(bar, that.bar)
-            .isEquals();
+                .append(bar, that.bar)
+                .isEquals();
     }
 
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
-            .append(bar)
-            .toHashCode();
+                .append(bar)
+                .toHashCode();
     }
 }

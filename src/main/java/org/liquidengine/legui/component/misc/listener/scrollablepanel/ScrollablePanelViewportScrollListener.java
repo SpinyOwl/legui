@@ -9,6 +9,7 @@ import org.liquidengine.legui.component.misc.event.scrollbar.ScrollBarChangeValu
 import org.liquidengine.legui.event.ScrollEvent;
 import org.liquidengine.legui.input.Mouse;
 import org.liquidengine.legui.listener.EventListener;
+import org.liquidengine.legui.listener.EventProcessor;
 import org.liquidengine.legui.system.processor.SehUtil;
 
 /**
@@ -47,7 +48,7 @@ public class ScrollablePanelViewportScrollListener implements EventListener<Scro
             newVal = minValue;
         }
 
-        event.getContext().getEventProcessor().pushEvent(new ScrollBarChangeValueEvent<>(scrollBar, event.getContext(), event.getFrame(), curValue, newVal));
+        EventProcessor.getInstance().pushEvent(new ScrollBarChangeValueEvent<>(scrollBar, event.getContext(), event.getFrame(), curValue, newVal));
         scrollBar.setCurValue(newVal);
 
         Viewport viewport = scrollBar.getViewport();

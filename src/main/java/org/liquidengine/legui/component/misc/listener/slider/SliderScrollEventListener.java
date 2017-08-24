@@ -3,6 +3,7 @@ package org.liquidengine.legui.component.misc.listener.slider;
 import org.liquidengine.legui.component.Slider;
 import org.liquidengine.legui.component.misc.event.slider.SliderChangeValueEvent;
 import org.liquidengine.legui.event.ScrollEvent;
+import org.liquidengine.legui.listener.EventProcessor;
 import org.liquidengine.legui.listener.ScrollEventListener;
 
 /**
@@ -23,7 +24,7 @@ public class SliderScrollEventListener implements ScrollEventListener {
             value = Slider.MIN_VALUE;
         }
 
-        event.getContext().getEventProcessor().pushEvent(new SliderChangeValueEvent(slider, event.getContext(), event.getFrame(), slider.getValue(), value));
+        EventProcessor.getInstance().pushEvent(new SliderChangeValueEvent(slider, event.getContext(), event.getFrame(), slider.getValue(), value));
         slider.setValue(value);
     }
 

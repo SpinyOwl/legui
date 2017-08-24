@@ -1,13 +1,14 @@
 package org.liquidengine.legui.component;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Default structure which should be associated with OpenGL window. Contains two default layers: <ul> <li>Component layer - holds components and always on
@@ -29,6 +30,15 @@ public class Frame {
      */
     private List<Layer> layers = new CopyOnWriteArrayList<>();
 
+//    /**
+//     * Holds related to this frame data shared between renderer and event processors: <br>
+//     * <ul>
+//     *     <li>system event handlers - {@link org.liquidengine.legui.system.processor.SystemEventHandler} childs.</li>
+//     *     <li>legui event listeners - {@link org.liquidengine.legui.listener.EventListener} childs.</li>
+//     * </ul>
+//     */
+//    private Context context = new Context();
+
     /**
      * Used to create frame and initialize layers with specified size.
      *
@@ -43,11 +53,11 @@ public class Frame {
      * Default frame constructor.
      */
     public Frame() {
-        initialize(0, 0);
+        initialize(10, 10);
     }
 
     /**
-     * Used to create frame and initialize layers with specified size.
+     * Used to create frame and initialize layer containers with specified size.
      *
      * @param size size.
      */
@@ -58,8 +68,8 @@ public class Frame {
     /**
      * Used to initialize frame and layers.
      *
-     * @param width initial window width.
-     * @param height initial window height.
+     * @param width initial layer containers width.
+     * @param height initial layer containers height.
      */
     private void initialize(float width, float height) {
         tooltipLayer = new TooltipLayer();
@@ -70,7 +80,8 @@ public class Frame {
     }
 
     /**
-     * Used to set frame size (if frame created with default constructor).
+     * Used to set layer containers size.
+     * NOTE: All LayerContainers will be resized to specified size!
      *
      * @param size frame size.
      */
@@ -79,7 +90,8 @@ public class Frame {
     }
 
     /**
-     * Used to set frame size (if frame created with default constructor).
+     * Used to set layer containers size.
+     * NOTE: All LayerContainers will be resized to specified size!
      *
      * @param width width.
      * @param height height.

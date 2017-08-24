@@ -6,6 +6,7 @@ import org.liquidengine.legui.component.misc.event.slider.SliderChangeValueEvent
 import org.liquidengine.legui.component.optional.Orientation;
 import org.liquidengine.legui.event.MouseDragEvent;
 import org.liquidengine.legui.input.Mouse;
+import org.liquidengine.legui.listener.EventProcessor;
 import org.liquidengine.legui.listener.MouseDragEventListener;
 
 /**
@@ -38,7 +39,7 @@ public class SliderMouseDragEventListener implements MouseDragEventListener {
             value = Slider.MIN_VALUE;
         }
 
-        event.getContext().getEventProcessor().pushEvent(new SliderChangeValueEvent(slider, event.getContext(), event.getFrame(), slider.getValue(), value));
+        EventProcessor.getInstance().pushEvent(new SliderChangeValueEvent(slider, event.getContext(), event.getFrame(), slider.getValue(), value));
         slider.setValue(value);
     }
 

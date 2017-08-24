@@ -1,8 +1,7 @@
 package org.liquidengine.legui.component.misc.listener.scrollbar;
 
-import static org.liquidengine.legui.input.Mouse.MouseButton.MOUSE_BUTTON_LEFT;
-
 import org.joml.Vector2f;
+import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.component.ScrollBar;
 import org.liquidengine.legui.component.Viewport;
 import org.liquidengine.legui.component.misc.event.scrollbar.ScrollBarChangeValueEvent;
@@ -12,6 +11,9 @@ import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.input.Mouse;
 import org.liquidengine.legui.listener.EventProcessor;
 import org.liquidengine.legui.listener.MouseClickEventListener;
+import org.liquidengine.legui.system.context.Context;
+
+import static org.liquidengine.legui.input.Mouse.MouseButton.MOUSE_BUTTON_LEFT;
 
 /**
  * Default mouse click event listener for scrollbar. Generates {@link ScrollBarChangeValueEvent} event.
@@ -97,8 +99,10 @@ public class ScrollBarMouseClickEventListener implements MouseClickEventListener
         } else if (newValue < minValue) {
             valueToUse = minValue;
         }
-        EventProcessor processor = event.getContext().getEventProcessor();
-        processor.pushEvent(new ScrollBarChangeValueEvent<>(scrollBar, event.getContext(), event.getFrame(), scrollBar.getCurValue(), valueToUse));
+        Context context = event.getContext();
+        Frame frame = event.getFrame();
+        float curValue = scrollBar.getCurValue();
+        EventProcessor.getInstance().pushEvent(new ScrollBarChangeValueEvent<>(scrollBar, context, frame, curValue, valueToUse));
         scrollBar.setCurValue(valueToUse);
 
         Viewport viewport = scrollBar.getViewport();

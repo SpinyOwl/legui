@@ -50,7 +50,6 @@ public class SystemEventHandlerProvider {
     }
 
     private static class LSEPPH {
-
         private static final SystemEventHandlerProvider I = new SystemEventHandlerProvider();
     }
 }

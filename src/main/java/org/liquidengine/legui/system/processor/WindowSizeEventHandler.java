@@ -7,6 +7,7 @@ import org.liquidengine.legui.component.Container;
 import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.component.Layer;
 import org.liquidengine.legui.event.WindowSizeEvent;
+import org.liquidengine.legui.listener.EventProcessor;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.event.SystemWindowSizeEvent;
 
@@ -33,7 +34,7 @@ public class WindowSizeEventHandler implements SystemEventHandler<SystemWindowSi
         if (!component.isVisible() || !component.isEnabled()) {
             return;
         }
-        context.getEventProcessor().pushEvent(new WindowSizeEvent(component, context, frame, event.width, event.height));
+        EventProcessor.getInstance().pushEvent(new WindowSizeEvent(component, context, frame, event.width, event.height));
         if (component instanceof Container) {
             List<Component> childs = ((Container) component).getChilds();
             for (Component child : childs) {
