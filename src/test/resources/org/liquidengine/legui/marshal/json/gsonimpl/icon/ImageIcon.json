@@ -6,5 +6,8 @@
   },
   "horizontalAlign": "CENTER",
   "verticalAlign": "MIDDLE",
-  "path": "test/image.png"
+  "image": {
+    "@class":"org.liquidengine.legui.image.DummyImage",
+    "path": "test/image.png"
+  }
 }

@@ -14,14 +14,14 @@ import org.liquidengine.legui.marshal.json.gsonimpl.GsonMarshallingTestBase;
 /**
  * Test for ImageIcon Gson Marshaller.
  */
-public class GsonImageIconMarshallerTest extends GsonMarshallingTestBase {
+public class GsonLoadableImageIconMarshallerTest extends GsonMarshallingTestBase {
 
-    private ImageIcon icon = new ImageIcon(new Vector2f(16), ImageLoader.loadImage("test/image.png"));
-    private GsonImageIconMarshaller<ImageIcon> marshaller = new GsonImageIconMarshaller<>();
-    private String pathToJson = "org/liquidengine/legui/marshal/json/gsonimpl/icon/ImageIcon.json";
+    private ImageIcon                                  icon       = new ImageIcon(new Vector2f(16), ImageLoader.loadImage("test/image.png"));
+    private GsonLoadableImageIconMarshaller<ImageIcon> marshaller = new GsonLoadableImageIconMarshaller<>();
+    private String                                     pathToJson = "org/liquidengine/legui/marshal/json/gsonimpl/icon/ImageIcon.json";
 
     /**
-     * Used to test {@link GsonImageIconMarshaller#marshal(Object, JsonMarshalContext)} method of marshaller.
+     * Used to test {@link GsonLoadableImageIconMarshaller#marshal(Object, JsonMarshalContext)} method of marshaller.
      *
      * @throws Exception if any exception occurred.
      */
@@ -33,7 +33,7 @@ public class GsonImageIconMarshallerTest extends GsonMarshallingTestBase {
     }
 
     /**
-     * Used to test {@link GsonImageIconMarshaller#unmarshal(JsonElement, GsonMarshalContext)} method of marshaller.
+     * Used to test {@link GsonLoadableImageIconMarshaller#unmarshal(JsonElement, GsonMarshalContext)} method of marshaller.
      *
      * @throws Exception if any exception occurred.
      */
