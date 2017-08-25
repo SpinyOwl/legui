@@ -106,13 +106,9 @@ public class NvgRenderer extends Renderer {
 
     @Override
     public void initialize() {
-        int flags = NanoVGGL3.NVG_STENCIL_STROKES | NanoVGGL3.NVG_ANTIALIAS | NanoVGGL3.NVG_DEBUG;
+        int flags = NanoVGGL3.NVG_STENCIL_STROKES | NanoVGGL3.NVG_ANTIALIAS;
         nvgContext = NanoVGGL3.nvgCreate(flags);
-        System.out.println(nvgContext);
         imageReferenceManager = new NvgLoadableImageReferenceManager();
-
-//        loadFontsToNvg();
-
         provider.getComponentRenderers().forEach(ComponentRenderer::initialize);
     }
 
