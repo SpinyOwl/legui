@@ -1,19 +1,19 @@
 package org.liquidengine.legui.marshal.json.gsonimpl.icon;
 
-import static org.liquidengine.legui.marshal.JsonConstants.PATH;
-import static org.liquidengine.legui.marshal.json.gsonimpl.GsonUtil.isNotNull;
-
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.liquidengine.legui.icon.ImageIcon;
-import org.liquidengine.legui.image.loader.ImageLoader;
 import org.liquidengine.legui.marshal.json.gsonimpl.GsonMarshalContext;
+import org.liquidengine.legui.marshal.json.gsonimpl.GsonMarshalUtil;
 import org.liquidengine.legui.marshal.json.gsonimpl.GsonUtil;
+
+import static org.liquidengine.legui.marshal.JsonConstants.IMAGE;
+import static org.liquidengine.legui.marshal.json.gsonimpl.GsonUtil.isNotNull;
 
 /**
  * Used to marshal/unmarshal from/to {@link ImageIcon} object.
  */
-public class GsonImageIconMarshaller<I extends ImageIcon> extends GsonIconMarshaller<I> {
+public class GsonLoadableImageIconMarshaller<I extends ImageIcon> extends GsonIconMarshaller<I> {
 
     /**
      * Reads data from object and puts it to json object.
@@ -25,8 +25,7 @@ public class GsonImageIconMarshaller<I extends ImageIcon> extends GsonIconMarsha
     @Override
     protected void marshal(I object, JsonObject json, GsonMarshalContext context) {
         super.marshal(object, json, context);
-        GsonUtil.fill(json)
-            .add(PATH, object.getImage().getPath());
+        GsonUtil.fill(json).add(IMAGE, GsonMarshalUtil.marshalToJson(object.getImage()));
     }
 
     /**
@@ -40,9 +39,9 @@ public class GsonImageIconMarshaller<I extends ImageIcon> extends GsonIconMarsha
     protected void unmarshal(JsonObject json, I object, GsonMarshalContext context) {
         super.unmarshal(json, object, context);
 
-        JsonElement path = json.get(PATH);
-        if (isNotNull(path)) {
-            object.setImage(ImageLoader.loadImage(path.getAsString()));
+        JsonElement image = json.get(IMAGE);
+        if (isNotNull(image)) {
+            object.setImage(GsonMarshalUtil.unmarshal(image.getAsJsonObject()));
         }
     }
 }

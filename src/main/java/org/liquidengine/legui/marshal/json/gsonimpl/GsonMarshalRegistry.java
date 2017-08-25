@@ -68,7 +68,7 @@ import org.liquidengine.legui.marshal.json.gsonimpl.component.GsonWidgetMarshall
 import org.liquidengine.legui.marshal.json.gsonimpl.component.optional.GsonTextStateMarshaller;
 import org.liquidengine.legui.marshal.json.gsonimpl.icon.GsonCharIconMarshaller;
 import org.liquidengine.legui.marshal.json.gsonimpl.icon.GsonIconMarshaller;
-import org.liquidengine.legui.marshal.json.gsonimpl.icon.GsonImageIconMarshaller;
+import org.liquidengine.legui.marshal.json.gsonimpl.icon.GsonLoadableImageIconMarshaller;
 import org.liquidengine.legui.marshal.json.gsonimpl.image.GsonBufferedImageMarshaller;
 import org.liquidengine.legui.marshal.json.gsonimpl.image.GsonLoadableImageMarshaller;
 import org.liquidengine.legui.marshal.json.gsonimpl.intersector.GsonIntersectorMarshaller;
@@ -192,7 +192,7 @@ public class GsonMarshalRegistry implements JsonMarshalRegistry {
             // icons
             // TODO: Add CharIcon and ImageIcon marshaller.
             I.registerMarshaller("Icon", Icon.class, new GsonIconMarshaller<>());
-            I.registerMarshaller("ImageIcon", ImageIcon.class, new GsonImageIconMarshaller<>());
+            I.registerMarshaller("ImageIcon", ImageIcon.class, new GsonLoadableImageIconMarshaller<>());
             I.registerMarshaller("CharIcon", CharIcon.class, new GsonCharIconMarshaller<>());
 
             //image

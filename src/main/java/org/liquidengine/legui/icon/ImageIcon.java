@@ -5,33 +5,33 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
-import org.liquidengine.legui.image.LoadableImage;
+import org.liquidengine.legui.image.Image;
 
 /**
  * Created by Aliaksandr_Shcherbin on 3/10/2017.
  */
 public class ImageIcon extends Icon {
 
-    private LoadableImage image;
+    private Image image;
 
     public ImageIcon() {
     }
 
-    public ImageIcon(Vector2f size, LoadableImage image) {
+    public ImageIcon(Vector2f size, Image image) {
         super(size);
         this.image = image;
     }
 
-    public ImageIcon(LoadableImage image) {
+    public ImageIcon(Image image) {
         super(new Vector2f(image.getWidth(), image.getHeight()));
         this.image = image;
     }
 
-    public LoadableImage getImage() {
+    public Image getImage() {
         return image;
     }
 
-    public void setImage(LoadableImage image) {
+    public void setImage(Image image) {
         this.image = image;
     }
 
