@@ -1,4 +1,4 @@
-package org.liquidengine.legui.system.processor;
+package org.liquidengine.legui.system.handler;
 
 import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
 
@@ -12,7 +12,7 @@ import org.liquidengine.legui.component.Widget;
 import org.liquidengine.legui.event.FocusEvent;
 import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.input.Mouse;
-import org.liquidengine.legui.listener.EventProcessor;
+import org.liquidengine.legui.listener.processor.EventProcessor;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.event.SystemMouseClickEvent;
 import org.lwjgl.glfw.GLFW;

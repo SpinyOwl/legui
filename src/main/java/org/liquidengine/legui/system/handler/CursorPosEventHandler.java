@@ -1,4 +1,4 @@
-package org.liquidengine.legui.system.processor;
+package org.liquidengine.legui.system.handler;
 
 import java.util.Collections;
 import java.util.List;
@@ -10,7 +10,7 @@ import org.liquidengine.legui.component.Layer;
 import org.liquidengine.legui.event.CursorEnterEvent;
 import org.liquidengine.legui.event.MouseDragEvent;
 import org.liquidengine.legui.input.Mouse;
-import org.liquidengine.legui.listener.EventProcessor;
+import org.liquidengine.legui.listener.processor.EventProcessor;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.event.SystemCursorPosEvent;
 

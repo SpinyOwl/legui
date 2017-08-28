@@ -1,4 +1,4 @@
-package org.liquidengine.legui.listener;
+package org.liquidengine.legui.listener.processor;
 
 import org.liquidengine.legui.event.Event;
 

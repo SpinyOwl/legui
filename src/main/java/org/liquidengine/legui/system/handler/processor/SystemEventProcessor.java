@@ -1,9 +1,11 @@
-package org.liquidengine.legui.system.processor;
+package org.liquidengine.legui.system.handler.processor;
 
 import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.system.context.CallbackKeeper;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.event.*;
+import org.liquidengine.legui.system.handler.SystemEventHandler;
+import org.liquidengine.legui.system.handler.SystemEventHandlerProvider;
 import org.lwjgl.glfw.*;
 
 import java.util.Queue;

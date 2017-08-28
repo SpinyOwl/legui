@@ -9,8 +9,8 @@ import org.liquidengine.legui.component.misc.event.scrollbar.ScrollBarChangeValu
 import org.liquidengine.legui.event.ScrollEvent;
 import org.liquidengine.legui.input.Mouse;
 import org.liquidengine.legui.listener.EventListener;
-import org.liquidengine.legui.listener.EventProcessor;
-import org.liquidengine.legui.system.processor.SehUtil;
+import org.liquidengine.legui.listener.processor.EventProcessor;
+import org.liquidengine.legui.system.handler.SehUtil;
 
 /**
  * Created by ShchAlexander on 23.07.2017.

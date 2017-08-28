@@ -1,22 +1,22 @@
-package org.liquidengine.legui.system.processor;
+package org.liquidengine.legui.system.handler;
 
 import java.util.List;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.Container;
 import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.component.Layer;
-import org.liquidengine.legui.event.WindowRefreshEvent;
-import org.liquidengine.legui.listener.EventProcessor;
+import org.liquidengine.legui.event.WindowCloseEvent;
+import org.liquidengine.legui.listener.processor.EventProcessor;
 import org.liquidengine.legui.system.context.Context;
-import org.liquidengine.legui.system.event.SystemWindowRefreshEvent;
+import org.liquidengine.legui.system.event.SystemWindowCloseEvent;
 
 /**
- * Created by Aliaksandr_Shcherbin on 2/2/2017.
+ * Created by ShchAlexander on 03.02.2017.
  */
-public class WindowRefreshEventHandler extends AbstractSystemEventHandler<SystemWindowRefreshEvent> {
+public class WindowCloseEventHandler extends AbstractSystemEventHandler<SystemWindowCloseEvent> {
 
     @Override
-    protected boolean handle(SystemWindowRefreshEvent event, Layer layer, Context context, Frame frame) {
+    protected boolean handle(SystemWindowCloseEvent event, Layer layer, Context context, Frame frame) {
         pushEvent(layer.getContainer(), context, frame);
         return false;
     }
@@ -25,7 +25,7 @@ public class WindowRefreshEventHandler extends AbstractSystemEventHandler<System
         if (!(component.isVisible())) {
             return;
         }
-        EventProcessor.getInstance().pushEvent(new WindowRefreshEvent(component, context, frame));
+        EventProcessor.getInstance().pushEvent(new WindowCloseEvent(component, context, frame));
         if (component instanceof Container) {
             List<Component> childs = ((Container) component).getChilds();
             for (Component child : childs) {

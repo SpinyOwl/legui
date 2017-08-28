@@ -1,4 +1,4 @@
-package org.liquidengine.legui.system.processor;
+package org.liquidengine.legui.system.handler;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

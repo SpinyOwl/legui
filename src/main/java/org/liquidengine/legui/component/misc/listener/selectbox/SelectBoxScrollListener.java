@@ -4,7 +4,7 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.liquidengine.legui.component.ScrollBar;
 import org.liquidengine.legui.event.ScrollEvent;
-import org.liquidengine.legui.listener.EventProcessor;
+import org.liquidengine.legui.listener.processor.EventProcessor;
 import org.liquidengine.legui.listener.ScrollEventListener;
 
 /**

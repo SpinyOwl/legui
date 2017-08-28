@@ -1,4 +1,4 @@
-package org.liquidengine.legui.system.processor;
+package org.liquidengine.legui.system.handler;
 
 import java.util.List;
 import org.liquidengine.legui.component.Component;
@@ -6,7 +6,7 @@ import org.liquidengine.legui.component.Container;
 import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.component.Layer;
 import org.liquidengine.legui.event.WindowPosEvent;
-import org.liquidengine.legui.listener.EventProcessor;
+import org.liquidengine.legui.listener.processor.EventProcessor;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.event.SystemWindowPosEvent;
 
@@ -30,7 +30,7 @@ public class WindowPosEventHandler extends AbstractSystemEventHandler<SystemWind
     }
 
     /**
-     * Used to push {@link WindowPosEvent} instance of {@link org.liquidengine.legui.event.Event} to {@link org.liquidengine.legui.listener.EventProcessor}.
+     * Used to push {@link WindowPosEvent} instance of {@link org.liquidengine.legui.event.Event} to {@link EventProcessor}.
      *
      * @param component component for which should be created {@link WindowPosEvent}
      * @param event event to push.

@@ -1,10 +1,11 @@
-package org.liquidengine.legui.listener;
+package org.liquidengine.legui.listener.processor;
 
 import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.event.Event;
+import org.liquidengine.legui.listener.EventListener;
 
 /**
  * Created by Aliaksandr_Shcherbin on 1/25/2017.

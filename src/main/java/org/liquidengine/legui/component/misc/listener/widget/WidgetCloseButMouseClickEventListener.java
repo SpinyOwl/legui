@@ -5,7 +5,7 @@ import static org.liquidengine.legui.event.MouseClickEvent.MouseClickAction.CLIC
 import org.liquidengine.legui.component.Widget;
 import org.liquidengine.legui.component.misc.event.widget.WidgetCloseEvent;
 import org.liquidengine.legui.event.MouseClickEvent;
-import org.liquidengine.legui.listener.EventProcessor;
+import org.liquidengine.legui.listener.processor.EventProcessor;
 import org.liquidengine.legui.listener.MouseClickEventListener;
 
 /**
