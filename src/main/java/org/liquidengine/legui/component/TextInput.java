@@ -27,31 +27,6 @@ public class TextInput extends Controller implements TextComponent {
     protected TextState textState;
 
     /**
-     * Used to store caret position in text.
-     */
-    private int caretPosition;
-
-    /**
-     * Used to store caret position calculated on mouse position base. Updated by renderers.
-     */
-    private int mouseCaretPosition;
-
-    /**
-     * Used to store start selection index.
-     */
-    private int startSelectionIndex;
-
-    /**
-     * Used to store end selection index.
-     */
-    private int endSelectionIndex;
-
-    /**
-     * Used to store text input editable state. If true then text could be updated by user input.
-     */
-    private boolean editable = true;
-
-    /**
      * Default constructor. Used to create component instance without any parameters. <p> Also if you want to make it easy to use with Json
      * marshaller/unmarshaller component should contain empty constructor.
      */
@@ -84,8 +59,8 @@ public class TextInput extends Controller implements TextComponent {
     }
 
     /**
-     * Default constructor with text to set. <p> Also if you want to make it easy to use with Json marshaller/unmarshaller component should contain empty
-     * constructor.
+     * Default constructor with text to set. <p> Also if you want to make it easy to use with Json marshaller/unmarshaller component should
+     * contain empty constructor.
      *
      * @param text text to set.
      */
@@ -142,7 +117,7 @@ public class TextInput extends Controller implements TextComponent {
      * @return mouse caret position.
      */
     public int getMouseCaretPosition() {
-        return mouseCaretPosition;
+        return textState.getMouseCaretPosition();
     }
 
     /**
@@ -151,7 +126,7 @@ public class TextInput extends Controller implements TextComponent {
      * @param mouseCaretPosition mouse caret position to set.
      */
     public void setMouseCaretPosition(int mouseCaretPosition) {
-        this.mouseCaretPosition = mouseCaretPosition;
+        textState.setMouseCaretPosition(mouseCaretPosition);
     }
 
     /**
@@ -160,7 +135,7 @@ public class TextInput extends Controller implements TextComponent {
      * @return true if text is editable.
      */
     public boolean isEditable() {
-        return editable;
+        return textState.isEditable();
     }
 
     /**
@@ -169,7 +144,7 @@ public class TextInput extends Controller implements TextComponent {
      * @param editable editable text or not.
      */
     public void setEditable(boolean editable) {
-        this.editable = editable;
+        textState.setEditable(editable);
     }
 
     /**
@@ -178,7 +153,7 @@ public class TextInput extends Controller implements TextComponent {
      * @return caret position.
      */
     public int getCaretPosition() {
-        return caretPosition;
+        return textState.getCaretPosition();
     }
 
     /**
@@ -187,7 +162,7 @@ public class TextInput extends Controller implements TextComponent {
      * @param caretPosition caret position to set.
      */
     public void setCaretPosition(int caretPosition) {
-        this.caretPosition = caretPosition;
+        textState.setCaretPosition(caretPosition);
     }
 
     /**
@@ -196,7 +171,7 @@ public class TextInput extends Controller implements TextComponent {
      * @return start selection index.
      */
     public int getStartSelectionIndex() {
-        return startSelectionIndex;
+        return textState.getStartSelectionIndex();
     }
 
     /**
@@ -205,7 +180,7 @@ public class TextInput extends Controller implements TextComponent {
      * @param startSelectionIndex start selection index to set.
      */
     public void setStartSelectionIndex(int startSelectionIndex) {
-        this.startSelectionIndex = startSelectionIndex;
+        textState.setStartSelectionIndex(startSelectionIndex);
     }
 
     /**
@@ -214,7 +189,7 @@ public class TextInput extends Controller implements TextComponent {
      * @return end selection index.
      */
     public int getEndSelectionIndex() {
-        return endSelectionIndex;
+        return textState.getEndSelectionIndex();
     }
 
     /**
@@ -223,7 +198,7 @@ public class TextInput extends Controller implements TextComponent {
      * @param endSelectionIndex end selection index to set.
      */
     public void setEndSelectionIndex(int endSelectionIndex) {
-        this.endSelectionIndex = endSelectionIndex;
+        textState.setEndSelectionIndex(endSelectionIndex);
     }
 
     /**
@@ -232,16 +207,7 @@ public class TextInput extends Controller implements TextComponent {
      * @return selected text.
      */
     public String getSelection() {
-        if (startSelectionIndex < 0 || endSelectionIndex < 0) {
-            return null;
-        }
-        String selection;
-        if (startSelectionIndex > endSelectionIndex) {
-            selection = textState.substring(endSelectionIndex, startSelectionIndex);
-        } else {
-            selection = textState.substring(startSelectionIndex, endSelectionIndex);
-        }
-        return selection;
+        return textState.getSelection();
     }
 
     /**
@@ -257,13 +223,8 @@ public class TextInput extends Controller implements TextComponent {
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-            .append("textState", textState)
-            .append("caretPosition", caretPosition)
-            .append("mouseCaretPosition", mouseCaretPosition)
-            .append("startSelectionIndex", startSelectionIndex)
-            .append("endSelectionIndex", endSelectionIndex)
-            .append("editable", editable)
-            .toString();
+                .append("textState", textState)
+                .toString();
     }
 
     @Override
@@ -279,27 +240,17 @@ public class TextInput extends Controller implements TextComponent {
         TextInput input = (TextInput) o;
 
         return new EqualsBuilder()
-            .appendSuper(super.equals(o))
-            .append(caretPosition, input.caretPosition)
-            .append(mouseCaretPosition, input.mouseCaretPosition)
-            .append(startSelectionIndex, input.startSelectionIndex)
-            .append(endSelectionIndex, input.endSelectionIndex)
-            .append(editable, input.editable)
-            .append(textState, input.textState)
-            .isEquals();
+                .appendSuper(super.equals(o))
+                .append(textState, input.textState)
+                .isEquals();
     }
 
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
-            .appendSuper(super.hashCode())
-            .append(textState)
-            .append(caretPosition)
-            .append(mouseCaretPosition)
-            .append(startSelectionIndex)
-            .append(endSelectionIndex)
-            .append(editable)
-            .toHashCode();
+                .appendSuper(super.hashCode())
+                .append(textState)
+                .toHashCode();
     }
 
 }
