@@ -78,6 +78,9 @@ compile group: 'org.liquidengine', name: 'legui', version: legui_version, changi
 
 ## Links
 [LWJGL - Lightweight Java Game Library 3](https://github.com/LWJGL/lwjgl3)
+
 [JOML – Java OpenGL Math Library](https://github.com/JOML-CI/JOML)
+
 [CBCHAIN - Callback Chain for LWJGL3](https://github.com/LiquidEngine/cbchain)
+
 [NanoVG -Small antialiased vector graphics rendering library for OpenGL.](https://github.com/memononen/nanovg)
