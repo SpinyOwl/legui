@@ -25,7 +25,8 @@ _**(This is too early stuff and it would be implemented in little bit new way th
 _**(Work in progress)**_
 ___
 # [LEGUI - What is it?](https://liquidengine.github.io/legui/)  
-GUI implementation for using with LWJGL3  
+GUI implementation for using with LWJGL3.
+Renderer made on top of NanoVG.
 
 # Contribution
 1. To contribute you can add your proposals in **issues** or fork and create pull request.
@@ -77,7 +78,6 @@ compile group: 'org.liquidengine', name: 'legui', version: legui_version, changi
 
 ## Links
 [LWJGL - Lightweight Java Game Library 3](https://github.com/LWJGL/lwjgl3)
-
 [JOML – Java OpenGL Math Library](https://github.com/JOML-CI/JOML)
-
 [CBCHAIN - Callback Chain for LWJGL3](https://github.com/LiquidEngine/cbchain)
+[NanoVG -Small antialiased vector graphics rendering library for OpenGL.](https://github.com/memononen/nanovg)
