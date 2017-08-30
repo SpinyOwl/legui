@@ -255,7 +255,7 @@ public class Widget extends Container<Component> {
      * @return height of title.
      */
     public float getTitleHeight() {
-        return title.getSize().y;
+        return titleContainer.getSize().y;
     }
 
     /**
@@ -264,6 +264,7 @@ public class Widget extends Container<Component> {
      * @param titleHeight title height to set.
      */
     public void setTitleHeight(float titleHeight) {
+        this.titleContainer.getSize().y = titleHeight;
         this.title.getSize().y = titleHeight;
         resize();
     }

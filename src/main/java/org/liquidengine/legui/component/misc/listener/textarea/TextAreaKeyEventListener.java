@@ -1,32 +1,14 @@
 package org.liquidengine.legui.component.misc.listener.textarea;
 
-import static org.liquidengine.legui.util.TextUtil.findNextWord;
-import static org.liquidengine.legui.util.TextUtil.findPrevWord;
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_A;
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_BACKSPACE;
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_C;
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_DELETE;
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_DOWN;
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_END;
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_ENTER;
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_HOME;
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_KP_ENTER;
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_LEFT;
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_RIGHT;
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_UP;
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_V;
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_X;
-import static org.lwjgl.glfw.GLFW.GLFW_MOD_CONTROL;
-import static org.lwjgl.glfw.GLFW.GLFW_MOD_SHIFT;
-import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
-import static org.lwjgl.glfw.GLFW.glfwGetClipboardString;
-import static org.lwjgl.glfw.GLFW.glfwSetClipboardString;
-
 import org.liquidengine.legui.component.TextArea;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.event.KeyEvent;
 import org.liquidengine.legui.listener.KeyEventListener;
 import org.liquidengine.legui.system.context.Context;
+
+import static org.liquidengine.legui.util.TextUtil.findNextWord;
+import static org.liquidengine.legui.util.TextUtil.findPrevWord;
+import static org.lwjgl.glfw.GLFW.*;
 
 /**
  * Key event listener. Used to provide some text operations by keyboard.
@@ -41,36 +23,34 @@ public class TextAreaKeyEventListener implements KeyEventListener {
     @Override
     public void process(KeyEvent event) {
         TextArea textArea = (TextArea) event.getComponent();
-        if (textArea.isFocused() && textArea.isEditable()) {
-            int key = event.getKey();
-            boolean pressed = event.getAction() != GLFW_RELEASE;
-            if (key == GLFW_KEY_LEFT && pressed) {
-                keyLeftAction(textArea, event.getMods());
-            } else if (key == GLFW_KEY_RIGHT && pressed) {
-                keyRightAction(textArea, event.getMods());
-            } else if (key == GLFW_KEY_UP && pressed) {
-                keyUpAction(textArea, event.getMods());
-            } else if (key == GLFW_KEY_DOWN && pressed) {
-                keyDownAction(textArea, event.getMods());
-            } else if (key == GLFW_KEY_HOME && pressed) {
-                keyHomeAction(textArea, event.getMods());
-            } else if (key == GLFW_KEY_END && pressed) {
-                keyEndAction(textArea, event.getMods());
-            } else if ((key == GLFW_KEY_ENTER || key == GLFW_KEY_KP_ENTER) && pressed) {
-                keyEnterAction(textArea);
-            } else if (key == GLFW_KEY_BACKSPACE && pressed) {
-                keyBackSpaceAction(textArea, event.getMods());
-            } else if (key == GLFW_KEY_DELETE && pressed) {
-                keyDeleteAction(textArea, event.getMods());
-            } else if (key == GLFW_KEY_V && pressed && event.getMods() == GLFW_MOD_CONTROL) {
-                pasteAction(textArea, event.getContext());
-            } else if (key == GLFW_KEY_C && pressed && event.getMods() == GLFW_MOD_CONTROL) {
-                copyAction(textArea, event.getContext());
-            } else if (key == GLFW_KEY_X && pressed && event.getMods() == GLFW_MOD_CONTROL) {
-                cutAction(textArea, event.getContext());
-            } else if (key == GLFW_KEY_A && pressed && event.getMods() == GLFW_MOD_CONTROL) {
-                selectAllAction(textArea);
-            }
+        int key = event.getKey();
+        boolean pressed = event.getAction() != GLFW_RELEASE;
+        if (key == GLFW_KEY_LEFT && pressed) {
+            keyLeftAction(textArea, event.getMods());
+        } else if (key == GLFW_KEY_RIGHT && pressed) {
+            keyRightAction(textArea, event.getMods());
+        } else if (key == GLFW_KEY_UP && pressed) {
+            keyUpAction(textArea, event.getMods());
+        } else if (key == GLFW_KEY_DOWN && pressed) {
+            keyDownAction(textArea, event.getMods());
+        } else if (key == GLFW_KEY_HOME && pressed) {
+            keyHomeAction(textArea, event.getMods());
+        } else if (key == GLFW_KEY_END && pressed) {
+            keyEndAction(textArea, event.getMods());
+        } else if ((key == GLFW_KEY_ENTER || key == GLFW_KEY_KP_ENTER) && pressed) {
+            keyEnterAction(textArea);
+        } else if (key == GLFW_KEY_BACKSPACE && pressed) {
+            keyBackSpaceAction(textArea, event.getMods());
+        } else if (key == GLFW_KEY_DELETE && pressed) {
+            keyDeleteAction(textArea, event.getMods());
+        } else if (key == GLFW_KEY_V && pressed && event.getMods() == GLFW_MOD_CONTROL) {
+            pasteAction(textArea, event.getContext());
+        } else if (key == GLFW_KEY_C && pressed && event.getMods() == GLFW_MOD_CONTROL) {
+            copyAction(textArea, event.getContext());
+        } else if (key == GLFW_KEY_X && pressed && event.getMods() == GLFW_MOD_CONTROL) {
+            cutAction(textArea, event.getContext());
+        } else if (key == GLFW_KEY_A && pressed && event.getMods() == GLFW_MOD_CONTROL) {
+            selectAllAction(textArea);
         }
     }
 
