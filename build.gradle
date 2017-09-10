@@ -27,6 +27,7 @@ def gson_version         = '2.7'
 def joml_version         = "1.9.3-SNAPSHOT"
 def lwjgl_version        = '3.1.2-SNAPSHOT'
 def le_cbchain           = '0.1.2'
+def le_util              = '0.0.1'
 //@formatter:on
 
 repositories {
@@ -48,6 +49,7 @@ dependencies {
     compile group: 'com.google.code.gson',       name: 'gson',                 version: gson_version,          changing: false
 
     compile group: 'org.liquidengine',           name: 'cbchain',              version: le_cbchain,            changing: true
+    compile group: 'org.liquidengine',           name: 'leutil',               version: le_util,               changing: true
 
     compile group: 'org.lwjgl',                  name: 'lwjgl-stb',            version: lwjgl_version,         changing: true
     runtime group: 'org.lwjgl',                  name: 'lwjgl-stb',            version: lwjgl_version,         changing: true,  classifier: 'natives-windows'

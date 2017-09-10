@@ -2,9 +2,10 @@ package org.liquidengine.legui.marshal.json.gsonimpl;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import java.io.IOException;
 import org.liquidengine.legui.image.DummyImageLoader;
 import org.liquidengine.legui.image.loader.ImageLoader;
-import org.liquidengine.legui.util.IOUtil;
+import org.liquidengine.leutil.io.IOUtil;
 
 /**
  * Used implement tests for Gson marshallers.
@@ -22,7 +23,12 @@ public class GsonMarshallingTestBase {
      * @return parsed {@link JsonObject} instance.
      */
     public JsonObject readJsonFromFile(String path) {
-        return new JsonParser().parse(IOUtil.loadResourceAsString(path)).getAsJsonObject();
+        try {
+            return new JsonParser().parse(IOUtil.resourceToString(path)).getAsJsonObject();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
 }

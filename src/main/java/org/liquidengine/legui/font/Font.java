@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.liquidengine.legui.util.IOUtil;
+import org.liquidengine.leutil.io.IOUtil;
 
 /**
  * Representation of font. Used by text components to specify font to use by renderer.
@@ -31,7 +31,7 @@ public class Font {
     public Font(String path) {
         this.path = path;
         try {
-            data = IOUtil.ioResourceToByteBuffer(path, 1024);
+            data = IOUtil.resourceToByteBuffer(path);
         } catch (IOException e) {
             throw FAILED_TO_LOAD_FONT.create(e, path);
         }
