@@ -1,8 +1,12 @@
 ## [Unreleased]
 
+## [1.1.10]
+### Fixed
+- Fixed issue with widget minimize button.
+
 ## [1.1.9]
 ### Fixed
-- Fixed some mistakes with generics diamonds
+- Fixed some mistakes with generics diamonds.
 
 ## [1.1.8] - 2017-08-29
 ### Fixed
