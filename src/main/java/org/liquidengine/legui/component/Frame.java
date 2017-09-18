@@ -194,7 +194,7 @@ public class Frame {
      *
      * @return container of default component layer.
      */
-    public Container getContainer() {
+    public Container<Component> getContainer() {
         return componentLayer.getContainer();
     }
 

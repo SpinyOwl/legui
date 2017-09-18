@@ -14,7 +14,7 @@ import org.liquidengine.legui.theme.Themes;
 /**
  * Panel with scroll bars.
  */
-public class ScrollablePanel<T extends Component> extends Container implements Viewport {
+public class ScrollablePanel<T extends Component> extends Container<Component> implements Viewport {
 
 
     private static final float INITIAL_SCROLL_SIZE = 8f;
@@ -208,7 +208,7 @@ public class ScrollablePanel<T extends Component> extends Container implements V
      *
      * @return container which should used to add components to scrollable panel.
      */
-    public Container getContainer() {
+    public Container<T> getContainer() {
         return container;
     }
 
@@ -217,7 +217,7 @@ public class ScrollablePanel<T extends Component> extends Container implements V
      *
      * @param container container which should used to add components to scrollable panel.
      */
-    public void setContainer(Container container) {
+    public void setContainer(Container<T> container) {
         viewport.remove(this.container);
         this.container = container;
         viewport.add(this.container);
