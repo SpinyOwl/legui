@@ -1,5 +1,7 @@
 package org.liquidengine.legui.component.misc.listener.scrollbar;
 
+import static org.liquidengine.legui.input.Mouse.MouseButton.MOUSE_BUTTON_LEFT;
+
 import org.joml.Vector2f;
 import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.component.ScrollBar;
@@ -9,11 +11,9 @@ import org.liquidengine.legui.component.optional.Orientation;
 import org.liquidengine.legui.event.Event;
 import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.input.Mouse;
-import org.liquidengine.legui.listener.processor.EventProcessor;
 import org.liquidengine.legui.listener.MouseClickEventListener;
+import org.liquidengine.legui.listener.processor.EventProcessor;
 import org.liquidengine.legui.system.context.Context;
-
-import static org.liquidengine.legui.input.Mouse.MouseButton.MOUSE_BUTTON_LEFT;
 
 /**
  * Default mouse click event listener for scrollbar. Generates {@link ScrollBarChangeValueEvent} event.

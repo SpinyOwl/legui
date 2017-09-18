@@ -1,14 +1,14 @@
 package org.liquidengine.legui.marshal.json.gsonimpl.icon;
 
+import static org.liquidengine.legui.marshal.JsonConstants.IMAGE;
+import static org.liquidengine.legui.marshal.json.gsonimpl.GsonUtil.isNotNull;
+
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.liquidengine.legui.icon.ImageIcon;
 import org.liquidengine.legui.marshal.json.gsonimpl.GsonMarshalContext;
 import org.liquidengine.legui.marshal.json.gsonimpl.GsonMarshalUtil;
 import org.liquidengine.legui.marshal.json.gsonimpl.GsonUtil;
-
-import static org.liquidengine.legui.marshal.JsonConstants.IMAGE;
-import static org.liquidengine.legui.marshal.json.gsonimpl.GsonUtil.isNotNull;
 
 /**
  * Used to marshal/unmarshal from/to {@link ImageIcon} object.

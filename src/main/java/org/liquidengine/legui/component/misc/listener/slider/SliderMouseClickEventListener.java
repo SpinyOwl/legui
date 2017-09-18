@@ -6,8 +6,8 @@ import org.liquidengine.legui.component.misc.event.slider.SliderChangeValueEvent
 import org.liquidengine.legui.component.optional.Orientation;
 import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.input.Mouse;
-import org.liquidengine.legui.listener.processor.EventProcessor;
 import org.liquidengine.legui.listener.MouseClickEventListener;
+import org.liquidengine.legui.listener.processor.EventProcessor;
 
 /**
  * Slider mouse click event listener. Used to change slider value. Generates slider value change event.

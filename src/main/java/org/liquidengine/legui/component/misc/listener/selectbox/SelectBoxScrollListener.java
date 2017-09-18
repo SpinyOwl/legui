@@ -4,8 +4,8 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.liquidengine.legui.component.ScrollBar;
 import org.liquidengine.legui.event.ScrollEvent;
-import org.liquidengine.legui.listener.processor.EventProcessor;
 import org.liquidengine.legui.listener.ScrollEventListener;
+import org.liquidengine.legui.listener.processor.EventProcessor;
 
 /**
  * Listener of scroll action which used to scroll expanded selectbox.
@@ -21,7 +21,7 @@ public class SelectBoxScrollListener implements ScrollEventListener {
     @Override
     public void process(ScrollEvent event) {
         ScrollEvent<ScrollBar> newEvent
-                = new ScrollEvent<>(bar, event.getContext(), event.getFrame(), event.getXoffset(), event.getYoffset());
+            = new ScrollEvent<>(bar, event.getContext(), event.getFrame(), event.getXoffset(), event.getYoffset());
         EventProcessor.getInstance().pushEvent(newEvent);
     }
 
@@ -38,14 +38,14 @@ public class SelectBoxScrollListener implements ScrollEventListener {
         SelectBoxScrollListener that = (SelectBoxScrollListener) o;
 
         return new EqualsBuilder()
-                .append(bar, that.bar)
-                .isEquals();
+            .append(bar, that.bar)
+            .isEquals();
     }
 
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
-                .append(bar)
-                .toHashCode();
+            .append(bar)
+            .toHashCode();
     }
 }

@@ -59,8 +59,7 @@ public class TextArea extends Controller implements TextComponent {
     }
 
     /**
-     * Default constructor with text. <p> Also if you want to make it easy to use with Json marshaller/unmarshaller component should contain
-     * empty constructor.
+     * Default constructor with text. <p> Also if you want to make it easy to use with Json marshaller/unmarshaller component should contain empty constructor.
      *
      * @param text text to set.
      */
@@ -232,24 +231,24 @@ public class TextArea extends Controller implements TextComponent {
         TextArea textArea = (TextArea) o;
 
         return new EqualsBuilder()
-                .appendSuper(super.equals(o))
-                .append(textState, textArea.textState)
-                .isEquals();
+            .appendSuper(super.equals(o))
+            .append(textState, textArea.textState)
+            .isEquals();
     }
 
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
-                .appendSuper(super.hashCode())
-                .append(textState)
-                .toHashCode();
+            .appendSuper(super.hashCode())
+            .append(textState)
+            .toHashCode();
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("textState", textState)
-                .toString();
+            .append("textState", textState)
+            .toString();
     }
 
 }

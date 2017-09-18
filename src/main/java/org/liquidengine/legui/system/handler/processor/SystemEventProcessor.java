@@ -1,15 +1,43 @@
 package org.liquidengine.legui.system.handler.processor;
 
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.system.context.CallbackKeeper;
 import org.liquidengine.legui.system.context.Context;
-import org.liquidengine.legui.system.event.*;
+import org.liquidengine.legui.system.event.SystemCharEvent;
+import org.liquidengine.legui.system.event.SystemCharModsEvent;
+import org.liquidengine.legui.system.event.SystemCursorEnterEvent;
+import org.liquidengine.legui.system.event.SystemCursorPosEvent;
+import org.liquidengine.legui.system.event.SystemDropEvent;
+import org.liquidengine.legui.system.event.SystemEvent;
+import org.liquidengine.legui.system.event.SystemFramebufferSizeEvent;
+import org.liquidengine.legui.system.event.SystemKeyEvent;
+import org.liquidengine.legui.system.event.SystemMouseClickEvent;
+import org.liquidengine.legui.system.event.SystemScrollEvent;
+import org.liquidengine.legui.system.event.SystemWindowCloseEvent;
+import org.liquidengine.legui.system.event.SystemWindowFocusEvent;
+import org.liquidengine.legui.system.event.SystemWindowIconifyEvent;
+import org.liquidengine.legui.system.event.SystemWindowPosEvent;
+import org.liquidengine.legui.system.event.SystemWindowRefreshEvent;
+import org.liquidengine.legui.system.event.SystemWindowSizeEvent;
 import org.liquidengine.legui.system.handler.SystemEventHandler;
 import org.liquidengine.legui.system.handler.SystemEventHandlerProvider;
-import org.lwjgl.glfw.*;
-
-import java.util.Queue;
-import java.util.concurrent.ConcurrentLinkedQueue;
+import org.lwjgl.glfw.GLFWCharCallbackI;
+import org.lwjgl.glfw.GLFWCharModsCallbackI;
+import org.lwjgl.glfw.GLFWCursorEnterCallbackI;
+import org.lwjgl.glfw.GLFWCursorPosCallbackI;
+import org.lwjgl.glfw.GLFWDropCallbackI;
+import org.lwjgl.glfw.GLFWFramebufferSizeCallbackI;
+import org.lwjgl.glfw.GLFWKeyCallbackI;
+import org.lwjgl.glfw.GLFWMouseButtonCallbackI;
+import org.lwjgl.glfw.GLFWScrollCallbackI;
+import org.lwjgl.glfw.GLFWWindowCloseCallbackI;
+import org.lwjgl.glfw.GLFWWindowFocusCallbackI;
+import org.lwjgl.glfw.GLFWWindowIconifyCallbackI;
+import org.lwjgl.glfw.GLFWWindowPosCallbackI;
+import org.lwjgl.glfw.GLFWWindowRefreshCallbackI;
+import org.lwjgl.glfw.GLFWWindowSizeCallbackI;
 
 /**
  * Created by Aliaksandr_Shcherbin on 1/25/2017.

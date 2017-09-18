@@ -22,30 +22,23 @@ import org.liquidengine.legui.font.FontRegistry;
 import org.liquidengine.legui.icon.Icon;
 import org.liquidengine.legui.image.Image;
 import org.liquidengine.legui.system.context.Context;
+import org.liquidengine.legui.system.renderer.AbstractRenderer;
 import org.liquidengine.legui.system.renderer.BorderRenderer;
 import org.liquidengine.legui.system.renderer.ComponentRenderer;
-import org.liquidengine.legui.system.renderer.Renderer;
+import org.liquidengine.legui.system.renderer.RendererProvider;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils;
 import org.lwjgl.nanovg.NanoVGGL3;
 
 /**
  * Created by Aliaksandr_Shcherbin on 1/26/2017.
  */
-public class NvgRenderer extends Renderer {
+public class NvgRenderer extends AbstractRenderer {
 
     public static final String NVG_CONTEXT = "NVG_CONTEXT";
     public static final String IMAGE_REFERENCE_MANAGER = "IMAGE_REFERENCE_MANAGER";
-
-    protected long nvgContext;
-    protected NvgRendererProvider provider;
-
     protected Map<String, Font> loadedFonts = new ConcurrentHashMap<>();
+    private long nvgContext;
     private NvgLoadableImageReferenceManager imageReferenceManager;
-
-    public NvgRenderer(/*Context context, */NvgRendererProvider provider) {
-//        super(context);
-        this.provider = provider;
-    }
 
     /**
      * Used to render border.
@@ -57,7 +50,7 @@ public class NvgRenderer extends Renderer {
         Border border = component.getBorder();
         if (border != null && border.isEnabled()) {
             // Render border
-            BorderRenderer borderRenderer = NvgRendererProvider.getInstance().getBorderRenderer(border.getClass());
+            BorderRenderer borderRenderer = RendererProvider.getInstance().getBorderRenderer(border.getClass());
             borderRenderer.render(border, component, context);
         }
     }
@@ -86,7 +79,7 @@ public class NvgRenderer extends Renderer {
      */
     public static void renderIcon(Icon icon, Component component, Context context) {
         if (icon != null && component != null) {
-            NvgRendererProvider.getInstance().getIconRenderer(icon.getClass()).render(icon, component, context);
+            RendererProvider.getInstance().getIconRenderer(icon.getClass()).render(icon, component, context);
         }
     }
 
@@ -100,7 +93,7 @@ public class NvgRenderer extends Renderer {
      */
     public static void renderImage(Image image, Vector2fc position, Vector2fc size, Map<String, Object> properties, Context context) {
         if (image != null) {
-            NvgRendererProvider.getInstance().getImageRenderer(image.getClass()).render(image, position, size, properties, context);
+            RendererProvider.getInstance().getImageRenderer(image.getClass()).render(image, position, size, properties, context);
         }
     }
 
@@ -109,7 +102,7 @@ public class NvgRenderer extends Renderer {
         int flags = NanoVGGL3.NVG_STENCIL_STROKES | NanoVGGL3.NVG_ANTIALIAS;
         nvgContext = NanoVGGL3.nvgCreate(flags);
         imageReferenceManager = new NvgLoadableImageReferenceManager();
-        provider.getComponentRenderers().forEach(ComponentRenderer::initialize);
+        RendererProvider.getInstance().getComponentRenderers().forEach(ComponentRenderer::initialize);
     }
 
     private void loadFontsToNvg() {
@@ -153,7 +146,7 @@ public class NvgRenderer extends Renderer {
     @Override
     public void destroy() {
         NanoVGGL3.nnvgDeleteGL3(nvgContext);
-        provider.getComponentRenderers().forEach(ComponentRenderer::destroy);
+        RendererProvider.getInstance().getComponentRenderers().forEach(ComponentRenderer::destroy);
         imageReferenceManager.destroy();
     }
 }

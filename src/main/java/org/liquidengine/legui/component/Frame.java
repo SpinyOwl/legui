@@ -1,14 +1,13 @@
 package org.liquidengine.legui.component;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Default structure which should be associated with OpenGL window. Contains two default layers: <ul> <li>Component layer - holds components and always on
@@ -80,8 +79,7 @@ public class Frame {
     }
 
     /**
-     * Used to set layer containers size.
-     * NOTE: All LayerContainers will be resized to specified size!
+     * Used to set layer containers size. NOTE: All LayerContainers will be resized to specified size!
      *
      * @param size frame size.
      */
@@ -90,8 +88,7 @@ public class Frame {
     }
 
     /**
-     * Used to set layer containers size.
-     * NOTE: All LayerContainers will be resized to specified size!
+     * Used to set layer containers size. NOTE: All LayerContainers will be resized to specified size!
      *
      * @param width width.
      * @param height height.

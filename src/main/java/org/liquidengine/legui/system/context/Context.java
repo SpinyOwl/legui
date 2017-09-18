@@ -1,13 +1,17 @@
 package org.liquidengine.legui.system.context;
 
-import org.joml.Vector2f;
-import org.joml.Vector2i;
-import org.liquidengine.legui.component.Component;
+import static org.lwjgl.glfw.GLFW.GLFW_ICONIFIED;
+import static org.lwjgl.glfw.GLFW.GLFW_TRUE;
+import static org.lwjgl.glfw.GLFW.glfwGetFramebufferSize;
+import static org.lwjgl.glfw.GLFW.glfwGetWindowAttrib;
+import static org.lwjgl.glfw.GLFW.glfwGetWindowPos;
+import static org.lwjgl.glfw.GLFW.glfwGetWindowSize;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
-import static org.lwjgl.glfw.GLFW.*;
+import org.joml.Vector2f;
+import org.joml.Vector2i;
+import org.liquidengine.legui.component.Component;
 
 /**
  * Created by Aliaksandr_Shcherbin on 1/25/2017.

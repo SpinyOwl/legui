@@ -59,8 +59,8 @@ public class TextInput extends Controller implements TextComponent {
     }
 
     /**
-     * Default constructor with text to set. <p> Also if you want to make it easy to use with Json marshaller/unmarshaller component should
-     * contain empty constructor.
+     * Default constructor with text to set. <p> Also if you want to make it easy to use with Json marshaller/unmarshaller component should contain empty
+     * constructor.
      *
      * @param text text to set.
      */
@@ -223,8 +223,8 @@ public class TextInput extends Controller implements TextComponent {
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("textState", textState)
-                .toString();
+            .append("textState", textState)
+            .toString();
     }
 
     @Override
@@ -240,17 +240,17 @@ public class TextInput extends Controller implements TextComponent {
         TextInput input = (TextInput) o;
 
         return new EqualsBuilder()
-                .appendSuper(super.equals(o))
-                .append(textState, input.textState)
-                .isEquals();
+            .appendSuper(super.equals(o))
+            .append(textState, input.textState)
+            .isEquals();
     }
 
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
-                .appendSuper(super.hashCode())
-                .append(textState)
-                .toHashCode();
+            .appendSuper(super.hashCode())
+            .append(textState)
+            .toHashCode();
     }
 
 }

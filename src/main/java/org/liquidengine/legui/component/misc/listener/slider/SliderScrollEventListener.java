@@ -3,8 +3,8 @@ package org.liquidengine.legui.component.misc.listener.slider;
 import org.liquidengine.legui.component.Slider;
 import org.liquidengine.legui.component.misc.event.slider.SliderChangeValueEvent;
 import org.liquidengine.legui.event.ScrollEvent;
-import org.liquidengine.legui.listener.processor.EventProcessor;
 import org.liquidengine.legui.listener.ScrollEventListener;
+import org.liquidengine.legui.listener.processor.EventProcessor;
 
 /**
  * Slider mouse scroll event listener.

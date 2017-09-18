@@ -42,8 +42,7 @@ public class NvgContainerRenderer extends NvgComponentRenderer<Container> {
 
         List<Component> all = component.getChilds();
         for (Component child : all) {
-            RendererProvider.getInstance().
-                getComponentRenderer(child.getClass()).render(child, context);
+            RendererProvider.getInstance().getComponentRenderer(child.getClass()).render(child, context);
         }
 
         renderBorderWScissor(component, context, nanovg);

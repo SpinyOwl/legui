@@ -4,8 +4,8 @@ import org.liquidengine.legui.component.ScrollBar;
 import org.liquidengine.legui.component.Viewport;
 import org.liquidengine.legui.component.misc.event.scrollbar.ScrollBarChangeValueEvent;
 import org.liquidengine.legui.event.ScrollEvent;
-import org.liquidengine.legui.listener.processor.EventProcessor;
 import org.liquidengine.legui.listener.ScrollEventListener;
+import org.liquidengine.legui.listener.processor.EventProcessor;
 
 /**
  * Default mouse scroll event listener for scrollbar. Generates {@link ScrollBarChangeValueEvent} event.

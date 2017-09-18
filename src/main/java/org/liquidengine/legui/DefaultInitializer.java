@@ -7,9 +7,7 @@ import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.context.DefaultCallbackKeeper;
 import org.liquidengine.legui.system.handler.processor.SystemEventProcessor;
 import org.liquidengine.legui.system.renderer.Renderer;
-import org.liquidengine.legui.system.renderer.RendererProvider;
 import org.liquidengine.legui.system.renderer.nvg.NvgRenderer;
-import org.liquidengine.legui.system.renderer.nvg.NvgRendererProvider;
 
 /**
  * Created by Aliaksandr_Shcherbin on 1/25/2017.
@@ -46,9 +44,7 @@ public class DefaultInitializer {
 
         // Also we need to create initialize renderer provider
         // and create renderer which will render our ui components.
-        NvgRendererProvider provider = NvgRendererProvider.getInstance();
-        RendererProvider.setRendererProvider(provider);
-        renderer = new NvgRenderer(provider);
+        renderer = new NvgRenderer();
     }
 
     public Context getContext() {

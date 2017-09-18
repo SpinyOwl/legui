@@ -57,7 +57,8 @@ public class NvgPasswordInputRenderer extends NvgComponentRenderer<PasswordInput
     private final int maxGlyphCount = 1024;
 
     @Override
-    public void renderComponent(PasswordInput passwordInput, Context leguiContext, long context) {
+    public void renderComponent(PasswordInput passwordInput, Context leguiContext,
+        long context) {
         createScissor(context, passwordInput);
         {
             Vector2f pos = passwordInput.getScreenPosition();

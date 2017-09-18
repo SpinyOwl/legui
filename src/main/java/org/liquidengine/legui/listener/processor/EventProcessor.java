@@ -6,6 +6,7 @@ import org.liquidengine.legui.event.Event;
  * @author Aliaksandr_Shcherbin.
  */
 public abstract class EventProcessor {
+
     private static EventProcessor INSTANCE = new EventProcessorImpl();
 
     public static EventProcessor getInstance() {
