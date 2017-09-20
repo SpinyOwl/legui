@@ -2,18 +2,14 @@ package org.liquidengine.legui.system.renderer.nvg.component;
 
 import static org.liquidengine.legui.color.ColorUtil.oppositeBlackOrWhite;
 import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderBorder;
-import static org.liquidengine.legui.system.renderer.nvg.util.NVGUtils.rgba;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgColorUtil.rgba;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.alignTextInBox;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.calculateTextBoundsRect;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.createScissor;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.drawRectangle;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.drawInScissor;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.intersectScissor;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.renderTextLineToBounds;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.resetScissor;
 import static org.lwjgl.nanovg.NanoVG.NVG_ROUND;
 import static org.lwjgl.nanovg.NanoVG.nnvgTextGlyphPositions;
 import static org.lwjgl.nanovg.NanoVG.nvgBeginPath;
-import static org.lwjgl.nanovg.NanoVG.nvgFill;
 import static org.lwjgl.nanovg.NanoVG.nvgFillColor;
 import static org.lwjgl.nanovg.NanoVG.nvgFontFace;
 import static org.lwjgl.nanovg.NanoVG.nvgFontSize;
@@ -21,8 +17,6 @@ import static org.lwjgl.nanovg.NanoVG.nvgLineCap;
 import static org.lwjgl.nanovg.NanoVG.nvgLineJoin;
 import static org.lwjgl.nanovg.NanoVG.nvgLineTo;
 import static org.lwjgl.nanovg.NanoVG.nvgMoveTo;
-import static org.lwjgl.nanovg.NanoVG.nvgRoundedRect;
-import static org.lwjgl.nanovg.NanoVG.nvgSave;
 import static org.lwjgl.nanovg.NanoVG.nvgStroke;
 import static org.lwjgl.nanovg.NanoVG.nvgStrokeColor;
 import static org.lwjgl.nanovg.NanoVG.nvgStrokeWidth;
@@ -41,6 +35,8 @@ import org.liquidengine.legui.component.optional.align.VerticalAlign;
 import org.liquidengine.legui.input.Mouse;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.nvg.NvgComponentRenderer;
+import org.liquidengine.legui.system.renderer.nvg.util.NvgShapes;
+import org.liquidengine.legui.system.renderer.nvg.util.NvgText;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.nanovg.NVGColor;
 import org.lwjgl.nanovg.NVGGlyphPosition;
@@ -66,8 +62,7 @@ public class NvgTextInputRenderer extends NvgComponentRenderer<TextInput> {
      */
     @Override
     protected void renderComponent(TextInput textInput, Context context, long nanovg) {
-        createScissor(nanovg, textInput);
-        {
+        drawInScissor(nanovg, textInput, () -> {
             Vector2f pos = textInput.getScreenPosition();
             Vector2f size = textInput.getSize();
             boolean enabled = textInput.isEnabled();
@@ -81,7 +76,7 @@ public class NvgTextInputRenderer extends NvgComponentRenderer<TextInput> {
             if (!textInput.isEditable()) {
                 bc.w *= 0.3f;
             }
-            drawBackground(nanovg, pos.x, pos.y, size.x, size.y, textInput.getCornerRadius(), bc);
+            NvgShapes.drawRect(nanovg, pos, size, bc, textInput.getCornerRadius());
 
             TextState textState = textInput.getTextState();
             Vector4f p = new Vector4f(textState.getPadding()).add(2, 2, 2, 2);
@@ -89,14 +84,9 @@ public class NvgTextInputRenderer extends NvgComponentRenderer<TextInput> {
             Vector4f intersectRect = new Vector4f(pos.x + p.x, pos.y + p.y, size.x - p.x - p.z, size.y - p.y - p.w);
             intersectScissor(nanovg, new Vector4f(intersectRect).sub(1, 1, -2, -2));
             renderText(context, nanovg, textInput, size, intersectRect, bc);
-        }
-        resetScissor(nanovg);
+        });
 
-        createScissor(nanovg, textInput);
-        {
-            renderBorder(textInput, context);
-        }
-        resetScissor(nanovg);
+        drawInScissor(nanovg, textInput, () -> renderBorder(textInput, context));
     }
 
     private void renderText(Context leguiContext, long context, TextInput gui, Vector2f size, Vector4f rect, Vector4f bc) {
@@ -240,8 +230,9 @@ public class NvgTextInputRenderer extends NvgComponentRenderer<TextInput> {
                 startSelectionIndex, endSelectionIndex,
                 focused, startSelectionX, endSelectionX, poffset);
             // render text
-            renderTextLineToBounds(context, textBounds[4] - poffset, textBounds[5], textBounds[6], textBounds[7],
-                fontSize, font, textColor, text, HorizontalAlign.LEFT, VerticalAlign.MIDDLE, false);
+
+            NvgText.drawTextLineToRect(context, new Vector4f(textBounds[4] - poffset, textBounds[5], textBounds[6], textBounds[7]),
+                false, HorizontalAlign.LEFT, VerticalAlign.MIDDLE, fontSize, font, text, textColor);
 
             if (focused) {
                 // render caret
@@ -279,7 +270,9 @@ public class NvgTextInputRenderer extends NvgComponentRenderer<TextInput> {
         if (focused) {
             // draw selection
             if (startSelectionIndex != endSelectionIndex) {
-                drawRectangle(context, highlightColor, startSelectionX - poffset, rect.y, endSelectionX - startSelectionX, rect.w);
+                Vector2f position = new Vector2f(startSelectionX - poffset, rect.y);
+                Vector2f size = new Vector2f(endSelectionX - startSelectionX, rect.w);
+                NvgShapes.drawRect(context, position, size, highlightColor);
             }
         }
     }
@@ -343,17 +336,5 @@ public class NvgTextInputRenderer extends NvgComponentRenderer<TextInput> {
             }
         }
         return caretx;
-    }
-
-    private void drawBackground(long context, float x, float y, float w, float h, float br, Vector4f bc) {
-        if (bc.w != 0) {
-            NVGColor colorA = NVGColor.calloc();
-            nvgSave(context);
-            nvgBeginPath(context);
-            nvgRoundedRect(context, x, y, w, h, br);
-            nvgFillColor(context, rgba(bc, colorA));
-            nvgFill(context);
-            colorA.free();
-        }
     }
 }

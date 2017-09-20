@@ -3,7 +3,7 @@ package org.liquidengine.legui.system.renderer.nvg.component;
 import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderBorderWScissor;
 import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderIcon;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.createScissor;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.drawRectangle;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.drawInScissor;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.renderTextStateLineToBounds;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.resetScissor;
 import static org.lwjgl.nanovg.NanoVG.nvgIntersectScissor;
@@ -18,6 +18,7 @@ import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.icon.Icon;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.nvg.NvgComponentRenderer;
+import org.liquidengine.legui.system.renderer.nvg.util.NvgShapes;
 
 /**
  * Created by ShchAlexander on 11.02.2017.
@@ -26,12 +27,10 @@ public class NvgButtonRenderer extends NvgComponentRenderer<Button> {
 
     @Override
     protected void renderComponent(Button button, Context context, long nanovg) {
-        createScissor(nanovg, button);
-        {
+        drawInScissor(nanovg, button, () -> {
             Vector2f pos = button.getScreenPosition();
             Vector2f size = button.getSize();
 
-            nvgSave(nanovg);
             // render background
             renderBackground(nanovg, button, pos, size, context);
 
@@ -42,12 +41,8 @@ public class NvgButtonRenderer extends NvgComponentRenderer<Button> {
                 renderTextStateLineToBounds(nanovg, pos, size, textState);
             }
 
-        }
-        resetScissor(nanovg);
-
+        });
         renderBorderWScissor(button, context, nanovg);
-
-        nvgRestore(nanovg);
     }
 
     private void renderBackground(long nvg, Button button, Vector2f pos, Vector2f size, Context context) {
@@ -68,21 +63,23 @@ public class NvgButtonRenderer extends NvgComponentRenderer<Button> {
             image = (image = button.getFocusedBackgroundIcon()) == null ? bgIcon : image;
         }
 
-        drawRectangle(nvg, backgroundColor, pos, size);
+        nvgSave(nvg);
+        NvgShapes.drawRect(nvg, pos, size, backgroundColor, button.getCornerRadius());
         if (hovered) {
             if (!pressed) {
                 Vector4f opp = ColorUtil.oppositeBlackOrWhite(backgroundColor);
                 opp.w = 0.3f;
-                drawRectangle(nvg, opp, pos, size);
+                NvgShapes.drawRect(nvg, pos, size, opp, button.getCornerRadius());
             } else {
                 Vector4f opp = ColorUtil.oppositeBlackOrWhite(backgroundColor);
                 opp.w = 0.6f;
-                drawRectangle(nvg, opp, pos, size);
+                NvgShapes.drawRect(nvg, pos, size, opp, button.getCornerRadius());
             }
         }
         if (image != null) {
             renderIcon(image, button, context);
         }
+        nvgRestore(nvg);
     }
 
 }

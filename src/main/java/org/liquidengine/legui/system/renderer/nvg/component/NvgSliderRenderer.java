@@ -1,19 +1,13 @@
 package org.liquidengine.legui.system.renderer.nvg.component;
 
 import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderBorder;
-import static org.liquidengine.legui.system.renderer.nvg.util.NVGUtils.rgba;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.createScissor;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.drawRectStroke;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.resetScissor;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgColorUtil.rgba;
 import static org.lwjgl.nanovg.NanoVG.NVG_ROUND;
 import static org.lwjgl.nanovg.NanoVG.nvgBeginPath;
-import static org.lwjgl.nanovg.NanoVG.nvgFill;
-import static org.lwjgl.nanovg.NanoVG.nvgFillColor;
 import static org.lwjgl.nanovg.NanoVG.nvgLineCap;
 import static org.lwjgl.nanovg.NanoVG.nvgLineJoin;
 import static org.lwjgl.nanovg.NanoVG.nvgLineTo;
 import static org.lwjgl.nanovg.NanoVG.nvgMoveTo;
-import static org.lwjgl.nanovg.NanoVG.nvgRoundedRect;
 import static org.lwjgl.nanovg.NanoVG.nvgSave;
 import static org.lwjgl.nanovg.NanoVG.nvgStroke;
 import static org.lwjgl.nanovg.NanoVG.nvgStrokeColor;
@@ -25,6 +19,8 @@ import org.liquidengine.legui.component.Slider;
 import org.liquidengine.legui.component.optional.Orientation;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.nvg.NvgComponentRenderer;
+import org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils;
+import org.liquidengine.legui.system.renderer.nvg.util.NvgShapes;
 import org.lwjgl.nanovg.NVGColor;
 
 /**
@@ -38,14 +34,13 @@ public class NvgSliderRenderer<T extends Slider> extends NvgComponentRenderer<T>
      * Used to render slider component.
      *
      * @param slider slider to render.
-     * @param leguiContext context.
-     * @param context nanoVG context.
+     * @param context context.
+     * @param nanovg nanoVG context.
      */
     @Override
-    public void renderComponent(T slider, Context leguiContext, long context) {
-        createScissor(context, slider);
-        {
-            nvgSave(context);
+    public void renderComponent(T slider, Context context, long nanovg) {
+        NvgRenderUtils.drawInScissor(nanovg, slider, () -> {
+            nvgSave(nanovg);
             Vector2f pos = slider.getScreenPosition();
             Vector2f size = slider.getSize();
             float x = pos.x;
@@ -61,7 +56,7 @@ public class NvgSliderRenderer<T extends Slider> extends NvgComponentRenderer<T>
             float cornerRadius = slider.getCornerRadius();
             float sliderSize = slider.getSliderSize();
 
-            drawBackground(context, x, y, w, h, backgroundColor, cornerRadius);
+            NvgShapes.drawRect(nanovg, pos, size, backgroundColor, cornerRadius);
 
             float lx,
                 rx,
@@ -82,31 +77,19 @@ public class NvgSliderRenderer<T extends Slider> extends NvgComponentRenderer<T>
             }
 
             // draw inactive color
-            drawLine(context, sliderInactiveColor, lx, by, rx, ty, SLIDER_WIDTH);
+            drawLine(nanovg, sliderInactiveColor, lx, by, rx, ty, SLIDER_WIDTH);
 
             // draw active part
-            drawLine(context, sliderColor, lx, by, px, py, SLIDER_WIDTH);
+            drawLine(nanovg, sliderColor, lx, by, px, py, SLIDER_WIDTH);
 
             // draw slider button
-            float xx = px - sliderSize / 2f;
-            float yy = py - sliderSize / 2f;
+            Vector2f sliderButtonSize = new Vector2f(sliderSize);
+            Vector2f sliderPos = new Vector2f(px - sliderSize / 2f, py - sliderSize / 2f);
+            NvgShapes.drawRect(nanovg, sliderPos, sliderButtonSize, sliderColor, cornerRadius);
+            NvgShapes.drawRectStroke(nanovg, sliderPos, sliderButtonSize, sliderInactiveColor, 1, cornerRadius);
 
-            drawBackground(context, xx, yy, sliderSize, sliderSize, sliderColor, cornerRadius);
-
-            drawRectStroke(context, xx + 0.5f, yy + 0.5f, sliderSize, sliderSize, sliderInactiveColor, cornerRadius, 1);
-
-            renderBorder(slider, leguiContext);
-        }
-        resetScissor(context);
-    }
-
-    private void drawBackground(long context, float x, float y, float w, float h, Vector4f backgroundColor, float cornerRadius) {
-        NVGColor colorA = NVGColor.calloc();
-        nvgBeginPath(context);
-        nvgRoundedRect(context, x, y, w, h, cornerRadius);
-        nvgFillColor(context, rgba(backgroundColor, colorA));
-        nvgFill(context);
-        colorA.free();
+            renderBorder(slider, context);
+        });
     }
 
     /**
@@ -121,7 +104,6 @@ public class NvgSliderRenderer<T extends Slider> extends NvgComponentRenderer<T>
      * @param width line width
      */
     private void drawLine(long context, Vector4f color, float x1, float y1, float x2, float y2, float width) {
-
         NVGColor colorA = NVGColor.calloc();
         nvgLineCap(context, NVG_ROUND);
         nvgLineJoin(context, NVG_ROUND);

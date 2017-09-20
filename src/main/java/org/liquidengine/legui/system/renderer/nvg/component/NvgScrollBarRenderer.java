@@ -3,11 +3,10 @@ package org.liquidengine.legui.system.renderer.nvg.component;
 import static org.liquidengine.legui.color.ColorUtil.oppositeBlackOrWhite;
 import static org.liquidengine.legui.component.optional.Orientation.VERTICAL;
 import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderBorder;
-import static org.liquidengine.legui.system.renderer.nvg.util.NVGUtils.rgba;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgColorUtil.rgba;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.alignTextInBox;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.createBounds;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.createScissor;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.drawRectangle;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.resetScissor;
 import static org.liquidengine.legui.util.TextUtil.cpToStr;
 import static org.lwjgl.nanovg.NanoVG.nnvgText;
@@ -30,6 +29,8 @@ import org.liquidengine.legui.component.optional.align.VerticalAlign;
 import org.liquidengine.legui.font.FontRegistry;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.nvg.NvgComponentRenderer;
+import org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils;
+import org.liquidengine.legui.system.renderer.nvg.util.NvgShapes;
 import org.lwjgl.nanovg.NVGColor;
 import org.lwjgl.nanovg.NVGTextRow;
 import org.lwjgl.system.MemoryUtil;
@@ -46,16 +47,11 @@ public class NvgScrollBarRenderer extends NvgComponentRenderer<ScrollBar> {
     private static final String T = cpToStr(0xE5CE);
 
     @Override
-    public void renderComponent(ScrollBar scrollBar, Context leguiContext, long context) {
-        createScissor(context, scrollBar);
-        {
-            nvgSave(context);
+    public void renderComponent(ScrollBar scrollBar, Context context, long nanovg) {
+        NvgRenderUtils.drawInScissor(nanovg, scrollBar, () -> {
+            nvgSave(nanovg);
             Vector2f pos = scrollBar.getScreenPosition();
             Vector2f size = scrollBar.getSize();
-            float x = pos.x;
-            float y = pos.y;
-            float w = size.x;
-            float h = size.y;
             Vector4f backgroundColor = new Vector4f(scrollBar.getBackgroundColor());
 
             float visibleAmount = scrollBar.getVisibleAmount();
@@ -77,151 +73,95 @@ public class NvgScrollBarRenderer extends NvgComponentRenderer<ScrollBar> {
             float cornerRadius = scrollBar.getCornerRadius();
 
             // draw background
-            drawBackground(context, x, y, w, h, backgroundColor, cornerRadius);
+            NvgShapes.drawRect(nanovg, pos, size, backgroundColor, cornerRadius);
 
             // draw scroll bar back
-            drawScrollBackground(scrollBar, context, x, y, w, h, arrowsEnabled, diff, vertical, scrollBarBackgroundColor, cornerRadius);
+            {
+                Vector2f scrollBarPos = new Vector2f();
+                Vector2f scrollBarSize = new Vector2f();
+                if (vertical) {
+                    scrollBarPos.set(pos.x, pos.y + diff);
+                    scrollBarSize.set(size.x, size.y - 2 * diff);
+                } else {
+                    scrollBarPos.set(pos.x + diff, pos.y);
+                    scrollBarSize.set(size.x - 2 * diff, size.y);
+                }
+                NvgShapes.drawRect(nanovg, scrollBarPos, scrollBarSize, scrollBarBackgroundColor, arrowsEnabled ? 0 : cornerRadius);
+            }
+            // draw arrows
+            {
+                if (arrowsEnabled) {
+                    Vector4f arrowColor = scrollBar.getArrowColor();
+                    String first, second;
+                    Vector2f arrowBgSize = new Vector2f();
+                    Vector2f secondArrowBgPos = new Vector2f();
+                    if (vertical) {
+                        first = T;
+                        second = B;
+                        arrowBgSize.set(size.x, arrowSize);
+                        secondArrowBgPos.set(pos.x, pos.y + size.y - arrowSize);
+                    } else {
+                        first = L;
+                        second = R;
+                        arrowBgSize.set(arrowSize, size.y);
+                        secondArrowBgPos.set(pos.x + size.x - arrowSize, pos.y);
+                    }
+                    // first arrow bg
+                    NvgShapes.drawRect(nanovg, pos, arrowBgSize, arrowColor, cornerRadius);
+                    // second arrow bg
+                    NvgShapes.drawRect(nanovg, secondArrowBgPos, arrowBgSize, arrowColor, cornerRadius);
+
+                    float fontSize;
+                    if (vertical) {
+                        fontSize = arrowSize > arrowBgSize.x ? arrowBgSize.x : arrowSize;
+                    } else {
+                        fontSize = arrowSize > arrowBgSize.y ? arrowBgSize.y : arrowSize;
+                    }
+                    String font = FontRegistry.MATERIAL_ICONS_REGULAR;
+                    HorizontalAlign horizontalAlign = HorizontalAlign.CENTER;
+                    VerticalAlign verticalAlign = VerticalAlign.MIDDLE;
+
+                    {
+                        nvgFontSize(nanovg, fontSize);
+                        nvgFontFace(nanovg, font);
+                        alignTextInBox(nanovg, horizontalAlign, verticalAlign);
+
+                        Vector4f blackOrWhite = oppositeBlackOrWhite(arrowColor);
+                        drawArr(nanovg, pos.x, pos.y, arrowBgSize.x, arrowBgSize.y, first, blackOrWhite, fontSize, horizontalAlign, verticalAlign);
+                        drawArr(nanovg, secondArrowBgPos.x, secondArrowBgPos.y, arrowBgSize.x, arrowBgSize.y, second, blackOrWhite, fontSize, horizontalAlign,
+                            verticalAlign);
+                    }
+                }
+            }
 
             // draw scroll button
-            drawScrollButton(scrollBar, context, x, y, w, h, visibleAmount, minValue, maxValue, diff, offset, curValue, vertical, scrollColor, cornerRadius);
+            {
+                float scrollBarSize = (vertical ? size.y : size.x) - 2 * diff;
+                float scrollBarPercentageSize = visibleAmount / (maxValue - minValue);
+                float barSize = scrollBarSize * scrollBarPercentageSize;
+                if (barSize < ScrollBar.MIN_SCROLL_SIZE) {
+                    barSize = ScrollBar.MIN_SCROLL_SIZE;
+                }
+                float rangeToScroll = scrollBarSize - barSize;
+                float scrollPosAccordingToScrollBounds = diff + rangeToScroll * curValue / (maxValue - minValue);
+
+                Vector2f scrollPos = new Vector2f();
+                Vector2f scrollSize = new Vector2f();
+                if (vertical) {
+                    scrollPos.set(pos.x + offset, pos.y + offset + scrollPosAccordingToScrollBounds);
+                    scrollSize.set(size.x - 2 * offset, barSize - 2 * offset);
+                } else {
+                    scrollPos.set(pos.x + offset + scrollPosAccordingToScrollBounds, pos.y + offset);
+                    scrollSize.set(barSize - 2 * offset, size.y - 2 * offset);
+                }
+
+                NvgShapes.drawRect(nanovg, scrollPos, scrollSize, scrollColor, cornerRadius);
+            }
 
             // draw border
-            renderBorder(scrollBar, leguiContext);
+            renderBorder(scrollBar, context);
 
-        }
-        resetScissor(context);
-    }
-
-    private void drawBackground(long context, float x, float y, float w, float h, Vector4f backgroundColor, float cornerRadius) {
-        NVGColor colorA = NVGColor.calloc();
-        nvgBeginPath(context);
-        nvgRoundedRect(context, x, y, w, h, cornerRadius);
-        nvgFillColor(context, rgba(backgroundColor, colorA));
-        nvgFill(context);
-        colorA.free();
-    }
-
-    private void drawScrollBackground(ScrollBar scrollBar, long context, float x, float y, float w, float h, boolean arrowsEnabled, float diff,
-        boolean vertical, Vector4f scrollBarBackgroundColor, float cornerRadius) {
-        float lx,
-            ly,
-            wx,
-            hy;
-        if (vertical) {
-            lx = x;
-            ly = y + diff;
-            wx = w;
-            hy = h - 2 * diff;
-        } else {
-            lx = x + diff;
-            ly = y;
-            wx = w - 2 * diff;
-            hy = h;
-        }
-
-        drawBackground(context, lx, ly, wx, hy, scrollBarBackgroundColor, arrowsEnabled ? 0 : cornerRadius);
-
-        if (arrowsEnabled) {
-            drawArrows(context, scrollBar, x, y, w, h);
-        }
-    }
-
-    private void drawScrollButton(ScrollBar scrollBar,
-        long context,
-        float x, float y, float w, float h,
-        float visibleAmount, float minValue,
-        float maxValue, float diff, float offset,
-        float curValue, boolean vertical,
-        Vector4f scrollColor, float cornerRadius) {
-        float scrollBarSize = (vertical ? scrollBar.getSize().y : scrollBar.getSize().x) - 2 * diff;
-        float scrollBarPercentageSize = visibleAmount / (maxValue - minValue);
-        float barSize = scrollBarSize * scrollBarPercentageSize;
-        if (barSize < ScrollBar.MIN_SCROLL_SIZE) {
-            barSize = ScrollBar.MIN_SCROLL_SIZE;
-        }
-        float rangeToScroll = scrollBarSize - barSize;
-        float scrollPosAccordingToScrollBounds = diff + rangeToScroll * curValue / (maxValue - minValue);
-
-        float xx,
-            yy,
-            ww,
-            hh;
-        if (vertical) {
-            xx = x + offset;
-            yy = y + offset + scrollPosAccordingToScrollBounds;
-            ww = w - 2 * offset;
-            hh = barSize - 2 * offset;
-        } else {
-            xx = x + offset + scrollPosAccordingToScrollBounds;
-            yy = y + offset;
-            ww = barSize - 2 * offset;
-            hh = h - 2 * offset;
-        }
-
-        drawBackground(context, xx, yy, ww, hh, scrollColor, cornerRadius);
-    }
-
-    private void drawArrows(long context, ScrollBar scrollBar, float x, float y, float w, float h) {
-        boolean vertical = VERTICAL.equals(scrollBar.getOrientation());
-        Vector4f arrowColor = scrollBar.getArrowColor();
-        float arrowSize = scrollBar.getArrowSize();
-        float x1,
-            y1,
-            w1,
-            h1,
-            x2,
-            y2,
-            w2,
-            h2;
-        String first,
-            second;
-        if (vertical) {
-            x1 = x;
-            y1 = y;
-            w1 = w;
-            h1 = arrowSize;
-            x2 = x;
-            y2 = y + h - arrowSize;
-            w2 = w;
-            h2 = arrowSize;
-            first = T;
-            second = B;
-        } else {
-            x1 = x;
-            y1 = y;
-            w1 = arrowSize;
-            h1 = h;
-            x2 = x + w - arrowSize;
-            y2 = y;
-            w2 = arrowSize;
-            h2 = h;
-            first = L;
-            second = R;
-        }
-        Vector4f blackOrWhite = oppositeBlackOrWhite(arrowColor);
-        // first arrow bg
-        drawRectangle(context, arrowColor, x1, y1, w1, h1);
-        // second arrow bg
-        drawRectangle(context, arrowColor, x2, y2, w2, h2);
-
-        float fontSize;
-        if (vertical) {
-            fontSize = arrowSize > w1 ? w1 : arrowSize;
-        } else {
-            fontSize = arrowSize > h1 ? h1 : arrowSize;
-        }
-        String font = FontRegistry.MATERIAL_ICONS_REGULAR;
-        HorizontalAlign horizontalAlign = HorizontalAlign.CENTER;
-        VerticalAlign verticalAlign = VerticalAlign.MIDDLE;
-
-        {
-            nvgFontSize(context, fontSize);
-            nvgFontFace(context, font);
-            alignTextInBox(context, horizontalAlign, verticalAlign);
-
-            drawArr(context, x1, y1, w1, h1, first, blackOrWhite, fontSize, horizontalAlign, verticalAlign);
-            drawArr(context, x2, y2, w2, h2, second, blackOrWhite, fontSize, horizontalAlign, verticalAlign);
-        }
+        });
     }
 
     private void drawArr(long context, float x1, float y1, float w1, float h1, String first, Vector4f blackOrWhite, float fontSize,

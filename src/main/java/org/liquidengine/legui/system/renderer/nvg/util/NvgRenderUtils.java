@@ -162,27 +162,22 @@ public final class NvgRenderUtils {
         ByteBuffer byteText = null;
         try {
             alignTextInBox(context, horizontalAlign, verticalAlign);
+            byteText = memUTF8(text, false);
+            long start = memAddress(byteText);
+            long end = start + byteText.remaining();
+            long rowStart = start;
+            long rowEnd = end;
             if (hide) {
-                byteText = memUTF8(text, false);
-                long start = memAddress(byteText);
-                long end = start + byteText.remaining();
                 NVGTextRow.Buffer buffer = NVGTextRow.calloc(1);
                 int rows = nnvgTextBreakLines(context, start, end, w, memAddress(buffer), 1);
-                NVGTextRow row = buffer.get(0);
                 if (rows != 0) {
-                    long rowStart = row.start();
-                    long rowEnd = row.end();
-
-                    renderTextLine(context, x, y, w, h, textColor, nvgColor, horizontalAlign, verticalAlign, rowStart, rowEnd);
+                    NVGTextRow row = buffer.get(0);
+                    rowStart = row.start();
+                    rowEnd = row.end();
                 }
                 buffer.free();
-            } else {
-                byteText = memUTF8(text, false);
-                long start = memAddress(byteText);
-                long end = start + byteText.remaining();
-
-                renderTextLine(context, x, y, w, h, textColor, nvgColor, horizontalAlign, verticalAlign, start, end);
             }
+            renderTextLine(context, x, y, w, h, textColor, nvgColor, horizontalAlign, verticalAlign, rowStart, rowEnd);
         } finally {
             if (byteText != null) {
                 memFree(byteText);
@@ -211,7 +206,7 @@ public final class NvgRenderUtils {
         float ty = y + h * verticalAlign.index / 2f;
 
         nvgBeginPath(context);
-        NVGColor textColorN = textColor.w == 0 ? NVGUtils.rgba(0.0f, 0.0f, 0.0f, 1f, nvgColor) : NVGUtils.rgba(textColor, nvgColor);
+        NVGColor textColorN = textColor.w == 0 ? NvgColorUtil.rgba(0.0f, 0.0f, 0.0f, 1f, nvgColor) : NvgColorUtil.rgba(textColor, nvgColor);
         nvgFillColor(context, textColorN);
         nnvgText(context, tx, ty, rowStart, rowEnd);
     }
@@ -228,7 +223,7 @@ public final class NvgRenderUtils {
      */
     public static void drawRectangle(long context, Vector4fc color, float x, float y, float w, float h) {
         NVGColor nvgColor = NVGColor.calloc();
-        NVGColor rgba = NVGUtils.rgba(color, nvgColor);
+        NVGColor rgba = NvgColorUtil.rgba(color, nvgColor);
         nvgBeginPath(context);
         nvgFillColor(context, rgba);
         nvgRect(context, x, y, w, h);
@@ -348,7 +343,7 @@ public final class NvgRenderUtils {
         nvgBeginPath(context);
         nvgStrokeWidth(context, strokeWidth);
         nvgRoundedRect(context, x, y, w, h, borderRadius);
-        nvgStrokeColor(context, NVGUtils.rgba(strokeColor, nvgColor));
+        nvgStrokeColor(context, NvgColorUtil.rgba(strokeColor, nvgColor));
         nvgStroke(context);
         nvgColor.free();
     }
@@ -358,7 +353,8 @@ public final class NvgRenderUtils {
         NVGColor colorA = NVGColor.calloc();
         NVGColor colorB = NVGColor.calloc();
 
-        nvgBoxGradient(context, x, y + 2, w, h, cornerRadius * 2, 10, NVGUtils.rgba(shadowColor, colorA), NVGUtils.rgba(0, 0, 0, 0, colorB), shadowPaint);
+        nvgBoxGradient(context, x, y + 2, w, h, cornerRadius * 2, 10, NvgColorUtil.rgba(shadowColor, colorA), NvgColorUtil.rgba(0, 0, 0, 0, colorB),
+            shadowPaint);
         nvgBeginPath(context);
         nvgRect(context, x - 10, y - 10, w + 20, h + 30);
         nvgRoundedRect(context, x, y, w, h, cornerRadius);
@@ -429,5 +425,18 @@ public final class NvgRenderUtils {
      */
     public static void resetScissor(long context) {
         nvgResetScissor(context);
+    }
+
+    /**
+     * Used to call function wrapped to scissor call.
+     *
+     * @param nanovg nanovg context.
+     * @param component component to create scissor.
+     * @param function function to call.
+     */
+    public static void drawInScissor(long nanovg, Component component, Runnable function) {
+        createScissor(nanovg, component);
+        function.run();
+        resetScissor(nanovg);
     }
 }
