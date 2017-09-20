@@ -485,6 +485,7 @@ public class Widget extends Container<Component> {
             } else {
                 maximize();
             }
+            updateIcons();
         }
     }
 

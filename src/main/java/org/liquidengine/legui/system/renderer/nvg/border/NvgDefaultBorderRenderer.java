@@ -1,21 +1,14 @@
 package org.liquidengine.legui.system.renderer.nvg.border;
 
-import static org.lwjgl.nanovg.NanoVG.nvgBeginPath;
-import static org.lwjgl.nanovg.NanoVG.nvgRoundedRect;
-import static org.lwjgl.nanovg.NanoVG.nvgStroke;
-import static org.lwjgl.nanovg.NanoVG.nvgStrokeColor;
-import static org.lwjgl.nanovg.NanoVG.nvgStrokeWidth;
-
 import org.joml.Vector2f;
+import org.joml.Vector4f;
 import org.liquidengine.legui.border.Border;
-import org.liquidengine.legui.border.SimpleLineBorder;
 import org.liquidengine.legui.color.ColorConstants;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.Controller;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.nvg.NvgBorderRenderer;
-import org.liquidengine.legui.system.renderer.nvg.util.NVGUtils;
-import org.lwjgl.nanovg.NVGColor;
+import org.liquidengine.legui.system.renderer.nvg.util.NvgShapes;
 
 /**
  * Created by ShchAlexander on 11.02.2017.
@@ -36,24 +29,13 @@ public class NvgDefaultBorderRenderer extends NvgBorderRenderer {
         float w = size.x;
         float h = size.y;
 
-        drawRectStroke(component, nanovg, x, y, w, h, new SimpleLineBorder(ColorConstants.black(), 1));
+        NvgShapes.drawRectStroke(nanovg, new Vector4f(x, y, w, h), ColorConstants.black, 1);
 
         if (component instanceof Controller) {
             Controller controller = (Controller) component;
             if (controller.isFocused()) {
-                drawRectStroke(component, nanovg, x - 1, y - 1, w + 2, h + 2, new SimpleLineBorder(ColorConstants.red(), 2));
+                NvgShapes.drawRectStroke(nanovg, new Vector4f(x - 1, y - 1, w + 2, h + 2), ColorConstants.red, 2);
             }
         }
-    }
-
-    private void drawRectStroke(Component component, long nanovg, float x, float y, float w, float h, SimpleLineBorder b) {
-        NVGColor nvgColor;
-        nvgColor = NVGColor.calloc();
-        nvgBeginPath(nanovg);
-        nvgStrokeWidth(nanovg, b.getThickness());
-        nvgRoundedRect(nanovg, x, y, w, h, component.getCornerRadius());
-        nvgStrokeColor(nanovg, NVGUtils.rgba(b.getColor(), nvgColor));
-        nvgStroke(nanovg);
-        nvgColor.free();
     }
 }

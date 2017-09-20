@@ -2,14 +2,10 @@ package org.liquidengine.legui.system.renderer.nvg.component;
 
 import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderBorder;
 import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderIcon;
-import static org.liquidengine.legui.system.renderer.nvg.util.NVGUtils.rgba;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.createScissor;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.drawInScissor;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.renderTextStateLineToBounds;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.resetScissor;
-import static org.lwjgl.nanovg.NanoVG.nvgBeginPath;
-import static org.lwjgl.nanovg.NanoVG.nvgFill;
-import static org.lwjgl.nanovg.NanoVG.nvgFillColor;
-import static org.lwjgl.nanovg.NanoVG.nvgRoundedRect;
 
 import org.joml.Vector2f;
 import org.joml.Vector4f;
@@ -18,7 +14,7 @@ import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.icon.Icon;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.nvg.NvgComponentRenderer;
-import org.lwjgl.nanovg.NVGColor;
+import org.liquidengine.legui.system.renderer.nvg.util.NvgShapes;
 
 /**
  * Created by ShchAlexander on 11.02.2017.
@@ -27,8 +23,7 @@ public class NvgCheckBoxRenderer extends NvgComponentRenderer<CheckBox> {
 
     @Override
     public void renderComponent(CheckBox checkBox, Context context, long nanovg) {
-        createScissor(nanovg, checkBox);
-        {
+        drawInScissor(nanovg, checkBox, () -> {
             Vector2f pos = checkBox.getScreenPosition();
             Vector2f size = checkBox.getSize();
 
@@ -37,14 +32,7 @@ public class NvgCheckBoxRenderer extends NvgComponentRenderer<CheckBox> {
             float sw = size.x;
             float sh = size.y;
             /*Draw background rectangle*/
-            {
-                NVGColor colorA = NVGColor.calloc();
-                nvgBeginPath(nanovg);
-                nvgRoundedRect(nanovg, px, py, sw, sh, 0);
-                nvgFillColor(nanovg, rgba(checkBox.getBackgroundColor(), colorA));
-                nvgFill(nanovg);
-                colorA.free();
-            }
+            NvgShapes.drawRect(nanovg, pos, size, checkBox.getBackgroundColor(), checkBox.getCornerRadius());
 
             TextState textState = checkBox.getTextState();
             Icon icon = checkBox.isChecked() ? checkBox.getIconChecked() : checkBox.getIconUnchecked();
@@ -64,7 +52,6 @@ public class NvgCheckBoxRenderer extends NvgComponentRenderer<CheckBox> {
             renderIcon(icon, checkBox, context);
 
             renderBorder(checkBox, context);
-        }
-        resetScissor(nanovg);
+        });
     }
 }
