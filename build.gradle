@@ -27,7 +27,7 @@ def gson_version         = '2.7'
 def joml_version         = "1.9.3-SNAPSHOT"
 def lwjgl_version        = '3.1.2-SNAPSHOT'
 def le_cbchain           = '0.1.2'
-def le_util              = '0.0.1'
+def le_util              = '0.0.3-SNAPSHOT'
 //@formatter:on
 
 repositories {

@@ -1,5 +1,12 @@
 ## [Unreleased]
 
+## [1.2.0]
+### Changes
+- Removed event processor from context
+- Event processors moved to another package
+- Some changes in nvg renderer structure
+- Removed renderer provider from constructor.
+  
 ## [1.1.10]
 ### Fixed
 - Fixed issue with widget minimize button.
