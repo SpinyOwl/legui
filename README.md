@@ -78,7 +78,7 @@ compile group: 'org.liquidengine', name: 'legui', version: legui_version, changi
   
 ### Examples:
 All examples located here: 
-https://github.com/LiquidEngine/legui.demo
+[LEGUI.DEMO](https://github.com/LiquidEngine/legui.demo)
 
 ## Links
 [LWJGL - Lightweight Java Game Library 3](https://github.com/LWJGL/lwjgl3)  
