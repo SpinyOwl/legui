@@ -24,7 +24,7 @@
 _**(This is too early stuff and it would be implemented in little bit new way than previous version)**_  
 _**(Work in progress)**_
 ___
-# [LEGUI - What is it?](https://liquidengine.github.io/legui/)  
+# LEGUI - [What is it?](https://liquidengine.github.io/legui/)  
 GUI implementation for using with LWJGL3.
 Renderer made on top of NanoVG.
 
