@@ -75,6 +75,10 @@ compile group: 'org.liquidengine', name: 'legui', version: legui_version, changi
   
   Current `SNAPSHOT` version you can find in [SNAPSHOT version.properties](https://github.com/LiquidEngine/legui/blob/snapshots/version.properties)  
   Current `RELEASE` version you can find in [RELEASE version.properties](https://github.com/LiquidEngine/legui/blob/releases/version.properties)  
+  
+### Examples:
+All examples located here: 
+https://github.com/LiquidEngine/legui.demo
 
 ## Links
 [LWJGL - Lightweight Java Game Library 3](https://github.com/LWJGL/lwjgl3)  
