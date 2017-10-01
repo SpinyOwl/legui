@@ -285,6 +285,7 @@ public class SelectBox extends Container {
 
                 SelectBoxElement boxElement = createSelectBoxElement(element);
                 if (elements.isEmpty()) {
+                    selectedElement = element;
                     selectionButton.getTextState().setText(element);
                 }
                 elements.add(element);
@@ -338,8 +339,7 @@ public class SelectBox extends Container {
      * @param element element to remove from selectbox.
      */
     public void removeElement(String element) {
-        elements.remove(element);
-        resize();
+        removeElement(elements.indexOf(element));
     }
 
     /**
@@ -350,8 +350,19 @@ public class SelectBox extends Container {
     public void removeElement(int index) {
         lock.lock();
         try {
-            elements.remove(index);
-            selectBoxElements.remove(index);
+            if (elements.size() != 0) {
+                String s = elements.get(index);
+                elements.remove(index);
+                SelectBoxElement element = selectBoxElements.get(index);
+                selectBoxElements.remove(index);
+                selectionListPanel.getContainer().remove(element);
+                for (int i = index; i < selectBoxElements.size(); i++) {
+                    selectBoxElements.get(i).getPosition().y -= elementHeight;
+                }
+                if (selectedElement == s) {
+                    setSelected(0, true);
+                }
+            }
             resize();
         } finally {
             lock.unlock();
@@ -376,8 +387,13 @@ public class SelectBox extends Container {
      * @param selected state of element to set.
      */
     public void setSelected(int index, boolean selected) {
-        String element = elements.get(index);
-        setSelected(element, selected, index);
+        if (elements.size() > 0) {
+            String element = elements.get(index);
+            setSelected(element, selected, index);
+        } else {
+            selectedElement = null;
+            selectionButton.getTextState().setText(NULL);
+        }
     }
 
     private void setSelected(String element, boolean selected, int index) {
