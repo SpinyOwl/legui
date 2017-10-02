@@ -6,8 +6,10 @@ import com.google.common.cache.RemovalListener;
 import java.nio.ByteBuffer;
 import java.util.Map;
 import java.util.Queue;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -29,11 +31,11 @@ public class NvgLoadableImageReferenceManager {
      */
     private RemovalListener<String, Integer> removalListener = removal -> imagesToRemove.add(removal.getKey());
 
-
     /**
      * Cache of loaded images. If image is reached only by soft reference it will be deleted.
      */
     private Cache<String, Integer> imageCache;
+
     /**
      * Cleanup scheduler.
      */
@@ -44,7 +46,7 @@ public class NvgLoadableImageReferenceManager {
      * Used to create image reference manager.
      */
     protected NvgLoadableImageReferenceManager() {
-        imageCache = CacheBuilder.newBuilder().initialCapacity(200)
+        imageCache = CacheBuilder.newBuilder().initialCapacity(200).softValues()
             .expireAfterAccess(300, TimeUnit.SECONDS).removalListener(removalListener).build();
         cleanup.scheduleAtFixedRate(() -> imageCache.cleanUp(), 1, 1, TimeUnit.SECONDS);
     }
@@ -104,24 +106,30 @@ public class NvgLoadableImageReferenceManager {
 
             String path = image.getPath();
             if (path != null) {
-                imageRef = imageCache.getIfPresent(path);
-                if (imageRef == null) {
-                    ByteBuffer imageData = image.getImageData();
-                    if (imageData != null) {
-                        int width = image.getWidth();
-                        int height = image.getHeight();
-                        imageRef = NanoVG.nvgCreateImageRGBA(context, width, height, 0, imageData);
-                    } else {
-                        imageRef = 0;
-                    }
-                    imageCache.put(path, imageRef);
-                    imageAssociationMap.put(path, imageRef);
+                try {
+                    imageRef = imageCache.get(path, getIntegerCallable(image, context));
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
                 }
             } else {
                 return 0;
             }
         }
         return imageRef;
+    }
+
+    private Callable<Integer> getIntegerCallable(LoadableImage image, long context) {
+        return () -> {
+            Integer reference = 0;
+            ByteBuffer imageData = image.getImageData();
+            if (imageData != null) {
+                int width = image.getWidth();
+                int height = image.getHeight();
+                reference = NanoVG.nvgCreateImageRGBA(context, width, height, 0, imageData);
+            }
+            imageAssociationMap.put(image.getPath(), reference);
+            return reference;
+        };
     }
 
     /**

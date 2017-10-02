@@ -33,6 +33,8 @@ import static org.lwjgl.system.MemoryUtil.memFree;
 import static org.lwjgl.system.MemoryUtil.memUTF8;
 
 import java.nio.ByteBuffer;
+import java.util.ArrayList;
+import java.util.List;
 import org.joml.Vector2f;
 import org.joml.Vector2fc;
 import org.joml.Vector4f;
@@ -406,12 +408,12 @@ public final class NvgRenderUtils {
      */
     public static void createScissorByParent(long context, Component parent) {
         if (parent != null) {
-            Vector2f p = parent.getScreenPosition();
+            Vector2f p = parent.getAbsolutePosition();
             Vector2f s = parent.getSize();
             nvgScissor(context, p.x, p.y, s.x, s.y);
 
             while ((parent = parent.getParent()) != null) {
-                p = parent.getScreenPosition();
+                p = parent.getAbsolutePosition();
                 s = parent.getSize();
                 nvgIntersectScissor(context, p.x, p.y, s.x, s.y);
             }
@@ -438,5 +440,33 @@ public final class NvgRenderUtils {
         createScissor(nanovg, component);
         function.run();
         resetScissor(nanovg);
+    }
+
+    public static boolean visibleInParents(Component component) {
+        List<Component> parentList = new ArrayList<>();
+        for (Component parent = component.getParent(); parent != null; parent = parent.getParent()) {
+            parentList.add(parent);
+        }
+        if (parentList.size() > 0) {
+            Vector2f pos = new Vector2f(0, 0);
+            Vector2f rect = new Vector2f(0, 0);
+            Vector2f absolutePosition = component.getAbsolutePosition();
+            float lx = absolutePosition.x;
+            float rx = absolutePosition.x + component.getSize().x;
+            float ty = absolutePosition.y;
+            float by = absolutePosition.y + component.getSize().y;
+
+            for (int i = parentList.size() - 1; i >= 0; i--) {
+                Component parent = parentList.get(i);
+                pos.add(parent.getPosition());
+                rect.set(pos).add(parent.getSize());
+
+                if (lx > rect.x || rx < pos.x || ty > rect.y || by < pos.y) {
+//                    System.out.println("SKIPPING " + component.getClass().getSimpleName() + " " + lx + " " + rx);
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 }

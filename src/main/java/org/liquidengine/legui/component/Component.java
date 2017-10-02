@@ -225,11 +225,11 @@ public abstract class Component implements Serializable {
     }
 
     /**
-     * Returns component position on the screen.
+     * Returns absolute component position.
      *
      * @return position vector.
      */
-    public Vector2f getScreenPosition() {
+    public Vector2f getAbsolutePosition() {
         Vector2f screenPos = new Vector2f(this.position);
         for (Container parent = this.getParent(); parent != null; parent = parent.getParent()) {
             screenPos.add(parent.getPosition());

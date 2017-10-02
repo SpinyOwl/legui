@@ -41,7 +41,7 @@ public class NvgSliderRenderer<T extends Slider> extends NvgComponentRenderer<T>
     public void renderComponent(T slider, Context context, long nanovg) {
         NvgRenderUtils.drawInScissor(nanovg, slider, () -> {
             nvgSave(nanovg);
-            Vector2f pos = slider.getScreenPosition();
+            Vector2f pos = slider.getAbsolutePosition();
             Vector2f size = slider.getSize();
             float x = pos.x;
             float y = pos.y;

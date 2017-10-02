@@ -5,7 +5,7 @@ import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.ScrollBar;
 import org.liquidengine.legui.component.ScrollablePanel;
 import org.liquidengine.legui.component.Viewport;
-import org.liquidengine.legui.component.misc.event.scrollbar.ScrollBarChangeValueEvent;
+import org.liquidengine.legui.component.event.scrollbar.ScrollBarChangeValueEvent;
 import org.liquidengine.legui.event.ScrollEvent;
 import org.liquidengine.legui.input.Mouse;
 import org.liquidengine.legui.listener.EventListener;

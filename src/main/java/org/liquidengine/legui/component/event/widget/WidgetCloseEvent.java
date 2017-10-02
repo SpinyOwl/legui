@@ -1,4 +1,4 @@
-package org.liquidengine.legui.component.misc.event.widget;
+package org.liquidengine.legui.component.event.widget;
 
 import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.component.Widget;

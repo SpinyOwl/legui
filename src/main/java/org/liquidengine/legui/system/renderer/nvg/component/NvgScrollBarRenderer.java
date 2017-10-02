@@ -7,16 +7,13 @@ import static org.liquidengine.legui.system.renderer.nvg.util.NvgColorUtil.rgba;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.alignTextInBox;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.createBounds;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.createScissor;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.resetScissor;
 import static org.liquidengine.legui.util.TextUtil.cpToStr;
 import static org.lwjgl.nanovg.NanoVG.nnvgText;
 import static org.lwjgl.nanovg.NanoVG.nnvgTextBreakLines;
 import static org.lwjgl.nanovg.NanoVG.nvgBeginPath;
-import static org.lwjgl.nanovg.NanoVG.nvgFill;
 import static org.lwjgl.nanovg.NanoVG.nvgFillColor;
 import static org.lwjgl.nanovg.NanoVG.nvgFontFace;
 import static org.lwjgl.nanovg.NanoVG.nvgFontSize;
-import static org.lwjgl.nanovg.NanoVG.nvgRoundedRect;
 import static org.lwjgl.nanovg.NanoVG.nvgSave;
 import static org.lwjgl.system.MemoryUtil.memAddress;
 
@@ -50,7 +47,7 @@ public class NvgScrollBarRenderer extends NvgComponentRenderer<ScrollBar> {
     public void renderComponent(ScrollBar scrollBar, Context context, long nanovg) {
         NvgRenderUtils.drawInScissor(nanovg, scrollBar, () -> {
             nvgSave(nanovg);
-            Vector2f pos = scrollBar.getScreenPosition();
+            Vector2f pos = scrollBar.getAbsolutePosition();
             Vector2f size = scrollBar.getSize();
             Vector4f backgroundColor = new Vector4f(scrollBar.getBackgroundColor());
 

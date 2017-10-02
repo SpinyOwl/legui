@@ -14,7 +14,7 @@ public class RectangleIntersector extends Intersector {
 
     @Override
     public boolean intersects(Component component, Vector2f point) {
-        Vector2f pos = component.getScreenPosition();
+        Vector2f pos = component.getAbsolutePosition();
         float x = pos.x;
         float y = pos.y;
         float w = component.getSize().x;

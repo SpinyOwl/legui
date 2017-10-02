@@ -21,7 +21,7 @@ public class NvgDefaultBorderRenderer extends NvgBorderRenderer {
             return;
         }
         // render simple rectangle border
-        Vector2f position = component.getScreenPosition();
+        Vector2f position = component.getAbsolutePosition();
         Vector2f size = component.getSize();
 
         float x = position.x;

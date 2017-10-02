@@ -3,7 +3,6 @@ package org.liquidengine.legui.system.renderer.nvg.component;
 import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderBorder;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.createScissor;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.renderTextStateLineToBounds;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.resetScissor;
 
 import org.joml.Vector2f;
 import org.joml.Vector4f;
@@ -22,7 +21,7 @@ public class NvgLabelRenderer extends NvgComponentRenderer<Label> {
     @Override
     public void renderComponent(Label label, Context context, long nanovg) {
         NvgRenderUtils.drawInScissor(nanovg, label, () -> {
-            Vector2f pos = label.getScreenPosition();
+            Vector2f pos = label.getAbsolutePosition();
             Vector2f size = label.getSize();
             Vector4f backgroundColor = new Vector4f(label.getBackgroundColor());
 

@@ -1,7 +1,6 @@
-package org.liquidengine.legui.component.misc.listener.slider;
+package org.liquidengine.legui.component.event.slider;
 
 
-import org.liquidengine.legui.component.misc.event.slider.SliderChangeValueEvent;
 import org.liquidengine.legui.listener.EventListener;
 
 /**

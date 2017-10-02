@@ -1,7 +1,7 @@
 package org.liquidengine.legui.component;
 
 import org.joml.Vector2f;
-import org.liquidengine.legui.component.misc.event.widget.WidgetCloseEvent;
+import org.liquidengine.legui.component.event.widget.WidgetCloseEvent;
 import org.liquidengine.legui.component.misc.listener.dialog.DialogCloseEventListener;
 import org.liquidengine.legui.theme.Themes;
 

@@ -2,7 +2,7 @@ package org.liquidengine.legui.component.misc.listener.slider;
 
 import org.joml.Vector2f;
 import org.liquidengine.legui.component.Slider;
-import org.liquidengine.legui.component.misc.event.slider.SliderChangeValueEvent;
+import org.liquidengine.legui.component.event.slider.SliderChangeValueEvent;
 import org.liquidengine.legui.component.optional.Orientation;
 import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.input.Mouse;
@@ -18,7 +18,7 @@ public class SliderMouseClickEventListener implements MouseClickEventListener {
     public void process(MouseClickEvent event) {
         if (event.getButton().equals(Mouse.MouseButton.MOUSE_BUTTON_LEFT) && event.getAction() == MouseClickEvent.MouseClickAction.PRESS) {
             Slider slider = (Slider) event.getComponent();
-            Vector2f pos = slider.getScreenPosition();
+            Vector2f pos = slider.getAbsolutePosition();
 
             Vector2f cursorPosition = Mouse.getCursorPosition();
             float value;

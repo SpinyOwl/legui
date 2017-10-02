@@ -14,7 +14,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 import org.liquidengine.legui.color.ColorConstants;
 import org.liquidengine.legui.component.misc.listener.selectbox.SelectBoxClickListener;
-import org.liquidengine.legui.component.misc.listener.selectbox.SelectBoxElementClickEventListener;
+import org.liquidengine.legui.component.misc.listener.selectbox.SelectBoxElementClickListener;
 import org.liquidengine.legui.component.misc.listener.selectbox.SelectBoxFocusListener;
 import org.liquidengine.legui.component.misc.listener.selectbox.SelectBoxScrollListener;
 import org.liquidengine.legui.event.FocusEvent;
@@ -307,7 +307,7 @@ public class SelectBox extends Container {
         SelectBoxElement boxElement = new SelectBoxElement(element, false);
         boxElement.setSize(new Vector2f(selectionListPanel.getContainer().getSize().x, elementHeight));
         boxElement.setPosition(0, selectionListPanel.getContainer().count() * elementHeight);
-        boxElement.getListenerMap().getListeners(MouseClickEvent.class).add(new SelectBoxElementClickEventListener(this));
+        boxElement.getListenerMap().getListeners(MouseClickEvent.class).add(new SelectBoxElementClickListener(this));
         return boxElement;
     }
 

@@ -19,7 +19,7 @@ public class NvgContainerRenderer extends NvgComponentRenderer<Container> {
     @Override
     protected void renderComponent(Container component, Context context, long nanovg) {
         NvgRenderUtils.drawInScissor(nanovg, component, () ->
-            NvgShapes.drawRect(nanovg, component.getScreenPosition(), component.getSize(), component.getBackgroundColor(), component.getCornerRadius())
+            NvgShapes.drawRect(nanovg, component.getAbsolutePosition(), component.getSize(), component.getBackgroundColor(), component.getCornerRadius())
         );
 
         List<Component> all = component.getChilds();

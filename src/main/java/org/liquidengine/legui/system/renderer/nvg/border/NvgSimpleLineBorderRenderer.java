@@ -19,7 +19,7 @@ public class NvgSimpleLineBorderRenderer extends NvgBorderRenderer<SimpleLineBor
             }
 
             NvgShapes.drawRectStroke(
-                nanovg, component.getScreenPosition(), component.getSize(), border.getColor(), border.getThickness(), component.getCornerRadius());
+                nanovg, component.getAbsolutePosition(), component.getSize(), border.getColor(), border.getThickness(), component.getCornerRadius());
         }
     }
 }

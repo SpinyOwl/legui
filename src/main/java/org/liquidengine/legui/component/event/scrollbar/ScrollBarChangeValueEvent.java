@@ -1,4 +1,4 @@
-package org.liquidengine.legui.component.misc.event.scrollbar;
+package org.liquidengine.legui.component.event.scrollbar;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;

@@ -4,7 +4,6 @@ import static org.liquidengine.legui.system.renderer.ImageRenderer.C_RADIUS;
 import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderBorder;
 import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderImage;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.createScissor;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.resetScissor;
 
 import java.util.HashMap;
 import org.joml.Vector2f;
@@ -21,7 +20,7 @@ public class NvgImageViewRenderer extends NvgComponentRenderer<ImageView> {
     @Override
     protected void renderComponent(ImageView imageView, Context context, long nanovg) {
         Vector2f size = imageView.getSize();
-        Vector2f position = imageView.getScreenPosition();
+        Vector2f position = imageView.getAbsolutePosition();
 
         NvgRenderUtils.drawInScissor(nanovg, imageView, () -> {
             HashMap<String, Object> p = new HashMap<>();

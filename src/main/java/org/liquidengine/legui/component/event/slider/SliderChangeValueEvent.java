@@ -1,4 +1,4 @@
-package org.liquidengine.legui.component.misc.event.slider;
+package org.liquidengine.legui.component.event.slider;
 
 import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.component.Slider;

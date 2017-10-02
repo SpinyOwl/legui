@@ -51,10 +51,10 @@ public class Tooltip extends Component implements TextComponent {
     }
 
     @Override
-    public Vector2f getScreenPosition() {
+    public Vector2f getAbsolutePosition() {
         Vector2f position = new Vector2f(getPosition());
         if (controller != null) {
-            position.add(controller.getScreenPosition());
+            position.add(controller.getAbsolutePosition());
         }
         return position;
     }

@@ -4,7 +4,6 @@ import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderBorde
 import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderIcon;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.createScissor;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.createScissorByParent;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.resetScissor;
 
 import org.joml.Vector2f;
 import org.joml.Vector4f;
@@ -24,7 +23,7 @@ public class NvgToggleButtonRenderer extends NvgComponentRenderer<ToggleButton> 
     @Override
     protected void renderComponent(ToggleButton toggleButton, Context context, long nanovg) {
         NvgRenderUtils.drawInScissor(nanovg, toggleButton, () -> {
-            Vector2f pos = toggleButton.getScreenPosition();
+            Vector2f pos = toggleButton.getAbsolutePosition();
             Vector2f size = toggleButton.getSize();
 
             // render background
