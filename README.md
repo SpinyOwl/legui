@@ -24,7 +24,7 @@
 _**(This is too early stuff and it would be implemented in little bit new way than previous version)**_  
 _**(Work in progress)**_
 ___
-# [LEGUI - What is it?](https://liquidengine.github.io/legui/)  
+# LEGUI - [What is it?](https://liquidengine.github.io/legui/)  
 GUI implementation for using with LWJGL3.
 Renderer made on top of NanoVG.
 
@@ -75,6 +75,10 @@ compile group: 'org.liquidengine', name: 'legui', version: legui_version, changi
   
   Current `SNAPSHOT` version you can find in [SNAPSHOT version.properties](https://github.com/LiquidEngine/legui/blob/snapshots/version.properties)  
   Current `RELEASE` version you can find in [RELEASE version.properties](https://github.com/LiquidEngine/legui/blob/releases/version.properties)  
+  
+### Examples:
+All examples located here: 
+[LEGUI.DEMO](https://github.com/LiquidEngine/legui.demo)
 
 ## Links
 [LWJGL - Lightweight Java Game Library 3](https://github.com/LWJGL/lwjgl3)  
