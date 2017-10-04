@@ -1,5 +1,6 @@
 package org.liquidengine.legui.component;
 
+import java.util.List;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -7,6 +8,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.color.ColorConstants;
+import org.liquidengine.legui.component.event.widget.WidgetCloseEvent;
 import org.liquidengine.legui.component.misc.listener.widget.WidgetCloseButMouseClickEventListener;
 import org.liquidengine.legui.component.misc.listener.widget.WidgetDragListener;
 import org.liquidengine.legui.component.misc.listener.widget.WidgetMinimizeButMouseClickEventListener;
@@ -18,6 +20,7 @@ import org.liquidengine.legui.event.MouseDragEvent;
 import org.liquidengine.legui.font.FontRegistry;
 import org.liquidengine.legui.icon.CharIcon;
 import org.liquidengine.legui.icon.Icon;
+import org.liquidengine.legui.listener.EventListener;
 import org.liquidengine.legui.listener.MouseDragEventListener;
 import org.liquidengine.legui.theme.Themes;
 
@@ -574,6 +577,33 @@ public class Widget extends Container<Component> {
     private void updateIcons() {
         closeButton.setBackgroundIcon(closeIcon);
         minimizeButton.setBackgroundIcon(minimized ? maximizeIcon : minimizeIcon);
+    }
+
+    /**
+     * Used to add event listener for widget close event.
+     *
+     * @param eventListener event listener to add.
+     */
+    public void addWidgetCloseEventListener(EventListener<WidgetCloseEvent> eventListener) {
+        this.getListenerMap().addListener(WidgetCloseEvent.class, eventListener);
+    }
+
+    /**
+     * Returns all event listeners for widget close event.
+     *
+     * @return all event listeners for widget close event.
+     */
+    public List<EventListener<WidgetCloseEvent>> getWidgetCloseEvents() {
+        return this.getListenerMap().getListeners(WidgetCloseEvent.class);
+    }
+
+    /**
+     * Used to remove event listener for widget close event.
+     *
+     * @param eventListener event listener to remove.
+     */
+    public void removeWidgetCloseEventListener(EventListener<WidgetCloseEvent> eventListener) {
+        this.getListenerMap().removeListener(WidgetCloseEvent.class, eventListener);
     }
 
     @Override

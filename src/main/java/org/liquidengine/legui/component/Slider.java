@@ -1,5 +1,6 @@
 package org.liquidengine.legui.component;
 
+import java.util.List;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -7,6 +8,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.color.ColorConstants;
+import org.liquidengine.legui.component.event.slider.SliderChangeValueEvent;
 import org.liquidengine.legui.component.misc.listener.slider.SliderMouseClickEventListener;
 import org.liquidengine.legui.component.misc.listener.slider.SliderMouseDragEventListener;
 import org.liquidengine.legui.component.misc.listener.slider.SliderScrollEventListener;
@@ -16,6 +18,7 @@ import org.liquidengine.legui.event.MouseDragEvent;
 import org.liquidengine.legui.event.ScrollEvent;
 import org.liquidengine.legui.intersection.Intersector;
 import org.liquidengine.legui.intersection.RectangleIntersector;
+import org.liquidengine.legui.listener.EventListener;
 import org.liquidengine.legui.theme.Themes;
 
 /**
@@ -239,6 +242,33 @@ public class Slider extends Controller {
      */
     public void setOrientation(Orientation orientation) {
         this.orientation = orientation;
+    }
+
+    /**
+     * Used to add event listener for slider change value event.
+     *
+     * @param eventListener event listener to add.
+     */
+    public void addSliderChangeValueEventListener(EventListener<SliderChangeValueEvent> eventListener) {
+        this.getListenerMap().addListener(SliderChangeValueEvent.class, eventListener);
+    }
+
+    /**
+     * Returns all event listeners for slider change value event.
+     *
+     * @return all event listeners for slider change value event.
+     */
+    public List<EventListener<SliderChangeValueEvent>> getSliderChangeValueEvents() {
+        return this.getListenerMap().getListeners(SliderChangeValueEvent.class);
+    }
+
+    /**
+     * Used to remove event listener for slider change value event.
+     *
+     * @param eventListener event listener to remove.
+     */
+    public void removeSliderChangeValueEventListener(EventListener<SliderChangeValueEvent> eventListener) {
+        this.getListenerMap().removeListener(SliderChangeValueEvent.class, eventListener);
     }
 
     @Override

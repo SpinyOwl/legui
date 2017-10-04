@@ -1,4 +1,4 @@
-package org.liquidengine.legui.component.event.selelctbox;
+package org.liquidengine.legui.component.event.selectbox;
 
 import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.component.SelectBox;

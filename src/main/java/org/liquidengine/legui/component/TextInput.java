@@ -1,10 +1,12 @@
 package org.liquidengine.legui.component;
 
+import java.util.List;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
+import org.liquidengine.legui.component.event.textinput.TextInputContentChangeEvent;
 import org.liquidengine.legui.component.misc.listener.textinput.TextInputCharEventListener;
 import org.liquidengine.legui.component.misc.listener.textinput.TextInputDragEventListener;
 import org.liquidengine.legui.component.misc.listener.textinput.TextInputKeyEventListener;
@@ -14,6 +16,7 @@ import org.liquidengine.legui.event.CharEvent;
 import org.liquidengine.legui.event.KeyEvent;
 import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.event.MouseDragEvent;
+import org.liquidengine.legui.listener.EventListener;
 import org.liquidengine.legui.theme.Themes;
 
 /**
@@ -219,6 +222,32 @@ public class TextInput extends Controller implements TextComponent {
         return textState;
     }
 
+    /**
+     * Used to add event listener for text input content change event.
+     *
+     * @param eventListener event listener to add.
+     */
+    public void addTextInputContentChangeEventListener(EventListener<TextInputContentChangeEvent> eventListener) {
+        this.getListenerMap().addListener(TextInputContentChangeEvent.class, eventListener);
+    }
+
+    /**
+     * Returns all event listeners for text input content change event.
+     *
+     * @return all event listeners for text input content change event.
+     */
+    public List<EventListener<TextInputContentChangeEvent>> getTextInputContentChangeEvents() {
+        return this.getListenerMap().getListeners(TextInputContentChangeEvent.class);
+    }
+
+    /**
+     * Used to remove event listener for text input content change event.
+     *
+     * @param eventListener event listener to remove.
+     */
+    public void removeTextInputContentChangeEventListener(EventListener<TextInputContentChangeEvent> eventListener) {
+        this.getListenerMap().removeListener(TextInputContentChangeEvent.class, eventListener);
+    }
 
     @Override
     public String toString() {
