@@ -63,7 +63,7 @@ public class NvgTextInputRenderer extends NvgComponentRenderer<TextInput> {
     @Override
     protected void renderComponent(TextInput textInput, Context context, long nanovg) {
         drawInScissor(nanovg, textInput, () -> {
-            Vector2f pos = textInput.getScreenPosition();
+            Vector2f pos = textInput.getAbsolutePosition();
             Vector2f size = textInput.getSize();
             boolean enabled = textInput.isEnabled();
             Vector4f bc = new Vector4f(textInput.getBackgroundColor());

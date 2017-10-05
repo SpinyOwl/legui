@@ -1,5 +1,19 @@
 ## [Unreleased]
 
+## [1.2.1]
+### Changes
+- Added several component events and listeners for them:
+  - CheckBoxChangeValueEvent
+  - ScrollBarChangeValueEvent
+  - SelectBoxChangeSelectionEvent
+  - SliderChangeValueEvent
+  - TextInputContentChangeEvent
+  - WidgetCloseEvent
+- Updated LWJGL version to `3.1.4-SNAPSHOT`
+- Renamed component method from `getScreenPosition()` to `getAbsolutePosition`. 
+- Updated `NvgComponentRenderer` so that now all component renderers inherited from it checking visibility of rendered component in the parent 
+components (to skip rendering of hidden components).
+
 ## [1.2.0]
 ### Changes
 - Removed event processor from context

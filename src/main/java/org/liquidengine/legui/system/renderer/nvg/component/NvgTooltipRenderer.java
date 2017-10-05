@@ -41,7 +41,7 @@ public class NvgTooltipRenderer extends NvgComponentRenderer<Tooltip> {
     public void renderComponent(Tooltip component, Context context, long nanovg) {
         NvgRenderUtils.drawInScissor(nanovg, component, () -> {
             TextState textState = component.getTextState();
-            Vector2f pos = component.getScreenPosition();
+            Vector2f pos = component.getAbsolutePosition();
             Vector2f size = component.getSize();
             float fontSize = textState.getFontSize();
             String font = textState.getFont();

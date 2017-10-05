@@ -13,14 +13,16 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 import org.liquidengine.legui.color.ColorConstants;
+import org.liquidengine.legui.component.event.selectbox.SelectBoxChangeSelectionEvent;
 import org.liquidengine.legui.component.misc.listener.selectbox.SelectBoxClickListener;
-import org.liquidengine.legui.component.misc.listener.selectbox.SelectBoxElementClickEventListener;
+import org.liquidengine.legui.component.misc.listener.selectbox.SelectBoxElementClickListener;
 import org.liquidengine.legui.component.misc.listener.selectbox.SelectBoxFocusListener;
 import org.liquidengine.legui.component.misc.listener.selectbox.SelectBoxScrollListener;
 import org.liquidengine.legui.event.FocusEvent;
 import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.icon.CharIcon;
 import org.liquidengine.legui.icon.Icon;
+import org.liquidengine.legui.listener.EventListener;
 import org.liquidengine.legui.listener.FocusEventListener;
 import org.liquidengine.legui.listener.MouseClickEventListener;
 import org.liquidengine.legui.theme.Themes;
@@ -308,7 +310,7 @@ public class SelectBox extends Container {
         SelectBoxElement boxElement = new SelectBoxElement(element, false);
         boxElement.setSize(new Vector2f(selectionListPanel.getContainer().getSize().x, elementHeight));
         boxElement.setPosition(0, selectionListPanel.getContainer().count() * elementHeight);
-        boxElement.getListenerMap().getListeners(MouseClickEvent.class).add(new SelectBoxElementClickEventListener(this));
+        boxElement.getListenerMap().getListeners(MouseClickEvent.class).add(new SelectBoxElementClickListener(this));
         return boxElement;
     }
 
@@ -440,6 +442,33 @@ public class SelectBox extends Container {
     public void setElementHeight(float elementHeight) {
         this.elementHeight = elementHeight;
         resize();
+    }
+
+    /**
+     * Used to add event listener for select box change selection event.
+     *
+     * @param eventListener event listener to add.
+     */
+    public void addSelectBoxChangeSelectionEventListener(EventListener<SelectBoxChangeSelectionEvent> eventListener) {
+        this.getListenerMap().addListener(SelectBoxChangeSelectionEvent.class, eventListener);
+    }
+
+    /**
+     * Returns all event listeners for select box change selection event.
+     *
+     * @return all event listeners for select box change selection event.
+     */
+    public List<EventListener<SelectBoxChangeSelectionEvent>> getSelectBoxChangeSelectionEvents() {
+        return this.getListenerMap().getListeners(SelectBoxChangeSelectionEvent.class);
+    }
+
+    /**
+     * Used to remove event listener for select box change selection event.
+     *
+     * @param eventListener event listener to remove.
+     */
+    public void removeSelectBoxChangeSelectionEventListener(EventListener<SelectBoxChangeSelectionEvent> eventListener) {
+        this.getListenerMap().removeListener(SelectBoxChangeSelectionEvent.class, eventListener);
     }
 
     @Override

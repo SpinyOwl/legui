@@ -2,7 +2,6 @@ package org.liquidengine.legui.system.renderer.nvg.component;
 
 import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderBorderWScissor;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.createScissor;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.resetScissor;
 
 import java.util.List;
 import org.joml.Vector2f;
@@ -23,7 +22,7 @@ public class NvgDefaultComponentRenderer extends NvgComponentRenderer {
     @Override
     protected void renderComponent(Component component, Context context, long nanovg) {
         NvgRenderUtils.drawInScissor(nanovg, component, () -> {
-            Vector2f pos = component.getScreenPosition();
+            Vector2f pos = component.getAbsolutePosition();
             Vector2f size = component.getSize();
             Vector4f color = component.getBackgroundColor();
             float cornerRadius = component.getCornerRadius();

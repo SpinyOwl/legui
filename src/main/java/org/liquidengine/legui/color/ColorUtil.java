@@ -60,9 +60,10 @@ public final class ColorUtil {
      * @param color color to negotiate.
      * @param dest target color object to set.
      */
-    public static void negativeColorRGB(Vector4f color, Vector4f dest) {
+    public static Vector4f negativeColorRGB(Vector4f color, Vector4f dest) {
         dest.zero().set(1).sub(color);
         dest.w = 1;
+        return dest;
     }
 
     /**
@@ -76,6 +77,16 @@ public final class ColorUtil {
     }
 
     /**
+     * Used to obtain half color from source.
+     *
+     * @param color source color.
+     * @return new color.
+     */
+    public static Vector4f halfRGB(Vector4f color) {
+        return new Vector4f(color.x / 2f, color.y / 2f, color.z / 2f, color.w);
+    }
+
+    /**
      * Used to return black or white color based on source color. for example for white source color it should return black.
      *
      * @param color color to find opposite black or white color.
@@ -86,7 +97,7 @@ public final class ColorUtil {
     }
 
     /**
-     * Used to return black or white color based on source color. for example for white source color it should return black.
+     * Used to return black or white color based on source color. For example for white source color it should return black.
      *
      * @param color color to find opposite black or white color.
      * @param targetColor color to set result.

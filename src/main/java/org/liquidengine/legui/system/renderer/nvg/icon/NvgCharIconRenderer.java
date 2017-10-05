@@ -22,7 +22,7 @@ public class NvgCharIconRenderer<I extends CharIcon> extends NvgIconRenderer<I> 
             return;
         }
         // render simple rectangle border
-        Vector2f position = component.getScreenPosition();
+        Vector2f position = component.getAbsolutePosition();
         Vector2f size = component.getSize();
         Vector2f iconSize = icon.getSize();
 

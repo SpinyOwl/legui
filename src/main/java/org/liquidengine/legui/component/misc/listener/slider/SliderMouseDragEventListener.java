@@ -2,7 +2,7 @@ package org.liquidengine.legui.component.misc.listener.slider;
 
 import org.joml.Vector2f;
 import org.liquidengine.legui.component.Slider;
-import org.liquidengine.legui.component.misc.event.slider.SliderChangeValueEvent;
+import org.liquidengine.legui.component.event.slider.SliderChangeValueEvent;
 import org.liquidengine.legui.component.optional.Orientation;
 import org.liquidengine.legui.event.MouseDragEvent;
 import org.liquidengine.legui.input.Mouse;
@@ -21,7 +21,7 @@ public class SliderMouseDragEventListener implements MouseDragEventListener {
             return;
         }
 
-        Vector2f pos = slider.getScreenPosition();
+        Vector2f pos = slider.getAbsolutePosition();
 
         Vector2f cursorPosition = Mouse.getCursorPosition();
         float value;

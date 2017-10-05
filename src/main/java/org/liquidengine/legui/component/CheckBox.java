@@ -2,18 +2,21 @@ package org.liquidengine.legui.component;
 
 import static org.liquidengine.legui.font.FontRegistry.MATERIAL_ICONS_REGULAR;
 
+import java.util.List;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 import org.liquidengine.legui.color.ColorConstants;
+import org.liquidengine.legui.component.event.checkbox.CheckBoxChangeValueEvent;
 import org.liquidengine.legui.component.misc.listener.checkbox.CheckBoxMouseClickEventListener;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.icon.CharIcon;
 import org.liquidengine.legui.icon.Icon;
+import org.liquidengine.legui.listener.EventListener;
 import org.liquidengine.legui.theme.Themes;
 
 /**
@@ -183,6 +186,31 @@ public class CheckBox extends Controller implements TextComponent {
      */
     public void setChecked(boolean checked) {
         this.checked = checked;
+    }
+
+    /**
+     * Used to add checkbox change value event listener.
+     *
+     * @param listener listener to add.
+     */
+    public void addCheckBoxChangeValueListener(EventListener<CheckBoxChangeValueEvent> listener) {
+        getListenerMap().addListener(CheckBoxChangeValueEvent.class, listener);
+    }
+
+    /**
+     * Used to get all event listeners for checkbox change value event.
+     *
+     * @return all event listeners for checkbox change value event.
+     */
+    public List<EventListener<CheckBoxChangeValueEvent>> getCheckBoxChangeValueEventListeners() {
+        return getListenerMap().getListeners(CheckBoxChangeValueEvent.class);
+    }
+
+    /**
+     * Used to remove event listener for checkbox change value event.
+     */
+    public void removeCheckBoxChangeValueListener(EventListener<CheckBoxChangeValueEvent> listener) {
+        getListenerMap().removeListener(CheckBoxChangeValueEvent.class, listener);
     }
 
     @Override

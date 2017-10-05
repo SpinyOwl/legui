@@ -5,7 +5,6 @@ import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderIcon;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.createScissor;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.drawInScissor;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.renderTextStateLineToBounds;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.resetScissor;
 import static org.lwjgl.nanovg.NanoVG.nvgIntersectScissor;
 import static org.lwjgl.nanovg.NanoVG.nvgRestore;
 import static org.lwjgl.nanovg.NanoVG.nvgSave;
@@ -28,7 +27,7 @@ public class NvgButtonRenderer extends NvgComponentRenderer<Button> {
     @Override
     protected void renderComponent(Button button, Context context, long nanovg) {
         drawInScissor(nanovg, button, () -> {
-            Vector2f pos = button.getScreenPosition();
+            Vector2f pos = button.getAbsolutePosition();
             Vector2f size = button.getSize();
 
             // render background

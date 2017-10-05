@@ -50,7 +50,7 @@ public class NvgTextAreaRenderer extends NvgComponentRenderer<TextArea> {
     @Override
     public void renderComponent(TextArea component, Context context, long nanovg) {
         NvgRenderUtils.drawInScissor(nanovg, component, () -> {
-            Vector2f pos = component.getScreenPosition();
+            Vector2f pos = component.getAbsolutePosition();
             Vector2f size = component.getSize();
             float br = component.getCornerRadius();
             Vector4f bc = new Vector4f(component.getBackgroundColor());

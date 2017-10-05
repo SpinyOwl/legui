@@ -56,7 +56,7 @@ public class NvgPasswordInputRenderer extends NvgComponentRenderer<PasswordInput
     @Override
     public void renderComponent(PasswordInput passwordInput, Context leguiContext, long nanovg) {
         NvgRenderUtils.drawInScissor(nanovg, passwordInput, () -> {
-            Vector2f pos = passwordInput.getScreenPosition();
+            Vector2f pos = passwordInput.getAbsolutePosition();
             Vector2f size = passwordInput.getSize();
             boolean enabled = passwordInput.isEnabled();
             Vector4f bc = new Vector4f(passwordInput.getBackgroundColor());

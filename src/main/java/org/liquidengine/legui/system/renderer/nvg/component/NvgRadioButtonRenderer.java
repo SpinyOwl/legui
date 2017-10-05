@@ -4,7 +4,6 @@ import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderBorde
 import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderIcon;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.createScissor;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.renderTextStateLineToBounds;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.resetScissor;
 
 import org.joml.Vector2f;
 import org.joml.Vector4f;
@@ -25,7 +24,7 @@ public class NvgRadioButtonRenderer extends NvgComponentRenderer<RadioButton> {
     public void renderComponent(RadioButton radioButton, Context context, long nanovg) {
         NvgRenderUtils.drawInScissor(nanovg, radioButton, () -> {
             // default renderer used
-            Vector2f pos = radioButton.getScreenPosition();
+            Vector2f pos = radioButton.getAbsolutePosition();
             Vector2f size = radioButton.getSize();
 
             // Draw background rectangle

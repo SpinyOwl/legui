@@ -4,9 +4,11 @@ import static org.liquidengine.legui.input.Mouse.MouseButton.MOUSE_BUTTON_LEFT;
 import static org.liquidengine.legui.util.TextUtil.cpToStr;
 
 import org.liquidengine.legui.component.TextInput;
+import org.liquidengine.legui.component.event.textinput.TextInputContentChangeEvent;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.event.CharEvent;
 import org.liquidengine.legui.listener.CharEventListener;
+import org.liquidengine.legui.listener.processor.EventProcessor;
 
 /**
  * Char event listener for text input. Used to fill text area with symbols entered via keyboard.
@@ -24,6 +26,7 @@ public class TextInputCharEventListener implements CharEventListener {
         if (textInput.isFocused() && textInput.isEditable() && !MOUSE_BUTTON_LEFT.isPressed()) {
             String str = cpToStr(event.getCodepoint());
             TextState textState = textInput.getTextState();
+            String oldText = textState.getText();
             int start = textInput.getStartSelectionIndex();
             int end = textInput.getEndSelectionIndex();
             if (start > end) {
@@ -42,6 +45,8 @@ public class TextInputCharEventListener implements CharEventListener {
             textInput.setCaretPosition(newCaretPosition);
             textInput.setEndSelectionIndex(newCaretPosition);
             textInput.setStartSelectionIndex(newCaretPosition);
+            String newText = textState.getText();
+            EventProcessor.getInstance().pushEvent(new TextInputContentChangeEvent(textInput, event.getContext(), event.getFrame(), oldText, newText));
         }
     }
 

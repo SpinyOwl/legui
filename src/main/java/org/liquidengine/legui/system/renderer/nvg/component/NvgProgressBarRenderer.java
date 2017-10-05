@@ -20,7 +20,7 @@ public class NvgProgressBarRenderer extends NvgComponentRenderer<ProgressBar> {
     public void renderComponent(ProgressBar progressBar, Context leguiContext, long nanovg) {
         NvgRenderUtils.drawInScissor(nanovg, progressBar, () -> {
             nvgSave(nanovg);
-            Vector2f pos = progressBar.getScreenPosition();
+            Vector2f pos = progressBar.getAbsolutePosition();
             float cornerRadius = progressBar.getCornerRadius();
 
             Vector2f size = progressBar.getSize();

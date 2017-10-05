@@ -5,7 +5,7 @@ import static org.liquidengine.legui.input.Mouse.MouseButton.MOUSE_BUTTON_LEFT;
 import org.joml.Vector2f;
 import org.liquidengine.legui.component.ScrollBar;
 import org.liquidengine.legui.component.Viewport;
-import org.liquidengine.legui.component.misc.event.scrollbar.ScrollBarChangeValueEvent;
+import org.liquidengine.legui.component.event.scrollbar.ScrollBarChangeValueEvent;
 import org.liquidengine.legui.component.optional.Orientation;
 import org.liquidengine.legui.event.MouseDragEvent;
 import org.liquidengine.legui.input.Mouse;
@@ -27,7 +27,7 @@ public class ScrollBarMouseDragEventListener implements MouseDragEventListener {
             return;
         }
 
-        Vector2f pos = scrollBar.getScreenPosition();
+        Vector2f pos = scrollBar.getAbsolutePosition();
         Vector2f cursorPosition = Mouse.getCursorPosition();
 
         float visibleAmount = scrollBar.getVisibleAmount();

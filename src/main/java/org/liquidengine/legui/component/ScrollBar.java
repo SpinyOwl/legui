@@ -1,5 +1,6 @@
 package org.liquidengine.legui.component;
 
+import java.util.List;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -7,6 +8,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.color.ColorConstants;
+import org.liquidengine.legui.component.event.scrollbar.ScrollBarChangeValueEvent;
 import org.liquidengine.legui.component.misc.listener.scrollbar.ScrollBarMouseClickEventListener;
 import org.liquidengine.legui.component.misc.listener.scrollbar.ScrollBarMouseDragEventListener;
 import org.liquidengine.legui.component.misc.listener.scrollbar.ScrollBarScrollListener;
@@ -14,6 +16,7 @@ import org.liquidengine.legui.component.optional.Orientation;
 import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.event.MouseDragEvent;
 import org.liquidengine.legui.event.ScrollEvent;
+import org.liquidengine.legui.listener.EventListener;
 import org.liquidengine.legui.theme.Themes;
 
 /**
@@ -388,6 +391,33 @@ public class ScrollBar extends Controller {
         if (scrollStep > 0) {
             this.scrollStep = scrollStep;
         }
+    }
+
+    /**
+     * Used to add event listener for scroll bar change value event.
+     *
+     * @param eventListener event listener to add.
+     */
+    public void addScrollBarChangeValueEventListener(EventListener<ScrollBarChangeValueEvent> eventListener) {
+        this.getListenerMap().addListener(ScrollBarChangeValueEvent.class, eventListener);
+    }
+
+    /**
+     * Returns all event listeners for scroll bar change value event.
+     *
+     * @return all event listeners for scroll bar change value event.
+     */
+    public List<EventListener<ScrollBarChangeValueEvent>> getScrollBarChangeValueEvents() {
+        return this.getListenerMap().getListeners(ScrollBarChangeValueEvent.class);
+    }
+
+    /**
+     * Used to remove event listener for scroll bar change value event.
+     *
+     * @param eventListener event listener to remove.
+     */
+    public void removeScrollBarChangeValueEventListener(EventListener<ScrollBarChangeValueEvent> eventListener) {
+        this.getListenerMap().removeListener(ScrollBarChangeValueEvent.class, eventListener);
     }
 
     @Override

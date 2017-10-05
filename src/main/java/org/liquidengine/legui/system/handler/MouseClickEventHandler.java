@@ -62,15 +62,18 @@ public class MouseClickEventHandler implements SystemEventHandler<SystemMouseCli
                 if (focusedGui != targetComponent) {
                     targetComponent.setFocused(true);
                     context.setFocusedGui(targetComponent);
-                    EventProcessor.getInstance().pushEvent(new FocusEvent(targetComponent, context, frame, targetComponent, true));
                 }
-                Vector2f position = targetComponent.getScreenPosition().sub(cursorPosition).negate();
+                Vector2f position = targetComponent.getAbsolutePosition().sub(cursorPosition).negate();
                 EventProcessor.getInstance()
                     .pushEvent(new MouseClickEvent(targetComponent, context, frame, MouseClickEvent.MouseClickAction.PRESS, button, position, cursorPosition));
+
+                if (focusedGui != targetComponent) {
+                    EventProcessor.getInstance().pushEvent(new FocusEvent(targetComponent, context, frame, targetComponent, true));
+                }
             } else {
                 updateReleasePosAndFocusedGui(button, cursorPosition, focusedGui);
 
-                Vector2f position = targetComponent.getScreenPosition().sub(cursorPosition).negate();
+                Vector2f position = targetComponent.getAbsolutePosition().sub(cursorPosition).negate();
                 if (focusedGui != null && focusedGui == targetComponent) {
                     EventProcessor.getInstance().pushEvent(
                         new MouseClickEvent(targetComponent, context, frame, MouseClickEvent.MouseClickAction.CLICK, button, position, cursorPosition));

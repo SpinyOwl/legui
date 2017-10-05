@@ -5,7 +5,6 @@ import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderIcon;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.createScissor;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.drawInScissor;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.renderTextStateLineToBounds;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.resetScissor;
 
 import org.joml.Vector2f;
 import org.joml.Vector4f;
@@ -24,7 +23,7 @@ public class NvgCheckBoxRenderer extends NvgComponentRenderer<CheckBox> {
     @Override
     public void renderComponent(CheckBox checkBox, Context context, long nanovg) {
         drawInScissor(nanovg, checkBox, () -> {
-            Vector2f pos = checkBox.getScreenPosition();
+            Vector2f pos = checkBox.getAbsolutePosition();
             Vector2f size = checkBox.getSize();
 
             float px = pos.x;
