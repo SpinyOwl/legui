@@ -19,14 +19,12 @@ import static org.lwjgl.glfw.GLFW.GLFW_KEY_X;
 import static org.lwjgl.glfw.GLFW.GLFW_MOD_CONTROL;
 import static org.lwjgl.glfw.GLFW.GLFW_MOD_SHIFT;
 import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
-import static org.lwjgl.glfw.GLFW.glfwGetClipboardString;
-import static org.lwjgl.glfw.GLFW.glfwSetClipboardString;
 
 import org.liquidengine.legui.component.TextArea;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.event.KeyEvent;
 import org.liquidengine.legui.listener.KeyEventListener;
-import org.liquidengine.legui.system.context.Context;
+import org.liquidengine.legui.system.Clipboard;
 
 /**
  * Key event listener. Used to provide some text operations by keyboard.
@@ -62,11 +60,11 @@ public class TextAreaKeyEventListener implements KeyEventListener {
         } else if (key == GLFW_KEY_DELETE && pressed) {
             keyDeleteAction(textArea, event.getMods());
         } else if (key == GLFW_KEY_V && pressed && event.getMods() == GLFW_MOD_CONTROL) {
-            pasteAction(textArea, event.getContext());
+            pasteAction(textArea);
         } else if (key == GLFW_KEY_C && pressed && event.getMods() == GLFW_MOD_CONTROL) {
-            copyAction(textArea, event.getContext());
+            copyAction(textArea);
         } else if (key == GLFW_KEY_X && pressed && event.getMods() == GLFW_MOD_CONTROL) {
-            cutAction(textArea, event.getContext());
+            cutAction(textArea);
         } else if (key == GLFW_KEY_A && pressed && event.getMods() == GLFW_MOD_CONTROL) {
             selectAllAction(textArea);
         }
@@ -88,9 +86,8 @@ public class TextAreaKeyEventListener implements KeyEventListener {
      * Used to cut some string from text area and put it to clipboard.
      *
      * @param gui text area to work with.
-     * @param leguiContext context.
      */
-    private void cutAction(TextArea gui, Context leguiContext) {
+    private void cutAction(TextArea gui) {
         if (gui.isEditable()) {
             TextState textState = gui.getTextState();
             String s = gui.getSelection();
@@ -106,7 +103,7 @@ public class TextAreaKeyEventListener implements KeyEventListener {
                 gui.setCaretPosition(start);
                 gui.setStartSelectionIndex(start);
                 gui.setEndSelectionIndex(start);
-                glfwSetClipboardString(leguiContext.getGlfwWindow(), s);
+                Clipboard.getInstance().setClipboardString(s);
             }
         }
     }
@@ -115,12 +112,11 @@ public class TextAreaKeyEventListener implements KeyEventListener {
      * Used to copy selected text to clipboard.
      *
      * @param gui gui.
-     * @param leguiContext context.
      */
-    private void copyAction(TextArea gui, Context leguiContext) {
+    private void copyAction(TextArea gui) {
         String s = gui.getSelection();
         if (s != null) {
-            glfwSetClipboardString(leguiContext.getGlfwWindow(), s);
+            Clipboard.getInstance().setClipboardString(s);
         }
     }
 
@@ -128,13 +124,12 @@ public class TextAreaKeyEventListener implements KeyEventListener {
      * Used to paste clipboard data to gui element.
      *
      * @param gui gui to paste
-     * @param leguiContext context.
      */
-    private void pasteAction(TextArea gui, Context leguiContext) {
+    private void pasteAction(TextArea gui) {
         if (gui.isEditable()) {
             TextState textState = gui.getTextState();
             int caretPosition = gui.getCaretPosition();
-            String s = glfwGetClipboardString(leguiContext.getGlfwWindow());
+            String s = Clipboard.getInstance().getClipboardString();
             if (s != null) {
                 textState.insert(caretPosition, s);
                 gui.setCaretPosition(caretPosition + s.length());

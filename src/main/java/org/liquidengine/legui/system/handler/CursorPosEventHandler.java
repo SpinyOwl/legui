@@ -84,10 +84,9 @@ public class CursorPosEventHandler extends AbstractSystemEventHandler<SystemCurs
     }
 
     private void processAsComponent(Component component, Context context, Frame frame) {
-        EventProcessor eventProcessor = EventProcessor.getInstance();
         if (Mouse.MouseButton.MOUSE_BUTTON_1.isPressed() && component == context.getFocusedGui()) {
             Vector2f delta = Mouse.getCursorPosition().sub(Mouse.getCursorPositionPrev());
-            eventProcessor.pushEvent(new MouseDragEvent(component, context, frame, delta));
+            EventProcessor.getInstance().pushEvent(new MouseDragEvent(component, context, frame, delta));
         }
     }
 }

@@ -17,8 +17,6 @@ import static org.lwjgl.glfw.GLFW.GLFW_KEY_X;
 import static org.lwjgl.glfw.GLFW.GLFW_MOD_CONTROL;
 import static org.lwjgl.glfw.GLFW.GLFW_MOD_SHIFT;
 import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
-import static org.lwjgl.glfw.GLFW.glfwGetClipboardString;
-import static org.lwjgl.glfw.GLFW.glfwSetClipboardString;
 
 import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.component.TextInput;
@@ -27,6 +25,7 @@ import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.event.KeyEvent;
 import org.liquidengine.legui.listener.KeyEventListener;
 import org.liquidengine.legui.listener.processor.EventProcessor;
+import org.liquidengine.legui.system.Clipboard;
 import org.liquidengine.legui.system.context.Context;
 
 /**
@@ -104,7 +103,7 @@ public class TextInputKeyEventListener implements KeyEventListener {
                 gui.setEndSelectionIndex(start);
                 String newText = gui.getTextState().getText();
                 EventProcessor.getInstance().pushEvent(new TextInputContentChangeEvent(gui, leguiContext, frame, oldText, newText));
-                glfwSetClipboardString(leguiContext.getGlfwWindow(), s);
+                Clipboard.getInstance().setClipboardString(s);
             }
         } else {
             copyAction(gui, leguiContext);
@@ -120,7 +119,7 @@ public class TextInputKeyEventListener implements KeyEventListener {
     private void copyAction(TextInput gui, Context leguiContext) {
         String s = gui.getSelection();
         if (s != null) {
-            glfwSetClipboardString(leguiContext.getGlfwWindow(), s);
+            Clipboard.getInstance().setClipboardString(s);
         }
     }
 
@@ -135,7 +134,8 @@ public class TextInputKeyEventListener implements KeyEventListener {
         if (gui.isEditable()) {
             TextState textState = gui.getTextState();
             int caretPosition = gui.getCaretPosition();
-            String s = glfwGetClipboardString(leguiContext.getGlfwWindow());
+            String s =
+                Clipboard.getInstance().getClipboardString();
             if (s != null) {
                 String oldText = textState.getText();
                 textState.insert(caretPosition, s);

@@ -1,7 +1,7 @@
 package org.liquidengine.legui.theme;
 
 import org.liquidengine.legui.theme.dark.DarkTheme;
-import org.liquidengine.legui.theme.white.def.WhiteTheme;
+import org.liquidengine.legui.theme.white.WhiteTheme;
 
 /**
  * Enum of existing themes.

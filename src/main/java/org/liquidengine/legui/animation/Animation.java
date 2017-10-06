@@ -1,7 +1,11 @@
 package org.liquidengine.legui.animation;
 
 /**
+ * Draft animation realization.
+ *
  * Created by ShchAlexander on 31.07.2017.
+ *
+ * @author ShchAlexander
  */
 public abstract class Animation {
 
