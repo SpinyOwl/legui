@@ -86,7 +86,9 @@ public abstract class Controller extends Component {
      */
     public void setTooltipComponent(Tooltip tooltip) {
         this.tooltip = tooltip;
-        tooltip.setController(this);
+        if (tooltip != null) {
+            tooltip.setController(this);
+        }
     }
 
     @Override

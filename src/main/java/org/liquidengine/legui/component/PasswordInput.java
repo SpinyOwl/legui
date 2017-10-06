@@ -13,6 +13,11 @@ public class PasswordInput extends TextInput {
     private int maskCharacter = 0x002A;
 
     /**
+     * Used to enable or disable masking
+     */
+    private boolean masked = true;
+
+    /**
      * Default constructor. Used to create component instance without any parameters. <p> Also if you want to make it easy to use with Json
      * marshaller/unmarshaller component should contain empty constructor.
      */
@@ -91,5 +96,23 @@ public class PasswordInput extends TextInput {
      */
     public void setMaskCharacter(int maskCharacter) {
         this.maskCharacter = maskCharacter;
+    }
+
+    /**
+     * Returns true if masking enabled.
+     *
+     * @return true if masking enabled.
+     */
+    public boolean isMasked() {
+        return masked;
+    }
+
+    /**
+     * Used to enable or disable masking.
+     *
+     * @param masked true if need to mask text.
+     */
+    public void setMasked(boolean masked) {
+        this.masked = masked;
     }
 }

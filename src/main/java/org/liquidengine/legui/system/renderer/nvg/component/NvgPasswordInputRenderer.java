@@ -245,14 +245,18 @@ public class NvgPasswordInputRenderer extends NvgComponentRenderer<PasswordInput
     }
 
     private String createMaskedText(PasswordInput gui, String text) {
-        StringBuffer b = new StringBuffer();
-        int length = text.length();
-        int maskCharacter = gui.getMaskCharacter();
-        char[] mask = Character.toChars(maskCharacter);
-        for (int i = 0; i < length; i++) {
-            b.append(mask);
+        if (gui.isMasked()) {
+            StringBuffer b = new StringBuffer();
+            int length = text.length();
+            int maskCharacter = gui.getMaskCharacter();
+            char[] mask = Character.toChars(maskCharacter);
+            for (int i = 0; i < length; i++) {
+                b.append(mask);
+            }
+            return b.toString();
+        } else {
+            return text;
         }
-        return b.toString();
     }
 
     private void updateMetadata(HorizontalAlign halign, Map<String, Object> metadata, float ratio, Float poffset) {
