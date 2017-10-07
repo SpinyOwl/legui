@@ -104,11 +104,11 @@ public class NvgSliderRenderer<T extends Slider> extends NvgComponentRenderer<T>
      * @param width line width
      */
     private void drawLine(long context, Vector4f color, float x1, float y1, float x2, float y2, float width) {
-        NVGColor colorA = NVGColor.calloc();
+        NVGColor colorA = rgba(color, NVGColor.calloc());
         nvgLineCap(context, NVG_ROUND);
         nvgLineJoin(context, NVG_ROUND);
         nvgStrokeWidth(context, width);
-        nvgStrokeColor(context, rgba(color, colorA));
+        nvgStrokeColor(context, colorA);
         nvgBeginPath(context);
         nvgMoveTo(context, x1, y1);
         nvgLineTo(context, x2, y2);

@@ -31,6 +31,7 @@
   "intersector": {
     "@class": "org.liquidengine.legui.intersection.RectangleIntersector"
   },
+  "selectedElement":"Hello",
   "elementHeight": 16.0,
   "buttonWidth": 15.0,
   "visibleCount": 3,

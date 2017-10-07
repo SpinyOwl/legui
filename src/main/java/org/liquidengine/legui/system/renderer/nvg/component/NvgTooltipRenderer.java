@@ -58,8 +58,6 @@ public class NvgTooltipRenderer extends NvgComponentRenderer<Tooltip> {
             nvgFontFace(nanovg, font);
 
             ByteBuffer byteText = null;
-            NVGColor colorA = null;
-            NVGTextRow.Buffer buffer = null;
             try {
 
                 byteText = memUTF8(text, false);
@@ -76,14 +74,14 @@ public class NvgTooltipRenderer extends NvgComponentRenderer<Tooltip> {
                 List<float[]> boundList = new ArrayList<>();
                 List<long[]> indicesList = new ArrayList<>();
 
-                colorA = NVGColor.calloc();
+                NVGColor colorA = NVGColor.calloc();
                 alignTextInBox(nanovg, HorizontalAlign.LEFT, VerticalAlign.MIDDLE);
                 nvgFontSize(nanovg, fontSize);
                 nvgFontFace(nanovg, font);
                 nvgFillColor(nanovg, rgba(textColor, colorA));
 
                 // calculate text bounds for every line and start/end indices
-                buffer = NVGTextRow.calloc(1);
+                NVGTextRow.Buffer buffer = NVGTextRow.calloc(1);
                 int rows = 0;
                 while (nnvgTextBreakLines(nanovg, start, end, size.x, memAddress(buffer), 1) != 0) {
                     NVGTextRow row = buffer.get(0);
@@ -106,15 +104,10 @@ public class NvgTooltipRenderer extends NvgComponentRenderer<Tooltip> {
                     nvgBeginPath(nanovg);
                     nnvgText(nanovg, bounds[4], bounds[5] - offsetY, indices[0], indices[1]);
                 }
-
+                buffer.free();
+                colorA.free();
             } finally {
                 memFree(byteText);
-                if (buffer != null) {
-                    buffer.free();
-                }
-                if (colorA != null) {
-                    colorA.free();
-                }
             }
         });
         renderBorderWScissor(component, context, nanovg);

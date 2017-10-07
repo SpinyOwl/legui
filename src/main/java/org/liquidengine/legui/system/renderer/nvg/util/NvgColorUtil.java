@@ -2,7 +2,6 @@ package org.liquidengine.legui.system.renderer.nvg.util;
 
 import org.joml.Vector4fc;
 import org.lwjgl.nanovg.NVGColor;
-import org.lwjgl.nanovg.NanoVG;
 
 /**
  * NanoVG utility. Used to convert some NanoVG elements to other. For example {@link NVGColor} to {@link org.joml.Vector4f} and back.
@@ -20,7 +19,11 @@ public class NvgColorUtil {
      * @return filled color.
      */
     public static NVGColor rgba(float r, float g, float b, float a, NVGColor color) {
-        return NanoVG.nvgRGBAf(r, g, b, a, color);
+        color.r(r);
+        color.g(g);
+        color.b(b);
+        color.a(a);
+        return color;
     }
 
     /**
@@ -32,6 +35,10 @@ public class NvgColorUtil {
      * @return filled color.
      */
     public static NVGColor rgba(Vector4fc rgba, NVGColor color) {
-        return NanoVG.nvgRGBAf(rgba.x(), rgba.y(), rgba.z(), rgba.w(), color);
+        color.r(rgba.x());
+        color.g(rgba.y());
+        color.b(rgba.z());
+        color.a(rgba.w());
+        return color;
     }
 }

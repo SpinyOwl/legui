@@ -80,6 +80,7 @@ public class NvgText {
             nvgBeginPath(nvg);
             nvgFillColor(nvg, textColor);
             nnvgText(nvg, textPosition.x, textPosition.y, rowStart, rowEnd);
+            textColor.free();
         } finally {
             if (byteText != null) {
                 MemoryUtil.memFree(byteText);

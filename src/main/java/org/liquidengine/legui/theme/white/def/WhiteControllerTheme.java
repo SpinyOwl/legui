@@ -13,7 +13,7 @@ public class WhiteControllerTheme<T extends Controller> extends WhiteComponentTh
 
     @Override
     public void applyAll(T component) {
-        applyAll(component);
+        super.applyAll(component);
         Tooltip tooltip = component.getTooltip();
         if (tooltip != null) {
             Themes.getDefaultTheme().applyAll(tooltip);

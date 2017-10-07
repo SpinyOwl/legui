@@ -3,10 +3,8 @@ package org.liquidengine.legui.system.renderer.nvg.component;
 import static org.liquidengine.legui.color.ColorUtil.oppositeBlackOrWhite;
 import static org.liquidengine.legui.component.optional.Orientation.VERTICAL;
 import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderBorder;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgColorUtil.rgba;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.alignTextInBox;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.createBounds;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.createScissor;
 import static org.liquidengine.legui.util.TextUtil.cpToStr;
 import static org.lwjgl.nanovg.NanoVG.nnvgText;
 import static org.lwjgl.nanovg.NanoVG.nnvgTextBreakLines;
@@ -26,6 +24,7 @@ import org.liquidengine.legui.component.optional.align.VerticalAlign;
 import org.liquidengine.legui.font.FontRegistry;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.nvg.NvgComponentRenderer;
+import org.liquidengine.legui.system.renderer.nvg.util.NvgColorUtil;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgShapes;
 import org.lwjgl.nanovg.NVGColor;
@@ -174,9 +173,9 @@ public class NvgScrollBarRenderer extends NvgComponentRenderer<ScrollBar> {
                 NVGTextRow row = buffer.get(0);
                 float[] bounds = createBounds(x1, y1, w1, h1, horizontalAlign, verticalAlign, row.width(), fontSize);
 
-                NVGColor colorA = NVGColor.calloc();
+                NVGColor colorA = NvgColorUtil.rgba(blackOrWhite, NVGColor.calloc());
                 nvgBeginPath(context);
-                nvgFillColor(context, rgba(blackOrWhite, colorA));
+                nvgFillColor(context, colorA);
                 nnvgText(context, bounds[0], bounds[1], row.start(), row.end());
                 colorA.free();
             }

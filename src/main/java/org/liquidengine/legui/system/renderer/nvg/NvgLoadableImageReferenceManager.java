@@ -46,7 +46,7 @@ public class NvgLoadableImageReferenceManager {
      * Used to create image reference manager.
      */
     protected NvgLoadableImageReferenceManager() {
-        imageCache = CacheBuilder.newBuilder().initialCapacity(200).softValues()
+        imageCache = CacheBuilder.newBuilder().initialCapacity(200)
             .expireAfterAccess(300, TimeUnit.SECONDS).removalListener(removalListener).build();
         cleanup.scheduleAtFixedRate(() -> imageCache.cleanUp(), 1, 1, TimeUnit.SECONDS);
     }
