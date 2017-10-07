@@ -93,155 +93,155 @@ public class NvgPasswordInputRenderer extends NvgComponentRenderer<PasswordInput
      */
     private void renderText(Context leguiContext, long context, PasswordInput gui, Vector2f size, Vector4f rect, Vector4f bc) {
 
-        NVGGlyphPosition.Buffer glyphs = NVGGlyphPosition.calloc(maxGlyphCount);
-        NVGColor colorA = NVGColor.calloc();
+        try (NVGGlyphPosition.Buffer glyphs = NVGGlyphPosition.calloc(maxGlyphCount); NVGColor colorA = NVGColor.calloc()) {
 
-        TextState textState = gui.getTextState();
-        String text = textState.getText();
-        String maskedText = createMaskedText(gui, text);
-        String font = textState.getFont();
-        float fontSize = textState.getFontSize();
-        Vector4f highlightColor = textState.getHighlightColor();
-        HorizontalAlign halign = textState.getHorizontalAlign();
-        VerticalAlign valign = textState.getVerticalAlign();
-        Vector4f textColor = textState.getTextColor();
-        int caretPosition = gui.getCaretPosition();
-        Map<String, Object> metadata = gui.getMetadata();
-        int startSelectionIndex = gui.getStartSelectionIndex();
-        int endSelectionIndex = gui.getEndSelectionIndex();
-        boolean focused = gui.isFocused();
+            TextState textState = gui.getTextState();
+            String text = textState.getText();
+            String maskedText = createMaskedText(gui, text);
+            String font = textState.getFont();
+            float fontSize = textState.getFontSize();
+            Vector4f highlightColor = textState.getHighlightColor();
+            HorizontalAlign halign = textState.getHorizontalAlign();
+            VerticalAlign valign = textState.getVerticalAlign();
+            Vector4f textColor = textState.getTextColor();
+            int caretPosition = gui.getCaretPosition();
+            Map<String, Object> metadata = gui.getMetadata();
+            int startSelectionIndex = gui.getStartSelectionIndex();
+            int endSelectionIndex = gui.getEndSelectionIndex();
+            boolean focused = gui.isFocused();
 
-        // initially configure text rendering
-        alignTextInBox(context, halign, valign);
-        nvgFontSize(context, fontSize);
-        nvgFontFace(context, font);
-        nvgFillColor(context, rgba(textColor, colorA));
+            // initially configure text rendering
+            alignTextInBox(context, halign, valign);
+            nvgFontSize(context, fontSize);
+            nvgFontFace(context, font);
+            nvgFillColor(context, rgba(textColor, colorA));
 
-        if (!focused) {
-            caretPosition = (halign == HorizontalAlign.LEFT ? 0 : (halign == HorizontalAlign.RIGHT ? maskedText.length() : maskedText.length() / 2));
-        }
+            if (!focused) {
+                caretPosition = (halign == HorizontalAlign.LEFT ? 0 : (halign == HorizontalAlign.RIGHT ? maskedText.length() : maskedText.length() / 2));
+            }
 
-        float[] textBounds = calculateTextBoundsRect(context, rect, maskedText, halign, valign);
+            float[] textBounds = calculateTextBoundsRect(context, rect, maskedText, halign, valign);
 
-        // calculate caret coordinate and mouse caret coordinate
-        float caretx;
-        float startSelectionX;
-        float endSelectionX;
-        float mouseCaretX = 0;
-        int mouseCaretPosition = 0;
-        float ratio = size.y * size.x;
-        ByteBuffer textBytes = null;
-        try {
-            // allocate ofheap memory and fill it with text
-            textBytes = memUTF8(maskedText);
+            // calculate caret coordinate and mouse caret coordinate
+            float caretx;
+            float startSelectionX;
+            float endSelectionX;
+            float mouseCaretX = 0;
+            int mouseCaretPosition = 0;
+            float ratio = size.y * size.x;
+            ByteBuffer textBytes = null;
+            try {
+                // allocate ofheap memory and fill it with text
+                textBytes = memUTF8(maskedText);
 
-            // align text for calculations
-            alignTextInBox(context, HorizontalAlign.LEFT, VerticalAlign.MIDDLE);
-            int ng = nnvgTextGlyphPositions(context, textBounds[4], 0, memAddress(textBytes), 0, memAddress(glyphs), maxGlyphCount);
+                // align text for calculations
+                alignTextInBox(context, HorizontalAlign.LEFT, VerticalAlign.MIDDLE);
+                int ng = nnvgTextGlyphPositions(context, textBounds[4], 0, memAddress(textBytes), 0, memAddress(glyphs), maxGlyphCount);
 
-            // get caret position on screen based on caret position in text
-            // and get x position of first and last selection
-            caretx = calculateCaretPos(caretPosition, textBounds, ng, glyphs);
-            startSelectionX = calculateCaretPos(startSelectionIndex, textBounds, ng, glyphs);
-            endSelectionX = calculateCaretPos(endSelectionIndex, textBounds, ng, glyphs);
+                // get caret position on screen based on caret position in text
+                // and get x position of first and last selection
+                caretx = calculateCaretPos(caretPosition, textBounds, ng, glyphs);
+                startSelectionX = calculateCaretPos(startSelectionIndex, textBounds, ng, glyphs);
+                endSelectionX = calculateCaretPos(endSelectionIndex, textBounds, ng, glyphs);
 
-            // calculate text offset in text field based on caret position on screen
-            // (caret always should be inside text field bounds)
-            float offsetX = getOffsetX(rect, caretx);
+                // calculate text offset in text field based on caret position on screen
+                // (caret always should be inside text field bounds)
+                float offsetX = getOffsetX(rect, caretx);
 
-            // get previous offset
-            Float poffset = (Float) metadata.getOrDefault(POFFSET, offsetX);
+                // get previous offset
+                Float poffset = (Float) metadata.getOrDefault(POFFSET, offsetX);
 
-            // get previous ratio
-            Float pratio = (Float) metadata.getOrDefault(PRATIO, ratio);
+                // get previous ratio
+                Float pratio = (Float) metadata.getOrDefault(PRATIO, ratio);
 
-            // get previous align to know if we need to recalculate offset
-            HorizontalAlign palign = (HorizontalAlign) metadata.getOrDefault(PALIGN, halign);
+                // get previous align to know if we need to recalculate offset
+                HorizontalAlign palign = (HorizontalAlign) metadata.getOrDefault(PALIGN, halign);
 
-            // we should recalculate offsets if ratio is changed
-            poffset = recalculateOffsetX(rect, halign, caretx, ratio, offsetX, poffset, pratio, palign);
+                // we should recalculate offsets if ratio is changed
+                poffset = recalculateOffsetX(rect, halign, caretx, ratio, offsetX, poffset, pratio, palign);
 
-            // calculate mouse caret position
-            if (maskedText.length() == 0) {
-                mouseCaretX = caretx;
-            } else {
-                float mx = Mouse.getCursorPosition().x + poffset;
-                if (mx <= glyphs.get(0).x()) {
-                    mouseCaretPosition = 0;
-                    mouseCaretX = glyphs.get(0).x();
-                } else if (mx >= glyphs.get(ng - 1).maxx()) {
-                    mouseCaretPosition = ng;
-                    mouseCaretX = glyphs.get(ng - 1).maxx();
-                    // if window not minimized
-                } else if (!leguiContext.isIconified()) {
-                    // binary search mouse caret position
-                    int upper = ng;
-                    int lower = 0;
-                    boolean found = false;
-                    do {
-                        int index = (upper + lower) / 2;
-                        float left = index == 0 ? glyphs.get(index).minx() : glyphs.get(index).x();
-                        float right = index >= ng - 1 ? glyphs.get(ng - 1).maxx() : glyphs.get(index + 1).x();
-                        float mid = (left + right) / 2f;
-                        if (mx >= left && mx < right) {
-                            found = true;
-                            if (mx > mid) {
-                                mouseCaretPosition = index + 1;
-                                mouseCaretX = right;
-                            } else {
-                                mouseCaretPosition = index;
-                                mouseCaretX = left;
-                            }
-                        } else if (mx >= right) {
-                            if (index != ng) {
-                                lower = index + 1;
-                            } else {
+                // calculate mouse caret position
+                if (maskedText.length() == 0) {
+                    mouseCaretX = caretx;
+                } else {
+                    float mx = Mouse.getCursorPosition().x + poffset;
+                    if (mx <= glyphs.get(0).x()) {
+                        mouseCaretPosition = 0;
+                        mouseCaretX = glyphs.get(0).x();
+                    } else if (mx >= glyphs.get(ng - 1).maxx()) {
+                        mouseCaretPosition = ng;
+                        mouseCaretX = glyphs.get(ng - 1).maxx();
+                        // if window not minimized
+                    } else if (!leguiContext.isIconified()) {
+                        // binary search mouse caret position
+                        int upper = ng;
+                        int lower = 0;
+                        boolean found = false;
+                        do {
+                            int index = (upper + lower) / 2;
+                            float left = index == 0 ? glyphs.get(index).minx() : glyphs.get(index).x();
+                            float right = index >= ng - 1 ? glyphs.get(ng - 1).maxx() : glyphs.get(index + 1).x();
+                            float mid = (left + right) / 2f;
+                            if (mx >= left && mx < right) {
                                 found = true;
-                                mouseCaretPosition = ng;
-                                mouseCaretX = right;
+                                if (mx > mid) {
+                                    mouseCaretPosition = index + 1;
+                                    mouseCaretX = right;
+                                } else {
+                                    mouseCaretPosition = index;
+                                    mouseCaretX = left;
+                                }
+                            } else if (mx >= right) {
+                                if (index != ng) {
+                                    lower = index + 1;
+                                } else {
+                                    found = true;
+                                    mouseCaretPosition = ng;
+                                    mouseCaretX = right;
+                                }
+                            } else if (mx < left) {
+                                if (index != 0) {
+                                    upper = index;
+                                } else {
+                                    found = true;
+                                    mouseCaretPosition = 0;
+                                    mouseCaretX = left;
+                                }
                             }
-                        } else if (mx < left) {
-                            if (index != 0) {
-                                upper = index;
-                            } else {
-                                found = true;
-                                mouseCaretPosition = 0;
-                                mouseCaretX = left;
-                            }
-                        }
-                    } while (!found);
+                        } while (!found);
+                    }
                 }
+                mouseCaretX -= poffset;
+                float nCaretX = caretx - poffset;
+
+                drawSelectionAndUpdateCaret(context, rect, bc, highlightColor, startSelectionIndex, endSelectionIndex, focused, startSelectionX, endSelectionX,
+                    poffset);
+                // render text
+                NvgText.drawTextLineToRect(context, new Vector4f(textBounds[4] - poffset, textBounds[5], textBounds[6], textBounds[7]),
+                    false, HorizontalAlign.LEFT, VerticalAlign.MIDDLE, fontSize, font, maskedText, textColor);
+
+                if (focused) {
+                    // render caret
+                    renderCaret(context, rect, nCaretX, rgba(caretColor, colorA));
+                }
+                // render mouse caret
+                if (leguiContext.isDebugEnabled()) {
+                    Vector4f cc = new Vector4f(this.caretColor);
+                    cc.x = 1;
+
+                    renderCaret(context, rect, mouseCaretX, rgba(cc, colorA));
+                }
+
+                // put last offset and ration to metadata
+                updateMetadata(halign, metadata, ratio, poffset);
+            } finally {
+                // free allocated memory
+                memFree(textBytes);
             }
-            mouseCaretX -= poffset;
-            float nCaretX = caretx - poffset;
-
-            drawSelectionAndUpdateCaret(context, rect, bc, highlightColor, startSelectionIndex, endSelectionIndex, focused, startSelectionX, endSelectionX,
-                poffset);
-            // render text
-            NvgText.drawTextLineToRect(context, new Vector4f(textBounds[4] - poffset, textBounds[5], textBounds[6], textBounds[7]),
-                false, HorizontalAlign.LEFT, VerticalAlign.MIDDLE, fontSize, font, maskedText, textColor);
-
-            if (focused) {
-                // render caret
-                renderCaret(context, rect, nCaretX, rgba(caretColor, colorA));
-            }
-            // render mouse caret
-            if (leguiContext.isDebugEnabled()) {
-                Vector4f cc = new Vector4f(this.caretColor);
-                cc.x = 1;
-
-                renderCaret(context, rect, mouseCaretX, rgba(cc, colorA));
-            }
-
-            // put last offset and ration to metadata
-            updateMetadata(halign, metadata, ratio, poffset);
-        } finally {
-            // free allocated memory
-            memFree(textBytes);
+            gui.setMouseCaretPosition(mouseCaretPosition);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        gui.setMouseCaretPosition(mouseCaretPosition);
-        glyphs.free();
-        colorA.free();
     }
 
     private String createMaskedText(PasswordInput gui, String text) {

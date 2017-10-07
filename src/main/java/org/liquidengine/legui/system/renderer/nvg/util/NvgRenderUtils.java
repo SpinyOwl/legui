@@ -121,15 +121,9 @@ public final class NvgRenderUtils {
         HorizontalAlign horizontalAlign,
         VerticalAlign verticalAlign, boolean hide) {
 
-        NVGColor colorA = null;
-        try {
-            colorA = NVGColor.calloc();
-            renderTextLineToBounds(context, x, y, w, h, fontSize, font, textColor, colorA, text, horizontalAlign, verticalAlign, hide);
-        } finally {
-            if (colorA != null) {
-                colorA.free();
-            }
-        }
+        NVGColor colorA = NVGColor.calloc();
+        renderTextLineToBounds(context, x, y, w, h, fontSize, font, textColor, colorA, text, horizontalAlign, verticalAlign, hide);
+        colorA.free();
     }
 
 
@@ -224,10 +218,9 @@ public final class NvgRenderUtils {
      * @param h rectangle height.
      */
     public static void drawRectangle(long context, Vector4fc color, float x, float y, float w, float h) {
-        NVGColor nvgColor = NVGColor.calloc();
-        NVGColor rgba = NvgColorUtil.rgba(color, nvgColor);
+        NVGColor nvgColor = NvgColorUtil.rgba(color, NVGColor.calloc());
         nvgBeginPath(context);
-        nvgFillColor(context, rgba);
+        nvgFillColor(context, nvgColor);
         nvgRect(context, x, y, w, h);
         nvgFill(context);
         nvgColor.free();
@@ -341,11 +334,11 @@ public final class NvgRenderUtils {
     }
 
     public static void drawRectStroke(long context, float x, float y, float w, float h, Vector4fc strokeColor, float borderRadius, float strokeWidth) {
-        NVGColor nvgColor = NVGColor.calloc();
+        NVGColor nvgColor = NvgColorUtil.rgba(strokeColor, NVGColor.calloc());
         nvgBeginPath(context);
         nvgStrokeWidth(context, strokeWidth);
         nvgRoundedRect(context, x, y, w, h, borderRadius);
-        nvgStrokeColor(context, NvgColorUtil.rgba(strokeColor, nvgColor));
+        nvgStrokeColor(context, nvgColor);
         nvgStroke(context);
         nvgColor.free();
     }
