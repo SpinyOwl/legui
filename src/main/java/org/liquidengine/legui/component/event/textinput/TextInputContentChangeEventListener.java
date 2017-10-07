@@ -6,6 +6,7 @@ import org.liquidengine.legui.listener.EventListener;
  * @author Aliaksandr_Shcherbin.
  */
 public interface TextInputContentChangeEventListener extends EventListener<TextInputContentChangeEvent> {
+
     /**
      * Used to handle {@link TextInputContentChangeEvent} event.
      *

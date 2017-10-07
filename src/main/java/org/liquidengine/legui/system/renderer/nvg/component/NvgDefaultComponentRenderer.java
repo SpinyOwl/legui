@@ -1,7 +1,6 @@
 package org.liquidengine.legui.system.renderer.nvg.component;
 
 import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderBorderWScissor;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.createScissor;
 
 import java.util.List;
 import org.joml.Vector2f;

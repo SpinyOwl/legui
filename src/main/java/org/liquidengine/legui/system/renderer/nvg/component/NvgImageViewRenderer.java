@@ -3,7 +3,6 @@ package org.liquidengine.legui.system.renderer.nvg.component;
 import static org.liquidengine.legui.system.renderer.ImageRenderer.C_RADIUS;
 import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderBorder;
 import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderImage;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.createScissor;
 
 import java.util.HashMap;
 import org.joml.Vector2f;

@@ -3,7 +3,6 @@ package org.liquidengine.legui.system.renderer.nvg.util;
 import static org.lwjgl.nanovg.NanoVG.nvgBeginPath;
 import static org.lwjgl.nanovg.NanoVG.nvgFill;
 import static org.lwjgl.nanovg.NanoVG.nvgFillColor;
-import static org.lwjgl.nanovg.NanoVG.nvgRGBAf;
 import static org.lwjgl.nanovg.NanoVG.nvgRect;
 import static org.lwjgl.nanovg.NanoVG.nvgRoundedRect;
 import static org.lwjgl.nanovg.NanoVG.nvgStroke;
