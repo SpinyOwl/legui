@@ -336,6 +336,7 @@ public class TextState implements Serializable {
     /**
      * Returns the <code>char</code> value at the specified index.
      *
+     * @param index the index of the char value to be returned
      * @return the specified <code>char</code> value
      * @throws IndexOutOfBoundsException if the <tt>index</tt> argument is negative or not less than <tt>length()</tt>
      * @see StringBuffer#charAt(int)
@@ -388,6 +389,7 @@ public class TextState implements Serializable {
      *
      * @param index the index to be offset
      * @param codePointOffset the offset in code points
+     * @return the index within this sequence that is offset from the given index by codePointOffset code points.
      * @see StringBuffer#offsetByCodePoints(int, int)
      */
     public int offsetByCodePoints(int index, int codePointOffset) {

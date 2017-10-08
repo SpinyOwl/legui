@@ -15,6 +15,11 @@ import org.liquidengine.legui.theme.Themes;
  */
 public class WhiteSelectBoxTheme<T extends SelectBox> extends WhiteControllerTheme<T> {
 
+    /**
+     * Used to apply theme only for component and not apply for child components.
+     *
+     * @param component component to apply theme.
+     */
     @Override
     public void apply(T component) {
         super.apply(component);
@@ -37,6 +42,7 @@ public class WhiteSelectBoxTheme<T extends SelectBox> extends WhiteControllerThe
             bgIcon.setHorizontalAlign(HorizontalAlign.CENTER);
             bgIcon.setVerticalAlign(VerticalAlign.MIDDLE);
         }
+
         Themes.getDefaultTheme().applyAll(component.getSelectionListPanel());
     }
 

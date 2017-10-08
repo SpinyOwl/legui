@@ -7,6 +7,6 @@ import org.liquidengine.legui.component.SelectBox;
  *
  * @param <T> {@link SelectBox.SelectBoxScrollablePanel} subclasses.
  */
-public class WhiteSelectBoxScrollablePanelTheme<T extends SelectBox.SelectBoxScrollablePanel> extends WhiteControllerTheme<T> {
+public class WhiteSelectBoxScrollablePanelTheme<T extends SelectBox.SelectBoxScrollablePanel> extends WhiteScrollablePanelTheme<T> {
 
 }

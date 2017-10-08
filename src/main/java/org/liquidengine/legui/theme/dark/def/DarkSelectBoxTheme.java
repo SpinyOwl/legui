@@ -6,7 +6,6 @@ import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
 import org.liquidengine.legui.icon.CharIcon;
 import org.liquidengine.legui.icon.Icon;
-import org.liquidengine.legui.theme.ThemeManager;
 import org.liquidengine.legui.theme.Themes;
 
 /**
@@ -15,12 +14,6 @@ import org.liquidengine.legui.theme.Themes;
  * @param <T> {@link SelectBox} subclasses.
  */
 public class DarkSelectBoxTheme<T extends SelectBox> extends DarkControllerTheme<T> {
-
-    private ThemeManager themeManager;
-
-    public DarkSelectBoxTheme(ThemeManager themeManager) {
-        this.themeManager = themeManager;
-    }
 
     /**
      * Used to apply theme only for component and not apply for child components.

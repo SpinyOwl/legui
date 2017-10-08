@@ -58,11 +58,8 @@ public class WhiteTheme extends Theme {
         manager.setComponentTheme(Component.class, new WhiteComponentTheme<>());
         manager.setComponentTheme(Container.class, new WhiteContainerTheme<>());
         manager.setComponentTheme(Controller.class, new WhiteControllerTheme<>());
-//        manager.setComponentTheme(Dialog.class, new DefaultDialogTheme<>());
-//        manager.setComponentTheme(ImageView.class, new DefaultImageViewTheme<>());
         manager.setComponentTheme(Label.class, new WhiteLabelTheme<>());
         manager.setComponentTheme(LayerContainer.class, new WhiteLayerContainerTheme<>());
-//        manager.setComponentTheme(Panel.class, new DefaultPanelTheme<>());
         manager.setComponentTheme(ProgressBar.class, new WhiteProgressBarTheme<>());
         manager.setComponentTheme(ScrollablePanel.class, new WhiteScrollablePanelTheme<>());
         manager.setComponentTheme(RadioButton.class, new WhiteRadioButtonTheme<>());

@@ -72,7 +72,7 @@ public class DarkTheme extends Theme {
         manager.setComponentTheme(ScrollablePanel.class, new DarkScrollablePanelTheme<>());
         manager.setComponentTheme(RadioButton.class, new DarkRadioButtonTheme<>());
         manager.setComponentTheme(ScrollBar.class, new DarkScrollBarTheme<>());
-        manager.setComponentTheme(SelectBox.class, new DarkSelectBoxTheme<>(manager));
+        manager.setComponentTheme(SelectBox.class, new DarkSelectBoxTheme<>());
         manager.setComponentTheme(SelectBox.SelectBoxScrollablePanel.class, new DarkSelectBoxScrollablePanelTheme<>());
         manager.setComponentTheme(SelectBox.SelectBoxElement.class, new DarkSelectBoxElementTheme<>());
         manager.setComponentTheme(Slider.class, new DarkSliderTheme<>());
@@ -80,7 +80,7 @@ public class DarkTheme extends Theme {
         manager.setComponentTheme(TextInput.class, new DarkTextInputTheme<>());
         manager.setComponentTheme(ToggleButton.class, new DarkToggleButtonTheme<>());
         manager.setComponentTheme(Tooltip.class, new DarkTooltipTheme<>());
-        manager.setComponentTheme(Widget.class, new DarkWidgetTheme<>(manager));
+        manager.setComponentTheme(Widget.class, new DarkWidgetTheme<>());
         return manager;
     }
 

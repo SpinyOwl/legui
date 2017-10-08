@@ -440,6 +440,7 @@ public final class NvgRenderUtils {
         for (Component parent = component.getParent(); parent != null; parent = parent.getParent()) {
             parentList.add(parent);
         }
+
         if (parentList.size() > 0) {
             Vector2f pos = new Vector2f(0, 0);
             Vector2f rect = new Vector2f(0, 0);
@@ -449,13 +450,21 @@ public final class NvgRenderUtils {
             float ty = absolutePosition.y;
             float by = absolutePosition.y + component.getSize().y;
 
-            for (int i = parentList.size() - 1; i >= 0; i--) {
+            // check top parent
+            if (lx > lx - component.getPosition().x + component.getParent().getSize().x ||
+                rx < lx - component.getPosition().x ||
+                ty > ty - component.getPosition().y + component.getParent().getSize().y ||
+                by < ty - component.getPosition().y) {
+                return false;
+            }
+
+            // check from bottom parent to top parent
+            for (int i = parentList.size() - 1; i >= 1; i--) {
                 Component parent = parentList.get(i);
                 pos.add(parent.getPosition());
                 rect.set(pos).add(parent.getSize());
 
                 if (lx > rect.x || rx < pos.x || ty > rect.y || by < pos.y) {
-//                    System.out.println("SKIPPING " + component.getClass().getSimpleName() + " " + lx + " " + rx);
                     return false;
                 }
             }

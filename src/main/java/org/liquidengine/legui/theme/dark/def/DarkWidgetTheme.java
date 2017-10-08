@@ -8,6 +8,7 @@ import org.liquidengine.legui.icon.CharIcon;
 import org.liquidengine.legui.icon.Icon;
 import org.liquidengine.legui.theme.AbstractTheme;
 import org.liquidengine.legui.theme.ThemeManager;
+import org.liquidengine.legui.theme.Themes;
 
 /**
  * Dark Widget Theme for all scrollable widgets. Used to make widget dark.
@@ -15,17 +16,6 @@ import org.liquidengine.legui.theme.ThemeManager;
  * @param <T> {@link Widget} subclasses.
  */
 public class DarkWidgetTheme<T extends Widget> extends DarkControllerTheme<T> {
-
-    private ThemeManager darkThemeManager;
-
-    /**
-     * Used to create theme.
-     *
-     * @param darkThemeManager theme manager.
-     */
-    public DarkWidgetTheme(ThemeManager darkThemeManager) {
-        this.darkThemeManager = darkThemeManager;
-    }
 
     /**
      * Used to apply theme for component and for all children of this component. Should be reimplemented for components that contains other child components.
@@ -67,7 +57,7 @@ public class DarkWidgetTheme<T extends Widget> extends DarkControllerTheme<T> {
             bgIcon.setHorizontalAlign(HorizontalAlign.CENTER);
             bgIcon.setVerticalAlign(VerticalAlign.MIDDLE);
         }
-        AbstractTheme componentTheme = darkThemeManager.getComponentTheme(component.getContainer().getClass());
-        componentTheme.applyAll(component.getContainer());
+
+        Themes.getDefaultTheme().applyAll(component.getContainer());
     }
 }

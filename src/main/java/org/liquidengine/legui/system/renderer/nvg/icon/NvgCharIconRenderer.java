@@ -2,12 +2,15 @@ package org.liquidengine.legui.system.renderer.nvg.icon;
 
 import org.joml.Vector2f;
 import org.joml.Vector4f;
+import org.liquidengine.legui.color.ColorConstants;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
 import org.liquidengine.legui.icon.CharIcon;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.nvg.NvgIconRenderer;
+import org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils;
+import org.liquidengine.legui.system.renderer.nvg.util.NvgShapes;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgText;
 import org.liquidengine.legui.util.TextUtil;
 
@@ -44,11 +47,11 @@ public class NvgCharIconRenderer<I extends CharIcon> extends NvgIconRenderer<I> 
 
     private void drawIcon(long context, float x, float y, float w, float h, CharIcon icon, Component component) {
         if (component.isFocused()) {
-            NvgText.drawTextLineToRect(context, new Vector4f(x - 0.5f, y + 1, w, h), false, HorizontalAlign.LEFT, VerticalAlign.MIDDLE,
+            NvgText.drawTextLineToRect(context, new Vector4f(x - 0.5f, y + 1, w, h), false, icon.getHorizontalAlign(), icon.getVerticalAlign(),
                 icon.getSize().y, icon.getFont(), TextUtil.cpToStr(icon.getCharCode()), component.getFocusedStrokeColor());
         }
 
-        NvgText.drawTextLineToRect(context, new Vector4f(x + 0.5f, y, w, h), false, HorizontalAlign.LEFT, VerticalAlign.MIDDLE,
+        NvgText.drawTextLineToRect(context, new Vector4f(x + 0.5f, y, w, h), false, icon.getHorizontalAlign(), icon.getVerticalAlign(),
             icon.getSize().y, icon.getFont(), TextUtil.cpToStr(icon.getCharCode()), icon.getColor());
     }
 }
