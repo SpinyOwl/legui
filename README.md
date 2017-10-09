@@ -28,10 +28,10 @@ ___
 GUI implementation for using with LWJGL3.
 Renderer made on top of NanoVG.
 
-# Contribution to LEGUI
+## Contribution to LEGUI
 See the [contribution guide](CONTRIBUTION.md) for more information.
 
-# System requirements
+## System requirements
 LEGUI requires Java 8+ cause it uses lambda expressions.
 
 ## Dependencies
@@ -73,7 +73,7 @@ compile group: 'org.liquidengine', name: 'legui', version: legui_version, changi
   Current `SNAPSHOT` version you can find in [SNAPSHOT version.properties](https://github.com/LiquidEngine/legui/blob/snapshots/version.properties)  
   Current `RELEASE` version you can find in [RELEASE version.properties](https://github.com/LiquidEngine/legui/blob/releases/version.properties)  
   
-### Examples:
+## Examples:
 All examples located here: 
 [LEGUI.DEMO](https://github.com/LiquidEngine/legui.demo)
 
