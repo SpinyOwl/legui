@@ -7,7 +7,7 @@ import static org.liquidengine.legui.marshal.json.gsonimpl.GsonUtil.isNotNull;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import org.liquidengine.legui.component.Container;
+import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.ScrollBar;
 import org.liquidengine.legui.component.ScrollablePanel;
 import org.liquidengine.legui.marshal.json.gsonimpl.GsonMarshalContext;
@@ -32,7 +32,7 @@ public class GsonScrollablePanelMarshaller<T extends ScrollablePanel> extends Gs
 
         ScrollBar verticalScrollBar = object.getVerticalScrollBar();
         ScrollBar horizontalScrollBar = object.getHorizontalScrollBar();
-        Container container = object.getContainer();
+        Component container = object.getContainer();
 
         JsonObject vScrollBar = GsonMarshalUtil.marshalToJson(verticalScrollBar, context);
         JsonObject hScrollBar = GsonMarshalUtil.marshalToJson(horizontalScrollBar, context);

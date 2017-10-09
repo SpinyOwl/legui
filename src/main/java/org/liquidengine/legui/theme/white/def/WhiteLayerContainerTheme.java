@@ -8,7 +8,7 @@ import org.liquidengine.legui.component.LayerContainer;
  *
  * @param <T> {@link LayerContainer} subclasses.
  */
-public class WhiteLayerContainerTheme<T extends LayerContainer> extends WhiteContainerTheme<T> {
+public class WhiteLayerContainerTheme<T extends LayerContainer> extends WhiteComponentTheme<T> {
 
     @Override
     public void apply(T component) {

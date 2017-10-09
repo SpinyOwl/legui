@@ -1,5 +1,6 @@
 package org.liquidengine.legui.theme.white.def;
 
+import java.util.List;
 import org.liquidengine.legui.border.SimpleLineBorder;
 import org.liquidengine.legui.color.ColorConstants;
 import org.liquidengine.legui.component.Component;
@@ -23,6 +24,10 @@ public class WhiteComponentTheme<T extends Component> extends AbstractTheme<T> {
         Tooltip tooltip = component.getTooltip();
         if (tooltip != null) {
             Themes.getDefaultTheme().applyAll(tooltip);
+        }
+        List<? extends Component> childs = component.getChilds();
+        for (Component child : childs) {
+            Themes.getDefaultTheme().applyAll(child);
         }
     }
 }

@@ -28,7 +28,7 @@ import org.liquidengine.legui.theme.Themes;
  * Widget component is container which have predefined components such as container, title label, close and minimize buttons and predefined event listeners.
  * This component can be moved, minimized and restored, closed. Also now you can enable or disable title.
  */
-public class Widget extends Container<Component> {
+public class Widget extends Component<Component> {
 
     /**
      * Initial height of title. Used to initialize title components.
@@ -49,8 +49,8 @@ public class Widget extends Container<Component> {
      * Used to store widget size in maximized state when minimizing widget.
      */
     private Vector2f maximizedSize = new Vector2f();
-    private Container<Component> container;
-    private Container<Component> titleContainer;
+    private Component<Component> container;
+    private Component<Component> titleContainer;
     private Label title;
     private Button closeButton;
     private Button minimizeButton;
@@ -336,7 +336,7 @@ public class Widget extends Container<Component> {
      *
      * @return title container.
      */
-    public Container<Component> getTitleContainer() {
+    public Component<Component> getTitleContainer() {
         return titleContainer;
     }
 
@@ -408,7 +408,7 @@ public class Widget extends Container<Component> {
      *
      * @return widget container.
      */
-    public Container<Component> getContainer() {
+    public Component<Component> getContainer() {
         return container;
     }
 
@@ -417,7 +417,7 @@ public class Widget extends Container<Component> {
      *
      * @param container widget container to set.
      */
-    public void setContainer(Container container) {
+    public void setContainer(Component container) {
         this.remove(this.container);
         this.add(this.container = container);
     }

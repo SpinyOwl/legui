@@ -2,6 +2,7 @@ package org.liquidengine.legui.marshal.json.gsonimpl.component;
 
 import static org.liquidengine.legui.marshal.JsonConstants.BACKGROUND_COLOR;
 import static org.liquidengine.legui.marshal.JsonConstants.BORDER;
+import static org.liquidengine.legui.marshal.JsonConstants.COMPONENTS;
 import static org.liquidengine.legui.marshal.JsonConstants.CORNER_RADIUS;
 import static org.liquidengine.legui.marshal.JsonConstants.ENABLED;
 import static org.liquidengine.legui.marshal.JsonConstants.HEIGHT;
@@ -19,8 +20,11 @@ import static org.liquidengine.legui.marshal.json.gsonimpl.GsonUtil.fill;
 import static org.liquidengine.legui.marshal.json.gsonimpl.GsonUtil.isNotNull;
 import static org.liquidengine.legui.marshal.json.gsonimpl.GsonUtil.readColor;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import java.util.ArrayList;
+import java.util.List;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.marshal.json.gsonimpl.AbstractGsonMarshaller;
 import org.liquidengine.legui.marshal.json.gsonimpl.GsonMarshalContext;
@@ -41,6 +45,11 @@ public class GsonComponentMarshaller<T extends Component> extends AbstractGsonMa
      */
     @Override
     protected void marshal(T object, JsonObject json, GsonMarshalContext context) {
+        List<Component> components = object.getChilds();
+        JsonArray comps = new JsonArray();
+        for (Component component : components) {
+            comps.add(GsonMarshalUtil.marshalToJson(component, context));
+        }
         fill(json)
             .add(POSITION, create()
                 .add(X, object.getPosition().x)
@@ -58,6 +67,7 @@ public class GsonComponentMarshaller<T extends Component> extends AbstractGsonMa
             .add(BORDER, GsonMarshalUtil.marshalToJson(object.getBorder(), context))
             .add(INTERSECTOR, GsonMarshalUtil.marshalToJson(object.getIntersector()))
             .add(TOOLTIP, GsonMarshalUtil.marshalToJson(object.getTooltip(), context))
+            .add(COMPONENTS, comps)
         ;
     }
 
@@ -126,7 +136,24 @@ public class GsonComponentMarshaller<T extends Component> extends AbstractGsonMa
         if (isNotNull(tooltip) && tooltip.isJsonObject()) {
             object.setTooltip(GsonMarshalUtil.unmarshal((JsonObject) tooltip));
         }
+
+        List<Component> componentList = new ArrayList<>();
+        JsonElement components = json.get(COMPONENTS);
+        if (isNotNull(components) && components.isJsonArray()) {
+            JsonArray comps = components.getAsJsonArray();
+            for (JsonElement comp : comps) {
+                processComponent(context, componentList, comp);
+            }
+        }
+        object.addAll(componentList);
     }
 
-
+    private void processComponent(GsonMarshalContext context, List<Component> componentList, JsonElement comp) {
+        if (isNotNull(comp) && comp.isJsonObject()) {
+            Object o = GsonMarshalUtil.unmarshal(comp.getAsJsonObject(), context);
+            if (o instanceof Component) {
+                componentList.add((Component) o);
+            }
+        }
+    }
 }

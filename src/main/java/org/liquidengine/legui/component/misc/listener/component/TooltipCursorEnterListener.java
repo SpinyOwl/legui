@@ -1,4 +1,4 @@
-package org.liquidengine.legui.component.misc.listener.controller;
+package org.liquidengine.legui.component.misc.listener.component;
 
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.Tooltip;

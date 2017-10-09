@@ -6,7 +6,6 @@ import java.util.List;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.Component;
-import org.liquidengine.legui.component.Container;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.RendererProvider;
 import org.liquidengine.legui.system.renderer.nvg.NvgComponentRenderer;
@@ -20,30 +19,16 @@ public class NvgDefaultComponentRenderer extends NvgComponentRenderer {
 
     @Override
     protected void renderComponent(Component component, Context context, long nanovg) {
-        NvgRenderUtils.drawInScissor(nanovg, component, () -> {
-            Vector2f pos = component.getAbsolutePosition();
-            Vector2f size = component.getSize();
-            Vector4f color = component.getBackgroundColor();
-            float cornerRadius = component.getCornerRadius();
 
-            if (component.isPressed()) {
-                NvgShapes.drawRect(nanovg, pos, size, new Vector4f(color).div(2), cornerRadius);
-            } else if (component.isHovered()) {
-                NvgShapes.drawRect(nanovg, pos, size, new Vector4f(color).div(4).mul(3), cornerRadius);
-            } else {
-                NvgShapes.drawRect(nanovg, pos, size, color, cornerRadius);
-            }
-        });
+        NvgRenderUtils.drawInScissor(nanovg, component, () ->
+            NvgShapes.drawRect(nanovg, component.getAbsolutePosition(), component.getSize(), component.getBackgroundColor(), component.getCornerRadius())
+        );
 
-        if (component instanceof Container) {
-            Container container = (Container) component;
-            List<Component> all = container.getChilds();
-            for (Component child : all) {
-                RendererProvider.getInstance().getComponentRenderer(child.getClass()).render(child, context);
-            }
+        List<Component> all = component.getChilds();
+        for (Component child : all) {
+            RendererProvider.getInstance().getComponentRenderer(child.getClass()).render(child, context);
         }
 
         renderBorderWScissor(component, context, nanovg);
     }
-
 }

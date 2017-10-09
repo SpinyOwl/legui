@@ -4,7 +4,6 @@ import java.util.Collections;
 import java.util.List;
 import org.joml.Vector2f;
 import org.liquidengine.legui.component.Component;
-import org.liquidengine.legui.component.Container;
 import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.component.Layer;
 import org.liquidengine.legui.event.CursorEnterEvent;
@@ -58,35 +57,23 @@ public class CursorPosEventHandler extends AbstractSystemEventHandler<SystemCurs
     protected boolean handle(SystemCursorPosEvent event, Layer layer, Context context, Frame frame) {
         List<Component> childs = layer.getContainer().getChilds();
         for (Component child : childs) {
-            update(event, child, context, frame);
+            update(child, context, frame);
         }
         return false;
     }
 
-    private void update(SystemCursorPosEvent event, Component component, Context context, Frame frame) {
-        if (component instanceof Container) {
-            processAsContainer(event, component, context, frame);
+    private void update(Component component, Context context, Frame frame) {
+        if (component.isEmpty()) {
+            if (Mouse.MouseButton.MOUSE_BUTTON_1.isPressed() && component == context.getFocusedGui()) {
+                Vector2f delta = Mouse.getCursorPosition().sub(Mouse.getCursorPositionPrev());
+                EventProcessor.getInstance().pushEvent(new MouseDragEvent(component, context, frame, delta));
+            }
         } else {
-            processAsComponent(component, context, frame);
-        }
-    }
-
-    private void processAsContainer(SystemCursorPosEvent event, Component component, Context context, Frame frame) {
-        Container container = (Container) component;
-        if (container.isEmpty()) {
-            processAsComponent(component, context, frame);
-        } else {
-            List<Component> childs = container.getChilds();
+            List<Component> childs = component.getChilds();
             for (Component child : childs) {
-                update(event, child, context, frame);
+                update(child, context, frame);
             }
         }
     }
 
-    private void processAsComponent(Component component, Context context, Frame frame) {
-        if (Mouse.MouseButton.MOUSE_BUTTON_1.isPressed() && component == context.getFocusedGui()) {
-            Vector2f delta = Mouse.getCursorPosition().sub(Mouse.getCursorPositionPrev());
-            EventProcessor.getInstance().pushEvent(new MouseDragEvent(component, context, frame, delta));
-        }
-    }
 }

@@ -38,7 +38,9 @@ public class NvgText {
     }
 
     public static void drawTextLineToRect(long nvg, TextState text, Vector2fc pos, Vector2fc size, boolean hideOverflow) {
-        drawTextLineToRect(nvg, text, new Vector4f(pos.x(), pos.y(), size.x(), size.y()), hideOverflow);
+        Vector4f p = text.getPadding();
+        Vector4f rect = new Vector4f(pos.x(), pos.y(), size.x(), size.y()).add(p.x, p.y, -p.x - p.z, -p.y - p.w);
+        drawTextLineToRect(nvg, text, rect, hideOverflow);
     }
 
     public static void drawTextLineToRect(long nvg, TextState text, Vector4fc rect, boolean hideOverflow) {
@@ -93,15 +95,29 @@ public class NvgText {
         int nvgVerticalAlign = NVG_ALIGN_MIDDLE;
         // @formatter:off
         switch (horizontalAlign) {
-            case LEFT:  nvgHorizontalAlign = NVG_ALIGN_LEFT; break;
-            case RIGHT: nvgHorizontalAlign = NVG_ALIGN_RIGHT; break;
-            case CENTER: nvgHorizontalAlign = NVG_ALIGN_CENTER; break;
+            case LEFT:
+                nvgHorizontalAlign = NVG_ALIGN_LEFT;
+                break;
+            case RIGHT:
+                nvgHorizontalAlign = NVG_ALIGN_RIGHT;
+                break;
+            case CENTER:
+                nvgHorizontalAlign = NVG_ALIGN_CENTER;
+                break;
         }
-        switch(verticalAlign) {
-            case TOP: nvgVerticalAlign = NVG_ALIGN_TOP; break;
-            case BOTTOM: nvgVerticalAlign = NVG_ALIGN_BOTTOM; break;
-            case MIDDLE: nvgVerticalAlign = NVG_ALIGN_MIDDLE; break;
-            case BASELINE: nvgVerticalAlign = NVG_ALIGN_BASELINE; break;
+        switch (verticalAlign) {
+            case TOP:
+                nvgVerticalAlign = NVG_ALIGN_TOP;
+                break;
+            case BOTTOM:
+                nvgVerticalAlign = NVG_ALIGN_BOTTOM;
+                break;
+            case MIDDLE:
+                nvgVerticalAlign = NVG_ALIGN_MIDDLE;
+                break;
+            case BASELINE:
+                nvgVerticalAlign = NVG_ALIGN_BASELINE;
+                break;
         }
         // @formatter:on
         nvgTextAlign(context, nvgHorizontalAlign | nvgVerticalAlign);

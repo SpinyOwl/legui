@@ -5,7 +5,6 @@ import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
 import java.util.List;
 import org.joml.Vector2f;
 import org.liquidengine.legui.component.Component;
-import org.liquidengine.legui.component.Container;
 import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.component.Layer;
 import org.liquidengine.legui.component.Widget;
@@ -108,16 +107,14 @@ public class MouseClickEventHandler implements SystemEventHandler<SystemMouseCli
             component.setPressed(false);
             EventProcessor.getInstance().pushEvent(new FocusEvent<>(component, context, frame, focused, false));
         }
-        if (component instanceof Container) {
-            List<? extends Component> childs = ((Container) component).getChilds();
-            for (Component child : childs) {
-                removeFocus(focused, child, context, frame);
-            }
+        List<? extends Component> childs = component.getChilds();
+        for (Component child : childs) {
+            removeFocus(focused, child, context, frame);
         }
     }
 
     private void pushWidgetsUp(Component gui) {
-        Container parent = gui.getParent();
+        Component parent = gui.getParent();
         Component current = gui;
         if (parent != null) {
             boolean push = false;

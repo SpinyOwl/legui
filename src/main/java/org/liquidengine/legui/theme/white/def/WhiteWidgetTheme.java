@@ -2,6 +2,7 @@ package org.liquidengine.legui.theme.white.def;
 
 import org.liquidengine.legui.color.ColorConstants;
 import org.liquidengine.legui.component.Widget;
+import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
 import org.liquidengine.legui.icon.CharIcon;
@@ -26,7 +27,9 @@ public class WhiteWidgetTheme<T extends Widget> extends WhiteComponentTheme<T> {
         component.getCloseButton().setBorder(null);
         component.getTitleContainer().setBackgroundColor(ColorConstants.lightGray());
         component.setTitleBackgroundColor(ColorConstants.lightGray());
-        component.getTitleTextState().setTextColor(ColorConstants.black());
+        TextState titleTextState = component.getTitleTextState();
+        titleTextState.setPadding(7,3,5,2);
+        titleTextState.setTextColor(ColorConstants.black());
         Icon closeIcon = component.getCloseIcon();
         if (closeIcon != null && closeIcon instanceof CharIcon) {
             CharIcon bgIcon = (CharIcon) closeIcon;

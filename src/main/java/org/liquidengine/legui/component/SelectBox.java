@@ -30,7 +30,7 @@ import org.liquidengine.legui.theme.Themes;
 /**
  * Creates drop-down list with select options.
  */
-public class SelectBox extends Container {
+public class SelectBox extends Component {
 
     public static final int EXPAND_ICON_CHAR = 0xE5C5;
     public static final int COLLAPSE_ICON_CHAR = 0xE5C7;
@@ -255,7 +255,7 @@ public class SelectBox extends Container {
         }
 
         Vector2f psize = new Vector2f();
-        Container parent = getParent();
+        Component parent = getParent();
         if (parent != null) {
             psize.set(getParent().getSize());
         }

@@ -21,7 +21,7 @@ import static org.liquidengine.legui.marshal.json.gsonimpl.GsonUtil.readColor;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import org.liquidengine.legui.component.Container;
+import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.Widget;
 import org.liquidengine.legui.marshal.json.gsonimpl.GsonMarshalContext;
 import org.liquidengine.legui.marshal.json.gsonimpl.GsonMarshalUtil;
@@ -42,7 +42,7 @@ public class GsonWidgetMarshaller<T extends Widget> extends GsonComponentMarshal
     protected void marshal(T object, JsonObject json, GsonMarshalContext context) {
         super.marshal(object, json, context);
 
-        Container container = object.getContainer();
+        Component container = object.getContainer();
         JsonObject cont = GsonMarshalUtil.marshalToJson(container, context);
         fill(json)
             .add(CONTAINER, cont)

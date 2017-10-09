@@ -2,6 +2,7 @@ package org.liquidengine.legui.theme.dark.def;
 
 import org.liquidengine.legui.color.ColorConstants;
 import org.liquidengine.legui.component.Widget;
+import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
 import org.liquidengine.legui.icon.CharIcon;
@@ -31,7 +32,9 @@ public class DarkWidgetTheme<T extends Widget> extends DarkComponentTheme<T> {
         component.getCloseButton().setBorder(null);
         component.getTitleContainer().setBackgroundColor(ColorConstants.lightBlack());
         component.setTitleBackgroundColor(ColorConstants.lightBlack());
-        component.getTitleTextState().setTextColor(ColorConstants.white());
+        TextState titleTextState = component.getTitleTextState();
+        titleTextState.setPadding(7,3,5,2);
+        titleTextState.setTextColor(ColorConstants.white());
         Icon closeIcon = component.getCloseIcon();
         if (closeIcon != null && closeIcon instanceof CharIcon) {
             CharIcon bgIcon = (CharIcon) closeIcon;
