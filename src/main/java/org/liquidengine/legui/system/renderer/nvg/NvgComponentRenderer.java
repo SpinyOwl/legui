@@ -30,8 +30,10 @@ public abstract class NvgComponentRenderer<C extends Component> extends Componen
             return;
         }
         renderComponent(component, context, nanovgContext);
-        for (Component child : (List<Component>) component.getChilds()) {
-            RendererProvider.getInstance().getComponentRenderer(child.getClass()).render(child, context);
+        if (!component.isEmpty()) {
+            for (Component child : (List<Component>) component.getChilds()) {
+                RendererProvider.getInstance().getComponentRenderer(child.getClass()).render(child, context);
+            }
         }
         renderBorderWScissor(component, context, nanovgContext);
     }
