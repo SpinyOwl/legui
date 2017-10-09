@@ -27,6 +27,7 @@ import org.liquidengine.legui.system.renderer.nvg.NvgComponentRenderer;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgColorUtil;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgShapes;
+import org.liquidengine.legui.system.renderer.nvg.util.NvgText;
 import org.lwjgl.nanovg.NVGColor;
 import org.lwjgl.nanovg.NVGTextRow;
 import org.lwjgl.system.MemoryUtil;
@@ -50,10 +51,6 @@ public class NvgScrollBarRenderer extends NvgComponentRenderer<ScrollBar> {
             Vector2f size = scrollBar.getSize();
             Vector4f backgroundColor = new Vector4f(scrollBar.getBackgroundColor());
 
-            float visibleAmount = scrollBar.getVisibleAmount();
-
-            float minValue = scrollBar.getMinValue();
-            float maxValue = scrollBar.getMaxValue();
             float arrowSize = scrollBar.getArrowSize();
 
             boolean arrowsEnabled = scrollBar.isArrowsEnabled();
@@ -61,15 +58,10 @@ public class NvgScrollBarRenderer extends NvgComponentRenderer<ScrollBar> {
 
             float offset = 1f;
 
-            float curValue = scrollBar.getCurValue();
             boolean vertical = VERTICAL.equals(scrollBar.getOrientation());
-            Vector4f scrollBarBackgroundColor = scrollBar.getBackgroundColor();
-            Vector4f scrollColor = scrollBar.getScrollColor();
-
-            float cornerRadius = scrollBar.getCornerRadius();
 
             // draw background
-            NvgShapes.drawRect(nanovg, pos, size, backgroundColor, cornerRadius);
+            NvgShapes.drawRect(nanovg, pos, size, backgroundColor, scrollBar.getCornerRadius());
 
             // draw scroll bar back
             {
@@ -82,77 +74,13 @@ public class NvgScrollBarRenderer extends NvgComponentRenderer<ScrollBar> {
                     scrollBarPos.set(pos.x + diff, pos.y);
                     scrollBarSize.set(size.x - 2 * diff, size.y);
                 }
-                NvgShapes.drawRect(nanovg, scrollBarPos, scrollBarSize, scrollBarBackgroundColor, arrowsEnabled ? 0 : cornerRadius);
+                NvgShapes.drawRect(nanovg, scrollBarPos, scrollBarSize, scrollBar.getBackgroundColor(), arrowsEnabled ? 0 : scrollBar.getCornerRadius());
             }
             // draw arrows
-            {
-                if (arrowsEnabled) {
-                    Vector4f arrowColor = scrollBar.getArrowColor();
-                    String first, second;
-                    Vector2f arrowBgSize = new Vector2f();
-                    Vector2f secondArrowBgPos = new Vector2f();
-                    if (vertical) {
-                        first = T;
-                        second = B;
-                        arrowBgSize.set(size.x, arrowSize);
-                        secondArrowBgPos.set(pos.x, pos.y + size.y - arrowSize);
-                    } else {
-                        first = L;
-                        second = R;
-                        arrowBgSize.set(arrowSize, size.y);
-                        secondArrowBgPos.set(pos.x + size.x - arrowSize, pos.y);
-                    }
-                    // first arrow bg
-                    NvgShapes.drawRect(nanovg, pos, arrowBgSize, arrowColor, cornerRadius);
-                    // second arrow bg
-                    NvgShapes.drawRect(nanovg, secondArrowBgPos, arrowBgSize, arrowColor, cornerRadius);
-
-                    float fontSize;
-                    if (vertical) {
-                        fontSize = arrowSize > arrowBgSize.x ? arrowBgSize.x : arrowSize;
-                    } else {
-                        fontSize = arrowSize > arrowBgSize.y ? arrowBgSize.y : arrowSize;
-                    }
-                    String font = FontRegistry.MATERIAL_ICONS_REGULAR;
-                    HorizontalAlign horizontalAlign = HorizontalAlign.CENTER;
-                    VerticalAlign verticalAlign = VerticalAlign.MIDDLE;
-
-                    {
-                        nvgFontSize(nanovg, fontSize);
-                        nvgFontFace(nanovg, font);
-                        alignTextInBox(nanovg, horizontalAlign, verticalAlign);
-
-                        Vector4f blackOrWhite = oppositeBlackOrWhite(arrowColor);
-                        drawArr(nanovg, pos.x, pos.y, arrowBgSize.x, arrowBgSize.y, first, blackOrWhite, fontSize, horizontalAlign, verticalAlign);
-                        drawArr(nanovg, secondArrowBgPos.x, secondArrowBgPos.y, arrowBgSize.x, arrowBgSize.y, second, blackOrWhite, fontSize, horizontalAlign,
-                            verticalAlign);
-                    }
-                }
-            }
+            drawArrows(nanovg, scrollBar, pos, size);
 
             // draw scroll button
-            {
-                float scrollBarSize = (vertical ? size.y : size.x) - 2 * diff;
-                float scrollBarPercentageSize = visibleAmount / (maxValue - minValue);
-                float barSize = scrollBarSize * scrollBarPercentageSize;
-                if (barSize < ScrollBar.MIN_SCROLL_SIZE) {
-                    barSize = ScrollBar.MIN_SCROLL_SIZE;
-                }
-                float rangeToScroll = scrollBarSize - barSize;
-                float scrollPosAccordingToScrollBounds = diff + rangeToScroll * curValue / (maxValue - minValue);
-
-                Vector2f scrollPos = new Vector2f();
-                Vector2f scrollSize = new Vector2f();
-                if (vertical) {
-                    scrollPos.set(pos.x + offset, pos.y + offset + scrollPosAccordingToScrollBounds);
-                    scrollSize.set(size.x - 2 * offset, barSize - 2 * offset);
-                } else {
-                    scrollPos.set(pos.x + offset + scrollPosAccordingToScrollBounds, pos.y + offset);
-                    scrollSize.set(barSize - 2 * offset, size.y - 2 * offset);
-                }
-
-                NvgShapes.drawRect(nanovg, scrollPos, scrollSize, scrollColor, cornerRadius);
-            }
+            drawScrollButton(nanovg, pos, size, scrollBar, diff, offset, vertical);
 
             // draw border
             renderBorder(scrollBar, context);
@@ -160,30 +88,91 @@ public class NvgScrollBarRenderer extends NvgComponentRenderer<ScrollBar> {
         });
     }
 
-    private void drawArr(long context, float x1, float y1, float w1, float h1, String first, Vector4f blackOrWhite, float fontSize,
-        HorizontalAlign horizontalAlign, VerticalAlign verticalAlign) {
-        ByteBuffer byteText = null;
-        try {
-            byteText = MemoryUtil.memUTF8(first);
-            NVGTextRow.Buffer buffer = NVGTextRow.calloc(1);
-            {
-                long start = memAddress(byteText);
-                long end = start + byteText.remaining() - 1;
-                nnvgTextBreakLines(context, start, end, w1, memAddress(buffer), 1);
-                NVGTextRow row = buffer.get(0);
-                float[] bounds = createBounds(x1, y1, w1, h1, horizontalAlign, verticalAlign, row.width(), fontSize);
-
-                NVGColor colorA = NvgColorUtil.rgba(blackOrWhite, NVGColor.calloc());
-                nvgBeginPath(context);
-                nvgFillColor(context, colorA);
-                nnvgText(context, bounds[0], bounds[1], row.start(), row.end());
-                colorA.free();
+    /**
+     * Used to render arrows.
+     *
+     * @param nanovg nanovg.
+     * @param scrollBar scrollbar.
+     * @param pos scrollbar position.
+     * @param size scrollbar size.
+     */
+    private void drawArrows(long nanovg, ScrollBar scrollBar, Vector2f pos, Vector2f size) {
+        boolean arrowsEnabled = scrollBar.isArrowsEnabled();
+        if (arrowsEnabled) {
+            Vector4f arrowColor = scrollBar.getArrowColor();
+            String first, second;
+            Vector2f arrowBgSize = new Vector2f();
+            Vector2f arrow2pos = new Vector2f();
+            float arrowSize = scrollBar.getArrowSize();
+            float cornerRadius = scrollBar.getCornerRadius();
+            boolean vertical = VERTICAL.equals(scrollBar.getOrientation());
+            if (vertical) {
+                first = T;
+                second = B;
+                arrowBgSize.set(size.x, arrowSize);
+                arrow2pos.set(pos.x, pos.y + size.y - arrowSize);
+            } else {
+                first = L;
+                second = R;
+                arrowBgSize.set(arrowSize, size.y);
+                arrow2pos.set(pos.x + size.x - arrowSize, pos.y);
             }
-            buffer.free();
-        } finally {
-            if (byteText != null) {
-                MemoryUtil.memFree(byteText);
+            // first arrow bg
+            NvgShapes.drawRect(nanovg, pos, arrowBgSize, arrowColor, cornerRadius);
+            // second arrow bg
+            NvgShapes.drawRect(nanovg, arrow2pos, arrowBgSize, arrowColor, cornerRadius);
+
+            float fontSize;
+            if (vertical) {
+                fontSize = arrowSize > arrowBgSize.x ? arrowBgSize.x : arrowSize;
+            } else {
+                fontSize = arrowSize > arrowBgSize.y ? arrowBgSize.y : arrowSize;
+            }
+
+            {
+                Vector4f color = oppositeBlackOrWhite(arrowColor);
+
+                Vector4f firstArrowBounds = new Vector4f(pos.x, pos.y, arrowBgSize.x, arrowBgSize.y);
+                Vector4f secondArrowBounds = new Vector4f(arrow2pos.x, arrow2pos.y, arrowBgSize.x, arrowBgSize.y);
+
+                NvgText.drawTextLineToRect(nanovg, firstArrowBounds, false, HorizontalAlign.CENTER, VerticalAlign.MIDDLE, fontSize,
+                    FontRegistry.MATERIAL_ICONS_REGULAR, first, color);
+                NvgText.drawTextLineToRect(nanovg, secondArrowBounds, false, HorizontalAlign.CENTER, VerticalAlign.MIDDLE, fontSize,
+                    FontRegistry.MATERIAL_ICONS_REGULAR, second, color);
             }
         }
+    }
+
+    /**
+     * Used to draw scroll button.
+     *
+     * @param nanovg nanovg.
+     * @param pos pos.
+     * @param size size.
+     * @param scrollBar scrollBar.
+     * @param diff diff.
+     * @param offset offset.
+     * @param vertical vertical.
+     */
+    private void drawScrollButton(long nanovg, Vector2f pos, Vector2f size, ScrollBar scrollBar, float diff, float offset, boolean vertical) {
+        float scrollBarSize = (vertical ? size.y : size.x) - 2 * diff;
+        float valueRange = scrollBar.getMaxValue() - scrollBar.getMinValue();
+        float barSize = scrollBarSize * scrollBar.getVisibleAmount() / valueRange;
+        if (barSize < ScrollBar.MIN_SCROLL_SIZE) {
+            barSize = ScrollBar.MIN_SCROLL_SIZE;
+        }
+        float scrollPosAccordingToScrollBounds = diff + (scrollBarSize - barSize) * scrollBar.getCurValue() / valueRange;
+
+        Vector2f scrollPos = new Vector2f();
+        Vector2f scrollSize = new Vector2f();
+        if (vertical) {
+            scrollPos.set(pos.x + offset, pos.y + offset + scrollPosAccordingToScrollBounds);
+            scrollSize.set(size.x - 2 * offset, barSize - 2 * offset);
+        } else {
+            scrollPos.set(pos.x + offset + scrollPosAccordingToScrollBounds, pos.y + offset);
+            scrollSize.set(barSize - 2 * offset, size.y - 2 * offset);
+        }
+
+        NvgShapes.drawRect(nanovg, scrollPos, scrollSize, scrollBar.getScrollColor(), scrollBar.getCornerRadius());
     }
 }

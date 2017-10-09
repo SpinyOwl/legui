@@ -58,7 +58,7 @@ public class TextInputKeyEventListener implements KeyEventListener {
         } else if (key == GLFW_KEY_V && pressed && event.getMods() == GLFW_MOD_CONTROL) {
             pasteAction(gui, event.getContext(), event.getFrame());
         } else if (key == GLFW_KEY_C && pressed && event.getMods() == GLFW_MOD_CONTROL) {
-            copyAction(gui, event.getContext());
+            copyAction(gui);
         } else if (key == GLFW_KEY_X && pressed && event.getMods() == GLFW_MOD_CONTROL) {
             cutAction(gui, event.getContext(), event.getFrame());
         } else if (key == GLFW_KEY_A && pressed && event.getMods() == GLFW_MOD_CONTROL) {
@@ -106,7 +106,7 @@ public class TextInputKeyEventListener implements KeyEventListener {
                 Clipboard.getInstance().setClipboardString(s);
             }
         } else {
-            copyAction(gui, leguiContext);
+            copyAction(gui);
         }
     }
 
@@ -114,9 +114,8 @@ public class TextInputKeyEventListener implements KeyEventListener {
      * Used to copy selected text to clipboard.
      *
      * @param gui gui.
-     * @param leguiContext context.
      */
-    private void copyAction(TextInput gui, Context leguiContext) {
+    private void copyAction(TextInput gui) {
         String s = gui.getSelection();
         if (s != null) {
             Clipboard.getInstance().setClipboardString(s);

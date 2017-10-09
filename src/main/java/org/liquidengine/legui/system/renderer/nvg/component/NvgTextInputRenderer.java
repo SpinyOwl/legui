@@ -266,13 +266,10 @@ public class NvgTextInputRenderer extends NvgComponentRenderer<TextInput> {
     private void drawSelection(long context, Vector4f rect, Vector4f highlightColor,
         int startSelectionIndex, int endSelectionIndex, boolean focused,
         float startSelectionX, float endSelectionX, Float poffset) {
-        if (focused) {
-            // draw selection
-            if (startSelectionIndex != endSelectionIndex) {
-                Vector2f position = new Vector2f(startSelectionX - poffset, rect.y);
-                Vector2f size = new Vector2f(endSelectionX - startSelectionX, rect.w);
-                NvgShapes.drawRect(context, position, size, highlightColor);
-            }
+        if (focused && startSelectionIndex != endSelectionIndex) {
+            Vector2f position = new Vector2f(startSelectionX - poffset, rect.y);
+            Vector2f size = new Vector2f(endSelectionX - startSelectionX, rect.w);
+            NvgShapes.drawRect(context, position, size, highlightColor);
         }
     }
 

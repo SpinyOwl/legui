@@ -6,8 +6,6 @@ import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
 import org.liquidengine.legui.icon.CharIcon;
 import org.liquidengine.legui.icon.Icon;
-import org.liquidengine.legui.theme.AbstractTheme;
-import org.liquidengine.legui.theme.ThemeManager;
 import org.liquidengine.legui.theme.Themes;
 
 /**
