@@ -13,7 +13,7 @@ import org.liquidengine.legui.icon.CharIcon;
  *
  * @param <T> {@link RadioButton} subclasses.
  */
-public class DarkRadioButtonTheme<T extends RadioButton> extends DarkControllerTheme<T> {
+public class DarkRadioButtonTheme<T extends RadioButton> extends DarkComponentTheme<T> {
 
     /**
      * Used to apply theme only for component and not apply for child components.

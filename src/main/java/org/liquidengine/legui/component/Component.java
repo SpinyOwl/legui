@@ -11,6 +11,8 @@ import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.border.Border;
 import org.liquidengine.legui.color.ColorConstants;
+import org.liquidengine.legui.component.misc.listener.controller.TooltipCursorEnterListener;
+import org.liquidengine.legui.event.CursorEnterEvent;
 import org.liquidengine.legui.intersection.Intersector;
 import org.liquidengine.legui.intersection.RectangleIntersector;
 import org.liquidengine.legui.listener.ListenerMap;
@@ -82,6 +84,10 @@ public abstract class Component implements Serializable {
      * Determines whether this component pressed or not (Mouse button is down and on this component).
      */
     private boolean pressed;
+    /**
+     * Tooltip
+     */
+    private Tooltip tooltip;
 
     /**
      * Default constructor. Used to create component instance without any parameters. <p> Also if you want to make it easy to use with Json
@@ -113,6 +119,11 @@ public abstract class Component implements Serializable {
     public Component(Vector2f position, Vector2f size) {
         this.position = position;
         this.size = size;
+        initialize();
+    }
+
+    private void initialize() {
+        getListenerMap().addListener(CursorEnterEvent.class, new TooltipCursorEnterListener());
         Themes.getDefaultTheme().getThemeManager().getComponentTheme(Component.class).applyAll(this);
     }
 
@@ -132,7 +143,13 @@ public abstract class Component implements Serializable {
      * @param parent component container.
      */
     public void setParent(Container parent) {
+        if (this.parent != null) {
+            this.parent.remove(this);
+        }
         this.parent = parent;
+        if (parent != null) {
+            parent.add(this);
+        }
     }
 
     /**
@@ -465,6 +482,39 @@ public abstract class Component implements Serializable {
      */
     public void setPressed(boolean pressed) {
         this.pressed = pressed;
+    }
+
+    /**
+     * Returns tooltip if it persist.
+     *
+     * @return tooltip.
+     */
+    public Tooltip getTooltip() {
+        return tooltip;
+    }
+
+    /**
+     * Used to set tooltip to component.
+     *
+     * @param tooltip tooltip to set.
+     */
+    public void setTooltip(Tooltip tooltip) {
+        // check same tooltip
+        if (this.tooltip == tooltip) {
+            return;
+        }
+        // unbind current tooltip from this component
+        if (this.tooltip != null) {
+            Tooltip prev = this.tooltip;
+            this.tooltip = null;
+            prev.setComponent(null);
+        }
+
+        this.tooltip = tooltip;
+        // bind component to tooltip
+        if (tooltip != null) {
+            tooltip.setComponent(this);
+        }
     }
 
     @Override

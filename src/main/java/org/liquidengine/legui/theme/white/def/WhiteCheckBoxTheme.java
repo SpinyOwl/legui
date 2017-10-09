@@ -13,7 +13,7 @@ import org.liquidengine.legui.icon.CharIcon;
  *
  * @param <T> {@link CheckBox} subclasses.
  */
-public class WhiteCheckBoxTheme<T extends CheckBox> extends WhiteControllerTheme<T> {
+public class WhiteCheckBoxTheme<T extends CheckBox> extends WhiteComponentTheme<T> {
 
     @Override
     public void apply(T component) {

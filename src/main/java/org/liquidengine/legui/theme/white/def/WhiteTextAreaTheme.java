@@ -9,7 +9,7 @@ import org.liquidengine.legui.component.optional.align.HorizontalAlign;
  *
  * @param <T> {@link TextArea} subclasses.
  */
-public class WhiteTextAreaTheme<T extends TextArea> extends WhiteControllerTheme<T> {
+public class WhiteTextAreaTheme<T extends TextArea> extends WhiteComponentTheme<T> {
 
     @Override
     public void apply(T component) {

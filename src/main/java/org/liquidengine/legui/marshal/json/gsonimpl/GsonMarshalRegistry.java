@@ -12,7 +12,6 @@ import org.liquidengine.legui.component.Button;
 import org.liquidengine.legui.component.CheckBox;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.Container;
-import org.liquidengine.legui.component.Controller;
 import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.component.ImageView;
 import org.liquidengine.legui.component.Label;
@@ -47,7 +46,6 @@ import org.liquidengine.legui.marshal.json.gsonimpl.component.GsonButtonMarshall
 import org.liquidengine.legui.marshal.json.gsonimpl.component.GsonCheckBoxMarshaller;
 import org.liquidengine.legui.marshal.json.gsonimpl.component.GsonComponentMarshaller;
 import org.liquidengine.legui.marshal.json.gsonimpl.component.GsonContainerMarshaller;
-import org.liquidengine.legui.marshal.json.gsonimpl.component.GsonControllerMarshaller;
 import org.liquidengine.legui.marshal.json.gsonimpl.component.GsonFrameMarshaller;
 import org.liquidengine.legui.marshal.json.gsonimpl.component.GsonImageViewMarshaller;
 import org.liquidengine.legui.marshal.json.gsonimpl.component.GsonLabelMarshaller;
@@ -214,7 +212,6 @@ public class GsonMarshalRegistry implements JsonMarshalRegistry {
             I.registerMarshaller("CheckBox", CheckBox.class, new GsonCheckBoxMarshaller<>());
             I.registerMarshaller("Container", Container.class, new GsonContainerMarshaller<>());
             I.registerMarshaller("Component", Component.class, new GsonComponentMarshaller<>());
-            I.registerMarshaller("Controller", Controller.class, new GsonControllerMarshaller<>());
             I.registerMarshaller("ImageView", ImageView.class, new GsonImageViewMarshaller<>());
             I.registerMarshaller("Label", Label.class, new GsonLabelMarshaller<>());
             I.registerMarshaller("Panel", Panel.class, new GsonPanelMarshaller<>());

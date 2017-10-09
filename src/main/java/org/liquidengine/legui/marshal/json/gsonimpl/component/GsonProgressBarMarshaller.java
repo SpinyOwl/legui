@@ -13,7 +13,7 @@ import org.liquidengine.legui.marshal.json.gsonimpl.GsonUtil;
 /**
  * Marshaller for {@link ProgressBar}.
  */
-public class GsonProgressBarMarshaller<T extends ProgressBar> extends GsonControllerMarshaller<T> {
+public class GsonProgressBarMarshaller<T extends ProgressBar> extends GsonComponentMarshaller<T> {
 
     /**
      * Reads data from object and puts it to json object.

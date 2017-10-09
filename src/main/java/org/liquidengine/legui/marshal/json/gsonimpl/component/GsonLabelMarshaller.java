@@ -13,7 +13,7 @@ import org.liquidengine.legui.marshal.json.gsonimpl.GsonMarshalUtil;
 /**
  * Marshaller for {@link Label}.
  */
-public class GsonLabelMarshaller<T extends Label> extends GsonControllerMarshaller<T> {
+public class GsonLabelMarshaller<T extends Label> extends GsonComponentMarshaller<T> {
 
     /**
      * Reads data from object and puts it to json object.

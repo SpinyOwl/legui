@@ -8,7 +8,7 @@ import org.liquidengine.legui.component.ToggleButton;
  *
  * @param <T> {@link ToggleButton} subclasses.
  */
-public class WhiteToggleButtonTheme<T extends ToggleButton> extends WhiteControllerTheme<T> {
+public class WhiteToggleButtonTheme<T extends ToggleButton> extends WhiteComponentTheme<T> {
 
     @Override
     public void apply(T component) {

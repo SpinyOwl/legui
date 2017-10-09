@@ -1,6 +1,6 @@
 package org.liquidengine.legui.component.misc.listener.controller;
 
-import org.liquidengine.legui.component.Controller;
+import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.Tooltip;
 import org.liquidengine.legui.event.CursorEnterEvent;
 import org.liquidengine.legui.listener.CursorEnterEventListener;
@@ -17,8 +17,8 @@ public class TooltipCursorEnterListener implements CursorEnterEventListener {
      */
     @Override
     public void process(CursorEnterEvent event) {
-        Controller controller = (Controller) event.getComponent();
-        Tooltip tooltip = controller.getTooltip();
+        Component component = event.getComponent();
+        Tooltip tooltip = component.getTooltip();
         if (tooltip != null) {
             if (event.isEntered()) {
                 event.getFrame().getTooltipLayer().getContainer().add(tooltip);

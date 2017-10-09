@@ -10,7 +10,7 @@ import org.liquidengine.legui.theme.Themes;
  *
  * @param <T> {@link ScrollablePanel} subclasses.
  */
-public class WhiteScrollablePanelTheme<T extends ScrollablePanel> extends WhiteControllerTheme<T> {
+public class WhiteScrollablePanelTheme<T extends ScrollablePanel> extends WhiteComponentTheme<T> {
 
     @Override
     public void apply(T component) {

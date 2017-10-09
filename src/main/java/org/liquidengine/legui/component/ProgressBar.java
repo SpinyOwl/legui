@@ -12,7 +12,7 @@ import org.liquidengine.legui.theme.Themes;
 /**
  * Progress bar. Used to display for example progress of loading or something else.
  */
-public class ProgressBar extends Controller {
+public class ProgressBar extends Component {
 
     /**
      * Maximum value of progress bar state.

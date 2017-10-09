@@ -13,7 +13,7 @@ import org.liquidengine.legui.icon.CharIcon;
  *
  * @param <T> {@link RadioButton} subclasses.
  */
-public class WhiteRadioButtonTheme<T extends RadioButton> extends WhiteControllerTheme<T> {
+public class WhiteRadioButtonTheme<T extends RadioButton> extends WhiteComponentTheme<T> {
 
     @Override
     public void apply(T component) {

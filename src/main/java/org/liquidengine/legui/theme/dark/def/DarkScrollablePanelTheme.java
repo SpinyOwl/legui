@@ -10,7 +10,7 @@ import org.liquidengine.legui.theme.Themes;
  *
  * @param <T> {@link ScrollablePanel} subclasses.
  */
-public class DarkScrollablePanelTheme<T extends ScrollablePanel> extends DarkControllerTheme<T> {
+public class DarkScrollablePanelTheme<T extends ScrollablePanel> extends DarkComponentTheme<T> {
 
     /**
      * Used to apply theme only for component and not apply for child components.

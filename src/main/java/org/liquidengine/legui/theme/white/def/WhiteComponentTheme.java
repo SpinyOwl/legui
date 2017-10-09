@@ -3,7 +3,9 @@ package org.liquidengine.legui.theme.white.def;
 import org.liquidengine.legui.border.SimpleLineBorder;
 import org.liquidengine.legui.color.ColorConstants;
 import org.liquidengine.legui.component.Component;
+import org.liquidengine.legui.component.Tooltip;
 import org.liquidengine.legui.theme.AbstractTheme;
+import org.liquidengine.legui.theme.Themes;
 
 /**
  * White Component Theme for all components. Used to make component white.
@@ -14,8 +16,13 @@ public class WhiteComponentTheme<T extends Component> extends AbstractTheme<T> {
 
     @Override
     public void apply(T component) {
+        super.apply(component);
         component.setBorder(new SimpleLineBorder(ColorConstants.darkGray(), .7f));
         component.setCornerRadius(2);
         component.setBackgroundColor(ColorConstants.white());
+        Tooltip tooltip = component.getTooltip();
+        if (tooltip != null) {
+            Themes.getDefaultTheme().applyAll(tooltip);
+        }
     }
 }

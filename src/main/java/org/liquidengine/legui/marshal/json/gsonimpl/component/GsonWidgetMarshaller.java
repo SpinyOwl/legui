@@ -29,7 +29,7 @@ import org.liquidengine.legui.marshal.json.gsonimpl.GsonMarshalUtil;
 /**
  * Marshaller for {@link Widget}.
  */
-public class GsonWidgetMarshaller<T extends Widget> extends GsonControllerMarshaller<T> {
+public class GsonWidgetMarshaller<T extends Widget> extends GsonComponentMarshaller<T> {
 
     /**
      * Reads data from object and puts it to json object.

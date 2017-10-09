@@ -16,7 +16,7 @@ import org.liquidengine.legui.marshal.json.gsonimpl.GsonMarshalUtil;
 /**
  * Marshaller for {@link Container}.
  */
-public class GsonContainerMarshaller<T extends Container> extends GsonControllerMarshaller<T> {
+public class GsonContainerMarshaller<T extends Container> extends GsonComponentMarshaller<T> {
 
     /**
      * Reads data from object and puts it to json object.

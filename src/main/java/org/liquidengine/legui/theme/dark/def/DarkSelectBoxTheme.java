@@ -13,7 +13,7 @@ import org.liquidengine.legui.theme.Themes;
  *
  * @param <T> {@link SelectBox} subclasses.
  */
-public class DarkSelectBoxTheme<T extends SelectBox> extends DarkControllerTheme<T> {
+public class DarkSelectBoxTheme<T extends SelectBox> extends DarkComponentTheme<T> {
 
     /**
      * Used to apply theme only for component and not apply for child components.

@@ -13,7 +13,7 @@ import org.liquidengine.legui.theme.Themes;
  *
  * @param <T> {@link Widget} subclasses.
  */
-public class WhiteWidgetTheme<T extends Widget> extends WhiteControllerTheme<T> {
+public class WhiteWidgetTheme<T extends Widget> extends WhiteComponentTheme<T> {
 
     @Override
     public void applyAll(T component) {

@@ -8,7 +8,7 @@ import org.liquidengine.legui.component.ScrollBar;
  *
  * @param <T> {@link ScrollBar} subclasses.
  */
-public class DarkScrollBarTheme<T extends ScrollBar> extends DarkControllerTheme<T> {
+public class DarkScrollBarTheme<T extends ScrollBar> extends DarkComponentTheme<T> {
 
     /**
      * Used to apply theme only for component and not apply for child components.

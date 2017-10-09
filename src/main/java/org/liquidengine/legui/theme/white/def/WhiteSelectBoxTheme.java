@@ -13,7 +13,7 @@ import org.liquidengine.legui.theme.Themes;
  *
  * @param <T> {@link SelectBox} subclasses.
  */
-public class WhiteSelectBoxTheme<T extends SelectBox> extends WhiteControllerTheme<T> {
+public class WhiteSelectBoxTheme<T extends SelectBox> extends WhiteComponentTheme<T> {
 
     /**
      * Used to apply theme only for component and not apply for child components.

@@ -8,7 +8,7 @@ import org.liquidengine.legui.component.SelectBox;
  *
  * @param <T> {@link SelectBox.SelectBoxElement} subclasses.
  */
-public class WhiteSelectBoxElementTheme<T extends SelectBox.SelectBoxElement> extends WhiteControllerTheme<T> {
+public class WhiteSelectBoxElementTheme<T extends SelectBox.SelectBoxElement> extends WhiteComponentTheme<T> {
 
     @Override
     public void apply(T component) {

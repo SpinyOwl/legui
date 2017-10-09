@@ -13,7 +13,7 @@ import org.liquidengine.legui.theme.Themes;
  *
  * @param <T> {@link Widget} subclasses.
  */
-public class DarkWidgetTheme<T extends Widget> extends DarkControllerTheme<T> {
+public class DarkWidgetTheme<T extends Widget> extends DarkComponentTheme<T> {
 
     /**
      * Used to apply theme for component and for all children of this component. Should be reimplemented for components that contains other child components.

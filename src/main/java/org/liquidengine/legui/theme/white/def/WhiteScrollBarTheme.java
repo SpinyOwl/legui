@@ -8,7 +8,7 @@ import org.liquidengine.legui.component.ScrollBar;
  *
  * @param <T> {@link ScrollBar} subclasses.
  */
-public class WhiteScrollBarTheme<T extends ScrollBar> extends WhiteControllerTheme<T> {
+public class WhiteScrollBarTheme<T extends ScrollBar> extends WhiteComponentTheme<T> {
 
     @Override
     public void apply(T component) {

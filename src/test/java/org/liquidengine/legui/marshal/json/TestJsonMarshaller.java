@@ -32,6 +32,7 @@ import org.liquidengine.legui.component.Slider;
 import org.liquidengine.legui.component.TextArea;
 import org.liquidengine.legui.component.TextInput;
 import org.liquidengine.legui.component.ToggleButton;
+import org.liquidengine.legui.component.Tooltip;
 import org.liquidengine.legui.component.Widget;
 import org.liquidengine.legui.component.optional.Orientation;
 import org.liquidengine.legui.font.FontRegistry;
@@ -123,7 +124,7 @@ public class TestJsonMarshaller {
         button.setBackgroundColor(new Vector4f(1));
         toReturn.add(button);
 
-        button.setTooltip("Just button");
+        button.setTooltip(new Tooltip("Just button"));
         button.getTooltip().setPosition(0, 25);
         button.getTooltip().getSize().set(50, 40);
         button.getTooltip().setBackgroundColor(ColorConstants.darkGray());
@@ -339,7 +340,7 @@ public class TestJsonMarshaller {
         Icon bgImageNormal = new ImageIcon(new DummyImage("org/liquidengine/legui/example/normal.png"));
         Icon bgImageToggled = new ImageIcon(new DummyImage("org/liquidengine/legui/example/toggled.png"));
 
-        toggleButton.setTooltip("Just toggle button with long tooltipText text");
+        toggleButton.setTooltip(new Tooltip("Just toggle button with long tooltipText text"));
 
         toggleButton.getTooltip().setPosition(45, 0);
         toggleButton.getTooltip().getSize().set(140, 40);

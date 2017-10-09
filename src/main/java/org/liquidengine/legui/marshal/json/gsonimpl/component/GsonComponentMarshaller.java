@@ -8,6 +8,7 @@ import static org.liquidengine.legui.marshal.JsonConstants.HEIGHT;
 import static org.liquidengine.legui.marshal.JsonConstants.INTERSECTOR;
 import static org.liquidengine.legui.marshal.JsonConstants.POSITION;
 import static org.liquidengine.legui.marshal.JsonConstants.SIZE;
+import static org.liquidengine.legui.marshal.JsonConstants.TOOLTIP;
 import static org.liquidengine.legui.marshal.JsonConstants.VISIBLE;
 import static org.liquidengine.legui.marshal.JsonConstants.WIDTH;
 import static org.liquidengine.legui.marshal.JsonConstants.X;
@@ -56,6 +57,7 @@ public class GsonComponentMarshaller<T extends Component> extends AbstractGsonMa
             .add(CORNER_RADIUS, object.getCornerRadius())
             .add(BORDER, GsonMarshalUtil.marshalToJson(object.getBorder(), context))
             .add(INTERSECTOR, GsonMarshalUtil.marshalToJson(object.getIntersector()))
+            .add(TOOLTIP, GsonMarshalUtil.marshalToJson(object.getTooltip(), context))
         ;
     }
 
@@ -76,6 +78,7 @@ public class GsonComponentMarshaller<T extends Component> extends AbstractGsonMa
         JsonElement cornerRadius = json.get(CORNER_RADIUS);
         JsonElement border = json.get(BORDER);
         JsonElement intersector = json.get(INTERSECTOR);
+        JsonElement tooltip = json.get(TOOLTIP);
 
         if (isNotNull(position)) {
             JsonElement x = position.get(X);
@@ -119,6 +122,9 @@ public class GsonComponentMarshaller<T extends Component> extends AbstractGsonMa
 
         if (isNotNull(intersector)) {
             object.setIntersector(GsonMarshalUtil.unmarshal(intersector.getAsJsonObject(), context));
+        }
+        if (isNotNull(tooltip) && tooltip.isJsonObject()) {
+            object.setTooltip(GsonMarshalUtil.unmarshal((JsonObject) tooltip));
         }
     }
 

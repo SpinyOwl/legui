@@ -10,7 +10,7 @@ import org.liquidengine.legui.theme.Themes;
  *
  * @param <T> {@link Container} subclasses.
  */
-public class WhiteContainerTheme<T extends Container> extends WhiteControllerTheme<T> {
+public class WhiteContainerTheme<T extends Container> extends WhiteComponentTheme<T> {
 
     @Override
     public void apply(T component) {

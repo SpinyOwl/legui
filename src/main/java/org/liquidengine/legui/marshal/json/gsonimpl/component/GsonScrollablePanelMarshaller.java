@@ -17,7 +17,7 @@ import org.liquidengine.legui.marshal.json.gsonimpl.GsonUtil;
 /**
  * Marshaller for {@link ScrollablePanel}.
  */
-public class GsonScrollablePanelMarshaller<T extends ScrollablePanel> extends GsonControllerMarshaller<T> {
+public class GsonScrollablePanelMarshaller<T extends ScrollablePanel> extends GsonComponentMarshaller<T> {
 
     /**
      * Reads data from object and puts it to json object.

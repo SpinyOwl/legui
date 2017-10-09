@@ -12,7 +12,7 @@ import org.liquidengine.legui.marshal.json.gsonimpl.GsonUtil;
 /**
  * Marshaller for {@link ImageView}.
  */
-public class GsonImageViewMarshaller<T extends ImageView> extends GsonControllerMarshaller<T> {
+public class GsonImageViewMarshaller<T extends ImageView> extends GsonComponentMarshaller<T> {
 
     /**
      * Reads data from object and puts it to json object.

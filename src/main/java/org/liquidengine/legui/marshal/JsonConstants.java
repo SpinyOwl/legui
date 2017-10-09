@@ -140,6 +140,9 @@ public final class JsonConstants {
     public static final String COLOR = "color";
     public static final String CHAR_CODE = "charCode";
 
+    // TOOLTIP
+    public static final String TOOLTIP = "tooltip";
+
 
     private JsonConstants() {
     }

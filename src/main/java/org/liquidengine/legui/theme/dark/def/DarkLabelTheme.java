@@ -9,7 +9,7 @@ import org.liquidengine.legui.component.optional.align.HorizontalAlign;
  *
  * @param <T> {@link Label} subclasses.
  */
-public class DarkLabelTheme<T extends Label> extends DarkControllerTheme<T> {
+public class DarkLabelTheme<T extends Label> extends DarkComponentTheme<T> {
 
     /**
      * Used to apply theme only for component and not apply for child components.

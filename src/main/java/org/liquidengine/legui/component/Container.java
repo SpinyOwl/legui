@@ -20,7 +20,7 @@ import org.liquidengine.legui.theme.Themes;
  * style="color:red">SetUniqueList</span> created on base of <span style="color:red">CopyOnWriteArrayList</span></b>, that's little restriction which determines
  * that child can exist in parent only one time.
  */
-public abstract class Container<T extends Component> extends Controller {
+public abstract class Container<T extends Component> extends Component {
 
     /**
      * List of child components.
@@ -115,8 +115,11 @@ public abstract class Container<T extends Component> extends Controller {
         if (component == null || component == this || isContains(component)) {
             return false;
         }
-        changeParent(component);
-        return components.add(component);
+        boolean added = components.add(component);
+        if (added) {
+            changeParent(component);
+        }
+        return added;
     }
 
     /**
@@ -158,6 +161,9 @@ public abstract class Container<T extends Component> extends Controller {
      */
     private void changeParent(T component) {
         Container parent = component.getParent();
+        if (parent == this) {
+            return;
+        }
         if (parent != null) {
             parent.remove(component);
         }
@@ -175,8 +181,11 @@ public abstract class Container<T extends Component> extends Controller {
         if (component != null) {
             Container parent = component.getParent();
             if (parent != null && parent == this && isContains(component)) {
-                component.setParent(null);
-                return components.remove(component);
+                boolean removed = components.remove(component);
+                if (removed) {
+                    component.setParent(null);
+                }
+                return removed;
             }
         }
         return false;

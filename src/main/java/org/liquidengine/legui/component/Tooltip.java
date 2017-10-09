@@ -14,7 +14,7 @@ import org.liquidengine.legui.theme.Themes;
 public class Tooltip extends Component implements TextComponent {
 
     private TextState textState;
-    private Controller controller;
+    private Component component;
 
     public Tooltip() {
         initialize("");
@@ -39,22 +39,34 @@ public class Tooltip extends Component implements TextComponent {
         return textState;
     }
 
-    public Controller getController() {
-        return controller;
-    }
-
-    public void setController(Controller controller) {
-        if (this.controller != null) {
-            this.controller.setTooltipComponent(null);
+    public void setComponent(Component component) {
+        // check self
+        if (component == this) {
+            return;
         }
-        this.controller = controller;
+        // check same component
+        if (this.component == component) {
+            return;
+        }
+        // remove tooltip from current component
+        if (this.component != null) {
+            Component prev = this.component;
+            this.component = null;
+            prev.setTooltip(null);
+        }
+        // set new component
+        this.component = component;
+        // bind this tooltip to component
+        if (component != null) {
+            component.setTooltip(this);
+        }
     }
 
     @Override
     public Vector2f getAbsolutePosition() {
         Vector2f position = new Vector2f(getPosition());
-        if (controller != null) {
-            position.add(controller.getAbsolutePosition());
+        if (component != null) {
+            position.add(component.getAbsolutePosition());
         }
         return position;
     }

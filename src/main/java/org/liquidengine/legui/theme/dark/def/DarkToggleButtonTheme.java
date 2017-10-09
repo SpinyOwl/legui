@@ -8,7 +8,7 @@ import org.liquidengine.legui.component.ToggleButton;
  *
  * @param <T> {@link ToggleButton} subclasses.
  */
-public class DarkToggleButtonTheme<T extends ToggleButton> extends DarkControllerTheme<T> {
+public class DarkToggleButtonTheme<T extends ToggleButton> extends DarkComponentTheme<T> {
 
     /**
      * Used to apply theme only for component and not apply for child components.

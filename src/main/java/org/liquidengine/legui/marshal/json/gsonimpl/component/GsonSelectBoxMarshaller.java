@@ -21,7 +21,7 @@ import org.liquidengine.legui.marshal.json.gsonimpl.GsonUtil;
 /**
  * Marshaller for {@link SelectBox}.
  */
-public class GsonSelectBoxMarshaller<T extends SelectBox> extends GsonControllerMarshaller<T> {
+public class GsonSelectBoxMarshaller<T extends SelectBox> extends GsonComponentMarshaller<T> {
 
     /**
      * Reads data from object and puts it to json object.
