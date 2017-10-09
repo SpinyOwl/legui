@@ -38,7 +38,9 @@ public class NvgText {
     }
 
     public static void drawTextLineToRect(long nvg, TextState text, Vector2fc pos, Vector2fc size, boolean hideOverflow) {
-        drawTextLineToRect(nvg, text, new Vector4f(pos.x(), pos.y(), size.x(), size.y()), hideOverflow);
+        Vector4f p = text.getPadding();
+        Vector4f rect = new Vector4f(pos.x(), pos.y(), size.x(), size.y()).add(p.x, p.y, -p.x - p.z, -p.y - p.w);
+        drawTextLineToRect(nvg, text, rect, hideOverflow);
     }
 
     public static void drawTextLineToRect(long nvg, TextState text, Vector4fc rect, boolean hideOverflow) {
