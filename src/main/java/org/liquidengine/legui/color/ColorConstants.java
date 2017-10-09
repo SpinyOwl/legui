@@ -146,6 +146,8 @@ public final class ColorConstants {
 
     /**
      * Red color vector.
+     *
+     * @return Vector4f red color.
      */
     public static Vector4f red() {
         return new Vector4f(red);
@@ -153,6 +155,8 @@ public final class ColorConstants {
 
     /**
      * Green color vector.
+     *
+     * @return Vector4f green color.
      */
     public static Vector4f green() {
         return new Vector4f(green);
@@ -160,6 +164,8 @@ public final class ColorConstants {
 
     /**
      * Blue color vector.
+     *
+     * @return Vector4f blue color.
      */
     public static Vector4f blue() {
         return new Vector4f(blue);
@@ -167,6 +173,8 @@ public final class ColorConstants {
 
     /**
      * Dark-red color vector.
+     *
+     * @return Vector4f darkRed color.
      */
     public static Vector4f darkRed() {
         return new Vector4f(darkRed);
@@ -174,6 +182,8 @@ public final class ColorConstants {
 
     /**
      * Dark-green color vector.
+     *
+     * @return Vector4f darkGreen color.
      */
     public static Vector4f darkGreen() {
         return new Vector4f(darkGreen);
@@ -181,6 +191,8 @@ public final class ColorConstants {
 
     /**
      * Dark-blue color vector.
+     *
+     * @return Vector4f darkBlue color.
      */
     public static Vector4f darkBlue() {
         return new Vector4f(darkBlue);
@@ -188,6 +200,8 @@ public final class ColorConstants {
 
     /**
      * Light-red color vector.
+     *
+     * @return Vector4f lightRed color.
      */
     public static Vector4f lightRed() {
         return new Vector4f(lightRed);
@@ -195,6 +209,8 @@ public final class ColorConstants {
 
     /**
      * Light-green color vector.
+     *
+     * @return Vector4f lightGreen color.
      */
     public static Vector4f lightGreen() {
         return new Vector4f(lightGreen);
@@ -202,6 +218,8 @@ public final class ColorConstants {
 
     /**
      * Light-blue color vector.
+     *
+     * @return Vector4f lightBlue color.
      */
     public static Vector4f lightBlue() {
         return new Vector4f(lightBlue);
@@ -209,6 +227,8 @@ public final class ColorConstants {
 
     /**
      * Black color vector.
+     *
+     * @return Vector4f black color.
      */
     public static Vector4f black() {
         return new Vector4f(black);
@@ -216,6 +236,8 @@ public final class ColorConstants {
 
     /**
      * Light-black color vector.
+     *
+     * @return Vector4f lightBlack color.
      */
     public static Vector4f lightBlack() {
         return new Vector4f(lightBlack);
@@ -223,6 +245,8 @@ public final class ColorConstants {
 
     /**
      * White color vector.
+     *
+     * @return Vector4f white color.
      */
     public static Vector4f white() {
         return new Vector4f(white);
@@ -230,6 +254,8 @@ public final class ColorConstants {
 
     /**
      * Transparent color vector.
+     *
+     * @return Vector4f transparent color.
      */
     public static Vector4f transparent() {
         return new Vector4f(transparent);
@@ -237,6 +263,8 @@ public final class ColorConstants {
 
     /**
      * Light-gray color vector.
+     *
+     * @return Vector4f lightGray color.
      */
     public static Vector4f lightGray() {
         return new Vector4f(lightGray);
@@ -244,6 +272,8 @@ public final class ColorConstants {
 
     /**
      * Dark-gray color vector.
+     *
+     * @return Vector4f darkGray color.
      */
     public static Vector4f darkGray() {
         return new Vector4f(darkGray);
@@ -251,6 +281,8 @@ public final class ColorConstants {
 
     /**
      * Gray color vector.
+     *
+     * @return Vector4f gray color.
      */
     public static Vector4f gray() {
         return new Vector4f(gray);

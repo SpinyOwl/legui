@@ -8,27 +8,18 @@ import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_MIDDLE;
 import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_RIGHT;
 import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_TOP;
 import static org.lwjgl.nanovg.NanoVG.NVG_HOLE;
-import static org.lwjgl.nanovg.NanoVG.nnvgText;
-import static org.lwjgl.nanovg.NanoVG.nnvgTextBreakLines;
 import static org.lwjgl.nanovg.NanoVG.nvgBeginPath;
 import static org.lwjgl.nanovg.NanoVG.nvgBoxGradient;
 import static org.lwjgl.nanovg.NanoVG.nvgFill;
-import static org.lwjgl.nanovg.NanoVG.nvgFillColor;
 import static org.lwjgl.nanovg.NanoVG.nvgFillPaint;
-import static org.lwjgl.nanovg.NanoVG.nvgFontFace;
-import static org.lwjgl.nanovg.NanoVG.nvgFontSize;
 import static org.lwjgl.nanovg.NanoVG.nvgIntersectScissor;
 import static org.lwjgl.nanovg.NanoVG.nvgPathWinding;
 import static org.lwjgl.nanovg.NanoVG.nvgRect;
 import static org.lwjgl.nanovg.NanoVG.nvgResetScissor;
 import static org.lwjgl.nanovg.NanoVG.nvgRoundedRect;
 import static org.lwjgl.nanovg.NanoVG.nvgScissor;
-import static org.lwjgl.nanovg.NanoVG.nvgStroke;
-import static org.lwjgl.nanovg.NanoVG.nvgStrokeColor;
-import static org.lwjgl.nanovg.NanoVG.nvgStrokeWidth;
 import static org.lwjgl.nanovg.NanoVG.nvgTextAlign;
 import static org.lwjgl.nanovg.NanoVG.nvgTextBounds;
-import static org.lwjgl.system.MemoryUtil.memAddress;
 import static org.lwjgl.system.MemoryUtil.memFree;
 import static org.lwjgl.system.MemoryUtil.memUTF8;
 
@@ -36,224 +27,22 @@ import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 import org.joml.Vector2f;
-import org.joml.Vector2fc;
 import org.joml.Vector4f;
-import org.joml.Vector4fc;
 import org.liquidengine.legui.component.Component;
-import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
-import org.liquidengine.legui.font.FontRegistry;
 import org.lwjgl.nanovg.NVGColor;
 import org.lwjgl.nanovg.NVGPaint;
-import org.lwjgl.nanovg.NVGTextRow;
 
 /**
  * Created by Aliaksandr_Shcherbin on 2/2/2017.
  */
 public final class NvgRenderUtils {
 
+    /**
+     * Private constructor.
+     */
     private NvgRenderUtils() {
-    }
-
-    /**
-     * Used to render text state to rectangle bounds.
-     *
-     * @param nvgContext nanovg context.
-     * @param pos rectangle position.
-     * @param size rectangle size.
-     * @param textState text state to render.
-     */
-    public static void renderTextStateLineToBounds(long nvgContext, Vector2f pos, Vector2f size, TextState textState) {
-        renderTextStateLineToBounds(nvgContext, pos, size, textState, true);
-    }
-
-    /**
-     * Used to render text state to rectangle bounds.
-     *
-     * @param nvgContext nanovg context.
-     * @param pos rectangle position.
-     * @param size rectangle size.
-     * @param textState text state to render.
-     * @param hide true if need to hide out of bounds textState.
-     */
-    public static void renderTextStateLineToBounds(long nvgContext, Vector2f pos, Vector2f size, TextState textState, boolean hide) {
-        Vector4f pad = textState.getPadding();
-        String font = textState.getFont() == null ? FontRegistry.DEFAULT : textState.getFont();
-        HorizontalAlign horizontalAlign = textState.getHorizontalAlign();
-        VerticalAlign verticalAlign = textState.getVerticalAlign();
-        renderTextLineToBounds(nvgContext,
-            /* X position             */ pos.x + 0.5f + pad.x,
-            /* Y position             */ pos.y + pad.y,
-            /* Width                  */ size.x - pad.x - pad.z,
-            /* Height                 */ size.y - pad.y - pad.w,
-            /* font size              */ textState.getFontSize(),
-            /* font name              */font,
-            /* text color             */ textState.getTextColor(),
-            /* text to render         */ textState.getText(),
-            /* horizontal alignment   */ horizontalAlign,
-            /* vertical alignment     */ verticalAlign,
-            /* hide out of bound text */ hide);
-    }
-
-    /**
-     * Used to render textState to rectangle bounds.
-     *
-     * @param context nanovg context.
-     * @param x x position of rectangle.
-     * @param y y position of rectangle.
-     * @param w width of rectangle.
-     * @param h height of rectangle.
-     * @param fontSize titleFont size.
-     * @param font titleFont name which contains in titleFont register.
-     * @param textColor textState color.
-     * @param text textState.
-     * @param horizontalAlign horizontal align.
-     * @param verticalAlign vertical align.
-     * @param hide true if need to hide out of bounds textState.
-     */
-    public static void renderTextLineToBounds(long context,
-        float x, float y, float w, float h,
-        float fontSize,
-        String font,
-        Vector4f textColor,
-        String text,
-        HorizontalAlign horizontalAlign,
-        VerticalAlign verticalAlign, boolean hide) {
-
-        NVGColor colorA = NVGColor.calloc();
-        renderTextLineToBounds(context, x, y, w, h, fontSize, font, textColor, colorA, text, horizontalAlign, verticalAlign, hide);
-        colorA.free();
-    }
-
-
-    /**
-     * Used to renderNvg textState to rectangle bounds.
-     *
-     * @param context nanovg context.
-     * @param x x position of rectangle.
-     * @param y y position of rectangle.
-     * @param w width of rectangle.
-     * @param h height of rectangle.
-     * @param fontSize titleFont size.
-     * @param font titleFont name which contains in titleFont register.
-     * @param textColor textState color.
-     * @param nvgColor nvg textState color.
-     * @param text textState.
-     * @param horizontalAlign horizontal align.
-     * @param verticalAlign vertical align.
-     * @param hide true if need to hide out of bounds textState.
-     */
-    public static void renderTextLineToBounds(long context,
-        float x, float y, float w, float h,
-        float fontSize,
-        String font,
-        Vector4f textColor,
-        NVGColor nvgColor,
-        String text,
-        HorizontalAlign horizontalAlign, VerticalAlign verticalAlign, boolean hide) {
-        nvgFontSize(context, fontSize);
-        nvgFontFace(context, font);
-
-        ByteBuffer byteText = null;
-        try {
-            alignTextInBox(context, horizontalAlign, verticalAlign);
-            byteText = memUTF8(text, false);
-            long start = memAddress(byteText);
-            long end = start + byteText.remaining();
-            long rowStart = start;
-            long rowEnd = end;
-            if (hide) {
-                NVGTextRow.Buffer buffer = NVGTextRow.calloc(1);
-                int rows = nnvgTextBreakLines(context, start, end, w, memAddress(buffer), 1);
-                if (rows != 0) {
-                    NVGTextRow row = buffer.get(0);
-                    rowStart = row.start();
-                    rowEnd = row.end();
-                }
-                buffer.free();
-            }
-            renderTextLine(context, x, y, w, h, textColor, nvgColor, horizontalAlign, verticalAlign, rowStart, rowEnd);
-        } finally {
-            if (byteText != null) {
-                memFree(byteText);
-            }
-        }
-    }
-
-    /**
-     * Used to render text line.
-     *
-     * @param context nanovg context.
-     * @param x left bound of rectangle.
-     * @param y top bound of rectangle.
-     * @param w rectangle width.
-     * @param h rectangle height.
-     * @param textColor text color
-     * @param nvgColor nanovg color.
-     * @param horizontalAlign horizontal align.
-     * @param verticalAlign vertical align.
-     * @param rowStart pointer to start of string to render.
-     * @param rowEnd pointer to end of string to render.
-     */
-    private static void renderTextLine(long context, float x, float y, float w, float h, Vector4f textColor, NVGColor nvgColor, HorizontalAlign horizontalAlign,
-        VerticalAlign verticalAlign, long rowStart, long rowEnd) {
-        float tx = x + w * horizontalAlign.index / 2f;
-        float ty = y + h * verticalAlign.index / 2f;
-
-        nvgBeginPath(context);
-        NVGColor textColorN = textColor.w == 0 ? NvgColorUtil.rgba(0.0f, 0.0f, 0.0f, 1f, nvgColor) : NvgColorUtil.rgba(textColor, nvgColor);
-        nvgFillColor(context, textColorN);
-        nnvgText(context, tx, ty, rowStart, rowEnd);
-    }
-
-    /**
-     * Used to draw rectangle.
-     *
-     * @param context nanovg context.
-     * @param color color.
-     * @param x x position of rectangle.
-     * @param y y position of rectangle.
-     * @param w rectangle width.
-     * @param h rectangle height.
-     */
-    public static void drawRectangle(long context, Vector4fc color, float x, float y, float w, float h) {
-        NVGColor nvgColor = NvgColorUtil.rgba(color, NVGColor.calloc());
-        nvgBeginPath(context);
-        nvgFillColor(context, nvgColor);
-        nvgRect(context, x, y, w, h);
-        nvgFill(context);
-        nvgColor.free();
-    }
-
-
-    public static void drawRectangle(long context, Vector4fc color, Vector4f bounds) {
-        drawRectangle(context, color, bounds.x, bounds.y, bounds.z, bounds.w);
-    }
-
-
-    public static void drawRectangle(long context, Vector4fc color, Vector2f position, Vector2f size) {
-        drawRectangle(context, color, position.x, position.y, size.x, size.y);
-    }
-
-    /**
-     * Used to renderNvg textState to rectangle bounds.
-     *
-     * @param context nanovg context.
-     * @param x x position of rectangle.
-     * @param y y position of rectangle.
-     * @param w width of rectangle.
-     * @param h height of rectangle.
-     * @param fontSize titleFont size.
-     * @param font titleFont name which contains in titleFont register.
-     * @param textColor textState color.
-     * @param text textState.
-     * @param horizontalAlign horizontal align.
-     * @param verticalAlign vertical align.
-     */
-    public static void renderTextLineToBounds(long context, float x, float y, float w, float h, float fontSize,
-        String font, Vector4f textColor, String text, HorizontalAlign horizontalAlign, VerticalAlign verticalAlign) {
-        renderTextLineToBounds(context, x, y, w, h, fontSize, font, textColor, text, horizontalAlign, verticalAlign, true);
     }
 
 
@@ -325,24 +114,6 @@ public final class NvgRenderUtils {
         nvgTextAlign(context, hAlign | vAlign);
     }
 
-    public static void drawRectStroke(long context, Vector4fc rect, Vector4fc color, float borderRadius, float strokeWidth) {
-        drawRectStroke(context, rect.x(), rect.y(), rect.z(), rect.w(), color, borderRadius, strokeWidth);
-    }
-
-    public static void drawRectStroke(long context, Vector2fc position, Vector2fc size, Vector4fc color, float borderRadius, float strokeWidth) {
-        drawRectStroke(context, position.x(), position.y(), size.x(), size.y(), color, borderRadius, strokeWidth);
-    }
-
-    public static void drawRectStroke(long context, float x, float y, float w, float h, Vector4fc strokeColor, float borderRadius, float strokeWidth) {
-        NVGColor nvgColor = NvgColorUtil.rgba(strokeColor, NVGColor.calloc());
-        nvgBeginPath(context);
-        nvgStrokeWidth(context, strokeWidth);
-        nvgRoundedRect(context, x, y, w, h, borderRadius);
-        nvgStrokeColor(context, nvgColor);
-        nvgStroke(context);
-        nvgColor.free();
-    }
-
     public static void dropShadow(long context, float x, float y, float w, float h, float cornerRadius, Vector4f shadowColor) {
         NVGPaint shadowPaint = NVGPaint.calloc();
         NVGColor colorA = NVGColor.calloc();
@@ -403,7 +174,8 @@ public final class NvgRenderUtils {
         if (parent != null) {
             Vector2f p = parent.getAbsolutePosition();
             Vector2f s = parent.getSize();
-            nvgScissor(context, p.x, p.y, s.x, s.y);
+
+            createScissor(context, new Vector4f(p, s.x, s.y));
 
             while ((parent = parent.getParent()) != null) {
                 p = parent.getAbsolutePosition();

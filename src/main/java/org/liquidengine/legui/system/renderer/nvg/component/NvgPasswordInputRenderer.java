@@ -5,7 +5,6 @@ import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderBorde
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgColorUtil.rgba;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.alignTextInBox;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.calculateTextBoundsRect;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.drawRectangle;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.intersectScissor;
 import static org.lwjgl.nanovg.NanoVG.NVG_ROUND;
 import static org.lwjgl.nanovg.NanoVG.nnvgTextGlyphPositions;
@@ -274,7 +273,7 @@ public class NvgPasswordInputRenderer extends NvgComponentRenderer<PasswordInput
 
             // draw selection
             if (startSelectionIndex != endSelectionIndex) {
-                drawRectangle(context, highlightColor, startSelectionX - poffset, rect.y, endSelectionX - startSelectionX, rect.w);
+                NvgShapes.drawRect(context, new Vector4f(startSelectionX - poffset, rect.y, endSelectionX - startSelectionX, rect.w), highlightColor);
             }
         }
     }

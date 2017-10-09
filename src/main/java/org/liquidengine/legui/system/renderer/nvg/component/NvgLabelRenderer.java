@@ -1,7 +1,6 @@
 package org.liquidengine.legui.system.renderer.nvg.component;
 
 import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderBorder;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.renderTextStateLineToBounds;
 
 import org.joml.Vector2f;
 import org.joml.Vector4f;
@@ -11,6 +10,7 @@ import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.nvg.NvgComponentRenderer;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgShapes;
+import org.liquidengine.legui.system.renderer.nvg.util.NvgText;
 
 /**
  * Created by ShchAlexander on 11.02.2017.
@@ -29,7 +29,7 @@ public class NvgLabelRenderer extends NvgComponentRenderer<Label> {
 
             // draw text into box
             TextState textState = label.getTextState();
-            renderTextStateLineToBounds(nanovg, pos, size, textState, false);
+            NvgText.drawTextLineToRect(nanovg, textState, pos, size, false);
             renderBorder(label, context);
         });
     }

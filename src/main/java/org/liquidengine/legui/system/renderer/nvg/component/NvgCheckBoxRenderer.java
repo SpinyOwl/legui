@@ -3,7 +3,6 @@ package org.liquidengine.legui.system.renderer.nvg.component;
 import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderBorder;
 import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderIcon;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.drawInScissor;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.renderTextStateLineToBounds;
 
 import org.joml.Vector2f;
 import org.joml.Vector4f;
@@ -13,6 +12,7 @@ import org.liquidengine.legui.icon.Icon;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.nvg.NvgComponentRenderer;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgShapes;
+import org.liquidengine.legui.system.renderer.nvg.util.NvgText;
 
 /**
  * Created by ShchAlexander on 11.02.2017.
@@ -45,7 +45,7 @@ public class NvgCheckBoxRenderer extends NvgComponentRenderer<CheckBox> {
             float x = px + iconWidthForUse;
             float w = sw - iconWidthForUse - pad.z;
 
-            renderTextStateLineToBounds(nanovg, new Vector2f(x, y), new Vector2f(w, h), textState);
+            NvgText.drawTextLineToRect(nanovg, textState, new Vector2f(x, y), new Vector2f(w, h), true);
 
             renderIcon(icon, checkBox, context);
 

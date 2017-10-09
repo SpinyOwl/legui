@@ -2,7 +2,6 @@ package org.liquidengine.legui.system.renderer.nvg.component;
 
 import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderBorder;
 import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderIcon;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.renderTextStateLineToBounds;
 
 import org.joml.Vector2f;
 import org.joml.Vector4f;
@@ -13,6 +12,7 @@ import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.nvg.NvgComponentRenderer;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgShapes;
+import org.liquidengine.legui.system.renderer.nvg.util.NvgText;
 
 /**
  * Created by ShchAlexander on 11.02.2017.
@@ -40,7 +40,7 @@ public class NvgRadioButtonRenderer extends NvgComponentRenderer<RadioButton> {
             Vector2f textRectPos = new Vector2f(pos.x + iconWidthForUse, pos.y + pad.y);
             Vector2f textRectSize = new Vector2f(size.x - iconWidthForUse - pad.z, size.y - (pad.y + pad.w));
 
-            renderTextStateLineToBounds(nanovg, textRectPos, textRectSize, textState);
+            NvgText.drawTextLineToRect(nanovg, textState, textRectPos, textRectSize, true);
             renderIcon(icon, radioButton, context);
             renderBorder(radioButton, context);
         });

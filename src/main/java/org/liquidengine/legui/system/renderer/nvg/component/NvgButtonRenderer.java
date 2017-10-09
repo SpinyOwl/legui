@@ -3,7 +3,6 @@ package org.liquidengine.legui.system.renderer.nvg.component;
 import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderBorderWScissor;
 import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderIcon;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.drawInScissor;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.renderTextStateLineToBounds;
 import static org.lwjgl.nanovg.NanoVG.nvgIntersectScissor;
 import static org.lwjgl.nanovg.NanoVG.nvgRestore;
 import static org.lwjgl.nanovg.NanoVG.nvgSave;
@@ -12,11 +11,11 @@ import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.color.ColorUtil;
 import org.liquidengine.legui.component.Button;
-import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.icon.Icon;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.nvg.NvgComponentRenderer;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgShapes;
+import org.liquidengine.legui.system.renderer.nvg.util.NvgText;
 
 /**
  * Created by ShchAlexander on 11.02.2017.
@@ -33,11 +32,8 @@ public class NvgButtonRenderer extends NvgComponentRenderer<Button> {
             renderBackground(nanovg, button, pos, size, context);
 
             // Render text
-            {
-                TextState textState = button.getTextState();
-                nvgIntersectScissor(nanovg, pos.x, pos.y, size.x, size.y);
-                renderTextStateLineToBounds(nanovg, pos, size, textState);
-            }
+            nvgIntersectScissor(nanovg, pos.x, pos.y, size.x, size.y);
+            NvgText.drawTextLineToRect(nanovg, button.getTextState(), pos, size, true);
 
         });
         renderBorderWScissor(button, context, nanovg);

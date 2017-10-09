@@ -3,19 +3,9 @@ package org.liquidengine.legui.system.renderer.nvg.component;
 import static org.liquidengine.legui.color.ColorUtil.oppositeBlackOrWhite;
 import static org.liquidengine.legui.component.optional.Orientation.VERTICAL;
 import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderBorder;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.alignTextInBox;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.createBounds;
 import static org.liquidengine.legui.util.TextUtil.cpToStr;
-import static org.lwjgl.nanovg.NanoVG.nnvgText;
-import static org.lwjgl.nanovg.NanoVG.nnvgTextBreakLines;
-import static org.lwjgl.nanovg.NanoVG.nvgBeginPath;
-import static org.lwjgl.nanovg.NanoVG.nvgFillColor;
-import static org.lwjgl.nanovg.NanoVG.nvgFontFace;
-import static org.lwjgl.nanovg.NanoVG.nvgFontSize;
 import static org.lwjgl.nanovg.NanoVG.nvgSave;
-import static org.lwjgl.system.MemoryUtil.memAddress;
 
-import java.nio.ByteBuffer;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.ScrollBar;
@@ -24,13 +14,9 @@ import org.liquidengine.legui.component.optional.align.VerticalAlign;
 import org.liquidengine.legui.font.FontRegistry;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.nvg.NvgComponentRenderer;
-import org.liquidengine.legui.system.renderer.nvg.util.NvgColorUtil;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgShapes;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgText;
-import org.lwjgl.nanovg.NVGColor;
-import org.lwjgl.nanovg.NVGTextRow;
-import org.lwjgl.system.MemoryUtil;
 
 /**
  * Created by ShchAlexander on 12.02.2017.
@@ -100,20 +86,21 @@ public class NvgScrollBarRenderer extends NvgComponentRenderer<ScrollBar> {
         boolean arrowsEnabled = scrollBar.isArrowsEnabled();
         if (arrowsEnabled) {
             Vector4f arrowColor = scrollBar.getArrowColor();
-            String first, second;
+            String firstArrowIcon;
+            String secondArrowIcon;
             Vector2f arrowBgSize = new Vector2f();
             Vector2f arrow2pos = new Vector2f();
             float arrowSize = scrollBar.getArrowSize();
             float cornerRadius = scrollBar.getCornerRadius();
             boolean vertical = VERTICAL.equals(scrollBar.getOrientation());
             if (vertical) {
-                first = T;
-                second = B;
+                firstArrowIcon = T;
+                secondArrowIcon = B;
                 arrowBgSize.set(size.x, arrowSize);
                 arrow2pos.set(pos.x, pos.y + size.y - arrowSize);
             } else {
-                first = L;
-                second = R;
+                firstArrowIcon = L;
+                secondArrowIcon = R;
                 arrowBgSize.set(arrowSize, size.y);
                 arrow2pos.set(pos.x + size.x - arrowSize, pos.y);
             }
@@ -136,9 +123,9 @@ public class NvgScrollBarRenderer extends NvgComponentRenderer<ScrollBar> {
                 Vector4f secondArrowBounds = new Vector4f(arrow2pos.x, arrow2pos.y, arrowBgSize.x, arrowBgSize.y);
 
                 NvgText.drawTextLineToRect(nanovg, firstArrowBounds, false, HorizontalAlign.CENTER, VerticalAlign.MIDDLE, fontSize,
-                    FontRegistry.MATERIAL_ICONS_REGULAR, first, color);
+                    FontRegistry.MATERIAL_ICONS_REGULAR, firstArrowIcon, color);
                 NvgText.drawTextLineToRect(nanovg, secondArrowBounds, false, HorizontalAlign.CENTER, VerticalAlign.MIDDLE, fontSize,
-                    FontRegistry.MATERIAL_ICONS_REGULAR, second, color);
+                    FontRegistry.MATERIAL_ICONS_REGULAR, secondArrowIcon, color);
             }
         }
     }
