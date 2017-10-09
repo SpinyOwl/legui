@@ -64,7 +64,6 @@ public class NvgTextAreaRenderer extends NvgComponentRenderer<TextArea> {
             intersectScissor(nanovg, new Vector4f(intersectRect).sub(1, 1, -2, -2));
             renderText(context, nanovg, component, size, intersectRect, bc);
         });
-        renderBorderWScissor(component, context, nanovg);
     }
 
     private void renderText(Context leguiContext, long context, TextArea gui, Vector2f size, Vector4f rect, Vector4f bc) {

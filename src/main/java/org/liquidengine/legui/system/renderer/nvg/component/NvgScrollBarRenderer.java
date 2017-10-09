@@ -67,10 +67,6 @@ public class NvgScrollBarRenderer extends NvgComponentRenderer<ScrollBar> {
 
             // draw scroll button
             drawScrollButton(nanovg, pos, size, scrollBar, diff, offset, vertical);
-
-            // draw border
-            renderBorder(scrollBar, context);
-
         });
     }
 

@@ -48,8 +48,6 @@ public class NvgCheckBoxRenderer extends NvgComponentRenderer<CheckBox> {
             NvgText.drawTextLineToRect(nanovg, textState, new Vector2f(x, y), new Vector2f(w, h), true);
 
             renderIcon(icon, checkBox, context);
-
-            renderBorder(checkBox, context);
         });
     }
 }

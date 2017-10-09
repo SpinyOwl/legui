@@ -42,8 +42,6 @@ public class NvgRadioButtonRenderer extends NvgComponentRenderer<RadioButton> {
 
             NvgText.drawTextLineToRect(nanovg, textState, textRectPos, textRectSize, true);
             renderIcon(icon, radioButton, context);
-            renderBorder(radioButton, context);
         });
-
     }
 }

@@ -77,7 +77,6 @@ public class NvgPasswordInputRenderer extends NvgComponentRenderer<PasswordInput
             intersectScissor(nanovg, new Vector4f(intersectRect).sub(1, 1, -2, -2));
             renderText(leguiContext, nanovg, passwordInput, size, intersectRect, bc);
         });
-        renderBorderWScissor(passwordInput, leguiContext, nanovg);
     }
 
     /**

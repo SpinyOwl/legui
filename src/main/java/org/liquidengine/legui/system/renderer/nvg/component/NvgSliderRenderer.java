@@ -87,8 +87,6 @@ public class NvgSliderRenderer<T extends Slider> extends NvgComponentRenderer<T>
             Vector2f sliderPos = new Vector2f(px - sliderSize / 2f, py - sliderSize / 2f);
             NvgShapes.drawRect(nanovg, sliderPos, sliderButtonSize, sliderColor, cornerRadius);
             NvgShapes.drawRectStroke(nanovg, sliderPos, sliderButtonSize, sliderInactiveColor, 1, cornerRadius);
-
-            renderBorder(slider, context);
         });
     }
 

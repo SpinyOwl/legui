@@ -162,6 +162,8 @@ public abstract class Component<T extends Component> implements Serializable {
      * @param parent component container.
      */
     public void setParent(Component parent) {
+        if(parent == this) return;
+
         if (this.parent != null) {
             this.parent.remove(this);
         }

@@ -85,8 +85,6 @@ public class NvgTextInputRenderer extends NvgComponentRenderer<TextInput> {
             intersectScissor(nanovg, new Vector4f(intersectRect).sub(1, 1, -2, -2));
             renderText(context, nanovg, textInput, size, intersectRect, bc);
         });
-
-        drawInScissor(nanovg, textInput, () -> renderBorder(textInput, context));
     }
 
     private void renderText(Context leguiContext, long context, TextInput gui, Vector2f size, Vector4f rect, Vector4f bc) {

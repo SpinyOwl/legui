@@ -26,8 +26,6 @@ public class NvgImageViewRenderer extends NvgComponentRenderer<ImageView> {
             p.put(C_RADIUS, imageView.getCornerRadius());
 
             renderImage(imageView.getImage(), position, size, p, context);
-
-            renderBorder(imageView, context);
         });
     }
 }

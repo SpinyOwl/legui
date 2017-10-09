@@ -110,6 +110,5 @@ public class NvgTooltipRenderer extends NvgComponentRenderer<Tooltip> {
                 memFree(byteText);
             }
         });
-        renderBorderWScissor(component, context, nanovg);
     }
 }

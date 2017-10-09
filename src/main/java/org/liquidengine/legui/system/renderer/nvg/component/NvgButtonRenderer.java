@@ -36,7 +36,6 @@ public class NvgButtonRenderer extends NvgComponentRenderer<Button> {
             NvgText.drawTextLineToRect(nanovg, button.getTextState(), pos, size, true);
 
         });
-        renderBorderWScissor(button, context, nanovg);
     }
 
     private void renderBackground(long nvg, Button button, Vector2f pos, Vector2f size, Context context) {

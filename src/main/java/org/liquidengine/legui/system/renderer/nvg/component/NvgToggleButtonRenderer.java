@@ -27,7 +27,6 @@ public class NvgToggleButtonRenderer extends NvgComponentRenderer<ToggleButton> 
 
             // render background
             renderBackground(nanovg, toggleButton, pos, size, context);
-            renderBorder(toggleButton, context);
         });
     }
 
