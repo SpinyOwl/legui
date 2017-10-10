@@ -1,7 +1,11 @@
 package org.liquidengine.legui.system.renderer.nvg.component;
 
+import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderBorderWScissor;
+
+import java.util.List;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.system.context.Context;
+import org.liquidengine.legui.system.renderer.RendererProvider;
 import org.liquidengine.legui.system.renderer.nvg.NvgComponentRenderer;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgShapes;
@@ -9,12 +13,35 @@ import org.liquidengine.legui.system.renderer.nvg.util.NvgShapes;
 /**
  * Created by Aliaksandr_Shcherbin on 1/26/2017.
  */
-public class NvgDefaultComponentRenderer extends NvgComponentRenderer {
+public class NvgDefaultComponentRenderer<C extends Component> extends NvgComponentRenderer<C> {
 
+    /**
+     * Used to render component.
+     *
+     * @param component component to render.
+     * @param context legui context.
+     * @param nanovg nanovg context pointer.
+     */
     @Override
-    protected void renderComponent(Component component, Context context, long nanovg) {
+    protected void renderComponent(C component, Context context, long nanovg) {
+        renderSelf(component, context, nanovg);
+        renderChildComponents(component, context, nanovg);
+        renderBorder(component, context, nanovg);
+    }
+
+    protected void renderSelf(C component, Context context, long nanovg) {
         NvgRenderUtils.drawInScissor(nanovg, component, () ->
             NvgShapes.drawRect(nanovg, component.getAbsolutePosition(), component.getSize(), component.getBackgroundColor(), component.getCornerRadius())
         );
+    }
+
+    protected void renderChildComponents(C component, Context context, long nanovg) {
+        for (Component child : (List<Component>) component.getChilds()) {
+            RendererProvider.getInstance().getComponentRenderer(child.getClass()).render(child, context);
+        }
+    }
+
+    protected void renderBorder(C component, Context context, long nanovg) {
+        renderBorderWScissor(component, context, nanovg);
     }
 }

@@ -1,7 +1,6 @@
 package org.liquidengine.legui.system.renderer.nvg.component;
 
 import static org.liquidengine.legui.color.ColorUtil.oppositeBlackOrWhite;
-import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderBorderWScissor;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgColorUtil.rgba;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.alignTextInBox;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.calculateTextBoundsRect;
@@ -24,7 +23,6 @@ import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
 import org.liquidengine.legui.input.Mouse;
 import org.liquidengine.legui.system.context.Context;
-import org.liquidengine.legui.system.renderer.nvg.NvgComponentRenderer;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgShapes;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgText;
@@ -35,7 +33,7 @@ import org.lwjgl.nanovg.NVGGlyphPosition;
 /**
  * NanoVG Text area renderer.
  */
-public class NvgTextAreaRenderer extends NvgComponentRenderer<TextArea> {
+public class NvgTextAreaRenderer extends NvgDefaultComponentRenderer<TextArea> {
 
     private static final String PRATIO = "pratio";
     private static final String POFFSETX = "poffsetx";
@@ -48,7 +46,7 @@ public class NvgTextAreaRenderer extends NvgComponentRenderer<TextArea> {
 
 
     @Override
-    public void renderComponent(TextArea component, Context context, long nanovg) {
+    public void renderSelf(TextArea component, Context context, long nanovg) {
         NvgRenderUtils.drawInScissor(nanovg, component, () -> {
             Vector2f pos = component.getAbsolutePosition();
             Vector2f size = component.getSize();
