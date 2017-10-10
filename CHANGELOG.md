@@ -1,5 +1,39 @@
 ## [Unreleased]
 
+## [1.2.6]
+### Changed
+- Added contribution guide.
+- Added license.
+- Updated readme.
+### Fixde
+- Added missed padding in text rendering utility.
+
+## [1.2.5]
+### Changed
+- Added javadoc for several classes.
+
+### Fixed
+- Removed unused imports.
+- Performance fix on rendering __'out of bound'__ components.
+- Refactoring.
+
+## [1.2.4]
+### Changed
+- Fixed all memory leaks.
+- fixed tests.
+### Fixed
+- Added javadocs for SystemEventProcessor class.
+- Added javadocs for Context class.
+
+## [1.2.3]
+### Changes
+- Extracted White Theme inner classes to separate classes.
+
+## [1.2.2]
+### Changes
+- Added clipboard class.
+- Removed window pointer usage in event listeners for text components. 
+
 ## [1.2.1]
 ### Changes
 - Added several component events and listeners for them:
@@ -16,9 +50,9 @@ components (to skip rendering of hidden components).
 
 ## [1.2.0]
 ### Changes
-- Removed event processor from context
-- Event processors moved to another package
-- Some changes in nvg renderer structure
+- Removed event processor from context.
+- Event processors moved to another package.
+- Some changes in nvg renderer structure.
 - Removed renderer provider from constructor.
   
 ## [1.1.10]
