@@ -49,7 +49,7 @@ LEGUI requires Java 8+ cause it uses lambda expressions.
 ## Dependencies
 For using this library you should add these urls as repositories:  
 For **[LWJGL](https://github.com/LWJGL/lwjgl3)** and **[JOML](https://github.com/JOML-CI/JOML)** dependencies  
-`https://oss.sonatype.org/content/repositories/snapshots/`
+`https://oss.sonatype.org/content/repositories/snapshots/`  
 Also you can add your own versions of these libraries using [LWJGL form](https://www.lwjgl.org/download).
 
 For **LEGUI** and **[CBCHAIN](https://github.com/LiquidEngine/cbchain)** dependency  
