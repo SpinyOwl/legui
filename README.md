@@ -41,7 +41,7 @@ Renderering implementation made on top of NanoVG.
 </table>
 
 ## Contribution to LEGUI
-See the [contribution guide](CONTRIBUTION.md) for more information.
+See the [contribution guide](CONTRIBUTING.md) for more information.
 
 ## System requirements
 LEGUI requires Java 8+ cause it uses lambda expressions.
