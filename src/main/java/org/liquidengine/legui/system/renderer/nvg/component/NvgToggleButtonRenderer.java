@@ -1,6 +1,5 @@
 package org.liquidengine.legui.system.renderer.nvg.component;
 
-import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderBorder;
 import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderIcon;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.createScissorByParent;
 
@@ -10,17 +9,16 @@ import org.liquidengine.legui.color.ColorUtil;
 import org.liquidengine.legui.component.ToggleButton;
 import org.liquidengine.legui.icon.Icon;
 import org.liquidengine.legui.system.context.Context;
-import org.liquidengine.legui.system.renderer.nvg.NvgComponentRenderer;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgShapes;
 
 /**
  * Created by ShchAlexander on 11.02.2017.
  */
-public class NvgToggleButtonRenderer extends NvgComponentRenderer<ToggleButton> {
+public class NvgToggleButtonRenderer extends NvgDefaultComponentRenderer<ToggleButton> {
 
     @Override
-    protected void renderComponent(ToggleButton toggleButton, Context context, long nanovg) {
+    protected void renderSelf(ToggleButton toggleButton, Context context, long nanovg) {
         NvgRenderUtils.drawInScissor(nanovg, toggleButton, () -> {
             Vector2f pos = toggleButton.getAbsolutePosition();
             Vector2f size = toggleButton.getSize();

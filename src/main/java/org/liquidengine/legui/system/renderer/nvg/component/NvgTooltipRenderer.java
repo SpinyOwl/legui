@@ -1,6 +1,5 @@
 package org.liquidengine.legui.system.renderer.nvg.component;
 
-import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderBorderWScissor;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgColorUtil.rgba;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.alignTextInBox;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.createBounds;
@@ -25,7 +24,6 @@ import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
 import org.liquidengine.legui.system.context.Context;
-import org.liquidengine.legui.system.renderer.nvg.NvgComponentRenderer;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgShapes;
 import org.lwjgl.nanovg.NVGColor;
@@ -34,11 +32,11 @@ import org.lwjgl.nanovg.NVGTextRow;
 /**
  * Created by ShchAlexander on 13.02.2017.
  */
-public class NvgTooltipRenderer extends NvgComponentRenderer<Tooltip> {
+public class NvgTooltipRenderer extends NvgDefaultComponentRenderer<Tooltip> {
 
 
     @Override
-    public void renderComponent(Tooltip component, Context context, long nanovg) {
+    public void renderSelf(Tooltip component, Context context, long nanovg) {
         NvgRenderUtils.drawInScissor(nanovg, component, () -> {
             TextState textState = component.getTextState();
             Vector2f pos = component.getAbsolutePosition();

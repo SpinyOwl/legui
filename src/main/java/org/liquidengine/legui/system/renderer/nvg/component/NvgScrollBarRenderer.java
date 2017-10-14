@@ -2,7 +2,6 @@ package org.liquidengine.legui.system.renderer.nvg.component;
 
 import static org.liquidengine.legui.color.ColorUtil.oppositeBlackOrWhite;
 import static org.liquidengine.legui.component.optional.Orientation.VERTICAL;
-import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderBorder;
 import static org.liquidengine.legui.util.TextUtil.cpToStr;
 import static org.lwjgl.nanovg.NanoVG.nvgSave;
 
@@ -13,7 +12,6 @@ import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
 import org.liquidengine.legui.font.FontRegistry;
 import org.liquidengine.legui.system.context.Context;
-import org.liquidengine.legui.system.renderer.nvg.NvgComponentRenderer;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgShapes;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgText;
@@ -21,7 +19,7 @@ import org.liquidengine.legui.system.renderer.nvg.util.NvgText;
 /**
  * Created by ShchAlexander on 12.02.2017.
  */
-public class NvgScrollBarRenderer extends NvgComponentRenderer<ScrollBar> {
+public class NvgScrollBarRenderer extends NvgDefaultComponentRenderer<ScrollBar> {
 
     // TODO: It would be nice to add Icon here to render arrows.
     private static final String B = cpToStr(0xE5CF);
@@ -30,7 +28,7 @@ public class NvgScrollBarRenderer extends NvgComponentRenderer<ScrollBar> {
     private static final String T = cpToStr(0xE5CE);
 
     @Override
-    public void renderComponent(ScrollBar scrollBar, Context context, long nanovg) {
+    public void renderSelf(ScrollBar scrollBar, Context context, long nanovg) {
         NvgRenderUtils.drawInScissor(nanovg, scrollBar, () -> {
             nvgSave(nanovg);
             Vector2f pos = scrollBar.getAbsolutePosition();

@@ -26,16 +26,25 @@ _**(Work in progress)**_
 ___
 # LEGUI - [What is it?](https://liquidengine.github.io/legui/)  
 GUI implementation for using with LWJGL3.
-Renderer made on top of NanoVG.
+Renderering implementation made on top of NanoVG.
+<table>
+  <tr>
+    <td><img src="https://liquidengine.github.io/legui/images/demo/0.bmp" /></td>
+    <td><img src="https://liquidengine.github.io/legui/images/demo/55.bmp" /></td>
+    <td><img src="https://liquidengine.github.io/legui/images/demo/209.bmp" /></td>
+  </tr>
+  <tr>
+    <td><img src="https://liquidengine.github.io/legui/images/demo/646.bmp" /></td>
+    <td><img src="https://liquidengine.github.io/legui/images/demo/813.bmp" /></td>
+    <td></td>
+  </tr>
+</table>
 
-# Contribution
-1. To contribute you can add your proposals in **issues** or fork and create pull request.
-2. I can add you as developer to this project and you can implement some features. But you should follow previous rule.
-3. You can talk to me in Discord channel.
+## Contribution to LEGUI
+See the [contribution guide](CONTRIBUTION.md) for more information.
 
-<a href="https://discord.gg/6wfqXpJ" target="_blank">
-  <img src="https://discordapp.com/assets/fc0b01fe10a0b8c602fb0106d8189d9b.png" height="100"/>
-</a>
+## System requirements
+LEGUI requires Java 8+ cause it uses lambda expressions.
 
 ## Dependencies
 For using this library you should add these urls as repositories:  
@@ -76,7 +85,7 @@ compile group: 'org.liquidengine', name: 'legui', version: legui_version, changi
   Current `SNAPSHOT` version you can find in [SNAPSHOT version.properties](https://github.com/LiquidEngine/legui/blob/snapshots/version.properties)  
   Current `RELEASE` version you can find in [RELEASE version.properties](https://github.com/LiquidEngine/legui/blob/releases/version.properties)  
   
-### Examples:
+## Examples:
 All examples located here: 
 [LEGUI.DEMO](https://github.com/LiquidEngine/legui.demo)
 

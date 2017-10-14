@@ -17,10 +17,10 @@ import org.liquidengine.legui.system.renderer.nvg.util.NvgText;
 /**
  * Created by ShchAlexander on 11.02.2017.
  */
-public class NvgCheckBoxRenderer extends NvgComponentRenderer<CheckBox> {
+public class NvgCheckBoxRenderer extends NvgDefaultComponentRenderer<CheckBox> {
 
     @Override
-    public void renderComponent(CheckBox checkBox, Context context, long nanovg) {
+    public void renderSelf(CheckBox checkBox, Context context, long nanovg) {
         drawInScissor(nanovg, checkBox, () -> {
             Vector2f pos = checkBox.getAbsolutePosition();
             Vector2f size = checkBox.getSize();
