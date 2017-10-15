@@ -2,7 +2,12 @@ group 'org.liquidengine'
 
 Properties verProp = new Properties(); verProp.load(new FileInputStream("$project.projectDir/version.properties"))
 def projectVersion = verProp["liquidengine.legui.version"]
-project.version = projectVersion
+def versionExt = System.getProperty("VEXT") ?: System.getenv("VEXT") ?: ""
+versionExt = versionExt == "" ? "" : "-" + versionExt
+project.version = projectVersion + versionExt
+
+println("VERSION : " + project.version)
+
 
 configurations.all {
     resolutionStrategy.cacheChangingModulesFor(0, 'seconds')
@@ -90,63 +95,25 @@ dependencies {
     deployerJar 'ar.com.synergian:wagon-git:0.2.5'
 }
 
-def build_type = System.getProperty("build_type") ?: (System.getenv("build_type") ?: "")
-if (build_type == "SNAPSHOT") {
-    project.version += "-SNAPSHOT"
-}
-
-task publishSnapshotProps {
-    doLast {
-        build_type = 'SNAPSHOT'
-        project.version = projectVersion + "-SNAPSHOT"
-    }
-}
-
-task publishReleaseProps {
-    doLast {
-        build_type = 'RELEASE'
-        project.version = projectVersion
-    }
-}
-
 task publishArchives {
     doLast {
-        def publishUrl
-        def buildType
+        def publishUrl = System.getProperty("publishUrl") ?: System.getenv("publishUrl") ?: publishUrl
         def publishUsername = System.getProperty("publishUsername") ?: System.getenv("publishUsername") ?: publishUsername
         def publishPassword = System.getProperty("publishPassword") ?: System.getenv("publishPassword") ?: publishPassword
-        def releasesPublishUrl = System.getProperty("releasesPublishUrl") ?: System.getenv("releasesPublishUrl") ?: releasesPublishUrl
-        def snapshotsPublishUrl = System.getProperty("snapshotsPublishUrl") ?: System.getenv("snapshotsPublishUrl") ?: snapshotsPublishUrl
-        println("-------------------------------------")
-        println("PUBLISH ARCHIVES TASK " + build_type)
-        println("-------------------------------------")
-        if (build_type != "") {
-            boolean b = false; buildType = "ERROR"
-            if (build_type == "RELEASE") {
-                publishUrl = releasesPublishUrl; buildType = "RELEASE"; b = true
-            }
-            if (build_type == "SNAPSHOT") {
-                publishUrl = snapshotsPublishUrl; buildType = "SNAPSHOT"; b = true
-            }
-            println("build_type : $buildType; PUBLISHED TO $publishUrl")
-            if (b) {
-                uploadArchives {
-                    repositories.mavenDeployer {
-                        configuration = configurations.deployerJar
-                        repository(url: publishUrl) {
-                            authentication(userName: publishUsername, password: publishPassword)
-                        }
-                    }
+
+        println("PUBLISHING TO $publishUrl")
+        uploadArchives {
+            repositories.mavenDeployer {
+                configuration = configurations.deployerJar
+                repository(url: publishUrl) {
+                    authentication(userName: publishUsername, password: publishPassword)
                 }
-                uploadArchives.execute()
             }
-        } else {
-            println("NOT UPLOADED")
         }
+        uploadArchives.execute()
+        println("PUBLISHED TO  $publishUrl")
     }
 }
-publishArchives.mustRunAfter publishSnapshotProps
-publishArchives.mustRunAfter publishReleaseProps
 
 task sourcesJar(type: Jar, dependsOn: classes) {
     classifier = 'sources'
@@ -168,4 +135,3 @@ artifacts {
     archives sourcesJar
     archives javadocJar
 }
-
