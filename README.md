@@ -34,7 +34,6 @@ Renderering implementation made on top of NanoVG.
     <td><img src="https://liquidengine.github.io/legui/images/demo/209.bmp" height="100px"/></td>
     <td><img src="https://liquidengine.github.io/legui/images/demo/646.bmp" height="100px"/></td>
     <td><img src="https://liquidengine.github.io/legui/images/demo/813.bmp" height="100px"/></td>
-    <td></td>
   </tr>
 </table>
 
