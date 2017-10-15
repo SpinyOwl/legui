@@ -2,7 +2,12 @@ group 'org.liquidengine'
 
 Properties verProp = new Properties(); verProp.load(new FileInputStream("$project.projectDir/version.properties"))
 def projectVersion = verProp["liquidengine.legui.version"]
-project.version = projectVersion
+def versionExt = System.getProperty("VEXT") ?: System.getenv("VEXT") ?: ""
+versionExt = versionExt == "" ? "" : "-" + versionExt
+project.version = projectVersion + versionExt
+
+println("VERSION : " + project.version)
+
 
 configurations.all {
     resolutionStrategy.cacheChangingModulesFor(0, 'seconds')
@@ -88,11 +93,6 @@ repositories {
 }
 dependencies {
     deployerJar 'ar.com.synergian:wagon-git:0.2.5'
-}
-
-def build_type = System.getProperty("build_type") ?: (System.getenv("build_type") ?: "")
-if (build_type == "SNAPSHOT") {
-    project.version += "-SNAPSHOT"
 }
 
 task publishArchives {
