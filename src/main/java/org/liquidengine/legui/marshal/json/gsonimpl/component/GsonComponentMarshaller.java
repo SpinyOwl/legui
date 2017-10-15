@@ -45,11 +45,6 @@ public class GsonComponentMarshaller<T extends Component> extends AbstractGsonMa
      */
     @Override
     protected void marshal(T object, JsonObject json, GsonMarshalContext context) {
-        List<Component> components = object.getChilds();
-        JsonArray comps = new JsonArray();
-        for (Component component : components) {
-            comps.add(GsonMarshalUtil.marshalToJson(component, context));
-        }
         fill(json)
             .add(POSITION, create()
                 .add(X, object.getPosition().x)
@@ -67,8 +62,16 @@ public class GsonComponentMarshaller<T extends Component> extends AbstractGsonMa
             .add(BORDER, GsonMarshalUtil.marshalToJson(object.getBorder(), context))
             .add(INTERSECTOR, GsonMarshalUtil.marshalToJson(object.getIntersector()))
             .add(TOOLTIP, GsonMarshalUtil.marshalToJson(object.getTooltip(), context))
-            .add(COMPONENTS, comps)
         ;
+
+        if (!object.isEmpty()) {
+            List<Component> components = object.getChilds();
+            JsonArray comps = new JsonArray();
+            for (Component component : components) {
+                comps.add(GsonMarshalUtil.marshalToJson(component, context));
+            }
+            json.add(COMPONENTS, comps);
+        }
     }
 
     /**

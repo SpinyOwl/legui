@@ -38,6 +38,9 @@ public class GsonScrollablePanelMarshaller<T extends ScrollablePanel> extends Gs
         JsonObject hScrollBar = GsonMarshalUtil.marshalToJson(horizontalScrollBar, context);
         JsonObject cont = GsonMarshalUtil.marshalToJson(container, context);
 
+        // remove base container
+        json.remove(CONTAINER);
+
         GsonUtil.fill(json)
             .add(HORIZONTAL_SCROLL_BAR, hScrollBar)
             .add(VERTICAL_SCROLL_BAR, vScrollBar)

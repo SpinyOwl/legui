@@ -21,8 +21,7 @@
     "cornerRadius": 2.0,
     "intersector": {
       "@class": "org.liquidengine.legui.intersection.RectangleIntersector"
-    },
-    "components": []
+    }
   },
   "eventPassable": true,
   "eventReceivable": true
