@@ -29,13 +29,11 @@ GUI implementation for using with LWJGL3.
 Renderering implementation made on top of NanoVG.
 <table>
   <tr>
-    <td><img src="https://liquidengine.github.io/legui/images/demo/0.bmp" /></td>
-    <td><img src="https://liquidengine.github.io/legui/images/demo/55.bmp" /></td>
-    <td><img src="https://liquidengine.github.io/legui/images/demo/209.bmp" /></td>
-  </tr>
-  <tr>
-    <td><img src="https://liquidengine.github.io/legui/images/demo/646.bmp" /></td>
-    <td><img src="https://liquidengine.github.io/legui/images/demo/813.bmp" /></td>
+    <td><img src="https://liquidengine.github.io/legui/images/demo/0.bmp" height="100px"/></td>
+    <td><img src="https://liquidengine.github.io/legui/images/demo/55.bmp" height="100px"/></td>
+    <td><img src="https://liquidengine.github.io/legui/images/demo/209.bmp" height="100px"/></td>
+    <td><img src="https://liquidengine.github.io/legui/images/demo/646.bmp" height="100px"/></td>
+    <td><img src="https://liquidengine.github.io/legui/images/demo/813.bmp" height="100px"/></td>
     <td></td>
   </tr>
 </table>
@@ -65,7 +63,9 @@ And add this dependency to your build script:
     <artifactId>legui</artifactId>
     <version>${legui_version}-SNAPSHOT</version>
 </dependency>
-<!-- OR -->
+ ```
+**OR** 
+ ```xml
 <!-- LEGUI - RELEASE - https://github.com/LiquidEngine/legui -->
 <dependency>
     <groupId>org.liquidengine</groupId>
