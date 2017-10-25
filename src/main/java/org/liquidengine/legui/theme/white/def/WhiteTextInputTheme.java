@@ -9,7 +9,7 @@ import org.liquidengine.legui.component.optional.align.HorizontalAlign;
  *
  * @param <T> {@link TextInput} subclasses.
  */
-public class WhiteTextInputTheme<T extends TextInput> extends WhiteControllerTheme<T> {
+public class WhiteTextInputTheme<T extends TextInput> extends WhiteComponentTheme<T> {
 
     @Override
     public void apply(T component) {

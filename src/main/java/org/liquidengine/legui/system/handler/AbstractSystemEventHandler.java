@@ -53,7 +53,7 @@ public abstract class AbstractSystemEventHandler<E extends SystemEvent> implemen
     }
 
     /**
-     * This method used to handle some {@link SystemEvent} and produce (or not) {@link Event} instances (which are UI events)
+     * This method used to handle some {@link SystemEvent} and produce (or not) {@link Event} instances (which are UI events).
      *
      * @param event event to be processed.
      * @param layer target event layer.

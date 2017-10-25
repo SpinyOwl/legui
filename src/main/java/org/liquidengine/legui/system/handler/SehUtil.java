@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import org.joml.Vector2f;
 import org.liquidengine.legui.component.Component;
-import org.liquidengine.legui.component.Container;
 import org.liquidengine.legui.component.Layer;
 import org.liquidengine.legui.component.LayerContainer;
 
@@ -45,11 +44,9 @@ public final class SehUtil {
         Component newtarget = target;
         if (component.isVisible() /*&& component.isEnabled()*/ && component.intersects(vector)) {
             newtarget = component;
-            if (component instanceof Container) {
-                List<Component> childs = ((Container) component).getChilds();
-                for (Component child : childs) {
-                    newtarget = recursiveTargetComponentSearch(vector, child, newtarget);
-                }
+            List<Component> childs = component.getChilds();
+            for (Component child : childs) {
+                newtarget = recursiveTargetComponentSearch(vector, child, newtarget);
             }
         }
         return newtarget;
@@ -81,11 +78,9 @@ public final class SehUtil {
     public static void recursiveTargetComponentListSearch(Vector2f vector, Component component, List<Component> targetList) {
         if (component.isVisible() /*&& component.isEnabled()*/ && component.intersects(vector)) {
             targetList.add(component);
-            if (component instanceof Container) {
-                List<Component> childs = ((Container) component).getChilds();
-                for (Component child : childs) {
-                    recursiveTargetComponentListSearch(vector, child, targetList);
-                }
+            List<Component> childs = component.getChilds();
+            for (Component child : childs) {
+                recursiveTargetComponentListSearch(vector, child, targetList);
             }
         }
     }

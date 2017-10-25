@@ -24,7 +24,7 @@ import org.liquidengine.legui.theme.Themes;
 /**
  * Implementation of slider controller.
  */
-public class Slider extends Controller {
+public class Slider extends Component {
 
     /**
      * Maximum value of slider.

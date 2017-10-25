@@ -8,7 +8,7 @@ import org.liquidengine.legui.component.ProgressBar;
  *
  * @param <T> {@link ProgressBar} subclasses.
  */
-public class WhiteProgressBarTheme<T extends ProgressBar> extends WhiteControllerTheme<T> {
+public class WhiteProgressBarTheme<T extends ProgressBar> extends WhiteComponentTheme<T> {
 
     @Override
     public void apply(T component) {

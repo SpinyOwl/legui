@@ -5,7 +5,6 @@ import org.joml.Vector4f;
 import org.liquidengine.legui.border.Border;
 import org.liquidengine.legui.color.ColorConstants;
 import org.liquidengine.legui.component.Component;
-import org.liquidengine.legui.component.Controller;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.nvg.NvgBorderRenderer;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgShapes;
@@ -31,11 +30,8 @@ public class NvgDefaultBorderRenderer extends NvgBorderRenderer {
 
         NvgShapes.drawRectStroke(nanovg, new Vector4f(x, y, w, h), ColorConstants.black, 1);
 
-        if (component instanceof Controller) {
-            Controller controller = (Controller) component;
-            if (controller.isFocused()) {
-                NvgShapes.drawRectStroke(nanovg, new Vector4f(x - 1, y - 1, w + 2, h + 2), ColorConstants.red, 2);
-            }
+        if (component.isFocused()) {
+            NvgShapes.drawRectStroke(nanovg, new Vector4f(x - 1, y - 1, w + 2, h + 2), ColorConstants.red, 2);
         }
     }
 }

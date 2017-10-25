@@ -9,7 +9,7 @@ import org.liquidengine.legui.theme.Themes;
 /**
  * Layer container. By default it has {@link org.liquidengine.legui.listener.WindowSizeEventListener} which used to resize this container.
  */
-public class LayerContainer<T extends Component> extends Container<T> {
+public class LayerContainer<T extends Component> extends Component<T> {
 
     /**
      * Default constructor. Used to create component instance without any parameters. <p> Also if you want to make it easy to use with Json

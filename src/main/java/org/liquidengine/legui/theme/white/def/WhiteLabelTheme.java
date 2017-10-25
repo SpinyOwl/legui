@@ -9,7 +9,7 @@ import org.liquidengine.legui.component.optional.align.HorizontalAlign;
  *
  * @param <T> {@link Label} subclasses.
  */
-public class WhiteLabelTheme<T extends Label> extends WhiteControllerTheme<T> {
+public class WhiteLabelTheme<T extends Label> extends WhiteComponentTheme<T> {
 
     @Override
     public void apply(T component) {

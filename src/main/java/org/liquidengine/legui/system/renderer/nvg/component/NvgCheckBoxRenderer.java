@@ -1,6 +1,5 @@
 package org.liquidengine.legui.system.renderer.nvg.component;
 
-import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderBorder;
 import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderIcon;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.drawInScissor;
 
@@ -10,17 +9,16 @@ import org.liquidengine.legui.component.CheckBox;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.icon.Icon;
 import org.liquidengine.legui.system.context.Context;
-import org.liquidengine.legui.system.renderer.nvg.NvgComponentRenderer;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgShapes;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgText;
 
 /**
  * Created by ShchAlexander on 11.02.2017.
  */
-public class NvgCheckBoxRenderer extends NvgComponentRenderer<CheckBox> {
+public class NvgCheckBoxRenderer extends NvgDefaultComponentRenderer<CheckBox> {
 
     @Override
-    public void renderComponent(CheckBox checkBox, Context context, long nanovg) {
+    public void renderSelf(CheckBox checkBox, Context context, long nanovg) {
         drawInScissor(nanovg, checkBox, () -> {
             Vector2f pos = checkBox.getAbsolutePosition();
             Vector2f size = checkBox.getSize();
@@ -48,8 +46,6 @@ public class NvgCheckBoxRenderer extends NvgComponentRenderer<CheckBox> {
             NvgText.drawTextLineToRect(nanovg, textState, new Vector2f(x, y), new Vector2f(w, h), true);
 
             renderIcon(icon, checkBox, context);
-
-            renderBorder(checkBox, context);
         });
     }
 }

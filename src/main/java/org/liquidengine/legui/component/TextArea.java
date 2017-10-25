@@ -19,7 +19,7 @@ import org.liquidengine.legui.theme.Themes;
 /**
  * TextArea is multiline text component which allow to enter text.
  */
-public class TextArea extends Controller implements TextComponent {
+public class TextArea extends Component implements TextComponent {
 
     /**
      * Used to hold text state of text area.

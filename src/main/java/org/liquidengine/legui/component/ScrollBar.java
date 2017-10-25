@@ -22,7 +22,7 @@ import org.liquidengine.legui.theme.Themes;
 /**
  * An implementation of a scrollbar.
  */
-public class ScrollBar extends Controller {
+public class ScrollBar extends Component {
 
     // TODO: It would be nice to add Icon here to render arrows.
     public static final float MIN_SCROLL_SIZE = 1f;

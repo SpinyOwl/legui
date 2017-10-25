@@ -7,7 +7,7 @@ import org.liquidengine.legui.marshal.json.gsonimpl.GsonMarshalContext;
 /**
  * Marshaller for {@link Panel}.
  */
-public class GsonPanelMarshaller<T extends Panel> extends GsonContainerMarshaller<T> {
+public class GsonPanelMarshaller<T extends Panel> extends GsonComponentMarshaller<T> {
 
     /**
      * Reads data from object and puts it to json object.

@@ -1,6 +1,5 @@
 package org.liquidengine.legui.system.renderer.nvg.component;
 
-import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderBorder;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgColorUtil.rgba;
 import static org.lwjgl.nanovg.NanoVG.NVG_ROUND;
 import static org.lwjgl.nanovg.NanoVG.nvgBeginPath;
@@ -18,16 +17,20 @@ import org.joml.Vector4f;
 import org.liquidengine.legui.component.Slider;
 import org.liquidengine.legui.component.optional.Orientation;
 import org.liquidengine.legui.system.context.Context;
-import org.liquidengine.legui.system.renderer.nvg.NvgComponentRenderer;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgShapes;
 import org.lwjgl.nanovg.NVGColor;
 
 /**
  * Renderer for Slider components.
+ *
+ * @param <T> component type.
  */
-public class NvgSliderRenderer<T extends Slider> extends NvgComponentRenderer<T> {
+public class NvgSliderRenderer<T extends Slider> extends NvgDefaultComponentRenderer<T> {
 
+    /**
+     * Slider width.
+     */
     public static final float SLIDER_WIDTH = 4.0f;
 
     /**
@@ -38,7 +41,7 @@ public class NvgSliderRenderer<T extends Slider> extends NvgComponentRenderer<T>
      * @param nanovg nanoVG context.
      */
     @Override
-    public void renderComponent(T slider, Context context, long nanovg) {
+    public void renderSelf(T slider, Context context, long nanovg) {
         NvgRenderUtils.drawInScissor(nanovg, slider, () -> {
             nvgSave(nanovg);
             Vector2f pos = slider.getAbsolutePosition();
@@ -87,8 +90,6 @@ public class NvgSliderRenderer<T extends Slider> extends NvgComponentRenderer<T>
             Vector2f sliderPos = new Vector2f(px - sliderSize / 2f, py - sliderSize / 2f);
             NvgShapes.drawRect(nanovg, sliderPos, sliderButtonSize, sliderColor, cornerRadius);
             NvgShapes.drawRectStroke(nanovg, sliderPos, sliderButtonSize, sliderInactiveColor, 1, cornerRadius);
-
-            renderBorder(slider, context);
         });
     }
 

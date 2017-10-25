@@ -13,7 +13,7 @@ import org.liquidengine.legui.icon.CharIcon;
  *
  * @param <T> {@link CheckBox} subclasses.
  */
-public class DarkCheckBoxTheme<T extends CheckBox> extends DarkControllerTheme<T> {
+public class DarkCheckBoxTheme<T extends CheckBox> extends DarkComponentTheme<T> {
 
     /**
      * Used to apply theme only for component and not apply for child components.

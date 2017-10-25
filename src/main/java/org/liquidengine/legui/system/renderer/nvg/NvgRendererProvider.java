@@ -9,7 +9,6 @@ import org.liquidengine.legui.border.SimpleLineBorder;
 import org.liquidengine.legui.component.Button;
 import org.liquidengine.legui.component.CheckBox;
 import org.liquidengine.legui.component.Component;
-import org.liquidengine.legui.component.Container;
 import org.liquidengine.legui.component.ImageView;
 import org.liquidengine.legui.component.Label;
 import org.liquidengine.legui.component.PasswordInput;
@@ -35,7 +34,6 @@ import org.liquidengine.legui.system.renderer.nvg.border.NvgDefaultBorderRendere
 import org.liquidengine.legui.system.renderer.nvg.border.NvgSimpleLineBorderRenderer;
 import org.liquidengine.legui.system.renderer.nvg.component.NvgButtonRenderer;
 import org.liquidengine.legui.system.renderer.nvg.component.NvgCheckBoxRenderer;
-import org.liquidengine.legui.system.renderer.nvg.component.NvgContainerRenderer;
 import org.liquidengine.legui.system.renderer.nvg.component.NvgDefaultComponentRenderer;
 import org.liquidengine.legui.system.renderer.nvg.component.NvgImageViewRenderer;
 import org.liquidengine.legui.system.renderer.nvg.component.NvgLabelRenderer;
@@ -72,7 +70,6 @@ public class NvgRendererProvider extends RendererProvider {
     private NvgRendererProvider() {
 
         // register component renderers
-        componentRendererMap.put(Container.class, new NvgContainerRenderer());
         componentRendererMap.put(Button.class, new NvgButtonRenderer());
         componentRendererMap.put(ToggleButton.class, new NvgToggleButtonRenderer());
         componentRendererMap.put(ImageView.class, new NvgImageViewRenderer());

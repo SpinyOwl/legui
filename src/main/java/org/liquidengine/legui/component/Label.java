@@ -12,7 +12,7 @@ import org.liquidengine.legui.theme.Themes;
 /**
  * Class represent single line non-editable text component.
  */
-public class Label extends Controller implements TextComponent {
+public class Label extends Component implements TextComponent {
 
     /**
      * Used to hold text state of component.

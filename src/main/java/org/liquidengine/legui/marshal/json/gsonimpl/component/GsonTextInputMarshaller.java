@@ -15,7 +15,7 @@ import org.liquidengine.legui.marshal.json.gsonimpl.GsonUtil;
 /**
  * Marshaller for {@link TextInput}.
  */
-public class GsonTextInputMarshaller<T extends TextInput> extends GsonControllerMarshaller<T> {
+public class GsonTextInputMarshaller<T extends TextInput> extends GsonComponentMarshaller<T> {
 
     /**
      * Reads data from object and puts it to json object.

@@ -1,7 +1,6 @@
 package org.liquidengine.legui.system.renderer.nvg.component;
 
 import static org.liquidengine.legui.color.ColorUtil.oppositeBlackOrWhite;
-import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderBorderWScissor;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgColorUtil.rgba;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.alignTextInBox;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.calculateTextBoundsRect;
@@ -33,7 +32,6 @@ import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
 import org.liquidengine.legui.input.Mouse;
 import org.liquidengine.legui.system.context.Context;
-import org.liquidengine.legui.system.renderer.nvg.NvgComponentRenderer;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgShapes;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgText;
@@ -44,7 +42,7 @@ import org.lwjgl.nanovg.NVGGlyphPosition;
 /**
  * Password input renderer.
  */
-public class NvgPasswordInputRenderer extends NvgComponentRenderer<PasswordInput> {
+public class NvgPasswordInputRenderer extends NvgDefaultComponentRenderer<PasswordInput> {
 
     public static final String PRATIO = "pratio";
     public static final String PALIGN = "palign";
@@ -53,7 +51,7 @@ public class NvgPasswordInputRenderer extends NvgComponentRenderer<PasswordInput
     private final int maxGlyphCount = 1024;
 
     @Override
-    public void renderComponent(PasswordInput passwordInput, Context leguiContext, long nanovg) {
+    public void renderSelf(PasswordInput passwordInput, Context leguiContext, long nanovg) {
         NvgRenderUtils.drawInScissor(nanovg, passwordInput, () -> {
             Vector2f pos = passwordInput.getAbsolutePosition();
             Vector2f size = passwordInput.getSize();
@@ -77,7 +75,6 @@ public class NvgPasswordInputRenderer extends NvgComponentRenderer<PasswordInput
             intersectScissor(nanovg, new Vector4f(intersectRect).sub(1, 1, -2, -2));
             renderText(leguiContext, nanovg, passwordInput, size, intersectRect, bc);
         });
-        renderBorderWScissor(passwordInput, leguiContext, nanovg);
     }
 
     /**

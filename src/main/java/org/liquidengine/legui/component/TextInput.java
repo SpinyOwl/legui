@@ -22,7 +22,7 @@ import org.liquidengine.legui.theme.Themes;
 /**
  * Text input is a single line text component which can be used to enter text.
  */
-public class TextInput extends Controller implements TextComponent {
+public class TextInput extends Component implements TextComponent {
 
     /**
      * Used to store text state of text input.

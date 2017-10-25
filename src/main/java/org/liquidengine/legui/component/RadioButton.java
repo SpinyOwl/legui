@@ -26,7 +26,7 @@ import org.liquidengine.legui.theme.Themes;
  * radioButton2.setRadioButtonGroup(radioButtonGroup);
  * }</pre>
  */
-public class RadioButton extends Controller implements TextComponent {
+public class RadioButton extends Component implements TextComponent {
 
     /**
      * Used to represent text state of radio button.

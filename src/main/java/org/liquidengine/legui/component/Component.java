@@ -1,8 +1,16 @@
 package org.liquidengine.legui.component;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
+import java.util.stream.Stream;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -11,6 +19,8 @@ import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.border.Border;
 import org.liquidengine.legui.color.ColorConstants;
+import org.liquidengine.legui.component.misc.listener.component.TooltipCursorEnterListener;
+import org.liquidengine.legui.event.CursorEnterEvent;
 import org.liquidengine.legui.intersection.Intersector;
 import org.liquidengine.legui.intersection.RectangleIntersector;
 import org.liquidengine.legui.listener.ListenerMap;
@@ -18,9 +28,13 @@ import org.liquidengine.legui.theme.Themes;
 
 /**
  * Component is an object that have graphical representation in legui system.
+ *
+ * @param <T> child type restriction.
  */
-public abstract class Component implements Serializable {
-
+public abstract class Component<T extends Component> implements Serializable {
+    ////////////////////////////////
+    //// COMPONENT BASE DATA
+    ////////////////////////////////
     /**
      * Metadata map, place where renderers or event processors can store state of component.
      */
@@ -28,14 +42,15 @@ public abstract class Component implements Serializable {
     /**
      * Parent component container. For root components it could be null.
      */
-    private Container parent;
+    private Component parent;
     /**
      * Map for UI event listeners.
      */
     private ListenerMap listenerMap = new ListenerMap();
     /**
-     * Position of component relative top left corner in parent component. <p> If component is the root component then position calculated relative window top
-     * left corner.
+     * Position of component relative top left corner in parent component.
+     * <p>
+     * If component is the root component then position calculated relative window top left corner.
      */
     private Vector2f position = new Vector2f();
     /**
@@ -43,7 +58,11 @@ public abstract class Component implements Serializable {
      */
     private Vector2f size = new Vector2f();
     /**
-     * Component background color. <p>Represented by vector where (x=r,y=g,z=b,w=a). <p>For example white = {@code new Vector4f(1,1,1,1)}
+     * Component background color.
+     * <p>
+     * Represented by vector where (x=r,y=g,z=b,w=a).
+     * <p>
+     * For example white = {@code new Vector4f(1,1,1,1)}
      */
     private Vector4f backgroundColor = ColorConstants.white();
     /**
@@ -82,10 +101,24 @@ public abstract class Component implements Serializable {
      * Determines whether this component pressed or not (Mouse button is down and on this component).
      */
     private boolean pressed;
+    /**
+     * Tooltip.
+     */
+    private Tooltip tooltip;
+
+    ////////////////////////////////
+    //// CONTAINER BASE DATA
+    ////////////////////////////////
 
     /**
-     * Default constructor. Used to create component instance without any parameters. <p> Also if you want to make it easy to use with Json
-     * marshaller/unmarshaller component should contain empty constructor.
+     * List of child components.
+     */
+    private List<T> components = new CopyOnWriteArrayList<>();
+
+    /**
+     * Default constructor. Used to create component instance without any parameters.
+     * <p>
+     * Also if you want to make it easy to use with Json marshaller/unmarshaller component should contain empty constructor.
      */
     public Component() {
         this(0, 0, 10, 10);
@@ -113,6 +146,14 @@ public abstract class Component implements Serializable {
     public Component(Vector2f position, Vector2f size) {
         this.position = position;
         this.size = size;
+        initialize();
+    }
+
+    /**
+     * Used to initialize component.
+     */
+    private void initialize() {
+        getListenerMap().addListener(CursorEnterEvent.class, new TooltipCursorEnterListener());
         Themes.getDefaultTheme().getThemeManager().getComponentTheme(Component.class).applyAll(this);
     }
 
@@ -121,18 +162,30 @@ public abstract class Component implements Serializable {
      *
      * @return null or parent component.
      */
-    public Container getParent() {
+    public Component getParent() {
         return parent;
     }
 
     /**
      * Used to set parent component. By default used by containers to attach component to container. Parent component used by renderers and event listeners and
-     * processors. <p> Don't use this method if you want to attach component to container. In this case use {@link Container#add(Component)} method.
+     * processors.
+     * <p>
+     * Don't use this method if you want to attach component to container. In this case use {@link Component#add(Component)} method.
      *
      * @param parent component container.
      */
-    public void setParent(Container parent) {
+    public void setParent(Component parent) {
+        if (parent == this) {
+            return;
+        }
+
+        if (this.parent != null) {
+            this.parent.remove(this);
+        }
         this.parent = parent;
+        if (parent != null) {
+            parent.add(this);
+        }
     }
 
     /**
@@ -231,7 +284,7 @@ public abstract class Component implements Serializable {
      */
     public Vector2f getAbsolutePosition() {
         Vector2f screenPos = new Vector2f(this.position);
-        for (Container parent = this.getParent(); parent != null; parent = parent.getParent()) {
+        for (Component parent = this.getParent(); parent != null; parent = parent.getParent()) {
             screenPos.add(parent.getPosition());
         }
         return screenPos;
@@ -467,6 +520,262 @@ public abstract class Component implements Serializable {
         this.pressed = pressed;
     }
 
+    /**
+     * Returns tooltip if it persist.
+     *
+     * @return tooltip.
+     */
+    public Tooltip getTooltip() {
+        return tooltip;
+    }
+
+    /**
+     * Used to set tooltip to component.
+     *
+     * @param tooltip tooltip to set.
+     */
+    public void setTooltip(Tooltip tooltip) {
+        // check same tooltip
+        if (this.tooltip == tooltip) {
+            return;
+        }
+        // unbind current tooltip from this component
+        if (this.tooltip != null) {
+            Tooltip prev = this.tooltip;
+            this.tooltip = null;
+            prev.setComponent(null);
+        }
+
+        this.tooltip = tooltip;
+        // bind component to tooltip
+        if (tooltip != null) {
+            tooltip.setComponent(this);
+        }
+    }
+
+    /////////////////////////////////
+    //// CONTAINER METHODS
+    /////////////////////////////////
+
+    /**
+     * Returns count of child components.
+     *
+     * @return count of child components.
+     * @see List#size()
+     */
+    public int count() {
+        return components.size();
+    }
+
+    /**
+     * Returns true if layerFrame contains no elements.
+     *
+     * @return true if layerFrame contains no elements.
+     * @see List#isEmpty()
+     */
+    public boolean isEmpty() {
+        return components.isEmpty();
+    }
+
+    /**
+     * Returns true if layerFrame contains specified component.
+     *
+     * @param component component to check.
+     * @return true if layerFrame contains specified component.
+     * @see List#contains(Object)
+     */
+    public boolean contains(T component) {
+        return isContains(component);
+    }
+
+    /**
+     * Returns an iterator over the elements in this layerFrame. The elements are returned in no particular order.
+     *
+     * @return an iterator over the elements in this layerFrame.
+     * @see List#iterator()
+     */
+    public Iterator<T> containerIterator() {
+        return components.iterator();
+    }
+
+    /**
+     * Used to add component to layerFrame.
+     *
+     * @param component component to add.
+     * @return true if component is added.
+     * @see List#add(Object)
+     */
+    public boolean add(T component) {
+        if (component == null || component == this || isContains(component)) {
+            return false;
+        }
+        boolean added = components.add(component);
+        if (added) {
+            changeParent(component);
+        }
+        return added;
+    }
+
+    /**
+     * Used to check if component collection contains component or not. Checked by reference.
+     *
+     * @param component component to check.
+     * @return true if collection contains provided component.
+     */
+    private boolean isContains(T component) {
+        return components.stream().anyMatch(c -> c == component);
+    }
+
+    /**
+     * Used to add components.
+     *
+     * @param components components nodes to add.
+     * @return true if added.
+     * @see List#addAll(Collection)
+     */
+    public boolean addAll(Collection<? extends T> components) {
+        if (components != null) {
+            List<T> toAdd = new ArrayList<>();
+            components.forEach(component -> {
+                if (component != null && component != this && !isContains(component)) {
+                    changeParent(component);
+                    toAdd.add(component);
+                }
+            });
+            return this.components.addAll(toAdd);
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Used to change parent of added component.
+     *
+     * @param component component to change.
+     */
+    private void changeParent(T component) {
+        Component parent = component.getParent();
+        if (parent == this) {
+            return;
+        }
+        if (parent != null) {
+            parent.remove(component);
+        }
+        component.setParent(this);
+    }
+
+    /**
+     * Used to remove component.
+     *
+     * @param component component to remove.
+     * @return true if removed.
+     * @see List#remove(Object)
+     */
+    public boolean remove(T component) {
+        if (component != null) {
+            Component parent = component.getParent();
+            if (parent != null && parent == this && isContains(component)) {
+                boolean removed = components.remove(component);
+                if (removed) {
+                    component.setParent(null);
+                }
+                return removed;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Used to remove components.
+     *
+     * @param components components to remove.
+     * @see List#removeAll(Collection)
+     */
+    public void removeAll(Collection<? extends T> components) {
+        List<T> toRemove = new ArrayList<>();
+        components.forEach(compo -> {
+            if (compo != null) {
+                compo.setParent(null);
+                toRemove.add(compo);
+            }
+        });
+        this.components.removeAll(toRemove);
+    }
+
+    /**
+     * Removes all of the elements of this layerFrame that satisfy the given predicate. Errors or runtime exceptions thrown during iteration or by the predicate
+     * are relayed to the caller.
+     *
+     * @param filter a predicate which returns true for elements to be removed.
+     * @return true if any components were removed.
+     * @see List#removeIf(Predicate)
+     */
+    public boolean removeIf(Predicate<? super T> filter) {
+        components.stream().filter(filter).forEach(compo -> compo.setParent(null));
+        return components.removeIf(filter);
+    }
+
+    /**
+     * Used to remove all child components from layerFrame.
+     *
+     * @see List#clear()
+     */
+    public void clearChilds() {
+        components.forEach(compo -> compo.setParent(null));
+        components.clear();
+    }
+
+    /**
+     * Returns true if this Container contains all of the elements of the specified collection.
+     *
+     * @param components components collection to check.
+     * @return true if this Container contains all of the elements of the specified collection.
+     * @see List#containsAll(Collection)
+     */
+    public boolean containsAll(Collection<T> components) {
+        return this.components.containsAll(components);
+    }
+
+    /**
+     * Returns a sequential Stream with this collection as its source.
+     *
+     * @return a sequential Stream with this collection as its source.
+     * @see List#stream()
+     */
+    public Stream<T> stream() {
+        return components.stream();
+    }
+
+    /**
+     * Returns a possibly parallel Stream with this collection as its source. It is allowable for this method to return a sequential stream.
+     *
+     * @return possibly parallel Stream with this collection as its source.
+     * @see List#parallelStream()
+     */
+    public Stream<T> parallelStream() {
+        return components.parallelStream();
+    }
+
+    /**
+     * Performs the given action for each element of the Iterable until all elements have been processed or the action throws an exception.
+     *
+     * @param action The action to be performed for each element.
+     */
+    public void forEach(Consumer<? super T> action) {
+        components.forEach(action);
+    }
+
+    /**
+     * Used to retrieve child components as {@link List}.
+     * <p>
+     * <span style="color:red">NOTE: this method returns NEW {@link List} of components</span>.
+     *
+     * @return list of child components.
+     */
+    public List<T> getChilds() {
+        return new ArrayList<>(components);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -492,6 +801,7 @@ public abstract class Component implements Serializable {
             .append(this.getBackgroundColor(), component.getBackgroundColor())
             .append(this.getBorder(), component.getBorder())
             .append(this.getIntersector(), component.getIntersector())
+            .append(components, component.components)
             .isEquals();
     }
 
@@ -510,6 +820,7 @@ public abstract class Component implements Serializable {
             .append(isHovered())
             .append(isFocused())
             .append(isPressed())
+            .append(components)
             .toHashCode();
     }
 

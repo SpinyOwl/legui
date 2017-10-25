@@ -22,7 +22,7 @@ import org.liquidengine.legui.theme.Themes;
 /**
  * An implementation of a check box -- an item that can be selected or deselected, and which displays its state to the user.
  */
-public class CheckBox extends Controller implements TextComponent {
+public class CheckBox extends Component implements TextComponent {
 
     /**
      * Check box text state.

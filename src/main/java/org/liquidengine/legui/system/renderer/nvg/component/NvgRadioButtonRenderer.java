@@ -1,6 +1,5 @@
 package org.liquidengine.legui.system.renderer.nvg.component;
 
-import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderBorder;
 import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderIcon;
 
 import org.joml.Vector2f;
@@ -9,7 +8,6 @@ import org.liquidengine.legui.component.RadioButton;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.icon.Icon;
 import org.liquidengine.legui.system.context.Context;
-import org.liquidengine.legui.system.renderer.nvg.NvgComponentRenderer;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgShapes;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgText;
@@ -17,10 +15,10 @@ import org.liquidengine.legui.system.renderer.nvg.util.NvgText;
 /**
  * Created by ShchAlexander on 11.02.2017.
  */
-public class NvgRadioButtonRenderer extends NvgComponentRenderer<RadioButton> {
+public class NvgRadioButtonRenderer extends NvgDefaultComponentRenderer<RadioButton> {
 
     @Override
-    public void renderComponent(RadioButton radioButton, Context context, long nanovg) {
+    public void renderSelf(RadioButton radioButton, Context context, long nanovg) {
         NvgRenderUtils.drawInScissor(nanovg, radioButton, () -> {
             // default renderer used
             Vector2f pos = radioButton.getAbsolutePosition();
@@ -42,8 +40,6 @@ public class NvgRadioButtonRenderer extends NvgComponentRenderer<RadioButton> {
 
             NvgText.drawTextLineToRect(nanovg, textState, textRectPos, textRectSize, true);
             renderIcon(icon, radioButton, context);
-            renderBorder(radioButton, context);
         });
-
     }
 }

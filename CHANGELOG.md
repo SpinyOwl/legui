@@ -1,4 +1,14 @@
+## [Released]
+## [1.3.0]
+### Changed
+- Removed `Controller` and `Container` classes
+- Component is by default container.
+- Updated related systems (rendering, marshaling, etc.)
+
 ## [Unreleased]
+## [1.2.7]
+### Fixed
+- Fixed text rendering bug (with rendering empty string)
 
 ## [1.2.6]
 ### Changed

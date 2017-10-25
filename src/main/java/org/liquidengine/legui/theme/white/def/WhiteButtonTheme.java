@@ -8,7 +8,7 @@ import org.liquidengine.legui.component.Button;
  *
  * @param <T> {@link Button} subclasses.
  */
-public class WhiteButtonTheme<T extends Button> extends WhiteControllerTheme<T> {
+public class WhiteButtonTheme<T extends Button> extends WhiteComponentTheme<T> {
 
     @Override
     public void apply(T component) {

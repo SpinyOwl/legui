@@ -2,7 +2,6 @@ package org.liquidengine.legui.system.handler;
 
 import java.util.List;
 import org.liquidengine.legui.component.Component;
-import org.liquidengine.legui.component.Container;
 import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.component.Layer;
 import org.liquidengine.legui.event.WindowPosEvent;
@@ -41,11 +40,9 @@ public class WindowPosEventHandler extends AbstractSystemEventHandler<SystemWind
             return;
         }
         EventProcessor.getInstance().pushEvent(new WindowPosEvent(component, context, frame, event.xpos, event.ypos));
-        if (component instanceof Container) {
-            List<Component> childs = ((Container) component).getChilds();
-            for (Component child : childs) {
-                pushEvent(child, event, context, frame);
-            }
+        List<Component> childs = component.getChilds();
+        for (Component child : childs) {
+            pushEvent(child, event, context, frame);
         }
     }
 }

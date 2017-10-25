@@ -1,7 +1,6 @@
 package org.liquidengine.legui.system.renderer.nvg.component;
 
 import static org.liquidengine.legui.color.ColorUtil.oppositeBlackOrWhite;
-import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderBorder;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgColorUtil.rgba;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.alignTextInBox;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.calculateTextBoundsRect;
@@ -34,7 +33,6 @@ import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
 import org.liquidengine.legui.input.Mouse;
 import org.liquidengine.legui.system.context.Context;
-import org.liquidengine.legui.system.renderer.nvg.NvgComponentRenderer;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgShapes;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgText;
 import org.lwjgl.glfw.GLFW;
@@ -44,7 +42,7 @@ import org.lwjgl.nanovg.NVGGlyphPosition;
 /**
  * Created by ShchAlexander on 13.02.2017.
  */
-public class NvgTextInputRenderer extends NvgComponentRenderer<TextInput> {
+public class NvgTextInputRenderer extends NvgDefaultComponentRenderer<TextInput> {
 
     public static final String PRATIO = "pratio";
     public static final String PALIGN = "palign";
@@ -61,7 +59,7 @@ public class NvgTextInputRenderer extends NvgComponentRenderer<TextInput> {
      * @param nanovg nanovg context pointer.
      */
     @Override
-    protected void renderComponent(TextInput textInput, Context context, long nanovg) {
+    protected void renderSelf(TextInput textInput, Context context, long nanovg) {
         drawInScissor(nanovg, textInput, () -> {
             Vector2f pos = textInput.getAbsolutePosition();
             Vector2f size = textInput.getSize();
@@ -85,8 +83,6 @@ public class NvgTextInputRenderer extends NvgComponentRenderer<TextInput> {
             intersectScissor(nanovg, new Vector4f(intersectRect).sub(1, 1, -2, -2));
             renderText(context, nanovg, textInput, size, intersectRect, bc);
         });
-
-        drawInScissor(nanovg, textInput, () -> renderBorder(textInput, context));
     }
 
     private void renderText(Context leguiContext, long context, TextInput gui, Vector2f size, Vector4f rect, Vector4f bc) {

@@ -4,10 +4,10 @@ import java.util.Collections;
 import java.util.List;
 import org.joml.Vector2f;
 import org.liquidengine.legui.component.Component;
-import org.liquidengine.legui.component.Container;
 import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.component.Layer;
 import org.liquidengine.legui.event.CursorEnterEvent;
+import org.liquidengine.legui.event.Event;
 import org.liquidengine.legui.event.MouseDragEvent;
 import org.liquidengine.legui.input.Mouse;
 import org.liquidengine.legui.listener.processor.EventProcessor;
@@ -15,10 +15,17 @@ import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.event.SystemCursorPosEvent;
 
 /**
- * Created by ShchAlexander on 04.02.2017.
+ * Cursor position event handler.
  */
 public class CursorPosEventHandler extends AbstractSystemEventHandler<SystemCursorPosEvent> {
 
+    /**
+     * Pre-handles {@link SystemCursorPosEvent} event.
+     *
+     * @param event event which should be pre-processed.
+     * @param frame target frame for event.
+     * @param context context
+     */
     protected void preHandle(SystemCursorPosEvent event, Frame frame, Context context) {
         Vector2f cursorPosition = new Vector2f(event.fx, event.fy);
         Mouse.setCursorPositionPrev(new Vector2f(Mouse.getCursorPosition()));
@@ -54,39 +61,43 @@ public class CursorPosEventHandler extends AbstractSystemEventHandler<SystemCurs
         }
     }
 
+    /**
+     * Used to handle {@link SystemCursorPosEvent} and produce (or not) {@link Event} instances (which are UI events).
+     *
+     * @param event event to be processed.
+     * @param layer target event layer.
+     * @param context context.
+     * @param frame frame.
+     * @return true if event processed and it shouldn't be processed for other underlying layers.
+     */
     @Override
     protected boolean handle(SystemCursorPosEvent event, Layer layer, Context context, Frame frame) {
         List<Component> childs = layer.getContainer().getChilds();
         for (Component child : childs) {
-            update(event, child, context, frame);
+            handle(child, context, frame);
         }
         return false;
     }
 
-    private void update(SystemCursorPosEvent event, Component component, Context context, Frame frame) {
-        if (component instanceof Container) {
-            processAsContainer(event, component, context, frame);
+    /**
+     * Used to handle event for specific component.
+     *
+     * @param component component.
+     * @param context context.
+     * @param frame frame.
+     */
+    private void handle(Component component, Context context, Frame frame) {
+        if (component.isEmpty()) {
+            if (Mouse.MouseButton.MOUSE_BUTTON_1.isPressed() && component == context.getFocusedGui()) {
+                Vector2f delta = Mouse.getCursorPosition().sub(Mouse.getCursorPositionPrev());
+                EventProcessor.getInstance().pushEvent(new MouseDragEvent(component, context, frame, delta));
+            }
         } else {
-            processAsComponent(component, context, frame);
-        }
-    }
-
-    private void processAsContainer(SystemCursorPosEvent event, Component component, Context context, Frame frame) {
-        Container container = (Container) component;
-        if (container.isEmpty()) {
-            processAsComponent(component, context, frame);
-        } else {
-            List<Component> childs = container.getChilds();
+            List<Component> childs = component.getChilds();
             for (Component child : childs) {
-                update(event, child, context, frame);
+                handle(child, context, frame);
             }
         }
     }
 
-    private void processAsComponent(Component component, Context context, Frame frame) {
-        if (Mouse.MouseButton.MOUSE_BUTTON_1.isPressed() && component == context.getFocusedGui()) {
-            Vector2f delta = Mouse.getCursorPosition().sub(Mouse.getCursorPositionPrev());
-            EventProcessor.getInstance().pushEvent(new MouseDragEvent(component, context, frame, delta));
-        }
-    }
 }

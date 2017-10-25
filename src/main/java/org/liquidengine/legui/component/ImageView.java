@@ -10,7 +10,7 @@ import org.liquidengine.legui.theme.Themes;
 /**
  * This class represents image view component.
  */
-public class ImageView extends Controller {
+public class ImageView extends Component {
 
     /**
      * BufferedImage (or image data).

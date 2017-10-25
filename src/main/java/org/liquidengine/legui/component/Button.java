@@ -13,7 +13,7 @@ import org.liquidengine.legui.theme.Themes;
 /**
  * An implementation of "push" button.
  */
-public class Button extends Controller implements TextComponent {
+public class Button extends Component implements TextComponent {
 
     /**
      * Button text state.

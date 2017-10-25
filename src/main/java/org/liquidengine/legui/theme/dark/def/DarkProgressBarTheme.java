@@ -8,7 +8,7 @@ import org.liquidengine.legui.component.ProgressBar;
  *
  * @param <T> {@link ProgressBar} subclasses.
  */
-public class DarkProgressBarTheme<T extends ProgressBar> extends DarkControllerTheme<T> {
+public class DarkProgressBarTheme<T extends ProgressBar> extends DarkComponentTheme<T> {
 
     /**
      * Used to apply theme only for component and not apply for child components.

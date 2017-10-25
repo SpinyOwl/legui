@@ -2,12 +2,14 @@ package org.liquidengine.legui.marshal.json.gsonimpl.component;
 
 import static org.liquidengine.legui.marshal.JsonConstants.BACKGROUND_COLOR;
 import static org.liquidengine.legui.marshal.JsonConstants.BORDER;
+import static org.liquidengine.legui.marshal.JsonConstants.COMPONENTS;
 import static org.liquidengine.legui.marshal.JsonConstants.CORNER_RADIUS;
 import static org.liquidengine.legui.marshal.JsonConstants.ENABLED;
 import static org.liquidengine.legui.marshal.JsonConstants.HEIGHT;
 import static org.liquidengine.legui.marshal.JsonConstants.INTERSECTOR;
 import static org.liquidengine.legui.marshal.JsonConstants.POSITION;
 import static org.liquidengine.legui.marshal.JsonConstants.SIZE;
+import static org.liquidengine.legui.marshal.JsonConstants.TOOLTIP;
 import static org.liquidengine.legui.marshal.JsonConstants.VISIBLE;
 import static org.liquidengine.legui.marshal.JsonConstants.WIDTH;
 import static org.liquidengine.legui.marshal.JsonConstants.X;
@@ -18,8 +20,11 @@ import static org.liquidengine.legui.marshal.json.gsonimpl.GsonUtil.fill;
 import static org.liquidengine.legui.marshal.json.gsonimpl.GsonUtil.isNotNull;
 import static org.liquidengine.legui.marshal.json.gsonimpl.GsonUtil.readColor;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import java.util.ArrayList;
+import java.util.List;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.marshal.json.gsonimpl.AbstractGsonMarshaller;
 import org.liquidengine.legui.marshal.json.gsonimpl.GsonMarshalContext;
@@ -56,7 +61,17 @@ public class GsonComponentMarshaller<T extends Component> extends AbstractGsonMa
             .add(CORNER_RADIUS, object.getCornerRadius())
             .add(BORDER, GsonMarshalUtil.marshalToJson(object.getBorder(), context))
             .add(INTERSECTOR, GsonMarshalUtil.marshalToJson(object.getIntersector()))
+            .add(TOOLTIP, GsonMarshalUtil.marshalToJson(object.getTooltip(), context))
         ;
+
+        if (!object.isEmpty()) {
+            List<Component> components = object.getChilds();
+            JsonArray comps = new JsonArray();
+            for (Component component : components) {
+                comps.add(GsonMarshalUtil.marshalToJson(component, context));
+            }
+            json.add(COMPONENTS, comps);
+        }
     }
 
     /**
@@ -76,6 +91,7 @@ public class GsonComponentMarshaller<T extends Component> extends AbstractGsonMa
         JsonElement cornerRadius = json.get(CORNER_RADIUS);
         JsonElement border = json.get(BORDER);
         JsonElement intersector = json.get(INTERSECTOR);
+        JsonElement tooltip = json.get(TOOLTIP);
 
         if (isNotNull(position)) {
             JsonElement x = position.get(X);
@@ -120,7 +136,34 @@ public class GsonComponentMarshaller<T extends Component> extends AbstractGsonMa
         if (isNotNull(intersector)) {
             object.setIntersector(GsonMarshalUtil.unmarshal(intersector.getAsJsonObject(), context));
         }
+        if (isNotNull(tooltip) && tooltip.isJsonObject()) {
+            object.setTooltip(GsonMarshalUtil.unmarshal((JsonObject) tooltip));
+        }
+
+        List<Component> componentList = new ArrayList<>();
+        JsonElement components = json.get(COMPONENTS);
+        if (isNotNull(components) && components.isJsonArray()) {
+            JsonArray comps = components.getAsJsonArray();
+            for (JsonElement comp : comps) {
+                processComponent(context, componentList, comp);
+            }
+        }
+        object.addAll(componentList);
     }
 
-
+    /**
+     * Used to process one JSON component and put it to component list.
+     *
+     * @param context context.
+     * @param componentList component list.
+     * @param comp json component to unmarshal.
+     */
+    private void processComponent(GsonMarshalContext context, List<Component> componentList, JsonElement comp) {
+        if (isNotNull(comp) && comp.isJsonObject()) {
+            Object o = GsonMarshalUtil.unmarshal(comp.getAsJsonObject(), context);
+            if (o instanceof Component) {
+                componentList.add((Component) o);
+            }
+        }
+    }
 }

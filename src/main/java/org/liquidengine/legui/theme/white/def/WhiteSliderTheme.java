@@ -8,7 +8,7 @@ import org.liquidengine.legui.component.Slider;
  *
  * @param <T> {@link Slider} subclasses.
  */
-public class WhiteSliderTheme<T extends Slider> extends WhiteControllerTheme<T> {
+public class WhiteSliderTheme<T extends Slider> extends WhiteComponentTheme<T> {
 
     @Override
     public void apply(T component) {

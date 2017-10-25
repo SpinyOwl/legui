@@ -169,7 +169,6 @@
     },
     "intersector": {
       "@class": "org.liquidengine.legui.intersection.RectangleIntersector"
-    },
-    "components": []
+    }
   }
 }
