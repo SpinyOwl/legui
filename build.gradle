@@ -101,7 +101,7 @@ task publishArchives {
         def publishUsername = System.getProperty("publishUsername") ?: System.getenv("publishUsername") ?: publishUsername
         def publishPassword = System.getProperty("publishPassword") ?: System.getenv("publishPassword") ?: publishPassword
 
-        println("PUBLISHED TO $publishUrl")
+        println("PUBLISHING TO $publishUrl")
         uploadArchives {
             repositories.mavenDeployer {
                 configuration = configurations.deployerJar
@@ -111,6 +111,7 @@ task publishArchives {
             }
         }
         uploadArchives.execute()
+        println("PUBLISHED TO  $publishUrl")
     }
 }
 
@@ -134,4 +135,3 @@ artifacts {
     archives sourcesJar
     archives javadocJar
 }
-
