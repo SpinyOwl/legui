@@ -1,41 +1,9 @@
 ## [Released]
 ## [1.3.0]
-### Main changes since [1.2.0] release
+### Changed
 - Removed `Controller` and `Container` classes
 - Component is by default container.
 - Updated related systems (rendering, marshaling, etc.)
-
-### Small changes since [1.2.0] release
-- Added several component events and listeners for them:
-  - CheckBoxChangeValueEvent
-  - ScrollBarChangeValueEvent
-  - SelectBoxChangeSelectionEvent
-  - SliderChangeValueEvent
-  - TextInputContentChangeEvent
-  - WidgetCloseEvent
-- Updated LWJGL version to `3.1.4-SNAPSHOT`
-- Renamed component method from `getScreenPosition()` to `getAbsolutePosition`. 
-- Updated `NvgComponentRenderer` so that now all component renderers inherited from it checking visibility of rendered component in the parent 
-components (to skip rendering of hidden components).
-- Added clipboard class.
-- Removed window pointer usage in event listeners for text components. 
-- Extracted White Theme inner classes to separate classes.
-- Added javadoc for several classes.
-- Added contribution guide.
-- Added license.
-- Updated readme.
-### Fixed since [1.2.0] release
-- Added javadocs for SystemEventProcessor class.
-- Added javadocs for Context class.
-- Removed unused imports.
-- Performance fix on rendering __'out of bound'__ components.
-- Refactoring.
-- fixed tests.
-- Fixed all memory leaks.
-- Added missed padding in text rendering utility.
-- Fixed text rendering bug (with rendering empty string)
-
-
 
 ## [Unreleased]
 ## [1.2.7]
