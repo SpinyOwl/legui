@@ -1,11 +1,11 @@
 ## [Released]
 ## [1.3.0]
-### Main changes
+### Main changes since [1.2.0] release
 - Removed `Controller` and `Container` classes
 - Component is by default container.
 - Updated related systems (rendering, marshaling, etc.)
 
-### Small changes
+### Small changes since [1.2.0] release
 - Added several component events and listeners for them:
   - CheckBoxChangeValueEvent
   - ScrollBarChangeValueEvent
@@ -24,7 +24,7 @@ components (to skip rendering of hidden components).
 - Added contribution guide.
 - Added license.
 - Updated readme.
-### Fixed
+### Fixed since [1.2.0] release
 - Added javadocs for SystemEventProcessor class.
 - Added javadocs for Context class.
 - Removed unused imports.

@@ -151,6 +151,13 @@ public class GsonComponentMarshaller<T extends Component> extends AbstractGsonMa
         object.addAll(componentList);
     }
 
+    /**
+     * Used to process one JSON component and put it to component list.
+     *
+     * @param context context.
+     * @param componentList component list.
+     * @param comp json component to unmarshal.
+     */
     private void processComponent(GsonMarshalContext context, List<Component> componentList, JsonElement comp) {
         if (isNotNull(comp) && comp.isJsonObject()) {
             Object o = GsonMarshalUtil.unmarshal(comp.getAsJsonObject(), context);

@@ -2,7 +2,6 @@ package org.liquidengine.legui.marshal.json.gsonimpl.component;
 
 import static org.liquidengine.legui.marshal.JsonConstants.BACKGROUND_COLOR;
 import static org.liquidengine.legui.marshal.JsonConstants.BORDER;
-import static org.liquidengine.legui.marshal.JsonConstants.COMPONENTS;
 import static org.liquidengine.legui.marshal.JsonConstants.CONTAINER;
 import static org.liquidengine.legui.marshal.JsonConstants.CORNER_RADIUS;
 import static org.liquidengine.legui.marshal.JsonConstants.ENABLED;
@@ -23,11 +22,8 @@ import static org.liquidengine.legui.marshal.json.gsonimpl.GsonUtil.fill;
 import static org.liquidengine.legui.marshal.json.gsonimpl.GsonUtil.isNotNull;
 import static org.liquidengine.legui.marshal.json.gsonimpl.GsonUtil.readColor;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import java.util.ArrayList;
-import java.util.List;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.ScrollBar;
 import org.liquidengine.legui.component.ScrollablePanel;
@@ -38,6 +34,8 @@ import org.liquidengine.legui.marshal.json.gsonimpl.GsonUtil;
 
 /**
  * Marshaller for {@link ScrollablePanel}.
+ *
+ * @param <T> type of component.
  */
 public class GsonScrollablePanelMarshaller<T extends ScrollablePanel> extends AbstractGsonMarshaller<T> {
 

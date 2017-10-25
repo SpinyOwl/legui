@@ -1,6 +1,5 @@
 package org.liquidengine.legui.system.renderer.nvg.component;
 
-import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderBorder;
 import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderIcon;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.drawInScissor;
 
@@ -10,7 +9,6 @@ import org.liquidengine.legui.component.CheckBox;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.icon.Icon;
 import org.liquidengine.legui.system.context.Context;
-import org.liquidengine.legui.system.renderer.nvg.NvgComponentRenderer;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgShapes;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgText;
 

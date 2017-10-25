@@ -1,5 +1,23 @@
 package org.liquidengine.legui.system.renderer.nvg.util;
 
+import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_BASELINE;
+import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_BOTTOM;
+import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_CENTER;
+import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_LEFT;
+import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_MIDDLE;
+import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_RIGHT;
+import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_TOP;
+import static org.lwjgl.nanovg.NanoVG.nnvgText;
+import static org.lwjgl.nanovg.NanoVG.nnvgTextBreakLines;
+import static org.lwjgl.nanovg.NanoVG.nvgBeginPath;
+import static org.lwjgl.nanovg.NanoVG.nvgFillColor;
+import static org.lwjgl.nanovg.NanoVG.nvgFontFace;
+import static org.lwjgl.nanovg.NanoVG.nvgFontSize;
+import static org.lwjgl.nanovg.NanoVG.nvgTextAlign;
+import static org.lwjgl.system.MemoryUtil.memAddress;
+import static org.lwjgl.system.MemoryUtil.memUTF8;
+
+import java.nio.ByteBuffer;
 import org.joml.Vector2f;
 import org.joml.Vector2fc;
 import org.joml.Vector4f;
@@ -10,12 +28,6 @@ import org.liquidengine.legui.component.optional.align.VerticalAlign;
 import org.lwjgl.nanovg.NVGColor;
 import org.lwjgl.nanovg.NVGTextRow;
 import org.lwjgl.system.MemoryUtil;
-
-import java.nio.ByteBuffer;
-
-import static org.lwjgl.nanovg.NanoVG.*;
-import static org.lwjgl.system.MemoryUtil.memAddress;
-import static org.lwjgl.system.MemoryUtil.memUTF8;
 
 /**
  * Created by ShchAlexander on 19.09.2017.

@@ -43,6 +43,8 @@ import org.liquidengine.legui.marshal.json.gsonimpl.GsonMarshalUtil;
 
 /**
  * Marshaller for {@link Widget}.
+ *
+ * @param <T> type of component.
  */
 public class GsonWidgetMarshaller<T extends Widget> extends AbstractGsonMarshaller<T> {
 

@@ -29,18 +29,39 @@ public class NvgDefaultComponentRenderer<C extends Component> extends NvgCompone
         renderBorder(component, context, nanovg);
     }
 
+    /**
+     * Used to render component without childs.
+     *
+     * @param component component to render.
+     * @param context context.
+     * @param nanovg nanovg context pointer.
+     */
     protected void renderSelf(C component, Context context, long nanovg) {
         NvgRenderUtils.drawInScissor(nanovg, component, () ->
             NvgShapes.drawRect(nanovg, component.getAbsolutePosition(), component.getSize(), component.getBackgroundColor(), component.getCornerRadius())
         );
     }
 
+    /**
+     * Used to render component childs.
+     *
+     * @param component component to render.
+     * @param context context.
+     * @param nanovg nanovg context pointer.
+     */
     protected void renderChildComponents(C component, Context context, long nanovg) {
         for (Component child : (List<Component>) component.getChilds()) {
             RendererProvider.getInstance().getComponentRenderer(child.getClass()).render(child, context);
         }
     }
 
+    /**
+     * Used to render component border.
+     *
+     * @param component component to render.
+     * @param context context.
+     * @param nanovg nanovg context pointer.
+     */
     protected void renderBorder(C component, Context context, long nanovg) {
         renderBorderWScissor(component, context, nanovg);
     }

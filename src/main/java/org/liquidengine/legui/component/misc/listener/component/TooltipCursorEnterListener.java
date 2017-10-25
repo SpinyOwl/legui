@@ -2,7 +2,6 @@ package org.liquidengine.legui.component.misc.listener.component;
 
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.Tooltip;
-import org.liquidengine.legui.component.misc.listener.checkbox.CheckBoxMouseClickEventListener;
 import org.liquidengine.legui.event.CursorEnterEvent;
 import org.liquidengine.legui.listener.CursorEnterEventListener;
 

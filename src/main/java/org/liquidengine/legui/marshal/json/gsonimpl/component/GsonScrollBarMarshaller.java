@@ -21,6 +21,8 @@ import org.liquidengine.legui.marshal.json.gsonimpl.GsonUtil;
 
 /**
  * Marshaller for {@link ScrollBar}.
+ *
+ * @param <T> type of component.
  */
 public class GsonScrollBarMarshaller<T extends ScrollBar> extends GsonComponentMarshaller<T> {
 

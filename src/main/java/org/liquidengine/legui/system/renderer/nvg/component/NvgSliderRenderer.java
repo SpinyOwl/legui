@@ -23,9 +23,14 @@ import org.lwjgl.nanovg.NVGColor;
 
 /**
  * Renderer for Slider components.
+ *
+ * @param <T> component type.
  */
 public class NvgSliderRenderer<T extends Slider> extends NvgDefaultComponentRenderer<T> {
 
+    /**
+     * Slider width.
+     */
     public static final float SLIDER_WIDTH = 4.0f;
 
     /**

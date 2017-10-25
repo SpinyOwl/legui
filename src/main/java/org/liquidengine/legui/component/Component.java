@@ -28,6 +28,8 @@ import org.liquidengine.legui.theme.Themes;
 
 /**
  * Component is an object that have graphical representation in legui system.
+ *
+ * @param <T> child type restriction.
  */
 public abstract class Component<T extends Component> implements Serializable {
     ////////////////////////////////
@@ -46,8 +48,9 @@ public abstract class Component<T extends Component> implements Serializable {
      */
     private ListenerMap listenerMap = new ListenerMap();
     /**
-     * Position of component relative top left corner in parent component. <p> If component is the root component then position calculated relative window top
-     * left corner.
+     * Position of component relative top left corner in parent component.
+     * <p>
+     * If component is the root component then position calculated relative window top left corner.
      */
     private Vector2f position = new Vector2f();
     /**
@@ -55,7 +58,11 @@ public abstract class Component<T extends Component> implements Serializable {
      */
     private Vector2f size = new Vector2f();
     /**
-     * Component background color. <p>Represented by vector where (x=r,y=g,z=b,w=a). <p>For example white = {@code new Vector4f(1,1,1,1)}
+     * Component background color.
+     * <p>
+     * Represented by vector where (x=r,y=g,z=b,w=a).
+     * <p>
+     * For example white = {@code new Vector4f(1,1,1,1)}
      */
     private Vector4f backgroundColor = ColorConstants.white();
     /**
@@ -95,7 +102,7 @@ public abstract class Component<T extends Component> implements Serializable {
      */
     private boolean pressed;
     /**
-     * Tooltip
+     * Tooltip.
      */
     private Tooltip tooltip;
 
@@ -109,8 +116,9 @@ public abstract class Component<T extends Component> implements Serializable {
     private List<T> components = new CopyOnWriteArrayList<>();
 
     /**
-     * Default constructor. Used to create component instance without any parameters. <p> Also if you want to make it easy to use with Json
-     * marshaller/unmarshaller component should contain empty constructor.
+     * Default constructor. Used to create component instance without any parameters.
+     * <p>
+     * Also if you want to make it easy to use with Json marshaller/unmarshaller component should contain empty constructor.
      */
     public Component() {
         this(0, 0, 10, 10);
@@ -141,6 +149,9 @@ public abstract class Component<T extends Component> implements Serializable {
         initialize();
     }
 
+    /**
+     * Used to initialize component.
+     */
     private void initialize() {
         getListenerMap().addListener(CursorEnterEvent.class, new TooltipCursorEnterListener());
         Themes.getDefaultTheme().getThemeManager().getComponentTheme(Component.class).applyAll(this);
@@ -157,12 +168,16 @@ public abstract class Component<T extends Component> implements Serializable {
 
     /**
      * Used to set parent component. By default used by containers to attach component to container. Parent component used by renderers and event listeners and
-     * processors. <p> Don't use this method if you want to attach component to container. In this case use {@link Component#add(Component)} method.
+     * processors.
+     * <p>
+     * Don't use this method if you want to attach component to container. In this case use {@link Component#add(Component)} method.
      *
      * @param parent component container.
      */
     public void setParent(Component parent) {
-        if(parent == this) return;
+        if (parent == this) {
+            return;
+        }
 
         if (this.parent != null) {
             this.parent.remove(this);
@@ -538,7 +553,6 @@ public abstract class Component<T extends Component> implements Serializable {
         }
     }
 
-
     /////////////////////////////////
     //// CONTAINER METHODS
     /////////////////////////////////
@@ -752,7 +766,9 @@ public abstract class Component<T extends Component> implements Serializable {
     }
 
     /**
-     * Used to retrieve child components as {@link List} <p> <span style="color:red">NOTE: this method returns NEW {@link List} of components</span>.
+     * Used to retrieve child components as {@link List}.
+     * <p>
+     * <span style="color:red">NOTE: this method returns NEW {@link List} of components</span>.
      *
      * @return list of child components.
      */
