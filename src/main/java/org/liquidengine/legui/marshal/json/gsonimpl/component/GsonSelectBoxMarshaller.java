@@ -34,10 +34,11 @@ import org.liquidengine.legui.component.SelectBox;
 import org.liquidengine.legui.marshal.json.gsonimpl.AbstractGsonMarshaller;
 import org.liquidengine.legui.marshal.json.gsonimpl.GsonMarshalContext;
 import org.liquidengine.legui.marshal.json.gsonimpl.GsonMarshalUtil;
-import org.liquidengine.legui.marshal.json.gsonimpl.GsonUtil;
 
 /**
  * Marshaller for {@link SelectBox}.
+ *
+ * @param <T> type of component.
  */
 public class GsonSelectBoxMarshaller<T extends SelectBox> extends AbstractGsonMarshaller<T> {
 
@@ -69,7 +70,7 @@ public class GsonSelectBoxMarshaller<T extends SelectBox> extends AbstractGsonMa
             .add(TOOLTIP, GsonMarshalUtil.marshalToJson(object.getTooltip(), context))
         ;
 
-        GsonUtil.fill(json)
+        fill(json)
             .add(SELECTED_ELEMENT, object.getSelection())
             .add(ELEMENT_HEIGHT, object.getElementHeight())
             .add(BUTTON_WIDTH, object.getButtonWidth())

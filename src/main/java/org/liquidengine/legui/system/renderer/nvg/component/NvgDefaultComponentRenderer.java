@@ -11,7 +11,9 @@ import org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgShapes;
 
 /**
- * Created by Aliaksandr_Shcherbin on 1/26/2017.
+ * Default component renderer.
+ *
+ * @param <C> component type.
  */
 public class NvgDefaultComponentRenderer<C extends Component> extends NvgComponentRenderer<C> {
 
