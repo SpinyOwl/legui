@@ -1,3 +1,8 @@
+## [Unreleased]
+## [1.3.1]
+### Changed
+- Removed parameter type from component and updated related systems.
+
 ## [Released]
 ## [1.3.0]
 ### Changed
