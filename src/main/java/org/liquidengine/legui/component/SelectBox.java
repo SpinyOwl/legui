@@ -613,7 +613,7 @@ public class SelectBox extends Component {
     /**
      * Scrollable panel of selectbox.
      */
-    public class SelectBoxScrollablePanel extends ScrollablePanel<SelectBoxElement> {
+    public class SelectBoxScrollablePanel extends ScrollablePanel {
 
         /**
          * Default constructor. Used to create component instance without any parameters. <p> Also if you want to make it easy to use with Json

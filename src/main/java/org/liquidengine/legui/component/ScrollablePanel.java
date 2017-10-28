@@ -14,7 +14,7 @@ import org.liquidengine.legui.theme.Themes;
 /**
  * Panel with scroll bars.
  */
-public class ScrollablePanel<T extends Component> extends Component implements Viewport {
+public class ScrollablePanel extends Component implements Viewport {
 
 
     private static final float INITIAL_SCROLL_SIZE = 8f;
@@ -88,12 +88,12 @@ public class ScrollablePanel<T extends Component> extends Component implements V
         horizontalScrollBar.setOrientation(Orientation.HORIZONTAL);
         horizontalScrollBar.setViewport(this);
 
-        viewport = new Panel<>(0, 0, viewportWidth, viewportHeight);
+        viewport = new Panel(0, 0, viewportWidth, viewportHeight);
         viewport.setBackgroundColor(1, 1, 1, 0);
         viewport.setBorder(null);
         viewport.getListenerMap().addListener(ScrollEvent.class, new ScrollablePanelViewportScrollListener());
 
-        container = new Panel<>(0, 0, viewportWidth, viewportHeight);
+        container = new Panel(0, 0, viewportWidth, viewportHeight);
         container.setBorder(null);
         viewport.add(container);
 

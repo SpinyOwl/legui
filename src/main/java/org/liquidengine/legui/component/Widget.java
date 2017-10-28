@@ -127,7 +127,7 @@ public class Widget extends Component {
      * @param title title to set.
      */
     private void initialize(String title) {
-        this.titleContainer = new Panel<>();
+        this.titleContainer = new Panel();
         this.titleContainer.getSize().y = INITIAL_TITLE_HEIGHT;
         this.titleContainer.setBackgroundColor(ColorConstants.white());
 
@@ -174,7 +174,7 @@ public class Widget extends Component {
         this.minimizeButton.getTextState().setVerticalAlign(VerticalAlign.MIDDLE);
         this.minimizeButton.getTextState().setHorizontalAlign(HorizontalAlign.CENTER);
 
-        this.container = new Panel<>();
+        this.container = new Panel();
 
         titleContainer.add(this.title);
         titleContainer.add(this.closeButton);
