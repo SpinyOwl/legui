@@ -28,10 +28,8 @@ import org.liquidengine.legui.theme.Themes;
 
 /**
  * Component is an object that have graphical representation in legui system.
- *
- * @param <T> child type restriction.
  */
-public abstract class Component<T extends Component> implements Serializable {
+public abstract class Component implements Serializable {
     ////////////////////////////////
     //// COMPONENT BASE DATA
     ////////////////////////////////
@@ -113,7 +111,7 @@ public abstract class Component<T extends Component> implements Serializable {
     /**
      * List of child components.
      */
-    private List<T> components = new CopyOnWriteArrayList<>();
+    private List<Component> components = new CopyOnWriteArrayList<>();
 
     /**
      * Default constructor. Used to create component instance without any parameters.
@@ -584,7 +582,7 @@ public abstract class Component<T extends Component> implements Serializable {
      * @return true if layerFrame contains specified component.
      * @see List#contains(Object)
      */
-    public boolean contains(T component) {
+    public boolean contains(Component component) {
         return isContains(component);
     }
 
@@ -594,7 +592,7 @@ public abstract class Component<T extends Component> implements Serializable {
      * @return an iterator over the elements in this layerFrame.
      * @see List#iterator()
      */
-    public Iterator<T> containerIterator() {
+    public Iterator<Component> containerIterator() {
         return components.iterator();
     }
 
@@ -605,7 +603,7 @@ public abstract class Component<T extends Component> implements Serializable {
      * @return true if component is added.
      * @see List#add(Object)
      */
-    public boolean add(T component) {
+    public boolean add(Component component) {
         if (component == null || component == this || isContains(component)) {
             return false;
         }
@@ -622,7 +620,7 @@ public abstract class Component<T extends Component> implements Serializable {
      * @param component component to check.
      * @return true if collection contains provided component.
      */
-    private boolean isContains(T component) {
+    private boolean isContains(Component component) {
         return components.stream().anyMatch(c -> c == component);
     }
 
@@ -633,9 +631,9 @@ public abstract class Component<T extends Component> implements Serializable {
      * @return true if added.
      * @see List#addAll(Collection)
      */
-    public boolean addAll(Collection<? extends T> components) {
+    public boolean addAll(Collection<? extends Component> components) {
         if (components != null) {
-            List<T> toAdd = new ArrayList<>();
+            List<Component> toAdd = new ArrayList<>();
             components.forEach(component -> {
                 if (component != null && component != this && !isContains(component)) {
                     changeParent(component);
@@ -653,7 +651,7 @@ public abstract class Component<T extends Component> implements Serializable {
      *
      * @param component component to change.
      */
-    private void changeParent(T component) {
+    private void changeParent(Component component) {
         Component parent = component.getParent();
         if (parent == this) {
             return;
@@ -671,7 +669,7 @@ public abstract class Component<T extends Component> implements Serializable {
      * @return true if removed.
      * @see List#remove(Object)
      */
-    public boolean remove(T component) {
+    public boolean remove(Component component) {
         if (component != null) {
             Component parent = component.getParent();
             if (parent != null && parent == this && isContains(component)) {
@@ -691,8 +689,8 @@ public abstract class Component<T extends Component> implements Serializable {
      * @param components components to remove.
      * @see List#removeAll(Collection)
      */
-    public void removeAll(Collection<? extends T> components) {
-        List<T> toRemove = new ArrayList<>();
+    public void removeAll(Collection<? extends Component> components) {
+        List<Component> toRemove = new ArrayList<>();
         components.forEach(compo -> {
             if (compo != null) {
                 compo.setParent(null);
@@ -710,7 +708,7 @@ public abstract class Component<T extends Component> implements Serializable {
      * @return true if any components were removed.
      * @see List#removeIf(Predicate)
      */
-    public boolean removeIf(Predicate<? super T> filter) {
+    public boolean removeIf(Predicate<? super Component> filter) {
         components.stream().filter(filter).forEach(compo -> compo.setParent(null));
         return components.removeIf(filter);
     }
@@ -732,7 +730,7 @@ public abstract class Component<T extends Component> implements Serializable {
      * @return true if this Container contains all of the elements of the specified collection.
      * @see List#containsAll(Collection)
      */
-    public boolean containsAll(Collection<T> components) {
+    public boolean containsAll(Collection<Component> components) {
         return this.components.containsAll(components);
     }
 
@@ -742,7 +740,7 @@ public abstract class Component<T extends Component> implements Serializable {
      * @return a sequential Stream with this collection as its source.
      * @see List#stream()
      */
-    public Stream<T> stream() {
+    public Stream<Component> stream() {
         return components.stream();
     }
 
@@ -752,7 +750,7 @@ public abstract class Component<T extends Component> implements Serializable {
      * @return possibly parallel Stream with this collection as its source.
      * @see List#parallelStream()
      */
-    public Stream<T> parallelStream() {
+    public Stream<Component> parallelStream() {
         return components.parallelStream();
     }
 
@@ -761,7 +759,7 @@ public abstract class Component<T extends Component> implements Serializable {
      *
      * @param action The action to be performed for each element.
      */
-    public void forEach(Consumer<? super T> action) {
+    public void forEach(Consumer<? super Component> action) {
         components.forEach(action);
     }
 
@@ -772,7 +770,7 @@ public abstract class Component<T extends Component> implements Serializable {
      *
      * @return list of child components.
      */
-    public List<T> getChilds() {
+    public List<Component> getChilds() {
         return new ArrayList<>(components);
     }
 

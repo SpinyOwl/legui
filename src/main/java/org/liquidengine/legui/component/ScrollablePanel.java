@@ -14,7 +14,7 @@ import org.liquidengine.legui.theme.Themes;
 /**
  * Panel with scroll bars.
  */
-public class ScrollablePanel<T extends Component> extends Component<Component> implements Viewport {
+public class ScrollablePanel<T extends Component> extends Component implements Viewport {
 
 
     private static final float INITIAL_SCROLL_SIZE = 8f;
@@ -32,12 +32,12 @@ public class ScrollablePanel<T extends Component> extends Component<Component> i
     /**
      * Base container which holds component container. Viewport size is limited by scroll bars and parent ScrollablePanel size.
      */
-    private Component<Component> viewport;
+    private Component viewport;
 
     /**
      * Used to hold components added by user.
      */
-    private Component<T> container;
+    private Component container;
 
     /**
      * Default constructor. Used to create component instance without any parameters. <p> Also if you want to make it easy to use with Json
@@ -208,7 +208,7 @@ public class ScrollablePanel<T extends Component> extends Component<Component> i
      *
      * @return container which should used to add components to scrollable panel.
      */
-    public Component<T> getContainer() {
+    public Component getContainer() {
         return container;
     }
 
@@ -217,7 +217,7 @@ public class ScrollablePanel<T extends Component> extends Component<Component> i
      *
      * @param container container which should used to add components to scrollable panel.
      */
-    public void setContainer(Component<T> container) {
+    public void setContainer(Component container) {
         viewport.remove(this.container);
         this.container = container;
         viewport.add(this.container);
@@ -265,7 +265,7 @@ public class ScrollablePanel<T extends Component> extends Component<Component> i
             .toHashCode();
     }
 
-    public Component<Component> getViewport() {
+    public Component getViewport() {
         return viewport;
     }
 }

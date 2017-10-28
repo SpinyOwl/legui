@@ -6,7 +6,7 @@ import org.liquidengine.legui.theme.Themes;
 /**
  * Default Container implementation. Used to hold components.
  */
-public class Panel<T extends Component> extends Component<T> {
+public class Panel<T extends Component> extends Component {
 
     /**
      * Default constructor. Used to create component instance without any parameters. <p> Also if you want to make it easy to use with Json
