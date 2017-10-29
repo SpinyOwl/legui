@@ -26,16 +26,16 @@ public class Tooltip extends Component implements TextComponent {
     /**
      * Constructor.
      *
-     * @param tooltip text to set
+     * @param tooltip text to set.
      */
     public Tooltip(String tooltip) {
         initialize(tooltip);
     }
 
     /**
-     * Used to initialize tooltip
+     * Used to initialize tooltip.
      *
-     * @param text text to set
+     * @param text text to set.
      */
     private void initialize(String text) {
         this.textState = new TextState(text);
