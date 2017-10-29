@@ -16,14 +16,27 @@ public class Tooltip extends Component implements TextComponent {
     private TextState textState;
     private Component component;
 
+    /**
+     * Constructor.
+     */
     public Tooltip() {
         initialize("");
     }
 
+    /**
+     * Constructor.
+     *
+     * @param tooltip text to set
+     */
     public Tooltip(String tooltip) {
         initialize(tooltip);
     }
 
+    /**
+     * Used to initialize tooltip
+     *
+     * @param text text to set
+     */
     private void initialize(String text) {
         this.textState = new TextState(text);
 
@@ -39,6 +52,20 @@ public class Tooltip extends Component implements TextComponent {
         return textState;
     }
 
+    /**
+     * Returns component for which specified this tooltip.
+     *
+     * @return component for which specified this tooltip.
+     */
+    public Component getComponent() {
+        return component;
+    }
+
+    /**
+     * Used to set component to toltip.
+     *
+     * @param component component to set.
+     */
     public void setComponent(Component component) {
         // check self
         if (component == this) {
@@ -62,6 +89,11 @@ public class Tooltip extends Component implements TextComponent {
         }
     }
 
+    /**
+     * Returns absolute component position.
+     *
+     * @return position vector.
+     */
     @Override
     public Vector2f getAbsolutePosition() {
         Vector2f position = new Vector2f(getPosition());
@@ -69,6 +101,7 @@ public class Tooltip extends Component implements TextComponent {
             position.add(component.getAbsolutePosition());
         }
         return position;
+
     }
 
     @Override
