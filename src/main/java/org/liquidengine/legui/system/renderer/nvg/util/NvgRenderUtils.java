@@ -171,16 +171,25 @@ public final class NvgRenderUtils {
      * @param parent parent component.
      */
     public static void createScissorByParent(long context, Component parent) {
-        if (parent != null) {
-            Vector2f p = parent.getAbsolutePosition();
+        List<Component> parents = new ArrayList<>();
+        while (parent != null) {
+            parents.add(parent);
+            parent = parent.getParent();
+        }
+        Vector2f pos = new Vector2f();
+        int size = parents.size();
+        if (size > 0) {
+            parent = parents.get(size-1);
+            pos.add(parent.getPosition());
             Vector2f s = parent.getSize();
-
-            createScissor(context, new Vector4f(p, s.x, s.y));
-
-            while ((parent = parent.getParent()) != null) {
-                p = parent.getAbsolutePosition();
-                s = parent.getSize();
-                nvgIntersectScissor(context, p.x, p.y, s.x, s.y);
+            createScissor(context, new Vector4f(pos, s.x, s.y));
+            if (size > 1) {
+                for (int i = size - 2; i >= 0; i--) {
+                    parent = parents.get(i);
+                    s = parent.getSize();
+                    pos.add(parent.getPosition());
+                    nvgIntersectScissor(context, pos.x, pos.y, s.x, s.y);
+                }
             }
         }
     }
