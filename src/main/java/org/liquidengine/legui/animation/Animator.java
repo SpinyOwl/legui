@@ -77,7 +77,7 @@ public abstract class Animator {
 
             List<Animation> initializeList = new ArrayList<>(animationsToInitialize);
             for (Animation animation : initializeList) {
-                animation.initialize();
+                animation.beforeAnimation();
                 animationsToInitialize.remove(animation);
                 animations.add(animation);
             }
@@ -92,7 +92,7 @@ public abstract class Animator {
 
             List<Animation> destroyList = new ArrayList<>(animationsToDestroy);
             for (Animation animation : destroyList) {
-                animation.destroy();
+                animation.afterAnimation();
                 animationsToDestroy.remove(animation);
             }
 
