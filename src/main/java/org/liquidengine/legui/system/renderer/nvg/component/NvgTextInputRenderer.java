@@ -4,8 +4,9 @@ import static org.liquidengine.legui.color.ColorUtil.oppositeBlackOrWhite;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgColorUtil.rgba;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.alignTextInBox;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.calculateTextBoundsRect;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.drawInScissor;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.createScissor;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.intersectScissor;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.resetScissor;
 import static org.lwjgl.nanovg.NanoVG.NVG_ROUND;
 import static org.lwjgl.nanovg.NanoVG.nnvgTextGlyphPositions;
 import static org.lwjgl.nanovg.NanoVG.nvgBeginPath;
@@ -60,7 +61,7 @@ public class NvgTextInputRenderer extends NvgDefaultComponentRenderer<TextInput>
      */
     @Override
     protected void renderSelf(TextInput textInput, Context context, long nanovg) {
-        drawInScissor(nanovg, textInput, () -> {
+       createScissor(nanovg, textInput);  {
             Vector2f pos = textInput.getAbsolutePosition();
             Vector2f size = textInput.getSize();
             boolean enabled = textInput.isEnabled();
@@ -82,7 +83,7 @@ public class NvgTextInputRenderer extends NvgDefaultComponentRenderer<TextInput>
             Vector4f intersectRect = new Vector4f(pos.x + p.x, pos.y + p.y, size.x - p.x - p.z, size.y - p.y - p.w);
             intersectScissor(nanovg, new Vector4f(intersectRect).sub(1, 1, -2, -2));
             renderText(context, nanovg, textInput, size, intersectRect, bc);
-        });
+        } resetScissor(nanovg);
     }
 
     private void renderText(Context leguiContext, long context, TextInput gui, Vector2f size, Vector4f rect, Vector4f bc) {

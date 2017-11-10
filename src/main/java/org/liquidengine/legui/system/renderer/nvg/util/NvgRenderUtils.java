@@ -203,19 +203,6 @@ public final class NvgRenderUtils {
         nvgResetScissor(context);
     }
 
-    /**
-     * Used to call function wrapped to scissor call.
-     *
-     * @param nanovg nanovg context.
-     * @param component component to create scissor.
-     * @param function function to call.
-     */
-    public static void drawInScissor(long nanovg, Component component, Runnable function) {
-        createScissor(nanovg, component);
-        function.run();
-        resetScissor(nanovg);
-    }
-
     public static boolean visibleInParents(Component component) {
         List<Component> parentList = new ArrayList<>();
         for (Component parent = component.getParent(); parent != null; parent = parent.getParent()) {

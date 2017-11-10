@@ -1,5 +1,8 @@
 package org.liquidengine.legui.system.renderer.nvg.component;
 
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.createScissor;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.resetScissor;
+
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.Label;
@@ -16,7 +19,7 @@ public class NvgLabelRenderer extends NvgDefaultComponentRenderer<Label> {
 
     @Override
     public void renderSelf(Label label, Context context, long nanovg) {
-        NvgRenderUtils.drawInScissor(nanovg, label, () -> {
+        createScissor(nanovg, label);  {
             Vector2f pos = label.getAbsolutePosition();
             Vector2f size = label.getSize();
             Vector4f backgroundColor = new Vector4f(label.getBackgroundColor());
@@ -27,6 +30,6 @@ public class NvgLabelRenderer extends NvgDefaultComponentRenderer<Label> {
             // draw text into box
             TextState textState = label.getTextState();
             NvgText.drawTextLineToRect(nanovg, textState, pos, size, false);
-        });
+        } resetScissor(nanovg);
     }
 }

@@ -4,7 +4,9 @@ import static org.liquidengine.legui.color.ColorUtil.oppositeBlackOrWhite;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgColorUtil.rgba;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.alignTextInBox;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.calculateTextBoundsRect;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.createScissor;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.intersectScissor;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.resetScissor;
 import static org.lwjgl.nanovg.NanoVG.nnvgTextGlyphPositions;
 import static org.lwjgl.nanovg.NanoVG.nvgFillColor;
 import static org.lwjgl.nanovg.NanoVG.nvgFontFace;
@@ -23,7 +25,6 @@ import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
 import org.liquidengine.legui.input.Mouse;
 import org.liquidengine.legui.system.context.Context;
-import org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgShapes;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgText;
 import org.lwjgl.glfw.GLFW;
@@ -47,7 +48,7 @@ public class NvgTextAreaRenderer extends NvgDefaultComponentRenderer<TextArea> {
 
     @Override
     public void renderSelf(TextArea component, Context context, long nanovg) {
-        NvgRenderUtils.drawInScissor(nanovg, component, () -> {
+        createScissor(nanovg, component);  {
             Vector2f pos = component.getAbsolutePosition();
             Vector2f size = component.getSize();
             float br = component.getCornerRadius();
@@ -61,7 +62,7 @@ public class NvgTextAreaRenderer extends NvgDefaultComponentRenderer<TextArea> {
 
             intersectScissor(nanovg, new Vector4f(intersectRect).sub(1, 1, -2, -2));
             renderText(context, nanovg, component, size, intersectRect, bc);
-        });
+        } resetScissor(nanovg);
     }
 
     private void renderText(Context leguiContext, long context, TextArea gui, Vector2f size, Vector4f rect, Vector4f bc) {

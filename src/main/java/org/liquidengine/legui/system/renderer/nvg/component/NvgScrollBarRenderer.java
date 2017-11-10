@@ -2,6 +2,8 @@ package org.liquidengine.legui.system.renderer.nvg.component;
 
 import static org.liquidengine.legui.color.ColorUtil.oppositeBlackOrWhite;
 import static org.liquidengine.legui.component.optional.Orientation.VERTICAL;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.createScissor;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.resetScissor;
 import static org.liquidengine.legui.util.TextUtil.cpToStr;
 import static org.lwjgl.nanovg.NanoVG.nvgSave;
 
@@ -29,7 +31,7 @@ public class NvgScrollBarRenderer extends NvgDefaultComponentRenderer<ScrollBar>
 
     @Override
     public void renderSelf(ScrollBar scrollBar, Context context, long nanovg) {
-        NvgRenderUtils.drawInScissor(nanovg, scrollBar, () -> {
+        createScissor(nanovg, scrollBar);  {
             nvgSave(nanovg);
             Vector2f pos = scrollBar.getAbsolutePosition();
             Vector2f size = scrollBar.getSize();
@@ -65,7 +67,7 @@ public class NvgScrollBarRenderer extends NvgDefaultComponentRenderer<ScrollBar>
 
             // draw scroll button
             drawScrollButton(nanovg, pos, size, scrollBar, diff, offset, vertical);
-        });
+        } resetScissor(nanovg);
     }
 
     /**

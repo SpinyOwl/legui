@@ -3,7 +3,9 @@ package org.liquidengine.legui.system.renderer.nvg.component;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgColorUtil.rgba;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.alignTextInBox;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.createBounds;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.createScissor;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.intersectScissor;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.resetScissor;
 import static org.lwjgl.nanovg.NanoVG.nnvgText;
 import static org.lwjgl.nanovg.NanoVG.nnvgTextBreakLines;
 import static org.lwjgl.nanovg.NanoVG.nvgBeginPath;
@@ -37,7 +39,7 @@ public class NvgTooltipRenderer extends NvgDefaultComponentRenderer<Tooltip> {
 
     @Override
     public void renderSelf(Tooltip component, Context context, long nanovg) {
-        NvgRenderUtils.drawInScissor(nanovg, component, () -> {
+        createScissor(nanovg, component);  {
             TextState textState = component.getTextState();
             Vector2f pos = component.getAbsolutePosition();
             Vector2f size = component.getSize();
@@ -107,6 +109,6 @@ public class NvgTooltipRenderer extends NvgDefaultComponentRenderer<Tooltip> {
             } finally {
                 memFree(byteText);
             }
-        });
+        } resetScissor(nanovg);
     }
 }

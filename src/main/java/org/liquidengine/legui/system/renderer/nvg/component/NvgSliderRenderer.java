@@ -1,6 +1,8 @@
 package org.liquidengine.legui.system.renderer.nvg.component;
 
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgColorUtil.rgba;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.createScissor;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.resetScissor;
 import static org.lwjgl.nanovg.NanoVG.NVG_ROUND;
 import static org.lwjgl.nanovg.NanoVG.nvgBeginPath;
 import static org.lwjgl.nanovg.NanoVG.nvgLineCap;
@@ -17,7 +19,6 @@ import org.joml.Vector4f;
 import org.liquidengine.legui.component.Slider;
 import org.liquidengine.legui.component.optional.Orientation;
 import org.liquidengine.legui.system.context.Context;
-import org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgShapes;
 import org.lwjgl.nanovg.NVGColor;
 
@@ -42,7 +43,7 @@ public class NvgSliderRenderer<T extends Slider> extends NvgDefaultComponentRend
      */
     @Override
     public void renderSelf(T slider, Context context, long nanovg) {
-        NvgRenderUtils.drawInScissor(nanovg, slider, () -> {
+        createScissor(nanovg, slider);  {
             nvgSave(nanovg);
             Vector2f pos = slider.getAbsolutePosition();
             Vector2f size = slider.getSize();
@@ -90,7 +91,7 @@ public class NvgSliderRenderer<T extends Slider> extends NvgDefaultComponentRend
             Vector2f sliderPos = new Vector2f(px - sliderSize / 2f, py - sliderSize / 2f);
             NvgShapes.drawRect(nanovg, sliderPos, sliderButtonSize, sliderColor, cornerRadius);
             NvgShapes.drawRectStroke(nanovg, sliderPos, sliderButtonSize, sliderInactiveColor, 1, cornerRadius);
-        });
+        } resetScissor(nanovg);
     }
 
     /**

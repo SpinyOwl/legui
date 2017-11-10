@@ -1,7 +1,8 @@
 package org.liquidengine.legui.system.renderer.nvg.component;
 
 import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderIcon;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.drawInScissor;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.createScissor;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.resetScissor;
 import static org.lwjgl.nanovg.NanoVG.nvgIntersectScissor;
 import static org.lwjgl.nanovg.NanoVG.nvgRestore;
 import static org.lwjgl.nanovg.NanoVG.nvgSave;
@@ -22,7 +23,7 @@ public class NvgButtonRenderer extends NvgDefaultComponentRenderer<Button> {
 
     @Override
     protected void renderSelf(Button button, Context context, long nanovg) {
-        drawInScissor(nanovg, button, () -> {
+       createScissor(nanovg, button);  {
             Vector2f pos = button.getAbsolutePosition();
             Vector2f size = button.getSize();
 
@@ -33,7 +34,7 @@ public class NvgButtonRenderer extends NvgDefaultComponentRenderer<Button> {
             nvgIntersectScissor(nanovg, pos.x, pos.y, size.x, size.y);
             NvgText.drawTextLineToRect(nanovg, button.getTextState(), pos, size, true);
 
-        });
+        } resetScissor(nanovg);
     }
 
     private void renderBackground(long nvg, Button button, Vector2f pos, Vector2f size, Context context) {

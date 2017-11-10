@@ -1,6 +1,8 @@
 package org.liquidengine.legui.system.renderer.nvg.component;
 
 import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderBorderWScissor;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.createScissor;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.resetScissor;
 
 import java.util.List;
 import org.liquidengine.legui.component.Component;
@@ -39,9 +41,9 @@ public class NvgDefaultComponentRenderer<C extends Component> extends NvgCompone
      * @param nanovg nanovg context pointer.
      */
     protected void renderSelf(C component, Context context, long nanovg) {
-        NvgRenderUtils.drawInScissor(nanovg, component, () ->
-            NvgShapes.drawRect(nanovg, component.getAbsolutePosition(), component.getSize(), component.getBackgroundColor(), component.getCornerRadius())
-        );
+        createScissor(nanovg, component); {
+            NvgShapes.drawRect(nanovg, component.getAbsolutePosition(), component.getSize(), component.getBackgroundColor(), component.getCornerRadius());
+        } resetScissor(nanovg);
     }
 
     /**
