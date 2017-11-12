@@ -1,10 +1,11 @@
 group 'org.liquidengine'
 
-Properties verProp = new Properties(); verProp.load(new FileInputStream("$project.projectDir/version.properties"))
-def projectVersion = verProp["liquidengine.legui.version"]
+import groovy.json.JsonSlurper
+
+// SETUP VERSION
+def versionJson = new JsonSlurper().parseText(new File("$project.projectDir/version.json").text)
 def versionExt = System.getProperty("VEXT") ?: System.getenv("VEXT") ?: ""
-versionExt = versionExt == "" ? "" : "-" + versionExt
-project.version = projectVersion + versionExt
+project.version = versionJson.version + (versionExt == "" ? "" : "-" + versionExt)
 
 println("VERSION : " + project.version)
 

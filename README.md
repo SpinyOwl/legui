@@ -81,8 +81,8 @@ compile group: 'org.liquidengine', name: 'legui', version: legui_version + '-SNA
 compile group: 'org.liquidengine', name: 'legui', version: legui_version, changing: true;
   ```
   
-  Current `SNAPSHOT` version you can find in [SNAPSHOT version.properties](https://github.com/LiquidEngine/legui/blob/snapshots/version.properties)  
-  Current `RELEASE` version you can find in [RELEASE version.properties](https://github.com/LiquidEngine/legui/blob/releases/version.properties)  
+  Current `SNAPSHOT` version you can find in [SNAPSHOT version.json](https://github.com/LiquidEngine/legui/blob/snapshots/version.json)  
+  Current `RELEASE` version you can find in [RELEASE version.json](https://github.com/LiquidEngine/legui/blob/releases/version.json)  
   
 ## Examples:
 All examples located here: 
