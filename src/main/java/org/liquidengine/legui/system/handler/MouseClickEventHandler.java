@@ -64,10 +64,10 @@ public class MouseClickEventHandler implements SystemEventHandler<SystemMouseCli
                 }
                 Vector2f position = targetComponent.getAbsolutePosition().sub(cursorPosition).negate();
                 EventProcessor.getInstance()
-                    .pushEvent(new MouseClickEvent(targetComponent, context, frame, MouseClickEvent.MouseClickAction.PRESS, button, position, cursorPosition));
+                    .pushEvent(new MouseClickEvent<>(targetComponent, context, frame, MouseClickEvent.MouseClickAction.PRESS, button, position, cursorPosition));
 
                 if (focusedGui != targetComponent) {
-                    EventProcessor.getInstance().pushEvent(new FocusEvent(targetComponent, context, frame, targetComponent, true));
+                    EventProcessor.getInstance().pushEvent(new FocusEvent<>(targetComponent, context, frame, targetComponent, true));
                 }
             } else {
                 updateReleasePosAndFocusedGui(button, cursorPosition, focusedGui);
@@ -75,10 +75,10 @@ public class MouseClickEventHandler implements SystemEventHandler<SystemMouseCli
                 Vector2f position = targetComponent.getAbsolutePosition().sub(cursorPosition).negate();
                 if (focusedGui != null && focusedGui == targetComponent) {
                     EventProcessor.getInstance().pushEvent(
-                        new MouseClickEvent(targetComponent, context, frame, MouseClickEvent.MouseClickAction.CLICK, button, position, cursorPosition));
+                        new MouseClickEvent<>(targetComponent, context, frame, MouseClickEvent.MouseClickAction.CLICK, button, position, cursorPosition));
                 }
                 EventProcessor.getInstance().pushEvent(
-                    new MouseClickEvent(targetComponent, context, frame, MouseClickEvent.MouseClickAction.RELEASE, button, position, cursorPosition));
+                    new MouseClickEvent<>(targetComponent, context, frame, MouseClickEvent.MouseClickAction.RELEASE, button, position, cursorPosition));
             }
             pushWidgetsUp(targetComponent);
         }

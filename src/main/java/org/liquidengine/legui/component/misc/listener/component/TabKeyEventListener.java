@@ -4,8 +4,11 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import org.liquidengine.legui.component.Component;
+import org.liquidengine.legui.component.Frame;
+import org.liquidengine.legui.event.FocusEvent;
 import org.liquidengine.legui.event.KeyEvent;
 import org.liquidengine.legui.listener.EventListener;
+import org.liquidengine.legui.listener.processor.EventProcessor;
 import org.liquidengine.legui.system.context.Context;
 import org.lwjgl.glfw.GLFW;
 
@@ -33,10 +36,10 @@ public class TabKeyEventListener implements EventListener<KeyEvent> {
             if (controlPressed && !shiftPressed) {
                 Component next = findNext(event.getComponent());
                 // if ((next == null || next == component) && cycled) next = event.getContext().getFrame().getContainer();
-                moveToNext(event.getContext(), event.getComponent(), next);
+                moveToNext(event.getContext(), event.getComponent(), next, event.getFrame());
             } else if (controlPressed && shiftPressed) {
                 Component prev = findPrev(event.getComponent());
-                moveToNext(event.getContext(), event.getComponent(), prev);
+                moveToNext(event.getContext(), event.getComponent(), prev, event.getFrame());
             }
         }
     }
@@ -202,176 +205,20 @@ public class TabKeyEventListener implements EventListener<KeyEvent> {
         return next;
     }
 
-    private void moveToNext(Context context, Component component, Component next) {
+    private void moveToNext(Context context, Component component, Component next, Frame frame) {
         if (component != null) {
             component.setFocused(false);
+            EventProcessor.getInstance().pushEvent(new FocusEvent<>(component, context, frame, next, false));
         }
         if (next != null) {
             Component focusedGui = context.getFocusedGui();
-            if (focusedGui != null) {
+            if (focusedGui != null && focusedGui != component) {
+                EventProcessor.getInstance().pushEvent(new FocusEvent<>(focusedGui, context, frame, next, false));
                 focusedGui.setFocused(false);
             }
             next.setFocused(true);
+            EventProcessor.getInstance().pushEvent(new FocusEvent<>(next, context, frame, next, true));
             context.setFocusedGui(next);
         }
     }
-
-//    private Component findPrev(Component component) {
-//        Component prev = component;
-//        Component parent = component.getParent();
-//        if (parent != null) {
-//            prev = findPrevInParent(component, parent, prev);
-//        } else {
-//            prev = findPrevInChilds(component, component.getChilds(), prev);
-//        }
-//        return prev;
-//    }
-//
-//    private Component findPrevInChilds(Component component, List<Component> childs, Component prev) {
-//        childs.sort(comparator);
-//        Collections.reverse(childs);
-//        for (Component child : childs) {
-//            if (child.isVisible()) {
-//                if (child.isTabFocusable()) {
-//                    if (!child.isEmpty()) {
-//                        prev = findPrevInChilds(component, child.getChilds(), prev);
-//                        if (prev == component) {
-//                            prev = child;
-//                        }
-//                    } else {
-//                        prev = child;
-//                    }
-//                    break;
-//                } else {
-//                    if (!child.isEmpty()) {
-//                        prev = findPrevInChilds(component, child.getChilds(), prev);
-//                    }
-//                    if (component != prev) {
-//                        break;
-//                    }
-//                }
-//            }
-//        }
-//        return prev;
-//    }
-//
-//    private Component findPrevInParent(Component component, Component parent, Component prev) {
-//        if (parent == null) {
-//            return prev;
-//        }
-//        List<Component> neighbors = parent.getChilds();
-//        neighbors.sort(comparator);
-//        int indexInParent = neighbors.indexOf(component);
-//        for (int i = indexInParent - 1; i >= 0; i--) {
-//            Component neighbor = neighbors.get(i);
-//            if (neighbor.isVisible()) {
-//                if (neighbor.isTabFocusable()) {
-//                    if (!neighbor.isEmpty()) {
-//                        prev = findPrevInChilds(component, neighbor.getChilds(), prev);
-//                        break;
-//                    }
-//                    prev = neighbor;
-//                    break;
-//                } else {
-//                    if (!neighbor.isEmpty()) {
-//                        prev = findNextInChilds(neighbor, prev);
-//                    }
-//                }
-//            }
-//        }
-////        if (prev == component) {
-////            prev = findPrevInParentNeighbors(parent, prev);
-////        }
-//        return prev;
-//    }
-//
-//    private Component findNext(Component component) {
-//        Component next = component;
-//        if (component.isEmpty()) {
-//            if ((next = findNextInParent(component, component.getParent(), next)) == component) {
-//                Component parent = component;
-//                while ((parent = parent.getParent()) != null) {
-//                    next = parent;
-//                }
-//            }
-//        } else {
-//            next = findNextInChilds(component, next);
-//            if (next == component) {
-//                next = findNextInParent(component, component.getParent(), next);
-//            }
-//        }
-//
-//        return next;
-//    }
-//
-//    private Component findNextInParent(Component component, Component parent, Component next) {
-//        if (parent == null) {
-//            return next;
-//        }
-//        List<Component> neighbors = parent.getChilds();
-//        neighbors.sort(comparator);
-//        int indexInParent = neighbors.indexOf(component);
-//        for (int i = indexInParent + 1; i < neighbors.size(); i++) {
-//            Component neighbor = neighbors.get(i);
-//            if (neighbor.isVisible()) {
-//                if (neighbor.isTabFocusable()) {
-//                    next = neighbor;
-//                    break;
-//                } else {
-//                    if (!neighbor.isEmpty()) {
-//                        next = findNextInChilds(neighbor, next);
-//                    }
-//                }
-//            }
-//        }
-//        if (next == component) {
-//            next = findNextInParentNeighbors(parent, next);
-//        }
-//        return next;
-//    }
-//
-//    private Component findNextInParentNeighbors(Component parent, Component next) {
-//        Component parentOfParent = parent.getParent();
-//        if (parentOfParent != null) {
-//            List<Component> parentNeighbors = parentOfParent.getChilds();
-//            parentNeighbors.sort(comparator);
-//            int parentIndex = parentNeighbors.indexOf(parent);
-//            int neighborsCount = parentNeighbors.size();
-//            if (parentIndex == neighborsCount - 1) {
-//                return findNextInParentNeighbors(parentOfParent, next);
-//            } else {
-//                for (int i = parentIndex + 1; i < neighborsCount; i++) {
-//                    Component neighbor = parentNeighbors.get(i);
-//                    if (neighbor.isVisible()) {
-//                        if (neighbor.isTabFocusable()) {
-//                            return neighbor;
-//                        } else {
-//                            if (!neighbor.isEmpty()) {
-//                                return findNextInChilds(neighbor, next);
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//        return findNextInParentNeighbors(parentOfParent, next);
-//    }
-//
-//    private Component findNextInChilds(Component component, Component next) {
-//        List<Component> childs = component.getChilds();
-//        childs.sort(comparator);
-//        for (Component child : childs) {
-//            if (child.isVisible()) {
-//                if (child.isTabFocusable()) {
-//                    next = child;
-//                    break;
-//                } else {
-//                    if (!child.isEmpty()) {
-//                        next = findNextInChilds(child, next);
-//                    }
-//                }
-//            }
-//        }
-//        return next;
-//    }
 }
