@@ -67,13 +67,6 @@ public class TestJsonMarshaller {
         toMarshal = frame;
         unMarshalled = unmarshaled;
 
-        String jsonOne = marshalled;
-        String jsonTwo = remarshalled;
-
-        System.out.println(jsonOne);
-        System.out.println(jsonTwo);
-        System.out.println(toMarshal.equals(unMarshalled));
-
         Assert.assertEquals(toMarshal, unMarshalled);
     }
 

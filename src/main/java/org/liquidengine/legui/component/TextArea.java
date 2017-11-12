@@ -27,6 +27,11 @@ public class TextArea extends Component implements TextComponent {
     protected TextState textState;
 
     /**
+     * Used to describe size of '\t' symbol in spaces.
+     */
+    private int tabSize = 4;
+
+    /**
      * Default constructor. Used to create component instance without any parameters. <p> Also if you want to make it easy to use with Json
      * marshaller/unmarshaller component should contain empty constructor.
      */
@@ -216,6 +221,26 @@ public class TextArea extends Component implements TextComponent {
      */
     public String getSelection() {
         return textState.getSelection();
+    }
+
+    /**
+     * Returns tab size in spaces.
+     *
+     * @return tab size in spaces.
+     */
+    public int getTabSize() {
+        return tabSize;
+    }
+
+    /**
+     * Used to set tab size in spaces.
+     *
+     * @param tabSize tab size in spaces.
+     */
+    public void setTabSize(int tabSize) {
+        if (tabSize >= 1) {
+            this.tabSize = tabSize;
+        }
     }
 
     @Override

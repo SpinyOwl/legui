@@ -16,7 +16,9 @@ import static org.lwjgl.system.MemoryUtil.memFree;
 import static org.lwjgl.system.MemoryUtil.memUTF8;
 
 import java.nio.ByteBuffer;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
@@ -43,7 +45,6 @@ public class NvgTextAreaRenderer extends NvgDefaultComponentRenderer<TextArea> {
     private static final String PHALIGN = "phalign";
     private static final String PVALIGN = "pvalign";
     private static final String POFFSETY = "poffsety";
-    private static final int SPACES_PER_TAB = 4;
     private static final String TABS = "\t";
     private static final String SPACES = " ";
     private static final char SPACEC = ' ';
@@ -134,7 +135,7 @@ public class NvgTextAreaRenderer extends NvgDefaultComponentRenderer<TextArea> {
 
         // also we need to calculate offset x // caretLine
         float offsetX = 0;
-        caretx = getCaretx(context, lineCaretPosition, caretLineText, caretLineBounds, glyphs, spaceWidth);
+        caretx = getCaretx(context, lineCaretPosition, caretLineText, caretLineBounds, glyphs, spaceWidth, gui.getTabSize());
         offsetX = calculateOffsetX(rect, caretx, offsetX);
 
         Float poffsetx = /*offsetX;//*/(Float) metadata.getOrDefault(POFFSETX, 0f);
@@ -157,7 +158,7 @@ public class NvgTextAreaRenderer extends NvgDefaultComponentRenderer<TextArea> {
             float[] lineBounds = calculateTextBoundsRect(context, rect, line, halign, valign);
             bounds[i] = lineBounds;
             if (line.contains(TABS)) {
-                bounds[i][6] += spaceWidth * (line.length() - line.replace(TABS, "").length()) * (SPACES_PER_TAB - 1);
+                bounds[i][6] += spaceWidth * (line.length() - line.replace(TABS, "").length()) * (gui.getTabSize() - 1);
             }
         }
         // calculate default mouse line index
@@ -191,6 +192,14 @@ public class NvgTextAreaRenderer extends NvgDefaultComponentRenderer<TextArea> {
                 float lineX = bounds[i][4] - poffsetx;
                 float lineY = bounds[i][5] - poffsety + voffset + fontSize * i;
 
+                List<Integer> tabIndices = new ArrayList<>();
+                if (line.contains(TABS)) {
+                    int index = line.indexOf(TABS, 0);
+                    while (index != -1) {
+                        tabIndices.add(index);
+                        index = line.indexOf(TABS, index + 1);
+                    }
+                }
                 // calculate mouse caret position
                 if (lineY <= mouseY && lineY + fontSize > mouseY) {
                     if (line.length() == 0) {
@@ -200,9 +209,9 @@ public class NvgTextAreaRenderer extends NvgDefaultComponentRenderer<TextArea> {
                         if (mx <= glyphs.get(0).x()) {
                             mouseCaretPositionInLine = 0;
                             mouseCaretX = glyphs.get(0).x();
-                        } else if (mx >= glyphs.get(ng - 1).maxx()) {
+                        } else if (mx >= glyphs.get(ng - 1).maxx() + spaceWidth * (gui.getTabSize() - 1) * tabIndices.size()) {
                             mouseCaretPositionInLine = ng;
-                            mouseCaretX = glyphs.get(ng - 1).maxx();
+                            mouseCaretX = glyphs.get(ng - 1).maxx() + spaceWidth * (gui.getTabSize() - 1) * tabIndices.size();
                             // if window not minimized
                         } else if (!leguiContext.isIconified()) {
                             // binary search mouse caret position
@@ -211,8 +220,20 @@ public class NvgTextAreaRenderer extends NvgDefaultComponentRenderer<TextArea> {
                             boolean found = false;
                             do {
                                 int index = (upper + lower) / 2;
+                                float tabAddition = 0;
+                                for (int t = 0; t < tabIndices.size(); t++) {
+                                    if (index > tabIndices.get(t)) {
+                                        tabAddition += spaceWidth * (gui.getTabSize() - 1);
+                                    }
+                                }
                                 float left = glyphs.get(index).x();
                                 float right = index >= ng - 1 ? glyphs.get(ng - 1).maxx() : glyphs.get(index + 1).x();
+                                left += tabAddition;
+                                right += tabAddition;
+                                if (tabIndices.contains(index)) {
+                                    right += spaceWidth * (gui.getTabSize() - 1);
+                                }
+
                                 float mid = (left + right) / 2f;
                                 if (mx >= left && mx < right) {
                                     found = true;
@@ -243,6 +264,7 @@ public class NvgTextAreaRenderer extends NvgDefaultComponentRenderer<TextArea> {
                             } while (!found);
                         }
                     }
+
                     mouseCaretX -= poffsetx;
                     mouseLineIndex = i;
                     // render mouse caret
@@ -254,7 +276,7 @@ public class NvgTextAreaRenderer extends NvgDefaultComponentRenderer<TextArea> {
                 // render current line background
                 renderCurrentLineBackground(context, rect, bc, fontSize, focused, caretLine, i, lineY);
 
-                char[] spaces = new char[SPACES_PER_TAB];
+                char[] spaces = new char[gui.getTabSize()];
                 Arrays.fill(spaces, SPACEC);
                 NvgText.drawTextLineToRect(context, new Vector4f(lineX, lineY, bounds[i][6], bounds[i][7]),
                     false, HorizontalAlign.LEFT, VerticalAlign.MIDDLE, fontSize, font, line.replace(TABS, new String(spaces)), textColor);
@@ -345,9 +367,9 @@ public class NvgTextAreaRenderer extends NvgDefaultComponentRenderer<TextArea> {
                 endSelectionIndexInLine = endSelectionIndex - lineStartIndeces[endSelectionLine];
 
                 float startSelectionCaretX =
-                    getCaretx(context, startSelectionIndexInLine, lines[startSelectionLine], bounds[startSelectionLine], glyphs, spaceWidth);
+                    getCaretx(context, startSelectionIndexInLine, lines[startSelectionLine], bounds[startSelectionLine], glyphs, spaceWidth, gui.getTabSize());
                 float endSelectionCaretX =
-                    getCaretx(context, endSelectionIndexInLine, lines[endSelectionLine], bounds[endSelectionLine], glyphs, spaceWidth);
+                    getCaretx(context, endSelectionIndexInLine, lines[endSelectionLine], bounds[endSelectionLine], glyphs, spaceWidth, gui.getTabSize());
 
                 for (int i = 0; i < lineCount; i++) {
                     if (i >= startSelectionLine && i <= endSelectionLine) {
@@ -433,7 +455,8 @@ public class NvgTextAreaRenderer extends NvgDefaultComponentRenderer<TextArea> {
      *
      * @return caret x position on screen.
      */
-    private float getCaretx(long context, int caretPosInText, String text, float[] caretLineBounds, NVGGlyphPosition.Buffer glyphs, float spaceWidth) {
+    private float getCaretx(long context, int caretPosInText, String text, float[] caretLineBounds, NVGGlyphPosition.Buffer glyphs, float spaceWidth,
+        int tabSize) {
         float caretx;
         ByteBuffer caretLineBytes = null;
         try {
@@ -448,7 +471,7 @@ public class NvgTextAreaRenderer extends NvgDefaultComponentRenderer<TextArea> {
             int tabCountBeforeCaret = 0;
             if (substring.contains(TABS)) {
                 tabCountBeforeCaret = substring.length() - substring.replace(TABS, "").length();
-                caretx += spaceWidth * tabCountBeforeCaret * (SPACES_PER_TAB - 1);
+                caretx += spaceWidth * tabCountBeforeCaret * (tabSize - 1);
             }
         } finally {
             memFree(caretLineBytes);

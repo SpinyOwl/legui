@@ -26,7 +26,7 @@ public class NvgSimpleLineBorderRenderer extends NvgBorderRenderer<SimpleLineBor
             Vector2f size = component.getSize();
             if (component.isFocused()) {
                 NvgShapes.drawRectStroke(
-                    nanovg, component.getAbsolutePosition().add(-0.5f, +0.5f), size, component.getFocusedStrokeColor(), 0.5f, cornerRadius);
+                    nanovg, component.getAbsolutePosition().add(-1f, +1f), size, component.getFocusedStrokeColor(), 1f, cornerRadius);
             }
             NvgShapes.drawRectStroke(
                 nanovg, component.getAbsolutePosition(), size, borderColor, thickness, cornerRadius);

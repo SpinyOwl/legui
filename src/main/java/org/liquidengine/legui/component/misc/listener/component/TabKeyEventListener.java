@@ -30,7 +30,6 @@ public class TabKeyEventListener implements EventListener<KeyEvent> {
             return;
         }
         if (event.getKey() == GLFW.GLFW_KEY_TAB && event.getAction() != GLFW.GLFW_PRESS) {
-            System.out.println(event.getComponent());
             boolean controlPressed = (event.getMods() & GLFW.GLFW_MOD_CONTROL) != 0;
             boolean shiftPressed = (event.getMods() & GLFW.GLFW_MOD_SHIFT) != 0;
             if (controlPressed && !shiftPressed) {
