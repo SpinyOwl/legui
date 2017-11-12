@@ -43,7 +43,8 @@ public class NvgSliderRenderer<T extends Slider> extends NvgDefaultComponentRend
      */
     @Override
     public void renderSelf(T slider, Context context, long nanovg) {
-        createScissor(nanovg, slider);  {
+        createScissor(nanovg, slider);
+        {
             nvgSave(nanovg);
             Vector2f pos = slider.getAbsolutePosition();
             Vector2f size = slider.getSize();
@@ -91,7 +92,8 @@ public class NvgSliderRenderer<T extends Slider> extends NvgDefaultComponentRend
             Vector2f sliderPos = new Vector2f(px - sliderSize / 2f, py - sliderSize / 2f);
             NvgShapes.drawRect(nanovg, sliderPos, sliderButtonSize, sliderColor, cornerRadius);
             NvgShapes.drawRectStroke(nanovg, sliderPos, sliderButtonSize, sliderInactiveColor, 1, cornerRadius);
-        } resetScissor(nanovg);
+        }
+        resetScissor(nanovg);
     }
 
     /**

@@ -32,6 +32,7 @@ public class TooltipCursorEnterListener implements CursorEnterEventListener {
      * Used to compare instances of this event listener.
      *
      * @param obj object to compare.
+     *
      * @return true if equals.
      */
     @Override

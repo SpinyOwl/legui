@@ -8,7 +8,6 @@ import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.ProgressBar;
 import org.liquidengine.legui.system.context.Context;
-import org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgShapes;
 
 /**
@@ -18,7 +17,8 @@ public class NvgProgressBarRenderer extends NvgDefaultComponentRenderer<Progress
 
     @Override
     public void renderSelf(ProgressBar progressBar, Context leguiContext, long nanovg) {
-        createScissor(nanovg, progressBar);  {
+        createScissor(nanovg, progressBar);
+        {
             nvgSave(nanovg);
             Vector2f pos = progressBar.getAbsolutePosition();
             float cornerRadius = progressBar.getCornerRadius();
@@ -30,6 +30,7 @@ public class NvgProgressBarRenderer extends NvgDefaultComponentRenderer<Progress
             Vector4f progressColor = progressBar.getProgressColor();
             Vector2f progressSize = new Vector2f(size.x * progressBar.getValue() / ProgressBar.MAX_VALUE, size.y);
             NvgShapes.drawRect(nanovg, pos, progressSize, progressColor, cornerRadius);
-        } resetScissor(nanovg);
+        }
+        resetScissor(nanovg);
     }
 }

@@ -215,7 +215,8 @@ public class Layer<T extends Component> {
 
     /**
      * Used to set current position.
-     *  @param x x position relative to parent component.
+     *
+     * @param x x position relative to parent component.
      * @param y y position relative to parent component.
      */
     public void setPosition(float x, float y) {
@@ -249,7 +250,8 @@ public class Layer<T extends Component> {
 
     /**
      * Used to set size vector.
-     *  @param width width to set.
+     *
+     * @param width width to set.
      * @param height height to set.
      */
     public void setSize(float width, float height) {
@@ -287,7 +289,8 @@ public class Layer<T extends Component> {
 
     /**
      * Used to set background color vector.
-     *  @param r red value.
+     *
+     * @param r red value.
      * @param g green value.
      * @param b blue value.
      * @param a alpha value.
@@ -318,7 +321,8 @@ public class Layer<T extends Component> {
 
     /**
      * Used to set focused stroke color vector.
-     *  @param r red value.
+     *
+     * @param r red value.
      * @param g green value.
      * @param b blue value.
      * @param a alpha value.
@@ -367,6 +371,7 @@ public class Layer<T extends Component> {
      * Used to determine if point intersects component (in screen space). This method uses component intersector.
      *
      * @param point point to check.
+     *
      * @return true if component intersected by point.
      */
     public boolean intersects(Vector2f point) {
@@ -512,6 +517,7 @@ public class Layer<T extends Component> {
      * Returns count of child components.
      *
      * @return count of child components.
+     *
      * @see List#size()
      */
     public int count() {
@@ -522,6 +528,7 @@ public class Layer<T extends Component> {
      * Returns true if layerFrame contains no elements.
      *
      * @return true if layerFrame contains no elements.
+     *
      * @see List#isEmpty()
      */
     public boolean isEmpty() {
@@ -532,7 +539,9 @@ public class Layer<T extends Component> {
      * Returns true if layerFrame contains specified component.
      *
      * @param component component to check.
+     *
      * @return true if layerFrame contains specified component.
+     *
      * @see List#contains(Object)
      */
     public boolean contains(T component) {
@@ -543,6 +552,7 @@ public class Layer<T extends Component> {
      * Returns an iterator over the elements in this layerFrame. The elements are returned in no particular order.
      *
      * @return an iterator over the elements in this layerFrame.
+     *
      * @see List#iterator()
      */
     public Iterator<Component> containerIterator() {
@@ -553,7 +563,9 @@ public class Layer<T extends Component> {
      * Used to add component to layerFrame.
      *
      * @param component component to add.
+     *
      * @return true if component is added.
+     *
      * @see List#add(Object)
      */
     public boolean add(T component) {
@@ -564,7 +576,9 @@ public class Layer<T extends Component> {
      * Used to add components.
      *
      * @param components components nodes to add.
+     *
      * @return true if added.
+     *
      * @see List#addAll(Collection)
      */
     public boolean addAll(Collection<? extends Component> components) {
@@ -575,7 +589,9 @@ public class Layer<T extends Component> {
      * Used to remove component.
      *
      * @param component component to remove.
+     *
      * @return true if removed.
+     *
      * @see List#remove(Object)
      */
     public boolean remove(T component) {
@@ -586,6 +602,7 @@ public class Layer<T extends Component> {
      * Used to remove components.
      *
      * @param components components to remove.
+     *
      * @see List#removeAll(Collection)
      */
     public void removeAll(Collection<? extends Component> components) {
@@ -597,7 +614,9 @@ public class Layer<T extends Component> {
      * are relayed to the caller.
      *
      * @param filter a predicate which returns true for elements to be removed.
+     *
      * @return true if any components were removed.
+     *
      * @see List#removeIf(Predicate)
      */
     public boolean removeIf(Predicate<? super Component> filter) {
@@ -617,7 +636,9 @@ public class Layer<T extends Component> {
      * Returns true if this Container contains all of the elements of the specified collection.
      *
      * @param components components collection to check.
+     *
      * @return true if this Container contains all of the elements of the specified collection.
+     *
      * @see List#containsAll(Collection)
      */
     public boolean containsAll(Collection<Component> components) {
@@ -628,6 +649,7 @@ public class Layer<T extends Component> {
      * Returns a sequential Stream with this collection as its source.
      *
      * @return a sequential Stream with this collection as its source.
+     *
      * @see List#stream()
      */
     public Stream<Component> stream() {
@@ -638,6 +660,7 @@ public class Layer<T extends Component> {
      * Returns a possibly parallel Stream with this collection as its source. It is allowable for this method to return a sequential stream.
      *
      * @return possibly parallel Stream with this collection as its source.
+     *
      * @see List#parallelStream()
      */
     public Stream<Component> parallelStream() {

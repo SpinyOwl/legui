@@ -95,6 +95,7 @@ public class RadioButtonGroup implements Serializable {
      * Returns true if provided radio button selected.
      *
      * @param radioButton radio button to check.
+     *
      * @return true if provided radio button selected.
      */
     public boolean isSelected(RadioButton radioButton) {

@@ -28,7 +28,7 @@ public class WhiteWidgetTheme<T extends Widget> extends WhiteComponentTheme<T> {
         component.getTitleContainer().setBackgroundColor(ColorConstants.lightGray());
         component.setTitleBackgroundColor(ColorConstants.lightGray());
         TextState titleTextState = component.getTitleTextState();
-        titleTextState.setPadding(7,3,5,2);
+        titleTextState.setPadding(7, 3, 5, 2);
         titleTextState.setTextColor(ColorConstants.black());
         Icon closeIcon = component.getCloseIcon();
         if (closeIcon != null && closeIcon instanceof CharIcon) {

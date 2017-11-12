@@ -9,7 +9,6 @@ import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.RendererProvider;
 import org.liquidengine.legui.system.renderer.nvg.NvgComponentRenderer;
-import org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgShapes;
 
 /**
@@ -41,9 +40,11 @@ public class NvgDefaultComponentRenderer<C extends Component> extends NvgCompone
      * @param nanovg nanovg context pointer.
      */
     protected void renderSelf(C component, Context context, long nanovg) {
-        createScissor(nanovg, component); {
+        createScissor(nanovg, component);
+        {
             NvgShapes.drawRect(nanovg, component.getAbsolutePosition(), component.getSize(), component.getBackgroundColor(), component.getCornerRadius());
-        } resetScissor(nanovg);
+        }
+        resetScissor(nanovg);
     }
 
     /**

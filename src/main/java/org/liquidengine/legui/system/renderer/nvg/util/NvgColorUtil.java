@@ -16,6 +16,7 @@ public class NvgColorUtil {
      * @param b blue.
      * @param a alpha.
      * @param color color to fill.
+     *
      * @return filled color.
      */
     public static NVGColor rgba(float r, float g, float b, float a, NVGColor color) {
@@ -32,6 +33,7 @@ public class NvgColorUtil {
      * @param rgba rgba color {@link Vector4fc} of floats. <ul> <li>rgba.x - red.</li> <li>rgba.y - green.</li> <li>rgba.z - blue.</li> <li>rgba.w - alpha.</li>
      * </ul>
      * @param color color to fill.
+     *
      * @return filled color.
      */
     public static NVGColor rgba(Vector4fc rgba, NVGColor color) {

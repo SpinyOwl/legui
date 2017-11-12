@@ -20,7 +20,8 @@ public class NvgCheckBoxRenderer extends NvgDefaultComponentRenderer<CheckBox> {
 
     @Override
     public void renderSelf(CheckBox checkBox, Context context, long nanovg) {
-       createScissor(nanovg, checkBox);  {
+        createScissor(nanovg, checkBox);
+        {
             Vector2f pos = checkBox.getAbsolutePosition();
             Vector2f size = checkBox.getSize();
 
@@ -47,6 +48,7 @@ public class NvgCheckBoxRenderer extends NvgDefaultComponentRenderer<CheckBox> {
             NvgText.drawTextLineToRect(nanovg, textState, new Vector2f(x, y), new Vector2f(w, h), true);
 
             renderIcon(icon, checkBox, context);
-        } resetScissor(nanovg);
+        }
+        resetScissor(nanovg);
     }
 }

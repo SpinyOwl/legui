@@ -36,6 +36,7 @@ public class ListenerMap {
      *
      * @param eventClass event class for which registered listeners.
      * @param <E> event type.
+     *
      * @return event listeners for specified event type.
      */
     public <E extends Event> List<EventListener<E>> getListeners(Class<E> eventClass) {

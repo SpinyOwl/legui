@@ -13,6 +13,7 @@ import static org.lwjgl.glfw.GLFW.GLFW_KEY_HOME;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_KP_ENTER;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_LEFT;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_RIGHT;
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_TAB;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_UP;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_V;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_X;
@@ -41,6 +42,8 @@ public class TextAreaKeyEventListener implements KeyEventListener {
         TextArea textArea = (TextArea) event.getComponent();
         int key = event.getKey();
         boolean pressed = event.getAction() != GLFW_RELEASE;
+        boolean controlPressed = (event.getMods() & GLFW_MOD_CONTROL) != 0;
+
         if (key == GLFW_KEY_LEFT && pressed) {
             keyLeftAction(textArea, event.getMods());
         } else if (key == GLFW_KEY_RIGHT && pressed) {
@@ -59,15 +62,32 @@ public class TextAreaKeyEventListener implements KeyEventListener {
             keyBackSpaceAction(textArea, event.getMods());
         } else if (key == GLFW_KEY_DELETE && pressed) {
             keyDeleteAction(textArea, event.getMods());
-        } else if (key == GLFW_KEY_V && pressed && event.getMods() == GLFW_MOD_CONTROL) {
+        } else if (key == GLFW_KEY_V && pressed && controlPressed) {
             pasteAction(textArea);
-        } else if (key == GLFW_KEY_C && pressed && event.getMods() == GLFW_MOD_CONTROL) {
+        } else if (key == GLFW_KEY_C && pressed && controlPressed) {
             copyAction(textArea);
-        } else if (key == GLFW_KEY_X && pressed && event.getMods() == GLFW_MOD_CONTROL) {
+        } else if (key == GLFW_KEY_X && pressed && controlPressed) {
             cutAction(textArea);
-        } else if (key == GLFW_KEY_A && pressed && event.getMods() == GLFW_MOD_CONTROL) {
+        } else if (key == GLFW_KEY_A && pressed && controlPressed) {
             selectAllAction(textArea);
+        } else if (key == GLFW_KEY_TAB && pressed && !controlPressed) {
+            addTab(textArea);
         }
+
+    }
+
+    /**
+     * Used to insert '\t' symbol.
+     *
+     * @param textArea text area to work with.
+     */
+    private void addTab(TextArea textArea) {
+        int oldCPos = textArea.getCaretPosition();
+        textArea.getTextState().insert(oldCPos, "\t");
+        int caretPosition = oldCPos + 1;
+        textArea.setCaretPosition(caretPosition);
+        textArea.setStartSelectionIndex(caretPosition);
+        textArea.setEndSelectionIndex(caretPosition);
     }
 
     /**

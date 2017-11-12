@@ -179,7 +179,7 @@ public final class NvgRenderUtils {
         Vector2f pos = new Vector2f();
         int size = parents.size();
         if (size > 0) {
-            parent = parents.get(size-1);
+            parent = parents.get(size - 1);
             pos.add(parent.getPosition());
             Vector2f s = parent.getSize();
             createScissor(context, new Vector4f(pos, s.x, s.y));

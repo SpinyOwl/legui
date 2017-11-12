@@ -20,13 +20,15 @@ public class NvgToggleButtonRenderer extends NvgDefaultComponentRenderer<ToggleB
 
     @Override
     protected void renderSelf(ToggleButton toggleButton, Context context, long nanovg) {
-        NvgRenderUtils.createScissor(nanovg, toggleButton);  {
+        NvgRenderUtils.createScissor(nanovg, toggleButton);
+        {
             Vector2f pos = toggleButton.getAbsolutePosition();
             Vector2f size = toggleButton.getSize();
 
             // render background
             renderBackground(nanovg, toggleButton, pos, size, context);
-        } resetScissor(nanovg);
+        }
+        resetScissor(nanovg);
     }
 
     private void renderBackground(long nvg, ToggleButton agui, Vector2f pos, Vector2f size, Context context) {

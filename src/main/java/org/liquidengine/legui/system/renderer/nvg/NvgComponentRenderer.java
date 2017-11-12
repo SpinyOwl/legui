@@ -2,9 +2,12 @@ package org.liquidengine.legui.system.renderer.nvg;
 
 import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.NVG_CONTEXT;
 
+import org.liquidengine.legui.border.SimpleLineBorder;
+import org.liquidengine.legui.color.ColorConstants;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.ComponentRenderer;
+import org.liquidengine.legui.system.renderer.nvg.border.NvgSimpleLineBorderRenderer;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils;
 
 /**
@@ -13,6 +16,15 @@ import org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils;
  * @param <C> component type.
  */
 public abstract class NvgComponentRenderer<C extends Component> extends ComponentRenderer<C> {
+
+    private NvgSimpleLineBorderRenderer debugBorderRenderer = new NvgSimpleLineBorderRenderer();
+    private SimpleLineBorder debugBorder = new SimpleLineBorder(ColorConstants.red(), 1);
+    private SimpleLineBorder debugFocusBorder = new SimpleLineBorder(ColorConstants.blue(), 2);
+
+    @Override
+    public void initialize() {
+        debugBorderRenderer.initialize();
+    }
 
     /**
      * Used to render component.
@@ -27,6 +39,13 @@ public abstract class NvgComponentRenderer<C extends Component> extends Componen
             return;
         }
         renderComponent(component, context, nanovgContext);
+        if (context.isDebugEnabled()) {
+            if (component.isFocused()) {
+                debugBorderRenderer.renderBorder(debugFocusBorder, component, context);
+            } else {
+                debugBorderRenderer.renderBorder(debugBorder, component, context);
+            }
+        }
     }
 
     /**

@@ -62,6 +62,7 @@ public class RectangleIntersector extends Intersector {
      * integer, but this implementation technique is not required by the Java&trade; programming language.)
      *
      * @return a hash code value for this object.
+     *
      * @see Object#equals(Object)
      * @see System#identityHashCode
      */
@@ -85,7 +86,9 @@ public class RectangleIntersector extends Intersector {
      * method, which states that equal objects must have equal hash codes.
      *
      * @param obj the reference object with which to compare.
+     *
      * @return {@code true} if this object is the same as the obj argument; {@code false} otherwise.
+     *
      * @see #hashCode()
      * @see HashMap
      */
