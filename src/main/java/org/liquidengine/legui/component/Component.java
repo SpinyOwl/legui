@@ -856,18 +856,20 @@ public abstract class Component implements Serializable {
         Component component = (Component) o;
 
         return new EqualsBuilder()
-            .append(this.cornerRadius, component.cornerRadius)
-            .append(this.enabled, component.enabled)
-            .append(this.visible, component.visible)
-            .append(this.hovered, component.hovered)
-            .append(this.focused, component.focused)
-            .append(this.pressed, component.pressed)
-            .append(this.listenerMap, component.listenerMap)
-            .append(this.position, component.position)
-            .append(this.size, component.size)
-            .append(this.backgroundColor, component.backgroundColor)
-            .append(this.border, component.border)
-            .append(this.intersector, component.intersector)
+            .append(this.getCornerRadius(), component.getCornerRadius())
+            .append(this.isEnabled(), component.isEnabled())
+            .append(this.isVisible(), component.isVisible())
+            .append(this.isHovered(), component.isHovered())
+            .append(this.isFocused(), component.isFocused())
+            .append(this.isPressed(), component.isPressed())
+            .append(this.getListenerMap(), component.getListenerMap())
+            .append(this.getPosition(), component.getPosition())
+            .append(this.getSize(), component.getSize())
+            .append(this.getBackgroundColor(), component.getBackgroundColor())
+            .append(this.getBorder(), component.getBorder())
+            .append(this.getIntersector(), component.getIntersector())
+            .append(this.getTabIndex(), component.getTabIndex())
+            .append(this.isTabFocusable(), component.isTabFocusable())
             .append(components, component.components)
             .isEquals();
     }
@@ -887,6 +889,8 @@ public abstract class Component implements Serializable {
             .append(hovered)
             .append(focused)
             .append(pressed)
+            .append(tabIndex)
+            .append(tabFocusable)
             .append(components)
             .toHashCode();
     }
@@ -905,6 +909,8 @@ public abstract class Component implements Serializable {
             .append("intersector", intersector)
             .append("hovered", hovered)
             .append("focused", focused)
+            .append("tabIndex", tabIndex)
+            .append("tabFocusable", tabFocusable)
             .append("pressed", pressed)
             .toString();
     }

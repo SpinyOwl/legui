@@ -14,6 +14,8 @@ import static org.liquidengine.legui.marshal.JsonConstants.INTERSECTOR;
 import static org.liquidengine.legui.marshal.JsonConstants.POSITION;
 import static org.liquidengine.legui.marshal.JsonConstants.SELECTED_ELEMENT;
 import static org.liquidengine.legui.marshal.JsonConstants.SIZE;
+import static org.liquidengine.legui.marshal.JsonConstants.TAB_FOCUSABLE;
+import static org.liquidengine.legui.marshal.JsonConstants.TAB_INDEX;
 import static org.liquidengine.legui.marshal.JsonConstants.TOOLTIP;
 import static org.liquidengine.legui.marshal.JsonConstants.VISIBLE;
 import static org.liquidengine.legui.marshal.JsonConstants.VISIBLE_COUNT;
@@ -65,6 +67,8 @@ public class GsonSelectBoxMarshaller<T extends SelectBox> extends AbstractGsonMa
             .add(ENABLED, object.isEnabled())
             .add(VISIBLE, object.isVisible())
             .add(CORNER_RADIUS, object.getCornerRadius())
+            .add(TAB_INDEX, object.getTabIndex())
+            .add(TAB_FOCUSABLE, object.isTabFocusable())
             .add(BORDER, GsonMarshalUtil.marshalToJson(object.getBorder(), context))
             .add(INTERSECTOR, GsonMarshalUtil.marshalToJson(object.getIntersector()))
             .add(TOOLTIP, GsonMarshalUtil.marshalToJson(object.getTooltip(), context))
@@ -106,6 +110,9 @@ public class GsonSelectBoxMarshaller<T extends SelectBox> extends AbstractGsonMa
         JsonElement intersector = json.get(INTERSECTOR);
         JsonElement tooltip = json.get(TOOLTIP);
 
+        JsonElement tabIndex = json.get(TAB_INDEX);
+        JsonElement tabFocusable = json.get(TAB_FOCUSABLE);
+
         if (isNotNull(position)) {
             JsonElement x = position.get(X);
             JsonElement y = position.get(Y);
@@ -139,6 +146,13 @@ public class GsonSelectBoxMarshaller<T extends SelectBox> extends AbstractGsonMa
         if (isNotNull(cornerRadius)) {
             object.setCornerRadius(cornerRadius.getAsFloat());
         }
+        if(isNotNull(tabIndex)) {
+            object.setTabIndex(tabIndex.getAsInt());
+        }
+        if(isNotNull(tabFocusable)) {
+            object.setTabFocusable(tabFocusable.getAsBoolean());
+        }
+
 
         if (isNotNull(border)) {
             object.setBorder(GsonMarshalUtil.unmarshal(border.getAsJsonObject(), context));

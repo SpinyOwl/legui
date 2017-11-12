@@ -17,6 +17,8 @@
   "enabled": true,
   "visible": true,
   "cornerRadius": 2.0,
+  "tabIndex": 0,
+  "tabFocusable": true,
   "border": {
     "@type": "SimpleLineBorder",
     "enabled": true,
@@ -34,7 +36,7 @@
   "editable": true,
   "textState": {
     "@type": "TextState",
-    "font": "roboto italic",
+    "font": "roboto-bold",
     "text": "Test text area",
     "fontSize": 16.0,
     "horizontalAlign": "LEFT",
@@ -58,5 +60,6 @@
       "bottom": 10.0
     }
   },
-  "caretPosition": 0
+  "caretPosition": 0,
+  "tabSize": 4
 }

@@ -17,12 +17,14 @@
   "enabled": true,
   "visible": true,
   "cornerRadius": 2.0,
+  "tabIndex": 0,
+  "tabFocusable": true,
   "intersector": {
     "@class": "org.liquidengine.legui.intersection.RectangleIntersector"
   },
   "textState": {
     "@type": "TextState",
-    "font": "roboto italic",
+    "font": "roboto-bold",
     "text": "Test Label",
     "fontSize": 16.0,
     "horizontalAlign": "LEFT",

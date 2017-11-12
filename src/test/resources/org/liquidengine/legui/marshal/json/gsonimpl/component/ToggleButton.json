@@ -17,6 +17,8 @@
   "enabled": true,
   "visible": true,
   "cornerRadius": 2.0,
+  "tabIndex": 0,
+  "tabFocusable": true,
   "border": {
     "@type": "SimpleLineBorder",
     "enabled": true,
@@ -33,7 +35,7 @@
   },
   "textState": {
     "@type": "TextState",
-    "font": "roboto italic",
+    "font": "roboto-bold",
     "text": "Test toggleButton",
     "fontSize": 16.0,
     "horizontalAlign": "CENTER",

@@ -2,6 +2,7 @@ package org.liquidengine.legui.marshal.json.gsonimpl.component;
 
 import static org.liquidengine.legui.marshal.JsonConstants.CARET_POSITION;
 import static org.liquidengine.legui.marshal.JsonConstants.EDITABLE;
+import static org.liquidengine.legui.marshal.JsonConstants.TAB_SIZE;
 import static org.liquidengine.legui.marshal.JsonConstants.TEXT_STATE;
 import static org.liquidengine.legui.marshal.json.gsonimpl.GsonUtil.isNotNull;
 
@@ -34,6 +35,7 @@ public class GsonTextAreaMarshaller<T extends TextArea> extends GsonComponentMar
             .add(EDITABLE, object.isEditable())
             .add(TEXT_STATE, textState)
             .add(CARET_POSITION, object.getCaretPosition())
+            .add(TAB_SIZE, object.getTabSize())
         ;
     }
 
@@ -51,6 +53,7 @@ public class GsonTextAreaMarshaller<T extends TextArea> extends GsonComponentMar
         JsonElement editable = json.get(EDITABLE);
         JsonElement textState = json.get(TEXT_STATE);
         JsonElement caretPosition = json.get(CARET_POSITION);
+        JsonElement tabSize = json.get(TAB_SIZE);
 
         if (isNotNull(textState)) {
             JsonObject asJsonObject = textState.getAsJsonObject();
@@ -62,6 +65,9 @@ public class GsonTextAreaMarshaller<T extends TextArea> extends GsonComponentMar
         }
         if (isNotNull(caretPosition)) {
             object.setCaretPosition(caretPosition.getAsInt());
+        }
+        if (isNotNull(tabSize)) {
+            object.setTabSize(tabSize.getAsInt());
         }
     }
 }

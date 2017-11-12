@@ -276,4 +276,16 @@ public class TabKeyEventListener implements EventListener<KeyEvent> {
             context.setFocusedGui(next);
         }
     }
+
+    /**
+     * Used to compare instances of this event listener.
+     *
+     * @param obj object to compare.
+     *
+     * @return true if equals.
+     */
+    @Override
+    public boolean equals(Object obj) {
+        return obj == this || obj instanceof TabKeyEventListener;
+    }
 }

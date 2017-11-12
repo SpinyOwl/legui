@@ -21,6 +21,8 @@
       "enabled": true,
       "visible": true,
       "cornerRadius": 2.0,
+      "tabIndex": 0,
+      "tabFocusable": true,
       "intersector": {
         "@class": "org.liquidengine.legui.intersection.RectangleIntersector"
       }
@@ -50,6 +52,8 @@
       "enabled": true,
       "visible": true,
       "cornerRadius": 2.0,
+      "tabIndex": 0,
+      "tabFocusable": true,
       "intersector": {
         "@class": "org.liquidengine.legui.intersection.RectangleIntersector"
       }

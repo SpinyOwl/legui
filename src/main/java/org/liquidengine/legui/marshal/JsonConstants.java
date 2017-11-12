@@ -19,6 +19,8 @@ public final class JsonConstants {
     public static final String SIZE = "size";
     public static final String WIDTH = "width";
     public static final String HEIGHT = "height";
+    public static final String TAB_INDEX = "tabIndex";
+    public static final String TAB_FOCUSABLE = "tabFocusable";
     // POSITION
     public static final String POSITION = "position";
     public static final String X = "x";
@@ -86,6 +88,7 @@ public final class JsonConstants {
     public static final String TEXT_AREA = "textArea";
     public static final String EDITABLE = "editable";
     public static final String SELECTION_COLOR = "selectionColor";
+    public static final String TAB_SIZE = "tabSize";
     // TEXT INPUT
     public static final String TEXT_INPUT = "textInput";
     // COMPONENT CONTAINER
