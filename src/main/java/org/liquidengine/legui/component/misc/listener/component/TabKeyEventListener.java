@@ -28,11 +28,13 @@ public class TabKeyEventListener implements EventListener<KeyEvent> {
         }
         if (event.getKey() == GLFW.GLFW_KEY_TAB && event.getAction() != GLFW.GLFW_PRESS) {
             System.out.println(event.getComponent());
-            if (event.getMods() == 0) {
+            boolean controlPressed = (event.getMods() & GLFW.GLFW_MOD_CONTROL) != 0;
+            boolean shiftPressed = (event.getMods() & GLFW.GLFW_MOD_SHIFT) != 0;
+            if (controlPressed && !shiftPressed) {
                 Component next = findNext(event.getComponent());
                 // if ((next == null || next == component) && cycled) next = event.getContext().getFrame().getContainer();
                 moveToNext(event.getContext(), event.getComponent(), next);
-            } else if (event.getMods() == GLFW.GLFW_MOD_SHIFT) {
+            } else if (controlPressed && shiftPressed) {
                 Component prev = findPrev(event.getComponent());
                 moveToNext(event.getContext(), event.getComponent(), prev);
             }

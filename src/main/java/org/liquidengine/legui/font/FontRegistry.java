@@ -16,7 +16,7 @@ public class FontRegistry {
     /**
      * Default roboto-bold font.
      */
-    public static final String ROBOTO_BOLD = "roboto italic";
+    public static final String ROBOTO_BOLD = "roboto-bold";
     /**
      * Default roboto-light font.
      */
