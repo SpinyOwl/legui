@@ -59,13 +59,13 @@ public class TextAreaKeyEventListener implements KeyEventListener {
             keyBackSpaceAction(textArea, event.getMods());
         } else if (key == GLFW_KEY_DELETE && pressed) {
             keyDeleteAction(textArea, event.getMods());
-        } else if (key == GLFW_KEY_V && pressed && event.getMods() == GLFW_MOD_CONTROL) {
+        } else if (key == GLFW_KEY_V && pressed && (event.getMods() & GLFW_MOD_CONTROL) != 0 ) {
             pasteAction(textArea);
-        } else if (key == GLFW_KEY_C && pressed && event.getMods() == GLFW_MOD_CONTROL) {
+        } else if (key == GLFW_KEY_C && pressed && (event.getMods() & GLFW_MOD_CONTROL) != 0 ) {
             copyAction(textArea);
-        } else if (key == GLFW_KEY_X && pressed && event.getMods() == GLFW_MOD_CONTROL) {
+        } else if (key == GLFW_KEY_X && pressed && (event.getMods() & GLFW_MOD_CONTROL) != 0 ) {
             cutAction(textArea);
-        } else if (key == GLFW_KEY_A && pressed && event.getMods() == GLFW_MOD_CONTROL) {
+        } else if (key == GLFW_KEY_A && pressed && (event.getMods() & GLFW_MOD_CONTROL) != 0 ) {
             selectAllAction(textArea);
         }
     }

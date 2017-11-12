@@ -19,8 +19,10 @@ import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.border.Border;
 import org.liquidengine.legui.color.ColorConstants;
+import org.liquidengine.legui.component.misc.listener.component.TabKeyEventListener;
 import org.liquidengine.legui.component.misc.listener.component.TooltipCursorEnterListener;
 import org.liquidengine.legui.event.CursorEnterEvent;
+import org.liquidengine.legui.event.KeyEvent;
 import org.liquidengine.legui.intersection.Intersector;
 import org.liquidengine.legui.intersection.RectangleIntersector;
 import org.liquidengine.legui.listener.ListenerMap;
@@ -104,6 +106,16 @@ public abstract class Component implements Serializable {
      */
     private Tooltip tooltip;
 
+    /**
+     * Tab index. Used to switch between components using tab key.
+     */
+    private int tabIndex;
+
+    /**
+     * Show if component can be focused by tabbing.
+     */
+    private boolean tabFocusable = true;
+
     ////////////////////////////////
     //// CONTAINER BASE DATA
     ////////////////////////////////
@@ -152,6 +164,7 @@ public abstract class Component implements Serializable {
      */
     private void initialize() {
         getListenerMap().addListener(CursorEnterEvent.class, new TooltipCursorEnterListener());
+        getListenerMap().addListener(KeyEvent.class, new TabKeyEventListener());
         Themes.getDefaultTheme().getThemeManager().getComponentTheme(Component.class).applyAll(this);
     }
 
@@ -392,6 +405,7 @@ public abstract class Component implements Serializable {
      * Used to determine if point intersects component (in screen space). This method uses component intersector.
      *
      * @param point point to check.
+     *
      * @return true if component intersected by point.
      */
     public boolean intersects(Vector2f point) {
@@ -551,6 +565,42 @@ public abstract class Component implements Serializable {
         }
     }
 
+    /**
+     * Returns tab index.
+     *
+     * @return tab index.
+     */
+    public int getTabIndex() {
+        return tabIndex;
+    }
+
+    /**
+     * Used to set tab index.
+     *
+     * @param tabIndex tab index.
+     */
+    public void setTabIndex(int tabIndex) {
+        this.tabIndex = tabIndex;
+    }
+
+    /**
+     * Returns true if component focused by tabbing.
+     *
+     * @return true if component focused by tabbing.
+     */
+    public boolean isTabFocusable() {
+        return tabFocusable;
+    }
+
+    /**
+     * Used to set tab affecting for component.
+     *
+     * @param tabFocusable new tab affecting state.
+     */
+    public void setTabFocusable(boolean tabFocusable) {
+        this.tabFocusable = tabFocusable;
+    }
+
     /////////////////////////////////
     //// CONTAINER METHODS
     /////////////////////////////////
@@ -559,6 +609,7 @@ public abstract class Component implements Serializable {
      * Returns count of child components.
      *
      * @return count of child components.
+     *
      * @see List#size()
      */
     public int count() {
@@ -569,6 +620,7 @@ public abstract class Component implements Serializable {
      * Returns true if layerFrame contains no elements.
      *
      * @return true if layerFrame contains no elements.
+     *
      * @see List#isEmpty()
      */
     public boolean isEmpty() {
@@ -579,7 +631,9 @@ public abstract class Component implements Serializable {
      * Returns true if layerFrame contains specified component.
      *
      * @param component component to check.
+     *
      * @return true if layerFrame contains specified component.
+     *
      * @see List#contains(Object)
      */
     public boolean contains(Component component) {
@@ -590,6 +644,7 @@ public abstract class Component implements Serializable {
      * Returns an iterator over the elements in this layerFrame. The elements are returned in no particular order.
      *
      * @return an iterator over the elements in this layerFrame.
+     *
      * @see List#iterator()
      */
     public Iterator<Component> containerIterator() {
@@ -600,7 +655,9 @@ public abstract class Component implements Serializable {
      * Used to add component to layerFrame.
      *
      * @param component component to add.
+     *
      * @return true if component is added.
+     *
      * @see List#add(Object)
      */
     public boolean add(Component component) {
@@ -618,6 +675,7 @@ public abstract class Component implements Serializable {
      * Used to check if component collection contains component or not. Checked by reference.
      *
      * @param component component to check.
+     *
      * @return true if collection contains provided component.
      */
     private boolean isContains(Component component) {
@@ -628,7 +686,9 @@ public abstract class Component implements Serializable {
      * Used to add components.
      *
      * @param components components nodes to add.
+     *
      * @return true if added.
+     *
      * @see List#addAll(Collection)
      */
     public boolean addAll(Collection<? extends Component> components) {
@@ -666,7 +726,9 @@ public abstract class Component implements Serializable {
      * Used to remove component.
      *
      * @param component component to remove.
+     *
      * @return true if removed.
+     *
      * @see List#remove(Object)
      */
     public boolean remove(Component component) {
@@ -687,6 +749,7 @@ public abstract class Component implements Serializable {
      * Used to remove components.
      *
      * @param components components to remove.
+     *
      * @see List#removeAll(Collection)
      */
     public void removeAll(Collection<? extends Component> components) {
@@ -705,7 +768,9 @@ public abstract class Component implements Serializable {
      * are relayed to the caller.
      *
      * @param filter a predicate which returns true for elements to be removed.
+     *
      * @return true if any components were removed.
+     *
      * @see List#removeIf(Predicate)
      */
     public boolean removeIf(Predicate<? super Component> filter) {
@@ -727,7 +792,9 @@ public abstract class Component implements Serializable {
      * Returns true if this Container contains all of the elements of the specified collection.
      *
      * @param components components collection to check.
+     *
      * @return true if this Container contains all of the elements of the specified collection.
+     *
      * @see List#containsAll(Collection)
      */
     public boolean containsAll(Collection<Component> components) {
@@ -738,6 +805,7 @@ public abstract class Component implements Serializable {
      * Returns a sequential Stream with this collection as its source.
      *
      * @return a sequential Stream with this collection as its source.
+     *
      * @see List#stream()
      */
     public Stream<Component> stream() {
@@ -748,6 +816,7 @@ public abstract class Component implements Serializable {
      * Returns a possibly parallel Stream with this collection as its source. It is allowable for this method to return a sequential stream.
      *
      * @return possibly parallel Stream with this collection as its source.
+     *
      * @see List#parallelStream()
      */
     public Stream<Component> parallelStream() {
@@ -787,18 +856,18 @@ public abstract class Component implements Serializable {
         Component component = (Component) o;
 
         return new EqualsBuilder()
-            .append(this.getCornerRadius(), component.getCornerRadius())
-            .append(this.isEnabled(), component.isEnabled())
-            .append(this.isVisible(), component.isVisible())
-            .append(this.isHovered(), component.isHovered())
-            .append(this.isFocused(), component.isFocused())
-            .append(this.isPressed(), component.isPressed())
-            .append(this.getListenerMap(), component.getListenerMap())
-            .append(this.getPosition(), component.getPosition())
-            .append(this.getSize(), component.getSize())
-            .append(this.getBackgroundColor(), component.getBackgroundColor())
-            .append(this.getBorder(), component.getBorder())
-            .append(this.getIntersector(), component.getIntersector())
+            .append(this.cornerRadius, component.cornerRadius)
+            .append(this.enabled, component.enabled)
+            .append(this.visible, component.visible)
+            .append(this.hovered, component.hovered)
+            .append(this.focused, component.focused)
+            .append(this.pressed, component.pressed)
+            .append(this.listenerMap, component.listenerMap)
+            .append(this.position, component.position)
+            .append(this.size, component.size)
+            .append(this.backgroundColor, component.backgroundColor)
+            .append(this.border, component.border)
+            .append(this.intersector, component.intersector)
             .append(components, component.components)
             .isEquals();
     }
@@ -806,18 +875,18 @@ public abstract class Component implements Serializable {
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
-            .append(getCornerRadius())
-            .append(getListenerMap())
-            .append(getPosition())
-            .append(getSize())
-            .append(getBackgroundColor())
-            .append(getBorder())
-            .append(isEnabled())
-            .append(isVisible())
-            .append(getIntersector())
-            .append(isHovered())
-            .append(isFocused())
-            .append(isPressed())
+            .append(cornerRadius)
+            .append(listenerMap)
+            .append(position)
+            .append(size)
+            .append(backgroundColor)
+            .append(border)
+            .append(enabled)
+            .append(visible)
+            .append(intersector)
+            .append(hovered)
+            .append(focused)
+            .append(pressed)
             .append(components)
             .toHashCode();
     }
@@ -839,4 +908,5 @@ public abstract class Component implements Serializable {
             .append("pressed", pressed)
             .toString();
     }
+
 }

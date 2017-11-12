@@ -127,9 +127,10 @@ public class Widget extends Component {
      * @param title title to set.
      */
     private void initialize(String title) {
-        this.titleContainer = new Panel();
-        this.titleContainer.getSize().y = INITIAL_TITLE_HEIGHT;
-        this.titleContainer.setBackgroundColor(ColorConstants.white());
+        titleContainer = new Panel();
+        titleContainer.getSize().y = INITIAL_TITLE_HEIGHT;
+        titleContainer.setBackgroundColor(ColorConstants.white());
+        titleContainer.setTabFocusable(false);
 
         this.title = new Label(title);
         this.title.setPosition(0, 0);
@@ -137,25 +138,28 @@ public class Widget extends Component {
         this.title.getTextState().getPadding().set(10, 5, 10, 5);
         this.title.setBackgroundColor(ColorConstants.transparent());
         this.title.setBorder(null);
+        this.title.setTabFocusable(false);
 
         mouseDragEventLeguiEventListener = new WidgetDragListener(this);
         this.title.getListenerMap().addListener(MouseDragEvent.class, mouseDragEventLeguiEventListener);
 
-        this.closeButton = new Button("");
-        this.closeButton.setBackgroundColor(ColorConstants.transparent());
+        closeButton = new Button("");
+        closeButton.setBackgroundColor(ColorConstants.transparent());
         closeIcon = new CharIcon(new Vector2f(INITIAL_TITLE_HEIGHT * 2 / 3), FontRegistry.MATERIAL_DESIGN_ICONS, (char) CLOSE_ICON_CHAR,
             ColorConstants.black());
         closeIcon.setHorizontalAlign(HorizontalAlign.CENTER);
         closeIcon.setVerticalAlign(VerticalAlign.MIDDLE);
-        this.closeButton.setBackgroundIcon(closeIcon);
+        closeButton.setBackgroundIcon(closeIcon);
 
-        this.closeButton.getListenerMap().addListener(MouseClickEvent.class, new WidgetCloseButMouseClickEventListener(this));
-        this.closeButton.setBorder(null);
-        this.closeButton.getTextState().setVerticalAlign(VerticalAlign.MIDDLE);
-        this.closeButton.getTextState().setHorizontalAlign(HorizontalAlign.CENTER);
+        closeButton.getListenerMap().addListener(MouseClickEvent.class, new WidgetCloseButMouseClickEventListener(this));
+        closeButton.setBorder(null);
+        closeButton.getTextState().setVerticalAlign(VerticalAlign.MIDDLE);
+        closeButton.getTextState().setHorizontalAlign(HorizontalAlign.CENTER);
+        closeButton.setTabFocusable(false);
 
-        this.minimizeButton = new Button("");
-        this.minimizeButton.setBackgroundColor(ColorConstants.transparent());
+        minimizeButton = new Button("");
+        minimizeButton.setBackgroundColor(ColorConstants.transparent());
+        minimizeButton.setTabFocusable(false);
 
         minimizeIcon = new CharIcon(new Vector2f(INITIAL_TITLE_HEIGHT * 2 / 3), FontRegistry.MATERIAL_DESIGN_ICONS, (char) MINIMIZE_ICON_CHAR,
             ColorConstants.black());
@@ -167,21 +171,22 @@ public class Widget extends Component {
         maximizeIcon.setHorizontalAlign(HorizontalAlign.CENTER);
         maximizeIcon.setVerticalAlign(VerticalAlign.MIDDLE);
 
-        this.minimizeButton.setBackgroundIcon(minimizeIcon);
+        minimizeButton.setBackgroundIcon(minimizeIcon);
 
-        this.minimizeButton.getListenerMap().addListener(MouseClickEvent.class, new WidgetMinimizeButMouseClickEventListener(this));
-        this.minimizeButton.setBorder(null);
-        this.minimizeButton.getTextState().setVerticalAlign(VerticalAlign.MIDDLE);
-        this.minimizeButton.getTextState().setHorizontalAlign(HorizontalAlign.CENTER);
+        minimizeButton.getListenerMap().addListener(MouseClickEvent.class, new WidgetMinimizeButMouseClickEventListener(this));
+        minimizeButton.setBorder(null);
+        minimizeButton.getTextState().setVerticalAlign(VerticalAlign.MIDDLE);
+        minimizeButton.getTextState().setHorizontalAlign(HorizontalAlign.CENTER);
 
-        this.container = new Panel();
+        container = new Panel();
+        container.setTabFocusable(false);
 
         titleContainer.add(this.title);
-        titleContainer.add(this.closeButton);
-        titleContainer.add(this.minimizeButton);
+        titleContainer.add(closeButton);
+        titleContainer.add(minimizeButton);
 
-        this.add(this.titleContainer);
-        this.add(this.container);
+        add(titleContainer);
+        add(container);
 
         Themes.getDefaultTheme().getThemeManager().getComponentTheme(Widget.class).applyAll(this);
 

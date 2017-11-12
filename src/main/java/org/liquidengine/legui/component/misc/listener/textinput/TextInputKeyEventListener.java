@@ -55,13 +55,13 @@ public class TextInputKeyEventListener implements KeyEventListener {
             keyBackSpaceAction(gui, event.getContext(), event.getFrame(), event.getMods());
         } else if (key == GLFW_KEY_DELETE && pressed) {
             keyDeleteAction(gui, event.getContext(), event.getFrame(), event.getMods());
-        } else if (key == GLFW_KEY_V && pressed && event.getMods() == GLFW_MOD_CONTROL) {
+        } else if (key == GLFW_KEY_V && pressed && (event.getMods() & GLFW_MOD_CONTROL) != 0) {
             pasteAction(gui, event.getContext(), event.getFrame());
-        } else if (key == GLFW_KEY_C && pressed && event.getMods() == GLFW_MOD_CONTROL) {
+        } else if (key == GLFW_KEY_C && pressed && (event.getMods() & GLFW_MOD_CONTROL) != 0) {
             copyAction(gui);
-        } else if (key == GLFW_KEY_X && pressed && event.getMods() == GLFW_MOD_CONTROL) {
+        } else if (key == GLFW_KEY_X && pressed && (event.getMods() & GLFW_MOD_CONTROL) != 0) {
             cutAction(gui, event.getContext(), event.getFrame());
-        } else if (key == GLFW_KEY_A && pressed && event.getMods() == GLFW_MOD_CONTROL) {
+        } else if (key == GLFW_KEY_A && pressed && (event.getMods() & GLFW_MOD_CONTROL) != 0) {
             selectAllAction(gui);
         }
     }
