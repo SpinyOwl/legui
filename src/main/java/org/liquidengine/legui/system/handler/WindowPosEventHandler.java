@@ -20,6 +20,7 @@ public class WindowPosEventHandler extends AbstractSystemEventHandler<SystemWind
      * @param event event to be processed.
      * @param layer target event layer.
      * @param context context.
+     *
      * @return true if this event was handled and should not be handled more.
      */
     @Override

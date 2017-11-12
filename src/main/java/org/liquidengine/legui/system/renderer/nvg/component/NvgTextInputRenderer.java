@@ -61,7 +61,8 @@ public class NvgTextInputRenderer extends NvgDefaultComponentRenderer<TextInput>
      */
     @Override
     protected void renderSelf(TextInput textInput, Context context, long nanovg) {
-       createScissor(nanovg, textInput);  {
+        createScissor(nanovg, textInput);
+        {
             Vector2f pos = textInput.getAbsolutePosition();
             Vector2f size = textInput.getSize();
             boolean enabled = textInput.isEnabled();
@@ -83,7 +84,8 @@ public class NvgTextInputRenderer extends NvgDefaultComponentRenderer<TextInput>
             Vector4f intersectRect = new Vector4f(pos.x + p.x, pos.y + p.y, size.x - p.x - p.z, size.y - p.y - p.w);
             intersectScissor(nanovg, new Vector4f(intersectRect).sub(1, 1, -2, -2));
             renderText(context, nanovg, textInput, size, intersectRect, bc);
-        } resetScissor(nanovg);
+        }
+        resetScissor(nanovg);
     }
 
     private void renderText(Context leguiContext, long context, TextInput gui, Vector2f size, Vector4f rect, Vector4f bc) {

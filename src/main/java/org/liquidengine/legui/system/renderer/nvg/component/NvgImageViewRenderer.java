@@ -9,7 +9,6 @@ import java.util.HashMap;
 import org.joml.Vector2f;
 import org.liquidengine.legui.component.ImageView;
 import org.liquidengine.legui.system.context.Context;
-import org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils;
 
 /**
  * Created by ShchAlexander on 11.02.2017.
@@ -21,11 +20,13 @@ public class NvgImageViewRenderer extends NvgDefaultComponentRenderer<ImageView>
         Vector2f size = imageView.getSize();
         Vector2f position = imageView.getAbsolutePosition();
 
-        createScissor(nanovg, imageView);  {
+        createScissor(nanovg, imageView);
+        {
             HashMap<String, Object> p = new HashMap<>();
             p.put(C_RADIUS, imageView.getCornerRadius());
 
             renderImage(imageView.getImage(), position, size, p, context);
-        } resetScissor(nanovg);
+        }
+        resetScissor(nanovg);
     }
 }

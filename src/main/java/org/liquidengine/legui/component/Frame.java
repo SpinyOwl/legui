@@ -138,6 +138,7 @@ public class Frame {
      * Used to check if layer list contains provided layer.
      *
      * @param layer layer to check.
+     *
      * @return true if layer list contains provided layer.
      */
     public boolean containsLayer(Layer layer) {

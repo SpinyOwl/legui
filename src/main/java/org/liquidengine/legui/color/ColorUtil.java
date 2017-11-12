@@ -23,6 +23,7 @@ public final class ColorUtil {
      * Used to create negative color for provided color. Alpha value will be the same as in source color.
      *
      * @param color color to negotiate.
+     *
      * @return new negative color.
      */
     public static Vector4f negativeColor(Vector4f color) {
@@ -46,6 +47,7 @@ public final class ColorUtil {
      * Used to negotiate only rgb part. Alpha value will be setted to 1.
      *
      * @param color color to negotiate.
+     *
      * @return new negative color.
      */
     public static Vector4f negativeColorRGB(Vector4f color) {
@@ -70,6 +72,7 @@ public final class ColorUtil {
      * Used to obtain half color from source.
      *
      * @param color source color.
+     *
      * @return new color.
      */
     public static Vector4f half(Vector4f color) {
@@ -80,6 +83,7 @@ public final class ColorUtil {
      * Used to obtain half color from source.
      *
      * @param color source color.
+     *
      * @return new color.
      */
     public static Vector4f halfRGB(Vector4f color) {
@@ -90,6 +94,7 @@ public final class ColorUtil {
      * Used to return black or white color based on source color. for example for white source color it should return black.
      *
      * @param color color to find opposite black or white color.
+     *
      * @return opposite black or white color.
      */
     public static Vector4f oppositeBlackOrWhite(Vector4f color) {
@@ -101,6 +106,7 @@ public final class ColorUtil {
      *
      * @param color color to find opposite black or white color.
      * @param targetColor color to set result.
+     *
      * @return opposite black or white color.
      */
     public static Vector4f oppositeBlackOrWhite(Vector4f color, Vector4f targetColor) {

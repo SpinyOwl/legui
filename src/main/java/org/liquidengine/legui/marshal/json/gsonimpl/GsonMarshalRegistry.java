@@ -121,6 +121,7 @@ public class GsonMarshalRegistry implements JsonMarshalRegistry {
      *
      * @param tClass class.
      * @param <T> type of marshaled/demarshaled class.
+     *
      * @return json marshaller for specified class.
      */
     public <T> AbstractGsonMarshaller<T> getMarshaller(Class<T> tClass) {
@@ -131,6 +132,7 @@ public class GsonMarshalRegistry implements JsonMarshalRegistry {
      * Returns marshaller for specified classname.
      *
      * @param classname full classname.
+     *
      * @return json marshaller for specified classname.
      */
     public AbstractGsonMarshaller getMarshaller(String classname) {
@@ -147,6 +149,7 @@ public class GsonMarshalRegistry implements JsonMarshalRegistry {
      * Returns marshaller for specified type.
      *
      * @param typeName type name.
+     *
      * @return json marshaller for specified type.
      */
     public AbstractGsonMarshaller getMarshallerByShortType(String typeName) {
@@ -162,6 +165,7 @@ public class GsonMarshalRegistry implements JsonMarshalRegistry {
      * Returns marshaller for specified class.
      *
      * @param tClass class.
+     *
      * @return json marshaller for specified class.
      */
     private <T> AbstractGsonMarshaller<T> treeGetMarshaller(Class<T> tClass) {

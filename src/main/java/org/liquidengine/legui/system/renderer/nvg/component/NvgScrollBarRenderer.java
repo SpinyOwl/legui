@@ -14,7 +14,6 @@ import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
 import org.liquidengine.legui.font.FontRegistry;
 import org.liquidengine.legui.system.context.Context;
-import org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgShapes;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgText;
 
@@ -31,7 +30,8 @@ public class NvgScrollBarRenderer extends NvgDefaultComponentRenderer<ScrollBar>
 
     @Override
     public void renderSelf(ScrollBar scrollBar, Context context, long nanovg) {
-        createScissor(nanovg, scrollBar);  {
+        createScissor(nanovg, scrollBar);
+        {
             nvgSave(nanovg);
             Vector2f pos = scrollBar.getAbsolutePosition();
             Vector2f size = scrollBar.getSize();
@@ -67,7 +67,8 @@ public class NvgScrollBarRenderer extends NvgDefaultComponentRenderer<ScrollBar>
 
             // draw scroll button
             drawScrollButton(nanovg, pos, size, scrollBar, diff, offset, vertical);
-        } resetScissor(nanovg);
+        }
+        resetScissor(nanovg);
     }
 
     /**

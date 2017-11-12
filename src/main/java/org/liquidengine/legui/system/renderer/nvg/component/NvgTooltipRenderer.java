@@ -26,7 +26,6 @@ import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
 import org.liquidengine.legui.system.context.Context;
-import org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgShapes;
 import org.lwjgl.nanovg.NVGColor;
 import org.lwjgl.nanovg.NVGTextRow;
@@ -39,7 +38,8 @@ public class NvgTooltipRenderer extends NvgDefaultComponentRenderer<Tooltip> {
 
     @Override
     public void renderSelf(Tooltip component, Context context, long nanovg) {
-        createScissor(nanovg, component);  {
+        createScissor(nanovg, component);
+        {
             TextState textState = component.getTextState();
             Vector2f pos = component.getAbsolutePosition();
             Vector2f size = component.getSize();
@@ -109,6 +109,7 @@ public class NvgTooltipRenderer extends NvgDefaultComponentRenderer<Tooltip> {
             } finally {
                 memFree(byteText);
             }
-        } resetScissor(nanovg);
+        }
+        resetScissor(nanovg);
     }
 }

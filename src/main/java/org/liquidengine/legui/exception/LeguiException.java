@@ -29,6 +29,7 @@ public class LeguiException extends RuntimeException {
      * @param message the detail message (which is saved for later retrieval by the {@link #getMessage()} method).
      * @param cause the cause (which is saved for later retrieval by the {@link #getCause()} method).  (A <tt>null</tt> value is permitted, and indicates that
      * the cause is nonexistent or unknown.)
+     *
      * @since 1.4
      */
     public LeguiException(String message, Throwable cause) {
@@ -42,6 +43,7 @@ public class LeguiException extends RuntimeException {
      *
      * @param cause the cause (which is saved for later retrieval by the {@link #getCause()} method).  (A <tt>null</tt> value is permitted, and indicates that
      * the cause is nonexistent or unknown.)
+     *
      * @since 1.4
      */
     public LeguiException(Throwable cause) {
@@ -56,6 +58,7 @@ public class LeguiException extends RuntimeException {
      * @param cause the cause.  (A {@code null} value is permitted, and indicates that the cause is nonexistent or unknown.)
      * @param enableSuppression whether or not suppression is enabled or disabled
      * @param writableStackTrace whether or not the stack trace should be writable
+     *
      * @since 1.7
      */
     public LeguiException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {

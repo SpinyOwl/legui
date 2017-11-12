@@ -10,7 +10,6 @@ import org.liquidengine.legui.component.RadioButton;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.icon.Icon;
 import org.liquidengine.legui.system.context.Context;
-import org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgShapes;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgText;
 
@@ -21,7 +20,8 @@ public class NvgRadioButtonRenderer extends NvgDefaultComponentRenderer<RadioBut
 
     @Override
     public void renderSelf(RadioButton radioButton, Context context, long nanovg) {
-        createScissor(nanovg, radioButton);  {
+        createScissor(nanovg, radioButton);
+        {
             // default renderer used
             Vector2f pos = radioButton.getAbsolutePosition();
             Vector2f size = radioButton.getSize();
@@ -42,6 +42,7 @@ public class NvgRadioButtonRenderer extends NvgDefaultComponentRenderer<RadioBut
 
             NvgText.drawTextLineToRect(nanovg, textState, textRectPos, textRectSize, true);
             renderIcon(icon, radioButton, context);
-        } resetScissor(nanovg);
+        }
+        resetScissor(nanovg);
     }
 }

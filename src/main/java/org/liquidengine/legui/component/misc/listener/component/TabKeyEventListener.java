@@ -36,14 +36,21 @@ public class TabKeyEventListener implements EventListener<KeyEvent> {
             if (controlPressed && !shiftPressed) {
                 Component next = findNext(event.getComponent());
                 // if ((next == null || next == component) && cycled) next = event.getContext().getFrame().getContainer();
-                moveToNext(event.getContext(), event.getComponent(), next, event.getFrame());
+                moveToNextTabFocusableComponent(event.getContext(), event.getComponent(), next, event.getFrame());
             } else if (controlPressed && shiftPressed) {
                 Component prev = findPrev(event.getComponent());
-                moveToNext(event.getContext(), event.getComponent(), prev, event.getFrame());
+                moveToNextTabFocusableComponent(event.getContext(), event.getComponent(), prev, event.getFrame());
             }
         }
     }
 
+    /**
+     * Used to find previous component (components sorted by tab index).
+     *
+     * @param component current component.
+     *
+     * @return previous component.
+     */
     private Component findPrev(Component component) {
         if (!component.isVisible()) {
             return null;
@@ -58,6 +65,15 @@ public class TabKeyEventListener implements EventListener<KeyEvent> {
 
     }
 
+    /**
+     * Used to find previous component in parent (in neighbors).
+     *
+     * @param component current component.
+     * @param parent parent component.
+     * @param prev current previous component.
+     *
+     * @return previous component.
+     */
     private Component findPrevInParent(Component component, Component parent, Component prev) {
         if (parent == null) {
             return prev;
@@ -100,6 +116,14 @@ public class TabKeyEventListener implements EventListener<KeyEvent> {
         return prev;
     }
 
+    /**
+     * Used to find previous component in child components.
+     *
+     * @param childs child components.
+     * @param prev current previous component.
+     *
+     * @return previous component.
+     */
     private Component findPrevInChilds(List<Component> childs, Component prev) {
         childs.sort(comparator);
         Collections.reverse(childs);
@@ -125,6 +149,13 @@ public class TabKeyEventListener implements EventListener<KeyEvent> {
         return prev;
     }
 
+    /**
+     * Used to find next component (components sorted by tab index).
+     *
+     * @param component current component.
+     *
+     * @return next component.
+     */
     private Component findNext(Component component) {
         if (!component.isVisible()) {
             return null;
@@ -145,6 +176,14 @@ public class TabKeyEventListener implements EventListener<KeyEvent> {
         return next;
     }
 
+    /**
+     * Used to find next component in child components.
+     *
+     * @param childs child components.
+     * @param next current next component.
+     *
+     * @return next component.
+     */
     private Component findNextInChilds(List<Component> childs, Component next) {
         if (childs.isEmpty()) {
             return next;
@@ -171,6 +210,15 @@ public class TabKeyEventListener implements EventListener<KeyEvent> {
         return next;
     }
 
+    /**
+     * Used to find next component in parent (in neighbors).
+     *
+     * @param component current component.
+     * @param parent parent component.
+     * @param next current next component.
+     *
+     * @return next component.
+     */
     private Component findNextInParent(Component component, Component parent, Component next) {
         if (parent == null) {
             return next;
@@ -205,7 +253,15 @@ public class TabKeyEventListener implements EventListener<KeyEvent> {
         return next;
     }
 
-    private void moveToNext(Context context, Component component, Component next, Frame frame) {
+    /**
+     * Used to move to found focusable component.
+     *
+     * @param context context (used in {@link FocusEvent} generation).
+     * @param component current component.
+     * @param next next component.
+     * @param frame frame (used in {@link FocusEvent} generation).
+     */
+    private void moveToNextTabFocusableComponent(Context context, Component component, Component next, Frame frame) {
         if (component != null) {
             component.setFocused(false);
             EventProcessor.getInstance().pushEvent(new FocusEvent<>(component, context, frame, next, false));

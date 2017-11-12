@@ -33,7 +33,7 @@ public class DarkWidgetTheme<T extends Widget> extends DarkComponentTheme<T> {
         component.getTitleContainer().setBackgroundColor(ColorConstants.lightBlack());
         component.setTitleBackgroundColor(ColorConstants.lightBlack());
         TextState titleTextState = component.getTitleTextState();
-        titleTextState.setPadding(7,3,5,2);
+        titleTextState.setPadding(7, 3, 5, 2);
         titleTextState.setTextColor(ColorConstants.white());
         Icon closeIcon = component.getCloseIcon();
         if (closeIcon != null && closeIcon instanceof CharIcon) {

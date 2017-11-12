@@ -34,7 +34,6 @@ import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
 import org.liquidengine.legui.input.Mouse;
 import org.liquidengine.legui.system.context.Context;
-import org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgShapes;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgText;
 import org.lwjgl.glfw.GLFW;
@@ -54,7 +53,8 @@ public class NvgPasswordInputRenderer extends NvgDefaultComponentRenderer<Passwo
 
     @Override
     public void renderSelf(PasswordInput passwordInput, Context leguiContext, long nanovg) {
-        createScissor(nanovg, passwordInput);  {
+        createScissor(nanovg, passwordInput);
+        {
             Vector2f pos = passwordInput.getAbsolutePosition();
             Vector2f size = passwordInput.getSize();
             boolean enabled = passwordInput.isEnabled();
@@ -76,7 +76,8 @@ public class NvgPasswordInputRenderer extends NvgDefaultComponentRenderer<Passwo
             Vector4f intersectRect = new Vector4f(pos.x + p.x, pos.y + p.y, size.x - p.x - p.z, size.y - p.y - p.w);
             intersectScissor(nanovg, new Vector4f(intersectRect).sub(1, 1, -2, -2));
             renderText(leguiContext, nanovg, passwordInput, size, intersectRect, bc);
-        } resetScissor(nanovg);
+        }
+        resetScissor(nanovg);
     }
 
     /**
