@@ -1,23 +1,41 @@
 <table>
   <tr>
-    <th align="center">Size</th>
-    <th align="center">Codacy</th>
-    <th align="center">Develop</th>
-    <th align="center">Snapshot</th>
-    <th align="center">Release</th>
+    <td>
+      <img src="https://img.shields.io/github/repo-size/LiquidEngine/legui.svg?style=for-the-badge" />
+    </td>
+    <td>
+      <a href="https://www.codacy.com/app/LiquidEngine/legui">
+        <img src="https://img.shields.io/codacy/grade/e3a864cc6d6a4f08938a7b368bdb35da.svg?style=for-the-badge&label=CODACY"/>
+      </a>
+    </td>
+    <td>
+      <a href="http://jenkins.liquidengine.tk/job/LEGUI_DEVELOP/">
+        <img src="https://img.shields.io/jenkins/s/http/jenkins.liquidengine.tk/job/LEGUI_DEVELOP.svg?style=for-the-badge&label=DEVELOP%20BUILD" />
+      </a>
+    </td>
+    <td>
+      <a href="http://jenkins.liquidengine.tk/job/LEGUI_SNAPSHOTS/">
+        <img src="https://img.shields.io/jenkins/s/http/jenkins.liquidengine.tk/job/LEGUI_SNAPSHOTS.svg?style=for-the-badge&label=SNAPSHOT%20BUILD" />
+      </a>
+    </td>
+    <td>
+      <a href="http://jenkins.liquidengine.tk/job/LEGUI_RELEASES/">
+        <img src="https://img.shields.io/jenkins/s/http/jenkins.liquidengine.tk/job/LEGUI_RELEASES.svg?style=for-the-badge&label=RELEASE%20BUILD" />
+      </a>
+    </td>
   </tr>
   <tr>
-    <td align="center"><img src="https://reposs.herokuapp.com/?path=LiquidEngine/legui"/></td>
-    <td align="center"><a href="https://www.codacy.com/app/LiquidEngine/legui?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=LiquidEngine/legui&amp;utm_campaign=Badge_Grade"><img src="https://api.codacy.com/project/badge/Grade/e3a864cc6d6a4f08938a7b368bdb35da"/></a></td>
-    <td align="center"><a href="http://jenkins.liquidengine.tk/job/LEGUI_DEVELOP/" target="_blank">
-      <img src="http://jenkins.liquidengine.tk/buildStatus/icon?job=LEGUI_DEVELOP"/>
-    </a></td>
-    <td align="center"><a href="http://jenkins.liquidengine.tk/job/LEGUI_SNAPSHOTS/" target="_blank">
-      <img src="http://jenkins.liquidengine.tk/buildStatus/icon?job=LEGUI_SNAPSHOTS"/>
-    </a></td>
-    <td align="center"><a href="http://jenkins.liquidengine.tk/job/LEGUI_RELEASES/" target="_blank">
-      <img src="http://jenkins.liquidengine.tk/buildStatus/icon?job=LEGUI_RELEASES"/>
-    </a></td>
+    <td></td>
+    <td></td>
+    <td>
+      <img src="https://img.shields.io/badge/dynamic/json.svg?label=develop%20version&colorB=00796b&prefix=&suffix=&query=$.version&uri=http%3A%2F%2Fjenkins.liquidengine.tk%2Fjob%2FLEGUI_DEVELOP%2FlastBuild%2Fartifact%2FfullVersion.json&style=for-the-badge" />
+    </td>
+    <td>
+      <img src="https://img.shields.io/badge/dynamic/json.svg?label=snapshot%20version&colorB=00796b&prefix=&suffix=&query=$.version&uri=http%3A%2F%2Fjenkins.liquidengine.tk%2Fjob%2FLEGUI_SNAPSHOTS%2FlastBuild%2Fartifact%2FfullVersion.json&style=for-the-badge" />
+    </td>
+    <td>
+      <img src="https://img.shields.io/badge/dynamic/json.svg?label=release%20version&colorB=00796b&prefix=&suffix=&query=$.version&uri=http%3A%2F%2Fjenkins.liquidengine.tk%2Fjob%2FLEGUI_RELEASES%2FlastBuild%2Fartifact%2FfullVersion.json&style=for-the-badge" />
+    </td>
   </tr>
 </table>
 
@@ -80,9 +98,6 @@ compile group: 'org.liquidengine', name: 'legui', version: legui_version + '-SNA
 // LEGUI - RELEASE - https://github.com/LiquidEngine/legui
 compile group: 'org.liquidengine', name: 'legui', version: legui_version, changing: true;
   ```
-  
-  Current `SNAPSHOT` version you can find in [SNAPSHOT version.json](https://github.com/LiquidEngine/legui/blob/snapshots/version.json)  
-  Current `RELEASE` version you can find in [RELEASE version.json](https://github.com/LiquidEngine/legui/blob/releases/version.json)  
   
 ## Examples:
 All examples located here: 
