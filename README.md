@@ -1,46 +1,14 @@
-<table>
-  <tr>
-    <td>
-      <img src="https://img.shields.io/github/repo-size/LiquidEngine/legui.svg?style=for-the-badge" />
-    </td>
-    <td>
-      <a href="https://www.codacy.com/app/LiquidEngine/legui">
-        <img src="https://img.shields.io/codacy/grade/e3a864cc6d6a4f08938a7b368bdb35da.svg?style=for-the-badge&label=CODACY"/>
-      </a>
-    </td>
-    <td>
-      <a href="http://jenkins.liquidengine.tk/job/LEGUI_DEVELOP/">
-        <img src="https://img.shields.io/jenkins/s/http/jenkins.liquidengine.tk/job/LEGUI_DEVELOP.svg?style=for-the-badge&label=DEVELOP%20BUILD" />
-      </a>
-    </td>
-    <td>
-      <a href="http://jenkins.liquidengine.tk/job/LEGUI_SNAPSHOTS/">
-        <img src="https://img.shields.io/jenkins/s/http/jenkins.liquidengine.tk/job/LEGUI_SNAPSHOTS.svg?style=for-the-badge&label=SNAPSHOT%20BUILD" />
-      </a>
-    </td>
-    <td>
-      <a href="http://jenkins.liquidengine.tk/job/LEGUI_RELEASES/">
-        <img src="https://img.shields.io/jenkins/s/http/jenkins.liquidengine.tk/job/LEGUI_RELEASES.svg?style=for-the-badge&label=RELEASE%20BUILD" />
-      </a>
-    </td>
-  </tr>
-  <tr>
-    <td></td>
-    <td></td>
-    <td>
-      <img src="https://img.shields.io/badge/dynamic/json.svg?label=develop%20version&colorB=00796b&prefix=&suffix=&query=$.version&uri=http%3A%2F%2Fjenkins.liquidengine.tk%2Fjob%2FLEGUI_DEVELOP%2FlastBuild%2Fartifact%2FfullVersion.json&style=for-the-badge" />
-    </td>
-    <td>
-      <img src="https://img.shields.io/badge/dynamic/json.svg?label=snapshot%20version&colorB=00796b&prefix=&suffix=&query=$.version&uri=http%3A%2F%2Fjenkins.liquidengine.tk%2Fjob%2FLEGUI_SNAPSHOTS%2FlastBuild%2Fartifact%2FfullVersion.json&style=for-the-badge" />
-    </td>
-    <td>
-      <img src="https://img.shields.io/badge/dynamic/json.svg?label=release%20version&colorB=00796b&prefix=&suffix=&query=$.version&uri=http%3A%2F%2Fjenkins.liquidengine.tk%2Fjob%2FLEGUI_RELEASES%2FlastBuild%2Fartifact%2FfullVersion.json&style=for-the-badge" />
-    </td>
-  </tr>
-</table>
+[![REPO SIZE](https://img.shields.io/github/repo-size/LiquidEngine/legui.svg?style=for-the-badge)]()
+[![CODACY](https://img.shields.io/codacy/grade/e3a864cc6d6a4f08938a7b368bdb35da.svg?style=for-the-badge)](https://www.codacy.com/app/LiquidEngine/legui)
 
-_**(This is too early stuff and it would be implemented in little bit new way than previous version)**_  
-_**(Work in progress)**_
+[![DEVELOP BUILD](https://img.shields.io/jenkins/s/http/jenkins.liquidengine.tk/job/LEGUI_DEVELOP.svg?label=develop&style=for-the-badge)](http://jenkins.liquidengine.tk/job/LEGUI_DEVELOP/)
+[![](https://img.shields.io/jenkins/s/http/jenkins.liquidengine.tk/job/LEGUI_SNAPSHOTS.svg?label=snapshot&style=for-the-badge)](http://jenkins.liquidengine.tk/job/LEGUI_SNAPSHOTS/)
+[![](https://img.shields.io/jenkins/s/http/jenkins.liquidengine.tk/job/LEGUI_RELEASES.svg?label=release&style=for-the-badge)](http://jenkins.liquidengine.tk/job/LEGUI_RELEASES/)
+
+[![](https://img.shields.io/badge/dynamic/json.svg?label=develop&colorB=00796b&prefix=&suffix=&query=$.version&uri=http%3A%2F%2Fjenkins.liquidengine.tk%2Fjob%2FLEGUI_DEVELOP%2FlastBuild%2Fartifact%2FfullVersion.json&style=for-the-badge)]()
+[![](https://img.shields.io/badge/dynamic/json.svg?label=snapshot&colorB=00796b&prefix=&suffix=&query=$.version&uri=http%3A%2F%2Fjenkins.liquidengine.tk%2Fjob%2FLEGUI_SNAPSHOTS%2FlastBuild%2Fartifact%2FfullVersion.json&style=for-the-badge)]()
+[![](https://img.shields.io/badge/dynamic/json.svg?label=release&colorB=00796b&prefix=&suffix=&query=$.version&uri=http%3A%2F%2Fjenkins.liquidengine.tk%2Fjob%2FLEGUI_RELEASES%2FlastBuild%2Fartifact%2FfullVersion.json&style=for-the-badge)]()
+
 ___
 # LEGUI - [What is it?](https://liquidengine.github.io/legui/)  
 GUI implementation for using with LWJGL3.
