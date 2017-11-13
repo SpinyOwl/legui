@@ -5,15 +5,15 @@
 
 ## [1.3.2]
 ### Changed
-- Removed generic from component. fe26a6a716dc7f0c8e5ba105fc8da9ca289e7c6d
-- Fixed tooltip component. ddf43eae2d5c57bb4e10cad5ae941cc7f366114d
-- Updated tooltip javadocs. b3d7e4f5a425a6ff27f6b90fd0b966579954cddb
-- Removed lamda method 'renderInScissor' in rendering utilities. 3d99486300f6b998287251c49e7f58d09b108fae
+- Removed generic from component. https://github.com/LiquidEngine/legui/commit/fe26a6a716dc7f0c8e5ba105fc8da9ca289e7c6d
+- Fixed tooltip component. https://github.com/LiquidEngine/legui/commit/ddf43eae2d5c57bb4e10cad5ae941cc7f366114d
+- Updated tooltip javadocs. https://github.com/LiquidEngine/legui/commit/b3d7e4f5a425a6ff27f6b90fd0b966579954cddb
+- Removed lamda method 'renderInScissor' in rendering utilities. https://github.com/LiquidEngine/legui/commit/3d99486300f6b998287251c49e7f58d09b108fae
 ### Major 
-- Added tabbing (#2) as additional key event listener. eac5f4a6e31e6644aa64e259f0f6f7c48c6f33cd 
-- Added `TAB` key callback for text area - adds 4 spaces. 19f6ca78f615f9560ef267d2b31bb4c66011984f
-- Updated text area renderer to support `\t` symbol. 326a0837321bf74ba21d15520c0352ab0faca5a7
-- Added focus event generation on switching between components using tab. 811a4b2e50876590689e327a0640662fa87b3c00
+- Added tabbing (https://github.com/LiquidEngine/legui/issues/2) as additional key event listener. https://github.com/LiquidEngine/legui/commit/eac5f4a6e31e6644aa64e259f0f6f7c48c6f33cd 
+- Added `TAB` key callback for text area - adds 4 spaces. https://github.com/LiquidEngine/legui/commit/19f6ca78f615f9560ef267d2b31bb4c66011984f
+- Updated text area renderer to support `\t` symbol. https://github.com/LiquidEngine/legui/commit/326a0837321bf74ba21d15520c0352ab0faca5a7
+- Added focus event generation on switching between components using tab. https://github.com/LiquidEngine/legui/commit/811a4b2e50876590689e327a0640662fa87b3c00
 ### Fixes 
 - Fixed new created issues with marshallers
 
