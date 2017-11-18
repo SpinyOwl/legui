@@ -57,10 +57,10 @@ import org.liquidengine.legui.system.renderer.nvg.image.NvgLoadableImageRenderer
  */
 public class NvgRendererProvider extends RendererProvider {
 
-    private Map<Class<? extends Component>, NvgComponentRenderer<? extends Component>> componentRendererMap = new ConcurrentHashMap<>();
-    private Map<Class<? extends Border>, NvgBorderRenderer<? extends Border>> borderRendererMap = new ConcurrentHashMap<>();
-    private Map<Class<? extends Icon>, NvgIconRenderer<? extends Icon>> iconRendererMap = new ConcurrentHashMap<>();
-    private Map<Class<? extends Image>, NvgImageRenderer<? extends Image>> imageRendererMap = new ConcurrentHashMap<>();
+    private Map<Class<? extends Component>, ComponentRenderer<? extends Component>> componentRendererMap = new ConcurrentHashMap<>();
+    private Map<Class<? extends Border>, BorderRenderer<? extends Border>> borderRendererMap = new ConcurrentHashMap<>();
+    private Map<Class<? extends Icon>, IconRenderer<? extends Icon>> iconRendererMap = new ConcurrentHashMap<>();
+    private Map<Class<? extends Image>, ImageRenderer<? extends Image>> imageRendererMap = new ConcurrentHashMap<>();
 
     private NvgComponentRenderer defaultComponentRenderer = new NvgDefaultComponentRenderer();
     private NvgBorderRenderer defaultBorderRenderer = new NvgDefaultBorderRenderer();
@@ -135,7 +135,12 @@ public class NvgRendererProvider extends RendererProvider {
         return renderer;
     }
 
+
     public <I extends Component, R extends NvgComponentRenderer<I>> void putComponentRenderer(Class<I> imageClass, R renderer) {
+        addComponentRenderer(imageClass, renderer);
+    }
+
+    protected <I extends Component, R extends ComponentRenderer<I>> void addComponentRenderer(Class<I> imageClass, R renderer) {
         if (imageClass == null || renderer == null) {
             return;
         }
@@ -143,6 +148,10 @@ public class NvgRendererProvider extends RendererProvider {
     }
 
     public <I extends Border, R extends NvgBorderRenderer<I>> void putBorderRenderer(Class<I> imageClass, R renderer) {
+        addBorderRenderer(imageClass, renderer);
+    }
+
+    protected <I extends Border, R extends BorderRenderer<I>> void addBorderRenderer(Class<I> imageClass, R renderer) {
         if (imageClass == null || renderer == null) {
             return;
         }
@@ -151,6 +160,10 @@ public class NvgRendererProvider extends RendererProvider {
 
 
     public <I extends Icon, R extends NvgIconRenderer<I>> void putIconRenderer(Class<I> imageClass, R renderer) {
+        addIconRenderer(imageClass, renderer);
+    }
+
+    protected <I extends Icon, R extends IconRenderer<I>> void addIconRenderer(Class<I> imageClass, R renderer) {
         if (imageClass == null || renderer == null) {
             return;
         }
@@ -159,6 +172,10 @@ public class NvgRendererProvider extends RendererProvider {
 
 
     public <I extends Image, R extends NvgImageRenderer<I>> void putImageRenderer(Class<I> imageClass, R renderer) {
+        addImageRenderer(imageClass, renderer);
+    }
+
+    protected <I extends Image, R extends ImageRenderer<I>> void addImageRenderer(Class<I> imageClass, R renderer) {
         if (imageClass == null || renderer == null) {
             return;
         }
