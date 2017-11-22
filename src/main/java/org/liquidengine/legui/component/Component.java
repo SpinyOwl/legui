@@ -117,6 +117,30 @@ public abstract class Component implements Serializable {
     private boolean tabFocusable = true;
 
     ////////////////////////////////
+    //// COMPONENT LAYER DATA
+    ////////////////////////////////
+
+    /**
+     * Preferred size of component. Used to set preferred size of component for layout manager. Layout manager will try to make this component size equal to
+     * preferred.
+     * <p>
+     * {@code -1} is default value - that means that layout manager will calculate preferred size.
+     */
+    private Vector2f preferredSize = new Vector2f(-1);
+
+    /**
+     * Minimum size of component. Used to set minimum size of component for layout manager. Layout manager uses this minimum size if component should be as
+     * small as possible. If one of dimensions is <= 0 this minimum size is 0.
+     */
+    private Vector2f minimumSize = new Vector2f();
+
+    /**
+     * Maximum size of component. Used to set maximum size of component for layout manager. Layout manager uses this maximum size if component should be as
+     * small as possible. If one of dimensions is <= 0 this maximum size is 0.
+     */
+    private Vector2f maximumSize = new Vector2f(-1);
+
+    ////////////////////////////////
     //// CONTAINER BASE DATA
     ////////////////////////////////
 
@@ -599,6 +623,86 @@ public abstract class Component implements Serializable {
      */
     public void setTabFocusable(boolean tabFocusable) {
         this.tabFocusable = tabFocusable;
+    }
+
+    ////////////////////////////////
+    //// COMPONENT LAYER DATA
+    ////////////////////////////////
+
+    /**
+     * Gets preferred size.
+     * <p>
+     * Preferred size of component. Used to set preferred size of component for layout manager. Layout manager will try to make this component size equal to
+     * preferred.
+     * <p>
+     * {@code -1} is default value - that means that layout manager will calculate preferred size.
+     *
+     * @return the preferred size.
+     */
+    public Vector2f getPreferredSize() {
+        return preferredSize;
+    }
+
+    /**
+     * Sets preferred size.
+     * <p>
+     * Preferred size of component. Used to set preferred size of component for layout manager. Layout manager will try to make this component size equal to
+     * preferred.
+     * <p>
+     * {@code -1} is default value - that means that layout manager will calculate preferred size.
+     *
+     * @param preferredSize the preferred size.
+     */
+    public void setPreferredSize(Vector2f preferredSize) {
+        this.preferredSize = preferredSize;
+    }
+
+    /**
+     * Gets minimum size.
+     * <p>
+     * Minimum size of component. Used to set minimum size of component for layout manager. Layout manager uses this minimum size if component should be as
+     * small as possible. If one of dimensions is <= 0 this minimum size is 0.
+     *
+     * @return the minimum size.
+     */
+    public Vector2f getMinimumSize() {
+        return minimumSize;
+    }
+
+    /**
+     * Sets minimum size.
+     * <p>
+     * Minimum size of component. Used to set minimum size of component for layout manager. Layout manager uses this minimum size if component should be as
+     * small as possible. If one of dimensions is <= 0 this minimum size is 0.
+     *
+     * @param minimumSize the minimum size.
+     */
+    public void setMinimumSize(Vector2f minimumSize) {
+        this.minimumSize = minimumSize;
+    }
+
+    /**
+     * Gets maximum size.
+     * <p>
+     * Maximum size of component. Used to set maximum size of component for layout manager. Layout manager uses this maximum size if component should be as
+     * small as possible. If one of dimensions is <= 0 this maximum size is 0.
+     *
+     * @return the maximum size.
+     */
+    public Vector2f getMaximumSize() {
+        return maximumSize;
+    }
+
+    /**
+     * Sets maximum size.
+     * <p>
+     * Maximum size of component. Used to set maximum size of component for layout manager. Layout manager uses this maximum size if component should be as
+     * small as possible. If one of dimensions is <= 0 this maximum size is 0.
+     *
+     * @param maximumSize the maximum size.
+     */
+    public void setMaximumSize(Vector2f maximumSize) {
+        this.maximumSize = maximumSize;
     }
 
     /////////////////////////////////
