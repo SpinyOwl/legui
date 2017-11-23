@@ -25,7 +25,6 @@ import static org.liquidengine.legui.marshal.json.gsonimpl.GsonUtil.readColor;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import java.util.ArrayList;
 import java.util.List;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.marshal.json.gsonimpl.AbstractGsonMarshaller;
@@ -153,30 +152,18 @@ public class GsonComponentMarshaller<T extends Component> extends AbstractGsonMa
             object.setTooltip(GsonMarshalUtil.unmarshal((JsonObject) tooltip));
         }
 
-        List<Component> componentList = new ArrayList<>();
         JsonElement components = json.get(COMPONENTS);
         if (isNotNull(components) && components.isJsonArray()) {
             JsonArray comps = components.getAsJsonArray();
             for (JsonElement comp : comps) {
-                processComponent(context, componentList, comp);
+                if (isNotNull(comp) && comp.isJsonObject()) {
+                    Object o = GsonMarshalUtil.unmarshal(comp.getAsJsonObject(), context);
+                    if (o instanceof Component) {
+                        object.add((Component) o);
+                    }
+                }
             }
         }
-        object.addAll(componentList);
     }
 
-    /**
-     * Used to process one JSON component and put it to component list.
-     *
-     * @param context context.
-     * @param componentList component list.
-     * @param comp json component to unmarshal.
-     */
-    private void processComponent(GsonMarshalContext context, List<Component> componentList, JsonElement comp) {
-        if (isNotNull(comp) && comp.isJsonObject()) {
-            Object o = GsonMarshalUtil.unmarshal(comp.getAsJsonObject(), context);
-            if (o instanceof Component) {
-                componentList.add((Component) o);
-            }
-        }
-    }
 }

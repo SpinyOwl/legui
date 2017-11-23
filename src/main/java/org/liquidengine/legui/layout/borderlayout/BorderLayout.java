@@ -19,6 +19,24 @@ public class BorderLayout implements Layout {
     private Component rightComponent;
     private Component bottomComponent;
 
+    /**
+     * Default constructor without gaps.
+     */
+    public BorderLayout() {
+    }
+
+    /**
+     * Constructor allows to set gaps between components.
+     *
+     * @param horizontalGap horizontal gap.
+     * @param verticalGap vertical gap.
+     */
+    public BorderLayout(float horizontalGap, float verticalGap) {
+
+        this.horizontalGap = horizontalGap;
+        this.verticalGap = verticalGap;
+    }
+
     @Override
     public void addComponent(Component component, LayoutConstraint constraint) {
         if (constraint == null || constraint instanceof BorderLayoutConstraint) {
@@ -146,6 +164,47 @@ public class BorderLayout implements Layout {
 
     @Override
     public void layout(Component parent) {
+        Vector2f parentSize = parent.getSize();
+        float left = 0; // later will be added paddings and margins
+        float right = parentSize.x;
+        float top = 0;
+        float bottom = parentSize.y;
 
+        if (topComponent != null) {
+            Vector2f pref = topComponent.getPreferredSize();
+            topComponent.setSize(right - left, pref.y);
+            topComponent.setPosition(left, top);
+            top += pref.y + verticalGap;
+        }
+        if (bottomComponent != null) {
+            Vector2f pref = bottomComponent.getPreferredSize();
+            bottomComponent.setSize(right - left, pref.y);
+            bottomComponent.setPosition(left, bottom - pref.y);
+            bottom -= pref.y + verticalGap;
+        }
+        if (leftComponent != null) {
+            Vector2f pref = leftComponent.getPreferredSize();
+            leftComponent.setSize(pref.x, bottom - top);
+            leftComponent.setPosition(left, top);
+            left += pref.x + horizontalGap;
+        }
+        if (rightComponent != null) {
+            Vector2f pref = rightComponent.getPreferredSize();
+            rightComponent.setSize(pref.x, bottom - top);
+            rightComponent.setPosition(right - pref.x, top);
+            right -= pref.x + horizontalGap;
+        }
+        if (centerComponent != null) {
+            Vector2f minimumSize = centerComponent.getMinimumSize();
+            Vector2f size = new Vector2f(right - left, bottom - top);
+            if (minimumSize.x > size.x) {
+                size.x = minimumSize.x;
+            }
+            if (minimumSize.y > size.y) {
+                size.y = minimumSize.y;
+            }
+            centerComponent.setSize(size);
+            centerComponent.setPosition(left, top);
+        }
     }
 }

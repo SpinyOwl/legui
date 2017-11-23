@@ -17,7 +17,7 @@ public class SliderMouseClickEventListener implements MouseClickEventListener {
     @Override
     public void process(MouseClickEvent event) {
         if (event.getButton().equals(Mouse.MouseButton.MOUSE_BUTTON_LEFT) && event.getAction() == MouseClickEvent.MouseClickAction.PRESS) {
-            Slider slider = (Slider) event.getComponent();
+            Slider slider = (Slider) event.getTargetComponent();
             Vector2f pos = slider.getAbsolutePosition();
 
             Vector2f cursorPosition = Mouse.getCursorPosition();

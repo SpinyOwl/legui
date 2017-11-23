@@ -40,7 +40,7 @@ public class TextInputKeyEventListener implements KeyEventListener {
      */
     @Override
     public void process(KeyEvent event) {
-        TextInput gui = (TextInput) event.getComponent();
+        TextInput gui = (TextInput) event.getTargetComponent();
         int key = event.getKey();
         boolean pressed = event.getAction() != GLFW_RELEASE;
         if (key == GLFW_KEY_LEFT && pressed) {

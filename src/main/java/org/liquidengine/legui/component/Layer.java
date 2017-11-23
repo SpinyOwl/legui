@@ -573,19 +573,6 @@ public class Layer<T extends Component> {
     }
 
     /**
-     * Used to add components.
-     *
-     * @param components components nodes to add.
-     *
-     * @return true if added.
-     *
-     * @see List#addAll(Collection)
-     */
-    public boolean addAll(Collection<? extends Component> components) {
-        return container.addAll(components);
-    }
-
-    /**
      * Used to remove component.
      *
      * @param component component to remove.

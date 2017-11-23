@@ -20,7 +20,7 @@ public class CheckBoxMouseClickEventListener implements MouseClickEventListener 
      */
     @Override
     public void process(MouseClickEvent event) {
-        CheckBox checkBox = (CheckBox) event.getComponent();
+        CheckBox checkBox = (CheckBox) event.getTargetComponent();
         if (event.getAction() == CLICK) {
             boolean checked = checkBox.isChecked();
             checkBox.setChecked(!checked);

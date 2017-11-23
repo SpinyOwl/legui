@@ -16,7 +16,7 @@ public class TextAreaMouseClickEventListener implements MouseClickEventListener 
      */
     @Override
     public void process(MouseClickEvent event) {
-        TextArea textArea = (TextArea) event.getComponent();
+        TextArea textArea = (TextArea) event.getTargetComponent();
         if (event.getAction() == MouseClickEvent.MouseClickAction.PRESS) {
             int mouseCaretPosition = textArea.getMouseCaretPosition();
             textArea.setCaretPosition(mouseCaretPosition);

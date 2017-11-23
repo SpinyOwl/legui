@@ -26,6 +26,7 @@ import org.liquidengine.legui.event.KeyEvent;
 import org.liquidengine.legui.intersection.Intersector;
 import org.liquidengine.legui.intersection.RectangleIntersector;
 import org.liquidengine.legui.layout.Layout;
+import org.liquidengine.legui.layout.LayoutConstraint;
 import org.liquidengine.legui.listener.ListenerMap;
 import org.liquidengine.legui.theme.Themes;
 
@@ -132,19 +133,19 @@ public abstract class Component implements Serializable {
      * <p>
      * {@code -1} is default value - that means that layout manager will calculate preferred size.
      */
-    private Vector2f preferredSize = new Vector2f(-1);
+    private Vector2f preferredSize;
 
     /**
      * Minimum size of component. Used to set minimum size of component for layout manager. Layout manager uses this minimum size if component should be as
      * small as possible. If one of dimensions is <= 0 this minimum size is 0.
      */
-    private Vector2f minimumSize = new Vector2f();
+    private Vector2f minimumSize;
 
     /**
      * Maximum size of component. Used to set maximum size of component for layout manager. Layout manager uses this maximum size if component should be as
      * small as possible. If one of dimensions is <= 0 this maximum size is 0.
      */
-    private Vector2f maximumSize = new Vector2f(-1);
+    private Vector2f maximumSize;
 
     ////////////////////////////////
     //// CONTAINER BASE DATA
@@ -665,6 +666,13 @@ public abstract class Component implements Serializable {
      * @return the preferred size.
      */
     public Vector2f getPreferredSize() {
+        if (preferredSize == null) {
+            if (layout != null) {
+                preferredSize = layout.getPreferredSize(this);
+            } else {
+                preferredSize = new Vector2f(size);
+            }
+        }
         return preferredSize;
     }
 
@@ -691,6 +699,13 @@ public abstract class Component implements Serializable {
      * @return the minimum size.
      */
     public Vector2f getMinimumSize() {
+        if (minimumSize == null) {
+            if (layout != null) {
+                minimumSize = layout.getMinimumSize(this);
+            } else {
+                minimumSize = new Vector2f();
+            }
+        }
         return minimumSize;
     }
 
@@ -715,6 +730,13 @@ public abstract class Component implements Serializable {
      * @return the maximum size.
      */
     public Vector2f getMaximumSize() {
+        if (maximumSize == null) {
+            if (layout != null) {
+                maximumSize = layout.getMaximumSize(this);
+            } else {
+                maximumSize = new Vector2f(Float.MAX_VALUE);
+            }
+        }
         return maximumSize;
     }
 
@@ -790,11 +812,26 @@ public abstract class Component implements Serializable {
      * @see List#add(Object)
      */
     public boolean add(Component component) {
+        return this.add(component, null);
+    }
+
+    /**
+     * Used to add component to layerFrame.
+     *
+     * @param component component to add.
+     * @param constraint layout constraint.
+     * @return true if component is added.
+     * @see List#add(Object)
+     */
+    public boolean add(Component component, LayoutConstraint constraint) {
         if (component == null || component == this || isContains(component)) {
             return false;
         }
         boolean added = components.add(component);
         if (added) {
+            if (layout != null) {
+                layout.addComponent(component, constraint);
+            }
             changeParent(component);
         }
         return added;
@@ -809,30 +846,6 @@ public abstract class Component implements Serializable {
      */
     private boolean isContains(Component component) {
         return components.stream().anyMatch(c -> c == component);
-    }
-
-    /**
-     * Used to add components.
-     *
-     * @param components components nodes to add.
-     *
-     * @return true if added.
-     *
-     * @see List#addAll(Collection)
-     */
-    public boolean addAll(Collection<? extends Component> components) {
-        if (components != null) {
-            List<Component> toAdd = new ArrayList<>();
-            components.forEach(component -> {
-                if (component != null && component != this && !isContains(component)) {
-                    changeParent(component);
-                    toAdd.add(component);
-                }
-            });
-            return this.components.addAll(toAdd);
-        } else {
-            return false;
-        }
     }
 
     /**

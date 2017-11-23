@@ -13,7 +13,7 @@ public class SliderScrollEventListener implements ScrollEventListener {
 
     @Override
     public void process(ScrollEvent event) {
-        Slider slider = (Slider) event.getComponent();
+        Slider slider = (Slider) event.getTargetComponent();
         float curValue = slider.getValue();
         float value = (float) (curValue + event.getYoffset());
 

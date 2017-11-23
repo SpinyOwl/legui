@@ -39,7 +39,7 @@ public class TextAreaKeyEventListener implements KeyEventListener {
      */
     @Override
     public void process(KeyEvent event) {
-        TextArea textArea = (TextArea) event.getComponent();
+        TextArea textArea = (TextArea) event.getTargetComponent();
         int key = event.getKey();
         boolean pressed = event.getAction() != GLFW_RELEASE;
         boolean controlPressed = (event.getMods() & GLFW_MOD_CONTROL) != 0;

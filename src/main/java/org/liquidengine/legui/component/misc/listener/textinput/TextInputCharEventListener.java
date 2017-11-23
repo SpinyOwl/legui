@@ -22,7 +22,7 @@ public class TextInputCharEventListener implements CharEventListener {
      */
     @Override
     public void process(CharEvent event) {
-        TextInput textInput = (TextInput) event.getComponent();
+        TextInput textInput = (TextInput) event.getTargetComponent();
         if (textInput.isFocused() && textInput.isEditable() && !MOUSE_BUTTON_LEFT.isPressed()) {
             String str = cpToStr(event.getCodepoint());
             TextState textState = textInput.getTextState();

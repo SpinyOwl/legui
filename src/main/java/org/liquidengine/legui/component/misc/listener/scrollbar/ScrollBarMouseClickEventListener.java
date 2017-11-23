@@ -27,7 +27,7 @@ public class ScrollBarMouseClickEventListener implements MouseClickEventListener
      */
     @Override
     public void process(MouseClickEvent event) {
-        ScrollBar scrollBar = (ScrollBar) event.getComponent();
+        ScrollBar scrollBar = (ScrollBar) event.getTargetComponent();
         boolean released = event.getAction() != MouseClickEvent.MouseClickAction.PRESS;
         if (!event.getButton().equals(MOUSE_BUTTON_LEFT)) {
             return;

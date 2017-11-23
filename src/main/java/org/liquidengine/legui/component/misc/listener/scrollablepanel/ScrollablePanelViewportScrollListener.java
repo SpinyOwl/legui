@@ -25,14 +25,14 @@ public class ScrollablePanelViewportScrollListener implements EventListener<Scro
     @Override
     public void process(ScrollEvent event) {
         ArrayList<Component> targetList = new ArrayList<>();
-        SehUtil.recursiveTargetComponentListSearch(Mouse.getCursorPosition(), event.getComponent(), targetList);
+        SehUtil.recursiveTargetComponentListSearch(Mouse.getCursorPosition(), event.getTargetComponent(), targetList);
         for (Component component : targetList) {
             if (component instanceof ScrollablePanel) {
                 return;
             }
         }
 
-        ScrollablePanel scrollablePanel = (ScrollablePanel) event.getComponent().getParent();
+        ScrollablePanel scrollablePanel = (ScrollablePanel) event.getTargetComponent().getParent();
         ScrollBar scrollBar = scrollablePanel.getVerticalScrollBar();
         float maxValue = scrollBar.getMaxValue();
         float minValue = scrollBar.getMinValue();

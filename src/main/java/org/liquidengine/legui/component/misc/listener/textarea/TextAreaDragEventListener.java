@@ -18,7 +18,7 @@ public class TextAreaDragEventListener implements MouseDragEventListener {
      */
     @Override
     public void process(MouseDragEvent event) {
-        TextArea textArea = (TextArea) event.getComponent();
+        TextArea textArea = (TextArea) event.getTargetComponent();
         if (MOUSE_BUTTON_LEFT.isPressed()) {
             int mouseCaretPosition = textArea.getMouseCaretPosition();
             textArea.setCaretPosition(mouseCaretPosition);

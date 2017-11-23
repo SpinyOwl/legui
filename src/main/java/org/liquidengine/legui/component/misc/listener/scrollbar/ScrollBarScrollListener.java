@@ -13,7 +13,7 @@ import org.liquidengine.legui.listener.processor.EventProcessor;
 public class ScrollBarScrollListener implements ScrollEventListener {
 
     public void process(ScrollEvent event) {
-        ScrollBar scrollBar = (ScrollBar) event.getComponent();
+        ScrollBar scrollBar = (ScrollBar) event.getTargetComponent();
         float maxValue = scrollBar.getMaxValue();
         float minValue = scrollBar.getMinValue();
         float curValue = scrollBar.getCurValue();

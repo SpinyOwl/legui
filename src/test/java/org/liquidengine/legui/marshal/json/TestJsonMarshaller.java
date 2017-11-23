@@ -58,7 +58,12 @@ public class TestJsonMarshaller {
         Object unMarshalled;
 
         Frame frame = new Frame();
-        frame.getContainer().addAll(createComponents(0, 0));
+
+        List<Component> components = createComponents(0, 0);
+        for (Component component : components) {
+            frame.getContainer().add(component);
+        }
+
 
         String marshalled = GsonMarshalUtil.marshal(frame);
         Frame unmarshaled = GsonMarshalUtil.unmarshal(marshalled);

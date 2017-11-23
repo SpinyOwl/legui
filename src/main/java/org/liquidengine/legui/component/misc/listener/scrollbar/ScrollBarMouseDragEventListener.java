@@ -19,7 +19,7 @@ public class ScrollBarMouseDragEventListener implements MouseDragEventListener {
 
     @Override
     public void process(MouseDragEvent event) {
-        ScrollBar scrollBar = (ScrollBar) event.getComponent();
+        ScrollBar scrollBar = (ScrollBar) event.getTargetComponent();
         if (!scrollBar.isScrolling()) {
             return;
         }
