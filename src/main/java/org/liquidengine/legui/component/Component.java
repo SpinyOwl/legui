@@ -25,6 +25,7 @@ import org.liquidengine.legui.event.CursorEnterEvent;
 import org.liquidengine.legui.event.KeyEvent;
 import org.liquidengine.legui.intersection.Intersector;
 import org.liquidengine.legui.intersection.RectangleIntersector;
+import org.liquidengine.legui.layout.Layout;
 import org.liquidengine.legui.listener.ListenerMap;
 import org.liquidengine.legui.theme.Themes;
 
@@ -119,6 +120,11 @@ public abstract class Component implements Serializable {
     ////////////////////////////////
     //// COMPONENT LAYER DATA
     ////////////////////////////////
+
+    /**
+     * Layout. Used to layout
+     */
+    private Layout layout;
 
     /**
      * Preferred size of component. Used to set preferred size of component for layout manager. Layout manager will try to make this component size equal to
@@ -628,6 +634,25 @@ public abstract class Component implements Serializable {
     ////////////////////////////////
     //// COMPONENT LAYER DATA
     ////////////////////////////////
+
+
+    /**
+     * Returns layout.
+     *
+     * @return layout.
+     */
+    public Layout getLayout() {
+        return layout;
+    }
+
+    /**
+     * Used to set layout for this component.
+     *
+     * @param layout layout to set.
+     */
+    public void setLayout(Layout layout) {
+        this.layout = layout;
+    }
 
     /**
      * Gets preferred size.

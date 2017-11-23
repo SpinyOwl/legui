@@ -8,7 +8,7 @@ import org.liquidengine.legui.component.Component;
  */
 public interface Layout {
 
-    void addComponent(Component component, LayoutRestriction restriction);
+    void addComponent(Component component, LayoutConstraint restriction);
 
     void removeComponent(Component component);
 
