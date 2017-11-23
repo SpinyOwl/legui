@@ -81,11 +81,6 @@ dependencies {
     runtime group: 'org.lwjgl',                  name: 'lwjgl',                version: lwjgl_version,         changing: true,  classifier: 'natives-windows'
     runtime group: 'org.lwjgl',                  name: 'lwjgl',                version: lwjgl_version,         changing: true,  classifier: 'natives-linux'
     runtime group: 'org.lwjgl',                  name: 'lwjgl',                version: lwjgl_version,         changing: true,  classifier: 'natives-macos'
-
-    compile group: 'org.lwjgl',                  name: 'lwjgl-yoga',           version: lwjgl_version,         changing: true
-    runtime group: 'org.lwjgl',                  name: 'lwjgl-yoga',           version: lwjgl_version,         changing: true,  classifier: 'natives-windows'
-    runtime group: 'org.lwjgl',                  name: 'lwjgl-yoga',           version: lwjgl_version,         changing: true,  classifier: 'natives-linux'
-    runtime group: 'org.lwjgl',                  name: 'lwjgl-yoga',           version: lwjgl_version,         changing: true,  classifier: 'natives-macos'
     //@formatter:on
     testCompile group: 'junit', name: 'junit', version: '4.11'
 }
