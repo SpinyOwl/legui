@@ -35,6 +35,9 @@ public class NvgShapes {
      * @param bgColor rectangle background color.
      */
     public static void drawRect(long nvg, Vector2fc position, Vector2fc size, Vector4fc bgColor) {
+        if (bgColor.w() == 0) {
+            return;
+        }
         NVGColor fillColor = NVGColor.calloc();
         NvgColorUtil.rgba(bgColor, fillColor);
         nvgBeginPath(nvg);
@@ -52,6 +55,9 @@ public class NvgShapes {
      * @param bgColor rectangle background color.
      */
     public static void drawRect(long nvg, Vector4fc rectangle, Vector4fc bgColor) {
+        if (bgColor.w() == 0) {
+            return;
+        }
         NVGColor fillColor = NVGColor.calloc();
         NvgColorUtil.rgba(bgColor, fillColor);
         nvgBeginPath(nvg);
@@ -71,6 +77,9 @@ public class NvgShapes {
      * @param radius cornder radius
      */
     public static void drawRect(long nvg, Vector2fc position, Vector2fc size, Vector4fc bgColor, float radius) {
+        if (bgColor.w() == 0) {
+            return;
+        }
         NVGColor fillColor = NVGColor.calloc();
         NvgColorUtil.rgba(bgColor, fillColor);
         nvgBeginPath(nvg);
@@ -89,6 +98,9 @@ public class NvgShapes {
      * @param radius cornder radius
      */
     public static void drawRect(long nvg, Vector4fc rectangle, Vector4fc bgColor, float radius) {
+        if (bgColor.w() == 0) {
+            return;
+        }
         NVGColor fillColor = NVGColor.calloc();
         NvgColorUtil.rgba(bgColor, fillColor);
         nvgBeginPath(nvg);
@@ -107,6 +119,9 @@ public class NvgShapes {
      * @param rectStrokeColor rectangle color.
      */
     public static void drawRectStroke(long nvg, Vector2fc position, Vector2fc size, Vector4fc rectStrokeColor, float strokeWidth) {
+        if (rectStrokeColor.w() == 0) {
+            return;
+        }
         NVGColor strokeColor = NVGColor.calloc();
         NvgColorUtil.rgba(rectStrokeColor, strokeColor);
         nvgBeginPath(nvg);
@@ -125,6 +140,9 @@ public class NvgShapes {
      * @param rectStrokeColor rectangle color.
      */
     public static void drawRectStroke(long nvg, Vector4fc rectangle, Vector4fc rectStrokeColor, float strokeWidth) {
+        if (rectStrokeColor.w() == 0) {
+            return;
+        }
         NVGColor strokeColor = NVGColor.calloc();
         NvgColorUtil.rgba(rectStrokeColor, strokeColor);
         nvgBeginPath(nvg);
@@ -145,6 +163,9 @@ public class NvgShapes {
      * @param radius cornder radius
      */
     public static void drawRectStroke(long nvg, Vector2fc position, Vector2fc size, Vector4fc rectStrokeColor, float strokeWidth, float radius) {
+        if (rectStrokeColor.w() == 0) {
+            return;
+        }
         NVGColor strokeColor = NVGColor.calloc();
         NvgColorUtil.rgba(rectStrokeColor, strokeColor);
         nvgBeginPath(nvg);
@@ -164,6 +185,9 @@ public class NvgShapes {
      * @param radius cornder radius
      */
     public static void drawRectStroke(long nvg, Vector4fc rectangle, Vector4fc rectStrokeColor, float strokeWidth, float radius) {
+        if (rectStrokeColor.w() == 0) {
+            return;
+        }
         NVGColor strokeColor = NVGColor.calloc();
         NvgColorUtil.rgba(rectStrokeColor, strokeColor);
         nvgBeginPath(nvg);

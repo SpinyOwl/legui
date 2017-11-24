@@ -45,15 +45,20 @@ public class BorderLayout implements Layout {
             } else {
                 BorderLayoutConstraint r = (BorderLayoutConstraint) constraint;
                 switch (r) {
-                    case TOP: topComponent = component;
+                    case TOP:
+                        topComponent = component;
                         break;
-                    case LEFT: leftComponent = component;
+                    case LEFT:
+                        leftComponent = component;
                         break;
-                    case CENTER: centerComponent = component;
+                    case CENTER:
+                        centerComponent = component;
                         break;
-                    case RIGHT: rightComponent = component;
+                    case RIGHT:
+                        rightComponent = component;
                         break;
-                    case BOTTOM: bottomComponent = component;
+                    case BOTTOM:
+                        bottomComponent = component;
                         break;
                 }
             }
@@ -82,11 +87,16 @@ public class BorderLayout implements Layout {
             throw new IllegalArgumentException("Cannot get component: constraint is null");
         }
         switch (constraint) {
-            case TOP: return topComponent;
-            case LEFT: return leftComponent;
-            case CENTER: return centerComponent;
-            case RIGHT: return rightComponent;
-            case BOTTOM: return bottomComponent;
+            case TOP:
+                return topComponent;
+            case LEFT:
+                return leftComponent;
+            case CENTER:
+                return centerComponent;
+            case RIGHT:
+                return rightComponent;
+            case BOTTOM:
+                return bottomComponent;
         }
         throw new IllegalArgumentException("Cannot get component: unknown constraint: " + constraint);
     }
@@ -169,42 +179,74 @@ public class BorderLayout implements Layout {
         float right = parentSize.x;
         float top = 0;
         float bottom = parentSize.y;
+        Vector2f minAllowed = getMinimumSize(parent);
+        if (right - left < minAllowed.x) {
+            right = left + minAllowed.x;
+        }
+        if (bottom - top < minAllowed.y) {
+            bottom = top + minAllowed.y;
+        }
 
         if (topComponent != null) {
             Vector2f pref = topComponent.getPreferredSize();
-            topComponent.setSize(right - left, pref.y);
+            Vector2f size = new Vector2f(right - left, pref.y);
+            checkToFreeSpace(size, left, right, top, bottom);
+            checkToMinimum(topComponent.getMinimumSize(), size);
+            topComponent.setSize(size);
             topComponent.setPosition(left, top);
-            top += pref.y + verticalGap;
+            top += size.y + verticalGap;
         }
         if (bottomComponent != null) {
             Vector2f pref = bottomComponent.getPreferredSize();
-            bottomComponent.setSize(right - left, pref.y);
-            bottomComponent.setPosition(left, bottom - pref.y);
-            bottom -= pref.y + verticalGap;
+            Vector2f size = new Vector2f(right - left, pref.y);
+            checkToFreeSpace(size, left, right, top, bottom);
+            checkToMinimum(bottomComponent.getMinimumSize(), size);
+            bottomComponent.setSize(size);
+            bottomComponent.setPosition(left, bottom - size.y);
+            bottom -= size.y + verticalGap;
         }
         if (leftComponent != null) {
             Vector2f pref = leftComponent.getPreferredSize();
-            leftComponent.setSize(pref.x, bottom - top);
+            Vector2f size = new Vector2f(pref.x, bottom - top);
+            checkToFreeSpace(size, left, right, top, bottom);
+            checkToMinimum(leftComponent.getMinimumSize(), size);
+            leftComponent.setSize(size);
             leftComponent.setPosition(left, top);
-            left += pref.x + horizontalGap;
+            left += size.x + horizontalGap;
         }
         if (rightComponent != null) {
             Vector2f pref = rightComponent.getPreferredSize();
-            rightComponent.setSize(pref.x, bottom - top);
-            rightComponent.setPosition(right - pref.x, top);
-            right -= pref.x + horizontalGap;
+            Vector2f size = new Vector2f(pref.x, bottom - top);
+            checkToFreeSpace(size, left, right, top, bottom);
+            checkToMinimum(rightComponent.getMinimumSize(), size);
+            rightComponent.setSize(size);
+            rightComponent.setPosition(right - size.x, top);
+            right -= size.x + horizontalGap;
         }
         if (centerComponent != null) {
-            Vector2f minimumSize = centerComponent.getMinimumSize();
             Vector2f size = new Vector2f(right - left, bottom - top);
-            if (minimumSize.x > size.x) {
-                size.x = minimumSize.x;
-            }
-            if (minimumSize.y > size.y) {
-                size.y = minimumSize.y;
-            }
+            checkToFreeSpace(size, left, right, top, bottom);
+            checkToMinimum(centerComponent.getMinimumSize(), size);
             centerComponent.setSize(size);
             centerComponent.setPosition(left, top);
+        }
+    }
+
+    private void checkToFreeSpace(Vector2f size, float left, float right, float top, float bottom) {
+        if (size.x > right - left) {
+            size.x = right - left;
+        }
+        if (size.y > bottom - top) {
+            size.y = bottom - top;
+        }
+    }
+
+    private void checkToMinimum(Vector2f minimumSize, Vector2f size) {
+        if (minimumSize.x > size.x) {
+            size.x = minimumSize.x;
+        }
+        if (minimumSize.y > size.y) {
+            size.y = minimumSize.y;
         }
     }
 }
