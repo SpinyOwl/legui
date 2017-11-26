@@ -27,6 +27,7 @@ import org.liquidengine.legui.intersection.Intersector;
 import org.liquidengine.legui.intersection.RectangleIntersector;
 import org.liquidengine.legui.layout.Layout;
 import org.liquidengine.legui.layout.LayoutConstraint;
+import org.liquidengine.legui.layout.borderlayout.BorderLayout;
 import org.liquidengine.legui.listener.ListenerMap;
 import org.liquidengine.legui.theme.Themes;
 
@@ -125,7 +126,7 @@ public abstract class Component implements Serializable {
     /**
      * Layout. Used to layout
      */
-    private Layout layout;
+    private Layout layout = new BorderLayout();
 
     /**
      * Preferred size of component. Used to set preferred size of component for layout manager. Layout manager will try to make this component size equal to

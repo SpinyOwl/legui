@@ -4,6 +4,7 @@ import org.joml.Vector2f;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.layout.Layout;
 import org.liquidengine.legui.layout.LayoutConstraint;
+import org.lwjgl.util.yoga.Yoga;
 
 /**
  * Created by ShchAlexander on 23.11.2017.
@@ -174,79 +175,158 @@ public class BorderLayout implements Layout {
 
     @Override
     public void layout(Component parent) {
-        Vector2f parentSize = parent.getSize();
-        float left = 0; // later will be added paddings and margins
-        float right = parentSize.x;
-        float top = 0;
-        float bottom = parentSize.y;
-        Vector2f minAllowed = getMinimumSize(parent);
-        if (right - left < minAllowed.x) {
-            right = left + minAllowed.x;
+        if (parent == null) {
+            return;
         }
-        if (bottom - top < minAllowed.y) {
-            bottom = top + minAllowed.y;
-        }
+        long rootNode = Yoga.YGNodeNew();
 
+        long mNode = Yoga.YGNodeNew();
+
+        long tNode = Yoga.YGNodeNew();
+        long lNode = Yoga.YGNodeNew();
+        long cNode = Yoga.YGNodeNew();
+        long rNode = Yoga.YGNodeNew();
+        long bNode = Yoga.YGNodeNew();
+
+        int row = 0;
         if (topComponent != null) {
-            Vector2f pref = topComponent.getPreferredSize();
-            Vector2f size = new Vector2f(right - left, pref.y);
-            checkToFreeSpace(size, left, right, top, bottom);
-            checkToMinimum(topComponent.getMinimumSize(), size);
-            topComponent.setSize(size);
-            topComponent.setPosition(left, top);
-            top += size.y + verticalGap;
+            Yoga.YGNodeInsertChild(rootNode, tNode, row++);
+        }
+        if (leftComponent != null || centerComponent != null || rightComponent != null) {
+            Yoga.YGNodeInsertChild(rootNode, mNode, row++);
         }
         if (bottomComponent != null) {
-            Vector2f pref = bottomComponent.getPreferredSize();
-            Vector2f size = new Vector2f(right - left, pref.y);
-            checkToFreeSpace(size, left, right, top, bottom);
-            checkToMinimum(bottomComponent.getMinimumSize(), size);
-            bottomComponent.setSize(size);
-            bottomComponent.setPosition(left, bottom - size.y);
-            bottom -= size.y + verticalGap;
+            Yoga.YGNodeInsertChild(rootNode, bNode, row++);
         }
+
+        int column = 0;
         if (leftComponent != null) {
-            Vector2f pref = leftComponent.getPreferredSize();
-            Vector2f size = new Vector2f(pref.x, bottom - top);
-            checkToFreeSpace(size, left, right, top, bottom);
-            checkToMinimum(leftComponent.getMinimumSize(), size);
-            leftComponent.setSize(size);
-            leftComponent.setPosition(left, top);
-            left += size.x + horizontalGap;
-        }
-        if (rightComponent != null) {
-            Vector2f pref = rightComponent.getPreferredSize();
-            Vector2f size = new Vector2f(pref.x, bottom - top);
-            checkToFreeSpace(size, left, right, top, bottom);
-            checkToMinimum(rightComponent.getMinimumSize(), size);
-            rightComponent.setSize(size);
-            rightComponent.setPosition(right - size.x, top);
-            right -= size.x + horizontalGap;
+            Yoga.YGNodeInsertChild(mNode, lNode, column++);
         }
         if (centerComponent != null) {
-            Vector2f size = new Vector2f(right - left, bottom - top);
-            checkToFreeSpace(size, left, right, top, bottom);
-            checkToMinimum(centerComponent.getMinimumSize(), size);
-            centerComponent.setSize(size);
-            centerComponent.setPosition(left, top);
+            Yoga.YGNodeInsertChild(mNode, cNode, column++);
+        }
+        if (rightComponent != null) {
+            Yoga.YGNodeInsertChild(mNode, rNode, column++);
+        }
+
+        Yoga.YGNodeStyleSetFlexDirection(rootNode, Yoga.YGFlexDirectionColumn);
+        Yoga.YGNodeStyleSetAlignItems(rootNode, Yoga.YGAlignStretch);
+        Yoga.YGNodeStyleSetJustifyContent(rootNode, Yoga.YGJustifySpaceBetween);
+
+        Yoga.YGNodeStyleSetFlexDirection(mNode, Yoga.YGFlexDirectionRow);
+        Yoga.YGNodeStyleSetAlignItems(mNode, Yoga.YGAlignStretch);
+        Yoga.YGNodeStyleSetJustifyContent(mNode, Yoga.YGJustifySpaceBetween);
+
+        Vector2f minLeft = getMinSize(leftComponent);
+        Vector2f minCenter = getMinSize(centerComponent);
+        Vector2f minRight = getMinSize(rightComponent);
+        float midMaxOfMin = Math.max(Math.max(minLeft.y, minCenter.y), minRight.y);
+        Yoga.YGNodeStyleSetMinHeight(mNode, midMaxOfMin);
+        Yoga.YGNodeStyleSetMaxHeight(mNode, Float.MAX_VALUE);
+
+        Vector2f size = parent.getSize();
+        Yoga.YGNodeStyleSetWidth(mNode, size.x);
+
+        Yoga.YGNodeStyleSetFlexGrow(mNode, 1);
+        Yoga.YGNodeStyleSetFlexShrink(mNode, 1);
+
+        Vector2f maxTop = getMaxSize(topComponent);
+        Yoga.YGNodeStyleSetMaxWidth(tNode, maxTop.x);
+        Yoga.YGNodeStyleSetMaxHeight(tNode, maxTop.y);
+        Vector2f minTop = getMinSize(topComponent);
+        Yoga.YGNodeStyleSetMinWidth(tNode, minTop.x);
+        Yoga.YGNodeStyleSetMinHeight(tNode, minTop.y);
+        Yoga.YGNodeStyleSetFlexGrow(tNode, 1);
+        Yoga.YGNodeStyleSetFlexShrink(tNode, 1);
+        Yoga.YGNodeStyleSetWidth(tNode, size.x);
+
+        Vector2f maxBottom = getMaxSize(bottomComponent);
+        Yoga.YGNodeStyleSetMaxWidth(bNode, maxBottom.x);
+        Yoga.YGNodeStyleSetMaxHeight(bNode, maxBottom.y);
+        Vector2f minBottom = getMinSize(bottomComponent);
+        Yoga.YGNodeStyleSetMinWidth(bNode, minBottom.x);
+        Yoga.YGNodeStyleSetMinHeight(bNode, minBottom.y);
+        Yoga.YGNodeStyleSetFlexGrow(bNode, 1);
+        Yoga.YGNodeStyleSetFlexShrink(bNode, 1);
+        Yoga.YGNodeStyleSetWidth(bNode, size.x);
+
+        Vector2f maxLeft = getMaxSize(leftComponent);
+        Yoga.YGNodeStyleSetMaxWidth(lNode, maxLeft.x);
+        Yoga.YGNodeStyleSetMaxHeight(lNode, maxLeft.y);
+        Yoga.YGNodeStyleSetMinWidth(lNode, minLeft.x);
+        Yoga.YGNodeStyleSetMinHeight(lNode, minLeft.y);
+        Yoga.YGNodeStyleSetFlexGrow(lNode, 1);
+        Yoga.YGNodeStyleSetFlexShrink(lNode, 1);
+        Yoga.YGNodeStyleSetMinHeight(lNode, midMaxOfMin);
+
+        Vector2f maxCenter = getMaxSize(centerComponent);
+        Yoga.YGNodeStyleSetMaxWidth(cNode, maxCenter.x);
+        Yoga.YGNodeStyleSetMaxHeight(cNode, maxCenter.y);
+        Yoga.YGNodeStyleSetMinWidth(cNode, minCenter.x);
+        Yoga.YGNodeStyleSetMinHeight(cNode, minCenter.y);
+        Yoga.YGNodeStyleSetFlexGrow(cNode, 1);
+        Yoga.YGNodeStyleSetFlexShrink(cNode, 1);
+        Yoga.YGNodeStyleSetMinHeight(cNode, midMaxOfMin);
+
+        Vector2f maxRight = getMaxSize(rightComponent);
+        Yoga.YGNodeStyleSetMaxWidth(rNode, maxRight.x);
+        Yoga.YGNodeStyleSetMaxHeight(rNode, maxRight.y);
+        Yoga.YGNodeStyleSetMinWidth(rNode, minRight.x);
+        Yoga.YGNodeStyleSetMinHeight(rNode, minRight.y);
+        Yoga.YGNodeStyleSetFlexGrow(rNode, 1);
+        Yoga.YGNodeStyleSetFlexShrink(rNode, 1);
+        Yoga.YGNodeStyleSetMinHeight(rNode, midMaxOfMin);
+
+        Yoga.nYGNodeCalculateLayout(rootNode, size.x, size.y, Yoga.YGDirectionLTR);
+
+        Vector2f d = new Vector2f(getX(mNode), getY(mNode));
+
+        setSizeAndPos(getW(tNode), getH(tNode), getX(tNode), getY(tNode), topComponent);
+        setSizeAndPos(getW(bNode), getH(bNode), getX(bNode), getY(bNode), bottomComponent);
+        setSizeAndPos(getW(lNode), getH(lNode), getX(lNode) + d.x, getY(lNode) + d.y, leftComponent);
+        setSizeAndPos(getW(rNode), getH(rNode), getX(rNode) + d.x, getY(rNode) + d.y, rightComponent);
+        setSizeAndPos(getW(cNode), getH(cNode), getX(cNode) + d.x, getY(cNode) + d.y, centerComponent);
+
+        Yoga.YGNodeFree(rootNode);
+        Yoga.YGNodeFree(mNode);
+        Yoga.YGNodeFree(tNode);
+        Yoga.YGNodeFree(lNode);
+        Yoga.YGNodeFree(cNode);
+        Yoga.YGNodeFree(rNode);
+        Yoga.YGNodeFree(bNode);
+    }
+
+    private float getY(long tNode) {
+        return Yoga.YGNodeLayoutGetTop(tNode);
+    }
+
+    private float getX(long tNode) {
+        return Yoga.YGNodeLayoutGetLeft(tNode);
+    }
+
+    private float getH(long tNode) {
+        return Yoga.YGNodeLayoutGetHeight(tNode);
+    }
+
+    private float getW(long tNode) {
+        return Yoga.YGNodeLayoutGetWidth(tNode);
+    }
+
+
+    private Vector2f getMinSize(Component bottomComponent) {
+        return bottomComponent != null ? bottomComponent.getMinimumSize() : new Vector2f();
+    }
+
+    private Vector2f getMaxSize(Component centerComponent) {
+        return centerComponent != null ? centerComponent.getMaximumSize() : new Vector2f(Float.MAX_VALUE);
+    }
+
+    private void setSizeAndPos(float w, float h, float x, float y, Component component) {
+        if (component != null) {
+            component.getSize().set(w, h);
+            component.getPosition().set(x, y);
         }
     }
 
-    private void checkToFreeSpace(Vector2f size, float left, float right, float top, float bottom) {
-        if (size.x > right - left) {
-            size.x = right - left;
-        }
-        if (size.y > bottom - top) {
-            size.y = bottom - top;
-        }
-    }
-
-    private void checkToMinimum(Vector2f minimumSize, Vector2f size) {
-        if (minimumSize.x > size.x) {
-            size.x = minimumSize.x;
-        }
-        if (minimumSize.y > size.y) {
-            size.y = minimumSize.y;
-        }
-    }
 }
