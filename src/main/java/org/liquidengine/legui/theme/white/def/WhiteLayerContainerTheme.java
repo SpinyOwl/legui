@@ -13,7 +13,7 @@ public class WhiteLayerContainerTheme<T extends LayerContainer> extends WhiteCom
     @Override
     public void apply(T component) {
         super.apply(component);
-        component.setBorder(null);
-        component.setBackgroundColor(ColorConstants.transparent());
+        component.getStyle().setBorder(null);
+        component.getStyle().getBackground().setColor(ColorConstants.transparent());
     }
 }

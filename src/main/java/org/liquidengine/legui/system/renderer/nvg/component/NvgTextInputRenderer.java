@@ -66,7 +66,7 @@ public class NvgTextInputRenderer extends NvgDefaultComponentRenderer<TextInput>
             Vector2f pos = textInput.getAbsolutePosition();
             Vector2f size = textInput.getSize();
             boolean enabled = textInput.isEnabled();
-            Vector4f bc = new Vector4f(textInput.getBackgroundColor());
+            Vector4f bc = new Vector4f(textInput.getStyle().getBackground().getColor());
 
             if (enabled && textInput.isFocused()) {
                 bc.w *= 1.1f;
@@ -76,7 +76,7 @@ public class NvgTextInputRenderer extends NvgDefaultComponentRenderer<TextInput>
             if (!textInput.isEditable()) {
                 bc.w *= 0.3f;
             }
-            NvgShapes.drawRect(nanovg, pos, size, bc, textInput.getCornerRadius());
+            NvgShapes.drawRect(nanovg, pos, size, bc, textInput.getStyle().getCornerRadius());
 
             TextState textState = textInput.getTextState();
             Vector4f p = new Vector4f(textState.getPadding()).add(2, 2, 2, 2);

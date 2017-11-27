@@ -98,20 +98,7 @@ public abstract class Component implements Serializable {
      */
     private boolean tabFocusable = true;
 
-    private Style style;
-
-    public Style getStyle() {
-        return style;
-    }
-
-    public void setStyle(Style style) {
-        this.style = style;
-    }
-
-    ////////////////////////////////
-    //// CONTAINER BASE DATA
-    ////////////////////////////////
-
+    private Style style = new Style();
     /**
      * List of child components.
      */
@@ -126,6 +113,9 @@ public abstract class Component implements Serializable {
         this(0, 0, 10, 10);
     }
 
+    ////////////////////////////////
+    //// CONTAINER BASE DATA
+    ////////////////////////////////
 
     /**
      * Constructor with position and size parameters.
@@ -149,6 +139,16 @@ public abstract class Component implements Serializable {
         this.position = position;
         this.size = size;
         initialize();
+    }
+
+    public Style getStyle() {
+        return style;
+    }
+
+    public void setStyle(Style style) {
+        if (style != null) {
+            this.style = style;
+        }
     }
 
     /**

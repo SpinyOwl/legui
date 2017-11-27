@@ -81,7 +81,7 @@ public class ToggleButton extends Button {
      * Initialize toggle button with default states.
      */
     private void initialize() {
-        setBackgroundColor(ColorConstants.red());
+        getStyle().getBackground().setColor(ColorConstants.red());
         toggledBackgroundColor = ColorConstants.green();
         MouseClickEventListener toggleButtonClickListener = new ToggleButtonMouseClickListener();
         getListenerMap().addListener(MouseClickEvent.class, toggleButtonClickListener);

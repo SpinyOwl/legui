@@ -27,7 +27,7 @@ public class NvgRadioButtonRenderer extends NvgDefaultComponentRenderer<RadioBut
             Vector2f size = radioButton.getSize();
 
             // Draw background rectangle
-            NvgShapes.drawRect(nanovg, pos, size, radioButton.getBackgroundColor(), radioButton.getCornerRadius());
+            NvgShapes.drawRect(nanovg, pos, size, radioButton.getStyle().getBackground().getColor(), radioButton.getStyle().getCornerRadius());
 
             TextState textState = radioButton.getTextState();
             Icon icon = radioButton.isChecked() ? radioButton.getIconChecked() : radioButton.getIconUnchecked();

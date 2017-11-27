@@ -96,7 +96,7 @@ public class TestJsonMarshaller {
         toReturn.add(mouseTargetLabel);
 
         Label focusedGuiLabel = new Label("Hello Label 2", 10, height - 50, width - 20, 20);
-        focusedGuiLabel.setBorder(new SimpleLineBorder(ColorConstants.red(), 1));
+        focusedGuiLabel.getStyle().setBorder(new SimpleLineBorder(ColorConstants.red(), 1));
         toReturn.add(focusedGuiLabel);
 
         Label debugLabel = new Label("Debug Label", 10, height - 75, width - 20, 20);
@@ -114,13 +114,13 @@ public class TestJsonMarshaller {
         toReturn.add(imageView);
 
         Button button = new Button(20, 170, 50, 20);
-        button.setBackgroundColor(new Vector4f(1));
+        button.getStyle().getBackground().setColor(new Vector4f(1));
         toReturn.add(button);
 
         button.setTooltip(new Tooltip("Just button"));
         button.getTooltip().setPosition(0, 25);
         button.getTooltip().getSize().set(50, 40);
-        button.getTooltip().setBackgroundColor(ColorConstants.darkGray());
+        button.getTooltip().getStyle().getBackground().setColor(ColorConstants.darkGray());
         button.getTooltip().getTextState().setTextColor(ColorConstants.white());
         button.getTooltip().getTextState().setPadding(4, 4, 4, 4);
 
@@ -129,7 +129,7 @@ public class TestJsonMarshaller {
         CheckBox checkBox1 = new CheckBox(20, 200, 50, 20);
         toReturn.add(checkBox1);
         CheckBox checkBox2 = new CheckBox(20, 230, 50, 20);
-        checkBox2.setBackgroundColor(new Vector4f(1));
+        checkBox2.getStyle().getBackground().setColor(new Vector4f(1));
         checkBox2.setChecked(true);
         toReturn.add(checkBox2);
 
@@ -160,7 +160,7 @@ public class TestJsonMarshaller {
 
         Widget widget = new Widget("Hello widget", 250, 170, 100, 100);
         widget.setTitleHeight(20);
-        widget.setTitleBackgroundColor(ColorConstants.lightGreen());
+        widget.getTitleContainer().getStyle().getBackground().setColor(ColorConstants.lightGreen());
 
         Button turnWidVisible = new Button("", 360, 280, 20, 20);
         Icon bgIm = new ImageIcon(new DummyImage("org/liquidengine/legui/example/1.png"));
@@ -176,28 +176,28 @@ public class TestJsonMarshaller {
         toReturn.add(turnWidVisible);
 
         Panel c0 = new Panel(-5, -5, 10, 10);
-        c0.setBackgroundColor(1, 0, 0, 1);
+        c0.getStyle().getBackground().setColor(1, 0, 0, 1);
         widget.getContainer().add(c0);
         Panel c1 = new Panel(-5, 75, 10, 10);
-        c1.setBackgroundColor(1, 0, 0, 1);
+        c1.getStyle().getBackground().setColor(1, 0, 0, 1);
         widget.getContainer().add(c1);
         Panel c2 = new Panel(95, -5, 10, 10);
-        c2.setBackgroundColor(1, 0, 0, 1);
+        c2.getStyle().getBackground().setColor(1, 0, 0, 1);
         widget.getContainer().add(c2);
         c2.setVisible(false);
         Panel c3 = new Panel(95, 75, 10, 10);
-        c3.setBackgroundColor(1, 0, 0, 1);
+        c3.getStyle().getBackground().setColor(1, 0, 0, 1);
         widget.getContainer().add(c3);
         Panel c4 = new Panel(45, 35, 10, 10);
-        c4.setBackgroundColor(1, 0, 0, 1);
+        c4.getStyle().getBackground().setColor(1, 0, 0, 1);
         widget.getContainer().add(c4);
         toReturn.add(widget);
 
         Widget widget2 = new Widget("Hello 2 widget", 250, 310, 100, 100);
         widget2.setTitleHeight(20);
         widget2.setCloseButtonColor(ColorConstants.white());
-        widget2.setCloseButtonBackgroundColor(ColorConstants.black());
-        widget2.setTitleBackgroundColor(ColorConstants.lightGreen());
+        widget2.getCloseButton().getStyle().getBackground().setColor(ColorConstants.black());
+        widget2.getTitleContainer().getStyle().getBackground().setColor(ColorConstants.lightGreen());
         widget2.setDraggable(false);
 
         Button turnDraggable = new Button("Draggable", 10, 10, 80, 20);
@@ -210,7 +210,7 @@ public class TestJsonMarshaller {
         Widget widget3 = new Widget("Hello 2 widget", 250, 420, 100, 100);
         widget3.setTitleHeight(20);
         widget3.setTitleEnabled(false);
-        widget3.setTitleBackgroundColor(ColorConstants.lightGreen());
+        widget3.getTitleContainer().getStyle().getBackground().setColor(ColorConstants.lightGreen());
         widget3.setCloseable(true);
         widget3.setMinimizable(false);
         toReturn.add(widget3);
@@ -238,41 +238,41 @@ public class TestJsonMarshaller {
         scrollBar1.setOrientation(Orientation.VERTICAL);
         scrollBar1.setVisibleAmount(20);
         scrollBar1.setArrowsEnabled(true);
-        scrollBar1.setBackgroundColor(ColorConstants.white());
+        scrollBar1.getStyle().getBackground().setColor(ColorConstants.white());
         scrollBar1.setScrollColor(ColorConstants.darkGray());
         scrollBar1.setArrowColor(ColorConstants.darkGray());
-        scrollBar1.setBorder(new SimpleLineBorder(ColorConstants.red(), 1));
+        scrollBar1.getStyle().setBorder(new SimpleLineBorder(ColorConstants.red(), 1));
         toReturn.add(scrollBar1);
 
         ScrollBar scrollBar11 = new ScrollBar(385, 170, 7, 100, 20);
         scrollBar11.setOrientation(Orientation.VERTICAL);
         scrollBar11.setVisibleAmount(20);
         scrollBar11.setArrowsEnabled(false);
-        scrollBar11.setBackgroundColor(ColorConstants.white());
+        scrollBar11.getStyle().getBackground().setColor(ColorConstants.white());
         scrollBar11.setScrollColor(ColorConstants.darkGray());
-        scrollBar11.setBorder(new SimpleLineBorder(ColorConstants.red(), 1));
-        scrollBar11.setCornerRadius(3);
+        scrollBar11.getStyle().setBorder(new SimpleLineBorder(ColorConstants.red(), 1));
+        scrollBar11.getStyle().setCornerRadius(3);
         toReturn.add(scrollBar11);
 
         ScrollBar scrollBar2 = new ScrollBar(250, 280, 100, 20, 20);
         scrollBar2.setOrientation(Orientation.HORIZONTAL);
         scrollBar2.setVisibleAmount(20);
         scrollBar2.setArrowsEnabled(true);
-        scrollBar2.setBorder(new SimpleLineBorder(ColorConstants.black(), 1));
-        scrollBar2.setBackgroundColor(ColorConstants.darkGray());
+        scrollBar2.getStyle().setBorder(new SimpleLineBorder(ColorConstants.black(), 1));
+        scrollBar2.getStyle().getBackground().setColor(ColorConstants.darkGray());
         scrollBar2.setScrollColor(ColorConstants.white());
         scrollBar2.setArrowColor(ColorConstants.white());
         toReturn.add(scrollBar2);
 
         Panel panel1 = new Panel(420, 170, 100, 100);
-        panel1.setBackgroundColor(ColorConstants.blue());
+        panel1.getStyle().getBackground().setColor(ColorConstants.blue());
         toReturn.add(panel1);
         Panel panel2 = new Panel(470, 170, 100, 100);
-        panel2.setBackgroundColor(ColorConstants.green());
+        panel2.getStyle().getBackground().setColor(ColorConstants.green());
         toReturn.add(panel2);
 
         ScrollablePanel scrollablePanel = new ScrollablePanel(420, 10, 250, 150);
-        scrollablePanel.setBackgroundColor(1, 1, 1, 1);
+        scrollablePanel.getStyle().getBackground().setColor(1, 1, 1, 1);
         scrollablePanel.getContainer().setSize(300, 200);
         scrollablePanel.resize();
 
@@ -301,7 +301,7 @@ public class TestJsonMarshaller {
         inpur.getTextState().setFontSize(35);
         inpur.getTextState().setHorizontalAlign(CENTER);
         inpur.getTextState().setVerticalAlign(MIDDLE);
-        inpur.setBackgroundColor(ColorConstants.white());
+        inpur.getStyle().getBackground().setColor(ColorConstants.white());
         toReturn.add(inpur);
 
         SelectBox selectBox = new SelectBox(20, 260, 100, 20);
@@ -337,7 +337,7 @@ public class TestJsonMarshaller {
 
         toggleButton.getTooltip().setPosition(45, 0);
         toggleButton.getTooltip().getSize().set(140, 40);
-        toggleButton.getTooltip().setBackgroundColor(ColorConstants.darkGray());
+        toggleButton.getTooltip().getStyle().getBackground().setColor(ColorConstants.darkGray());
         toggleButton.getTooltip().getTextState().setTextColor(ColorConstants.white());
         toggleButton.getTooltip().getTextState().setPadding(4, 4, 4, 4);
 

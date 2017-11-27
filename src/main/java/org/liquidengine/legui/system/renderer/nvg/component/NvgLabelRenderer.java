@@ -22,10 +22,10 @@ public class NvgLabelRenderer extends NvgDefaultComponentRenderer<Label> {
         {
             Vector2f pos = label.getAbsolutePosition();
             Vector2f size = label.getSize();
-            Vector4f backgroundColor = new Vector4f(label.getBackgroundColor());
+            Vector4f backgroundColor = new Vector4f(label.getStyle().getBackground().getColor());
 
             /*Draw background rectangle*/
-            NvgShapes.drawRect(nanovg, pos, size, backgroundColor, label.getCornerRadius());
+            NvgShapes.drawRect(nanovg, pos, size, backgroundColor, label.getStyle().getCornerRadius());
 
             // draw text into box
             TextState textState = label.getTextState();

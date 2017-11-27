@@ -69,13 +69,13 @@ public class GsonWidgetMarshaller<T extends Widget> extends AbstractGsonMarshall
                 .add(HEIGHT, object.getSize().y)
                 .get()
             )
-            .add(BACKGROUND_COLOR, createColor(object.getBackgroundColor()))
+//            .add(BACKGROUND_COLOR, createColor(object.getBackgroundColor()))
             .add(ENABLED, object.isEnabled())
             .add(VISIBLE, object.isVisible())
-            .add(CORNER_RADIUS, object.getCornerRadius())
+//            .add(CORNER_RADIUS, object.getCornerRadius())
             .add(TAB_INDEX, object.getTabIndex())
             .add(TAB_FOCUSABLE, object.isTabFocusable())
-            .add(BORDER, GsonMarshalUtil.marshalToJson(object.getBorder(), context))
+//            .add(BORDER, GsonMarshalUtil.marshalToJson(object.getBorder(), context))
             .add(INTERSECTOR, GsonMarshalUtil.marshalToJson(object.getIntersector()))
             .add(TOOLTIP, GsonMarshalUtil.marshalToJson(object.getTooltip(), context))
         ;
@@ -91,9 +91,9 @@ public class GsonWidgetMarshaller<T extends Widget> extends AbstractGsonMarshall
             .add(CLOSEABLE, object.isCloseable())
             .add(TITLE_ENABLED, object.isTitleEnabled())
             .add(TITLE_HEIGHT, object.getTitleHeight())
-            .add(TITLE_BACKGROUND_COLOR, createColor(object.getTitleBackgroundColor()))
+//            .add(TITLE_BACKGROUND_COLOR, createColor(object.getTitleBackgroundColor()))
             .add(CLOSE_BUTTON_COLOR, createColor(object.getCloseButtonColor()))
-            .add(CLOSE_BUTTON_BACKGROUND_COLOR, createColor(object.getCloseButtonBackgroundColor()))
+//            .add(CLOSE_BUTTON_BACKGROUND_COLOR, createColor(object.getCloseButtonBackgroundColor()))
             .add(TITLE, GsonMarshalUtil.marshalToJson(object.getTitleTextState(), context))
             .add(CLOSE_ICON, GsonMarshalUtil.marshalToJson(object.getCloseIcon(), context))
             .add(MINIMIZE_ICON, GsonMarshalUtil.marshalToJson(object.getMinimizeIcon(), context))
@@ -145,30 +145,30 @@ public class GsonWidgetMarshaller<T extends Widget> extends AbstractGsonMarshall
                 object.getSize().y = y.getAsFloat();
             }
         }
-        if (isNotNull(bg)) {
-            object.setBackgroundColor(readColor(bg));
-        }
+//        if (isNotNull(bg)) {
+//            object.getBackground().setColor(readColor(bg));
+//        }
         if (isNotNull(enabled)) {
             object.setEnabled(enabled.getAsBoolean());
         }
         if (isNotNull(visible)) {
             object.setVisible(visible.getAsBoolean());
         }
-        if (isNotNull(cornerRadius)) {
-            object.setCornerRadius(cornerRadius.getAsFloat());
-        }
-        if(isNotNull(tabIndex)) {
+//        if (isNotNull(cornerRadius)) {
+//            object.setCornerRadius(cornerRadius.getAsFloat());
+//        }
+        if (isNotNull(tabIndex)) {
             object.setTabIndex(tabIndex.getAsInt());
         }
-        if(isNotNull(tabFocusable)) {
+        if (isNotNull(tabFocusable)) {
             object.setTabFocusable(tabFocusable.getAsBoolean());
         }
 
-        if (isNotNull(border)) {
-            object.setBorder(GsonMarshalUtil.unmarshal(border.getAsJsonObject(), context));
-        } else {
-            object.setBorder(null);
-        }
+//        if (isNotNull(border)) {
+//            object.setBorder(GsonMarshalUtil.unmarshal(border.getAsJsonObject(), context));
+//        } else {
+//            object.setBorder(null);
+//        }
 
         if (isNotNull(intersector)) {
             object.setIntersector(GsonMarshalUtil.unmarshal(intersector.getAsJsonObject(), context));
@@ -203,15 +203,15 @@ public class GsonWidgetMarshaller<T extends Widget> extends AbstractGsonMarshall
         if (isNotNull(titleHeight)) {
             object.setTitleHeight(titleHeight.getAsFloat());
         }
-        if (isNotNull(titleBackgroundColor)) {
-            object.setTitleBackgroundColor(readColor(titleBackgroundColor.getAsJsonObject()));
-        }
+//        if (isNotNull(titleBackgroundColor)) {
+//            object.setTitleBackgroundColor(readColor(titleBackgroundColor.getAsJsonObject()));
+//        }
         if (isNotNull(closeButtonColor)) {
             object.setCloseButtonColor(readColor(closeButtonColor.getAsJsonObject()));
         }
-        if (isNotNull(closeButtonBackgroundColor)) {
-            object.setCloseButtonBackgroundColor(readColor(closeButtonBackgroundColor.getAsJsonObject()));
-        }
+//        if (isNotNull(closeButtonBackgroundColor)) {
+//            object.setCloseButtonBackgroundColor(readColor(closeButtonBackgroundColor.getAsJsonObject()));
+//        }
         if (isNotNull(draggable)) {
             object.setDraggable(draggable.getAsBoolean());
         }

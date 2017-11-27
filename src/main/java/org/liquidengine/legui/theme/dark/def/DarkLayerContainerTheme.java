@@ -18,7 +18,7 @@ public class DarkLayerContainerTheme<T extends LayerContainer> extends DarkCompo
     @Override
     public void apply(T component) {
         super.apply(component);
-        component.setBorder(null);
-        component.setBackgroundColor(ColorConstants.transparent());
+        component.getStyle().setBorder(null);
+        component.getStyle().getBackground().setColor(ColorConstants.transparent());
     }
 }

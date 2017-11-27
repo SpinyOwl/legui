@@ -4,6 +4,7 @@ import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.color.ColorConstants;
 import org.liquidengine.legui.font.Font;
+import org.liquidengine.legui.style.border.SimpleLineBorder;
 
 /**
  * The type Style.
@@ -12,8 +13,8 @@ import org.liquidengine.legui.font.Font;
  */
 public class Style {
 
-    private Background background;
-    private Border border;
+    private Background background = new Background();
+    private Border border = new SimpleLineBorder(ColorConstants.gray(), 1);
     private Font font;
 
     private float topLeftCornerRadius;
@@ -24,9 +25,9 @@ public class Style {
     private Vector4f padding;
     private Vector4f margin;
 
-    private Vector2f minSize;
-    private Vector2f maxSize;
-    private Vector2f size;
+    private Vector2f minimumSize;
+    private Vector2f maximumSize;
+    private Vector2f preferredSize;
 
     /**
      * Stroke color. Used to render stroke if component is focused.
@@ -48,7 +49,15 @@ public class Style {
      * @param background the background
      */
     public void setBackground(Background background) {
-        this.background = background;
+        if (background != null) {
+            this.background = background;
+        } else {
+            this.background = new Background();
+        }
+    }
+
+    public Vector4f getCornerRadius() {
+        return new Vector4f(topLeftCornerRadius, topRightCornerRadius, bottomRightCornerRadius, bottomLeftCornerRadius);
     }
 
     /**
@@ -210,17 +219,17 @@ public class Style {
      *
      * @return the min size
      */
-    public Vector2f getMinSize() {
-        return minSize;
+    public Vector2f getMinimumSize() {
+        return minimumSize;
     }
 
     /**
      * Sets min size.
      *
-     * @param minSize the min size
+     * @param minimumSize the min size
      */
-    public void setMinSize(Vector2f minSize) {
-        this.minSize = minSize;
+    public void setMinimumSize(Vector2f minimumSize) {
+        this.minimumSize = minimumSize;
     }
 
     /**
@@ -228,17 +237,17 @@ public class Style {
      *
      * @return the max size
      */
-    public Vector2f getMaxSize() {
-        return maxSize;
+    public Vector2f getMaximumSize() {
+        return maximumSize;
     }
 
     /**
      * Sets max size.
      *
-     * @param maxSize the max size
+     * @param maximumSize the max size
      */
-    public void setMaxSize(Vector2f maxSize) {
-        this.maxSize = maxSize;
+    public void setMaximumSize(Vector2f maximumSize) {
+        this.maximumSize = maximumSize;
     }
 
     /**
@@ -246,17 +255,17 @@ public class Style {
      *
      * @return the size
      */
-    public Vector2f getSize() {
-        return size;
+    public Vector2f getPreferredSize() {
+        return preferredSize;
     }
 
     /**
      * Sets size.
      *
-     * @param size the size
+     * @param preferredSize the size
      */
-    public void setSize(Vector2f size) {
-        this.size = size;
+    public void setPreferredSize(Vector2f preferredSize) {
+        this.preferredSize = preferredSize;
     }
 
     /**

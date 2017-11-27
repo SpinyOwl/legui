@@ -18,8 +18,8 @@ public class WhiteRadioButtonTheme<T extends RadioButton> extends WhiteComponent
     @Override
     public void apply(T component) {
         super.apply(component);
-        component.setBorder(null);
-        component.setBackgroundColor(ColorConstants.transparent());
+        component.getStyle().setBorder(null);
+        component.getStyle().getBackground().setColor(ColorConstants.transparent());
         component.getTextState().setTextColor(ColorConstants.black());
         component.getTextState().setHorizontalAlign(HorizontalAlign.LEFT);
         component.setIconUnchecked(new CharIcon(new Vector2f(16), MATERIAL_ICONS_REGULAR, (char) 0xE836, ColorConstants.black()));

@@ -58,7 +58,7 @@ public class NvgPasswordInputRenderer extends NvgDefaultComponentRenderer<Passwo
             Vector2f pos = passwordInput.getAbsolutePosition();
             Vector2f size = passwordInput.getSize();
             boolean enabled = passwordInput.isEnabled();
-            Vector4f bc = new Vector4f(passwordInput.getBackgroundColor());
+            Vector4f bc = new Vector4f(passwordInput.getStyle().getBackground().getColor());
 
             if (enabled && passwordInput.isFocused()) {
                 bc.w *= 1.1f;
@@ -68,7 +68,7 @@ public class NvgPasswordInputRenderer extends NvgDefaultComponentRenderer<Passwo
             if (!passwordInput.isEditable()) {
                 bc.w *= 0.3f;
             }
-            NvgShapes.drawRect(nanovg, pos, size, bc, passwordInput.getCornerRadius());
+            NvgShapes.drawRect(nanovg, pos, size, bc, passwordInput.getStyle().getCornerRadius());
 
             TextState textState = passwordInput.getTextState();
             Vector4f p = new Vector4f(textState.getPadding()).add(2, 2, 2, 2);

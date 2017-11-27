@@ -552,7 +552,7 @@ public class SelectBox extends Component {
             super(text == null ? "null" : text);
             this.selected = selected;
             this.text = text;
-            this.setBorder(null);
+            this.getStyle().setBorder(null);
         }
 
         public String getText() {

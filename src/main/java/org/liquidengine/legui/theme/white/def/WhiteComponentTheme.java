@@ -18,9 +18,9 @@ public class WhiteComponentTheme<T extends Component> extends AbstractTheme<T> {
     @Override
     public void apply(T component) {
         super.apply(component);
-        component.setBorder(new SimpleLineBorder(ColorConstants.darkGray(), .7f));
-        component.setCornerRadius(2);
-        component.setBackgroundColor(ColorConstants.white());
+        component.getStyle().setBorder(new SimpleLineBorder(ColorConstants.darkGray(), .7f));
+        component.getStyle().setCornerRadius(2);
+        component.getStyle().getBackground().setColor(ColorConstants.white());
         Tooltip tooltip = component.getTooltip();
         if (tooltip != null) {
             Themes.getDefaultTheme().applyAll(tooltip);

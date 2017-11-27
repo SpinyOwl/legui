@@ -18,9 +18,9 @@ public class DarkSliderTheme<T extends Slider> extends DarkComponentTheme<T> {
     @Override
     public void apply(T component) {
         super.apply(component);
-        component.setBackgroundColor(ColorConstants.transparent());
+        component.getStyle().getBackground().setColor(ColorConstants.transparent());
         component.setSliderColor(ColorConstants.gray());
         component.setSliderActiveColor(ColorConstants.white());
-        component.setBorder(null);
+        component.getStyle().setBorder(null);
     }
 }

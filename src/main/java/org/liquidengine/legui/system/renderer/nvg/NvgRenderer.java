@@ -47,8 +47,6 @@ public class NvgRenderer extends AbstractRenderer {
      * @param context context.
      */
     public static void renderBorder(Component component, Context context) {
-        if(component.getStyle()==null) return;
-
         Border border = component.getStyle().getBorder();
         if (border != null && border.isEnabled()) {
             // Render border

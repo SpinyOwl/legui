@@ -28,7 +28,7 @@ public class GsonProgressBarMarshaller<T extends ProgressBar> extends GsonCompon
 
         GsonUtil.fill(json)
             .add(VALUE, object.getValue())
-            .add(PROGRESS_COLOR, GsonUtil.createColor(object.getBackgroundColor()))
+            .add(PROGRESS_COLOR, GsonUtil.createColor(object.getProgressColor()))
         ;
     }
 
@@ -50,7 +50,7 @@ public class GsonProgressBarMarshaller<T extends ProgressBar> extends GsonCompon
             object.setValue(value.getAsFloat());
         }
         if (isNotNull(pc)) {
-            object.setBackgroundColor(GsonUtil.readColor(pc));
+            object.setProgressColor(GsonUtil.readColor(pc));
         }
     }
 }

@@ -122,7 +122,7 @@ public class GsonComponentMarshaller<T extends Component> extends AbstractGsonMa
             }
         }
 //        if (isNotNull(bg)) {
-//            object.setBackgroundColor(readColor(bg));
+//            object.getBackground().setColor(readColor(bg));
 //        }
         if (isNotNull(enabled)) {
             object.setEnabled(enabled.getAsBoolean());

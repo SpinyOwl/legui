@@ -23,10 +23,10 @@ public class DarkSelectBoxTheme<T extends SelectBox> extends DarkComponentTheme<
     @Override
     public void apply(T component) {
         super.apply(component);
-        component.getExpandButton().setBorder(null);
-        component.getExpandButton().setBackgroundColor(ColorConstants.transparent());
-        component.getSelectionButton().setBorder(null);
-        component.getSelectionButton().setBackgroundColor(ColorConstants.transparent());
+        component.getExpandButton().getStyle().setBorder(null);
+        component.getExpandButton().getStyle().getBackground().setColor(ColorConstants.transparent());
+        component.getSelectionButton().getStyle().setBorder(null);
+        component.getSelectionButton().getStyle().getBackground().setColor(ColorConstants.transparent());
         component.getSelectionButton().getTextState().setTextColor(ColorConstants.white());
         Icon collapseIcon = component.getCollapseIcon();
         if (collapseIcon != null && collapseIcon instanceof CharIcon) {
