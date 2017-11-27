@@ -7,7 +7,22 @@ import org.liquidengine.legui.layout.LayoutConstraint;
 import org.lwjgl.util.yoga.Yoga;
 
 /**
- * Created by ShchAlexander on 23.11.2017.
+ * A border layout lays out a container, arranging and resizing its components to fit in five regions: TOP, LEFT, CENTER, RIGHT, and BOTTOM. Each region may
+ * contain no more than one component, and is identified by a corresponding constant: <code>TOP</code>, <code>LEFT</code>, <code>CENTER</code>,
+ * <code>RIGHT</code>, and <code>BOTTOM</code>.  When adding a component to a container with a border layout, use one of these five constants, for example:
+ * <pre>
+ *    {@link org.liquidengine.legui.component.Panel} p = new {@link org.liquidengine.legui.component.Panel}();
+ *    p.setLayout(new {@link BorderLayout}());
+ *    p.add(new Button("Okay"), {@link BorderLayoutConstraint#TOP});
+ * </pre>
+ * As a convenience, <code>BorderLayout</code> interprets the absence of a string specification the same as the constant <code>CENTER</code>:
+ * <pre>
+ *    {@link org.liquidengine.legui.component.Panel} p2 = new {@link org.liquidengine.legui.component.Panel}();
+ *    p2.setLayout(new {@link BorderLayout}());
+ *    p2.add(new {@link org.liquidengine.legui.component.TextArea}());  // Same as p.add(new {@link org.liquidengine.legui.component.TextArea}(), {@link
+ * BorderLayoutConstraint#CENTER});
+ * </pre>
+ * <p>. Created by ShchAlexander on 23.11.2017.
  */
 public class BorderLayout implements Layout {
 
@@ -38,6 +53,13 @@ public class BorderLayout implements Layout {
         this.verticalGap = verticalGap;
     }
 
+    /**
+     * Used to add component to layout.
+     *
+     * @param component component to add.
+     * @param constraint layout constraint (must be instance of {@link BorderLayoutConstraint}.
+     * @throws IllegalArgumentException if provided constraint is not instance of {@link BorderLayoutConstraint}.
+     */
     @Override
     public void addComponent(Component component, LayoutConstraint constraint) {
         if (constraint == null || constraint instanceof BorderLayoutConstraint) {
@@ -68,6 +90,11 @@ public class BorderLayout implements Layout {
         }
     }
 
+    /**
+     * Used to remove component from layout.
+     *
+     * @param component component to remove.
+     */
     @Override
     public void removeComponent(Component component) {
         if (component == topComponent) {
@@ -83,6 +110,12 @@ public class BorderLayout implements Layout {
         }
     }
 
+    /**
+     * Used to retrieve component attached to one of regions.
+     *
+     * @param constraint region constraint.
+     * @return component or null.
+     */
     public Component getComponent(BorderLayoutConstraint constraint) {
         if (constraint == null) {
             throw new IllegalArgumentException("Cannot get component: constraint is null");
@@ -102,6 +135,12 @@ public class BorderLayout implements Layout {
         throw new IllegalArgumentException("Cannot get component: unknown constraint: " + constraint);
     }
 
+    /**
+     * Used to calculate minimum size for parent component.
+     *
+     * @param parent component to calculate minimum size.
+     * @return calculated minimum size for specified component.
+     */
     @Override
     public Vector2f getMinimumSize(Component parent) {
         Vector2f minimumSize = new Vector2f(0);
@@ -135,6 +174,12 @@ public class BorderLayout implements Layout {
         return minimumSize;
     }
 
+    /**
+     * Used to calculate preferred size for parent component.
+     *
+     * @param parent component to calculate preferred size.
+     * @return calculated preferred size for specified component.
+     */
     @Override
     public Vector2f getPreferredSize(Component parent) {
         Vector2f prefSize = new Vector2f(0);
@@ -168,11 +213,22 @@ public class BorderLayout implements Layout {
         return prefSize;
     }
 
+    /**
+     * Used to calculate maximum size for parent component.
+     *
+     * @param parent component to calculate maximum size.
+     * @return calculated maximum size for specified component.
+     */
     @Override
     public Vector2f getMaximumSize(Component parent) {
         return new Vector2f(Float.MAX_VALUE);
     }
 
+    /**
+     * Used to lay out child components for parent component.
+     *
+     * @param parent component to lay out.
+     */
     @Override
     public void layout(Component parent) {
         if (parent == null) {
@@ -280,13 +336,28 @@ public class BorderLayout implements Layout {
 
         Yoga.nYGNodeCalculateLayout(rootNode, size.x, size.y, Yoga.YGDirectionLTR);
 
-        Vector2f d = new Vector2f(getX(mNode), getY(mNode));
+        Vector2f d = new Vector2f(Yoga.YGNodeLayoutGetLeft(mNode), Yoga.YGNodeLayoutGetTop(mNode));
 
-        setSizeAndPos(getW(tNode), getH(tNode), getX(tNode), getY(tNode), topComponent);
-        setSizeAndPos(getW(bNode), getH(bNode), getX(bNode), getY(bNode), bottomComponent);
-        setSizeAndPos(getW(lNode), getH(lNode), getX(lNode) + d.x, getY(lNode) + d.y, leftComponent);
-        setSizeAndPos(getW(rNode), getH(rNode), getX(rNode) + d.x, getY(rNode) + d.y, rightComponent);
-        setSizeAndPos(getW(cNode), getH(cNode), getX(cNode) + d.x, getY(cNode) + d.y, centerComponent);
+        setSizeAndPos(topComponent,
+            Yoga.YGNodeLayoutGetLeft(tNode), Yoga.YGNodeLayoutGetTop(tNode),
+            Yoga.YGNodeLayoutGetWidth(tNode), Yoga.YGNodeLayoutGetHeight(tNode)
+        );
+        setSizeAndPos(bottomComponent,
+            Yoga.YGNodeLayoutGetLeft(bNode), Yoga.YGNodeLayoutGetTop(bNode),
+            Yoga.YGNodeLayoutGetWidth(bNode), Yoga.YGNodeLayoutGetHeight(bNode)
+        );
+        setSizeAndPos(leftComponent,
+            Yoga.YGNodeLayoutGetLeft(lNode) + d.x, Yoga.YGNodeLayoutGetTop(lNode) + d.y,
+            Yoga.YGNodeLayoutGetWidth(lNode), Yoga.YGNodeLayoutGetHeight(lNode)
+        );
+        setSizeAndPos(rightComponent,
+            Yoga.YGNodeLayoutGetLeft(rNode) + d.x, Yoga.YGNodeLayoutGetTop(rNode) + d.y,
+            Yoga.YGNodeLayoutGetWidth(rNode), Yoga.YGNodeLayoutGetHeight(rNode)
+        );
+        setSizeAndPos(centerComponent,
+            Yoga.YGNodeLayoutGetLeft(cNode) + d.x, Yoga.YGNodeLayoutGetTop(cNode) + d.y,
+            Yoga.YGNodeLayoutGetWidth(cNode), Yoga.YGNodeLayoutGetHeight(cNode)
+        );
 
         Yoga.YGNodeFree(rootNode);
         Yoga.YGNodeFree(mNode);
@@ -295,22 +366,6 @@ public class BorderLayout implements Layout {
         Yoga.YGNodeFree(cNode);
         Yoga.YGNodeFree(rNode);
         Yoga.YGNodeFree(bNode);
-    }
-
-    private float getY(long tNode) {
-        return Yoga.YGNodeLayoutGetTop(tNode);
-    }
-
-    private float getX(long tNode) {
-        return Yoga.YGNodeLayoutGetLeft(tNode);
-    }
-
-    private float getH(long tNode) {
-        return Yoga.YGNodeLayoutGetHeight(tNode);
-    }
-
-    private float getW(long tNode) {
-        return Yoga.YGNodeLayoutGetWidth(tNode);
     }
 
 
@@ -322,7 +377,7 @@ public class BorderLayout implements Layout {
         return centerComponent != null ? centerComponent.getMaximumSize() : new Vector2f(Float.MAX_VALUE);
     }
 
-    private void setSizeAndPos(float w, float h, float x, float y, Component component) {
+    private void setSizeAndPos(Component component, float x, float y, float w, float h) {
         if (component != null) {
             component.getSize().set(w, h);
             component.getPosition().set(x, y);

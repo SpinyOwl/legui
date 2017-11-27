@@ -4,6 +4,8 @@ import java.util.List;
 import org.liquidengine.legui.component.Component;
 
 /**
+ * Default layout manager.
+ *
  * @author Aliaksandr_Shcherbin.
  */
 public class DefaultLayoutManager extends LayoutManager {
