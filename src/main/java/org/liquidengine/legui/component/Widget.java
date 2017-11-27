@@ -20,6 +20,8 @@ import org.liquidengine.legui.event.MouseDragEvent;
 import org.liquidengine.legui.font.FontRegistry;
 import org.liquidengine.legui.icon.CharIcon;
 import org.liquidengine.legui.icon.Icon;
+import org.liquidengine.legui.layout.LayoutConstraint;
+import org.liquidengine.legui.layout.borderlayout.BorderLayoutConstraint;
 import org.liquidengine.legui.listener.EventListener;
 import org.liquidengine.legui.listener.MouseDragEventListener;
 import org.liquidengine.legui.theme.Themes;
@@ -27,6 +29,8 @@ import org.liquidengine.legui.theme.Themes;
 /**
  * Widget component is container which have predefined components such as container, title label, close and minimize buttons and predefined event listeners.
  * This component can be moved, minimized and restored, closed. Also now you can enable or disable title.
+ *
+ * TODO: REIMPLEMENT THIS COMPONENT ACCORDING TO NEW LAYOUT SYSTEM
  */
 public class Widget extends Component {
 
@@ -128,7 +132,9 @@ public class Widget extends Component {
      */
     private void initialize(String title) {
         titleContainer = new Panel();
-        titleContainer.getSize().y = INITIAL_TITLE_HEIGHT;
+        titleContainer.setLayout(null);
+        titleContainer.getMaximumSize().y = INITIAL_TITLE_HEIGHT;
+        titleContainer.getMinimumSize().y = INITIAL_TITLE_HEIGHT;
         titleContainer.setBackgroundColor(ColorConstants.white());
         titleContainer.setTabFocusable(false);
 
@@ -144,6 +150,7 @@ public class Widget extends Component {
         this.title.getListenerMap().addListener(MouseDragEvent.class, mouseDragEventLeguiEventListener);
 
         closeButton = new Button("");
+        closeButton.setSize(new Vector2f(INITIAL_TITLE_HEIGHT));
         closeButton.setBackgroundColor(ColorConstants.transparent());
         closeIcon = new CharIcon(new Vector2f(INITIAL_TITLE_HEIGHT * 2 / 3), FontRegistry.MATERIAL_DESIGN_ICONS, (char) CLOSE_ICON_CHAR,
             ColorConstants.black());
@@ -158,6 +165,7 @@ public class Widget extends Component {
         closeButton.setTabFocusable(false);
 
         minimizeButton = new Button("");
+        minimizeButton.setSize(new Vector2f(INITIAL_TITLE_HEIGHT));
         minimizeButton.setBackgroundColor(ColorConstants.transparent());
         minimizeButton.setTabFocusable(false);
 
@@ -180,16 +188,17 @@ public class Widget extends Component {
 
         container = new Panel();
         container.setTabFocusable(false);
+        container.setLayout(null);
 
         titleContainer.add(this.title);
         titleContainer.add(closeButton);
         titleContainer.add(minimizeButton);
 
-        add(titleContainer);
-        add(container);
+        add(titleContainer, BorderLayoutConstraint.TOP);
+        add(container, BorderLayoutConstraint.CENTER);
 
         Themes.getDefaultTheme().getThemeManager().getComponentTheme(Widget.class).applyAll(this);
-
+        getLayout().layout(this);
         resize();
     }
 
@@ -296,6 +305,11 @@ public class Widget extends Component {
             return;
         }
         this.titleContainer.setVisible(titleEnabled);
+        if (titleEnabled) {
+            this.getLayout().addComponent(titleContainer, BorderLayoutConstraint.TOP);
+        } else {
+            this.getLayout().removeComponent(titleContainer);
+        }
         resize();
     }
 

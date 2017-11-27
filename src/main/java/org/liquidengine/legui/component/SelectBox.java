@@ -29,6 +29,8 @@ import org.liquidengine.legui.theme.Themes;
 
 /**
  * Creates drop-down list with select options.
+ *
+ * TODO: REIMPLEMENT THIS COMPONENT ACCORDING TO NEW LAYOUT SYSTEM
  */
 public class SelectBox extends Component {
 
@@ -132,6 +134,7 @@ public class SelectBox extends Component {
      */
     private void initialize() {
         selectionListPanel.getHorizontalScrollBar().setVisible(false);
+        selectionListPanel.getLayout().removeComponent(selectionListPanel.getHorizontalScrollBar());
 
         expandIcon = new CharIcon(new Vector2f(expandButton.getSize()), DEFAULT_ICON_FONT, (char) EXPAND_ICON_CHAR, ColorConstants.black());
         collapseIcon = new CharIcon(new Vector2f(expandButton.getSize()), DEFAULT_ICON_FONT, (char) COLLAPSE_ICON_CHAR, ColorConstants.black());
@@ -246,7 +249,9 @@ public class SelectBox extends Component {
         collapseIcon.setSize(new Vector2f(buttonWidth, getSize().y).mul(2f / 3f));
         expandIcon.setSize(new Vector2f(buttonWidth, getSize().y).mul(2f / 3f));
 
-        selectionListPanel.getVerticalScrollBar().getSize().x = buttonWidth;
+        selectionListPanel.getVerticalScrollBar().getMinimumSize().x = buttonWidth;
+        selectionListPanel.getVerticalScrollBar().getMaximumSize().x = buttonWidth;
+//        selectionListPanel.getVerticalScrollBar().getSize().x = buttonWidth;
 
         for (int i = 0; i < selectBoxElements.size(); i++) {
             SelectBoxElement selectBoxElement = selectBoxElements.get(i);
@@ -270,7 +275,6 @@ public class SelectBox extends Component {
         selectionListPanel.setPosition(wpos);
         selectionListPanel.getContainer().getSize().y = selectionListPanel.getContainer().count() * elementHeight;
         selectionListPanel.getContainer().getSize().x = this.getSize().x - selectionListPanel.getVerticalScrollBar().getSize().x;
-        selectionListPanel.resize();
 
     }
 
@@ -617,34 +621,6 @@ public class SelectBox extends Component {
      */
     public class SelectBoxScrollablePanel extends ScrollablePanel {
 
-        /**
-         * Default constructor. Used to create component instance without any parameters. <p> Also if you want to make it easy to use with Json
-         * marshaller/unmarshaller component should contain empty constructor.
-         */
-        public SelectBoxScrollablePanel() {
-        }
-
-        /**
-         * Constructor with position and size parameters.
-         *
-         * @param x x position position in parent component.
-         * @param y y position position in parent component.
-         * @param width width of component.
-         * @param height height of component.
-         */
-        public SelectBoxScrollablePanel(float x, float y, float width, float height) {
-            super(x, y, width, height);
-        }
-
-        /**
-         * Constructor with position and size parameters.
-         *
-         * @param position position position in parent component.
-         * @param size size of component.
-         */
-        public SelectBoxScrollablePanel(Vector2f position, Vector2f size) {
-            super(position, size);
-        }
     }
 
 }

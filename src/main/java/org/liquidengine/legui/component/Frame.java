@@ -23,7 +23,7 @@ public class Frame {
     /**
      * Used to hold components.
      */
-    private ComponentLayer componentLayer;
+    private Layer<Component> componentLayer;
     /**
      * All other layers added to this list.
      */
@@ -150,7 +150,7 @@ public class Frame {
      *
      * @return default component layer.
      */
-    public ComponentLayer getComponentLayer() {
+    public Layer<Component> getComponentLayer() {
         return componentLayer;
     }
 

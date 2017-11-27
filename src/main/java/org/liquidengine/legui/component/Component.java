@@ -692,6 +692,21 @@ public abstract class Component implements Serializable {
     }
 
     /**
+     * Sets preferred size.
+     * <p>
+     * Preferred size of component. Used to set preferred size of component for layout manager. Layout manager will try to make this component size equal to
+     * preferred.
+     * <p>
+     * {@code -1} is default value - that means that layout manager will calculate preferred size.
+     *
+     * @param prefWidth the preferred width.
+     * @param prefHeight the preferred height.
+     */
+    public void setPreferredSize(float prefWidth, float prefHeight) {
+        this.preferredSize = new Vector2f(prefWidth, prefHeight);
+    }
+
+    /**
      * Gets minimum size.
      * <p>
      * Minimum size of component. Used to set minimum size of component for layout manager. Layout manager uses this minimum size if component should be as
@@ -723,6 +738,19 @@ public abstract class Component implements Serializable {
     }
 
     /**
+     * Sets minimum size.
+     * <p>
+     * Minimum size of component. Used to set minimum size of component for layout manager. Layout manager uses this minimum size if component should be as
+     * small as possible. If one of dimensions is <= 0 this minimum size is 0.
+     *
+     * @param minWidth the minimum width.
+     * @param minHeight the minimum height.
+     */
+    public void setMinimumSize(float minWidth, float minHeight) {
+        this.minimumSize = new Vector2f(minWidth, minHeight);
+    }
+
+    /**
      * Gets maximum size.
      * <p>
      * Maximum size of component. Used to set maximum size of component for layout manager. Layout manager uses this maximum size if component should be as
@@ -751,6 +779,19 @@ public abstract class Component implements Serializable {
      */
     public void setMaximumSize(Vector2f maximumSize) {
         this.maximumSize = maximumSize;
+    }
+
+    /**
+     * Sets maximum size.
+     * <p>
+     * Maximum size of component. Used to set maximum size of component for layout manager. Layout manager uses this maximum size if component should be as
+     * small as possible. If one of dimensions is <= 0 this maximum size is 0.
+     *
+     * @param maxWidth the maximum width.
+     * @param maxHeight the maximum height.
+     */
+    public void setMaximumSize(float maxWidth, float maxHeight) {
+        this.maximumSize = new Vector2f(maxWidth, maxHeight);
     }
 
     /////////////////////////////////
