@@ -15,7 +15,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import org.joml.Vector2fc;
 import org.joml.Vector2i;
-import org.liquidengine.legui.border.Border;
+import org.liquidengine.legui.style.Border;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.font.Font;
 import org.liquidengine.legui.font.FontRegistry;
@@ -47,7 +47,9 @@ public class NvgRenderer extends AbstractRenderer {
      * @param context context.
      */
     public static void renderBorder(Component component, Context context) {
-        Border border = component.getBorder();
+        if(component.getStyle()==null) return;
+
+        Border border = component.getStyle().getBorder();
         if (border != null && border.isEnabled()) {
             // Render border
             BorderRenderer borderRenderer = RendererProvider.getInstance().getBorderRenderer(border.getClass());

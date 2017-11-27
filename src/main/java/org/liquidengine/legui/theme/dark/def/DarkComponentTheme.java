@@ -1,7 +1,7 @@
 package org.liquidengine.legui.theme.dark.def;
 
 import java.util.List;
-import org.liquidengine.legui.border.SimpleLineBorder;
+import org.liquidengine.legui.style.border.SimpleLineBorder;
 import org.liquidengine.legui.color.ColorConstants;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.Tooltip;

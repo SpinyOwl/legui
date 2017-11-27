@@ -4,7 +4,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.junit.Assert;
 import org.junit.Test;
-import org.liquidengine.legui.border.SimpleLineBorder;
+import org.liquidengine.legui.style.border.SimpleLineBorder;
 import org.liquidengine.legui.color.ColorConstants;
 import org.liquidengine.legui.marshal.json.JsonMarshalContext;
 import org.liquidengine.legui.marshal.json.gsonimpl.GsonMarshalContext;

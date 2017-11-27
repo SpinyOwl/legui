@@ -1,4 +1,4 @@
-package org.liquidengine.legui.border;
+package org.liquidengine.legui.style;
 
 /**
  * Abstract class defines hierarchy of borders.

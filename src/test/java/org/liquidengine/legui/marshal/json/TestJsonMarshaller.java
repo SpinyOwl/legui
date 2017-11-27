@@ -13,7 +13,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.liquidengine.legui.border.SimpleLineBorder;
+import org.liquidengine.legui.style.border.SimpleLineBorder;
 import org.liquidengine.legui.color.ColorConstants;
 import org.liquidengine.legui.component.Button;
 import org.liquidengine.legui.component.CheckBox;

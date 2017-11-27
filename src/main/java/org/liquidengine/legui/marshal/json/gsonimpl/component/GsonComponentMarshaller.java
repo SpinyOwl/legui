@@ -57,13 +57,13 @@ public class GsonComponentMarshaller<T extends Component> extends AbstractGsonMa
                 .add(HEIGHT, object.getSize().y)
                 .get()
             )
-            .add(BACKGROUND_COLOR, createColor(object.getBackgroundColor()))
+//            .add(BACKGROUND_COLOR, createColor(object.getBackgroundColor()))
             .add(ENABLED, object.isEnabled())
             .add(VISIBLE, object.isVisible())
-            .add(CORNER_RADIUS, object.getCornerRadius())
+//            .add(CORNER_RADIUS, object.getCornerRadius())
             .add(TAB_INDEX, object.getTabIndex())
             .add(TAB_FOCUSABLE, object.isTabFocusable())
-            .add(BORDER, GsonMarshalUtil.marshalToJson(object.getBorder(), context))
+//            .add(BORDER, GsonMarshalUtil.marshalToJson(object.getBorder(), context))
             .add(INTERSECTOR, GsonMarshalUtil.marshalToJson(object.getIntersector()))
             .add(TOOLTIP, GsonMarshalUtil.marshalToJson(object.getTooltip(), context))
         ;
@@ -121,18 +121,18 @@ public class GsonComponentMarshaller<T extends Component> extends AbstractGsonMa
                 object.getSize().y = y.getAsFloat();
             }
         }
-        if (isNotNull(bg)) {
-            object.setBackgroundColor(readColor(bg));
-        }
+//        if (isNotNull(bg)) {
+//            object.setBackgroundColor(readColor(bg));
+//        }
         if (isNotNull(enabled)) {
             object.setEnabled(enabled.getAsBoolean());
         }
         if (isNotNull(visible)) {
             object.setVisible(visible.getAsBoolean());
         }
-        if (isNotNull(cornerRadius)) {
-            object.setCornerRadius(cornerRadius.getAsFloat());
-        }
+//        if (isNotNull(cornerRadius)) {
+//            object.setCornerRadius(cornerRadius.getAsFloat());
+//        }
         if(isNotNull(tabIndex)) {
             object.setTabIndex(tabIndex.getAsInt());
         }
@@ -140,11 +140,11 @@ public class GsonComponentMarshaller<T extends Component> extends AbstractGsonMa
             object.setTabFocusable(tabFocusable.getAsBoolean());
         }
 
-        if (isNotNull(border)) {
-            object.setBorder(GsonMarshalUtil.unmarshal(border.getAsJsonObject(), context));
-        } else {
-            object.setBorder(null);
-        }
+//        if (isNotNull(border)) {
+//            object.setBorder(GsonMarshalUtil.unmarshal(border.getAsJsonObject(), context));
+//        } else {
+//            object.setBorder(null);
+//        }
 
         if (isNotNull(intersector)) {
             object.setIntersector(GsonMarshalUtil.unmarshal(intersector.getAsJsonObject(), context));

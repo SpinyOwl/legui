@@ -2,7 +2,7 @@ package org.liquidengine.legui.system.renderer.nvg.border;
 
 import org.joml.Vector2f;
 import org.joml.Vector4f;
-import org.liquidengine.legui.border.SimpleLineBorder;
+import org.liquidengine.legui.style.border.SimpleLineBorder;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.nvg.NvgBorderRenderer;
@@ -22,14 +22,14 @@ public class NvgSimpleLineBorderRenderer extends NvgBorderRenderer<SimpleLineBor
                 return;
             }
 
-            float cornerRadius = component.getCornerRadius();
+//            float cornerRadius = component.getCornerRadius();
             Vector2f size = component.getSize();
             if (component.isFocused()) {
                 NvgShapes.drawRectStroke(
                     nanovg, component.getAbsolutePosition().add(-1f, +1f), size, component.getFocusedStrokeColor(), 1f, cornerRadius);
             }
-            NvgShapes.drawRectStroke(
-                nanovg, component.getAbsolutePosition(), size, borderColor, thickness, cornerRadius);
+//            NvgShapes.drawRectStroke(
+//                nanovg, component.getAbsolutePosition(), size, borderColor, thickness, cornerRadius);
         }
     }
 }
