@@ -769,9 +769,9 @@ public abstract class Component implements Serializable {
     }
 
     /**
-     * Returns true if layerFrame contains no elements.
+     * Returns true if component contains no elements.
      *
-     * @return true if layerFrame contains no elements.
+     * @return true if component contains no elements.
      *
      * @see List#isEmpty()
      */
@@ -780,11 +780,11 @@ public abstract class Component implements Serializable {
     }
 
     /**
-     * Returns true if layerFrame contains specified component.
+     * Returns true if component contains specified component.
      *
      * @param component component to check.
      *
-     * @return true if layerFrame contains specified component.
+     * @return true if component contains specified component.
      *
      * @see List#contains(Object)
      */
@@ -793,9 +793,9 @@ public abstract class Component implements Serializable {
     }
 
     /**
-     * Returns an iterator over the elements in this layerFrame. The elements are returned in no particular order.
+     * Returns an iterator over the elements in this component. The elements are returned in no particular order.
      *
-     * @return an iterator over the elements in this layerFrame.
+     * @return an iterator over the elements in this component.
      *
      * @see List#iterator()
      */
@@ -804,7 +804,7 @@ public abstract class Component implements Serializable {
     }
 
     /**
-     * Used to add component to layerFrame.
+     * Used to add component to component.
      *
      * @param component component to add.
      *
@@ -817,7 +817,7 @@ public abstract class Component implements Serializable {
     }
 
     /**
-     * Used to add component to layerFrame.
+     * Used to add component to component.
      *
      * @param component component to add.
      * @param constraint layout constraint.
@@ -907,7 +907,7 @@ public abstract class Component implements Serializable {
     }
 
     /**
-     * Removes all of the elements of this layerFrame that satisfy the given predicate. Errors or runtime exceptions thrown during iteration or by the predicate
+     * Removes all of the elements of this component that satisfy the given predicate. Errors or runtime exceptions thrown during iteration or by the predicate
      * are relayed to the caller.
      *
      * @param filter a predicate which returns true for elements to be removed.
@@ -922,7 +922,7 @@ public abstract class Component implements Serializable {
     }
 
     /**
-     * Used to remove all child components from layerFrame.
+     * Used to remove all child components from component.
      *
      * @see List#clear()
      */
