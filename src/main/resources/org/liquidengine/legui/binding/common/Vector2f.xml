@@ -1,0 +1,4 @@
+<binding for="org.joml.Vector2f" default="false" xmlns="binding.legui.liquidengine.org">
+  <bind field="x"/>
+  <bind field="y"/>
+</binding>

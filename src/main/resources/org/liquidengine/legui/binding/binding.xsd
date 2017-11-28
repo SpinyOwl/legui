@@ -1,0 +1,28 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="binding.legui.liquidengine.org">
+  <xs:element name="binding">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" minOccurs="0" name="bind">
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="xs:string">
+                <xs:attribute name="field" type="xs:string"/>
+                <xs:attribute name="to" type="xs:string"/>
+                <xs:attribute name="using" type="xs:string"/>
+                <xs:attribute default="attribute" name="as" type="TargetType"/>
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="for" type="xs:string"/>
+      <xs:attribute default="true" name="default" type="xs:boolean"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:simpleType name="TargetType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="field"/>
+      <xs:enumeration value="attribute"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>
