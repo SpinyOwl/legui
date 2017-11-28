@@ -41,7 +41,7 @@ public final class Binding {
 
         private String javaField;
         private String bindingField;
-        private String linkedBinding;
+        private Binding linkedBinding;
         private TargetType targetType;
 
         public Bind(String javaField) {
@@ -69,11 +69,11 @@ public final class Binding {
             this.bindingField = bindingField;
         }
 
-        public String getLinkedBinding() {
+        public Binding getLinkedBinding() {
             return linkedBinding;
         }
 
-        public void setLinkedBinding(String linkedBinding) {
+        public void setLinkedBinding(Binding linkedBinding) {
             this.linkedBinding = linkedBinding;
         }
 
