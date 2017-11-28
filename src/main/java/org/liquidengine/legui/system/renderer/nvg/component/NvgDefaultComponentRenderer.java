@@ -4,7 +4,6 @@ import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderBorde
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.createScissor;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.resetScissor;
 
-import java.util.List;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.style.Style;

@@ -56,6 +56,12 @@ public class Style {
         }
     }
 
+    /**
+     * Returns corner radius for all corners as vector <code>new Vector4f(topLeftCornerRadius, topRightCornerRadius, bottomRightCornerRadius,
+     * bottomLeftCornerRadius)</code>
+     *
+     * @return vector of corner radius for all corners.
+     */
     public Vector4f getCornerRadius() {
         return new Vector4f(topLeftCornerRadius, topRightCornerRadius, bottomRightCornerRadius, bottomLeftCornerRadius);
     }

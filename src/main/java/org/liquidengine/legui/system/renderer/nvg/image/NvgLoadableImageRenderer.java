@@ -5,7 +5,6 @@ import static org.lwjgl.nanovg.NanoVG.nvgBeginPath;
 import static org.lwjgl.nanovg.NanoVG.nvgFill;
 import static org.lwjgl.nanovg.NanoVG.nvgFillPaint;
 import static org.lwjgl.nanovg.NanoVG.nvgImagePattern;
-import static org.lwjgl.nanovg.NanoVG.nvgRoundedRect;
 import static org.lwjgl.nanovg.NanoVG.nvgRoundedRectVarying;
 
 import java.util.Map;

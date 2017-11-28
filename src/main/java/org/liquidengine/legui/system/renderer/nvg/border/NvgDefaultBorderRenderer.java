@@ -2,9 +2,9 @@ package org.liquidengine.legui.system.renderer.nvg.border;
 
 import org.joml.Vector2f;
 import org.joml.Vector4f;
-import org.liquidengine.legui.style.Border;
 import org.liquidengine.legui.color.ColorConstants;
 import org.liquidengine.legui.component.Component;
+import org.liquidengine.legui.style.Border;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.nvg.NvgBorderRenderer;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgShapes;

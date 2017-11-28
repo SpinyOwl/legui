@@ -6,9 +6,9 @@ import static org.liquidengine.legui.marshal.json.gsonimpl.GsonUtil.isNotNull;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import org.liquidengine.legui.style.border.SimpleLineBorder;
 import org.liquidengine.legui.marshal.json.gsonimpl.GsonMarshalContext;
 import org.liquidengine.legui.marshal.json.gsonimpl.GsonUtil;
+import org.liquidengine.legui.style.border.SimpleLineBorder;
 
 /**
  * Created by Aliaksandr_Shcherbin on 2/24/2017.

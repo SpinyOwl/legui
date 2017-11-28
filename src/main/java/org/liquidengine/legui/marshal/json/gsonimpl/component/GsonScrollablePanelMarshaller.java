@@ -19,10 +19,8 @@ import static org.liquidengine.legui.marshal.JsonConstants.WIDTH;
 import static org.liquidengine.legui.marshal.JsonConstants.X;
 import static org.liquidengine.legui.marshal.JsonConstants.Y;
 import static org.liquidengine.legui.marshal.json.gsonimpl.GsonUtil.create;
-import static org.liquidengine.legui.marshal.json.gsonimpl.GsonUtil.createColor;
 import static org.liquidengine.legui.marshal.json.gsonimpl.GsonUtil.fill;
 import static org.liquidengine.legui.marshal.json.gsonimpl.GsonUtil.isNotNull;
-import static org.liquidengine.legui.marshal.json.gsonimpl.GsonUtil.readColor;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -145,13 +143,12 @@ public class GsonScrollablePanelMarshaller<T extends ScrollablePanel> extends Ab
 //        if (isNotNull(cornerRadius)) {
 //            object.setCornerRadius(cornerRadius.getAsFloat());
 //        }
-        if(isNotNull(tabIndex)) {
+        if (isNotNull(tabIndex)) {
             object.setTabIndex(tabIndex.getAsInt());
         }
-        if(isNotNull(tabFocusable)) {
+        if (isNotNull(tabFocusable)) {
             object.setTabFocusable(tabFocusable.getAsBoolean());
         }
-
 
 //        if (isNotNull(border)) {
 //            object.setBorder(GsonMarshalUtil.unmarshal(border.getAsJsonObject(), context));

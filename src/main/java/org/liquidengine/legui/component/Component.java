@@ -16,9 +16,6 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
-import org.joml.Vector4f;
-import org.liquidengine.legui.style.Border;
-import org.liquidengine.legui.color.ColorConstants;
 import org.liquidengine.legui.component.misc.listener.component.TabKeyEventListener;
 import org.liquidengine.legui.component.misc.listener.component.TooltipCursorEnterListener;
 import org.liquidengine.legui.event.CursorEnterEvent;
@@ -98,7 +95,11 @@ public abstract class Component implements Serializable {
      */
     private boolean tabFocusable = true;
 
+    /**
+     * Component style.
+     */
     private Style style = new Style();
+
     /**
      * List of child components.
      */
@@ -141,10 +142,20 @@ public abstract class Component implements Serializable {
         initialize();
     }
 
+    /**
+     * Returns component style.
+     *
+     * @return component style.
+     */
     public Style getStyle() {
         return style;
     }
 
+    /**
+     * Used to set component style.
+     *
+     * @param style component style to set.
+     */
     public void setStyle(Style style) {
         if (style != null) {
             this.style = style;

@@ -78,21 +78,21 @@ public class SystemEventProcessor {
      */
     public void addDefaultCallbacks(CallbackKeeper guiCallbackKeeper) {
         //@formatter:off
-        guiCallbackKeeper.getChainCharCallback()            .add(createDefaultGlfwCharCallbackI());
-        guiCallbackKeeper.getChainDropCallback()            .add(createDefaultGlfwDropCallbackI());
-        guiCallbackKeeper.getChainKeyCallback()             .add(createDefaultGlfwKeyCallbackI());
-        guiCallbackKeeper.getChainScrollCallback()          .add(createDefaultGlfwScrollCallbackI());
-        guiCallbackKeeper.getChainCharModsCallback()        .add(createDefaultGlfwCharModsCallbackI());
-        guiCallbackKeeper.getChainCursorEnterCallback()     .add(createDefaultGlfwCursorEnterCallbackI());
-        guiCallbackKeeper.getChainFramebufferSizeCallback() .add(createDefaultGlfwFramebufferSizeCallbackI());
-        guiCallbackKeeper.getChainMouseButtonCallback()     .add(createDefaultGlfwMouseButtonCallbackI());
-        guiCallbackKeeper.getChainCursorPosCallback()       .add(createDefaultGlfwCursorPosCallbackI());
-        guiCallbackKeeper.getChainWindowCloseCallback()     .add(createDefaultGlfwWindowCloseCallbackI());
-        guiCallbackKeeper.getChainWindowFocusCallback()     .add(createDefaultGlfwWindowFocusCallbackI());
-        guiCallbackKeeper.getChainWindowIconifyCallback()   .add(createDefaultGlfwWindowIconifyCallbackI());
-        guiCallbackKeeper.getChainWindowPosCallback()       .add(createDefaultGlfwWindowPosCallbackI());
-        guiCallbackKeeper.getChainWindowRefreshCallback()   .add(createDefaultGlfwWindowRefreshCallbackI());
-        guiCallbackKeeper.getChainWindowSizeCallback()      .add(createDefaultGlfwWindowSizeCallbackI());
+        guiCallbackKeeper.getChainCharCallback().add(createDefaultGlfwCharCallbackI());
+        guiCallbackKeeper.getChainDropCallback().add(createDefaultGlfwDropCallbackI());
+        guiCallbackKeeper.getChainKeyCallback().add(createDefaultGlfwKeyCallbackI());
+        guiCallbackKeeper.getChainScrollCallback().add(createDefaultGlfwScrollCallbackI());
+        guiCallbackKeeper.getChainCharModsCallback().add(createDefaultGlfwCharModsCallbackI());
+        guiCallbackKeeper.getChainCursorEnterCallback().add(createDefaultGlfwCursorEnterCallbackI());
+        guiCallbackKeeper.getChainFramebufferSizeCallback().add(createDefaultGlfwFramebufferSizeCallbackI());
+        guiCallbackKeeper.getChainMouseButtonCallback().add(createDefaultGlfwMouseButtonCallbackI());
+        guiCallbackKeeper.getChainCursorPosCallback().add(createDefaultGlfwCursorPosCallbackI());
+        guiCallbackKeeper.getChainWindowCloseCallback().add(createDefaultGlfwWindowCloseCallbackI());
+        guiCallbackKeeper.getChainWindowFocusCallback().add(createDefaultGlfwWindowFocusCallbackI());
+        guiCallbackKeeper.getChainWindowIconifyCallback().add(createDefaultGlfwWindowIconifyCallbackI());
+        guiCallbackKeeper.getChainWindowPosCallback().add(createDefaultGlfwWindowPosCallbackI());
+        guiCallbackKeeper.getChainWindowRefreshCallback().add(createDefaultGlfwWindowRefreshCallbackI());
+        guiCallbackKeeper.getChainWindowSizeCallback().add(createDefaultGlfwWindowSizeCallbackI());
         //@formatter:on
     }
 

@@ -60,7 +60,8 @@ public class NvgScrollBarRenderer extends NvgDefaultComponentRenderer<ScrollBar>
                     scrollBarPos.set(pos.x + diff, pos.y);
                     scrollBarSize.set(size.x - 2 * diff, size.y);
                 }
-                NvgShapes.drawRect(nanovg, scrollBarPos, scrollBarSize, scrollBar.getStyle().getBackground().getColor(), arrowsEnabled ? new Vector4f(0) : scrollBar.getStyle().getCornerRadius());
+                NvgShapes.drawRect(nanovg, scrollBarPos, scrollBarSize, scrollBar.getStyle().getBackground().getColor(),
+                    arrowsEnabled ? new Vector4f(0) : scrollBar.getStyle().getCornerRadius());
             }
             // draw arrows
             drawArrows(nanovg, scrollBar, pos, size);

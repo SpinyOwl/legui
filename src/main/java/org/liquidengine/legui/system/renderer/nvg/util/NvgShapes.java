@@ -107,6 +107,8 @@ public class NvgShapes {
             }
             nvgFill(nvg);
             fillColor.free();
+        } else {
+            drawRect(nvg, position, size, bgColor);
         }
     }
 
@@ -138,13 +140,17 @@ public class NvgShapes {
      * @param radius cornder radius
      */
     public static void drawRect(long nvg, Vector4fc rectangle, Vector4fc bgColor, Vector4f radius) {
-        NVGColor fillColor = NVGColor.calloc();
-        NvgColorUtil.rgba(bgColor, fillColor);
-        nvgBeginPath(nvg);
-        nvgFillColor(nvg, fillColor);
-        nvgRoundedRectVarying(nvg, rectangle.x(), rectangle.y(), rectangle.z(), rectangle.w(), radius.x, radius.y, radius.z, radius.w);
-        nvgFill(nvg);
-        fillColor.free();
+        if (radius != null && !radius.equals(ZERO_CORNDERS)) {
+            NVGColor fillColor = NVGColor.calloc();
+            NvgColorUtil.rgba(bgColor, fillColor);
+            nvgBeginPath(nvg);
+            nvgFillColor(nvg, fillColor);
+            nvgRoundedRectVarying(nvg, rectangle.x(), rectangle.y(), rectangle.z(), rectangle.w(), radius.x, radius.y, radius.z, radius.w);
+            nvgFill(nvg);
+            fillColor.free();
+        } else {
+            drawRect(nvg, rectangle, bgColor, radius);
+        }
     }
 
     /**
@@ -190,16 +196,22 @@ public class NvgShapes {
      * @param nvg nanovg context
      * @param rectangle rectangle size and position.
      * @param rectStrokeColor rectangle color.
+     * @param strokeWidth stroke width.
+     * @param radius radius vector.
      */
     public static void drawRectStroke(long nvg, Vector4fc rectangle, Vector4fc rectStrokeColor, float strokeWidth, Vector4f radius) {
-        NVGColor strokeColor = NVGColor.calloc();
-        NvgColorUtil.rgba(rectStrokeColor, strokeColor);
-        nvgBeginPath(nvg);
-        nvgStrokeColor(nvg, strokeColor);
-        nvgStrokeWidth(nvg, strokeWidth);
-        nvgRoundedRectVarying(nvg, rectangle.x(), rectangle.y(), rectangle.z(), rectangle.w(), radius.x, radius.y, radius.z, radius.w);
-        nvgStroke(nvg);
-        strokeColor.free();
+        if (radius != null && !radius.equals(ZERO_CORNDERS)) {
+            NVGColor strokeColor = NVGColor.calloc();
+            NvgColorUtil.rgba(rectStrokeColor, strokeColor);
+            nvgBeginPath(nvg);
+            nvgStrokeColor(nvg, strokeColor);
+            nvgStrokeWidth(nvg, strokeWidth);
+            nvgRoundedRectVarying(nvg, rectangle.x(), rectangle.y(), rectangle.z(), rectangle.w(), radius.x, radius.y, radius.z, radius.w);
+            nvgStroke(nvg);
+            strokeColor.free();
+        } else {
+            drawRectStroke(nvg, rectangle, rectStrokeColor, strokeWidth);
+        }
     }
 
     /**
@@ -229,17 +241,22 @@ public class NvgShapes {
      * @param position rectangle position.
      * @param size rectangle size.
      * @param rectStrokeColor rectangle color.
-     * @param radius cornder radius
+     * @param strokeWidth stroke width.
+     * @param radius radius vector.
      */
     public static void drawRectStroke(long nvg, Vector2fc position, Vector2fc size, Vector4fc rectStrokeColor, float strokeWidth, Vector4f radius) {
-        NVGColor strokeColor = NVGColor.calloc();
-        NvgColorUtil.rgba(rectStrokeColor, strokeColor);
-        nvgBeginPath(nvg);
-        nvgStrokeColor(nvg, strokeColor);
-        nvgStrokeWidth(nvg, strokeWidth);
-        nvgRoundedRectVarying(nvg, position.x(), position.y(), size.x(), size.y(), radius.x, radius.y, radius.z, radius.w);
-        nvgStroke(nvg);
-        strokeColor.free();
+        if (radius != null && !radius.equals(ZERO_CORNDERS)) {
+            NVGColor strokeColor = NVGColor.calloc();
+            NvgColorUtil.rgba(rectStrokeColor, strokeColor);
+            nvgBeginPath(nvg);
+            nvgStrokeColor(nvg, strokeColor);
+            nvgStrokeWidth(nvg, strokeWidth);
+            nvgRoundedRectVarying(nvg, position.x(), position.y(), size.x(), size.y(), radius.x, radius.y, radius.z, radius.w);
+            nvgStroke(nvg);
+            strokeColor.free();
+        } else {
+            drawRectStroke(nvg, position, size, rectStrokeColor, strokeWidth);
+        }
     }
 
     /**
@@ -248,7 +265,8 @@ public class NvgShapes {
      * @param nvg nanovg context
      * @param rectangle rectangle size and position.
      * @param rectStrokeColor rectangle color.
-     * @param radius cornder radius
+     * @param strokeWidth stroke width.
+     * @param radius corner radius.
      */
     public static void drawRectStroke(long nvg, Vector4fc rectangle, Vector4fc rectStrokeColor, float strokeWidth, float radius) {
         NVGColor strokeColor = NVGColor.calloc();

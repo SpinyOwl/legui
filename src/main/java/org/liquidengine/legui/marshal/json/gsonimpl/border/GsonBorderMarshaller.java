@@ -5,10 +5,10 @@ import static org.liquidengine.legui.marshal.json.gsonimpl.GsonUtil.isNotNull;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import org.liquidengine.legui.style.Border;
 import org.liquidengine.legui.marshal.json.gsonimpl.AbstractGsonMarshaller;
 import org.liquidengine.legui.marshal.json.gsonimpl.GsonMarshalContext;
 import org.liquidengine.legui.marshal.json.gsonimpl.GsonUtil;
+import org.liquidengine.legui.style.Border;
 
 /**
  * Marshaller for {@link Border}.

@@ -6,8 +6,6 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import org.apache.commons.collections4.BidiMap;
 import org.apache.commons.collections4.bidimap.DualHashBidiMap;
-import org.liquidengine.legui.style.Border;
-import org.liquidengine.legui.style.border.SimpleLineBorder;
 import org.liquidengine.legui.component.Button;
 import org.liquidengine.legui.component.CheckBox;
 import org.liquidengine.legui.component.Component;
@@ -68,6 +66,8 @@ import org.liquidengine.legui.marshal.json.gsonimpl.icon.GsonLoadableImageIconMa
 import org.liquidengine.legui.marshal.json.gsonimpl.image.GsonBufferedImageMarshaller;
 import org.liquidengine.legui.marshal.json.gsonimpl.image.GsonLoadableImageMarshaller;
 import org.liquidengine.legui.marshal.json.gsonimpl.intersector.GsonIntersectorMarshaller;
+import org.liquidengine.legui.style.Border;
+import org.liquidengine.legui.style.border.SimpleLineBorder;
 
 /**
  * Created by Aliaksandr_Shcherbin on 2/24/2017.
