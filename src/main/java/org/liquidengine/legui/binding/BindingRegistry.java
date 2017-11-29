@@ -1,5 +1,6 @@
 package org.liquidengine.legui.binding;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -7,6 +8,7 @@ import java.util.Map;
  */
 public final class BindingRegistry {
 
+    private Map<Class, Binding> bindingMap = new HashMap<>();
 
     /**
      * Private constructor
@@ -27,8 +29,31 @@ public final class BindingRegistry {
 
     }
 
+    public void setBinding(Class c, Binding b) {
+        if (c != null) {
+            if (b != null && (b.getType() != c && !b.getType().isAssignableFrom(c))) {
+                System.out.println("Can't add binding");
+                return;
+            }
+            bindingMap.put(c, b);
+        }
+    }
+
     public Binding getBinding(Class c) {
-        return null;
+        return cycledSearch(c);
+    }
+
+    protected Binding cycledSearch(Class clazz) {
+        Binding binding = null;
+        Class cClass = clazz;
+        while (binding == null) {
+            binding = bindingMap.get(cClass);
+            if (cClass.isAssignableFrom(Object.class)) {
+                break;
+            }
+            cClass = cClass.getSuperclass();
+        }
+        return binding;
     }
 
     /**

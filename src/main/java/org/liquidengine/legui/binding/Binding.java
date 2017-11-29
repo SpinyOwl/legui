@@ -1,28 +1,40 @@
 package org.liquidengine.legui.binding;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author Aliaksandr_Shcherbin.
  */
 public final class Binding {
 
-    private String type;
+    private Class type;
     private boolean byDefault;
+    private Map<String, Bind> bindings = new HashMap<>();
 
-    public Binding(String type, boolean byDefault) {
+    public Binding(Class type, boolean byDefault) {
         this.type = type;
         this.byDefault = byDefault;
     }
 
-    public Binding(String type) {
+    public Binding(Class type) {
         this.type = type;
     }
 
-    public String getType() {
+    public Class getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(Class type) {
         this.type = type;
+    }
+
+    public void bind(String field, Bind bind) {
+        bindings.put(field, bind);
+    }
+
+    public Map<String, Bind> getBindings() {
+        return new HashMap<>(bindings);
     }
 
     public boolean isByDefault() {
