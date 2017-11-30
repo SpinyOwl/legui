@@ -9,7 +9,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 /**
  * @author Aliaksandr_Shcherbin.
  */
-public class AbstractClassBinding<T> {
+public abstract class AbstractClassBinding<T> {
 
     /**
      * Class and it's child classes for which could be used this binding.
@@ -89,6 +89,10 @@ public class AbstractClassBinding<T> {
     protected void setByDefault(boolean byDefault) {
         this.byDefault = byDefault;
     }
+
+//    public abstract Object getFieldValue(T object, String fieldName);
+
+//    public abstract
 
     @Override
     public String toString() {

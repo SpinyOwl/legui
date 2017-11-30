@@ -5,6 +5,8 @@ import static org.liquidengine.legui.marshal.MarshalUtils.getFieldValue;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import org.liquidengine.legui.binding.BindingRegistry;
@@ -43,10 +45,9 @@ public final class JsonMarshaller {
 
     private static JsonElement marshalToJson(Object object, AbstractClassBinding classBinding) {
         JsonObject json = new JsonObject();
-        Map<String, Binding> bindings = classBinding.getBindings();
-        for (Entry<String, Binding> b : bindings.entrySet()) {
-            Binding binding = b.getValue();
+        List<Binding> bindings = classBinding.getBindingList();
 
+        for (Binding binding : bindings) {
             String javaFieldName = binding.getJavaFieldName();
             String bindingFieldName = binding.getBindingFieldName();
             if (bindingFieldName == null) {
@@ -64,13 +65,41 @@ public final class JsonMarshaller {
         return json;
     }
 
-    public static <T> T unmarshal(String marshal, Class<T> myVecClass) {
-        T object = null;
+    public static <T> T unmarshal(String json, Class<T> clazz) {
+        ClassBinding binding = BindingRegistry.getInstance().getBinding(clazz);
+        if (binding == null) {
+            return new Gson().fromJson(json, clazz);
+        } else {
+            try {
+                JsonElement jsonElement = new JsonParser().parse(json);
+                return unmarshalFromJson(jsonElement, clazz, binding);
+            } catch (InstantiationException | IllegalAccessException e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+    }
+
+    private static <T> T unmarshalFromJson(JsonElement jsonElement, Class<T> clazz, ClassBinding classBinding)
+        throws IllegalAccessException, InstantiationException {
+        T object = clazz.newInstance();
+        List<Binding> bindings = classBinding.getBindingList();
+        for (Binding binding : bindings) {
+            String javaFieldName = binding.getJavaFieldName();
+            String bindingFieldName = binding.getBindingFieldName();
+            if (bindingFieldName == null) {
+                bindingFieldName = javaFieldName;
+            }
+
+            JsonObject jsonO = jsonElement.getAsJsonObject();
+            JsonElement element = jsonO.get(bindingFieldName);
+
+        }
 
         return object;
     }
 
-    public static <T> T unmarshal(String marshal, Class<T> myVecClass, ClassBinding binding) {
+    public static <T> T unmarshal(String json, Class<T> clazz, ClassBinding binding) {
         T object = null;
 
         return object;
