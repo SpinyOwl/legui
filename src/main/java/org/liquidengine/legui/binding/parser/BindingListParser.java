@@ -3,6 +3,8 @@ package org.liquidengine.legui.binding.parser;
 import java.util.HashMap;
 import java.util.Map;
 import org.liquidengine.legui.binding.BindingRegistry;
+import org.liquidengine.legui.binding.model.BindingCreationException;
+import org.liquidengine.legui.binding.model.BindingUtilities;
 import org.liquidengine.legui.binding.model.ClassBinding;
 import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
@@ -34,7 +36,8 @@ public class BindingListParser extends DefaultHandler {
             return;
         }
         switch (localName) {
-            case "binding": addBinding(attributes);
+            case "binding":
+                addBinding(attributes);
                 break;
         }
     }
@@ -48,9 +51,11 @@ public class BindingListParser extends DefaultHandler {
             String aName = attributes.getLocalName(i);
             String value = attributes.getValue(i);
             switch (aName) {
-                case "for": className = value;
+                case "for":
+                    className = value;
                     break;
-                case "is": path = value;
+                case "is":
+                    path = value;
                     break;
             }
             if (path != null && className != null) {
@@ -65,7 +70,14 @@ public class BindingListParser extends DefaultHandler {
                 }
                 ClassBinding binding = BindingParserService.getInstance().parseBinding(path);
                 if (binding != null) {
-                    bindings.put(aClass, binding);
+                    Class bType = binding.getBindingForType();
+                    if (bType != aClass && !bType.isAssignableFrom(aClass)) {
+                        System.out.println("Binding skipped. "
+                            + "Binding type '" + aClass.getCanonicalName() + "' is not instance of '"
+                            + bType.getCanonicalName() + "' specified in '" + path + "'.");
+                    } else {
+                        bindings.put(aClass, binding);
+                    }
                 }
             }
         }

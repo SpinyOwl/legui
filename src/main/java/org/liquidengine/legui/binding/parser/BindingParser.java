@@ -1,12 +1,10 @@
 package org.liquidengine.legui.binding.parser;
 
-import org.liquidengine.legui.binding.BindingBuilder;
-import org.liquidengine.legui.binding.BindingRegistry;
+import org.liquidengine.legui.binding.model.BindingBuilder;
 import org.liquidengine.legui.binding.model.ClassBinding;
 import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXException;
-import org.xml.sax.SAXParseException;
 import org.xml.sax.helpers.DefaultHandler;
 
 /**

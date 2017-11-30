@@ -4,10 +4,10 @@ import java.util.Map;
 import java.util.Map.Entry;
 import org.joml.Vector2f;
 import org.liquidengine.legui.binding.model.ClassBinding;
-import org.liquidengine.legui.binding.BindingBuilder;
+import org.liquidengine.legui.binding.model.BindingBuilder;
 import org.liquidengine.legui.binding.BindingRegistry;
 import org.liquidengine.legui.component.Widget;
-import org.liquidengine.legui.marshal.j.JsonMarshaller;
+import org.liquidengine.legui.marshal.json.JsonMarshaller;
 
 /**
  * @author Aliaksandr_Shcherbin.
@@ -16,7 +16,6 @@ public class Test {
 
     public static void main(String[] args) {
         BindingRegistry.getInstance().loadBindings("org/liquidengine/legui/binding/binding-list.xml");
-//        BindingParserService.getInstance().parseList("org/liquidengine/legui/binding/binding-list.xml");
 
         Vector2f c = new MyVec();
         c.set(10, 20);
@@ -37,11 +36,9 @@ public class Test {
 
         System.out.println(marshal);
 
-
         System.out.println(JsonMarshaller.marshal(new Widget()));
 
-//        MyVec v = JsonMarshaller.unmarshal(marshal, MyVec.class);
-//        System.out.println(v);
+        MyVec v = JsonMarshaller.unmarshal(marshal, MyVec.class);
 
     }
 

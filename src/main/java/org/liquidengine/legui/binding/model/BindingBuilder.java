@@ -1,11 +1,11 @@
-package org.liquidengine.legui.binding;
+package org.liquidengine.legui.binding.model;
+
+import static org.liquidengine.legui.binding.model.BindingUtilities.classTreeGetFieldType;
+import static org.liquidengine.legui.binding.model.BindingUtilities.classTreeHasField;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-import org.liquidengine.legui.binding.model.Binding;
-import org.liquidengine.legui.binding.model.ClassBinding;
-import org.liquidengine.legui.binding.model.TargetType;
 
 /**
  * @author Aliaksandr_Shcherbin.
@@ -41,7 +41,7 @@ public final class BindingBuilder {
         return bind(field, to, true, null);
     }
 
-    public BindingBuilder bind(String field, String to, ClassBinding using) {
+    public BindingBuilder bind(String field, String to, AbstractClassBinding using) {
         return bind(field, to, true, using);
     }
 
@@ -54,13 +54,12 @@ public final class BindingBuilder {
         return this;
     }
 
-    public BindingBuilder bind(String field, String to, boolean attribute, ClassBinding linkedClassBinding) {
+    public BindingBuilder bind(String field, String to, boolean attribute, AbstractClassBinding linkedClassBinding) {
+        checkFieldExist(field);
+        checkFieldTypeIsValid(field, linkedClassBinding);
+
         Binding binding = new Binding(field);
-        if (to == null) {
-            binding.setBindingField(field);
-        } else {
-            binding.setBindingField(to);
-        }
+        binding.setBindingFieldName(to);
         if (linkedClassBinding == null) {
             binding.setTargetType(attribute ? TargetType.ATTRIBUTE : TargetType.FIELD);
         } else {
@@ -71,13 +70,33 @@ public final class BindingBuilder {
         return this;
     }
 
+    private void checkFieldTypeIsValid(String field, AbstractClassBinding linkedClassBinding) {
+        if (linkedClassBinding != null) {
+            Class bindingClass = classBinding.getBindingForType();
+            Class bType = linkedClassBinding.getBindingForType();
+            Class fieldType = classTreeGetFieldType(bindingClass, field);
+            if (bType != fieldType && !bType.isAssignableFrom(fieldType)) {
+                throw new BindingCreationException(
+                    "Field type '" + fieldType.getCanonicalName() + "' is not instance of '" + bType.getCanonicalName() + "'.");
+            }
+        }
+    }
+
+    private void checkFieldExist(String field) {
+        Class bindingClass = classBinding.getBindingForType();
+        if (!classTreeHasField(bindingClass, field)) {
+            throw new BindingCreationException(
+                "Class '" + bindingClass.getCanonicalName() + "' and it's parent classes have not getters/setters or field named as '" + field + "'.");
+        }
+    }
+
     public ClassBinding build() {
         for (Entry<String, Binding> entry : inheritedBindings.entrySet()) {
-            classBinding.putBinding(entry.getKey(), entry.getValue());
+            classBinding.putBinding(entry.getValue());
         }
 
         for (Entry<String, Binding> entry : bindings.entrySet()) {
-            classBinding.putBinding(entry.getKey(), entry.getValue());
+            classBinding.putBinding(entry.getValue());
         }
         return classBinding;
     }

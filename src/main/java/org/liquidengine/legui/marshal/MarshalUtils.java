@@ -29,7 +29,7 @@ public final class MarshalUtils {
         return field;
     }
 
-    public static Object getFielFromObjectByInClass(Object object, String fieldName, Class<?> objectClass) {
+    private static Object getFielFromObjectByInClass(Object object, String fieldName, Class<?> objectClass) {
         Object field = null;
         // search getter or field in this object (not searchig in inherited fields and methods)
         String getterName = "get" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);

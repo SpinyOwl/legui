@@ -36,14 +36,14 @@
             </xs:simpleContent>
           </xs:complexType>
         </xs:element>
-        <xs:element name="unbind" maxOccurs="unbounded" minOccurs="0">
+        <xs:element maxOccurs="unbounded" minOccurs="0" name="unbind">
           <xs:annotation>
             <xs:documentation>Used to unbind some field (which could exist in inherited binding).</xs:documentation>
           </xs:annotation>
           <xs:complexType>
             <xs:simpleContent>
               <xs:extension base="xs:string">
-                <xs:attribute type="xs:string" name="field">
+                <xs:attribute name="field" type="xs:string">
                   <xs:annotation>
                     <xs:documentation>
                       Java Field which should be removed from inherited bindings.
@@ -92,12 +92,22 @@
     </xs:annotation>
     <xs:complexType>
       <xs:sequence>
-        <xs:element name="binding" maxOccurs="unbounded">
+        <xs:element maxOccurs="unbounded" minOccurs="0" name="binding">
           <xs:complexType>
             <xs:simpleContent>
               <xs:extension base="xs:string">
-                <xs:attribute type="xs:string" name="for" use="required"/>
-                <xs:attribute type="xs:string" name="is" use="required"/>
+                <xs:attribute name="for" type="xs:string" use="required"/>
+                <xs:attribute name="is" type="xs:string" use="required"/>
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element maxOccurs="unbounded" minOccurs="0" name="custom-binding">
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="xs:string">
+                <xs:attribute name="for" type="xs:string" use="required"/>
+                <xs:attribute name="class" type="xs:string" use="required"/>
               </xs:extension>
             </xs:simpleContent>
           </xs:complexType>

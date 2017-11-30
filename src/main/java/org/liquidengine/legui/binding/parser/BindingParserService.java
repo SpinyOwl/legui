@@ -10,6 +10,7 @@ import java.util.Map;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParserFactory;
 import org.liquidengine.legui.binding.model.Binding;
+import org.liquidengine.legui.binding.model.BindingCreationException;
 import org.liquidengine.legui.binding.model.ClassBinding;
 import org.xml.sax.SAXException;
 
@@ -34,7 +35,7 @@ public class BindingParserService {
             BindingListParser listParser = new BindingListParser();
             saxParserFactory.newSAXParser().parse(getInputStream(listPath), listParser);
             return listParser.getBindings();
-        } catch (SAXException | IOException | ParserConfigurationException e) {
+        } catch (SAXException | IOException | ParserConfigurationException | BindingCreationException e) {
             e.printStackTrace();
             return null;
         }

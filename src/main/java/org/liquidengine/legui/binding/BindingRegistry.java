@@ -3,7 +3,6 @@ package org.liquidengine.legui.binding;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-import org.liquidengine.legui.binding.model.Binding;
 import org.liquidengine.legui.binding.model.ClassBinding;
 import org.liquidengine.legui.binding.parser.BindingParserService;
 
@@ -38,15 +37,17 @@ public final class BindingRegistry {
         }
     }
 
-    public void setBinding(Class c, ClassBinding b) {
+    public <T> void setBinding(Class<? extends T> c, ClassBinding<? extends T> b) {
         if (c != null) {
             if (b != null) {
-                if (b.getType() != c && !b.getType().isAssignableFrom(c)) {
-                    System.out.println("Can't add binding. Class " + c + " is not instance of " + b.getType());
+                Class<? extends T> type = b.getBindingForType();
+                if (type != c && !type.isAssignableFrom(c)) {
+                    System.out.println("Can't add binding. Class '" + c.getCanonicalName() + "' is not instance of '" + type.getCanonicalName() + "'.");
                     return;
                 }
                 if (!b.isByDefault()) {
-                    System.out.println("Can't add binding for class " + c + " and binding type " + b.getType() + " cause it is not default for this type.");
+                    System.out.println("Can't add binding for class '" + c.getCanonicalName() + "' and binding type '" + type.getCanonicalName()
+                        + "' cause it is not default for this type.");
                     return;
                 }
                 bindingMap.put(c, b);
