@@ -1,33 +1,36 @@
 package org.liquidengine.legui.binding;
 
-import java.util.List;
-import org.liquidengine.legui.binding.Binding.Bind;
-import org.liquidengine.legui.binding.Binding.TargetType;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+import org.liquidengine.legui.binding.model.Binding;
+import org.liquidengine.legui.binding.model.ClassBinding;
+import org.liquidengine.legui.binding.model.TargetType;
 
 /**
  * @author Aliaksandr_Shcherbin.
  */
 public final class BindingBuilder {
 
-    private Binding binding;
-
-    private Class forClass;
-    private Binding inherited;
-    private List<Bind> bindings;
-    private boolean byDefault = false;
+    private ClassBinding classBinding;
+    private Map<String, Binding> bindings = new HashMap<>();
+    private Map<String, Binding> inheritedBindings = new HashMap<>();
 
     private BindingBuilder() {
     }
 
-    public static BindingBuilder createForClass(Class clazz) {
-        BindingBuilder builder = new BindingBuilder();
-        builder.binding = new Binding(clazz);
-        return builder;
+    public static BindingBuilder createForClass(Class clazz, String to) {
+        return createForClass(clazz, to, false, null);
     }
 
-    public BindingBuilder extend(Binding binding) {
-        this.inherited = binding;
-        return this;
+    public static BindingBuilder createForClass(Class clazz, String to, boolean byDefault, ClassBinding inherited) {
+        BindingBuilder builder = new BindingBuilder();
+        builder.classBinding = new ClassBinding(clazz, byDefault);
+        builder.classBinding.setToName(to);
+        if (inherited != null) {
+            builder.inheritedBindings.putAll(inherited.getBindings());
+        }
+        return builder;
     }
 
     public BindingBuilder bind(String field) {
@@ -38,7 +41,7 @@ public final class BindingBuilder {
         return bind(field, to, true, null);
     }
 
-    public BindingBuilder bind(String field, String to, Binding using) {
+    public BindingBuilder bind(String field, String to, ClassBinding using) {
         return bind(field, to, true, using);
     }
 
@@ -46,12 +49,37 @@ public final class BindingBuilder {
         return bind(field, to, attribute, null);
     }
 
-    public BindingBuilder bind(String field, String to, boolean attribute, Binding binding) {
-        Bind bind = new Bind(field);
-        bind.setBindingField(to);
-        bind.setTargetType(attribute ? TargetType.ATTRIBUTE : TargetType.FIELD);
-        bind.setLinkedBinding(binding);
+    public BindingBuilder unbind(String field) {
+        inheritedBindings.remove(field);
         return this;
+    }
+
+    public BindingBuilder bind(String field, String to, boolean attribute, ClassBinding linkedClassBinding) {
+        Binding binding = new Binding(field);
+        if (to == null) {
+            binding.setBindingField(field);
+        } else {
+            binding.setBindingField(to);
+        }
+        if (linkedClassBinding == null) {
+            binding.setTargetType(attribute ? TargetType.ATTRIBUTE : TargetType.FIELD);
+        } else {
+            binding.setTargetType(TargetType.FIELD);
+        }
+        binding.setLinkedClassBinding(linkedClassBinding);
+        bindings.put(field, binding);
+        return this;
+    }
+
+    public ClassBinding build() {
+        for (Entry<String, Binding> entry : inheritedBindings.entrySet()) {
+            classBinding.putBinding(entry.getKey(), entry.getValue());
+        }
+
+        for (Entry<String, Binding> entry : bindings.entrySet()) {
+            classBinding.putBinding(entry.getKey(), entry.getValue());
+        }
+        return classBinding;
     }
 
 }

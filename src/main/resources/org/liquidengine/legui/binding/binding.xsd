@@ -1,23 +1,80 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="binding.legui.liquidengine.org">
-  <xs:element name="binding">
+  <xs:element name="class-binding">
     <xs:complexType>
       <xs:sequence>
         <xs:element maxOccurs="unbounded" minOccurs="0" name="bind">
+          <xs:annotation>
+            <xs:documentation>
+              Create binding for Java Field which should be marshalled/unmarshalled.
+              Note that you can override inherited field bind by new binding.
+            </xs:documentation>
+          </xs:annotation>
           <xs:complexType>
             <xs:simpleContent>
               <xs:extension base="xs:string">
-                <xs:attribute name="field" type="xs:string" use="required"/>
-                <xs:attribute name="to" type="xs:string"/>
-                <xs:attribute name="using" type="xs:string"/>
-                <xs:attribute default="attribute" name="as" type="TargetType"/>
+                <xs:attribute name="field" type="xs:string" use="required">
+                  <xs:annotation>
+                    <xs:documentation>Java Field which should be marshalled/unmarshalled.</xs:documentation>
+                  </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="to" type="xs:string">
+                  <xs:annotation>
+                    <xs:documentation>Field name in target source.</xs:documentation>
+                  </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="using" type="xs:string">
+                  <xs:annotation>
+                    <xs:documentation>Binding reference which should be used to transform java field to target field.</xs:documentation>
+                  </xs:annotation>
+                </xs:attribute>
+                <xs:attribute default="attribute" name="as" type="TargetType">
+                  <xs:annotation>
+                    <xs:documentation>Target type (mostly used for XML bindings).</xs:documentation>
+                  </xs:annotation>
+                </xs:attribute>
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="unbind" maxOccurs="unbounded" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>Used to unbind some field (which could exist in inherited binding).</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="xs:string">
+                <xs:attribute type="xs:string" name="field">
+                  <xs:annotation>
+                    <xs:documentation>
+                      Java Field which should be removed from inherited bindings.
+                    </xs:documentation>
+                  </xs:annotation>
+                </xs:attribute>
               </xs:extension>
             </xs:simpleContent>
           </xs:complexType>
         </xs:element>
       </xs:sequence>
-      <xs:attribute name="for" type="xs:string" use="required"/>
-      <xs:attribute name="extend" type="xs:string"/>
-      <xs:attribute default="true" name="default" type="xs:boolean"/>
+      <xs:attribute name="for" type="xs:string" use="required">
+        <xs:annotation>
+          <xs:documentation>Java class name (full qualified name).</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="to" type="xs:string" use="required">
+        <xs:annotation>
+          <xs:documentation>Default field name.</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="inherit" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Path to binding which should be inherited.</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute default="false" name="default" type="xs:boolean">
+        <xs:annotation>
+          <xs:documentation>Should this binding be used as default binding for specified Java class or not.</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
     </xs:complexType>
   </xs:element>
   <xs:simpleType name="TargetType">
@@ -27,9 +84,15 @@
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="binding-list">
+    <xs:annotation>
+      <xs:documentation>
+        List of default bindings which should be added to registry.
+        Note that if class-binding is not default it will not be added to binding registry.
+      </xs:documentation>
+    </xs:annotation>
     <xs:complexType>
       <xs:sequence>
-        <xs:element name="binding" minOccurs="1" maxOccurs="unbounded">
+        <xs:element name="binding" maxOccurs="unbounded">
           <xs:complexType>
             <xs:simpleContent>
               <xs:extension base="xs:string">

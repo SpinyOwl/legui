@@ -1,9 +1,0 @@
-<binding for="org.liquidengine.legui.component.Panel" extend="org.liquidengine.legui.component.Component" xmlns="binding.legui.liquidengine.org">
-  <bind field="position" to="position" using="org/liquidengine/legui/marshal/binding/common/Vector2f.xml"/>
-  <bind field="size" to="size" using="/org/liquidengine/legui/marshal/binding/common/Vector2size.xml"/>
-  <bind field="enabled"/>
-  <bind field="focused"/>
-  <bind field="pressed"/>
-  <bind field="tabIndex" to="tabIndex"/>
-  <bind as="field" field="components" to="childs"/>
-</binding>

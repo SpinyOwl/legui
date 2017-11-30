@@ -1,5 +1,6 @@
-<b:binding-list xmlns:b="binding.legui.liquidengine.org">
-  <b:binding for="org.liquidengine.legui.component.Component" is="org/liquidengine/legui/binding/component/Component.xml"/>
-  <b:binding for="org.joml.Vector2f" is="org/liquidengine/legui/binding/common/Vector2f.xml"/>
-  <b:binding for="Component" is="org/liquidengine/legui/binding/component/Component.xml"/>
-</b:binding-list>
+<binding-list xmlns="binding.legui.liquidengine.org">
+  <binding for="org.joml.Vector2f" is="org/liquidengine/legui/binding/common/Vector2f.xml"/>
+
+  <binding for="org.liquidengine.legui.component.Component" is="org/liquidengine/legui/binding/component/Component.xml"/>
+  <binding for="org.liquidengine.legui.component.Widget" is="org/liquidengine/legui/binding/component/Widget.xml"/>
+</binding-list>

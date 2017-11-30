@@ -5,8 +5,12 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
+import java.util.Map;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParserFactory;
+import org.liquidengine.legui.binding.model.Binding;
+import org.liquidengine.legui.binding.model.ClassBinding;
 import org.xml.sax.SAXException;
 
 /**
@@ -23,13 +27,33 @@ public class BindingParserService {
         return BindingParserHolder.INSTANCE;
     }
 
-    public void parseList(String listPath) {
+    public Map<Class, ClassBinding> parseList(String listPath) {
         try {
             SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
             saxParserFactory.setNamespaceAware(true);
-            saxParserFactory.newSAXParser().parse(getInputStream(listPath), new BindingListParser());
+            BindingListParser listParser = new BindingListParser();
+            saxParserFactory.newSAXParser().parse(getInputStream(listPath), listParser);
+            return listParser.getBindings();
         } catch (SAXException | IOException | ParserConfigurationException e) {
             e.printStackTrace();
+            return null;
+        }
+    }
+
+    ClassBinding parseBinding(String bindingPath) {
+        return this.parseBinding(bindingPath, null);
+    }
+
+    ClassBinding parseBinding(String bindingPath, String parentPath) {
+        try {
+            SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
+            saxParserFactory.setNamespaceAware(true);
+            BindingParser bindingParser = new BindingParser(parentPath);
+            saxParserFactory.newSAXParser().parse(getInputStream(bindingPath), bindingParser);
+            return bindingParser.getBinding();
+        } catch (SAXException | IOException | ParserConfigurationException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 
