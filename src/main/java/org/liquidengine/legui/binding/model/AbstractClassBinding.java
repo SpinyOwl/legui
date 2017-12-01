@@ -90,9 +90,9 @@ public abstract class AbstractClassBinding<T> {
         this.byDefault = byDefault;
     }
 
-//    public abstract Object getFieldValue(T object, String fieldName);
-
-//    public abstract
+    public void postConstruct(T instance) {
+        // by default doing nothing
+    }
 
     @Override
     public String toString() {

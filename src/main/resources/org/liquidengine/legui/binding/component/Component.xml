@@ -5,6 +5,6 @@
   <bind field="focused"/>
   <bind field="pressed"/>
   <bind field="tabIndex" to="tabIndex"/>
-  <bind as="field" field="components" to="childs"/>
+  <bind field="components" as="field" to="childs"/>
   <unbind field="components"/>
 </class-binding>

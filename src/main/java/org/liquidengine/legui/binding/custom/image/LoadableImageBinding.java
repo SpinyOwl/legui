@@ -17,4 +17,9 @@ public class LoadableImageBinding extends AbstractClassBinding<LoadableImage> {
     public LoadableImageBinding(Class<? extends LoadableImage> bindingForType, boolean byDefault) {
         super(bindingForType, byDefault);
     }
+
+    @Override
+    public void postConstruct(LoadableImage instance) {
+        instance.load();
+    }
 }

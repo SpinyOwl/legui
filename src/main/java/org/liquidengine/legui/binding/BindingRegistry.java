@@ -66,7 +66,11 @@ public final class BindingRegistry {
     protected ClassBinding cycledSearch(Class clazz) {
         ClassBinding classBinding = null;
         Class cClass = clazz;
-        while (classBinding == null) {
+
+        if (clazz == null) {
+            return null;
+        }
+        while (classBinding == null && cClass != null) {
             classBinding = bindingMap.get(cClass);
             if (cClass.isAssignableFrom(Object.class)) {
                 break;

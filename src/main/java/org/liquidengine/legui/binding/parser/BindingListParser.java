@@ -2,9 +2,6 @@ package org.liquidengine.legui.binding.parser;
 
 import java.util.HashMap;
 import java.util.Map;
-import org.liquidengine.legui.binding.BindingRegistry;
-import org.liquidengine.legui.binding.model.BindingCreationException;
-import org.liquidengine.legui.binding.model.BindingUtilities;
 import org.liquidengine.legui.binding.model.ClassBinding;
 import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;

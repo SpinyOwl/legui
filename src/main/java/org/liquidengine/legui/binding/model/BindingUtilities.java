@@ -4,6 +4,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Set;
+import org.apache.commons.lang3.ClassUtils;
 import org.reflections.ReflectionUtils;
 
 /**
@@ -94,26 +95,26 @@ public class BindingUtilities {
     }
 
     public static Object getFieldValue(Object object, String fieldName) {
-        Object field = null;
+        Object fieldValue = null;
         // search in inherited
         Class<?> superclass = object.getClass();
-        while (field == null && superclass != null) {
-            field = getFieldFromObjectByInClass(object, fieldName, superclass);
+        while (fieldValue == null && superclass != null) {
+            fieldValue = getFieldValueFromObjectByInClass(object, fieldName, superclass);
             superclass = superclass.getSuperclass();
         }
 
-        return field;
+        return fieldValue;
     }
 
-    private static Object getFieldFromObjectByInClass(Object object, String fieldName, Class<?> objectClass) {
-        Object field = null;
-        // search getter or field in this object (not searchig in inherited fields and methods)
+    private static Object getFieldValueFromObjectByInClass(Object object, String fieldName, Class<?> objectClass) {
+        Object fieldValue = null;
+        // search getter or fieldValue in this object (not searchig in inherited fields and methods)
         String getterName = "get" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
         Set<Method> getters = ReflectionUtils.getMethods(objectClass, ReflectionUtils.withName(getterName));
         if (!getters.isEmpty()) {
             Method getter = getters.iterator().next();
             try {
-                field = getter.invoke(object);
+                fieldValue = getter.invoke(object);
             } catch (IllegalAccessException | InvocationTargetException e) {
                 e.printStackTrace();
             }
@@ -124,12 +125,12 @@ public class BindingUtilities {
         if (!getters.isEmpty()) {
             Method getter = getters.iterator().next();
             try {
-                field = getter.invoke(object);
+                fieldValue = getter.invoke(object);
             } catch (IllegalAccessException | InvocationTargetException e) {
                 e.printStackTrace();
             }
         }
-        if (field == null) {
+        if (fieldValue == null) {
             Set<Field> fields = ReflectionUtils.getFields(objectClass, ReflectionUtils.withName(fieldName));
             if (!fields.isEmpty()) {
                 Field next = fields.iterator().next();
@@ -137,12 +138,67 @@ public class BindingUtilities {
                     if (!next.isAccessible()) {
                         next.setAccessible(true);
                     }
-                    field = next.get(object);
+                    fieldValue = next.get(object);
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
                 }
             }
         }
-        return field;
+        return fieldValue;
+    }
+
+
+    public static void setFieldValue(Object object, String fieldName, Object fieldValue) {
+
+        Class<?> objectClass = object.getClass();
+        while (objectClass != null) {
+
+            // search getter or field in this object (not searchig in inherited fields and methods)
+            String setterName = "set" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
+            Set<Method> setters = ReflectionUtils.getMethods(objectClass, ReflectionUtils.withName(setterName));
+            Class<?> fieldValueType = getNonPrimitiveType(fieldValue.getClass());
+            if (!setters.isEmpty()) {
+                Method setter = setters.iterator().next();
+                try {
+                    if (setter.getParameterCount() == 1 &&
+                        getNonPrimitiveType(setter.getParameterTypes()[0]) == fieldValueType) {
+                        setter.invoke(object, fieldValue);
+                        return;
+                    }
+                } catch (IllegalAccessException | InvocationTargetException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            // trying search field and set value directly to field.
+            Set<Field> fields = ReflectionUtils.getFields(objectClass, ReflectionUtils.withName(fieldName));
+            if (!fields.isEmpty()) {
+                Field field = fields.iterator().next();
+                try {
+                    Class<?> fieldType = field.getType();
+                    fieldType = getNonPrimitiveType(fieldType);
+                    if (fieldType == fieldValueType) {
+                        if (!field.isAccessible()) {
+                            field.setAccessible(true);
+                        }
+                        field.set(object, fieldValue);
+                        return;
+                    }
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+            }
+            objectClass = objectClass.getSuperclass();
+        }
+
+        System.err.println("Can't set field value '" + fieldValue + "' to field '" + fieldName
+            + "' in object '" + object + "' ('" + objectClass + "') cause value type is not equal to field type or there is no such field.");
+    }
+
+    private static Class<?> getNonPrimitiveType(Class<?> fieldType) {
+        if (fieldType.isPrimitive()) {
+            fieldType = ClassUtils.primitiveToWrapper(fieldType);
+        }
+        return fieldType;
     }
 }

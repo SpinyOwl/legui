@@ -36,9 +36,13 @@ public class Test {
 
         System.out.println(marshal);
 
-        System.out.println(JsonMarshaller.marshal(new Widget()));
+        Widget widgetToMarshal = new Widget();
+        String widgetJson = JsonMarshaller.marshal(widgetToMarshal);
+        System.out.println(widgetJson);
 
-        MyVec v = JsonMarshaller.unmarshal(marshal, MyVec.class);
+        Widget widget = JsonMarshaller.unmarshal(widgetJson, Widget.class);
+
+        System.out.println(widget.equals(widgetToMarshal));
 
     }
 
