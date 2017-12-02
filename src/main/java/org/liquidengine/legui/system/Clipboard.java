@@ -3,7 +3,7 @@ package org.liquidengine.legui.system;
 import org.lwjgl.glfw.GLFW;
 
 /**
- * @author Aliaksandr_Shcherbin.
+ * @author ShchAlexander.
  */
 public abstract class Clipboard {
 

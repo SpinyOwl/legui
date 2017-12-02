@@ -8,10 +8,18 @@ import org.apache.commons.lang3.ClassUtils;
 import org.reflections.ReflectionUtils;
 
 /**
- * @author Aliaksandr_Shcherbin.
+ * @author ShchAlexander.
  */
 public class BindingUtilities {
 
+    /**
+     * Used to check if class hierarchy has specified field.
+     *
+     * @param objectClass class to check.
+     * @param fieldName field name to search in hierarchy.
+     *
+     * @return true if class hierarchy has specified field.
+     */
     public static boolean classTreeHasField(Class objectClass, String fieldName) {
         Class<?> superclass = objectClass;
         while (superclass != null) {
@@ -23,6 +31,14 @@ public class BindingUtilities {
         return false;
     }
 
+    /**
+     * Used to check if class has specified field.
+     *
+     * @param objectClass class to check.
+     * @param fieldName field name to search in hierarchy.
+     *
+     * @return true if class has specified field.
+     */
     private static boolean classHasField(Class objectClass, String fieldName) {
         String getterName = "get" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
         String boolGetterName = "is" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
@@ -38,6 +54,14 @@ public class BindingUtilities {
         return !fields.isEmpty();
     }
 
+    /**
+     * Used to retrieve class of field in specified class hierarchy.
+     *
+     * @param objectClass class to retrieve field class.
+     * @param fieldName field name to search field type.
+     *
+     * @return field type or null if field not found.
+     */
     public static Class classTreeGetFieldType(Class objectClass, String fieldName) {
         Class fieldType = null;
 
@@ -50,6 +74,14 @@ public class BindingUtilities {
         return fieldType;
     }
 
+    /**
+     * Used to retrieve class of field in specified class.
+     *
+     * @param objectClass class to retrieve field class.
+     * @param fieldName field name to search field type.
+     *
+     * @return field type or null if field not found.
+     */
     private static Class getFieldType(Class objectClass, String fieldName) {
         Class fieldType = null;
         // search getter or field in this object (not searchig in inherited fields and methods)
@@ -94,19 +126,38 @@ public class BindingUtilities {
         return fieldType;
     }
 
+    /**
+     * Used to get field value from object going through type hierarchy.
+     *
+     * @param object object to get field.
+     * @param fieldName field name.
+     *
+     * @return field value or null if not found.
+     */
     public static Object getFieldValue(Object object, String fieldName) {
         Object fieldValue = null;
+        boolean[] found = {false};
         // search in inherited
         Class<?> superclass = object.getClass();
-        while (fieldValue == null && superclass != null) {
-            fieldValue = getFieldValueFromObjectByInClass(object, fieldName, superclass);
+        while (!found[0] && fieldValue == null && superclass != null) {
+            fieldValue = getFieldValueFromObject(object, fieldName, superclass, found);
             superclass = superclass.getSuperclass();
         }
 
         return fieldValue;
     }
 
-    private static Object getFieldValueFromObjectByInClass(Object object, String fieldName, Class<?> objectClass) {
+    /**
+     * Used to get field value from object.
+     *
+     * @param object object to get field.
+     * @param fieldName field name.
+     * @param objectClass object class.
+     * @param found if field found should be changed [0] element to true.
+     *
+     * @return field value or null if not found.
+     */
+    private static Object getFieldValueFromObject(Object object, String fieldName, Class<?> objectClass, boolean[] found) {
         Object fieldValue = null;
         // search getter or fieldValue in this object (not searchig in inherited fields and methods)
         String getterName = "get" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
@@ -115,6 +166,7 @@ public class BindingUtilities {
             Method getter = getters.iterator().next();
             try {
                 fieldValue = getter.invoke(object);
+                found[0] = true;
             } catch (IllegalAccessException | InvocationTargetException e) {
                 e.printStackTrace();
             }
@@ -126,6 +178,7 @@ public class BindingUtilities {
             Method getter = getters.iterator().next();
             try {
                 fieldValue = getter.invoke(object);
+                found[0] = true;
             } catch (IllegalAccessException | InvocationTargetException e) {
                 e.printStackTrace();
             }
@@ -139,6 +192,7 @@ public class BindingUtilities {
                         next.setAccessible(true);
                     }
                     fieldValue = next.get(object);
+                    found[0] = true;
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
                 }
@@ -147,7 +201,13 @@ public class BindingUtilities {
         return fieldValue;
     }
 
-
+    /**
+     * Used to set field value.
+     *
+     * @param object object to set field value.
+     * @param fieldName field name.
+     * @param fieldValue field value to set.
+     */
     public static void setFieldValue(Object object, String fieldName, Object fieldValue) {
 
         Class<?> objectClass = object.getClass();
@@ -195,6 +255,13 @@ public class BindingUtilities {
             + "' in object '" + object + "' ('" + objectClass + "') cause value type is not equal to field type or there is no such field.");
     }
 
+    /**
+     * Used to retrieve non-primitive type of field (if field is primitive - it returns primitive wrapper).
+     *
+     * @param fieldType field type.
+     *
+     * @return non-primitive field type.
+     */
     private static Class<?> getNonPrimitiveType(Class<?> fieldType) {
         if (fieldType.isPrimitive()) {
             fieldType = ClassUtils.primitiveToWrapper(fieldType);

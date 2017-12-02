@@ -6,7 +6,7 @@ import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.component.Layer;
 
 /**
- * Created by Aliaksandr_Shcherbin on 2/6/2017.
+ * Created by ShchAlexander on 2/6/2017.
  */
 public abstract class Theme {
 

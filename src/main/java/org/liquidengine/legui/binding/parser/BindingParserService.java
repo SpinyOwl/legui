@@ -5,11 +5,9 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
 import java.util.Map;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParserFactory;
-import org.liquidengine.legui.binding.model.Binding;
 import org.liquidengine.legui.binding.model.BindingCreationException;
 import org.liquidengine.legui.binding.model.ClassBinding;
 import org.xml.sax.SAXException;
@@ -17,7 +15,7 @@ import org.xml.sax.SAXException;
 /**
  * Parser for bindings.
  *
- * @author Aliaksandr_Shcherbin.
+ * @author ShchAlexander.
  */
 public class BindingParserService {
 
@@ -49,7 +47,7 @@ public class BindingParserService {
         try {
             SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
             saxParserFactory.setNamespaceAware(true);
-            BindingParser bindingParser = new BindingParser(parentPath);
+            BindingParser bindingParser = new BindingParser(bindingPath, parentPath);
             saxParserFactory.newSAXParser().parse(getInputStream(bindingPath), bindingParser);
             return bindingParser.getBinding();
         } catch (SAXException | IOException | ParserConfigurationException e) {

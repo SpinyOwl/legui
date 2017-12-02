@@ -10,21 +10,53 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 /**
- * @author Aliaksandr_Shcherbin.
+ * Binding builder. Used to create instance of class binding.
+ *
+ * @author ShchAlexander.
  */
 public final class BindingBuilder {
 
+    /**
+     * Class binding.
+     */
     private ClassBinding classBinding;
+    /**
+     * Bindings.
+     */
     private Map<String, Binding> bindings = new HashMap<>();
+    /**
+     * Inherited bindings.
+     */
     private Map<String, Binding> inheritedBindings = new HashMap<>();
 
+    /**
+     * Private constructor.
+     */
     private BindingBuilder() {
     }
 
+    /**
+     * Used to create binding for specified class.
+     *
+     * @param clazz class to create binding.
+     * @param to target binding name.
+     *
+     * @return builder instance to complete binding creation.
+     */
     public static BindingBuilder createForClass(Class clazz, String to) {
         return createForClass(clazz, to, false, null);
     }
 
+    /**
+     * Used to create binding for specified class.
+     *
+     * @param clazz class to create binding.
+     * @param to target binding name.
+     * @param byDefault should binding used as default for specified class or not
+     * @param inherited base class binding.
+     *
+     * @return builder instance to complete binding creation.
+     */
     public static BindingBuilder createForClass(Class clazz, String to, boolean byDefault, ClassBinding inherited) {
         BindingBuilder builder = new BindingBuilder();
         builder.classBinding = new ClassBinding(clazz, byDefault);
@@ -35,27 +67,77 @@ public final class BindingBuilder {
         return builder;
     }
 
+    /**
+     * Used to bind specified field.
+     *
+     * @param field field to bind.
+     *
+     * @return builder instance to complete binding creation.
+     */
     public BindingBuilder bind(String field) {
         return bind(field, field, true);
     }
 
+    /**
+     * Used to bind specified field.
+     *
+     * @param field field to bind.
+     * @param to target field name in binding.
+     *
+     * @return builder instance to complete binding creation.
+     */
     public BindingBuilder bind(String field, String to) {
         return bind(field, to, true);
     }
 
+    /**
+     * Used to bind specified field.
+     *
+     * @param field field to bind.
+     * @param to target field name in binding.
+     * @param using binding for specified field.
+     *
+     * @return builder instance to complete binding creation.
+     */
     public BindingBuilder bind(String field, String to, AbstractClassBinding using) {
         return bind(field, to, true, using);
     }
 
+    /**
+     * Used to bind specified field.
+     *
+     * @param field field to bind.
+     * @param to target field name in binding.
+     * @param attribute target type of binding should be attribute or not.
+     *
+     * @return builder instance to complete binding creation.
+     */
     public BindingBuilder bind(String field, String to, boolean attribute) {
         return bind(field, to, attribute, (AbstractClassBinding) null);
     }
 
+    /**
+     * Used to unbind specified field.
+     *
+     * @param field field to unbind.
+     *
+     * @return builder instance to complete binding creation.
+     */
     public BindingBuilder unbind(String field) {
         inheritedBindings.remove(field);
         return this;
     }
 
+    /**
+     * Used to bind specified field.
+     *
+     * @param field field to bind.
+     * @param to target field name in binding.
+     * @param attribute target type of binding should be attribute or not.
+     * @param linkedClassBinding binding for specified field.
+     *
+     * @return builder instance to complete binding creation.
+     */
     public BindingBuilder bind(String field, String to, boolean attribute, AbstractClassBinding linkedClassBinding) {
         checkFieldExist(field);
         checkLinkedBindingFieldTypeIsValid(field, linkedClassBinding);
@@ -65,6 +147,16 @@ public final class BindingBuilder {
         return this;
     }
 
+    /**
+     * Used to bind specified field.
+     *
+     * @param field field to bind.
+     * @param to target field name in binding.
+     * @param attribute target type of binding should be attribute or not.
+     * @param classConverter class converter for specified field.
+     *
+     * @return builder instance to complete binding creation.
+     */
     public BindingBuilder bind(String field, String to, boolean attribute, AbstractClassConverter classConverter) {
         checkFieldExist(field);
         checkClassConverterType(field, classConverter);
@@ -74,6 +166,16 @@ public final class BindingBuilder {
         return this;
     }
 
+    /**
+     * Used to create binding instance.
+     *
+     * @param field field to bind.
+     * @param to target field name in binding.
+     * @param attribute target type of binding should be attribute or not.
+     * @param linkedClassBinding binding for specified field.
+     *
+     * @return binding instance.
+     */
     private Binding createBinding(String field, String to, boolean attribute, AbstractClassBinding linkedClassBinding) {
         Binding binding = new Binding(field);
         if (to != null) {
@@ -91,6 +193,12 @@ public final class BindingBuilder {
         return binding;
     }
 
+    /**
+     * Used to check if class converter type parametrized with right class (class of object field).
+     *
+     * @param field field name.
+     * @param classConverter class converter.
+     */
     private void checkClassConverterType(String field, AbstractClassConverter classConverter) {
         Class<? extends AbstractClassConverter> converterClass = classConverter.getClass();
         Type type = converterClass.getGenericSuperclass();
@@ -115,14 +223,12 @@ public final class BindingBuilder {
 
     }
 
-    private boolean isClassConverter(Type type) {
-        if (type instanceof ParameterizedType) {
-            ParameterizedType parameterizedType = (ParameterizedType) type;
-            return parameterizedType.getRawType().equals(AbstractClassConverter.class);
-        }
-        return false;
-    }
-
+    /**
+     * Used to check if linked class binding type parametrized with right class (class of object field).
+     *
+     * @param field field name.
+     * @param linkedClassBinding linked class binding for field.
+     */
     private void checkLinkedBindingFieldTypeIsValid(String field, AbstractClassBinding linkedClassBinding) {
         if (linkedClassBinding != null) {
             Class bindingClass = classBinding.getBindingForType();
@@ -135,6 +241,11 @@ public final class BindingBuilder {
         }
     }
 
+    /**
+     * Used to check if field exist in binding class.
+     *
+     * @param field field name to check.
+     */
     private void checkFieldExist(String field) {
         Class bindingClass = classBinding.getBindingForType();
         if (!classTreeHasField(bindingClass, field)) {
@@ -143,6 +254,11 @@ public final class BindingBuilder {
         }
     }
 
+    /**
+     * Creates class binding instance from previously configured steps.
+     *
+     * @return class binding instance.
+     */
     public ClassBinding build() {
         for (Entry<String, Binding> entry : inheritedBindings.entrySet()) {
             classBinding.putBinding(entry.getValue());

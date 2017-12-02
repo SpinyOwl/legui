@@ -11,7 +11,7 @@ import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.event.SystemWindowSizeEvent;
 
 /**
- * Created by Aliaksandr_Shcherbin on 2/2/2017.
+ * Created by ShchAlexander on 2/2/2017.
  */
 public class WindowSizeEventHandler implements SystemEventHandler<SystemWindowSizeEvent> {
 

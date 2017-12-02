@@ -11,10 +11,13 @@ import org.liquidengine.legui.binding.parser.BindingParserService;
  */
 public final class BindingRegistry {
 
+    /**
+     * Used to hold default bindings.
+     */
     private Map<Class, ClassBinding> bindingMap = new HashMap<>();
 
     /**
-     * Private constructor
+     * Private constructor.
      */
     private BindingRegistry() {
     }
@@ -28,6 +31,11 @@ public final class BindingRegistry {
         return BRH.INSTANCE;
     }
 
+    /**
+     * Used to load bindings from binding list.
+     *
+     * @param bindingListPath path to binding list.
+     */
     public void loadBindings(String bindingListPath) {
         Map<Class, ClassBinding> map = BindingParserService.getInstance().parseList(bindingListPath);
         if (map != null) {
@@ -37,6 +45,14 @@ public final class BindingRegistry {
         }
     }
 
+    /**
+     * Used to set specified binding for specified class.
+     * If binding is not set as default ({@link ClassBinding#byDefault}) it will not be added.
+     *
+     * @param c class to bind.
+     * @param b binding for class.
+     * @param <T> class type.
+     */
     public <T> void setBinding(Class<? extends T> c, ClassBinding<? extends T> b) {
         if (c != null) {
             if (b != null) {
@@ -55,14 +71,36 @@ public final class BindingRegistry {
         }
     }
 
+    /**
+     * Used to retrieve binding for specified class.
+     * If there is no binding for this concrete class it will search binding for all of it's superclasses.
+     *
+     * @param c class to search binding.
+     * @param <T> class type.
+     *
+     * @return returns default binding for class or null.
+     */
     public <T> ClassBinding<T> getBinding(Class<T> c) {
         return cycledSearch(c);
     }
 
+    /**
+     * Returns all bindings as map.
+     *
+     * @return all bindings as map.
+     */
     public Map<Class, ClassBinding> getBindingMap() {
         return new HashMap<>(bindingMap);
     }
 
+    /**
+     * Used to search binding for class through all class hierarchy of specified class.
+     *
+     * @param clazz class to search binding.
+     * @param <T> type of class.
+     *
+     * @return binding or null if not found.
+     */
     protected <T> ClassBinding<T> cycledSearch(Class<T> clazz) {
         ClassBinding classBinding = null;
         Class cClass = clazz;

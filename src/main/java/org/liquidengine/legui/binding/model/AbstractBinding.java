@@ -3,7 +3,9 @@ package org.liquidengine.legui.binding.model;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
- * @author Aliaksandr_Shcherbin.
+ * Field binding. Describes how java field should be mapped to external type.
+ *
+ * @author ShchAlexander.
  */
 public abstract class AbstractBinding {
 
@@ -53,34 +55,74 @@ public abstract class AbstractBinding {
         this.bindingFieldName = bindingFieldName;
     }
 
+    /**
+     * Returns java field name.
+     *
+     * @return java field name.
+     */
     public String getJavaFieldName() {
         return javaFieldName;
     }
 
+    /**
+     * Used to set java field name.
+     *
+     * @param javaFieldName java field name to set.
+     */
     protected void setJavaFieldName(String javaFieldName) {
         this.javaFieldName = javaFieldName;
     }
 
+    /**
+     * Returns binding field name.
+     *
+     * @return binding field name.
+     */
     public String getBindingFieldName() {
         return bindingFieldName;
     }
 
+    /**
+     * Used to set binding field name.
+     *
+     * @param bindingFieldName binding field name to set.
+     */
     protected void setBindingFieldName(String bindingFieldName) {
         this.bindingFieldName = bindingFieldName;
     }
 
+    /**
+     * Returns linked class binding.
+     *
+     * @return linked class binding.
+     */
     public AbstractClassBinding getLinkedClassBinding() {
         return linkedClassBinding;
     }
 
+    /**
+     * Used to set linked class binding.
+     *
+     * @param linkedClassBinding linked class binding to set.
+     */
     protected void setLinkedClassBinding(AbstractClassBinding linkedClassBinding) {
         this.linkedClassBinding = linkedClassBinding;
     }
 
+    /**
+     * Returns target type.
+     *
+     * @return target type.
+     */
     public TargetType getTargetType() {
         return targetType;
     }
 
+    /**
+     * Used to set target type.
+     *
+     * @param targetType target type to set.
+     */
     protected void setTargetType(TargetType targetType) {
         this.targetType = targetType;
     }
@@ -95,10 +137,20 @@ public abstract class AbstractBinding {
             .toString();
     }
 
+    /**
+     * Returns class converter.
+     *
+     * @return class converter.
+     */
     public AbstractClassConverter getClassConverter() {
         return classConverter;
     }
 
+    /**
+     * Used to set class converter.
+     *
+     * @param classConverter class converter to set.
+     */
     public void setClassConverter(AbstractClassConverter classConverter) {
         this.classConverter = classConverter;
     }

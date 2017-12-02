@@ -17,7 +17,7 @@ import org.liquidengine.legui.image.LoadableImage;
 import org.lwjgl.nanovg.NanoVG;
 
 /**
- * Created by Aliaksandr_Shcherbin on 1/26/2017.
+ * Created by ShchAlexander on 1/26/2017.
  */
 public class NvgLoadableImageReferenceManager {
 

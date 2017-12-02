@@ -1,28 +1,62 @@
 package org.liquidengine.legui.binding.parser;
 
+import org.liquidengine.legui.binding.model.AbstractClassConverter;
 import org.liquidengine.legui.binding.model.BindingBuilder;
 import org.liquidengine.legui.binding.model.ClassBinding;
-import org.liquidengine.legui.binding.model.AbstractClassConverter;
 import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 /**
- * @author Aliaksandr_Shcherbin.
+ * ClassBinding parser.
+ *
+ * @author ShchAlexander.
  */
 public class BindingParser extends DefaultHandler {
 
+    /**
+     * Class binding.
+     */
     private ClassBinding binding;
+    private String bindingPath;
+    /**
+     * Path to inherited binding.
+     */
     private String parentPath;
+    /**
+     * Binding builder.
+     */
     private BindingBuilder builder;
+    /**
+     * Java field name to bind.
+     */
     private String field;
+    /**
+     * Binding field name.
+     */
     private String toField;
+    /**
+     * Should field be mapped ass attribute (XML).
+     */
     private boolean attribute;
+    /**
+     * Class converter.
+     */
     private AbstractClassConverter classConverter;
+    /**
+     * Linked class binding.
+     */
     private ClassBinding linked;
 
-    public BindingParser(String parentPath) {
+    /**
+     * Binding parser constructor.
+     *
+     * @param bindingPath path to current binding.
+     * @param parentPath path to parent binding.
+     */
+    public BindingParser(String bindingPath, String parentPath) {
+        this.bindingPath = bindingPath;
         this.parentPath = parentPath;
     }
 
@@ -116,7 +150,7 @@ public class BindingParser extends DefaultHandler {
             }
             binding = BindingStorage.getInstance().getBinding(inheritBinding);
             if (binding == null) {
-                binding = BindingParserService.getInstance().parseBinding(inheritBinding);
+                binding = BindingParserService.getInstance().parseBinding(inheritBinding, bindingPath);
                 BindingStorage.getInstance().putBinding(inheritBinding, binding);
             }
         }

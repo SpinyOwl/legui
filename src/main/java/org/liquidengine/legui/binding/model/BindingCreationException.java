@@ -1,7 +1,9 @@
 package org.liquidengine.legui.binding.model;
 
 /**
- * @author Aliaksandr_Shcherbin.
+ * Binding creation exception. Used mostly in binding parser and binding builder.
+ *
+ * @author ShchAlexander.
  */
 public class BindingCreationException extends RuntimeException {
 

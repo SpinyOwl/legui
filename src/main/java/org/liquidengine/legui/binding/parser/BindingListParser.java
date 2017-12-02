@@ -9,7 +9,9 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 /**
- * @author Aliaksandr_Shcherbin.
+ * Parser for binding list.
+ *
+ * @author ShchAlexander.
  */
 public class BindingListParser extends DefaultHandler {
 
@@ -39,6 +41,11 @@ public class BindingListParser extends DefaultHandler {
         }
     }
 
+    /**
+     * Used to add binding.
+     *
+     * @param attributes attributes.
+     */
     private void addBinding(Attributes attributes) {
         String path = null;
         String className = null;
@@ -80,6 +87,11 @@ public class BindingListParser extends DefaultHandler {
         }
     }
 
+    /**
+     * Returns parsed bindings.
+     *
+     * @return bindings map.
+     */
     public Map<Class, ClassBinding> getBindings() {
         return bindings;
     }

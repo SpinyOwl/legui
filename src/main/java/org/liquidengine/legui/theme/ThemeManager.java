@@ -3,7 +3,7 @@ package org.liquidengine.legui.theme;
 import org.liquidengine.legui.component.Component;
 
 /**
- * Created by Aliaksandr_Shcherbin on 3/9/2017.
+ * Created by ShchAlexander on 3/9/2017.
  */
 public abstract class ThemeManager {
 

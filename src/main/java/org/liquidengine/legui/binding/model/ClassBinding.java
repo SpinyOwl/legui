@@ -3,7 +3,7 @@ package org.liquidengine.legui.binding.model;
 /**
  * Default binding implementation
  *
- * @author Aliaksandr_Shcherbin.
+ * @author ShchAlexander.
  */
 public final class ClassBinding<T> extends AbstractClassBinding<T> {
 

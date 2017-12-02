@@ -10,7 +10,7 @@ import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.event.SystemWindowRefreshEvent;
 
 /**
- * Created by Aliaksandr_Shcherbin on 2/2/2017.
+ * Created by ShchAlexander on 2/2/2017.
  */
 public class WindowRefreshEventHandler extends AbstractSystemEventHandler<SystemWindowRefreshEvent> {
 

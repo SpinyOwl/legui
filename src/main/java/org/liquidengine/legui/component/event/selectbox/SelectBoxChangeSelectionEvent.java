@@ -6,7 +6,7 @@ import org.liquidengine.legui.event.Event;
 import org.liquidengine.legui.system.context.Context;
 
 /**
- * @author Aliaksandr_Shcherbin.
+ * @author ShchAlexander.
  */
 public class SelectBoxChangeSelectionEvent<T extends SelectBox> extends Event<T> {
 

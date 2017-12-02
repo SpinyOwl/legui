@@ -17,7 +17,7 @@ import org.liquidengine.legui.binding.model.Binding;
 import org.liquidengine.legui.binding.model.BindingUtilities;
 
 /**
- * @author Aliaksandr_Shcherbin.
+ * @author ShchAlexander.
  */
 public final class JsonMarshaller {
 

@@ -1,15 +1,27 @@
 package org.liquidengine.legui.binding.model;
 
 /**
+ * Default binding class.
  * Created by ShchAlexander on 30.11.2017.
  */
 public final class Binding extends AbstractBinding {
 
-    protected Binding(String javaField) {
-        super(javaField);
+    /**
+     * Constructs binding for specified field name.
+     *
+     * @param javaFieldName java field name.
+     */
+    protected Binding(String javaFieldName) {
+        super(javaFieldName);
     }
 
-    protected Binding(String javaField, String bindingField) {
-        super(javaField, bindingField);
+    /**
+     * Constructs binding for specified java and binding field names.
+     *
+     * @param javaFieldName java field name.
+     * @param bindingFieldName binding field name.
+     */
+    protected Binding(String javaFieldName, String bindingFieldName) {
+        super(javaFieldName, bindingFieldName);
     }
 }
