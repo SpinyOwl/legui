@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
@@ -90,8 +91,17 @@ public abstract class AbstractClassBinding<T> {
         this.byDefault = byDefault;
     }
 
-    public void postConstruct(T instance) {
-        // by default doing nothing
+    public T createInstance(Class<T> clazz, Map<String, Object> fieldValues) {
+        T instance = null;
+        try {
+            instance = clazz.newInstance();
+            for (Entry<String, Object> entry : fieldValues.entrySet()) {
+                BindingUtilities.setFieldValue(instance, entry.getKey(), entry.getValue());
+            }
+        } catch (InstantiationException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return instance;
     }
 
     @Override

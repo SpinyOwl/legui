@@ -2,6 +2,7 @@ package org.liquidengine.legui.binding.parser;
 
 import org.liquidengine.legui.binding.model.BindingBuilder;
 import org.liquidengine.legui.binding.model.ClassBinding;
+import org.liquidengine.legui.binding.model.AbstractClassConverter;
 import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXException;
@@ -15,6 +16,11 @@ public class BindingParser extends DefaultHandler {
     private ClassBinding binding;
     private String parentPath;
     private BindingBuilder builder;
+    private String field;
+    private String toField;
+    private boolean attribute;
+    private AbstractClassConverter classConverter;
+    private ClassBinding linked;
 
     public BindingParser(String parentPath) {
         this.parentPath = parentPath;
@@ -44,19 +50,41 @@ public class BindingParser extends DefaultHandler {
         switch (localName) {
             case "class-binding": createClassBinding(attributes);
                 break;
-            case "bind": bind(attributes);
+            case "bind": addBind(attributes);
+                break;
+            case "using-binding": addLink(attributes);
+                break;
+            case "using-converter": addConverter(attributes);
                 break;
             case "unbind": unbind(attributes);
                 break;
         }
     }
 
+    private void addConverter(Attributes attributes) {
+        for (int i = 0; i < attributes.getLength(); i++) {
+            String name = attributes.getLocalName(i);
+            String value = attributes.getValue(i);
+            switch (name) {
+                case "class": {
+                    try {
+                        classConverter = (AbstractClassConverter) Class.forName(value).newInstance();
+                    } catch (ClassNotFoundException | IllegalAccessException | InstantiationException e) {
+                        e.printStackTrace();
+                    }
+                }
+                break;
+            }
+        }
+    }
+
+
     @Override
     public void endElement(String uri, String localName, String qName) throws SAXException {
         switch (localName) {
-            case "class-binding": {
-                binding = builder.build();
-            }
+            case "class-binding": binding = builder.build();
+                break;
+            case "bind": bind();
                 break;
         }
     }
@@ -103,11 +131,25 @@ public class BindingParser extends DefaultHandler {
         }
     }
 
-    private void bind(Attributes attributes) {
-        String field = null;
-        String toField = null;
-        String using = null;
-        boolean attribute = true;
+    private void bind() {
+        if (linked != null) {
+            builder.bind(field, toField, attribute, linked);
+        } else if (classConverter != null) {
+            builder.bind(field, toField, attribute, classConverter);
+        } else {
+            builder.bind(field, toField, attribute);
+        }
+        field = null;
+        toField = null;
+        attribute = false;
+        linked = null;
+        classConverter = null;
+    }
+
+    private void addBind(Attributes attributes) {
+        field = null;
+        toField = null;
+        attribute = true;
 
         for (int i = 0; i < attributes.getLength(); i++) {
             String name = attributes.getLocalName(i);
@@ -117,21 +159,30 @@ public class BindingParser extends DefaultHandler {
                     break;
                 case "to": toField = value;
                     break;
-                case "using": using = value;
-                    break;
                 case "attribute": attribute = Boolean.valueOf(value);
                     break;
             }
         }
-        ClassBinding linked = null;
-        if (using != null) {
-            linked = BindingStorage.getInstance().getBinding(using);
-            if (linked == null) {
-                linked = BindingParserService.getInstance().parseBinding(using);
-                BindingStorage.getInstance().putBinding(using, linked);
+    }
+
+    private void addLink(Attributes attributes) {
+        String linkedBindingPath = null;
+        for (int i = 0; i < attributes.getLength(); i++) {
+            String name = attributes.getLocalName(i);
+            String value = attributes.getValue(i);
+            switch (name) {
+                case "path": linkedBindingPath = value;
+                    break;
             }
         }
-        builder.bind(field, toField, attribute, linked);
+        linked = null;
+        if (linkedBindingPath != null) {
+            linked = BindingStorage.getInstance().getBinding(linkedBindingPath);
+            if (linked == null) {
+                linked = BindingParserService.getInstance().parseBinding(linkedBindingPath);
+                BindingStorage.getInstance().putBinding(linkedBindingPath, linked);
+            }
+        }
     }
 
     private void unbind(Attributes attributes) {

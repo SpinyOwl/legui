@@ -1,5 +1,6 @@
 package org.liquidengine.legui.binding.custom.image;
 
+import java.util.Map;
 import org.liquidengine.legui.binding.model.AbstractClassBinding;
 import org.liquidengine.legui.image.LoadableImage;
 
@@ -19,7 +20,9 @@ public class LoadableImageBinding extends AbstractClassBinding<LoadableImage> {
     }
 
     @Override
-    public void postConstruct(LoadableImage instance) {
+    public LoadableImage createInstance(Class<LoadableImage> clazz, Map<String, Object> fieldValues) {
+        LoadableImage instance = super.createInstance(clazz, fieldValues);
         instance.load();
+        return instance;
     }
 }

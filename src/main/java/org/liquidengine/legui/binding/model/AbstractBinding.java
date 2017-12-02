@@ -24,6 +24,11 @@ public abstract class AbstractBinding {
     private AbstractClassBinding linkedClassBinding;
 
     /**
+     * Linked binding which should be used for field conversions.
+     */
+    private AbstractClassConverter classConverter;
+
+    /**
      * Target type to which should be converted java field (for example in XML representation it could be field or attribute).
      */
     private TargetType targetType;
@@ -88,5 +93,13 @@ public abstract class AbstractBinding {
             .append("linkedClassBinding", linkedClassBinding)
             .append("targetType", targetType)
             .toString();
+    }
+
+    public AbstractClassConverter getClassConverter() {
+        return classConverter;
+    }
+
+    public void setClassConverter(AbstractClassConverter classConverter) {
+        this.classConverter = classConverter;
     }
 }

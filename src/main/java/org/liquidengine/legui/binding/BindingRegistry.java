@@ -55,7 +55,7 @@ public final class BindingRegistry {
         }
     }
 
-    public ClassBinding getBinding(Class c) {
+    public <T> ClassBinding<T> getBinding(Class<T> c) {
         return cycledSearch(c);
     }
 
@@ -63,7 +63,7 @@ public final class BindingRegistry {
         return new HashMap<>(bindingMap);
     }
 
-    protected ClassBinding cycledSearch(Class clazz) {
+    protected <T> ClassBinding<T> cycledSearch(Class<T> clazz) {
         ClassBinding classBinding = null;
         Class cClass = clazz;
 
