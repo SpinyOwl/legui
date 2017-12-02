@@ -59,14 +59,7 @@ public final class BindingBuilder {
     public BindingBuilder bind(String field, String to, boolean attribute, AbstractClassBinding linkedClassBinding) {
         checkFieldExist(field);
         checkLinkedBindingFieldTypeIsValid(field, linkedClassBinding);
-
-        Binding binding = new Binding(field);
-        binding.setBindingFieldName(to);
-        if (linkedClassBinding == null) {
-            binding.setTargetType(attribute ? TargetType.ATTRIBUTE : TargetType.FIELD);
-        } else {
-            binding.setTargetType(TargetType.FIELD);
-        }
+        Binding binding = createBinding(field, to, attribute, linkedClassBinding);
         binding.setLinkedClassBinding(linkedClassBinding);
         bindings.put(field, binding);
         return this;
@@ -75,17 +68,27 @@ public final class BindingBuilder {
     public BindingBuilder bind(String field, String to, boolean attribute, AbstractClassConverter classConverter) {
         checkFieldExist(field);
         checkClassConverterType(field, classConverter);
-
-        Binding binding = new Binding(field);
-        binding.setBindingFieldName(to);
-        if (classConverter == null) {
-            binding.setTargetType(attribute ? TargetType.ATTRIBUTE : TargetType.FIELD);
-        } else {
-            binding.setTargetType(TargetType.ATTRIBUTE);
-        }
+        Binding binding = createBinding(field, to, attribute, null);
         binding.setClassConverter(classConverter);
         bindings.put(field, binding);
         return this;
+    }
+
+    private Binding createBinding(String field, String to, boolean attribute, AbstractClassBinding linkedClassBinding) {
+        Binding binding = new Binding(field);
+        if (to != null) {
+            binding.setBindingFieldName(to);
+        } else if (linkedClassBinding != null) {
+            binding.setBindingFieldName(linkedClassBinding.getToName());
+        } else {
+            binding.setBindingFieldName(field);
+        }
+        if (linkedClassBinding == null) {
+            binding.setTargetType(attribute ? TargetType.ATTRIBUTE : TargetType.FIELD);
+        } else {
+            binding.setTargetType(TargetType.FIELD);
+        }
+        return binding;
     }
 
     private void checkClassConverterType(String field, AbstractClassConverter classConverter) {

@@ -106,7 +106,7 @@
   </xs:complexType>
 
   <!-- BINDING LIST TYPES -->
-
+  <!-- TODO : Create abitlity to add binding to class converter -->
   <xs:element name="binding-list">
     <xs:annotation>
       <xs:documentation>

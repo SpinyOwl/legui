@@ -3,7 +3,6 @@
 
   <binding for="org.liquidengine.legui.component.Component" is="org/liquidengine/legui/binding/component/Component.xml"/>
   <binding for="org.liquidengine.legui.component.Widget" is="org/liquidengine/legui/binding/component/Widget.xml"/>
-  <binding for="org.joml.Vector4f" is="org/liquidengine/legui/binding/component/Widget.xml"/>
 
-  <custom-binding class="org.liquidengine.legui.binding.custom.image.LoadableImageBinding" for="org.liquidengine.legui.image.LoadableImage" />
+  <custom-binding for="org.liquidengine.legui.image.LoadableImage" class="org.liquidengine.legui.binding.custom.image.LoadableImageBinding" />
 </binding-list>
