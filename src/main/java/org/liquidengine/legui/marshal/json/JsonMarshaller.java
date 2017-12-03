@@ -157,6 +157,7 @@ public final class JsonMarshaller {
      *
      * @param jsonElement json to unmarshal.
      * @param clazz target class.
+     * @param classBinding class binding.
      * @param <T> class type.
      *
      * @return unmarshalled object or null.
