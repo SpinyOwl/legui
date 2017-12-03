@@ -60,6 +60,11 @@ public class BindingParser extends DefaultHandler {
         this.parentPath = parentPath;
     }
 
+    /**
+     * Returns created binding.
+     *
+     * @return created binding.
+     */
     public ClassBinding getBinding() {
         return binding;
     }
@@ -92,9 +97,15 @@ public class BindingParser extends DefaultHandler {
                 break;
             case "unbind": unbind(attributes);
                 break;
+            default: break;
         }
     }
 
+    /**
+     * Used to add class converter.
+     *
+     * @param attributes attributes.
+     */
     private void addConverter(Attributes attributes) {
         for (int i = 0; i < attributes.getLength(); i++) {
             String name = attributes.getLocalName(i);
@@ -112,17 +123,45 @@ public class BindingParser extends DefaultHandler {
         }
     }
 
-
+    /**
+     * Receive notification of the end of an element.
+     * <p>
+     * <p>By default, do nothing.  Application writers may override this
+     * method in a subclass to take specific actions at the end of
+     * each element (such as finalising a tree node or writing
+     * output to a file).</p>
+     *
+     * @param uri The Namespace URI, or the empty string if the
+     * element has no Namespace URI or if Namespace
+     * processing is not being performed.
+     * @param localName The local name (without prefix), or the
+     * empty string if Namespace processing is not being
+     * performed.
+     * @param qName The qualified name (with prefix), or the
+     * empty string if qualified names are not available.
+     *
+     * @throws SAXException Any SAX exception, possibly
+     * wrapping another exception.
+     * @see ContentHandler#endElement
+     */
     @Override
-    public void endElement(String uri, String localName, String qName) throws SAXException {
+    public void endElement(String uri, String localName, String qName) {
         switch (localName) {
             case "class-binding": binding = builder.build();
                 break;
             case "bind": bind();
                 break;
+            default: break;
         }
     }
 
+    /**
+     * Used to create class binding.
+     *
+     * @param attributes attributes.
+     *
+     * @throws SAXException in case of SAX exception.
+     */
     private void createClassBinding(Attributes attributes) throws SAXException {
         String forClass = null;
         String toField = null;
@@ -141,6 +180,7 @@ public class BindingParser extends DefaultHandler {
                     break;
                 case "default": defaultBinding = Boolean.valueOf(value);
                     break;
+                default: break;
             }
         }
         ClassBinding binding = null;
@@ -165,6 +205,9 @@ public class BindingParser extends DefaultHandler {
         }
     }
 
+    /**
+     * Used to add field binding.
+     */
     private void bind() {
         if (linked != null) {
             builder.bind(field, toField, attribute, linked);
@@ -180,6 +223,11 @@ public class BindingParser extends DefaultHandler {
         classConverter = null;
     }
 
+    /**
+     * Used to add field binding.
+     *
+     * @param attributes attributes.
+     */
     private void addBind(Attributes attributes) {
         field = null;
         toField = null;
@@ -195,10 +243,16 @@ public class BindingParser extends DefaultHandler {
                     break;
                 case "attribute": attribute = Boolean.valueOf(value);
                     break;
+                default: break;
             }
         }
     }
 
+    /**
+     * Used to add binding link.
+     *
+     * @param attributes attributes.
+     */
     private void addLink(Attributes attributes) {
         String linkedBindingPath = null;
         for (int i = 0; i < attributes.getLength(); i++) {
@@ -207,6 +261,7 @@ public class BindingParser extends DefaultHandler {
             switch (name) {
                 case "path": linkedBindingPath = value;
                     break;
+                default: break;
             }
         }
         linked = null;
@@ -219,6 +274,11 @@ public class BindingParser extends DefaultHandler {
         }
     }
 
+    /**
+     * Used to remove field binding.
+     *
+     * @param attributes attributes.
+     */
     private void unbind(Attributes attributes) {
         for (int i = 0; i < attributes.getLength(); i++) {
             String name = attributes.getLocalName(i);
@@ -226,6 +286,7 @@ public class BindingParser extends DefaultHandler {
             switch (name) {
                 case "field": builder.unbind(value);
                     break;
+                default: break;
             }
         }
     }

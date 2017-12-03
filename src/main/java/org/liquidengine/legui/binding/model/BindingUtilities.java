@@ -8,6 +8,8 @@ import org.apache.commons.lang3.ClassUtils;
 import org.reflections.ReflectionUtils;
 
 /**
+ * Binding utilities class.
+ *
  * @author ShchAlexander.
  */
 public class BindingUtilities {
@@ -263,9 +265,10 @@ public class BindingUtilities {
      * @return non-primitive field type.
      */
     private static Class<?> getNonPrimitiveType(Class<?> fieldType) {
-        if (fieldType.isPrimitive()) {
-            fieldType = ClassUtils.primitiveToWrapper(fieldType);
+        Class<?> type = fieldType;
+        if (type.isPrimitive()) {
+            type = ClassUtils.primitiveToWrapper(type);
         }
-        return fieldType;
+        return type;
     }
 }

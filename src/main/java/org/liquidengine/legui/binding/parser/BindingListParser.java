@@ -38,6 +38,7 @@ public class BindingListParser extends DefaultHandler {
             case "binding":
                 addBinding(attributes);
                 break;
+            default: break;
         }
     }
 
@@ -61,6 +62,7 @@ public class BindingListParser extends DefaultHandler {
                 case "is":
                     path = value;
                     break;
+                default: break;
             }
             if (path != null && className != null) {
                 Class<?> aClass = null;

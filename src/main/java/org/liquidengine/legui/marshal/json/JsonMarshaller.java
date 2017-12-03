@@ -17,20 +17,39 @@ import org.liquidengine.legui.binding.model.Binding;
 import org.liquidengine.legui.binding.model.BindingUtilities;
 
 /**
+ * Json marshaller.
+ *
  * @author ShchAlexander.
  */
 public final class JsonMarshaller {
 
+    /**
+     * Private constructor.
+     */
     private JsonMarshaller() {
     }
 
-    public static String marshal(java.io.Serializable object) {
+    /**
+     * Used to marshal object to json representation.
+     *
+     * @param object object to marshal.
+     *
+     * @return json string.
+     */
+    public static String marshal(Object object) {
         return new Gson().toJson(marshalToJson(object));
     }
 
+    /**
+     * Used to marshal object to JsonElement.
+     *
+     * @param object object to marshal.
+     *
+     * @return JsonElement.
+     */
     private static JsonElement marshalToJson(Object object) {
         JsonElement json;
-        AbstractClassBinding<? extends Object> classBinding = BindingRegistry.getInstance().getBinding(object.getClass());
+        AbstractClassBinding<?> classBinding = BindingRegistry.getInstance().getBinding(object.getClass());
         if (classBinding != null) {
             json = marshalToJson(object, classBinding);
         } else {
@@ -39,13 +58,30 @@ public final class JsonMarshaller {
         return json;
     }
 
-    public static <T> String marshal(T object, AbstractClassBinding<? extends Object> classBinding) {
+    /**
+     * Used to marshal object to json representation.
+     *
+     * @param object object to marshal.
+     * @param classBinding class binding to use till marshalling.
+     * @param <T> type of object.
+     *
+     * @return json representation of object.
+     */
+    public static <T> String marshal(T object, AbstractClassBinding<? extends T> classBinding) {
         Gson gson = new Gson();
         JsonElement e = marshalToJson(object, classBinding);
         return gson.toJson(e);
     }
 
-    private static JsonElement marshalToJson(Object object, AbstractClassBinding<? extends Object> classBinding) {
+    /**
+     * Used to marshal object to json using class binding.
+     *
+     * @param object object to marshal.
+     * @param classBinding class binding.
+     *
+     * @return json representation og object.
+     */
+    private static <T> JsonElement marshalToJson(T object, AbstractClassBinding<? extends T> classBinding) {
         JsonObject json = new JsonObject();
         List<Binding> bindings = classBinding.getBindingList();
 
@@ -70,14 +106,40 @@ public final class JsonMarshaller {
         return json;
     }
 
-    private static JsonElement marshalToJson(Object object, AbstractClassConverter classBinding) {
-        return new JsonPrimitive(classBinding.convertFromJava(object));
+    /**
+     * Used to marshal object to json using class converter.
+     *
+     * @param object object to marshal.
+     * @param classConverter class converter.
+     *
+     * @return json representation og object.
+     */
+    private static <T> JsonElement marshalToJson(T object, AbstractClassConverter<T> classConverter) {
+        return new JsonPrimitive(classConverter.convertFromJava(object));
     }
 
+    /**
+     * Used to unmarshal json representation to Java object.
+     *
+     * @param json json to unmarshal.
+     * @param clazz target class.
+     * @param <T> class type.
+     *
+     * @return unmarshalled object or null.
+     */
     public static <T> T unmarshal(String json, Class<T> clazz) {
         return unmarshal(new JsonParser().parse(json), clazz);
     }
 
+    /**
+     * Used to unmarshal json representation to Java object.
+     *
+     * @param json json to unmarshal.
+     * @param clazz target class.
+     * @param <T> class type.
+     *
+     * @return unmarshalled object or null.
+     */
     private static <T> T unmarshal(JsonElement json, Class<T> clazz) {
         AbstractClassBinding<T> binding = BindingRegistry.getInstance().getBinding(clazz);
         if (binding == null) {
@@ -88,6 +150,15 @@ public final class JsonMarshaller {
 
     }
 
+    /**
+     * Used to unmarshal json representation to Java object using class binding.
+     *
+     * @param jsonElement json to unmarshal.
+     * @param clazz target class.
+     * @param <T> class type.
+     *
+     * @return unmarshalled object or null.
+     */
     private static <T> T unmarshalFromJson(JsonElement jsonElement, Class<T> clazz, AbstractClassBinding<T> classBinding) {
         List<Binding> bindings = classBinding.getBindingList();
         Map<String, Object> fieldValues = new HashMap<>();
@@ -117,7 +188,16 @@ public final class JsonMarshaller {
         return classBinding.createInstance(clazz, fieldValues);
     }
 
-    private static Object unmarshalFromJson(JsonElement element, AbstractClassConverter classConverter) {
+    /**
+     * Used to unmarshal json representation to Java object using class converter.
+     *
+     * @param element json to unmarshal.
+     * @param classConverter class converter.
+     * @param <T> class type.
+     *
+     * @return unmarshalled object or null.
+     */
+    private static <T> T unmarshalFromJson(JsonElement element, AbstractClassConverter<T> classConverter) {
         return classConverter.convertToJava(element.getAsString());
     }
 }

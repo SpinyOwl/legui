@@ -1,7 +1,9 @@
 package org.liquidengine.legui.binding.model;
 
 /**
- * Default binding implementation
+ * Default binding implementation.
+ *
+ * @param <T> type of class binding.
  *
  * @author ShchAlexander.
  */

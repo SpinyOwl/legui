@@ -7,6 +7,8 @@ import org.liquidengine.legui.binding.model.ClassBinding;
 import org.liquidengine.legui.binding.parser.BindingParserService;
 
 /**
+ * Binding registry. Holds bindings mapped to class.
+ * <p>
  * Created by ShchAlexander on 29.11.2017.
  */
 public final class BindingRegistry {
@@ -54,20 +56,18 @@ public final class BindingRegistry {
      * @param <T> class type.
      */
     public <T> void setBinding(Class<? extends T> c, ClassBinding<? extends T> b) {
-        if (c != null) {
-            if (b != null) {
-                Class<? extends T> type = b.getBindingForType();
-                if (type != c && !type.isAssignableFrom(c)) {
-                    System.out.println("Can't add binding. Class '" + c.getCanonicalName() + "' is not instance of '" + type.getCanonicalName() + "'.");
-                    return;
-                }
-                if (!b.isByDefault()) {
-                    System.out.println("Can't add binding for class '" + c.getCanonicalName() + "' and binding type '" + type.getCanonicalName()
-                        + "' cause it is not default for this type.");
-                    return;
-                }
-                bindingMap.put(c, b);
+        if (c != null && b != null) {
+            Class<? extends T> type = b.getBindingForType();
+            if (type != c && !type.isAssignableFrom(c)) {
+                System.out.println("Can't add binding. Class '" + c.getCanonicalName() + "' is not instance of '" + type.getCanonicalName() + "'.");
+                return;
             }
+            if (!b.isByDefault()) {
+                System.out.println("Can't add binding for class '" + c.getCanonicalName() + "' and binding type '" + type.getCanonicalName()
+                    + "' cause it is not default for this type.");
+                return;
+            }
+            bindingMap.put(c, b);
         }
     }
 
@@ -119,7 +119,7 @@ public final class BindingRegistry {
     }
 
     /**
-     * Singleton "On demand holder"
+     * Singleton "On demand holder".
      */
     private static class BRH {
 

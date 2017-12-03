@@ -3,7 +3,7 @@
     <using-binding path="org/liquidengine/legui/binding/common/Vector2f.xml"/>
   </bind>
   <bind field="size" to="size">
-    <using-converter class="org.liquidengine.legui.binding.converter.TTestConverter"/>
+    <using-binding path="org/liquidengine/legui/binding/common/Vector2size.xml"/>
   </bind>
   <bind field="enabled"/>
   <bind field="focused"/>
