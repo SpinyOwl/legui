@@ -38,7 +38,7 @@ class BindingStorage {
      *
      * @return binding by binding path.
      */
-    ClassBinding getBinding(String path) {
+    protected ClassBinding getBinding(String path) {
         return bindingsByPath.get(path);
     }
 
@@ -48,7 +48,7 @@ class BindingStorage {
      * @param path binding path.
      * @param binding binding.
      */
-    void putBinding(String path, ClassBinding binding) {
+    protected void putBinding(String path, ClassBinding binding) {
         bindingsByPath.put(path, binding);
     }
 

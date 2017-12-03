@@ -78,6 +78,7 @@ public final class JsonMarshaller {
      *
      * @param object object to marshal.
      * @param classBinding class binding.
+     * @param <T> type of object.
      *
      * @return json representation og object.
      */
@@ -111,6 +112,7 @@ public final class JsonMarshaller {
      *
      * @param object object to marshal.
      * @param classConverter class converter.
+     * @param <T> type of object.
      *
      * @return json representation og object.
      */

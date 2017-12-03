@@ -119,6 +119,7 @@ public class BindingParser extends DefaultHandler {
                     }
                 }
                 break;
+                default: break;
             }
         }
     }

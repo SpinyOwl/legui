@@ -10,6 +10,8 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 /**
  * Class binding. Used to map java class to external view.
  *
+ * @param <T> type of class binding.
+ *
  * @author ShchAlexander.
  */
 public abstract class AbstractClassBinding<T> {
