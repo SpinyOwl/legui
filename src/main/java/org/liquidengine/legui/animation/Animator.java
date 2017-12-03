@@ -8,7 +8,7 @@ import org.lwjgl.glfw.GLFW;
 /**
  * Animation processor.
  *
- * @author Aliaksandr_Shcherbin.
+ * @author ShchAlexander.
  */
 public abstract class Animator {
 

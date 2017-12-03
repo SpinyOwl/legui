@@ -14,7 +14,7 @@ import org.liquidengine.leutil.io.IOUtil;
 import org.lwjgl.stb.STBImage;
 
 /**
- * Created by Aliaksandr_Shcherbin on 2/6/2017.
+ * Created by ShchAlexander on 2/6/2017.
  */
 public class BufferedImage extends LoadableImage {
 

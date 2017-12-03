@@ -3,7 +3,7 @@ package org.liquidengine.legui.component.event.widget;
 import org.liquidengine.legui.listener.EventListener;
 
 /**
- * @author Aliaksandr_Shcherbin.
+ * @author ShchAlexander.
  */
 public interface WidgetCloseEventListener<T extends WidgetCloseEvent> extends EventListener<T> {
 

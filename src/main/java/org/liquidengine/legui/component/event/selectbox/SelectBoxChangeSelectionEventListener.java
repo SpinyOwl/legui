@@ -3,7 +3,7 @@ package org.liquidengine.legui.component.event.selectbox;
 import org.liquidengine.legui.listener.EventListener;
 
 /**
- * @author Aliaksandr_Shcherbin.
+ * @author ShchAlexander.
  */
 public interface SelectBoxChangeSelectionEventListener extends EventListener<SelectBoxChangeSelectionEvent> {
 

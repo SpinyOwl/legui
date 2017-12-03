@@ -10,7 +10,7 @@ import org.liquidengine.legui.system.renderer.Renderer;
 import org.liquidengine.legui.system.renderer.nvg.NvgRenderer;
 
 /**
- * Created by Aliaksandr_Shcherbin on 1/25/2017.
+ * Created by ShchAlexander on 1/25/2017.
  */
 public class DefaultInitializer {
 

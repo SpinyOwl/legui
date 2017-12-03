@@ -30,7 +30,7 @@ import org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils;
 import org.lwjgl.nanovg.NanoVGGL3;
 
 /**
- * Created by Aliaksandr_Shcherbin on 1/26/2017.
+ * Created by ShchAlexander on 1/26/2017.
  */
 public class NvgRenderer extends AbstractRenderer {
 

@@ -3,7 +3,7 @@ package org.liquidengine.legui.component.event.textinput;
 import org.liquidengine.legui.listener.EventListener;
 
 /**
- * @author Aliaksandr_Shcherbin.
+ * @author ShchAlexander.
  */
 public interface TextInputContentChangeEventListener extends EventListener<TextInputContentChangeEvent> {
 
