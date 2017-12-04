@@ -2,7 +2,7 @@ package org.liquidengine.legui.binding.parser;
 
 import java.util.HashMap;
 import java.util.Map;
-import org.liquidengine.legui.binding.model.ClassBinding;
+import org.liquidengine.legui.binding.model.AbstractClassBinding;
 
 /**
  * Internal binding storage. Used only by parsers.
@@ -14,7 +14,7 @@ class BindingStorage {
     /**
      * Bindings map.
      */
-    private Map<String, ClassBinding> bindingsByPath = new HashMap<>();
+    private Map<String, AbstractClassBinding> bindingsByPath = new HashMap<>();
 
     /**
      * Private constructor.
@@ -38,7 +38,7 @@ class BindingStorage {
      *
      * @return binding by binding path.
      */
-    protected ClassBinding getBinding(String path) {
+    protected AbstractClassBinding getBinding(String path) {
         return bindingsByPath.get(path);
     }
 
@@ -48,7 +48,7 @@ class BindingStorage {
      * @param path binding path.
      * @param binding binding.
      */
-    protected void putBinding(String path, ClassBinding binding) {
+    protected void putBinding(String path, AbstractClassBinding binding) {
         bindingsByPath.put(path, binding);
     }
 

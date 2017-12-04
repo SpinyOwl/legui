@@ -1,6 +1,7 @@
 package org.liquidengine.legui.binding.model;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.liquidengine.legui.binding.accessor.AbstractFieldAccessor;
 
 /**
  * Field binding. Describes how java field should be mapped to external type.
@@ -34,6 +35,11 @@ public abstract class AbstractBinding {
      * Target type to which should be converted java field (for example in XML representation it could be field or attribute).
      */
     private TargetType targetType;
+
+    /**
+     * Field accessor which coild be used to access field.
+     */
+    private AbstractFieldAccessor fieldAccessor;
 
     /**
      * Constructs binding for specified field name.
@@ -153,5 +159,13 @@ public abstract class AbstractBinding {
      */
     public void setClassConverter(AbstractClassConverter classConverter) {
         this.classConverter = classConverter;
+    }
+
+    public AbstractFieldAccessor getFieldAccessor() {
+        return fieldAccessor;
+    }
+
+    public void setFieldAccessor(AbstractFieldAccessor fieldAccessor) {
+        this.fieldAccessor = fieldAccessor;
     }
 }

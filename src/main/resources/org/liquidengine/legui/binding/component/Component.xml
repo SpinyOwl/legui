@@ -9,6 +9,9 @@
   <bind field="focused"/>
   <bind field="pressed"/>
   <bind field="tabIndex" to="tabIndex"/>
-  <bind as="field" field="components" to="childs"/>
-  <unbind field="components"/>
+  <bind field="childs" as="field" to="childs">
+    <using-accessor class="prg.liquidengine.legui.binding.accessor.ComponentChildsAccessor"/>
+  </bind>
+  <!--<bind field="childs" getter="getChilds" setter="addAll" as="field" to="childs"/>-->
+  <!--<unbind field="components"/>-->
 </class-binding>

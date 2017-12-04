@@ -165,6 +165,7 @@ public final class JsonMarshaller {
     private static <T> T unmarshalFromJson(JsonElement jsonElement, Class<T> clazz, AbstractClassBinding<T> classBinding) {
         List<Binding> bindings = classBinding.getBindingList();
         Map<String, Object> fieldValues = new HashMap<>();
+//        List<BindedParameters>
         for (Binding binding : bindings) {
             String javaFieldName = binding.getJavaFieldName();
             String bindingFieldName = binding.getBindingFieldName();

@@ -49,6 +49,11 @@
 
   <xs:complexType name="bindOperation">
     <xs:sequence>
+      <xs:element name="using-accessor" type="fieldAccessorType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Binding reference which should be used to transform java field to target field.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
       <xs:choice>
         <xs:element name="using-binding" type="usingBindingType" minOccurs="0">
           <xs:annotation>
@@ -67,6 +72,16 @@
         <xs:documentation>Java Field which should be marshalled/unmarshalled.</xs:documentation>
       </xs:annotation>
     </xs:attribute>
+    <xs:attribute name="getter" type="xs:string">
+      <xs:annotation>
+        <xs:documentation>Java Field getter.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="setter" type="xs:string">
+      <xs:annotation>
+        <xs:documentation>Java Field setter.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
     <xs:attribute name="to" type="xs:string">
       <xs:annotation>
         <xs:documentation>Field name in target source.</xs:documentation>
@@ -83,6 +98,14 @@
     <xs:attribute name="path" use="required">
       <xs:annotation>
         <xs:documentation>Binding reference which should be used to transform java field to target field.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+
+  <xs:complexType name="fieldAccessorType">
+    <xs:attribute name="class" use="required">
+      <xs:annotation>
+        <xs:documentation>Field accessor type which should be used to access field.</xs:documentation>
       </xs:annotation>
     </xs:attribute>
   </xs:complexType>

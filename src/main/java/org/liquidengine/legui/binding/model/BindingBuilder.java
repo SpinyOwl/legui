@@ -57,7 +57,7 @@ public final class BindingBuilder {
      *
      * @return builder instance to complete binding creation.
      */
-    public static BindingBuilder createForClass(Class clazz, String to, boolean byDefault, ClassBinding inherited) {
+    public static BindingBuilder createForClass(Class clazz, String to, boolean byDefault, AbstractClassBinding inherited) {
         BindingBuilder builder = new BindingBuilder();
         builder.classBinding = new ClassBinding(clazz, byDefault);
         builder.classBinding.setToName(to);

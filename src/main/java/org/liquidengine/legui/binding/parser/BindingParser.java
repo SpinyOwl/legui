@@ -1,5 +1,6 @@
 package org.liquidengine.legui.binding.parser;
 
+import org.liquidengine.legui.binding.model.AbstractClassBinding;
 import org.liquidengine.legui.binding.model.AbstractClassConverter;
 import org.liquidengine.legui.binding.model.BindingBuilder;
 import org.liquidengine.legui.binding.model.ClassBinding;
@@ -19,6 +20,9 @@ public class BindingParser extends DefaultHandler {
      * Class binding.
      */
     private ClassBinding binding;
+    /**
+     * Path to binding.
+     */
     private String bindingPath;
     /**
      * Path to inherited binding.
@@ -47,7 +51,11 @@ public class BindingParser extends DefaultHandler {
     /**
      * Linked class binding.
      */
-    private ClassBinding linked;
+    private AbstractClassBinding linked;
+    /**
+     * private
+     */
+
 
     /**
      * Binding parser constructor.
@@ -184,7 +192,7 @@ public class BindingParser extends DefaultHandler {
                 default: break;
             }
         }
-        ClassBinding binding = null;
+        AbstractClassBinding binding = null;
         if (inheritBinding != null) {
             if (parentPath != null && parentPath.equals(inheritBinding)) {
                 throw new SAXException("Cycled bindings detected. Bindings will not be added.");
