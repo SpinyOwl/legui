@@ -1,0 +1,3 @@
+<class-binding for="org.liquidengine.legui.component.Widget" to="widget" default="true" inherit="org/liquidengine/legui/binding/component/Component.xml" xmlns="binding.legui.liquidengine.org">
+  <unbind field="components"/>
+</class-binding>
