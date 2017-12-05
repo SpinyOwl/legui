@@ -8,6 +8,7 @@ import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import org.liquidengine.legui.binding.accessor.AbstractFieldAccessor;
 
 /**
  * Binding builder. Used to create instance of class binding.
@@ -75,7 +76,19 @@ public final class BindingBuilder {
      * @return builder instance to complete binding creation.
      */
     public BindingBuilder bind(String field) {
-        return bind(field, field, true);
+        return bind(field, (AbstractFieldAccessor) null);
+    }
+
+    /**
+     * Used to bind specified field.
+     *
+     * @param field field to bind.
+     * @param accessor field accessor.
+     *
+     * @return builder instance to complete binding creation.
+     */
+    public BindingBuilder bind(String field, AbstractFieldAccessor accessor) {
+        return bind(field, field, true, accessor);
     }
 
     /**
@@ -87,7 +100,20 @@ public final class BindingBuilder {
      * @return builder instance to complete binding creation.
      */
     public BindingBuilder bind(String field, String to) {
-        return bind(field, to, true);
+        return bind(field, to, (AbstractFieldAccessor) null);
+    }
+
+    /**
+     * Used to bind specified field.
+     *
+     * @param field field to bind.
+     * @param to target field name in binding.
+     * @param accessor field accessor.
+     *
+     * @return builder instance to complete binding creation.
+     */
+    public BindingBuilder bind(String field, String to, AbstractFieldAccessor accessor) {
+        return bind(field, to, true, accessor);
     }
 
     /**
@@ -100,7 +126,21 @@ public final class BindingBuilder {
      * @return builder instance to complete binding creation.
      */
     public BindingBuilder bind(String field, String to, AbstractClassBinding using) {
-        return bind(field, to, true, using);
+        return bind(field, to, using, null);
+    }
+
+    /**
+     * Used to bind specified field.
+     *
+     * @param field field to bind.
+     * @param to target field name in binding.
+     * @param using binding for specified field.
+     * @param accessor field accessor.
+     *
+     * @return builder instance to complete binding creation.
+     */
+    public BindingBuilder bind(String field, String to, AbstractClassBinding using, AbstractFieldAccessor accessor) {
+        return bind(field, to, true, using, accessor);
     }
 
     /**
@@ -113,7 +153,21 @@ public final class BindingBuilder {
      * @return builder instance to complete binding creation.
      */
     public BindingBuilder bind(String field, String to, boolean attribute) {
-        return bind(field, to, attribute, (AbstractClassBinding) null);
+        return bind(field, to, attribute, (AbstractFieldAccessor) null);
+    }
+
+    /**
+     * Used to bind specified field.
+     *
+     * @param field field to bind.
+     * @param to target field name in binding.
+     * @param attribute target type of binding should be attribute or not.
+     * @param accessor field accessor.
+     *
+     * @return builder instance to complete binding creation.
+     */
+    public BindingBuilder bind(String field, String to, boolean attribute, AbstractFieldAccessor accessor) {
+        return bind(field, to, attribute, (AbstractClassBinding) null, accessor);
     }
 
     /**
@@ -139,10 +193,24 @@ public final class BindingBuilder {
      * @return builder instance to complete binding creation.
      */
     public BindingBuilder bind(String field, String to, boolean attribute, AbstractClassBinding linkedClassBinding) {
+        return bind(field, to, attribute, linkedClassBinding, null);
+    }
+
+    /**
+     * Used to bind specified field.
+     *
+     * @param field field to bind.
+     * @param to target field name in binding.
+     * @param attribute target type of binding should be attribute or not.
+     * @param linkedClassBinding binding for specified field.
+     * @param accessor field accessor.
+     *
+     * @return builder instance to complete binding creation.
+     */
+    public BindingBuilder bind(String field, String to, boolean attribute, AbstractClassBinding linkedClassBinding, AbstractFieldAccessor accessor) {
         checkFieldExist(field);
         checkLinkedBindingFieldTypeIsValid(field, linkedClassBinding);
-        Binding binding = createBinding(field, to, attribute, linkedClassBinding);
-        binding.setLinkedClassBinding(linkedClassBinding);
+        Binding binding = createBinding(field, to, attribute, linkedClassBinding, accessor);
         bindings.put(field, binding);
         return this;
     }
@@ -158,9 +226,24 @@ public final class BindingBuilder {
      * @return builder instance to complete binding creation.
      */
     public BindingBuilder bind(String field, String to, boolean attribute, AbstractClassConverter classConverter) {
+        return bind(field, to, attribute, classConverter, null);
+    }
+
+    /**
+     * Used to bind specified field.
+     *
+     * @param field field to bind.
+     * @param to target field name in binding.
+     * @param attribute target type of binding should be attribute or not.
+     * @param classConverter class converter for specified field.
+     * @param accessor field accessor.
+     *
+     * @return builder instance to complete binding creation.
+     */
+    public BindingBuilder bind(String field, String to, boolean attribute, AbstractClassConverter classConverter, AbstractFieldAccessor accessor) {
         checkFieldExist(field);
         checkClassConverterType(field, classConverter);
-        Binding binding = createBinding(field, to, attribute, null);
+        Binding binding = createBinding(field, to, attribute, null, accessor);
         binding.setClassConverter(classConverter);
         bindings.put(field, binding);
         return this;
@@ -176,12 +259,13 @@ public final class BindingBuilder {
      *
      * @return binding instance.
      */
-    private Binding createBinding(String field, String to, boolean attribute, AbstractClassBinding linkedClassBinding) {
+    private Binding createBinding(String field, String to, boolean attribute, AbstractClassBinding linkedClassBinding, AbstractFieldAccessor fieldAccessor) {
         Binding binding = new Binding(field);
         if (to != null) {
             binding.setBindingFieldName(to);
         } else if (linkedClassBinding != null) {
             binding.setBindingFieldName(linkedClassBinding.getToName());
+            binding.setLinkedClassBinding(linkedClassBinding);
         } else {
             binding.setBindingFieldName(field);
         }
@@ -190,6 +274,7 @@ public final class BindingBuilder {
         } else {
             binding.setTargetType(TargetType.FIELD);
         }
+        binding.setFieldAccessor(fieldAccessor);
         return binding;
     }
 

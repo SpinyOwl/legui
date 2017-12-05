@@ -1,5 +1,6 @@
 package org.liquidengine.legui.binding.parser;
 
+import org.liquidengine.legui.binding.accessor.AbstractFieldAccessor;
 import org.liquidengine.legui.binding.model.AbstractClassBinding;
 import org.liquidengine.legui.binding.model.AbstractClassConverter;
 import org.liquidengine.legui.binding.model.BindingBuilder;
@@ -53,8 +54,9 @@ public class BindingParser extends DefaultHandler {
      */
     private AbstractClassBinding linked;
     /**
-     * private
+     * Field accessor.
      */
+    private AbstractFieldAccessor fieldAccessor;
 
 
     /**
@@ -103,6 +105,8 @@ public class BindingParser extends DefaultHandler {
                 break;
             case "using-converter": addConverter(attributes);
                 break;
+            case "using-accessor": addAccessor(attributes);
+                break;
             case "unbind": unbind(attributes);
                 break;
             default: break;
@@ -122,6 +126,29 @@ public class BindingParser extends DefaultHandler {
                 case "class": {
                     try {
                         classConverter = (AbstractClassConverter) Class.forName(value).newInstance();
+                    } catch (ClassNotFoundException | IllegalAccessException | InstantiationException e) {
+                        e.printStackTrace();
+                    }
+                }
+                break;
+                default: break;
+            }
+        }
+    }
+
+    /**
+     * Used to add class converter.
+     *
+     * @param attributes attributes.
+     */
+    private void addAccessor(Attributes attributes) {
+        for (int i = 0; i < attributes.getLength(); i++) {
+            String name = attributes.getLocalName(i);
+            String value = attributes.getValue(i);
+            switch (name) {
+                case "class": {
+                    try {
+                        fieldAccessor = (AbstractFieldAccessor) Class.forName(value).newInstance();
                     } catch (ClassNotFoundException | IllegalAccessException | InstantiationException e) {
                         e.printStackTrace();
                     }
@@ -219,17 +246,18 @@ public class BindingParser extends DefaultHandler {
      */
     private void bind() {
         if (linked != null) {
-            builder.bind(field, toField, attribute, linked);
+            builder.bind(field, toField, attribute, linked, fieldAccessor);
         } else if (classConverter != null) {
-            builder.bind(field, toField, attribute, classConverter);
+            builder.bind(field, toField, attribute, classConverter, fieldAccessor);
         } else {
-            builder.bind(field, toField, attribute);
+            builder.bind(field, toField, attribute, fieldAccessor);
         }
         field = null;
         toField = null;
         attribute = false;
         linked = null;
         classConverter = null;
+        fieldAccessor = null;
     }
 
     /**

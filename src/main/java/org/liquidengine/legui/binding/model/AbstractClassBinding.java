@@ -153,23 +153,25 @@ public abstract class AbstractClassBinding<T> {
      * Used to create instance of class binding type.
      *
      * @param clazz class to create instance.
-     * @param fieldValues field values in map where key is field name and value is field value.
      *
      * @return created instance.
      */
-    public T createInstance(Class<T> clazz, Map<String, Object> fieldValues) {
+    public T createInstance(Class<T> clazz) {
         T instance = null;
         try {
             instance = clazz.newInstance();
-            if (fieldValues != null) {
-                for (Entry<String, Object> entry : fieldValues.entrySet()) {
-                    BindingUtilities.setFieldValue(instance, entry.getKey(), entry.getValue());
-                }
-            }
         } catch (InstantiationException | IllegalAccessException e) {
             e.printStackTrace();
         }
         return instance;
+    }
+
+    /**
+     * Used to made some operations after constructing and filling instance.
+     * @param instance instance to operate.
+     */
+    public void postConstruct(T instance) {
+        //
     }
 
     @Override
