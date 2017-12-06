@@ -10,11 +10,35 @@ import java.lang.reflect.Type;
 import org.liquidengine.legui.binding.model.ClassBinding;
 
 /**
+ * Utility class.
  * Created by ShchAlexander on 05.12.2017.
  */
-public class JsonSerisalizeCreator {
+public final class JsonSerisalizeCreator {
 
+    /**
+     * Private constructor.
+     */
+    private JsonSerisalizeCreator() {
+        // private empty constructor.
+    }
+
+    /**
+     * Used to create adapter for class with class binding.
+     *
+     * @param c class.
+     * @param b class binding.
+     *
+     * @return Gson adapter.
+     */
+    protected static CustomSerializerDeserialiser createAdapter(Class c, ClassBinding b) {
+        return new CustomSerializerDeserialiser();
+    }
+
+    /**
+     * Gson serializer for class bindings.
+     */
     public static class CustomSerializerDeserialiser implements JsonSerializer, JsonDeserializer {
+
         /**
          * Gson invokes this call-back method during serialization when it encounters a field of the
          * specified type.
@@ -35,6 +59,7 @@ public class JsonSerisalizeCreator {
         public JsonElement serialize(Object src, Type typeOfSrc, JsonSerializationContext context) {
             return JsonMarshaller.marshalToJson(src);
         }
+
         /**
          * Gson invokes this call-back method during deserialization when it encounters a field of the
          * specified type.
@@ -56,9 +81,5 @@ public class JsonSerisalizeCreator {
         public Object deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
             return JsonMarshaller.unmarshal(json, typeOfT);
         }
-    }
-
-    protected static CustomSerializerDeserialiser createAdapter(Class c, ClassBinding b) {
-        return new CustomSerializerDeserialiser();
     }
 }

@@ -265,10 +265,10 @@ public final class BindingBuilder {
             binding.setBindingFieldName(to);
         } else if (linkedClassBinding != null) {
             binding.setBindingFieldName(linkedClassBinding.getToName());
-            binding.setLinkedClassBinding(linkedClassBinding);
         } else {
             binding.setBindingFieldName(field);
         }
+        binding.setLinkedClassBinding(linkedClassBinding);
         if (linkedClassBinding == null) {
             binding.setTargetType(attribute ? TargetType.ATTRIBUTE : TargetType.FIELD);
         } else {

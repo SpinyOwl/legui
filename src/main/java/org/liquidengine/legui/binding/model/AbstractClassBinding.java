@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
@@ -168,10 +167,11 @@ public abstract class AbstractClassBinding<T> {
 
     /**
      * Used to made some operations after constructing and filling instance.
+     *
      * @param instance instance to operate.
      */
     public void postConstruct(T instance) {
-        //
+        // by default is empty.
     }
 
     @Override

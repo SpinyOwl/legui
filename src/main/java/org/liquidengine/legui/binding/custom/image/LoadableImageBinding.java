@@ -4,6 +4,8 @@ import org.liquidengine.legui.binding.model.AbstractClassBinding;
 import org.liquidengine.legui.image.LoadableImage;
 
 /**
+ * Binding for {@link LoadableImage} instances.
+ * <p>
  * Created by ShchAlexander on 01.12.2017.
  */
 public class LoadableImageBinding extends AbstractClassBinding<LoadableImage> {
@@ -18,6 +20,11 @@ public class LoadableImageBinding extends AbstractClassBinding<LoadableImage> {
         super(bindingForType, byDefault);
     }
 
+    /**
+     * Used to load image after construction.
+     *
+     * @param instance instance to operate.
+     */
     @Override
     public void postConstruct(LoadableImage instance) {
         instance.load();

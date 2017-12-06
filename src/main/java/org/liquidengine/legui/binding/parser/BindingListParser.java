@@ -15,6 +15,9 @@ import org.xml.sax.helpers.DefaultHandler;
  */
 public class BindingListParser extends DefaultHandler {
 
+    /**
+     * Map of bindings.
+     */
     private Map<Class, ClassBinding> bindings = new HashMap<>();
 
     /**

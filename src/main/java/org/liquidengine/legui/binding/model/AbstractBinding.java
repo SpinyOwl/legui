@@ -37,7 +37,7 @@ public abstract class AbstractBinding {
     private TargetType targetType;
 
     /**
-     * Field accessor which coild be used to access field.
+     * Field accessor which could be used to access field (get/set) and retrieve field type.
      */
     private AbstractFieldAccessor fieldAccessor;
 
@@ -161,10 +161,20 @@ public abstract class AbstractBinding {
         this.classConverter = classConverter;
     }
 
+    /**
+     * Returns field accessor.
+     *
+     * @return field accessor.
+     */
     public AbstractFieldAccessor getFieldAccessor() {
         return fieldAccessor;
     }
 
+    /**
+     * Used to set field accessor.
+     *
+     * @param fieldAccessor field accessor to set.
+     */
     public void setFieldAccessor(AbstractFieldAccessor fieldAccessor) {
         this.fieldAccessor = fieldAccessor;
     }

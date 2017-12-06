@@ -2,7 +2,7 @@
   <bind field="position" to="position">
     <using-binding path="org/liquidengine/legui/binding/common/Vector2f.xml"/>
   </bind>
-  <bind field="size" to="size">
+  <bind field="size">
     <using-binding path="org/liquidengine/legui/binding/common/Vector2size.xml"/>
   </bind>
   <bind field="enabled"/>
@@ -12,6 +12,4 @@
   <bind field="childs" as="field" to="childs">
     <using-accessor class="org.liquidengine.legui.binding.accessor.ComponentChildsAccessor"/>
   </bind>
-  <!--<bind field="childs" getter="getChilds" setter="addAll" as="field" to="childs"/>-->
-  <!--<unbind field="components"/>-->
 </class-binding>
