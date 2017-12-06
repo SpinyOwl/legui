@@ -155,6 +155,7 @@ public final class JsonMarshaller {
      * @return unmarshalled object or null.
      */
     protected static <T> T unmarshal(JsonElement json, Type type) {
+        Type typeToUse = type;
         if (json.isJsonObject()) {
             JsonObject o = json.getAsJsonObject();
             JsonElement jsonElement = o.remove("@type");
@@ -166,19 +167,17 @@ public final class JsonMarshaller {
                     e.printStackTrace();
                 }
                 if (newType != null) {
-                    type = newType;
+                    typeToUse = newType;
                 }
             }
         }
-        if (type instanceof Class) {
-            AbstractClassBinding<T> binding = BindingRegistry.getInstance().getBinding((Class<T>) type);
+        if (typeToUse instanceof Class) {
+            AbstractClassBinding<T> binding = BindingRegistry.getInstance().getBinding((Class<T>) typeToUse);
             if (binding != null) {
-                return unmarshalFromJson(json, (Class<T>) type, binding);
-            } else {
-                createGson().fromJson(json, type);
+                return unmarshalFromJson(json, (Class<T>) typeToUse, binding);
             }
         }
-        return createGson().fromJson(json, type);
+        return createGson().fromJson(json, typeToUse);
     }
 
     /**
@@ -244,6 +243,11 @@ public final class JsonMarshaller {
         return classConverter.convertToJava(element.getAsString());
     }
 
+    /**
+     * Used to create Gson instance with type adapters for class bindings in {@link BindingRegistry}.
+     *
+     * @return Gson instance.
+     */
     protected static Gson createGson() {
         GsonBuilder gsonBuilder = new GsonBuilder();
         Map<Class, ClassBinding> bindingMap = BindingRegistry.getInstance().getBindingMap();

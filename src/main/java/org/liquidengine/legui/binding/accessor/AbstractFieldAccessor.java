@@ -3,6 +3,9 @@ package org.liquidengine.legui.binding.accessor;
 import java.lang.reflect.Type;
 
 /**
+ * Field accessor. Used to access field (get/set) and retrieve field type.
+ *
+ * @param <T> type of class binding.
  * Created by ShchAlexander on 04.12.2017.
  */
 public abstract class AbstractFieldAccessor<T> {

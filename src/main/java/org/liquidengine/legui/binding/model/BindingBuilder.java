@@ -256,6 +256,7 @@ public final class BindingBuilder {
      * @param to target field name in binding.
      * @param attribute target type of binding should be attribute or not.
      * @param linkedClassBinding binding for specified field.
+     * @param fieldAccessor field accessor.
      *
      * @return binding instance.
      */
