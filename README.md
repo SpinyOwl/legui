@@ -123,7 +123,8 @@ All examples located here:
 
 ## Projects using LEGUI:
 ### Modeler by Cout970
-[Cout970/Modeler](https://github.com/cout970/Modeler)
+> Open 3D Modeling Tool  ([Cout970/Modeler](https://github.com/cout970/Modeler))  
+> This tool is written in Kotlin, using LWJGL3 for rendering and Legui to build user interfaces  
 <table>
   <tr>
     <td><img src="https://camo.githubusercontent.com/8dcd56ad9a0d51ae82e34dc5bf4c3c18fd9c47e1/68747470733a2f2f696d6167652e70726e747363722e636f6d2f696d6167652f7a4e424133325a6b54515f6b624a6359704c73616f412e706e67"/></td>
