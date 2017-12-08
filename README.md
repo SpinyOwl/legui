@@ -10,7 +10,24 @@
 ![](https://img.shields.io/badge/dynamic/json.svg?label=release&colorB=00796b&prefix=&suffix=&query=$.version&uri=http%3A%2F%2Fjenkins.liquidengine.tk%2Fjob%2FLEGUI_RELEASES%2FlastSuccessfulBuild%2Fartifact%2FfullVersion.json&style=flat-square)
 
 ___
-# LEGUI - [What is it?](https://liquidengine.github.io/legui/)  
+# TOC
+* [LEGUI - What is it?](#legui---what-is-it)
+* [Contribution to LEGUI](#contribution-to-legui)
+* [System requirements](#system-requirements)
+* [OpenGL state touched by the backend](#opengl-state-touched-by-the-backend)
+* [Usage](#usage)
+* * [Dependencies](#dependencies)
+* * * [Add dependency repo](#add-dependency-repo)
+* * * [Add dependency (Maven)](#add-dependency-maven)
+* * * [Add dependency (Gradle)](#add-dependency-gradle)
+* * [Demos](#demos)
+* [Projects using LEGUI](#projects-using-legui)
+* * [Modeler by Cout970](#modeler-by-cout970)
+* [Links](#links)
+
+
+
+## LEGUI - [What is it?](https://liquidengine.github.io/legui/)  
 GUI implementation for using with LWJGL3.  
 
 This gui library made for using with OpenGL port (LWJGL) to allow programmers fast and easy integrate user interface to their OpenGL apps written in Java or Kotlin.  
@@ -60,8 +77,9 @@ The data for the whole frame is buffered and flushed in end of rendering. The fo
 	glUniformBlockBinding(... , GLNVG_FRAG_BINDING);
 ```
 
-
-## Dependencies
+## Usage
+### Dependencies
+#### Add dependency repo
 For using this library you should add these urls as repositories:  
 For **[LWJGL](https://github.com/LWJGL/lwjgl3)** and **[JOML](https://github.com/JOML-CI/JOML)** dependencies  
 `https://oss.sonatype.org/content/repositories/snapshots/`  
@@ -72,7 +90,7 @@ For **LEGUI** and **[CBCHAIN](https://github.com/LiquidEngine/cbchain)** depende
 `https://raw.github.com/LiquidEngine/repo/snapshots` 
 
 And add this dependency to your build script:  
-### Maven:
+#### Add dependency (Maven):
  ```xml
 <!-- LEGUI - SNAPSHOT - https://github.com/LiquidEngine/legui -->
 <dependency>
@@ -90,7 +108,7 @@ And add this dependency to your build script:
     <version>${legui_version}</version>
 </dependency>
  ```
-### Gradle:
+#### Add dependency (Gradle):
   ```groovy
 // LEGUI - SNAPSHOT - https://github.com/LiquidEngine/legui
 compile group: 'org.liquidengine', name: 'legui', version: legui_version + '-SNAPSHOT', changing: true;
@@ -98,10 +116,20 @@ compile group: 'org.liquidengine', name: 'legui', version: legui_version + '-SNA
 // LEGUI - RELEASE - https://github.com/LiquidEngine/legui
 compile group: 'org.liquidengine', name: 'legui', version: legui_version, changing: true;
   ```
-  
-## Examples:
+
+### Demos:
 All examples located here: 
 [LEGUI.DEMO](https://github.com/LiquidEngine/legui.demo)
+
+## Projects using LEGUI:
+### Modeler by Cout970
+[Cout970/Modeler](https://github.com/cout970/Modeler)
+<table>
+  <tr>
+    <td><img src="https://camo.githubusercontent.com/8dcd56ad9a0d51ae82e34dc5bf4c3c18fd9c47e1/68747470733a2f2f696d6167652e70726e747363722e636f6d2f696d6167652f7a4e424133325a6b54515f6b624a6359704c73616f412e706e67"/></td>
+    <td><img src="https://camo.githubusercontent.com/21cc57d2dc635e2f6adf8b8f6eb06c1b48da5596/68747470733a2f2f696d6167652e70726e747363722e636f6d2f696d6167652f776336654538695f534669314b732d694e4447614a412e706e67"/></td>
+  </tr>
+</table>
 
 ## Links
 [LWJGL - Lightweight Java Game Library 3](https://github.com/LWJGL/lwjgl3)  
