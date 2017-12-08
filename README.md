@@ -11,8 +11,11 @@
 
 ___
 # LEGUI - [What is it?](https://liquidengine.github.io/legui/)  
-GUI implementation for using with LWJGL3.
-Renderering implementation made on top of NanoVG.
+GUI implementation for using with LWJGL3.  
+
+This gui library made for using with OpenGL port (LWJGL) to allow programmers fast and easy integrate user interface to their OpenGL apps written in Java or Kotlin.  
+API is close to Swing API.  
+
 <table>
   <tr>
     <td><img src="https://liquidengine.github.io/legui/images/demo/0.bmp" height="100px"/></td>
@@ -28,6 +31,35 @@ See the [contribution guide](CONTRIBUTING.md) for more information.
 
 ## System requirements
 LEGUI requires Java 8+ cause it uses lambda expressions.
+
+## OpenGL state touched by the backend
+
+Default renderer made on top of NanoVG which touches following states:
+
+When textures are uploaded or updated, the following pixel store is set to defaults: `GL_UNPACK_ALIGNMENT`, `GL_UNPACK_ROW_LENGTH`, `GL_UNPACK_SKIP_PIXELS`, `GL_UNPACK_SKIP_ROWS`. Texture binding is also affected. Texture updates can happen when the user loads images, or when new font glyphs are added. Glyphs are added as needed start and end of `render()` method.
+
+The data for the whole frame is buffered and flushed in end of rendering. The following code illustrates the OpenGL state touched by the rendering code:
+```C
+	glUseProgram(prog);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glEnable(GL_CULL_FACE);
+	glCullFace(GL_BACK);
+	glFrontFace(GL_CCW);
+	glEnable(GL_BLEND);
+	glDisable(GL_DEPTH_TEST);
+	glDisable(GL_SCISSOR_TEST);
+	glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
+	glStencilMask(0xffffffff);
+	glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
+	glStencilFunc(GL_ALWAYS, 0, 0xffffffff);
+	glActiveTexture(GL_TEXTURE0);
+	glBindBuffer(GL_UNIFORM_BUFFER, buf);
+	glBindVertexArray(arr);
+	glBindBuffer(GL_ARRAY_BUFFER, buf);
+	glBindTexture(GL_TEXTURE_2D, tex);
+	glUniformBlockBinding(... , GLNVG_FRAG_BINDING);
+```
+
 
 ## Dependencies
 For using this library you should add these urls as repositories:  
