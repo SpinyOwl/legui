@@ -1,0 +1,7 @@
+<class-binding xmlns="binding.legui.liquidengine.org"
+  for="org.joml.Vector4f" to="vector4f" default="true">
+  <bind field="x" to="red"/>
+  <bind field="y" to="green"/>
+  <bind field="z" to="blue"/>
+  <bind field="w" to="alpha"/>
+</class-binding>

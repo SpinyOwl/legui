@@ -11,7 +11,7 @@ public final class Binding extends AbstractBinding {
      *
      * @param javaFieldName java field name.
      */
-    protected Binding(String javaFieldName) {
+    public Binding(String javaFieldName) {
         super(javaFieldName);
     }
 
@@ -21,7 +21,7 @@ public final class Binding extends AbstractBinding {
      * @param javaFieldName java field name.
      * @param bindingFieldName binding field name.
      */
-    protected Binding(String javaFieldName, String bindingFieldName) {
+    public Binding(String javaFieldName, String bindingFieldName) {
         super(javaFieldName, bindingFieldName);
     }
 }

@@ -1,7 +1,8 @@
 package org.liquidengine.legui.binding.parser;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import org.liquidengine.legui.binding.model.AbstractClassBinding;
 import org.liquidengine.legui.binding.model.ClassBinding;
 import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
@@ -18,7 +19,7 @@ public class BindingListParser extends DefaultHandler {
     /**
      * Map of bindings.
      */
-    private Map<Class, ClassBinding> bindings = new HashMap<>();
+    private Map<Class, AbstractClassBinding> bindings = new LinkedHashMap<>();
 
     /**
      * Receive notification of the start of an element. <p> <p>By default, do nothing.  Application writers may override this method in a subclass to take
@@ -41,7 +42,73 @@ public class BindingListParser extends DefaultHandler {
             case "binding":
                 addBinding(attributes);
                 break;
+            case "custom-binding":
+                addCustomBinding(attributes);
+                break;
             default: break;
+        }
+    }
+
+    /**
+     * Used to create custom binding.
+     *
+     * @param attributes attributes.
+     */
+    private void addCustomBinding(Attributes attributes) {
+        String className = null;
+        String bindingClassName = null;
+
+        int length = attributes.getLength();
+        for (int i = 0; i < length; i++) {
+            String aName = attributes.getLocalName(i);
+            String value = attributes.getValue(i);
+            switch (aName) {
+                case "for":
+                    className = value;
+                    break;
+                case "class":
+                    bindingClassName = value;
+                    break;
+                default:
+                    break;
+            }
+        }
+        if (className != null && bindingClassName != null) {
+
+            Class<?> bForType = null;
+            try {
+                bForType = Class.forName(className);
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            if (bForType == null) {
+                return;
+            }
+
+            Class<AbstractClassBinding> classBindingClass = null;
+            try {
+                classBindingClass = (Class<AbstractClassBinding>) Class.forName(bindingClassName);
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+
+            if (classBindingClass == null) {
+                return;
+            }
+
+            try {
+                AbstractClassBinding binding = classBindingClass.newInstance();
+                Class bType = binding.getBindingForType();
+                if (!bForType.equals(bType) && !bType.isAssignableFrom(bForType)) {
+                    System.out.println("Binding skipped. "
+                        + "Binding type '" + bForType.getCanonicalName() + "' is not instance of '"
+                        + bType.getCanonicalName() + "' specified in '" + bindingClassName + "'.");
+                } else {
+                    bindings.put(bForType, binding);
+                }
+            } catch (InstantiationException | IllegalAccessException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -65,28 +132,29 @@ public class BindingListParser extends DefaultHandler {
                 case "is":
                     path = value;
                     break;
-                default: break;
+                default:
+                    break;
             }
-            if (path != null && className != null) {
-                Class<?> aClass = null;
-                try {
-                    aClass = Class.forName(className);
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                }
-                if (aClass == null) {
-                    return;
-                }
-                ClassBinding binding = BindingParserService.getInstance().parseBinding(path);
-                if (binding != null) {
-                    Class bType = binding.getBindingForType();
-                    if (bType != aClass && !bType.isAssignableFrom(aClass)) {
-                        System.out.println("Binding skipped. "
-                            + "Binding type '" + aClass.getCanonicalName() + "' is not instance of '"
-                            + bType.getCanonicalName() + "' specified in '" + path + "'.");
-                    } else {
-                        bindings.put(aClass, binding);
-                    }
+        }
+        if (path != null && className != null) {
+            Class<?> bForType = null;
+            try {
+                bForType = Class.forName(className);
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            if (bForType == null) {
+                return;
+            }
+            ClassBinding binding = BindingParserService.getInstance().parseBinding(path);
+            if (binding != null) {
+                Class bType = binding.getBindingForType();
+                if (bType != bForType && !bType.isAssignableFrom(bForType)) {
+                    System.out.println("Binding skipped. "
+                        + "Binding type '" + bForType.getCanonicalName() + "' is not instance of '"
+                        + bType.getCanonicalName() + "' specified in '" + path + "'.");
+                } else {
+                    bindings.put(bForType, binding);
                 }
             }
         }
@@ -97,7 +165,7 @@ public class BindingListParser extends DefaultHandler {
      *
      * @return bindings map.
      */
-    public Map<Class, ClassBinding> getBindings() {
+    public Map<Class, AbstractClassBinding> getBindings() {
         return bindings;
     }
 }

@@ -160,6 +160,10 @@ public class BindingUtilities {
      * @return field value or null if not found.
      */
     private static Object getFieldValueFromObject(Object object, String fieldName, Class<?> objectClass, boolean[] found) {
+        if (object == null) {
+            throw new NullPointerException("source object is null.");
+        }
+
         Object fieldValue = null;
         // search getter or fieldValue in this object (not searchig in inherited fields and methods)
         String getterName = "get" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
@@ -211,6 +215,9 @@ public class BindingUtilities {
      * @param fieldValue field value to set.
      */
     public static void setFieldValue(Object object, String fieldName, Object fieldValue) {
+        if (fieldValue == null || object == null) {
+            return;
+        }
 
         Class<?> objectClass = object.getClass();
         while (objectClass != null) {
@@ -223,7 +230,7 @@ public class BindingUtilities {
                 Method setter = setters.iterator().next();
                 try {
                     if (setter.getParameterCount() == 1 &&
-                        getNonPrimitiveType(setter.getParameterTypes()[0]) == fieldValueType) {
+                        getNonPrimitiveType(setter.getParameterTypes()[0]).isAssignableFrom(fieldValueType)) {
                         setter.invoke(object, fieldValue);
                         return;
                     }
@@ -239,7 +246,7 @@ public class BindingUtilities {
                 try {
                     Class<?> fieldType = field.getType();
                     fieldType = getNonPrimitiveType(fieldType);
-                    if (fieldType == fieldValueType) {
+                    if (fieldType.isAssignableFrom(fieldValueType)) {
                         if (!field.isAccessible()) {
                             field.setAccessible(true);
                         }

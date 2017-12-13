@@ -1,9 +1,18 @@
 <binding-list xmlns="binding.legui.liquidengine.org">
   <binding for="org.joml.Vector2f" is="org/liquidengine/legui/binding/common/Vector2f.xml"/>
 
+  <binding for="org.liquidengine.legui.icon.ImageIcon" is="org/liquidengine/legui/binding/icon/ImageIcon.xml"/>
+  <binding for="org.liquidengine.legui.icon.CharIcon" is="org/liquidengine/legui/binding/icon/CharIcon.xml"/>
+
+  <binding for="org.liquidengine.legui.component.Button" is="org/liquidengine/legui/binding/component/Button.xml"/>
+  <binding for="org.liquidengine.legui.component.CheckBox" is="org/liquidengine/legui/binding/component/CheckBox.xml"/>
   <binding for="org.liquidengine.legui.component.Component" is="org/liquidengine/legui/binding/component/Component.xml"/>
+  <binding for="org.liquidengine.legui.component.ComponentLayer" is="org/liquidengine/legui/binding/component/ComponentLayer.xml"/>
+  <binding for="org.liquidengine.legui.component.Layer" is="org/liquidengine/legui/binding/component/Layer.xml"/>
   <binding for="org.liquidengine.legui.component.Panel" is="org/liquidengine/legui/binding/component/Panel.xml"/>
   <binding for="org.liquidengine.legui.component.Widget" is="org/liquidengine/legui/binding/component/Widget.xml"/>
+
+  <binding for="org.liquidengine.legui.component.optional.TextState" is="org/liquidengine/legui/binding/component/optional/TextState.xml"/>
 
   <custom-binding for="org.liquidengine.legui.image.LoadableImage" class="org.liquidengine.legui.binding.custom.image.LoadableImageBinding" />
 </binding-list>

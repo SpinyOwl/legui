@@ -1,7 +1,7 @@
 package org.liquidengine.legui.binding.model;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -34,7 +34,7 @@ public abstract class AbstractClassBinding<T> {
     /**
      * Field bindings saved as map for easy access by field name.
      */
-    private Map<String, Binding> bindings = new HashMap<>();
+    private Map<String, Binding> bindings = new LinkedHashMap<>();
 
 
     /**
@@ -62,7 +62,7 @@ public abstract class AbstractClassBinding<T> {
      *
      * @param toName name which should be used as default element name.
      */
-    protected void setToName(String toName) {
+    public void setToName(String toName) {
         this.toName = toName;
     }
 
@@ -80,7 +80,7 @@ public abstract class AbstractClassBinding<T> {
      *
      * @param bindingForType class for which binding created.
      */
-    protected void setBindingForType(Class<? extends T> bindingForType) {
+    public void setBindingForType(Class<? extends T> bindingForType) {
         this.bindingForType = bindingForType;
     }
 
@@ -89,7 +89,7 @@ public abstract class AbstractClassBinding<T> {
      *
      * @param binding field binding.
      */
-    protected void putBinding(Binding binding) {
+    public void putBinding(Binding binding) {
         if (binding != null) {
             bindings.put(binding.getJavaFieldName(), binding);
         }
@@ -125,7 +125,7 @@ public abstract class AbstractClassBinding<T> {
      * @return all field bindings as map where key is java field name.
      */
     public Map<String, Binding> getBindings() {
-        return new HashMap<>(bindings);
+        return new LinkedHashMap<>(bindings);
     }
 
     /**
@@ -144,7 +144,7 @@ public abstract class AbstractClassBinding<T> {
      *
      * @param byDefault true if binding should be used as default binding for specified class.
      */
-    protected void setByDefault(boolean byDefault) {
+    public void setByDefault(boolean byDefault) {
         this.byDefault = byDefault;
     }
 

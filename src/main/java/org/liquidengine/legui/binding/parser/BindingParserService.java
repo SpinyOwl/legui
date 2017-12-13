@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.util.Map;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParserFactory;
+import org.liquidengine.legui.binding.model.AbstractClassBinding;
 import org.liquidengine.legui.binding.model.BindingCreationException;
 import org.liquidengine.legui.binding.model.ClassBinding;
 import org.xml.sax.SAXException;
@@ -41,12 +42,16 @@ public class BindingParserService {
      *
      * @return created class bindings map.
      */
-    public Map<Class, ClassBinding> parseList(String listPath) {
+    public Map<Class, AbstractClassBinding> parseList(String listPath) {
         try {
             SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
             saxParserFactory.setNamespaceAware(true);
             BindingListParser listParser = new BindingListParser();
-            saxParserFactory.newSAXParser().parse(getInputStream(listPath), listParser);
+            InputStream inputStream = getInputStream(listPath);
+            if (inputStream == null) {
+                throw new FileNotFoundException("Binding list: " + listPath);
+            }
+            saxParserFactory.newSAXParser().parse(inputStream, listParser);
             return listParser.getBindings();
         } catch (SAXException | IOException | ParserConfigurationException | BindingCreationException e) {
             e.printStackTrace();
@@ -78,7 +83,11 @@ public class BindingParserService {
             SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
             saxParserFactory.setNamespaceAware(true);
             BindingParser bindingParser = new BindingParser(bindingPath, parentPath);
-            saxParserFactory.newSAXParser().parse(getInputStream(bindingPath), bindingParser);
+            InputStream inputStream = getInputStream(bindingPath);
+            if (inputStream == null) {
+                throw new FileNotFoundException(bindingPath + ((parentPath != null ? " not found for binding " + parentPath : "")));
+            }
+            saxParserFactory.newSAXParser().parse(inputStream, bindingParser);
             return bindingParser.getBinding();
         } catch (SAXException | IOException | ParserConfigurationException e) {
             e.printStackTrace();
@@ -102,9 +111,6 @@ public class BindingParserService {
             stream = new FileInputStream(file);
         } else {
             stream = Thread.currentThread().getContextClassLoader().getResourceAsStream(filePath);
-        }
-        if (stream == null) {
-            throw new FileNotFoundException(filePath);
         }
         return stream;
     }

@@ -7,7 +7,7 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import java.lang.reflect.Type;
-import org.liquidengine.legui.binding.model.ClassBinding;
+import org.liquidengine.legui.binding.model.AbstractClassBinding;
 
 /**
  * Utility class.
@@ -30,7 +30,7 @@ public final class JsonSerisalizeCreator {
      *
      * @return Gson adapter.
      */
-    protected static CustomSerializerDeserialiser createAdapter(Class c, ClassBinding b) {
+    protected static CustomSerializerDeserialiser createAdapter(Class c, AbstractClassBinding b) {
         return new CustomSerializerDeserialiser();
     }
 
