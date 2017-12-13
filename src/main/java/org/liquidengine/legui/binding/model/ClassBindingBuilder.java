@@ -15,7 +15,7 @@ import org.liquidengine.legui.binding.accessor.AbstractFieldAccessor;
  *
  * @author ShchAlexander.
  */
-public final class BindingBuilder {
+public final class ClassBindingBuilder {
 
     /**
      * Class binding.
@@ -33,7 +33,7 @@ public final class BindingBuilder {
     /**
      * Private constructor.
      */
-    private BindingBuilder() {
+    private ClassBindingBuilder() {
     }
 
     /**
@@ -44,7 +44,7 @@ public final class BindingBuilder {
      *
      * @return builder instance to complete binding creation.
      */
-    public static BindingBuilder createForClass(Class clazz, String to) {
+    public static ClassBindingBuilder createForClass(Class clazz, String to) {
         return createForClass(clazz, to, false, null);
     }
 
@@ -58,8 +58,8 @@ public final class BindingBuilder {
      *
      * @return builder instance to complete binding creation.
      */
-    public static BindingBuilder createForClass(Class clazz, String to, boolean byDefault, AbstractClassBinding inherited) {
-        BindingBuilder builder = new BindingBuilder();
+    public static ClassBindingBuilder createForClass(Class clazz, String to, boolean byDefault, AbstractClassBinding inherited) {
+        ClassBindingBuilder builder = new ClassBindingBuilder();
         builder.classBinding = new ClassBinding(clazz, byDefault);
         builder.classBinding.setToName(to);
         if (inherited != null) {
@@ -75,7 +75,7 @@ public final class BindingBuilder {
      *
      * @return builder instance to complete binding creation.
      */
-    public BindingBuilder bind(String field) {
+    public ClassBindingBuilder bind(String field) {
         return bind(field, (AbstractFieldAccessor) null);
     }
 
@@ -87,7 +87,7 @@ public final class BindingBuilder {
      *
      * @return builder instance to complete binding creation.
      */
-    public BindingBuilder bind(String field, AbstractFieldAccessor accessor) {
+    public ClassBindingBuilder bind(String field, AbstractFieldAccessor accessor) {
         return bind(field, field, true, accessor);
     }
 
@@ -99,7 +99,7 @@ public final class BindingBuilder {
      *
      * @return builder instance to complete binding creation.
      */
-    public BindingBuilder bind(String field, String to) {
+    public ClassBindingBuilder bind(String field, String to) {
         return bind(field, to, (AbstractFieldAccessor) null);
     }
 
@@ -112,7 +112,7 @@ public final class BindingBuilder {
      *
      * @return builder instance to complete binding creation.
      */
-    public BindingBuilder bind(String field, String to, AbstractFieldAccessor accessor) {
+    public ClassBindingBuilder bind(String field, String to, AbstractFieldAccessor accessor) {
         return bind(field, to, true, accessor);
     }
 
@@ -125,7 +125,7 @@ public final class BindingBuilder {
      *
      * @return builder instance to complete binding creation.
      */
-    public BindingBuilder bind(String field, String to, AbstractClassBinding using) {
+    public ClassBindingBuilder bind(String field, String to, AbstractClassBinding using) {
         return bind(field, to, using, null);
     }
 
@@ -139,7 +139,7 @@ public final class BindingBuilder {
      *
      * @return builder instance to complete binding creation.
      */
-    public BindingBuilder bind(String field, String to, AbstractClassBinding using, AbstractFieldAccessor accessor) {
+    public ClassBindingBuilder bind(String field, String to, AbstractClassBinding using, AbstractFieldAccessor accessor) {
         return bind(field, to, true, using, accessor);
     }
 
@@ -152,7 +152,7 @@ public final class BindingBuilder {
      *
      * @return builder instance to complete binding creation.
      */
-    public BindingBuilder bind(String field, String to, boolean attribute) {
+    public ClassBindingBuilder bind(String field, String to, boolean attribute) {
         return bind(field, to, attribute, (AbstractFieldAccessor) null);
     }
 
@@ -166,7 +166,7 @@ public final class BindingBuilder {
      *
      * @return builder instance to complete binding creation.
      */
-    public BindingBuilder bind(String field, String to, boolean attribute, AbstractFieldAccessor accessor) {
+    public ClassBindingBuilder bind(String field, String to, boolean attribute, AbstractFieldAccessor accessor) {
         return bind(field, to, attribute, (AbstractClassBinding) null, accessor);
     }
 
@@ -177,7 +177,7 @@ public final class BindingBuilder {
      *
      * @return builder instance to complete binding creation.
      */
-    public BindingBuilder unbind(String field) {
+    public ClassBindingBuilder unbind(String field) {
         inheritedBindings.remove(field);
         return this;
     }
@@ -192,7 +192,7 @@ public final class BindingBuilder {
      *
      * @return builder instance to complete binding creation.
      */
-    public BindingBuilder bind(String field, String to, boolean attribute, AbstractClassBinding linkedClassBinding) {
+    public ClassBindingBuilder bind(String field, String to, boolean attribute, AbstractClassBinding linkedClassBinding) {
         return bind(field, to, attribute, linkedClassBinding, null);
     }
 
@@ -207,7 +207,7 @@ public final class BindingBuilder {
      *
      * @return builder instance to complete binding creation.
      */
-    public BindingBuilder bind(String field, String to, boolean attribute, AbstractClassBinding linkedClassBinding, AbstractFieldAccessor accessor) {
+    public ClassBindingBuilder bind(String field, String to, boolean attribute, AbstractClassBinding linkedClassBinding, AbstractFieldAccessor accessor) {
         checkFieldExist(field);
         checkLinkedBindingFieldTypeIsValid(field, linkedClassBinding);
         Binding binding = createBinding(field, to, attribute, linkedClassBinding, accessor);
@@ -225,7 +225,7 @@ public final class BindingBuilder {
      *
      * @return builder instance to complete binding creation.
      */
-    public BindingBuilder bind(String field, String to, boolean attribute, AbstractClassConverter classConverter) {
+    public ClassBindingBuilder bind(String field, String to, boolean attribute, AbstractClassConverter classConverter) {
         return bind(field, to, attribute, classConverter, null);
     }
 
@@ -240,7 +240,7 @@ public final class BindingBuilder {
      *
      * @return builder instance to complete binding creation.
      */
-    public BindingBuilder bind(String field, String to, boolean attribute, AbstractClassConverter classConverter, AbstractFieldAccessor accessor) {
+    public ClassBindingBuilder bind(String field, String to, boolean attribute, AbstractClassConverter classConverter, AbstractFieldAccessor accessor) {
         checkFieldExist(field);
         checkClassConverterType(field, classConverter);
         Binding binding = createBinding(field, to, attribute, null, accessor);

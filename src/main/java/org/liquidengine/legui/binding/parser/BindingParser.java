@@ -3,7 +3,7 @@ package org.liquidengine.legui.binding.parser;
 import org.liquidengine.legui.binding.accessor.AbstractFieldAccessor;
 import org.liquidengine.legui.binding.model.AbstractClassBinding;
 import org.liquidengine.legui.binding.model.AbstractClassConverter;
-import org.liquidengine.legui.binding.model.BindingBuilder;
+import org.liquidengine.legui.binding.model.ClassBindingBuilder;
 import org.liquidengine.legui.binding.model.ClassBinding;
 import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
@@ -32,7 +32,7 @@ public class BindingParser extends DefaultHandler {
     /**
      * Binding builder.
      */
-    private BindingBuilder builder;
+    private ClassBindingBuilder builder;
     /**
      * Java field name to bind.
      */
@@ -237,7 +237,7 @@ public class BindingParser extends DefaultHandler {
             throw new SAXException(e);
         }
         if (clazz != null) {
-            builder = BindingBuilder.createForClass(clazz, toField, defaultBinding, binding);
+            builder = ClassBindingBuilder.createForClass(clazz, toField, defaultBinding, binding);
         }
     }
 

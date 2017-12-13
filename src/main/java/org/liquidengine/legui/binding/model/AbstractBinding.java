@@ -46,7 +46,7 @@ public abstract class AbstractBinding {
      *
      * @param javaFieldName java field name.
      */
-    protected AbstractBinding(String javaFieldName) {
+    public AbstractBinding(String javaFieldName) {
         this.javaFieldName = javaFieldName;
     }
 
@@ -56,7 +56,7 @@ public abstract class AbstractBinding {
      * @param javaFieldName java field name.
      * @param bindingFieldName binding field name.
      */
-    protected AbstractBinding(String javaFieldName, String bindingFieldName) {
+    public AbstractBinding(String javaFieldName, String bindingFieldName) {
         this.javaFieldName = javaFieldName;
         this.bindingFieldName = bindingFieldName;
     }
@@ -75,7 +75,7 @@ public abstract class AbstractBinding {
      *
      * @param javaFieldName java field name to set.
      */
-    protected void setJavaFieldName(String javaFieldName) {
+    public void setJavaFieldName(String javaFieldName) {
         this.javaFieldName = javaFieldName;
     }
 
@@ -93,7 +93,7 @@ public abstract class AbstractBinding {
      *
      * @param bindingFieldName binding field name to set.
      */
-    protected void setBindingFieldName(String bindingFieldName) {
+    public void setBindingFieldName(String bindingFieldName) {
         this.bindingFieldName = bindingFieldName;
     }
 
@@ -111,7 +111,7 @@ public abstract class AbstractBinding {
      *
      * @param linkedClassBinding linked class binding to set.
      */
-    protected void setLinkedClassBinding(AbstractClassBinding linkedClassBinding) {
+    public void setLinkedClassBinding(AbstractClassBinding linkedClassBinding) {
         this.linkedClassBinding = linkedClassBinding;
     }
 
@@ -129,7 +129,7 @@ public abstract class AbstractBinding {
      *
      * @param targetType target type to set.
      */
-    protected void setTargetType(TargetType targetType) {
+    public void setTargetType(TargetType targetType) {
         this.targetType = targetType;
     }
 

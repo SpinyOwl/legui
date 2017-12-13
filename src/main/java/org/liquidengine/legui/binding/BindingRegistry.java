@@ -3,6 +3,7 @@ package org.liquidengine.legui.binding;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import org.liquidengine.legui.binding.model.AbstractClassBinding;
 import org.liquidengine.legui.binding.model.ClassBinding;
 import org.liquidengine.legui.binding.parser.BindingParserService;
 
@@ -16,7 +17,7 @@ public final class BindingRegistry {
     /**
      * Used to hold default bindings.
      */
-    private Map<Class, ClassBinding> bindingMap = new HashMap<>();
+    private Map<Class, AbstractClassBinding> bindingMap = new HashMap<>();
 
     /**
      * Private constructor.
@@ -39,9 +40,9 @@ public final class BindingRegistry {
      * @param bindingListPath path to binding list.
      */
     public void loadBindings(String bindingListPath) {
-        Map<Class, ClassBinding> map = BindingParserService.getInstance().parseList(bindingListPath);
+        Map<Class, AbstractClassBinding> map = BindingParserService.getInstance().parseList(bindingListPath);
         if (map != null) {
-            for (Entry<Class, ClassBinding> entry : map.entrySet()) {
+            for (Entry<Class, AbstractClassBinding> entry : map.entrySet()) {
                 setBinding(entry.getKey(), entry.getValue());
             }
         }
@@ -55,7 +56,7 @@ public final class BindingRegistry {
      * @param b binding for class.
      * @param <T> class type.
      */
-    public <T> void setBinding(Class<? extends T> c, ClassBinding<? extends T> b) {
+    public <T> void setBinding(Class<? extends T> c, AbstractClassBinding<? extends T> b) {
         if (c != null && b != null) {
             Class<? extends T> type = b.getBindingForType();
             if (type != c && !type.isAssignableFrom(c)) {
@@ -80,7 +81,7 @@ public final class BindingRegistry {
      *
      * @return returns default binding for class or null.
      */
-    public <T> ClassBinding<T> getBinding(Class<T> c) {
+    public <T> AbstractClassBinding<T> getBinding(Class<T> c) {
         return cycledSearch(c);
     }
 
@@ -89,7 +90,7 @@ public final class BindingRegistry {
      *
      * @return all bindings as map.
      */
-    public Map<Class, ClassBinding> getBindingMap() {
+    public Map<Class, AbstractClassBinding> getBindingMap() {
         return new HashMap<>(bindingMap);
     }
 
@@ -101,8 +102,8 @@ public final class BindingRegistry {
      *
      * @return binding or null if not found.
      */
-    protected <T> ClassBinding<T> cycledSearch(Class<T> clazz) {
-        ClassBinding classBinding = null;
+    protected <T> AbstractClassBinding<T> cycledSearch(Class<T> clazz) {
+        AbstractClassBinding classBinding = null;
         Class cClass = clazz;
 
         if (clazz == null) {

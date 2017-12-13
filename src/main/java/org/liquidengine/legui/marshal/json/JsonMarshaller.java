@@ -6,6 +6,7 @@ import static org.liquidengine.legui.marshal.json.JsonSerisalizeCreator.createAd
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonPrimitive;
@@ -18,7 +19,6 @@ import org.liquidengine.legui.binding.model.AbstractClassBinding;
 import org.liquidengine.legui.binding.model.AbstractClassConverter;
 import org.liquidengine.legui.binding.model.Binding;
 import org.liquidengine.legui.binding.model.BindingUtilities;
-import org.liquidengine.legui.binding.model.ClassBinding;
 
 /**
  * Json marshaller.
@@ -52,6 +52,9 @@ public final class JsonMarshaller {
      * @return JsonElement.
      */
     protected static JsonElement marshalToJson(Object object) {
+        if (object == null) {
+            return JsonNull.INSTANCE;
+        }
         JsonElement json;
         AbstractClassBinding<?> classBinding = BindingRegistry.getInstance().getBinding(object.getClass());
         if (classBinding != null) {
@@ -87,36 +90,43 @@ public final class JsonMarshaller {
      * @return json representation og object.
      */
     protected static <T> JsonElement marshalToJson(T object, AbstractClassBinding<? extends T> classBinding) {
-        JsonObject json = new JsonObject();
-        json.addProperty("@type", object.getClass().getName());
 
-        List<Binding> bindings = classBinding.getBindingList();
+        JsonElement jsonE;
+        if (object == null) {
+            jsonE = JsonNull.INSTANCE;
+        } else {
+            JsonObject json = new JsonObject();
+            jsonE = json;
+            json.addProperty("@type", object.getClass().getName());
 
-        for (Binding binding : bindings) {
-            String javaFieldName = binding.getJavaFieldName();
-            String bindingFieldName = binding.getBindingFieldName();
-            if (bindingFieldName == null) {
-                bindingFieldName = javaFieldName;
+            List<Binding> bindings = classBinding.getBindingList();
+
+            for (Binding binding : bindings) {
+                String javaFieldName = binding.getJavaFieldName();
+                String bindingFieldName = binding.getBindingFieldName();
+                if (bindingFieldName == null) {
+                    bindingFieldName = javaFieldName;
+                }
+
+                Object fieldValue;
+                if (binding.getFieldAccessor() != null) {
+                    fieldValue = binding.getFieldAccessor().getFieldValue(object);
+                } else {
+                    fieldValue = getFieldValue(object, javaFieldName);
+                }
+
+                JsonElement value = null;
+                if (binding.getLinkedClassBinding() != null) {
+                    value = marshalToJson(fieldValue, binding.getLinkedClassBinding());
+                } else if (binding.getClassConverter() != null) {
+                    value = marshalToJson(fieldValue, binding.getClassConverter());
+                } else {
+                    value = marshalToJson(fieldValue);
+                }
+                json.add(bindingFieldName, value);
             }
-
-            Object fieldValue;
-            if (binding.getFieldAccessor() != null) {
-                fieldValue = binding.getFieldAccessor().getFieldValue(object);
-            } else {
-                fieldValue = getFieldValue(object, javaFieldName);
-            }
-
-            JsonElement value = null;
-            if (binding.getLinkedClassBinding() != null) {
-                value = marshalToJson(fieldValue, binding.getLinkedClassBinding());
-            } else if (binding.getClassConverter() != null) {
-                value = marshalToJson(fieldValue, binding.getClassConverter());
-            } else {
-                value = marshalToJson(fieldValue);
-            }
-            json.add(bindingFieldName, value);
         }
-        return json;
+        return jsonE;
     }
 
     /**
@@ -155,6 +165,9 @@ public final class JsonMarshaller {
      * @return unmarshalled object or null.
      */
     protected static <T> T unmarshal(JsonElement json, Type type) {
+        if (json == null || json.isJsonNull()) {
+            return null;
+        }
         Type typeToUse = type;
         if (json.isJsonObject()) {
             JsonObject o = json.getAsJsonObject();
@@ -191,6 +204,9 @@ public final class JsonMarshaller {
      * @return unmarshalled object or null.
      */
     protected static <T> T unmarshalFromJson(JsonElement jsonElement, Class<T> clazz, AbstractClassBinding<T> classBinding) {
+        if (jsonElement == null || jsonElement.isJsonNull()) {
+            return null;
+        }
         List<Binding> bindings = classBinding.getBindingList();
 //        List<BindedParameters>
         T instance = classBinding.createInstance(clazz);
@@ -240,6 +256,9 @@ public final class JsonMarshaller {
      * @return unmarshalled object or null.
      */
     protected static <T> T unmarshalFromJson(JsonElement element, AbstractClassConverter<T> classConverter) {
+        if (element == null || element.isJsonNull()) {
+            return null;
+        }
         return classConverter.convertToJava(element.getAsString());
     }
 
@@ -250,9 +269,9 @@ public final class JsonMarshaller {
      */
     protected static Gson createGson() {
         GsonBuilder gsonBuilder = new GsonBuilder();
-        Map<Class, ClassBinding> bindingMap = BindingRegistry.getInstance().getBindingMap();
+        Map<Class, AbstractClassBinding> bindingMap = BindingRegistry.getInstance().getBindingMap();
 
-        for (Entry<Class, ClassBinding> entry : bindingMap.entrySet()) {
+        for (Entry<Class, AbstractClassBinding> entry : bindingMap.entrySet()) {
             gsonBuilder.registerTypeHierarchyAdapter(entry.getKey(), createAdapter(entry.getKey(), entry.getValue()));
         }
 
