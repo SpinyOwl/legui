@@ -1,6 +1,6 @@
 package org.liquidengine.legui.binding;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import org.liquidengine.legui.binding.model.AbstractClassBinding;
@@ -17,7 +17,7 @@ public final class BindingRegistry {
     /**
      * Used to hold default bindings.
      */
-    private Map<Class, AbstractClassBinding> bindingMap = new HashMap<>();
+    private Map<Class, AbstractClassBinding> bindingMap = new LinkedHashMap<>();
 
     /**
      * Private constructor.
@@ -91,7 +91,7 @@ public final class BindingRegistry {
      * @return all bindings as map.
      */
     public Map<Class, AbstractClassBinding> getBindingMap() {
-        return new HashMap<>(bindingMap);
+        return new LinkedHashMap<>(bindingMap);
     }
 
     /**

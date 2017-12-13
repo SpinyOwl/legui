@@ -5,7 +5,7 @@ import static org.liquidengine.legui.binding.model.BindingUtilities.classTreeHas
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import org.liquidengine.legui.binding.accessor.AbstractFieldAccessor;
@@ -24,11 +24,11 @@ public final class ClassBindingBuilder {
     /**
      * Bindings.
      */
-    private Map<String, Binding> bindings = new HashMap<>();
+    private Map<String, Binding> bindings = new LinkedHashMap<>();
     /**
      * Inherited bindings.
      */
-    private Map<String, Binding> inheritedBindings = new HashMap<>();
+    private Map<String, Binding> inheritedBindings = new LinkedHashMap<>();
 
     /**
      * Private constructor.

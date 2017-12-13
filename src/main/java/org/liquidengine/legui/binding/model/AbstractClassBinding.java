@@ -1,7 +1,7 @@
 package org.liquidengine.legui.binding.model;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -34,7 +34,7 @@ public abstract class AbstractClassBinding<T> {
     /**
      * Field bindings saved as map for easy access by field name.
      */
-    private Map<String, Binding> bindings = new HashMap<>();
+    private Map<String, Binding> bindings = new LinkedHashMap<>();
 
 
     /**
@@ -125,7 +125,7 @@ public abstract class AbstractClassBinding<T> {
      * @return all field bindings as map where key is java field name.
      */
     public Map<String, Binding> getBindings() {
-        return new HashMap<>(bindings);
+        return new LinkedHashMap<>(bindings);
     }
 
     /**

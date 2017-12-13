@@ -1,6 +1,6 @@
 package org.liquidengine.legui.binding.parser;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import org.liquidengine.legui.binding.model.AbstractClassBinding;
 import org.liquidengine.legui.binding.model.ClassBinding;
@@ -19,7 +19,7 @@ public class BindingListParser extends DefaultHandler {
     /**
      * Map of bindings.
      */
-    private Map<Class, AbstractClassBinding> bindings = new HashMap<>();
+    private Map<Class, AbstractClassBinding> bindings = new LinkedHashMap<>();
 
     /**
      * Receive notification of the start of an element. <p> <p>By default, do nothing.  Application writers may override this method in a subclass to take

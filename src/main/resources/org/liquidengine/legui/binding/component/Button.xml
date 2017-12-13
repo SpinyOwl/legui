@@ -2,9 +2,7 @@
   for="org.liquidengine.legui.component.Button" to="button" default="true"
   inherit="org/liquidengine/legui/binding/component/Component.xml">
 
-  <bind field="textState" to="textState" as="field">
-    <using-binding path="org/liquidengine/legui/binding/component/optional/TextState.xml"/>
-  </bind>
+  <bind field="textState" to="textState" as="field"/>
   <bind field="backgroundIcon" as="field"/>
   <bind field="focusedBackgroundIcon" as="field"/>
   <bind field="pressedBackgroundIcon" as="field"/>

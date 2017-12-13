@@ -1,5 +1,3 @@
 <class-binding xmlns="binding.legui.liquidengine.org"
   for="org.liquidengine.legui.component.Label" to="label"
-  inherit="org/liquidengine/legui/binding/component/Component.xml">
-
-</class-binding>
+  inherit="org/liquidengine/legui/binding/component/Component.xml"/>

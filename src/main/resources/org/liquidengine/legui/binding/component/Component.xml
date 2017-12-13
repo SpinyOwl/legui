@@ -1,7 +1,5 @@
 <class-binding default="true" for="org.liquidengine.legui.component.Component" to="component" xmlns="binding.legui.liquidengine.org">
-  <bind field="position" to="position">
-    <using-binding path="org/liquidengine/legui/binding/common/Vector2f.xml"/>
-  </bind>
+  <bind field="position" to="position"/>
   <bind field="size">
     <using-binding path="org/liquidengine/legui/binding/common/Vector2fSize.xml"/>
   </bind>
