@@ -72,16 +72,6 @@
         <xs:documentation>Java Field which should be marshalled/unmarshalled.</xs:documentation>
       </xs:annotation>
     </xs:attribute>
-    <xs:attribute name="getter" type="xs:string">
-      <xs:annotation>
-        <xs:documentation>Java Field getter.</xs:documentation>
-      </xs:annotation>
-    </xs:attribute>
-    <xs:attribute name="setter" type="xs:string">
-      <xs:annotation>
-        <xs:documentation>Java Field setter.</xs:documentation>
-      </xs:annotation>
-    </xs:attribute>
     <xs:attribute name="to" type="xs:string">
       <xs:annotation>
         <xs:documentation>Field name in target source.</xs:documentation>
@@ -129,7 +119,6 @@
   </xs:complexType>
 
   <!-- BINDING LIST TYPES -->
-  <!-- TODO : Create abitlity to add binding to class converter -->
   <xs:element name="binding-list">
     <xs:annotation>
       <xs:documentation>
