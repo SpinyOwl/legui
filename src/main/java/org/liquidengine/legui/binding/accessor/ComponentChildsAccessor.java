@@ -8,7 +8,7 @@ import org.liquidengine.legui.component.Component;
 /**
  * Created by ShchAlexander on 04.12.2017.
  */
-public class ComponentChildsAccessor extends AbstractFieldAccessor<Component> {
+public class ComponentChildsAccessor extends AbstractFieldAccessor<Component, List<Component>> {
 
     /**
      * Used to get childs of {@link Component}.
@@ -18,18 +18,17 @@ public class ComponentChildsAccessor extends AbstractFieldAccessor<Component> {
      * @return childs of component.
      */
     @Override
-    public Object getFieldValue(Component object) {
+    public List<Component> getFieldValue(Component object) {
         return object.getChilds();
     }
 
     @Override
-    public void setFieldValue(Component object, Object value) {
-        if (value instanceof List) {
-            List vList = (List) value;
-            if (!vList.isEmpty()) {
-                for (Object listEntry : vList) {
-                    if (listEntry instanceof Component) {
-                        object.add((Component) listEntry);
+    public void setFieldValue(Component object, List<Component> value) {
+        if (value != null) {
+            if (!value.isEmpty()) {
+                for (Component listEntry : value) {
+                    if (listEntry != null) {
+                        object.add(listEntry);
                     }
                 }
             }
@@ -38,6 +37,6 @@ public class ComponentChildsAccessor extends AbstractFieldAccessor<Component> {
 
     @Override
     public Type getFieldType() {
-        return new TypeToken<List<Component>>() {}.getType();
+        return new TypeToken<List<Component>>(){}.getType();
     }
 }

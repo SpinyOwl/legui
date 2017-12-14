@@ -161,7 +161,7 @@ public class BindingUtilities {
      */
     private static Object getFieldValueFromObject(Object object, String fieldName, Class<?> objectClass, boolean[] found) {
         if (object == null) {
-            throw new NullPointerException("source object is null.");
+            throw new IllegalArgumentException("Source object cannot be null.");
         }
 
         Object fieldValue = null;

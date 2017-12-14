@@ -51,7 +51,10 @@
     <xs:sequence>
       <xs:element name="using-accessor" type="fieldAccessorType" minOccurs="0">
         <xs:annotation>
-          <xs:documentation>Binding reference which should be used to transform java field to target field.</xs:documentation>
+          <xs:documentation>
+            Binding reference which should be used to transform java field to target field.
+            Also field accessor should be used for parametrized types, collections and maps (Ex.: java.util.List).
+          </xs:documentation>
         </xs:annotation>
       </xs:element>
       <xs:choice>

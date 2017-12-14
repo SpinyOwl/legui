@@ -208,8 +208,10 @@ public final class ClassBindingBuilder {
      * @return builder instance to complete binding creation.
      */
     public ClassBindingBuilder bind(String field, String to, boolean attribute, AbstractClassBinding linkedClassBinding, AbstractFieldAccessor accessor) {
-        checkFieldExist(field);
-        checkLinkedBindingFieldTypeIsValid(field, linkedClassBinding);
+        if (accessor == null) {
+            checkFieldExist(field);
+        }
+        checkLinkedBindingFieldTypeIsValid(field, linkedClassBinding, accessor);
         Binding binding = createBinding(field, to, attribute, linkedClassBinding, accessor);
         bindings.put(field, binding);
         return this;
@@ -241,7 +243,9 @@ public final class ClassBindingBuilder {
      * @return builder instance to complete binding creation.
      */
     public ClassBindingBuilder bind(String field, String to, boolean attribute, AbstractClassConverter classConverter, AbstractFieldAccessor accessor) {
-        checkFieldExist(field);
+        if (accessor == null) {
+            checkFieldExist(field);
+        }
         checkClassConverterType(field, classConverter);
         Binding binding = createBinding(field, to, attribute, null, accessor);
         binding.setClassConverter(classConverter);
@@ -311,12 +315,13 @@ public final class ClassBindingBuilder {
 
     /**
      * Used to check if linked class binding type parametrized with right class (class of object field).
-     *
-     * @param field field name.
+     *  @param field field name.
      * @param linkedClassBinding linked class binding for field.
+     * @param accessor
      */
-    private void checkLinkedBindingFieldTypeIsValid(String field, AbstractClassBinding linkedClassBinding) {
-        if (linkedClassBinding != null) {
+    private void checkLinkedBindingFieldTypeIsValid(String field, AbstractClassBinding linkedClassBinding,
+        AbstractFieldAccessor accessor) {
+        if (linkedClassBinding != null && accessor == null) {
             Class bindingClass = classBinding.getBindingForType();
             Class bType = linkedClassBinding.getBindingForType();
             Class fieldType = classTreeGetFieldType(bindingClass, field);

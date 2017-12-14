@@ -11,6 +11,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonPrimitive;
 import java.lang.reflect.Type;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -61,23 +62,11 @@ public final class JsonMarshaller {
             json = marshalToJson(object, classBinding);
         } else {
             json = createGson().toJsonTree(object);
+            if (json.isJsonObject()) {
+                json.getAsJsonObject().addProperty("@type", object.getClass().getName());
+            }
         }
         return json;
-    }
-
-    /**
-     * Used to marshal object to json representation.
-     *
-     * @param object object to marshal.
-     * @param classBinding class binding to use till marshalling.
-     * @param <T> type of object.
-     *
-     * @return json representation of object.
-     */
-    public static <T> String marshal(T object, AbstractClassBinding<? extends T> classBinding) {
-        Gson gson = createGson();
-        JsonElement e = marshalToJson(object, classBinding);
-        return gson.toJson(e);
     }
 
     /**
@@ -220,7 +209,17 @@ public final class JsonMarshaller {
             JsonObject jsonObject = jsonElement.getAsJsonObject();
             JsonElement element = jsonObject.get(bindingFieldName);
 
+            // retrieving class for field value
             Class fieldClass = BindingUtilities.classTreeGetFieldType(clazz, javaFieldName);
+            if (fieldClass == null && binding.getFieldAccessor() != null) {
+                Type fieldType = binding.getFieldAccessor().getFieldType();
+                if (fieldType instanceof Class) {
+                    fieldClass = (Class) fieldType;
+                } else {
+                    // for now skipping if can't get field class.
+                    continue;
+                }
+            }
 
             Object fieldValue;
             if (binding.getLinkedClassBinding() != null) {

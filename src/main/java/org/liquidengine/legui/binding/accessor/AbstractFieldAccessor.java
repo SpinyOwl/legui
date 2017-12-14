@@ -8,7 +8,7 @@ import java.lang.reflect.Type;
  * @param <T> type of class binding.
  * Created by ShchAlexander on 04.12.2017.
  */
-public abstract class AbstractFieldAccessor<T> {
+public abstract class AbstractFieldAccessor<T, V> {
 
     /**
      * Used to get field value from object.
@@ -17,7 +17,7 @@ public abstract class AbstractFieldAccessor<T> {
      *
      * @return field value of object.
      */
-    public abstract Object getFieldValue(T object);
+    public abstract V getFieldValue(T object);
 
     /**
      * Used to set field value to object.
@@ -25,7 +25,7 @@ public abstract class AbstractFieldAccessor<T> {
      * @param object object to set field value.
      * @param value value to set.
      */
-    public abstract void setFieldValue(T object, Object value);
+    public abstract void setFieldValue(T object, V value);
 
     /**
      * Used to obtain field type.

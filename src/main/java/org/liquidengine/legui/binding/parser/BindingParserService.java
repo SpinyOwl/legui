@@ -84,9 +84,14 @@ public class BindingParserService {
             saxParserFactory.setNamespaceAware(true);
             BindingParser bindingParser = new BindingParser(bindingPath, parentPath);
             InputStream inputStream = getInputStream(bindingPath);
+
             if (inputStream == null) {
-                throw new FileNotFoundException(bindingPath + ((parentPath != null ? " not found for binding " + parentPath : "")));
+                System.err.println(
+                    "Can't parse binding cause binding not found: " + bindingPath + ((parentPath != null ? "    \t-> (for binding " + parentPath + ")" : "")));
             }
+//            if (inputStream == null) {
+//                throw new FileNotFoundException();
+//            }
             saxParserFactory.newSAXParser().parse(inputStream, bindingParser);
             return bindingParser.getBinding();
         } catch (SAXException | IOException | ParserConfigurationException e) {

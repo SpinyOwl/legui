@@ -1,4 +1,5 @@
 <class-binding xmlns="binding.legui.liquidengine.org"
-  for="org.liquidengine.legui.component.Panel" to="panel" default="true"
+  for="org.liquidengine.legui.component.TextInput" to="textInput" default="true"
   inherit="org/liquidengine/legui/binding/component/Component.xml">
+  <bind field="textState" to="textState"/>
 </class-binding>

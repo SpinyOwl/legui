@@ -2,7 +2,6 @@ package org.liquidengine.legui.binding.custom.image;
 
 import org.liquidengine.legui.binding.model.AbstractClassBinding;
 import org.liquidengine.legui.binding.model.Binding;
-import org.liquidengine.legui.binding.model.ClassBindingBuilder;
 import org.liquidengine.legui.binding.model.TargetType;
 import org.liquidengine.legui.image.LoadableImage;
 
