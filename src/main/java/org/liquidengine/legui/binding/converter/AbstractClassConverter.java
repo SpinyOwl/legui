@@ -1,10 +1,10 @@
-package org.liquidengine.legui.binding.model;
+package org.liquidengine.legui.binding.converter;
 
 /**
  * Class converter. Should be used to convert class to string representation and vise versa.
  *
  * @param <T> type of class converter.
- *
+ * <p>
  * Created by ShchAlexander on 02.12.2017.
  */
 public abstract class AbstractClassConverter<T> {

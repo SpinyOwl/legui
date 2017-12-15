@@ -11,13 +11,12 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonPrimitive;
 import java.lang.reflect.Type;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import org.liquidengine.legui.binding.BindingRegistry;
+import org.liquidengine.legui.binding.converter.AbstractClassConverter;
 import org.liquidengine.legui.binding.model.AbstractClassBinding;
-import org.liquidengine.legui.binding.model.AbstractClassConverter;
 import org.liquidengine.legui.binding.model.Binding;
 import org.liquidengine.legui.binding.model.BindingUtilities;
 
@@ -27,6 +26,8 @@ import org.liquidengine.legui.binding.model.BindingUtilities;
  * @author ShchAlexander.
  */
 public final class JsonMarshaller {
+
+    public static final String TYPE_PROPERTY = "@type";
 
     /**
      * Private constructor.
@@ -63,7 +64,13 @@ public final class JsonMarshaller {
         } else {
             json = createGson().toJsonTree(object);
             if (json.isJsonObject()) {
-                json.getAsJsonObject().addProperty("@type", object.getClass().getName());
+                JsonObject curr = json.getAsJsonObject();
+                json = new JsonObject();
+                JsonObject jOb = json.getAsJsonObject();
+                jOb.addProperty(TYPE_PROPERTY, object.getClass().getName());
+                for (Entry<String, JsonElement> entry : curr.entrySet()) {
+                    jOb.add(entry.getKey(), entry.getValue());
+                }
             }
         }
         return json;
@@ -86,7 +93,7 @@ public final class JsonMarshaller {
         } else {
             JsonObject json = new JsonObject();
             jsonE = json;
-            json.addProperty("@type", object.getClass().getName());
+            json.addProperty(TYPE_PROPERTY, object.getClass().getName());
 
             List<Binding> bindings = classBinding.getBindingList();
 
@@ -160,7 +167,7 @@ public final class JsonMarshaller {
         Type typeToUse = type;
         if (json.isJsonObject()) {
             JsonObject o = json.getAsJsonObject();
-            JsonElement jsonElement = o.remove("@type");
+            JsonElement jsonElement = o.remove(TYPE_PROPERTY);
             Type newType = null;
             if (jsonElement != null && !jsonElement.isJsonNull()) {
                 try {
@@ -199,6 +206,8 @@ public final class JsonMarshaller {
         List<Binding> bindings = classBinding.getBindingList();
 //        List<BindedParameters>
         T instance = classBinding.createInstance(clazz);
+        JsonObject jsonObject = jsonElement.getAsJsonObject();
+
         for (Binding binding : bindings) {
             String javaFieldName = binding.getJavaFieldName();
             String bindingFieldName = binding.getBindingFieldName();
@@ -206,8 +215,10 @@ public final class JsonMarshaller {
                 bindingFieldName = javaFieldName;
             }
 
-            JsonObject jsonObject = jsonElement.getAsJsonObject();
             JsonElement element = jsonObject.get(bindingFieldName);
+            if (element == null || element.isJsonNull()) {
+                continue;
+            }
 
             // retrieving class for field value
             Class fieldClass = BindingUtilities.classTreeGetFieldType(clazz, javaFieldName);

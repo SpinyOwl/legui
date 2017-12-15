@@ -11,6 +11,10 @@ import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.component.ImageView;
 import org.liquidengine.legui.component.Layer;
 import org.liquidengine.legui.component.Panel;
+import org.liquidengine.legui.component.RadioButton;
+import org.liquidengine.legui.component.RadioButtonGroup;
+import org.liquidengine.legui.component.ScrollablePanel;
+import org.liquidengine.legui.component.SelectBox;
 import org.liquidengine.legui.icon.ImageIcon;
 import org.liquidengine.legui.image.BufferedImage;
 import org.liquidengine.legui.marshal.json.JsonMarshaller;
@@ -36,7 +40,7 @@ public class Test {
         // -------------------
 
         Frame frame = new Frame();
-        frame.setSize(new Vector2f(100,200));
+        frame.setSize(new Vector2f(100, 200));
 
         Layer test = new DialogLayer();
         frame.addLayer(test);
@@ -50,6 +54,31 @@ public class Test {
         component.setBackgroundIcon(backgroundIcon);
         panel.add(component);
 
+        RadioButtonGroup g1 = new RadioButtonGroup();
+        RadioButtonGroup g2 = new RadioButtonGroup();
+
+        RadioButton r1 = new RadioButton("1");
+        RadioButton r2 = new RadioButton("2");
+        RadioButton r3 = new RadioButton("3");
+        r1.setRadioButtonGroup(g1);
+        r2.setRadioButtonGroup(g1);
+        r3.setRadioButtonGroup(g1);
+
+        RadioButton r4 = new RadioButton("4");
+        RadioButton r5 = new RadioButton("5");
+
+        r4.setRadioButtonGroup(g2);
+        r5.setRadioButtonGroup(g2);
+
+        ScrollablePanel panel1 = new ScrollablePanel();
+        frame.getContainer().add(panel1);
+
+        panel.add(r1);
+        panel.add(r2);
+        panel.add(r3);
+        panel.add(r4);
+        panel.add(r5);
+
         ImageView view = new ImageView(image);
         frame.getContainer().add(view);
 
@@ -62,6 +91,20 @@ public class Test {
 
         Frame unmarshalled = JsonMarshaller.unmarshal(json, Frame.class);
         System.out.println(unmarshalled.equals(frame));
+
+        json = JsonMarshaller.marshal(panel1);
+        System.out.println(json);
+        ScrollablePanel un = JsonMarshaller.unmarshal(json, ScrollablePanel.class);
+        System.out.println(un.equals(panel1));
+
+        SelectBox sb = new SelectBox();
+        sb.addElement("Hello");
+        sb.addElement("World");
+
+        json = JsonMarshaller.marshal(sb);
+        System.out.println(json);
+        SelectBox unsb = JsonMarshaller.unmarshal(json, SelectBox.class);
+        System.out.println(sb.equals(unsb));
     }
 
     public static class MyVec extends Vector2f {

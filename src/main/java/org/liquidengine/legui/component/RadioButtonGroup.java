@@ -1,9 +1,13 @@
 package org.liquidengine.legui.component;
 
 import java.io.Serializable;
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.atomic.AtomicInteger;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -13,6 +17,62 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  * Group of radio buttons which determines that only one radio button can be selected in group.
  */
 public class RadioButtonGroup implements Serializable {
+
+    /**
+     * Used to store all existing groups.
+     */
+    private static final Map<Integer, WeakReference<RadioButtonGroup>> groupsMap = new ConcurrentHashMap<>();
+    /**
+     * Used to create new index for button group.
+     */
+    private static AtomicInteger indexer = new AtomicInteger(0);
+    /**
+     * Index of radio button group.
+     */
+    private final int index;
+
+    /**
+     * Used to create {@link RadioButtonGroup} with specified index.
+     *
+     * @param index index to set.
+     */
+    private RadioButtonGroup(int index) {
+        this.index = index;
+        groupsMap.put(index, new WeakReference<>(this));
+    }
+
+    /**
+     * Default constructor.
+     */
+    public RadioButtonGroup() {
+        this(indexer.addAndGet(1));
+    }
+
+    /**
+     * Returns radioButtonGroup selected by index or new one.
+     *
+     * @param index index to search.
+     *
+     * @return RadioButtonGroup instance.
+     */
+    public static RadioButtonGroup getGroupByIndex(int index) {
+        WeakReference<RadioButtonGroup> groupWeakReference = groupsMap.get(index);
+        if (groupWeakReference == null) {
+            return new RadioButtonGroup(index);
+        } else {
+            RadioButtonGroup radioButtonGroup = groupWeakReference.get();
+            if (radioButtonGroup == null) {
+                groupWeakReference.clear();
+                return new RadioButtonGroup(index);
+            } else {
+                return radioButtonGroup;
+            }
+        }
+    }
+
+    public int getIndex() {
+        return index;
+    }
 
     /**
      * Used to hold radio buttons.

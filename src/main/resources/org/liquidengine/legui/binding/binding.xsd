@@ -3,17 +3,17 @@
   <xs:element name="class-binding">
     <xs:complexType>
       <xs:sequence>
+        <xs:element name="unbind" maxOccurs="unbounded" minOccurs="0" type="unbindOperationType">
+          <xs:annotation>
+            <xs:documentation>Used to unbind some field (which could exist in inherited binding).</xs:documentation>
+          </xs:annotation>
+        </xs:element>
         <xs:element name="bind" maxOccurs="unbounded" minOccurs="0" type="bindOperation">
           <xs:annotation>
             <xs:documentation>
               Create binding for Java Field which should be marshalled/unmarshalled.
               Note that you can override inherited field bind by new binding.
             </xs:documentation>
-          </xs:annotation>
-        </xs:element>
-        <xs:element name="unbind" maxOccurs="unbounded" minOccurs="0" type="unbindOperationType">
-          <xs:annotation>
-            <xs:documentation>Used to unbind some field (which could exist in inherited binding).</xs:documentation>
           </xs:annotation>
         </xs:element>
       </xs:sequence>

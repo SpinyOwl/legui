@@ -9,6 +9,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import org.liquidengine.legui.binding.accessor.AbstractFieldAccessor;
+import org.liquidengine.legui.binding.converter.AbstractClassConverter;
 
 /**
  * Binding builder. Used to create instance of class binding.
@@ -315,9 +316,10 @@ public final class ClassBindingBuilder {
 
     /**
      * Used to check if linked class binding type parametrized with right class (class of object field).
-     *  @param field field name.
+     *
+     * @param field field name.
      * @param linkedClassBinding linked class binding for field.
-     * @param accessor
+     * @param accessor field accessor.
      */
     private void checkLinkedBindingFieldTypeIsValid(String field, AbstractClassBinding linkedClassBinding,
         AbstractFieldAccessor accessor) {

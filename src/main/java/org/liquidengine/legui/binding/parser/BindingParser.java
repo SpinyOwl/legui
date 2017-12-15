@@ -1,10 +1,10 @@
 package org.liquidengine.legui.binding.parser;
 
 import org.liquidengine.legui.binding.accessor.AbstractFieldAccessor;
+import org.liquidengine.legui.binding.converter.AbstractClassConverter;
 import org.liquidengine.legui.binding.model.AbstractClassBinding;
-import org.liquidengine.legui.binding.model.AbstractClassConverter;
-import org.liquidengine.legui.binding.model.ClassBindingBuilder;
 import org.liquidengine.legui.binding.model.ClassBinding;
+import org.liquidengine.legui.binding.model.ClassBindingBuilder;
 import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXException;
@@ -97,19 +97,26 @@ public class BindingParser extends DefaultHandler {
             return;
         }
         switch (localName) {
-            case "class-binding": createClassBinding(attributes);
+            case "class-binding":
+                createClassBinding(attributes);
                 break;
-            case "bind": addBind(attributes);
+            case "bind":
+                addBind(attributes);
                 break;
-            case "using-binding": addLink(attributes);
+            case "using-binding":
+                addLink(attributes);
                 break;
-            case "using-converter": addConverter(attributes);
+            case "using-converter":
+                addConverter(attributes);
                 break;
-            case "using-accessor": addAccessor(attributes);
+            case "using-accessor":
+                addAccessor(attributes);
                 break;
-            case "unbind": unbind(attributes);
+            case "unbind":
+                unbind(attributes);
                 break;
-            default: break;
+            default:
+                break;
         }
     }
 
@@ -131,7 +138,8 @@ public class BindingParser extends DefaultHandler {
                     }
                 }
                 break;
-                default: break;
+                default:
+                    break;
             }
         }
     }
@@ -154,7 +162,8 @@ public class BindingParser extends DefaultHandler {
                     }
                 }
                 break;
-                default: break;
+                default:
+                    break;
             }
         }
     }
@@ -183,11 +192,14 @@ public class BindingParser extends DefaultHandler {
     @Override
     public void endElement(String uri, String localName, String qName) {
         switch (localName) {
-            case "class-binding": binding = builder.build();
+            case "class-binding":
+                binding = builder.build();
                 break;
-            case "bind": bind();
+            case "bind":
+                bind();
                 break;
-            default: break;
+            default:
+                break;
         }
     }
 
@@ -208,15 +220,20 @@ public class BindingParser extends DefaultHandler {
             String name = attributes.getLocalName(i);
             String value = attributes.getValue(i);
             switch (name) {
-                case "for": forClass = value;
+                case "for":
+                    forClass = value;
                     break;
-                case "to": toField = value;
+                case "to":
+                    toField = value;
                     break;
-                case "inherit": inheritBinding = value;
+                case "inherit":
+                    inheritBinding = value;
                     break;
-                case "default": defaultBinding = Boolean.valueOf(value);
+                case "default":
+                    defaultBinding = Boolean.valueOf(value);
                     break;
-                default: break;
+                default:
+                    break;
             }
         }
         AbstractClassBinding binding = null;
@@ -274,13 +291,17 @@ public class BindingParser extends DefaultHandler {
             String name = attributes.getLocalName(i);
             String value = attributes.getValue(i);
             switch (name) {
-                case "field": field = value;
+                case "field":
+                    field = value;
                     break;
-                case "to": toField = value;
+                case "to":
+                    toField = value;
                     break;
-                case "attribute": attribute = Boolean.valueOf(value);
+                case "attribute":
+                    attribute = Boolean.valueOf(value);
                     break;
-                default: break;
+                default:
+                    break;
             }
         }
     }
@@ -296,9 +317,11 @@ public class BindingParser extends DefaultHandler {
             String name = attributes.getLocalName(i);
             String value = attributes.getValue(i);
             switch (name) {
-                case "path": linkedBindingPath = value;
+                case "path":
+                    linkedBindingPath = value;
                     break;
-                default: break;
+                default:
+                    break;
             }
         }
         linked = null;
@@ -321,9 +344,11 @@ public class BindingParser extends DefaultHandler {
             String name = attributes.getLocalName(i);
             String value = attributes.getValue(i);
             switch (name) {
-                case "field": builder.unbind(value);
+                case "field":
+                    builder.unbind(value);
                     break;
-                default: break;
+                default:
+                    break;
             }
         }
     }

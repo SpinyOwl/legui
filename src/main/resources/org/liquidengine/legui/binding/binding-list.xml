@@ -12,18 +12,15 @@
   <binding for="org.liquidengine.legui.component.Layer" is="org/liquidengine/legui/binding/component/Layer.xml"/>
   <binding for="org.liquidengine.legui.component.PasswordInput" is="org/liquidengine/legui/binding/component/PasswordInput.xml"/>
   <binding for="org.liquidengine.legui.component.ProgressBar" is="org/liquidengine/legui/binding/component/ProgressBar.xml"/>
-  <!-- <binding for="org.liquidengine.legui.component.RadioButton" is="org/liquidengine/legui/binding/component/RadioButton.xml"/> -->
-  <!-- <binding for="org.liquidengine.legui.component.RadioButtonGroup" is="org/liquidengine/legui/binding/component/RadioButtonGroup.xml"/> -->
-  <!-- <binding for="org.liquidengine.legui.component.ScrollablePanel" is="org/liquidengine/legui/binding/component/ScrollablePanel.xml"/> -->
-  <!-- <binding for="org.liquidengine.legui.component.ScrollBar" is="org/liquidengine/legui/binding/component/ScrollBar.xml"/> -->
-  <!-- <binding for="org.liquidengine.legui.component.SelectBox" is="org/liquidengine/legui/binding/component/SelectBox.xml"/> -->
-  <!-- <binding for="org.liquidengine.legui.component.Slider" is="org/liquidengine/legui/binding/component/Slider.xml"/> -->
-  <!-- <binding for="org.liquidengine.legui.component.TextArea" is="org/liquidengine/legui/binding/component/TextArea.xml"/> -->
-  <!-- <binding for="org.liquidengine.legui.component.TextComponent" is="org/liquidengine/legui/binding/component/TextComponent.xml"/> -->
+  <binding for="org.liquidengine.legui.component.RadioButton" is="org/liquidengine/legui/binding/component/RadioButton.xml"/>
+  <binding for="org.liquidengine.legui.component.ScrollablePanel" is="org/liquidengine/legui/binding/component/ScrollablePanel.xml"/>
+  <binding for="org.liquidengine.legui.component.ScrollBar" is="org/liquidengine/legui/binding/component/ScrollBar.xml"/>
+  <binding for="org.liquidengine.legui.component.SelectBox" is="org/liquidengine/legui/binding/component/SelectBox.xml"/>
+  <binding for="org.liquidengine.legui.component.Slider" is="org/liquidengine/legui/binding/component/Slider.xml"/>
+  <binding for="org.liquidengine.legui.component.TextArea" is="org/liquidengine/legui/binding/component/TextArea.xml"/>
   <binding for="org.liquidengine.legui.component.TextInput" is="org/liquidengine/legui/binding/component/TextInput.xml"/>
-  <!-- <binding for="org.liquidengine.legui.component.ToggleButton" is="org/liquidengine/legui/binding/component/ToggleButton.xml"/> -->
-  <!-- <binding for="org.liquidengine.legui.component.Tooltip" is="org/liquidengine/legui/binding/component/Tooltip.xml"/> -->
-  <!-- <binding for="org.liquidengine.legui.component.TooltipLayer" is="org/liquidengine/legui/binding/component/TooltipLayer.xml"/> -->
+  <binding for="org.liquidengine.legui.component.ToggleButton" is="org/liquidengine/legui/binding/component/ToggleButton.xml"/>
+  <binding for="org.liquidengine.legui.component.Tooltip" is="org/liquidengine/legui/binding/component/Tooltip.xml"/>
   <binding for="org.liquidengine.legui.component.Widget" is="org/liquidengine/legui/binding/component/Widget.xml"/>
 
   <binding for="org.liquidengine.legui.component.optional.TextState" is="org/liquidengine/legui/binding/component/optional/TextState.xml"/>

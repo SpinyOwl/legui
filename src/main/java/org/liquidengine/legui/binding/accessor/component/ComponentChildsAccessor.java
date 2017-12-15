@@ -1,8 +1,9 @@
-package org.liquidengine.legui.binding.accessor;
+package org.liquidengine.legui.binding.accessor.component;
 
 import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.List;
+import org.liquidengine.legui.binding.accessor.AbstractFieldAccessor;
 import org.liquidengine.legui.component.Component;
 
 /**
@@ -24,12 +25,10 @@ public class ComponentChildsAccessor extends AbstractFieldAccessor<Component, Li
 
     @Override
     public void setFieldValue(Component object, List<Component> value) {
-        if (value != null) {
-            if (!value.isEmpty()) {
-                for (Component listEntry : value) {
-                    if (listEntry != null) {
-                        object.add(listEntry);
-                    }
+        if (value != null && !value.isEmpty()) {
+            for (Component listEntry : value) {
+                if (listEntry != null) {
+                    object.add(listEntry);
                 }
             }
         }
@@ -37,6 +36,7 @@ public class ComponentChildsAccessor extends AbstractFieldAccessor<Component, Li
 
     @Override
     public Type getFieldType() {
-        return new TypeToken<List<Component>>(){}.getType();
+        return new TypeToken<List<Component>>() {
+        }.getType();
     }
 }

@@ -6,6 +6,8 @@ import org.liquidengine.legui.component.ComponentLayer;
 import org.liquidengine.legui.component.Frame;
 
 /**
+ * Accessor for component layer in frame.
+ *
  * @author Aliaksandr_Shcherbin.
  */
 public class FrameComponentLayerAccessor extends AbstractFieldAccessor<Frame, ComponentLayer> {

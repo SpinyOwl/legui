@@ -1,18 +1,15 @@
-package org.liquidengine.legui.binding.accessor.frame;
+package org.liquidengine.legui.binding.accessor.selectbox;
 
 import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.List;
 import org.liquidengine.legui.binding.accessor.AbstractFieldAccessor;
-import org.liquidengine.legui.component.Frame;
-import org.liquidengine.legui.component.Layer;
+import org.liquidengine.legui.component.SelectBox;
 
 /**
- * Accessor for layers in frame.
- *
  * @author Aliaksandr_Shcherbin.
  */
-public class FrameLayersAccessor extends AbstractFieldAccessor<Frame, List<Layer>> {
+public class SelectBoxElementsAccessor extends AbstractFieldAccessor<SelectBox, List<String>> {
 
     /**
      * Used to get field value from object.
@@ -22,8 +19,8 @@ public class FrameLayersAccessor extends AbstractFieldAccessor<Frame, List<Layer
      * @return field value of object.
      */
     @Override
-    public List<Layer> getFieldValue(Frame object) {
-        return object.getLayers();
+    public List<String> getFieldValue(SelectBox object) {
+        return object.getElements();
     }
 
     /**
@@ -33,11 +30,9 @@ public class FrameLayersAccessor extends AbstractFieldAccessor<Frame, List<Layer
      * @param value value to set.
      */
     @Override
-    public void setFieldValue(Frame object, List<Layer> value) {
-        if (value != null) {
-            for (Layer layer : value) {
-                object.addLayer(layer);
-            }
+    public void setFieldValue(SelectBox object, List<String> value) {
+        for (String s : value) {
+            object.addElement(s);
         }
     }
 
@@ -48,7 +43,7 @@ public class FrameLayersAccessor extends AbstractFieldAccessor<Frame, List<Layer
      */
     @Override
     public Type getFieldType() {
-        return new TypeToken<List<Layer>>() {
+        return new TypeToken<List<String>>() {
         }.getType();
     }
 }

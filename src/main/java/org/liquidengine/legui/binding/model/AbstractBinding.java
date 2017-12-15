@@ -2,6 +2,7 @@ package org.liquidengine.legui.binding.model;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.liquidengine.legui.binding.accessor.AbstractFieldAccessor;
+import org.liquidengine.legui.binding.converter.AbstractClassConverter;
 
 /**
  * Field binding. Describes how java field should be mapped to external type.

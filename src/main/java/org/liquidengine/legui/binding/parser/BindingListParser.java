@@ -45,7 +45,8 @@ public class BindingListParser extends DefaultHandler {
             case "custom-binding":
                 addCustomBinding(attributes);
                 break;
-            default: break;
+            default:
+                break;
         }
     }
 
