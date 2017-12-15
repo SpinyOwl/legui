@@ -30,6 +30,14 @@ public class RadioButtonGroup implements Serializable {
      * Index of radio button group.
      */
     private final int index;
+    /**
+     * Used to hold radio buttons.
+     */
+    private List<RadioButton> radioButtons = new CopyOnWriteArrayList<>();
+    /**
+     * Currently selected radio button.
+     */
+    private RadioButton selection;
 
     /**
      * Used to create {@link RadioButtonGroup} with specified index.
@@ -70,18 +78,14 @@ public class RadioButtonGroup implements Serializable {
         }
     }
 
+    /**
+     * Returns radio button group index.
+     *
+     * @return index of radio button group.
+     */
     public int getIndex() {
         return index;
     }
-
-    /**
-     * Used to hold radio buttons.
-     */
-    private List<RadioButton> radioButtons = new CopyOnWriteArrayList<>();
-    /**
-     * Currently selected radio button.
-     */
-    private RadioButton selection;
 
     /**
      * Used to add radio button to group.

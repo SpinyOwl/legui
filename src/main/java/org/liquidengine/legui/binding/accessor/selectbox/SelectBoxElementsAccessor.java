@@ -7,6 +7,8 @@ import org.liquidengine.legui.binding.accessor.AbstractFieldAccessor;
 import org.liquidengine.legui.component.SelectBox;
 
 /**
+ * Accessor for selectbox elements.
+ *
  * @author Aliaksandr_Shcherbin.
  */
 public class SelectBoxElementsAccessor extends AbstractFieldAccessor<SelectBox, List<String>> {

@@ -4,6 +4,8 @@ import org.liquidengine.legui.binding.converter.AbstractClassConverter;
 import org.liquidengine.legui.component.RadioButtonGroup;
 
 /**
+ * Converter for radiobutton group which used in radiobutton.
+ *
  * @author Aliaksandr_Shcherbin.
  */
 public class RadioButtonGroupConverter extends AbstractClassConverter<RadioButtonGroup> {
