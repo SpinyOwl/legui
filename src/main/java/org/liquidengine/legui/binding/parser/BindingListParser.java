@@ -2,6 +2,8 @@ package org.liquidengine.legui.binding.parser;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.liquidengine.legui.binding.model.AbstractClassBinding;
 import org.liquidengine.legui.binding.model.ClassBinding;
 import org.xml.sax.Attributes;
@@ -15,6 +17,7 @@ import org.xml.sax.helpers.DefaultHandler;
  * @author ShchAlexander.
  */
 public class BindingListParser extends DefaultHandler {
+    public static final Logger LOGGER = LogManager.getLogger();
 
     /**
      * Map of bindings.
@@ -101,7 +104,7 @@ public class BindingListParser extends DefaultHandler {
                 AbstractClassBinding binding = classBindingClass.newInstance();
                 Class bType = binding.getBindingForType();
                 if (!bForType.equals(bType) && !bType.isAssignableFrom(bForType)) {
-                    System.out.println("Binding skipped. "
+                    LOGGER.warn("Binding skipped. "
                         + "Binding type '" + bForType.getCanonicalName() + "' is not instance of '"
                         + bType.getCanonicalName() + "' specified in '" + bindingClassName + "'.");
                 } else {
@@ -151,7 +154,7 @@ public class BindingListParser extends DefaultHandler {
             if (binding != null) {
                 Class bType = binding.getBindingForType();
                 if (bType != bForType && !bType.isAssignableFrom(bForType)) {
-                    System.out.println("Binding skipped. "
+                    LOGGER.warn("Binding skipped. "
                         + "Binding type '" + bForType.getCanonicalName() + "' is not instance of '"
                         + bType.getCanonicalName() + "' specified in '" + path + "'.");
                 } else {

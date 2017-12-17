@@ -3,6 +3,8 @@ package org.liquidengine.legui.binding;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.liquidengine.legui.binding.model.AbstractClassBinding;
 import org.liquidengine.legui.binding.model.ClassBinding;
 import org.liquidengine.legui.binding.parser.BindingParserService;
@@ -14,10 +16,16 @@ import org.liquidengine.legui.binding.parser.BindingParserService;
  */
 public final class BindingRegistry {
 
+    private static final Logger LOGGER = LogManager.getLogger();
+
     /**
      * Used to hold default bindings.
      */
     private Map<Class, AbstractClassBinding> bindingMap = new LinkedHashMap<>();
+    /**
+     * Used to hold default bindings.
+     */
+    private Map<String, AbstractClassBinding> bindingMapByTypeAlias = new LinkedHashMap<>();
 
     /**
      * Private constructor.
@@ -43,9 +51,35 @@ public final class BindingRegistry {
         Map<Class, AbstractClassBinding> map = BindingParserService.getInstance().parseList(bindingListPath);
         if (map != null) {
             for (Entry<Class, AbstractClassBinding> entry : map.entrySet()) {
-                setBinding(entry.getKey(), entry.getValue());
+                Class c = entry.getKey();
+                AbstractClassBinding b = entry.getValue();
+                if (bindingIsNotForType(c, b)) {
+                    addBinding(entry.getValue());
+                    return;
+                } else {
+                    addDefaultBinding(c, b);
+                }
             }
         }
+    }
+
+    /**
+     * Checks if binding can be used with specified type.
+     *
+     * @param c class.
+     * @param b binding.
+     *
+     * @return true if binding can't be used with specified type.
+     */
+    private boolean bindingIsNotForType(Class c, AbstractClassBinding b) {
+        if (c != null && b != null) {
+            Class type = b.getBindingForType();
+            if (type != c && !type.isAssignableFrom(c)) {
+                LOGGER.warn("Can't add binding. Class '" + c.getCanonicalName() + "' is not instance of '" + type.getCanonicalName() + "'.");
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -56,19 +90,38 @@ public final class BindingRegistry {
      * @param b binding for class.
      * @param <T> class type.
      */
-    public <T> void setBinding(Class<? extends T> c, AbstractClassBinding<? extends T> b) {
+    public <T> void setDefaultBinding(Class<? extends T> c, AbstractClassBinding<? extends T> b) {
         if (c != null && b != null) {
-            Class<? extends T> type = b.getBindingForType();
-            if (type != c && !type.isAssignableFrom(c)) {
-                System.out.println("Can't add binding. Class '" + c.getCanonicalName() + "' is not instance of '" + type.getCanonicalName() + "'.");
+            if (bindingIsNotForType(c, b)) {
                 return;
             }
-            if (!b.isByDefault()) {
-                System.out.println("Can't add binding for class '" + c.getCanonicalName() + "' and binding type '" + type.getCanonicalName()
-                    + "' cause it is not default for this type.");
-                return;
+            addDefaultBinding(c, b);
+        }
+    }
+
+    private <T> void addDefaultBinding(Class<? extends T> c, AbstractClassBinding<? extends T> b) {
+        if (!b.isByDefault()) {
+            LOGGER.warn("Can't add binding for class '" + c.getCanonicalName()
+                + "' and binding type '" + b.getBindingForType().getCanonicalName()
+                + "' cause it is not default for this type.");
+            return;
+        }
+        bindingMap.put(c, b);
+        bindingMapByTypeAlias.put(b.getToName(), b);
+    }
+
+    /**
+     * Used to add class binding to alias binding registry.
+     *
+     * @param b binding for class.
+     */
+    public void addBinding(AbstractClassBinding b) {
+        if (b != null) {
+            if (b.isByDefault()) {
+                setDefaultBinding(b.getBindingForType(), b);
+            } else {
+                bindingMapByTypeAlias.put(b.getToName(), b);
             }
-            bindingMap.put(c, b);
         }
     }
 
@@ -86,12 +139,32 @@ public final class BindingRegistry {
     }
 
     /**
-     * Returns all bindings as map.
+     * Used to retrieve binding for specified type alias.
      *
-     * @return all bindings as map.
+     * @param alias class alias.
+     *
+     * @return returns binding for alias or null.
      */
-    public Map<Class, AbstractClassBinding> getBindingMap() {
+    public AbstractClassBinding getBindingByTypeAlias(String alias) {
+        return bindingMapByTypeAlias.get(alias);
+    }
+
+    /**
+     * Returns all default bindings as map.
+     *
+     * @return all default bindings as map.
+     */
+    public Map<Class, AbstractClassBinding> getDefaultBindingMap() {
         return new LinkedHashMap<>(bindingMap);
+    }
+
+    /**
+     * Returns all alias bindings as map.
+     *
+     * @return all alias bindings as map.
+     */
+    public Map<String, AbstractClassBinding> getAliasBindingMap() {
+        return new LinkedHashMap<>(bindingMapByTypeAlias);
     }
 
     /**

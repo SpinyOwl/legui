@@ -28,6 +28,7 @@ import org.liquidengine.legui.binding.model.BindingUtilities;
 public final class JsonMarshaller {
 
     public static final String TYPE_PROPERTY = "@type";
+    public static final String CLASS_PROPERTY = "@class";
 
     /**
      * Private constructor.
@@ -67,7 +68,7 @@ public final class JsonMarshaller {
                 JsonObject curr = json.getAsJsonObject();
                 json = new JsonObject();
                 JsonObject jOb = json.getAsJsonObject();
-                jOb.addProperty(TYPE_PROPERTY, object.getClass().getName());
+                jOb.addProperty(CLASS_PROPERTY, object.getClass().getName());
                 for (Entry<String, JsonElement> entry : curr.entrySet()) {
                     jOb.add(entry.getKey(), entry.getValue());
                 }
@@ -88,12 +89,16 @@ public final class JsonMarshaller {
     protected static <T> JsonElement marshalToJson(T object, AbstractClassBinding<? extends T> classBinding) {
 
         JsonElement jsonE;
-        if (object == null) {
+        if (object == null || classBinding == null) {
             jsonE = JsonNull.INSTANCE;
         } else {
             JsonObject json = new JsonObject();
             jsonE = json;
-            json.addProperty(TYPE_PROPERTY, object.getClass().getName());
+            if (object.getClass().equals(classBinding.getBindingForType())) {
+                json.addProperty(TYPE_PROPERTY, classBinding.getToName());
+            } else {
+                json.addProperty(CLASS_PROPERTY, object.getClass().getName());
+            }
 
             List<Binding> bindings = classBinding.getBindingList();
 
@@ -167,11 +172,22 @@ public final class JsonMarshaller {
         Type typeToUse = type;
         if (json.isJsonObject()) {
             JsonObject o = json.getAsJsonObject();
-            JsonElement jsonElement = o.remove(TYPE_PROPERTY);
+
+            // try to unmarshal by type alias.
+            JsonElement typeProp = o.remove(TYPE_PROPERTY);
+            if (typeProp != null && !typeProp.isJsonNull()) {
+                AbstractClassBinding binding = BindingRegistry.getInstance().getBindingByTypeAlias(typeProp.getAsString());
+                if (binding != null) {
+                    return (T) unmarshalFromJson(json, binding.getBindingForType(), binding);
+                }
+            }
+
+            // try unmarshal by class name.
+            JsonElement classProp = o.remove(CLASS_PROPERTY);
             Type newType = null;
-            if (jsonElement != null && !jsonElement.isJsonNull()) {
+            if (classProp != null && !classProp.isJsonNull()) {
                 try {
-                    newType = Class.forName(jsonElement.getAsString());
+                    newType = Class.forName(classProp.getAsString());
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
                 }
@@ -179,6 +195,7 @@ public final class JsonMarshaller {
                     typeToUse = newType;
                 }
             }
+
         }
         if (typeToUse instanceof Class) {
             AbstractClassBinding<T> binding = BindingRegistry.getInstance().getBinding((Class<T>) typeToUse);
@@ -279,7 +296,7 @@ public final class JsonMarshaller {
      */
     protected static Gson createGson() {
         GsonBuilder gsonBuilder = new GsonBuilder();
-        Map<Class, AbstractClassBinding> bindingMap = BindingRegistry.getInstance().getBindingMap();
+        Map<Class, AbstractClassBinding> bindingMap = BindingRegistry.getInstance().getDefaultBindingMap();
 
         for (Entry<Class, AbstractClassBinding> entry : bindingMap.entrySet()) {
             gsonBuilder.registerTypeHierarchyAdapter(entry.getKey(), createAdapter(entry.getKey(), entry.getValue()));

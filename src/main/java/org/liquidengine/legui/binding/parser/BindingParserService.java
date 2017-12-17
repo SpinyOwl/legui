@@ -8,6 +8,8 @@ import java.io.InputStream;
 import java.util.Map;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParserFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.liquidengine.legui.binding.model.AbstractClassBinding;
 import org.liquidengine.legui.binding.model.BindingCreationException;
 import org.liquidengine.legui.binding.model.ClassBinding;
@@ -19,6 +21,7 @@ import org.xml.sax.SAXException;
  * @author ShchAlexander.
  */
 public class BindingParserService {
+    public static final Logger LOGGER = LogManager.getLogger();
 
     /**
      * Private constructor.
@@ -86,7 +89,7 @@ public class BindingParserService {
             InputStream inputStream = getInputStream(bindingPath);
 
             if (inputStream == null) {
-                System.err.println(
+                LOGGER.warn(
                     "Can't parse binding cause binding not found: " + bindingPath + ((parentPath != null ? "    \t-> (for binding " + parentPath + ")" : "")));
             }
 //            if (inputStream == null) {

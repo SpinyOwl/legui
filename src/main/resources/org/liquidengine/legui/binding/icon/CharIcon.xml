@@ -1,5 +1,5 @@
 <class-binding xmlns="binding.legui.liquidengine.org"
-  for="org.liquidengine.legui.icon.CharIcon" to="icon" default="true"
+  for="org.liquidengine.legui.icon.CharIcon" to="charIcon" default="true"
   inherit="org/liquidengine/legui/binding/icon/Icon.xml">
   <bind field="color" to="color" as="field">
     <using-binding path="org/liquidengine/legui/binding/common/Vector4fColor.xml"/>

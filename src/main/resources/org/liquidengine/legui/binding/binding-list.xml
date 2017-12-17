@@ -1,4 +1,6 @@
 <binding-list xmlns="binding.legui.liquidengine.org">
+  <binding for="org.joml.Vector2f" is="org/liquidengine/legui/binding/common/Vector2f.xml"/>
+
   <binding for="org.liquidengine.legui.icon.ImageIcon" is="org/liquidengine/legui/binding/icon/ImageIcon.xml"/>
   <binding for="org.liquidengine.legui.icon.CharIcon" is="org/liquidengine/legui/binding/icon/CharIcon.xml"/>
 

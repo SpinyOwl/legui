@@ -5,6 +5,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Set;
 import org.apache.commons.lang3.ClassUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.reflections.ReflectionUtils;
 
 /**
@@ -13,6 +15,8 @@ import org.reflections.ReflectionUtils;
  * @author ShchAlexander.
  */
 public class BindingUtilities {
+
+    public static final Logger LOGGER = LogManager.getLogger();
 
     /**
      * Used to check if class hierarchy has specified field.
@@ -260,7 +264,7 @@ public class BindingUtilities {
             objectClass = objectClass.getSuperclass();
         }
 
-        System.err.println("Can't set field value '" + fieldValue + "' to field '" + fieldName
+        LOGGER.warn("Can't set field value '" + fieldValue + "' to field '" + fieldName
             + "' in object '" + object + "' ('" + objectClass + "') cause value type is not equal to field type or there is no such field.");
     }
 
