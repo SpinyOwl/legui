@@ -99,6 +99,14 @@ public final class BindingRegistry {
         }
     }
 
+    /**
+     * Used to add specified binding for specified class (without type check).
+     * If binding is not set as default ({@link ClassBinding#byDefault}) it will not be added.
+     *
+     * @param c class to bind.
+     * @param b binding for class.
+     * @param <T> class type.
+     */
     private <T> void addDefaultBinding(Class<? extends T> c, AbstractClassBinding<? extends T> b) {
         if (!b.isByDefault()) {
             LOGGER.warn("Can't add binding for class '" + c.getCanonicalName()
