@@ -61,8 +61,7 @@ public final class ClassBindingBuilder {
      */
     public static ClassBindingBuilder createForClass(Class clazz, String to, boolean byDefault, AbstractClassBinding inherited) {
         ClassBindingBuilder builder = new ClassBindingBuilder();
-        builder.classBinding = new ClassBinding(clazz, byDefault);
-        builder.classBinding.setToName(to);
+        builder.classBinding = new ClassBinding(clazz, to, byDefault);
         if (inherited != null) {
             builder.inheritedBindings.putAll(inherited.getBindings());
         }

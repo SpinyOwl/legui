@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import org.liquidengine.legui.binding.BindingRegistry;
+import org.liquidengine.legui.binding.accessor.AbstractFieldAccessor;
 import org.liquidengine.legui.binding.converter.AbstractClassConverter;
 import org.liquidengine.legui.binding.model.AbstractClassBinding;
 import org.liquidengine.legui.binding.model.Binding;
@@ -110,8 +111,9 @@ public final class JsonMarshaller {
                 }
 
                 Object fieldValue;
-                if (binding.getFieldAccessor() != null) {
-                    fieldValue = binding.getFieldAccessor().getFieldValue(object);
+                AbstractFieldAccessor fieldAccessor = binding.getFieldAccessor();
+                if (fieldAccessor != null) {
+                    fieldValue = fieldAccessor.getFieldValue(object);
                 } else {
                     fieldValue = getFieldValue(object, javaFieldName);
                 }
@@ -239,8 +241,10 @@ public final class JsonMarshaller {
 
             // retrieving class for field value
             Class fieldClass = BindingUtilities.classTreeGetFieldType(clazz, javaFieldName);
-            if (fieldClass == null && binding.getFieldAccessor() != null) {
-                Type fieldType = binding.getFieldAccessor().getFieldType();
+            AbstractFieldAccessor fieldAccessor = binding.getFieldAccessor();
+            if (fieldClass == null && fieldAccessor != null) {
+                Type fieldType = fieldAccessor.getFieldType();
+
                 if (fieldType instanceof Class) {
                     fieldClass = (Class) fieldType;
                 } else {
@@ -255,15 +259,15 @@ public final class JsonMarshaller {
             } else if (binding.getClassConverter() != null) {
                 fieldValue = unmarshalFromJson(element, binding.getClassConverter());
             } else {
-                if (binding.getFieldAccessor() != null) {
-                    fieldValue = unmarshal(element, binding.getFieldAccessor().getFieldType());
+                if (fieldAccessor != null) {
+                    fieldValue = unmarshal(element, fieldAccessor.getFieldType());
                 } else {
                     fieldValue = unmarshal(element, fieldClass);
                 }
             }
 
-            if (binding.getFieldAccessor() != null) {
-                binding.getFieldAccessor().setFieldValue(instance, fieldValue);
+            if (fieldAccessor != null) {
+                fieldAccessor.setFieldValue(instance, fieldValue);
             } else {
                 BindingUtilities.setFieldValue(instance, javaFieldName, fieldValue);
             }

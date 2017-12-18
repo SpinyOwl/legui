@@ -41,10 +41,14 @@ public abstract class AbstractClassBinding<T> {
      * Constructs class binding.
      *
      * @param bindingForType type for which binding is created.
+     * @param toName name which should be used as default element name.
      * @param byDefault should this binding used as default or not.
      */
-    public AbstractClassBinding(Class<? extends T> bindingForType, boolean byDefault) {
+    public AbstractClassBinding(Class<? extends T> bindingForType, String toName, boolean byDefault) {
+        if(bindingForType==null) throw new IllegalArgumentException("bindingForType cannot be null.");
+        if(toName==null) throw new IllegalArgumentException("toName cannot be null.");
         this.bindingForType = bindingForType;
+        this.toName = toName;
         this.byDefault = byDefault;
     }
 

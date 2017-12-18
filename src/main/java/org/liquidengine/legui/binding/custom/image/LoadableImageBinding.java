@@ -16,7 +16,7 @@ public class LoadableImageBinding extends AbstractClassBinding<LoadableImage> {
      * Constructs class binding.
      */
     public LoadableImageBinding() {
-        super(LoadableImage.class, true);
+        super(LoadableImage.class, LoadableImage.class.getSimpleName().toLowerCase(), true);
 
         Binding binding = new Binding("path");
         binding.setTargetType(TargetType.ATTRIBUTE);
