@@ -1,6 +1,6 @@
 package org.liquidengine.legui.binding.model;
 
-import static org.liquidengine.legui.binding.model.BindingUtilities.classTreeGetFieldType;
+import static org.liquidengine.legui.binding.model.BindingUtilities.classTreeGetFieldClass;
 import static org.liquidengine.legui.binding.model.BindingUtilities.classTreeHasField;
 
 import java.lang.reflect.ParameterizedType;
@@ -268,8 +268,6 @@ public final class ClassBindingBuilder {
         Binding binding = new Binding(field);
         if (to != null) {
             binding.setBindingFieldName(to);
-        } else if (linkedClassBinding != null) {
-            binding.setBindingFieldName(linkedClassBinding.getToName());
         } else {
             binding.setBindingFieldName(field);
         }
@@ -305,7 +303,7 @@ public final class ClassBindingBuilder {
 
         Class bType = (Class) actualTypeArguments[0];
         Class bindingClass = classBinding.getBindingForType();
-        Class fieldType = classTreeGetFieldType(bindingClass, field);
+        Class fieldType = classTreeGetFieldClass(bindingClass, field);
         if (bType != fieldType && !bType.isAssignableFrom(fieldType)) {
             throw new BindingCreationException(
                 "Field type '" + fieldType.getCanonicalName() + "' is not instance of '" + bType.getCanonicalName() + "'.");
@@ -325,7 +323,7 @@ public final class ClassBindingBuilder {
         if (linkedClassBinding != null && accessor == null) {
             Class bindingClass = classBinding.getBindingForType();
             Class bType = linkedClassBinding.getBindingForType();
-            Class fieldType = classTreeGetFieldType(bindingClass, field);
+            Class fieldType = classTreeGetFieldClass(bindingClass, field);
             if (bType != fieldType && !bType.isAssignableFrom(fieldType)) {
                 throw new BindingCreationException(
                     "Field type '" + fieldType.getCanonicalName() + "' is not instance of '" + bType.getCanonicalName() + "'.");

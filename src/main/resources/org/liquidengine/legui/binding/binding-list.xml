@@ -7,6 +7,7 @@
   <binding for="org.liquidengine.legui.component.Button" is="org/liquidengine/legui/binding/component/Button.xml"/>
   <binding for="org.liquidengine.legui.component.CheckBox" is="org/liquidengine/legui/binding/component/CheckBox.xml"/>
   <binding for="org.liquidengine.legui.component.Component" is="org/liquidengine/legui/binding/component/Component.xml"/>
+  <binding for="org.liquidengine.legui.component.Panel" is="org/liquidengine/legui/binding/component/Panel.xml"/>
   <binding for="org.liquidengine.legui.component.ComponentLayer" is="org/liquidengine/legui/binding/component/ComponentLayer.xml"/>
   <binding for="org.liquidengine.legui.component.Frame" is="org/liquidengine/legui/binding/component/Frame.xml"/>
   <binding for="org.liquidengine.legui.component.ImageView" is="org/liquidengine/legui/binding/component/ImageView.xml"/>

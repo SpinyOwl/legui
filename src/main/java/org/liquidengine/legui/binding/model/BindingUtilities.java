@@ -3,6 +3,7 @@ package org.liquidengine.legui.binding.model;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Type;
 import java.util.Set;
 import org.apache.commons.lang3.ClassUtils;
 import org.apache.logging.log4j.LogManager;
@@ -68,12 +69,32 @@ public class BindingUtilities {
      *
      * @return field type or null if field not found.
      */
-    public static Class classTreeGetFieldType(Class objectClass, String fieldName) {
-        Class fieldType = null;
+    public static Type classTreeGetFieldType(Class objectClass, String fieldName) {
+        Type fieldType = null;
 
         Class<?> superclass = objectClass;
         while (fieldType == null && superclass != null) {
             fieldType = getFieldType(superclass, fieldName);
+            superclass = superclass.getSuperclass();
+        }
+
+        return fieldType;
+    }
+
+    /**
+     * Used to retrieve class of field in specified class hierarchy.
+     *
+     * @param objectClass class to retrieve field class.
+     * @param fieldName field name to search field type.
+     *
+     * @return field type or null if field not found.
+     */
+    public static Class classTreeGetFieldClass(Class objectClass, String fieldName) {
+        Class fieldType = null;
+
+        Class<?> superclass = objectClass;
+        while (fieldType == null && superclass != null) {
+            fieldType = getFieldClass(superclass, fieldName);
             superclass = superclass.getSuperclass();
         }
 
@@ -88,7 +109,7 @@ public class BindingUtilities {
      *
      * @return field type or null if field not found.
      */
-    private static Class getFieldType(Class objectClass, String fieldName) {
+    private static Class getFieldClass(Class objectClass, String fieldName) {
         Class fieldType = null;
         // search getter or field in this object (not searchig in inherited fields and methods)
         String getterName = "get" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
@@ -129,6 +150,58 @@ public class BindingUtilities {
             fieldType = next.getType();
         }
 
+        return fieldType;
+    }
+
+
+    /**
+     * Used to retrieve class of field in specified class.
+     *
+     * @param objectClass class to retrieve field class.
+     * @param fieldName field name to search field type.
+     *
+     * @return field type or null if field not found.
+     */
+    private static Type getFieldType(Class objectClass, String fieldName) {
+        Type fieldType = null;
+        // search getter or field in this object (not searchig in inherited fields and methods)
+        String getterName = "get" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
+        String boolGetterName = "is" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
+        String setterName = "set" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
+        Set<Method> getters = ReflectionUtils.getMethods(objectClass, ReflectionUtils.withName(getterName));
+        Set<Method> bGetters = ReflectionUtils.getMethods(objectClass, ReflectionUtils.withName(boolGetterName));
+        Set<Method> setters = ReflectionUtils.getMethods(objectClass, ReflectionUtils.withName(setterName));
+        if ((!getters.isEmpty() || !bGetters.isEmpty()) && !setters.isEmpty()) {
+            Method getter;
+            if (!getters.isEmpty()) {
+                getter = getters.iterator().next();
+            } else {
+                getter = bGetters.iterator().next();
+            }
+            fieldType = getter.getGenericReturnType();
+        }
+
+        if (fieldType != null) {
+            return fieldType;
+        }
+
+        // search boolean getter
+        getterName = "is" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
+        getters = ReflectionUtils.getMethods(objectClass, ReflectionUtils.withName(getterName));
+        if (!getters.isEmpty()) {
+            Method getter = getters.iterator().next();
+            fieldType = getter.getGenericReturnType();
+        }
+
+        if (fieldType != null) {
+            return fieldType;
+        }
+
+        Set<Field> fields = ReflectionUtils.getFields(objectClass, ReflectionUtils.withName(fieldName));
+        if (!fields.isEmpty()) {
+            Field next = fields.iterator().next();
+            fieldType = next.getGenericType();
+        }
         return fieldType;
     }
 

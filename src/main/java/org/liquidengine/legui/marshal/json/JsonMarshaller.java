@@ -240,7 +240,7 @@ public final class JsonMarshaller {
             }
 
             // retrieving class for field value
-            Class fieldClass = BindingUtilities.classTreeGetFieldType(clazz, javaFieldName);
+            Class fieldClass = BindingUtilities.classTreeGetFieldClass(clazz, javaFieldName);
             AbstractFieldAccessor fieldAccessor = binding.getFieldAccessor();
             if (fieldClass == null && fieldAccessor != null) {
                 Type fieldType = fieldAccessor.getFieldType();
