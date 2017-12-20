@@ -17,18 +17,6 @@ public enum LeguiExceptionTemplate {
      */
     UNMARSHAL_EXCEPTION("Can't unmarshal your component"),
     /**
-     * Used by {@link org.liquidengine.legui.marshal.json.gsonimpl.GsonMarshalUtil}.
-     */
-    MARSHALLER_IS_NOT_EXIST("Can't find marshaller for component type: '%s'"),
-    /**
-     * Used by {@link org.liquidengine.legui.marshal.json.gsonimpl.GsonMarshalUtil}.
-     */
-    UNMARSHALLER_IS_NOT_EXIST("Can't find unmarshaller for component type: '%s'"),
-    /**
-     * Used by {@link org.liquidengine.legui.marshal.json.gsonimpl.GsonMarshalUtil}.
-     */
-    GSON_REGISTRY_TYPE_EXIST("Type '%s' already exist in type registry."),
-    /**
      * Used by {@link org.liquidengine.legui.font.Font}.
      */
     FAILED_TO_LOAD_FONT("Failed to initialize font. (%s)"),

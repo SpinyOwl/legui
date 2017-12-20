@@ -27,7 +27,7 @@ import org.liquidengine.legui.component.ScrollablePanel;
 import org.liquidengine.legui.component.SelectBox;
 import org.liquidengine.legui.icon.ImageIcon;
 import org.liquidengine.legui.image.BufferedImage;
-import org.liquidengine.legui.marshal.json.JsonMarshaller2;
+import org.liquidengine.legui.marshal.json.JsonMarshaller;
 
 /**
  * @author Aliaksandr_Shcherbin.
@@ -59,10 +59,10 @@ public class TestMarshallers {
 
         v1.setVectors(vectors);
 
-        String jsonVec = JsonMarshaller2.marshal(v1);
+        String jsonVec = JsonMarshaller.marshal(v1);
         System.out.println(jsonVec);
 
-        MyVec unmarshalled = JsonMarshaller2.unmarshal(jsonVec, MyVec.class);
+        MyVec unmarshalled = JsonMarshaller.unmarshal(jsonVec, MyVec.class);
 
         System.out.println(v1.equals(unmarshalled));
         Assert.assertEquals(v1, unmarshalled);
@@ -116,9 +116,9 @@ public class TestMarshallers {
 
         frame.getContainer().add(panel);
 
-        String json = JsonMarshaller2.marshal(frame);
+        String json = JsonMarshaller.marshal(frame);
         System.out.println(json);
-        Frame unmarshalled = JsonMarshaller2.unmarshal(json, Frame.class);
+        Frame unmarshalled = JsonMarshaller.unmarshal(json, Frame.class);
 
         System.out.println(frame.equals(unmarshalled));
         Assert.assertEquals(frame, unmarshalled);
@@ -131,10 +131,10 @@ public class TestMarshallers {
         sb.addElement("Hello");
         sb.addElement("World");
 
-        String json = JsonMarshaller2.marshal(sb);
+        String json = JsonMarshaller.marshal(sb);
         System.out.println(json);
         System.out.println();
-        SelectBox unsb = JsonMarshaller2.unmarshal(json, SelectBox.class);
+        SelectBox unsb = JsonMarshaller.unmarshal(json, SelectBox.class);
 
         System.out.println(sb.equals(unsb));
         Assert.assertEquals(sb, unsb);

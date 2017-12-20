@@ -1,8 +1,8 @@
 package org.liquidengine.legui.marshal.json;
 
 import static org.liquidengine.legui.binding.model.BindingUtilities.getFieldValue;
-import static org.liquidengine.legui.marshal.json.BindingProperties.CLASS_PROPERTY;
-import static org.liquidengine.legui.marshal.json.BindingProperties.TYPE_PROPERTY;
+import static org.liquidengine.legui.marshal.json.JsonMarshalProperties.CLASS_PROPERTY;
+import static org.liquidengine.legui.marshal.json.JsonMarshalProperties.TYPE_PROPERTY;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonNull;
@@ -19,13 +19,23 @@ import org.liquidengine.legui.binding.model.AbstractClassBinding;
 import org.liquidengine.legui.binding.model.Binding;
 
 /**
+ * Json serializer based on class binding.
+ *
  * @author Aliaksandr_Shcherbin.
  */
-public class BindingSerializer implements JsonSerializer {
+public class BindingBasedJsonSerializer implements JsonSerializer {
 
+    /**
+     * Class binding to use.
+     */
     private AbstractClassBinding classBinding;
 
-    public BindingSerializer(AbstractClassBinding classBinding) {
+    /**
+     * Serializer Constructor.
+     *
+     * @param classBinding class binding to use.
+     */
+    public BindingBasedJsonSerializer(AbstractClassBinding classBinding) {
         this.classBinding = classBinding;
     }
 
@@ -56,16 +66,29 @@ public class BindingSerializer implements JsonSerializer {
         return marshalToJson(src, classBinding, context);
     }
 
+    /**
+     * Used to marshal src to json element.
+     *
+     * @param src source object to marshal.
+     * @param classBinding class binding to use.
+     * @param context context.
+     * @param <O> type.
+     *
+     * @return json element created from source object.
+     */
     private <O> JsonElement marshalToJson(O src, AbstractClassBinding classBinding, JsonSerializationContext context) {
-        if (src == null || classBinding == null) {
+        if (src == null) {
             return JsonNull.INSTANCE;
+        }
+        if (classBinding == null) {
+            return context.serialize(src);
         }
 
         JsonObject object = new JsonObject();
         if (src.getClass().equals(classBinding.getBindingForType())) {
-            object.addProperty(TYPE_PROPERTY.value(), classBinding.getToName());
+            object.addProperty(TYPE_PROPERTY, classBinding.getToName());
         } else {
-            object.addProperty(CLASS_PROPERTY.value(), src.getClass().getName());
+            object.addProperty(CLASS_PROPERTY, src.getClass().getName());
         }
 
         List<Binding> bindingList = classBinding.getBindingList();
@@ -101,9 +124,9 @@ public class BindingSerializer implements JsonSerializer {
                     value = context.serialize(fieldValue);
                     if (value.isJsonObject()) {
                         JsonObject asJsonObject = value.getAsJsonObject();
-                        if (!asJsonObject.has(TYPE_PROPERTY.value()) && !asJsonObject.has(CLASS_PROPERTY.value())) {
+                        if (!asJsonObject.has(TYPE_PROPERTY) && !asJsonObject.has(CLASS_PROPERTY)) {
                             JsonObject nv = new JsonObject();
-                            nv.addProperty(CLASS_PROPERTY.value(), fieldValue.getClass().getName());
+                            nv.addProperty(CLASS_PROPERTY, fieldValue.getClass().getName());
                             for (Entry<String, JsonElement> entry : asJsonObject.entrySet()) {
                                 nv.add(entry.getKey(), entry.getValue());
                             }
