@@ -29,6 +29,6 @@
   <bind field="tabFocusable"/>
 
   <bind field="childs" as="field" to="childs">
-    <!--<using-accessor class="org.liquidengine.legui.binding.accessor.component.ComponentChildsAccessor"/>-->
+    <using-accessor class="org.liquidengine.legui.binding.accessor.component.ComponentChildsAccessor"/>
   </bind>
 </class-binding>

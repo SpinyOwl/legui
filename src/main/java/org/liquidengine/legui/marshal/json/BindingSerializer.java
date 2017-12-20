@@ -47,6 +47,12 @@ public class BindingSerializer implements JsonSerializer {
      */
     @Override
     public JsonElement serialize(Object src, Type typeOfSrc, JsonSerializationContext context) {
+        AbstractClassBinding classBinding = this.classBinding;
+        AbstractClassBinding bForSrc = BindingRegistry.getInstance().getBinding(src.getClass());
+        if (bForSrc != null) {
+            classBinding = bForSrc;
+        }
+
         return marshalToJson(src, classBinding, context);
     }
 

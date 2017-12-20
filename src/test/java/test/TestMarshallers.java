@@ -1,4 +1,4 @@
-package org.liquidengine.legui.binding;
+package test;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,6 +9,10 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import org.liquidengine.legui.binding.BindingRegistry;
 import org.liquidengine.legui.binding.model.Binding;
 import org.liquidengine.legui.binding.model.ClassBinding;
 import org.liquidengine.legui.component.Button;
@@ -28,16 +32,15 @@ import org.liquidengine.legui.marshal.json.JsonMarshaller2;
 /**
  * @author Aliaksandr_Shcherbin.
  */
-public class Test {
+public class TestMarshallers {
 
-    public static void main(String[] args) {
+    @BeforeClass
+    public static void intialize() {
         BindingRegistry.getInstance().loadBindings("org/liquidengine/legui/binding/binding-list.xml");
-
-//        t1();
-        t2();
     }
 
-    private static void t1() {
+    @Test
+    public void customTypesTest() {
         ClassBinding<MyVec> b = new ClassBinding<>(MyVec.class, "MYVEC", true);
         b.putBinding(new Binding("vectors", "vectors"));
         b.putBinding(new Binding("vecMap", "vMap"));
@@ -59,16 +62,15 @@ public class Test {
         String jsonVec = JsonMarshaller2.marshal(v1);
         System.out.println(jsonVec);
 
-        MyVec v2 = JsonMarshaller2.unmarshal(jsonVec, MyVec.class);
+        MyVec unmarshalled = JsonMarshaller2.unmarshal(jsonVec, MyVec.class);
 
-        System.out.println(v2.equals(v1));
-        System.out.println("----");
-        System.out.println(v1);
-        System.out.println("----");
-        System.out.println(v2);
+        System.out.println(v1.equals(unmarshalled));
+        Assert.assertEquals(v1, unmarshalled);
+        System.out.println();
     }
 
-    private static void t2() {
+    @Test
+    public void testFrame() {
         Frame frame = new Frame();
         frame.setSize(new Vector2f(100, 200));
 
@@ -114,30 +116,28 @@ public class Test {
 
         frame.getContainer().add(panel);
 
-        // --
-
         String json = JsonMarshaller2.marshal(frame);
         System.out.println(json);
-        System.out.println();
-
         Frame unmarshalled = JsonMarshaller2.unmarshal(json, Frame.class);
-        System.out.println(unmarshalled.equals(frame));
-//
-        json = JsonMarshaller2.marshal(panel1);
-        System.out.println(json);
+
+        System.out.println(frame.equals(unmarshalled));
+        Assert.assertEquals(frame, unmarshalled);
         System.out.println();
-        ScrollablePanel un = JsonMarshaller2.unmarshal(json, ScrollablePanel.class);
-        System.out.println(un.equals(panel1));
-//
+    }
+
+    @Test
+    public void testSelectbox() {
         SelectBox sb = new SelectBox();
         sb.addElement("Hello");
         sb.addElement("World");
 
-        json = JsonMarshaller2.marshal(sb);
+        String json = JsonMarshaller2.marshal(sb);
         System.out.println(json);
         System.out.println();
         SelectBox unsb = JsonMarshaller2.unmarshal(json, SelectBox.class);
+
         System.out.println(sb.equals(unsb));
+        Assert.assertEquals(sb, unsb);
     }
 
     public static class MyVec {
