@@ -157,7 +157,7 @@ public class BindingBasedJsonDeserializer<T> implements JsonDeserializer<T> {
         }
 
         if (typeOfT instanceof Class) {
-            return unmarshalClass(json, (Class<T>) typeOfT, classBinding, context, holderToUse);
+            return unmarshalClass(json, (Class<T>) typeOfT, classBinding, context);
         }
 
         Type typeToUse = typeOfT;
@@ -190,13 +190,11 @@ public class BindingBasedJsonDeserializer<T> implements JsonDeserializer<T> {
      * @param targetClass type to use during unmarshal.
      * @param classBinding class binding to use.
      * @param context context.
-     * @param holder holder which keeps type or class name and class instance.
      * @param <T> type of class.
      *
      * @return deserialized instance.
      */
-    private <T> T unmarshalClass(JsonElement jsonElement, Class<T> targetClass, AbstractClassBinding<T> classBinding, JsonDeserializationContext context,
-        ClassTypeHolder holder) {
+    private <T> T unmarshalClass(JsonElement jsonElement, Class<T> targetClass, AbstractClassBinding<T> classBinding, JsonDeserializationContext context) {
         if (jsonElement == null || targetClass == null) {
             return null;
         }
@@ -312,7 +310,7 @@ public class BindingBasedJsonDeserializer<T> implements JsonDeserializer<T> {
         }
 
         if (binding != null) {
-            return unmarshalClass(jsonObject, typeToUse, binding, context, holderToUse);
+            return unmarshalClass(jsonObject, typeToUse, binding, context);
         }
         return context.deserialize(jsonObject, typeToUse);
     }
