@@ -21,6 +21,8 @@ import org.liquidengine.legui.binding.model.BindingUtilities;
 /**
  * Json deserializer based on bindings.
  *
+ * @param <T> type of class.
+ *
  * @author Aliaksandr_Shcherbin.
  */
 public class BindingBasedJsonDeserializer<T> implements JsonDeserializer<T> {
@@ -42,7 +44,6 @@ public class BindingBasedJsonDeserializer<T> implements JsonDeserializer<T> {
     /**
      * Used to get class binding for specified class and json.
      *
-     * @param json json to get type or class.
      * @param targetClass current target class.
      * @param current current default binding.
      * @param classTypeHolder holder which keeps type or class name and class instance.
@@ -50,8 +51,7 @@ public class BindingBasedJsonDeserializer<T> implements JsonDeserializer<T> {
      *
      * @return deserialized instance.
      */
-    private static <T> AbstractClassBinding<T> getClassBinding(JsonObject json, Class<T> targetClass, AbstractClassBinding current,
-        ClassTypeHolder classTypeHolder) {
+    private static <T> AbstractClassBinding<T> getClassBinding(Class<T> targetClass, AbstractClassBinding current, ClassTypeHolder classTypeHolder) {
         AbstractClassBinding newBinding = null;
         if (classTypeHolder.alias != null) {
             newBinding = BindingRegistry.getInstance().<T>getBindingByTypeAlias(classTypeHolder.alias);
@@ -122,19 +122,20 @@ public class BindingBasedJsonDeserializer<T> implements JsonDeserializer<T> {
      */
     @Override
     public T deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+        Type typeToUse = typeOfT;
         AbstractClassBinding<T> classBinding = this.classBinding;
 
-        if (json.isJsonObject() && typeOfT instanceof Class) {
-            ClassTypeHolder classTypeHolder = getClassFromJson(json.getAsJsonObject(), (Class) typeOfT);
+        if (json.isJsonObject() && typeToUse instanceof Class) {
+            ClassTypeHolder classTypeHolder = getClassFromJson(json.getAsJsonObject(), (Class) typeToUse);
             Class<T> classFromJson = classTypeHolder.clazz;
-            if (typeOfT != classFromJson) {
-                typeOfT = classFromJson;
-                classBinding = getClassBinding(json.getAsJsonObject(), classFromJson, classBinding, classTypeHolder);
+            if (typeToUse != classFromJson) {
+                typeToUse = classFromJson;
+                classBinding = getClassBinding(classFromJson, classBinding, classTypeHolder);
             }
-            return unmarshal(json, typeOfT, classBinding, context, classTypeHolder);
+            return unmarshal(json, typeToUse, classBinding, context, classTypeHolder);
         }
 
-        return unmarshal(json, typeOfT, classBinding, context, null);
+        return unmarshal(json, typeToUse, classBinding, context, null);
     }
 
     /**
@@ -150,32 +151,33 @@ public class BindingBasedJsonDeserializer<T> implements JsonDeserializer<T> {
      * @return deserialized instance.
      */
     private T unmarshal(JsonElement json, Type typeOfT, AbstractClassBinding<T> classBinding, JsonDeserializationContext context, ClassTypeHolder holder) {
+        ClassTypeHolder holderToUse = holder;
         if (json == null || json.isJsonNull()) {
             return null;
         }
 
         if (typeOfT instanceof Class) {
-            return unmarshalClass(json, (Class<T>) typeOfT, classBinding, context, holder);
+            return unmarshalClass(json, (Class<T>) typeOfT, classBinding, context, holderToUse);
         }
 
         Type typeToUse = typeOfT;
         AbstractClassBinding<T> binding = null;
         if (json.isJsonObject()) {
             JsonObject o = json.getAsJsonObject();
-            if (holder == null) {
-                holder = getClassFromJson(o, null);
-                typeToUse = holder.clazz == null ? typeToUse : holder.clazz;
-                if (holder.alias != null) {
-                    binding = BindingRegistry.getInstance().getBindingByTypeAlias(holder.alias);
-                } else if (holder.className != null) {
-                    binding = BindingRegistry.getInstance().getBinding(holder.clazz);
+            if (holderToUse == null) {
+                holderToUse = getClassFromJson(o, null);
+                typeToUse = holderToUse.clazz == null ? typeToUse : holderToUse.clazz;
+                if (holderToUse.alias != null) {
+                    binding = BindingRegistry.getInstance().getBindingByTypeAlias(holderToUse.alias);
+                } else if (holderToUse.className != null) {
+                    binding = BindingRegistry.getInstance().getBinding(holderToUse.clazz);
                 }
             }
         }
 
         if (binding != null && typeToUse instanceof Class) {
             Class<T> aClass = (Class<T>) typeToUse;
-            return unmarshal(json, aClass, binding, context, holder);
+            return unmarshal(json, aClass, binding, context, holderToUse);
         }
 
         return context.deserialize(json, typeOfT);
@@ -250,15 +252,13 @@ public class BindingBasedJsonDeserializer<T> implements JsonDeserializer<T> {
 
                 if (binding.getLinkedClassBinding() != null) {
                     if (element.isJsonObject()) {
-                        fieldValue = unmarshal(element, fieldClass, binding.getLinkedClassBinding(), context, holder);
-                    } else {
-                        System.err.println("NOT A JSON OBJECT");
+                        fieldValue = unmarshal(element, fieldClass, binding.getLinkedClassBinding(), context, null);
                     }
                 } else if (binding.getClassConverter() != null) {
                     fieldValue = binding.getClassConverter().convertToJava(element.getAsString());
                 } else {
                     if (element.isJsonObject()) {
-                        fieldValue = unmarshal(element.getAsJsonObject(), fieldClass, context, holder);
+                        fieldValue = unmarshal(element.getAsJsonObject(), fieldClass, context, null);
                     } else {
                         if (fieldClass.isPrimitive()) {
                             fieldValue = context.deserialize(element, BindingUtilities.classTreeGetFieldType(targetClass, javaFieldName));
@@ -297,21 +297,22 @@ public class BindingBasedJsonDeserializer<T> implements JsonDeserializer<T> {
      * @return deserialized instance.
      */
     private <T> T unmarshal(JsonObject jsonObject, Class<T> fieldClass, JsonDeserializationContext context, ClassTypeHolder holder) {
+        ClassTypeHolder holderToUse = holder;
         Class<T> typeToUse = fieldClass;
         AbstractClassBinding<T> binding = null;
 
-        if (holder == null) {
-            holder = getClassFromJson(jsonObject, typeToUse);
-            typeToUse = holder.clazz;
-            if (holder.alias != null) {
-                binding = BindingRegistry.getInstance().getBindingByTypeAlias(holder.alias);
-            } else if (holder.className != null) {
-                binding = BindingRegistry.getInstance().getBinding(holder.clazz);
+        if (holderToUse == null) {
+            holderToUse = getClassFromJson(jsonObject, typeToUse);
+            typeToUse = holderToUse.clazz;
+            if (holderToUse.alias != null) {
+                binding = BindingRegistry.getInstance().getBindingByTypeAlias(holderToUse.alias);
+            } else if (holderToUse.className != null) {
+                binding = BindingRegistry.getInstance().getBinding(holderToUse.clazz);
             }
         }
 
         if (binding != null) {
-            return unmarshalClass(jsonObject, typeToUse, binding, context, holder);
+            return unmarshalClass(jsonObject, typeToUse, binding, context, holderToUse);
         }
         return context.deserialize(jsonObject, typeToUse);
     }

@@ -8,6 +8,8 @@ import org.liquidengine.legui.binding.BindingRegistry;
 import org.liquidengine.legui.binding.model.AbstractClassBinding;
 
 /**
+ * Used to convert Java object to JSON and vice versa.
+ *
  * @author Aliaksandr_Shcherbin.
  */
 public class JsonMarshaller {

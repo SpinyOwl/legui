@@ -30,45 +30,62 @@ import org.liquidengine.legui.image.BufferedImage;
 import org.liquidengine.legui.marshal.json.JsonMarshaller;
 
 /**
+ * Test of marshaller. Checks that object is the same after marshal -> unmarshal operations.
+ *
  * @author Aliaksandr_Shcherbin.
  */
 public class TestMarshallers {
 
+    /**
+     * Used to initialize bindings.
+     */
     @BeforeClass
     public static void intialize() {
         BindingRegistry.getInstance().loadBindings("org/liquidengine/legui/binding/binding-list.xml");
     }
 
+    /**
+     * Used to check custom types marshalling.
+     */
     @Test
     public void customTypesTest() {
+
+        // Creating binding for specific type.
         ClassBinding<MyVec> b = new ClassBinding<>(MyVec.class, "MYVEC", true);
         b.putBinding(new Binding("vectors", "vectors"));
         b.putBinding(new Binding("vecMap", "vMap"));
         BindingRegistry.getInstance().addBinding(b);
+
+        // creating instance to test.
         MyVec v1 = new MyVec();
 
+        // adding vecMap
         HashMap<String, MyVecTwo> vecMap = new HashMap<>();
         vecMap.put("v - 1", new MyVecTwo("WWW"));
         v1.setVecMap(vecMap);
 
+        // adding vectors
         ArrayList<MyVecTwo> vectors = new ArrayList<>();
         vectors.add(new MyVecTwo());
-        MyVecTwo e = new MyVecTwo();
-        e.setText("MYVEC");
-        vectors.add(e);
-
+        vectors.add(new MyVecTwo("MYVEC"));
         v1.setVectors(vectors);
 
-        String jsonVec = JsonMarshaller.marshal(v1);
-        System.out.println(jsonVec);
+        // adding non-binded vecMapMap
+        HashMap<MyVec, MyVecTwo> vecMapMap = new HashMap<>();
+        vecMapMap.put(new MyVec(), new MyVecTwo("MY VEC WWW"));
+        v1.setVecMapMap(vecMapMap);
 
-        MyVec unmarshalled = JsonMarshaller.unmarshal(jsonVec, MyVec.class);
+        String jsonVec = JsonMarshaller.marshal(v1); // marshal
+        MyVec unmarshalled = JsonMarshaller.unmarshal(jsonVec, MyVec.class); //unmarshal
 
-        System.out.println(v1.equals(unmarshalled));
-        Assert.assertEquals(v1, unmarshalled);
-        System.out.println();
+        // checking only those fields that was mapped.
+        Assert.assertEquals(v1.getVectors(), unmarshalled.getVectors());
+        Assert.assertEquals(v1.getVecMap(), unmarshalled.getVecMap());
     }
 
+    /**
+     * Used to test marshalling - unmarshalling on complex hierarchical structure as frame.
+     */
     @Test
     public void testFrame() {
         Frame frame = new Frame();
@@ -117,14 +134,13 @@ public class TestMarshallers {
         frame.getContainer().add(panel);
 
         String json = JsonMarshaller.marshal(frame);
-        System.out.println(json);
         Frame unmarshalled = JsonMarshaller.unmarshal(json, Frame.class);
-
-        System.out.println(frame.equals(unmarshalled));
         Assert.assertEquals(frame, unmarshalled);
-        System.out.println();
     }
 
+    /**
+     * Used to test marshalling - unmarshalling of component with custom field accessor.
+     */
     @Test
     public void testSelectbox() {
         SelectBox sb = new SelectBox();
@@ -132,40 +148,78 @@ public class TestMarshallers {
         sb.addElement("World");
 
         String json = JsonMarshaller.marshal(sb);
-        System.out.println(json);
-        System.out.println();
         SelectBox unsb = JsonMarshaller.unmarshal(json, SelectBox.class);
-
-        System.out.println(sb.equals(unsb));
         Assert.assertEquals(sb, unsb);
     }
 
+    /**
+     * Test type.
+     */
     public static class MyVec {
 
+        /**
+         * List to test.
+         */
         private List<? extends MyVecTwo> vectors;
+        /**
+         * Map of elements to test.
+         */
         private Map<String, MyVecTwo> vecMap;
+        /**
+         * Complex element map.
+         */
         private Map<MyVec, MyVecTwo> vecMapMap;
 
+        /**
+         * Gets vec map map.
+         *
+         * @return the vec map map
+         */
         public Map<MyVec, MyVecTwo> getVecMapMap() {
             return vecMapMap;
         }
 
+        /**
+         * Sets vec map map.
+         *
+         * @param vecMapMap the vec map map
+         */
         public void setVecMapMap(Map<MyVec, MyVecTwo> vecMapMap) {
             this.vecMapMap = vecMapMap;
         }
 
+        /**
+         * Gets vec map.
+         *
+         * @return the vec map
+         */
         public Map<String, MyVecTwo> getVecMap() {
             return vecMap;
         }
 
+        /**
+         * Sets vec map.
+         *
+         * @param vecMap the vec map
+         */
         public void setVecMap(Map<String, MyVecTwo> vecMap) {
             this.vecMap = vecMap;
         }
 
+        /**
+         * Gets vectors.
+         *
+         * @return the vectors
+         */
         public List<? extends MyVecTwo> getVectors() {
             return vectors;
         }
 
+        /**
+         * Sets vectors.
+         *
+         * @param vectors the vectors
+         */
         public void setVectors(List<MyVecTwo> vectors) {
             this.vectors = vectors;
         }
@@ -209,39 +263,80 @@ public class TestMarshallers {
     }
 
 
+    /**
+     * The type My vec two.
+     */
     public static class MyVecTwo {
 
         private String text = "Hello";
         private float f = 1.0f;
         private double d = 2.0d;
 
+        /**
+         * Instantiates a new My vec two.
+         */
         public MyVecTwo() {
         }
 
+        /**
+         * Instantiates a new My vec two.
+         *
+         * @param www the www
+         */
         public MyVecTwo(String www) {
             text = www;
         }
 
+        /**
+         * Gets text.
+         *
+         * @return the text
+         */
         public String getText() {
             return text;
         }
 
+        /**
+         * Sets text.
+         *
+         * @param text the text
+         */
         public void setText(String text) {
             this.text = text;
         }
 
+        /**
+         * Gets f.
+         *
+         * @return the f
+         */
         public float getF() {
             return f;
         }
 
+        /**
+         * Sets f.
+         *
+         * @param f the f
+         */
         public void setF(float f) {
             this.f = f;
         }
 
+        /**
+         * Gets d.
+         *
+         * @return the d
+         */
         public double getD() {
             return d;
         }
 
+        /**
+         * Sets d.
+         *
+         * @param d the d
+         */
         public void setD(double d) {
             this.d = d;
         }
