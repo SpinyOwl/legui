@@ -686,23 +686,10 @@ public abstract class Component implements Serializable {
      * Used to add components.
      *
      * @param components components nodes to add.
-     *
-     * @return true if added.
-     *
-     * @see List#addAll(Collection)
      */
-    public boolean addAll(Collection<? extends Component> components) {
+    public void addAll(Collection<? extends Component> components) {
         if (components != null) {
-            List<Component> toAdd = new ArrayList<>();
-            components.forEach(component -> {
-                if (component != null && component != this && !isContains(component)) {
-                    changeParent(component);
-                    toAdd.add(component);
-                }
-            });
-            return this.components.addAll(toAdd);
-        } else {
-            return false;
+            components.forEach(this::add);
         }
     }
 
