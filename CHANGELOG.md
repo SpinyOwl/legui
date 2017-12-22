@@ -1,4 +1,8 @@
 
+## [1.3.4]
+### Fixed
+- Fixed issue with adding tab in disabled text area.
+
 ## [1.3.3]
 ### Fixed
 - Updated readme and build script.
