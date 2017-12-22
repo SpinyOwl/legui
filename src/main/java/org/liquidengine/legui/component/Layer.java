@@ -581,8 +581,8 @@ public class Layer<T extends Component> {
      *
      * @see List#addAll(Collection)
      */
-    public boolean addAll(Collection<? extends Component> components) {
-        return container.addAll(components);
+    public void addAll(Collection<? extends Component> components) {
+        container.addAll(components);
     }
 
     /**
