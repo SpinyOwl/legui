@@ -1,3 +1,10 @@
+## [1.3.6]
+### Fixed
+- Fixed component `addAll(Collection<? extends Component> components)` method - no more duplicated compoents.
+
+## [1.3.5]
+### Fixed
+- Updated renderer to discard rendering of too small components.  
 
 ## [1.3.4]
 ### Fixed
