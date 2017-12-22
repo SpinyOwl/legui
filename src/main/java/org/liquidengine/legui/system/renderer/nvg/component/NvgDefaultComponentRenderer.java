@@ -4,7 +4,6 @@ import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderBorde
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.createScissor;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.resetScissor;
 
-import java.util.List;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.RendererProvider;
@@ -27,13 +26,11 @@ public class NvgDefaultComponentRenderer<C extends Component> extends NvgCompone
      */
     @Override
     protected void renderComponent(C component, Context context, long nanovg) {
-        if (component.isVisible()) {
-            if (component.getSize().lengthSquared() > 0.01) {
-                renderSelf(component, context, nanovg);
-                renderChildComponents(component, context, nanovg);
-                if (component.getBorder() != null && component.getBorder().isEnabled()) {
-                    renderBorder(component, context, nanovg);
-                }
+        if (component.isVisible() && component.getSize().lengthSquared() > 0.01) {
+            renderSelf(component, context, nanovg);
+            renderChildComponents(component, context, nanovg);
+            if (component.getBorder() != null && component.getBorder().isEnabled()) {
+                renderBorder(component, context, nanovg);
             }
         }
     }
