@@ -27,15 +27,14 @@ public class NvgDefaultComponentRenderer<C extends Component> extends NvgCompone
      */
     @Override
     protected void renderComponent(C component, Context context, long nanovg) {
-        if (component.isVisible() && component.getSize().lengthSquared() > 0.0001) {
-            renderSelf(component, context, nanovg);
-        }
-
-        renderChildComponents(component, context, nanovg);
-
-        if (component.isVisible() && component.getSize().lengthSquared() > 0.0001
-            && component.getBorder() != null && component.getBorder().isEnabled()) {
-            renderBorder(component, context, nanovg);
+        if (component.isVisible()) {
+            if (component.getSize().lengthSquared() > 0.01) {
+                renderSelf(component, context, nanovg);
+                renderChildComponents(component, context, nanovg);
+                if (component.getBorder() != null && component.getBorder().isEnabled()) {
+                    renderBorder(component, context, nanovg);
+                }
+            }
         }
     }
 
@@ -62,7 +61,7 @@ public class NvgDefaultComponentRenderer<C extends Component> extends NvgCompone
      * @param nanovg nanovg context pointer.
      */
     protected void renderChildComponents(C component, Context context, long nanovg) {
-        for (Component child : (List<Component>) component.getChilds()) {
+        for (Component child : component.getChilds()) {
             RendererProvider.getInstance().getComponentRenderer(child.getClass()).render(child, context);
         }
     }
