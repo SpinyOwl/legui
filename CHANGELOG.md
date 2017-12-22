@@ -1,3 +1,14 @@
+## [1.4.0]
+### Major
+- Added class bindings which describe how object should be marshalled.
+- Added bindings for several types.
+ 
+### Changed
+- Recreated json marshaller according to new binding system.
+
+### Removed
+- Removed old marshalling system.
+
 ## [1.3.6]
 ### Fixed
 - Fixed component `addAll(Collection<? extends Component> components)` method - no more duplicated compoents.
