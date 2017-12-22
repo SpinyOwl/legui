@@ -576,10 +576,6 @@ public class Layer<T extends Component> {
      * Used to add components.
      *
      * @param components components nodes to add.
-     *
-     * @return true if added.
-     *
-     * @see List#addAll(Collection)
      */
     public void addAll(Collection<? extends Component> components) {
         container.addAll(components);
@@ -589,10 +585,6 @@ public class Layer<T extends Component> {
      * Used to remove component.
      *
      * @param component component to remove.
-     *
-     * @return true if removed.
-     *
-     * @see List#remove(Object)
      */
     public boolean remove(T component) {
         return container.remove(component);
