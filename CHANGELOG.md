@@ -1,3 +1,6 @@
+## [1.3.5]
+### Fixed
+- Updated renderer to discard rendering of too small components.  
 
 ## [1.3.4]
 ### Fixed
