@@ -3,7 +3,7 @@ package org.liquidengine.legui.listener.processor;
 import org.liquidengine.legui.event.Event;
 
 /**
- * @author Aliaksandr_Shcherbin.
+ * @author ShchAlexander.
  */
 public abstract class EventProcessor {
 

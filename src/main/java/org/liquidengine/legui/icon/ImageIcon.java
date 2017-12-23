@@ -8,7 +8,7 @@ import org.joml.Vector2f;
 import org.liquidengine.legui.image.Image;
 
 /**
- * Created by Aliaksandr_Shcherbin on 3/10/2017.
+ * Created by ShchAlexander on 3/10/2017.
  */
 public class ImageIcon extends Icon {
 

@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * Created by Aliaksandr_Shcherbin on 1/26/2017.
+ * Created by ShchAlexander on 1/26/2017.
  */
 public class FontRegistry {
 

@@ -40,7 +40,7 @@ import org.lwjgl.glfw.GLFWWindowRefreshCallbackI;
 import org.lwjgl.glfw.GLFWWindowSizeCallbackI;
 
 /**
- * Created by Aliaksandr_Shcherbin on 1/25/2017.
+ * Created by ShchAlexander on 1/25/2017.
  */
 public class SystemEventProcessor {
 

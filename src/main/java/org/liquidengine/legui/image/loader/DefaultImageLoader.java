@@ -4,7 +4,7 @@ import org.liquidengine.legui.image.BufferedImage;
 import org.liquidengine.legui.image.LoadableImage;
 
 /**
- * Created by Aliaksandr_Shcherbin on 3/2/2017.
+ * Created by ShchAlexander on 3/2/2017.
  */
 public class DefaultImageLoader extends ImageLoader {
 

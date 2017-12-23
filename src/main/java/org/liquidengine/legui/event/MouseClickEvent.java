@@ -9,7 +9,7 @@ import org.liquidengine.legui.input.Mouse;
 import org.liquidengine.legui.system.context.Context;
 
 /**
- * Created by Aliaksandr_Shcherbin on 2/10/2017.
+ * Created by ShchAlexander on 2/10/2017.
  */
 public class MouseClickEvent<T extends Component> extends Event<T> {
 

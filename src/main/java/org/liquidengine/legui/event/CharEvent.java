@@ -5,7 +5,7 @@ import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.system.context.Context;
 
 /**
- * Created by Aliaksandr_Shcherbin on 2/14/2017.
+ * Created by ShchAlexander on 2/14/2017.
  */
 public class CharEvent<T extends Component> extends Event<T> {
 

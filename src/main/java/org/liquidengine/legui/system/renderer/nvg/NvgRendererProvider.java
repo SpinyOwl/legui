@@ -53,7 +53,7 @@ import org.liquidengine.legui.system.renderer.nvg.image.NvgDefaultImageRenderer;
 import org.liquidengine.legui.system.renderer.nvg.image.NvgLoadableImageRenderer;
 
 /**
- * Created by Aliaksandr_Shcherbin on 1/26/2017.
+ * Created by ShchAlexander on 1/26/2017.
  */
 public class NvgRendererProvider extends RendererProvider {
 
