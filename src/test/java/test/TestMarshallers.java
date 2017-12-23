@@ -405,7 +405,7 @@ public class TestMarshallers {
          */
         @Override
         public void load() {
-
+            // empty body to avoid loading native libraries in test on raspberry pi
         }
     }
 

@@ -185,8 +185,6 @@ public class BindingParser extends DefaultHandler {
      * @param qName The qualified name (with prefix), or the
      * empty string if qualified names are not available.
      *
-     * @throws SAXException Any SAX exception, possibly
-     * wrapping another exception.
      * @see ContentHandler#endElement
      */
     @Override
