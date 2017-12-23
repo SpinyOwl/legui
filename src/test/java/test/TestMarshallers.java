@@ -98,7 +98,7 @@ public class TestMarshallers {
         panel.add(new Panel(10, 10, 20, 20));
 
         Button component = new Button();
-        BufferedImage image = new BufferedImage("org/liquidengine/legui/example/1.jpg");
+        BufImageStub image = new BufImageStub("org/liquidengine/legui/example/1.jpg");
         ImageIcon backgroundIcon = new ImageIcon(new Vector2f(100, 200), image);
         component.setBackgroundIcon(backgroundIcon);
         panel.add(component);
@@ -376,6 +376,36 @@ public class TestMarshallers {
                 .append(f)
                 .append(d)
                 .toHashCode();
+        }
+    }
+
+    /**
+     * Stub class for test. ().
+     */
+    public static class BufImageStub extends BufferedImage {
+
+        /**
+         * This constructor should be used with {@link #setPath(String)} and {@link #load()} methods.
+         */
+        public BufImageStub() {
+            super();
+        }
+
+        /**
+         * Used to create buffered image object and load it.
+         *
+         * @param path path to image source.
+         */
+        public BufImageStub(String path) {
+            super(path);
+        }
+
+        /**
+         * Should be used to load image data from source.
+         */
+        @Override
+        public void load() {
+
         }
     }
 
