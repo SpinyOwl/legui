@@ -8,7 +8,7 @@ import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.event.SystemCharEvent;
 
 /**
- * Created by Aliaksandr_Shcherbin on 2/14/2017.
+ * Created by ShchAlexander on 2/14/2017.
  */
 public class CharEventHandler implements SystemEventHandler<SystemCharEvent> {
 

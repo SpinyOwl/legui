@@ -28,9 +28,11 @@ public class NvgDefaultComponentRenderer<C extends Component> extends NvgCompone
      */
     @Override
     protected void renderComponent(C component, Context context, long nanovg) {
-        renderSelf(component, context, nanovg);
-        renderChildComponents(component, context, nanovg);
-        renderBorder(component, context, nanovg);
+        if (component.isVisible() && component.getSize().lengthSquared() > 0.01) {
+            renderSelf(component, context, nanovg);
+            renderChildComponents(component, context, nanovg);
+            renderBorder(component, context, nanovg);
+        }
     }
 
     /**

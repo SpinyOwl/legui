@@ -1,0 +1,3 @@
+<class-binding default="true" for="org.liquidengine.legui.component.Panel" to="panel"
+  inherit="org/liquidengine/legui/binding/component/Component.xml"
+  xmlns="binding.legui.liquidengine.org"/>

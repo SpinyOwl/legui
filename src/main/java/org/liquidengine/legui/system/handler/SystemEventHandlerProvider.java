@@ -16,7 +16,7 @@ import org.liquidengine.legui.system.event.SystemWindowRefreshEvent;
 import org.liquidengine.legui.system.event.SystemWindowSizeEvent;
 
 /**
- * Created by Aliaksandr_Shcherbin on 1/25/2017.
+ * Created by ShchAlexander on 1/25/2017.
  */
 public class SystemEventHandlerProvider {
 

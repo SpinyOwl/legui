@@ -7,7 +7,7 @@ import org.liquidengine.legui.event.MouseDragEvent;
 import org.liquidengine.legui.listener.MouseDragEventListener;
 
 /**
- * @author Aliaksandr_Shcherbin.
+ * @author ShchAlexander.
  */
 public class WidgetDragListener implements MouseDragEventListener {
 

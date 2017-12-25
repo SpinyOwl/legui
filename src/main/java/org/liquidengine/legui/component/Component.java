@@ -103,7 +103,7 @@ public abstract class Component implements Serializable {
     /**
      * List of child components.
      */
-    private List<Component> components = new CopyOnWriteArrayList<>();
+    private List<Component> childs = new CopyOnWriteArrayList<>();
 
     /**
      * Default constructor. Used to create component instance without any parameters.
@@ -516,7 +516,7 @@ public abstract class Component implements Serializable {
      * @see List#size()
      */
     public int count() {
-        return components.size();
+        return childs.size();
     }
 
     /**
@@ -527,7 +527,7 @@ public abstract class Component implements Serializable {
      * @see List#isEmpty()
      */
     public boolean isEmpty() {
-        return components.isEmpty();
+        return childs.isEmpty();
     }
 
     /**
@@ -551,7 +551,7 @@ public abstract class Component implements Serializable {
      * @see List#iterator()
      */
     public Iterator<Component> containerIterator() {
-        return components.iterator();
+        return childs.iterator();
     }
 
     /**
@@ -567,7 +567,7 @@ public abstract class Component implements Serializable {
         if (component == null || component == this || isContains(component)) {
             return false;
         }
-        boolean added = components.add(component);
+        boolean added = childs.add(component);
         if (added) {
             changeParent(component);
         }
@@ -582,30 +582,17 @@ public abstract class Component implements Serializable {
      * @return true if collection contains provided component.
      */
     private boolean isContains(Component component) {
-        return components.stream().anyMatch(c -> c == component);
+        return childs.stream().anyMatch(c -> c == component);
     }
 
     /**
      * Used to add components.
      *
      * @param components components nodes to add.
-     *
-     * @return true if added.
-     *
-     * @see List#addAll(Collection)
      */
-    public boolean addAll(Collection<? extends Component> components) {
+    public void addAll(Collection<? extends Component> components) {
         if (components != null) {
-            List<Component> toAdd = new ArrayList<>();
-            components.forEach(component -> {
-                if (component != null && component != this && !isContains(component)) {
-                    changeParent(component);
-                    toAdd.add(component);
-                }
-            });
-            return this.components.addAll(toAdd);
-        } else {
-            return false;
+            components.forEach(this::add);
         }
     }
 
@@ -638,7 +625,7 @@ public abstract class Component implements Serializable {
         if (component != null) {
             Component parent = component.getParent();
             if (parent != null && parent == this && isContains(component)) {
-                boolean removed = components.remove(component);
+                boolean removed = childs.remove(component);
                 if (removed) {
                     component.setParent(null);
                 }
@@ -663,7 +650,7 @@ public abstract class Component implements Serializable {
                 toRemove.add(compo);
             }
         });
-        this.components.removeAll(toRemove);
+        this.childs.removeAll(toRemove);
     }
 
     /**
@@ -677,8 +664,8 @@ public abstract class Component implements Serializable {
      * @see List#removeIf(Predicate)
      */
     public boolean removeIf(Predicate<? super Component> filter) {
-        components.stream().filter(filter).forEach(compo -> compo.setParent(null));
-        return components.removeIf(filter);
+        childs.stream().filter(filter).forEach(compo -> compo.setParent(null));
+        return childs.removeIf(filter);
     }
 
     /**
@@ -687,8 +674,8 @@ public abstract class Component implements Serializable {
      * @see List#clear()
      */
     public void clearChilds() {
-        components.forEach(compo -> compo.setParent(null));
-        components.clear();
+        childs.forEach(compo -> compo.setParent(null));
+        childs.clear();
     }
 
     /**
@@ -701,7 +688,7 @@ public abstract class Component implements Serializable {
      * @see List#containsAll(Collection)
      */
     public boolean containsAll(Collection<Component> components) {
-        return this.components.containsAll(components);
+        return this.childs.containsAll(components);
     }
 
     /**
@@ -712,7 +699,7 @@ public abstract class Component implements Serializable {
      * @see List#stream()
      */
     public Stream<Component> stream() {
-        return components.stream();
+        return childs.stream();
     }
 
     /**
@@ -723,7 +710,7 @@ public abstract class Component implements Serializable {
      * @see List#parallelStream()
      */
     public Stream<Component> parallelStream() {
-        return components.parallelStream();
+        return childs.parallelStream();
     }
 
     /**
@@ -732,7 +719,7 @@ public abstract class Component implements Serializable {
      * @param action The action to be performed for each element.
      */
     public void forEach(Consumer<? super Component> action) {
-        components.forEach(action);
+        childs.forEach(action);
     }
 
     /**
@@ -743,7 +730,7 @@ public abstract class Component implements Serializable {
      * @return list of child components.
      */
     public List<Component> getChilds() {
-        return new ArrayList<>(components);
+        return new ArrayList<>(childs);
     }
 
     @Override
@@ -770,7 +757,7 @@ public abstract class Component implements Serializable {
             .append(this.getIntersector(), component.getIntersector())
             .append(this.getTabIndex(), component.getTabIndex())
             .append(this.isTabFocusable(), component.isTabFocusable())
-            .append(components, component.components)
+            .append(childs, component.childs)
             .isEquals();
     }
 
@@ -788,7 +775,7 @@ public abstract class Component implements Serializable {
             .append(pressed)
             .append(tabIndex)
             .append(tabFocusable)
-            .append(components)
+            .append(childs)
             .toHashCode();
     }
 

@@ -35,7 +35,7 @@ import org.lwjgl.nanovg.NVGColor;
 import org.lwjgl.nanovg.NVGPaint;
 
 /**
- * Created by Aliaksandr_Shcherbin on 2/2/2017.
+ * Created by ShchAlexander on 2/2/2017.
  */
 public final class NvgRenderUtils {
 

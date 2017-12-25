@@ -10,7 +10,7 @@ import org.liquidengine.legui.listener.MouseClickEventListener;
 import org.liquidengine.legui.listener.processor.EventProcessor;
 
 /**
- * @author Aliaksandr_Shcherbin.
+ * @author ShchAlexander.
  */
 public class SelectBoxElementClickListener implements MouseClickEventListener {
 

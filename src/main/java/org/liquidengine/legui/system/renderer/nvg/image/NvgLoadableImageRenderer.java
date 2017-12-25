@@ -17,7 +17,7 @@ import org.liquidengine.legui.system.renderer.nvg.NvgLoadableImageReferenceManag
 import org.lwjgl.nanovg.NVGPaint;
 
 /**
- * Created by Aliaksandr_Shcherbin on 3/31/2017.
+ * Created by ShchAlexander on 3/31/2017.
  */
 public class NvgLoadableImageRenderer<I extends LoadableImage> extends NvgImageRenderer<I> {
 

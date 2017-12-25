@@ -1,9 +1,13 @@
 package org.liquidengine.legui.component;
 
 import java.io.Serializable;
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.atomic.AtomicInteger;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -15,6 +19,18 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 public class RadioButtonGroup implements Serializable {
 
     /**
+     * Used to store all existing groups.
+     */
+    private static final Map<Integer, WeakReference<RadioButtonGroup>> groupsMap = new ConcurrentHashMap<>();
+    /**
+     * Used to create new index for button group.
+     */
+    private static AtomicInteger indexer = new AtomicInteger(0);
+    /**
+     * Index of radio button group.
+     */
+    private final int index;
+    /**
      * Used to hold radio buttons.
      */
     private List<RadioButton> radioButtons = new CopyOnWriteArrayList<>();
@@ -22,6 +38,54 @@ public class RadioButtonGroup implements Serializable {
      * Currently selected radio button.
      */
     private RadioButton selection;
+
+    /**
+     * Used to create {@link RadioButtonGroup} with specified index.
+     *
+     * @param index index to set.
+     */
+    private RadioButtonGroup(int index) {
+        this.index = index;
+        groupsMap.put(index, new WeakReference<>(this));
+    }
+
+    /**
+     * Default constructor.
+     */
+    public RadioButtonGroup() {
+        this(indexer.addAndGet(1));
+    }
+
+    /**
+     * Returns radioButtonGroup selected by index or new one.
+     *
+     * @param index index to search.
+     *
+     * @return RadioButtonGroup instance.
+     */
+    public static RadioButtonGroup getGroupByIndex(int index) {
+        WeakReference<RadioButtonGroup> groupWeakReference = groupsMap.get(index);
+        if (groupWeakReference == null) {
+            return new RadioButtonGroup(index);
+        } else {
+            RadioButtonGroup radioButtonGroup = groupWeakReference.get();
+            if (radioButtonGroup == null) {
+                groupWeakReference.clear();
+                return new RadioButtonGroup(index);
+            } else {
+                return radioButtonGroup;
+            }
+        }
+    }
+
+    /**
+     * Returns radio button group index.
+     *
+     * @return index of radio button group.
+     */
+    public int getIndex() {
+        return index;
+    }
 
     /**
      * Used to add radio button to group.
