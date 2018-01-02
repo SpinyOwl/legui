@@ -1,4 +1,4 @@
-package org.liquidengine.legui.color;
+package org.liquidengine.legui.style.color;
 
 import java.util.Random;
 import org.joml.Vector4f;

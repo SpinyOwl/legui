@@ -1,6 +1,6 @@
 package org.liquidengine.legui.component;
 
-import static org.liquidengine.legui.font.FontRegistry.MATERIAL_ICONS_REGULAR;
+import static org.liquidengine.legui.style.font.FontRegistry.MATERIAL_ICONS_REGULAR;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;

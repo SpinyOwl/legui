@@ -1,6 +1,6 @@
 package org.liquidengine.legui.system.renderer.nvg.component;
 
-import static org.liquidengine.legui.color.ColorUtil.oppositeBlackOrWhite;
+import static org.liquidengine.legui.style.color.ColorUtil.oppositeBlackOrWhite;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgColorUtil.rgba;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.alignTextInBox;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.calculateTextBoundsRect;

@@ -2,8 +2,9 @@ package org.liquidengine.legui.style;
 
 import org.joml.Vector2f;
 import org.joml.Vector4f;
-import org.liquidengine.legui.color.ColorConstants;
-import org.liquidengine.legui.font.Font;
+import org.liquidengine.legui.style.color.ColorConstants;
+import org.liquidengine.legui.style.font.Font;
+import org.liquidengine.legui.style.font.FontRegistry;
 import org.liquidengine.legui.style.border.SimpleLineBorder;
 
 /**
@@ -15,12 +16,9 @@ public class Style {
 
     private Background background = new Background();
     private Border border = new SimpleLineBorder(ColorConstants.gray(), 1);
-    private Font font;
+    private Font font = FontRegistry.getFont(FontRegistry.DEFAULT);
 
-    private float topLeftCornerRadius;
-    private float topRightCornerRadius;
-    private float bottomLeftCornerRadius;
-    private float bottomRightCornerRadius;
+    private Vector4f cornerRadius = new Vector4f(0, 0, 0, 0);
 
     private Vector4f padding;
     private Vector4f margin;
@@ -63,7 +61,7 @@ public class Style {
      * @return vector of corner radius for all corners.
      */
     public Vector4f getCornerRadius() {
-        return new Vector4f(topLeftCornerRadius, topRightCornerRadius, bottomRightCornerRadius, bottomLeftCornerRadius);
+        return cornerRadius;
     }
 
     /**
@@ -72,8 +70,20 @@ public class Style {
      * @param radius the radius
      */
     public void setCornerRadius(float radius) {
-        topLeftCornerRadius = topRightCornerRadius =
-            bottomLeftCornerRadius = bottomRightCornerRadius = radius;
+        cornerRadius.set(radius);
+    }
+
+    /**
+     * Sets corner radius.
+     *
+     * @param cornerRadius the radius.
+     */
+    public void setCornerRadius(Vector4f cornerRadius) {
+        if (cornerRadius != null) {
+            this.cornerRadius = cornerRadius;
+        } else {
+            this.cornerRadius.set(0, 0, 0, 0);
+        }
     }
 
     /**
@@ -118,7 +128,7 @@ public class Style {
      * @return the top left corner radius
      */
     public float getTopLeftCornerRadius() {
-        return topLeftCornerRadius;
+        return cornerRadius.x;
     }
 
     /**
@@ -127,7 +137,7 @@ public class Style {
      * @param topLeftCornerRadius the top left corner radius
      */
     public void setTopLeftCornerRadius(float topLeftCornerRadius) {
-        this.topLeftCornerRadius = topLeftCornerRadius;
+        cornerRadius.x = topLeftCornerRadius;
     }
 
     /**
@@ -136,7 +146,7 @@ public class Style {
      * @return the top right corner radius
      */
     public float getTopRightCornerRadius() {
-        return topRightCornerRadius;
+        return cornerRadius.y;
     }
 
     /**
@@ -145,7 +155,7 @@ public class Style {
      * @param topRightCornerRadius the top right corner radius
      */
     public void setTopRightCornerRadius(float topRightCornerRadius) {
-        this.topRightCornerRadius = topRightCornerRadius;
+        cornerRadius.y = topRightCornerRadius;
     }
 
     /**
@@ -154,7 +164,7 @@ public class Style {
      * @return the bottom left corner radius
      */
     public float getBottomLeftCornerRadius() {
-        return bottomLeftCornerRadius;
+        return cornerRadius.w;
     }
 
     /**
@@ -163,7 +173,7 @@ public class Style {
      * @param bottomLeftCornerRadius the bottom left corner radius
      */
     public void setBottomLeftCornerRadius(float bottomLeftCornerRadius) {
-        this.bottomLeftCornerRadius = bottomLeftCornerRadius;
+        cornerRadius.w = bottomLeftCornerRadius;
     }
 
     /**
@@ -172,7 +182,7 @@ public class Style {
      * @return the bottom right corner radius
      */
     public float getBottomRightCornerRadius() {
-        return bottomRightCornerRadius;
+        return cornerRadius.z;
     }
 
     /**
@@ -181,7 +191,7 @@ public class Style {
      * @param bottomRightCornerRadius the bottom right corner radius
      */
     public void setBottomRightCornerRadius(float bottomRightCornerRadius) {
-        this.bottomRightCornerRadius = bottomRightCornerRadius;
+        cornerRadius.z = bottomRightCornerRadius;
     }
 
     /**

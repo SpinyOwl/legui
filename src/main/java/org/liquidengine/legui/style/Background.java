@@ -2,7 +2,7 @@ package org.liquidengine.legui.style;
 
 import org.joml.Vector2f;
 import org.joml.Vector4f;
-import org.liquidengine.legui.color.ColorConstants;
+import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.icon.Icon;
 
 /**

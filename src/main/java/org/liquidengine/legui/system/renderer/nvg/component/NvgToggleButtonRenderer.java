@@ -3,16 +3,18 @@ package org.liquidengine.legui.system.renderer.nvg.component;
 import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderIcon;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.createScissorByParent;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.resetScissor;
+import static org.lwjgl.nanovg.NanoVG.nvgIntersectScissor;
 
 import org.joml.Vector2f;
 import org.joml.Vector4f;
-import org.liquidengine.legui.color.ColorUtil;
+import org.liquidengine.legui.style.color.ColorUtil;
 import org.liquidengine.legui.component.ToggleButton;
 import org.liquidengine.legui.icon.Icon;
 import org.liquidengine.legui.style.Style;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgShapes;
+import org.liquidengine.legui.system.renderer.nvg.util.NvgText;
 
 /**
  * Created by ShchAlexander on 11.02.2017.
@@ -28,6 +30,10 @@ public class NvgToggleButtonRenderer extends NvgDefaultComponentRenderer<ToggleB
 
             // render background
             renderBackground(nanovg, toggleButton, pos, size, context);
+
+            // Render text
+            nvgIntersectScissor(nanovg, pos.x, pos.y, size.x, size.y);
+            NvgText.drawTextLineToRect(nanovg, toggleButton.getTextState(), pos, size, true);
         }
         resetScissor(nanovg);
     }

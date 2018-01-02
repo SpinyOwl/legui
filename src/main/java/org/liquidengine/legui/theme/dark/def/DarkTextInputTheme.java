@@ -1,6 +1,6 @@
 package org.liquidengine.legui.theme.dark.def;
 
-import org.liquidengine.legui.color.ColorConstants;
+import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.component.TextInput;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 

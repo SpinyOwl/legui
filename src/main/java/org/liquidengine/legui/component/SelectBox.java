@@ -1,6 +1,6 @@
 package org.liquidengine.legui.component;
 
-import static org.liquidengine.legui.font.FontRegistry.MATERIAL_ICONS_REGULAR;
+import static org.liquidengine.legui.style.font.FontRegistry.MATERIAL_ICONS_REGULAR;
 
 import java.util.List;
 import java.util.Objects;
@@ -12,7 +12,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
-import org.liquidengine.legui.color.ColorConstants;
+import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.component.event.selectbox.SelectBoxChangeSelectionEvent;
 import org.liquidengine.legui.component.misc.listener.selectbox.SelectBoxClickListener;
 import org.liquidengine.legui.component.misc.listener.selectbox.SelectBoxElementClickListener;

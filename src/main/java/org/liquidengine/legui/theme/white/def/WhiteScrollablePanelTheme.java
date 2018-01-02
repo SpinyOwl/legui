@@ -1,6 +1,6 @@
 package org.liquidengine.legui.theme.white.def;
 
-import org.liquidengine.legui.color.ColorConstants;
+import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.ScrollablePanel;
 import org.liquidengine.legui.theme.Themes;

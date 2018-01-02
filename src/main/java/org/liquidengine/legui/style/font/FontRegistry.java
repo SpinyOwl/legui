@@ -1,4 +1,4 @@
-package org.liquidengine.legui.font;
+package org.liquidengine.legui.style.font;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -47,13 +47,13 @@ public class FontRegistry {
     private static final Map<String, Font> fontRegister = new ConcurrentHashMap<>();
 
     static {
-        registerFont(ENTYPO, "org/liquidengine/legui/font/entypo.ttf");
-        registerFont(ROBOTO_BOLD, "org/liquidengine/legui/font/Roboto-Bold.ttf");
-        registerFont(ROBOTO_LIGHT, "org/liquidengine/legui/font/Roboto-Light.ttf");
-        registerFont(ROBOTO_REGULAR, "org/liquidengine/legui/font/Roboto-Regular.ttf");
-        registerFont(MATERIAL_ICONS_REGULAR, "org/liquidengine/legui/font/MaterialIcons-Regular.ttf");
-        registerFont(FONT_AWESOME_ICONS, "org/liquidengine/legui/font/FontAwesome.otf");
-        registerFont(MATERIAL_DESIGN_ICONS, "org/liquidengine/legui/font/materialdesignicons.ttf");
+        registerFont(ENTYPO, "org/liquidengine/legui/style/font/entypo.ttf");
+        registerFont(ROBOTO_BOLD, "org/liquidengine/legui/style/font/Roboto-Bold.ttf");
+        registerFont(ROBOTO_LIGHT, "org/liquidengine/legui/style/font/Roboto-Light.ttf");
+        registerFont(ROBOTO_REGULAR, "org/liquidengine/legui/style/font/Roboto-Regular.ttf");
+        registerFont(MATERIAL_ICONS_REGULAR, "org/liquidengine/legui/style/font/MaterialIcons-Regular.ttf");
+        registerFont(FONT_AWESOME_ICONS, "org/liquidengine/legui/style/font/FontAwesome.otf");
+        registerFont(MATERIAL_DESIGN_ICONS, "org/liquidengine/legui/style/font/materialdesignicons.ttf");
     }
 
     /**
@@ -69,8 +69,12 @@ public class FontRegistry {
      * @param path font path.
      */
     public static void registerFont(final String name, final String path) {
-        Font font = new Font(path);
-        fontRegister.put(name, font);
+        try {
+            Font font = new Font(path);
+            fontRegister.put(name, font);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**

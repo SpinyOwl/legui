@@ -1,6 +1,6 @@
 package org.liquidengine.legui.system.renderer.nvg.component;
 
-import static org.liquidengine.legui.color.ColorUtil.oppositeBlackOrWhite;
+import static org.liquidengine.legui.style.color.ColorUtil.oppositeBlackOrWhite;
 import static org.liquidengine.legui.component.optional.Orientation.VERTICAL;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.createScissor;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.resetScissor;
@@ -12,7 +12,7 @@ import org.joml.Vector4f;
 import org.liquidengine.legui.component.ScrollBar;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
-import org.liquidengine.legui.font.FontRegistry;
+import org.liquidengine.legui.style.font.FontRegistry;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgShapes;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgText;

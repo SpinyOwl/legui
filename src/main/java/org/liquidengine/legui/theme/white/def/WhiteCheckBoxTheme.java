@@ -1,9 +1,9 @@
 package org.liquidengine.legui.theme.white.def;
 
-import static org.liquidengine.legui.font.FontRegistry.MATERIAL_ICONS_REGULAR;
+import static org.liquidengine.legui.style.font.FontRegistry.MATERIAL_ICONS_REGULAR;
 
 import org.joml.Vector2f;
-import org.liquidengine.legui.color.ColorConstants;
+import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.component.CheckBox;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.icon.CharIcon;

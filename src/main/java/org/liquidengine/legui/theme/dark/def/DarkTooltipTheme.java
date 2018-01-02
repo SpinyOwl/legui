@@ -1,7 +1,7 @@
 package org.liquidengine.legui.theme.dark.def;
 
 import org.joml.Vector4f;
-import org.liquidengine.legui.color.ColorConstants;
+import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.component.Tooltip;
 import org.liquidengine.legui.style.border.SimpleLineBorder;
 

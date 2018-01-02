@@ -26,7 +26,11 @@
   <binding for="org.liquidengine.legui.component.Tooltip" is="org/liquidengine/legui/binding/component/Tooltip.xml"/>
   <binding for="org.liquidengine.legui.component.Widget" is="org/liquidengine/legui/binding/component/Widget.xml"/>
 
+  <binding for="org.liquidengine.legui.style.Style" is="org/liquidengine/legui/binding/style/Style.xml"/>
+
   <binding for="org.liquidengine.legui.component.optional.TextState" is="org/liquidengine/legui/binding/component/optional/TextState.xml"/>
 
   <custom-binding for="org.liquidengine.legui.image.LoadableImage" class="org.liquidengine.legui.binding.custom.image.LoadableImageBinding" />
+  <custom-binding for="org.liquidengine.legui.style.font.Font" class="org.liquidengine.legui.binding.custom.style.font.FontBinding" />
+
 </binding-list>

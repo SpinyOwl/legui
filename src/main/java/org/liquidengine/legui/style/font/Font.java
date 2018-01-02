@@ -1,4 +1,4 @@
-package org.liquidengine.legui.font;
+package org.liquidengine.legui.style.font;
 
 import static org.liquidengine.legui.exception.LeguiExceptionTemplate.FAILED_TO_LOAD_FONT;
 
@@ -16,12 +16,18 @@ public class Font {
     /**
      * Font data.
      */
-    private final ByteBuffer data;
+    private ByteBuffer data;
 
     /**
      * Path to font.
      */
-    private final String path;
+    private String path;
+
+    /**
+     * Default constructor. Should be used with path setter and {@link #load()} method.
+     */
+    public Font() {
+    }
 
     /**
      * Used to create font by specified path. Loads font from specified path.
@@ -30,11 +36,8 @@ public class Font {
      */
     public Font(String path) {
         this.path = path;
-        try {
-            data = IOUtil.resourceToByteBuffer(path);
-        } catch (IOException e) {
-            throw FAILED_TO_LOAD_FONT.create(e, path);
-        }
+        load();
+
     }
 
     /**
@@ -46,6 +49,14 @@ public class Font {
     public Font(String path, ByteBuffer data) {
         this.path = path;
         this.data = data;
+    }
+
+    public void load() {
+        try {
+            data = IOUtil.resourceToByteBuffer(path);
+        } catch (IOException e) {
+            throw FAILED_TO_LOAD_FONT.create(e, path);
+        }
     }
 
     /**
@@ -64,6 +75,17 @@ public class Font {
      */
     public String getPath() {
         return path;
+    }
+
+    /**
+     * Used to set path. Can be used only once. Used with default constructor.
+     *
+     * @param path path to set.
+     */
+    public void setPath(String path) {
+        if (this.path == null && path!=null) {
+            this.path = path;
+        }
     }
 
     @Override

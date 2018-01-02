@@ -1,7 +1,7 @@
 package org.liquidengine.legui.component;
 
 import org.joml.Vector2f;
-import org.liquidengine.legui.color.ColorConstants;
+import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.component.misc.listener.layercontainer.LayerContainerWindowSizeEventListener;
 import org.liquidengine.legui.event.WindowSizeEvent;
 import org.liquidengine.legui.theme.Themes;

@@ -134,6 +134,7 @@ public class TestMarshallers {
         frame.getContainer().add(panel);
 
         String json = JsonMarshaller.marshal(frame);
+        System.out.println(json);
         Frame unmarshalled = JsonMarshaller.unmarshal(json, Frame.class);
         Assert.assertEquals(frame, unmarshalled);
     }

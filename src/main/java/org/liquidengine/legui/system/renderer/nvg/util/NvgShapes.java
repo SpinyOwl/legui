@@ -22,7 +22,7 @@ import org.lwjgl.nanovg.NVGColor;
  */
 public class NvgShapes {
 
-    public static final Vector4f ZERO_CORNDERS = new Vector4f(0);
+    public static final Vector4fc ZERO_CORNDERS = new Vector4f(0);
 
     /**
      * Private constructor for utility class.
