@@ -1,6 +1,6 @@
 package org.liquidengine.legui.component;
 
-import static org.liquidengine.legui.font.FontRegistry.MATERIAL_ICONS_REGULAR;
+import static org.liquidengine.legui.style.font.FontRegistry.MATERIAL_ICONS_REGULAR;
 
 import java.util.List;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -8,7 +8,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
-import org.liquidengine.legui.color.ColorConstants;
+import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.component.event.checkbox.CheckBoxChangeValueEvent;
 import org.liquidengine.legui.component.misc.listener.checkbox.CheckBoxMouseClickEventListener;
 import org.liquidengine.legui.component.optional.TextState;
@@ -114,8 +114,8 @@ public class CheckBox extends Component implements TextComponent {
      */
     private void initialize(String text) {
         this.textState = new TextState(text);
-        setBackgroundColor(ColorConstants.transparent());
-        setBorder(null);
+        getStyle().getBackground().setColor(ColorConstants.transparent());
+        getStyle().setBorder(null);
 
         getListenerMap().addListener(MouseClickEvent.class, new CheckBoxMouseClickEventListener());
         iconChecked.setHorizontalAlign(HorizontalAlign.LEFT);

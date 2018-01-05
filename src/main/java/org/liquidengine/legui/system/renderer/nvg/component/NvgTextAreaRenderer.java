@@ -1,6 +1,6 @@
 package org.liquidengine.legui.system.renderer.nvg.component;
 
-import static org.liquidengine.legui.color.ColorUtil.oppositeBlackOrWhite;
+import static org.liquidengine.legui.style.color.ColorUtil.oppositeBlackOrWhite;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgColorUtil.rgba;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.alignTextInBox;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.calculateTextBoundsRect;
@@ -57,8 +57,8 @@ public class NvgTextAreaRenderer extends NvgDefaultComponentRenderer<TextArea> {
         {
             Vector2f pos = component.getAbsolutePosition();
             Vector2f size = component.getSize();
-            float br = component.getCornerRadius();
-            Vector4f bc = new Vector4f(component.getBackgroundColor());
+            Vector4f br = component.getStyle().getCornerRadius();
+            Vector4f bc = new Vector4f(component.getStyle().getBackground().getColor());
 
             NvgShapes.drawRect(nanovg, pos, size, bc, br);
 

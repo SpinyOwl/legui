@@ -16,9 +16,6 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
-import org.joml.Vector4f;
-import org.liquidengine.legui.border.Border;
-import org.liquidengine.legui.color.ColorConstants;
 import org.liquidengine.legui.component.misc.listener.component.TabKeyEventListener;
 import org.liquidengine.legui.component.misc.listener.component.TooltipCursorEnterListener;
 import org.liquidengine.legui.event.CursorEnterEvent;
@@ -26,6 +23,7 @@ import org.liquidengine.legui.event.KeyEvent;
 import org.liquidengine.legui.intersection.Intersector;
 import org.liquidengine.legui.intersection.RectangleIntersector;
 import org.liquidengine.legui.listener.ListenerMap;
+import org.liquidengine.legui.style.Style;
 import org.liquidengine.legui.theme.Themes;
 
 /**
@@ -57,26 +55,7 @@ public abstract class Component implements Serializable {
      * Size of component.
      */
     private Vector2f size = new Vector2f();
-    /**
-     * Component background color.
-     * <p>
-     * Represented by vector where (x=r,y=g,z=b,w=a).
-     * <p>
-     * For example white = {@code new Vector4f(1,1,1,1)}
-     */
-    private Vector4f backgroundColor = ColorConstants.white();
-    /**
-     * Stroke color. Used to render stroke if component is focused.
-     */
-    private Vector4f focusedStrokeColor = ColorConstants.lightBlue();
-    /**
-     * Component border.
-     */
-    private Border border = null;
-    /**
-     * Used to store corner radius of component.
-     */
-    private float cornerRadius = 0;
+
     /**
      * Used to enable and disable event processing for this component. If enabled==false then component won't receive events.
      */
@@ -116,9 +95,10 @@ public abstract class Component implements Serializable {
      */
     private boolean tabFocusable = true;
 
-    ////////////////////////////////
-    //// CONTAINER BASE DATA
-    ////////////////////////////////
+    /**
+     * Component style.
+     */
+    private Style style = new Style();
 
     /**
      * List of child components.
@@ -134,6 +114,9 @@ public abstract class Component implements Serializable {
         this(0, 0, 10, 10);
     }
 
+    ////////////////////////////////
+    //// CONTAINER BASE DATA
+    ////////////////////////////////
 
     /**
      * Constructor with position and size parameters.
@@ -157,6 +140,26 @@ public abstract class Component implements Serializable {
         this.position = position;
         this.size = size;
         initialize();
+    }
+
+    /**
+     * Returns component style.
+     *
+     * @return component style.
+     */
+    public Style getStyle() {
+        return style;
+    }
+
+    /**
+     * Used to set component style.
+     *
+     * @param style component style to set.
+     */
+    public void setStyle(Style style) {
+        if (style != null) {
+            this.style = style;
+        }
     }
 
     /**
@@ -302,70 +305,6 @@ public abstract class Component implements Serializable {
     }
 
     /**
-     * Returns {@link Vector4f} background color vector where x,y,z,w mapped to r,g,b,a values. <ul> <li>vector.x - red.</li> <li>vector.y - green.</li>
-     * <li>vector.z - blue.</li> <li>vector.a - alpha.</li> </ul>
-     *
-     * @return background color vector.
-     */
-    public Vector4f getBackgroundColor() {
-        return backgroundColor;
-    }
-
-    /**
-     * Used to set background color vector where x,y,z,w mapped to r,g,b,a values. <ul> <li>vector.x - red.</li> <li>vector.y - green.</li> <li>vector.z -
-     * blue.</li> <li>vector.a - alpha.</li> </ul>
-     *
-     * @param backgroundColor background color vector.
-     */
-    public void setBackgroundColor(Vector4f backgroundColor) {
-        this.backgroundColor = backgroundColor;
-    }
-
-    /**
-     * Used to set background color vector.
-     *
-     * @param r red value.
-     * @param g green value.
-     * @param b blue value.
-     * @param a alpha value.
-     */
-    public void setBackgroundColor(float r, float g, float b, float a) {
-        backgroundColor.set(r, g, b, a);
-    }
-
-    /**
-     * Returns {@link Vector4f} focused stroke color vector where x,y,z,w mapped to r,g,b,a values. <ul> <li>vector.x - red.</li> <li>vector.y - green.</li>
-     * <li>vector.z - blue.</li> <li>vector.a - alpha.</li> </ul>
-     *
-     * @return background color vector.
-     */
-    public Vector4f getFocusedStrokeColor() {
-        return focusedStrokeColor;
-    }
-
-    /**
-     * Used to set focused stroke color vector where x,y,z,w mapped to r,g,b,a values. <ul> <li>vector.x - red.</li> <li>vector.y - green.</li> <li>vector.z -
-     * blue.</li> <li>vector.a - alpha.</li> </ul>
-     *
-     * @param focusedStrokeColor focused stroke color vector.
-     */
-    public void setFocusedStrokeColor(Vector4f focusedStrokeColor) {
-        this.focusedStrokeColor = focusedStrokeColor;
-    }
-
-    /**
-     * Used to set focused stroke color vector.
-     *
-     * @param r red value.
-     * @param g green value.
-     * @param b blue value.
-     * @param a alpha value.
-     */
-    public void setFocusedStrokeColor(float r, float g, float b, float a) {
-        backgroundColor.set(r, g, b, a);
-    }
-
-    /**
      * Returns true if component enabled. By default if component enabled it receives and proceed events.
      *
      * @return true if component enabled. default value is {@link Boolean#TRUE}.
@@ -440,42 +379,6 @@ public abstract class Component implements Serializable {
      */
     public Map<String, Object> getMetadata() {
         return metadata;
-    }
-
-    /**
-     * Returns border of component.
-     *
-     * @return border.
-     */
-    public Border getBorder() {
-        return border;
-    }
-
-    /**
-     * Used to set border for component.
-     *
-     * @param border border.
-     */
-    public void setBorder(Border border) {
-        this.border = border;
-    }
-
-    /**
-     * Returns corner radius of component.
-     *
-     * @return corner radius.
-     */
-    public float getCornerRadius() {
-        return cornerRadius;
-    }
-
-    /**
-     * Used to set corner radius.
-     *
-     * @param cornerRadius corner radius.
-     */
-    public void setCornerRadius(float cornerRadius) {
-        this.cornerRadius = cornerRadius;
     }
 
     /**
@@ -843,7 +746,6 @@ public abstract class Component implements Serializable {
         Component component = (Component) o;
 
         return new EqualsBuilder()
-            .append(this.getCornerRadius(), component.getCornerRadius())
             .append(this.isEnabled(), component.isEnabled())
             .append(this.isVisible(), component.isVisible())
             .append(this.isHovered(), component.isHovered())
@@ -852,8 +754,6 @@ public abstract class Component implements Serializable {
             .append(this.getListenerMap(), component.getListenerMap())
             .append(this.getPosition(), component.getPosition())
             .append(this.getSize(), component.getSize())
-            .append(this.getBackgroundColor(), component.getBackgroundColor())
-            .append(this.getBorder(), component.getBorder())
             .append(this.getIntersector(), component.getIntersector())
             .append(this.getTabIndex(), component.getTabIndex())
             .append(this.isTabFocusable(), component.isTabFocusable())
@@ -864,12 +764,9 @@ public abstract class Component implements Serializable {
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
-            .append(cornerRadius)
             .append(listenerMap)
             .append(position)
             .append(size)
-            .append(backgroundColor)
-            .append(border)
             .append(enabled)
             .append(visible)
             .append(intersector)
@@ -885,12 +782,9 @@ public abstract class Component implements Serializable {
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-            .append("cornerRadius", cornerRadius)
             .append("listenerMap", listenerMap)
             .append("position", position)
             .append("size", size)
-            .append("backgroundColor", backgroundColor)
-            .append("border", border)
             .append("enabled", enabled)
             .append("visible", visible)
             .append("intersector", intersector)

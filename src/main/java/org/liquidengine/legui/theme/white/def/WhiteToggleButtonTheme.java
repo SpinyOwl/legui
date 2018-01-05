@@ -1,6 +1,6 @@
 package org.liquidengine.legui.theme.white.def;
 
-import org.liquidengine.legui.color.ColorConstants;
+import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.component.ToggleButton;
 
 /**
@@ -13,7 +13,7 @@ public class WhiteToggleButtonTheme<T extends ToggleButton> extends WhiteCompone
     @Override
     public void apply(T component) {
         super.apply(component);
-        component.setBackgroundColor(ColorConstants.red());
+        component.getStyle().getBackground().setColor(ColorConstants.red());
         component.setToggledBackgroundColor(ColorConstants.green());
     }
 }

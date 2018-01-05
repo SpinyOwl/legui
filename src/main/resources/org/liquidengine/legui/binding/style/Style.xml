@@ -1,0 +1,30 @@
+<class-binding xmlns="binding.legui.liquidengine.org"
+  for="org.liquidengine.legui.style.Style" to="style" default="true">
+
+  <bind field="background"/>
+  <bind field="border"/>
+  <bind field="font"/>
+  <bind field="cornerRadius">
+    <using-converter class="org.liquidengine.legui.binding.converter.style.Vector4fToStyleStringConverter"/>
+  </bind>
+  <!--<bind field="padding">-->
+  <!--<using-converter class="org.liquidengine.legui.binding.converter.style.Vector4fToStyleStringConverter"/>-->
+  <!--</bind>-->
+  <!--<bind field="margin">-->
+  <!--<using-converter class="org.liquidengine.legui.binding.converter.style.Vector4fToStyleStringConverter"/>-->
+  <!--</bind>-->
+  <!--<bind field="minimumSize">-->
+  <!--<using-binding path="org/liquidengine/legui/binding/common/Vector2fSize.xml"/>-->
+  <!--</bind>-->
+  <!--<bind field="maximumSize">-->
+  <!--<using-binding path="org/liquidengine/legui/binding/common/Vector2fSize.xml"/>-->
+  <!--</bind>-->
+  <!--<bind field="preferredSize">-->
+  <!--<using-binding path="org/liquidengine/legui/binding/common/Vector2fSize.xml"/>-->
+  <!--</bind>-->
+  <!--<bind field="focusedStrokeColor">-->
+  <!--<using-binding path="org/liquidengine/legui/binding/common/Vector4fColor.xml"/>-->
+  <!--</bind>-->
+
+
+</class-binding>

@@ -7,9 +7,10 @@ import static org.lwjgl.nanovg.NanoVG.nvgIntersectScissor;
 
 import org.joml.Vector2f;
 import org.joml.Vector4f;
-import org.liquidengine.legui.color.ColorUtil;
+import org.liquidengine.legui.style.color.ColorUtil;
 import org.liquidengine.legui.component.ToggleButton;
 import org.liquidengine.legui.icon.Icon;
+import org.liquidengine.legui.style.Style;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgShapes;
@@ -42,20 +43,22 @@ public class NvgToggleButtonRenderer extends NvgDefaultComponentRenderer<ToggleB
         boolean hovered = agui.isHovered();
         boolean pressed = agui.isPressed();
         boolean toggled = agui.isToggled();
-        Vector4f backgroundColor = new Vector4f(toggled ? agui.getToggledBackgroundColor() : agui.getBackgroundColor());
+        Style style = agui.getStyle();
+        Vector4f backgroundColor = new Vector4f(toggled ? agui.getToggledBackgroundColor() : style.getBackground().getColor());
 
         Icon icon = getIcon(agui, focused, hovered, pressed, toggled);
 
-        NvgShapes.drawRect(nvg, pos, size, backgroundColor, agui.getCornerRadius());
+        Vector4f cornerRadius = style.getCornerRadius();
+        NvgShapes.drawRect(nvg, pos, size, backgroundColor, cornerRadius);
         if (hovered) {
             if (!pressed) {
                 Vector4f opp = ColorUtil.oppositeBlackOrWhite(backgroundColor);
                 opp.w = 0.3f;
-                NvgShapes.drawRect(nvg, pos, size, opp, agui.getCornerRadius());
+                NvgShapes.drawRect(nvg, pos, size, opp, cornerRadius);
             } else {
                 Vector4f opp = ColorUtil.oppositeBlackOrWhite(backgroundColor);
                 opp.w = 0.6f;
-                NvgShapes.drawRect(nvg, pos, size, opp, agui.getCornerRadius());
+                NvgShapes.drawRect(nvg, pos, size, opp, cornerRadius);
             }
         }
 

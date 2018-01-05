@@ -1,6 +1,6 @@
 package org.liquidengine.legui.theme.dark.def;
 
-import org.liquidengine.legui.color.ColorConstants;
+import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.component.Widget;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
@@ -24,14 +24,13 @@ public class DarkWidgetTheme<T extends Widget> extends DarkComponentTheme<T> {
     @Override
     public void applyAll(T component) {
         super.applyAll(component);
-        component.getMinimizeButton().setBackgroundColor(ColorConstants.lightBlack());
+        component.getMinimizeButton().getStyle().getBackground().setColor(ColorConstants.lightBlack());
         component.getMinimizeButton().getTextState().setTextColor(ColorConstants.white());
-        component.getMinimizeButton().setBorder(null);
-        component.getCloseButton().setBackgroundColor(ColorConstants.lightBlack());
+        component.getMinimizeButton().getStyle().setBorder(null);
+        component.getCloseButton().getStyle().getBackground().setColor(ColorConstants.lightBlack());
         component.getCloseButton().getTextState().setTextColor(ColorConstants.white());
-        component.getCloseButton().setBorder(null);
-        component.getTitleContainer().setBackgroundColor(ColorConstants.lightBlack());
-        component.setTitleBackgroundColor(ColorConstants.lightBlack());
+        component.getCloseButton().getStyle().setBorder(null);
+        component.getTitleContainer().getStyle().getBackground().setColor(ColorConstants.lightBlack());
         TextState titleTextState = component.getTitleTextState();
         titleTextState.setPadding(7, 3, 5, 2);
         titleTextState.setTextColor(ColorConstants.white());

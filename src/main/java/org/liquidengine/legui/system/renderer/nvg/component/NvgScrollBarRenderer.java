@@ -1,6 +1,6 @@
 package org.liquidengine.legui.system.renderer.nvg.component;
 
-import static org.liquidengine.legui.color.ColorUtil.oppositeBlackOrWhite;
+import static org.liquidengine.legui.style.color.ColorUtil.oppositeBlackOrWhite;
 import static org.liquidengine.legui.component.optional.Orientation.VERTICAL;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.createScissor;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.resetScissor;
@@ -12,7 +12,7 @@ import org.joml.Vector4f;
 import org.liquidengine.legui.component.ScrollBar;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
-import org.liquidengine.legui.font.FontRegistry;
+import org.liquidengine.legui.style.font.FontRegistry;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgShapes;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgText;
@@ -35,7 +35,7 @@ public class NvgScrollBarRenderer extends NvgDefaultComponentRenderer<ScrollBar>
             nvgSave(nanovg);
             Vector2f pos = scrollBar.getAbsolutePosition();
             Vector2f size = scrollBar.getSize();
-            Vector4f backgroundColor = new Vector4f(scrollBar.getBackgroundColor());
+            Vector4f backgroundColor = new Vector4f(scrollBar.getStyle().getBackground().getColor());
 
             float arrowSize = scrollBar.getArrowSize();
 
@@ -47,7 +47,7 @@ public class NvgScrollBarRenderer extends NvgDefaultComponentRenderer<ScrollBar>
             boolean vertical = VERTICAL.equals(scrollBar.getOrientation());
 
             // draw background
-            NvgShapes.drawRect(nanovg, pos, size, backgroundColor, scrollBar.getCornerRadius());
+            NvgShapes.drawRect(nanovg, pos, size, backgroundColor, scrollBar.getStyle().getCornerRadius());
 
             // draw scroll bar back
             {
@@ -60,7 +60,8 @@ public class NvgScrollBarRenderer extends NvgDefaultComponentRenderer<ScrollBar>
                     scrollBarPos.set(pos.x + diff, pos.y);
                     scrollBarSize.set(size.x - 2 * diff, size.y);
                 }
-                NvgShapes.drawRect(nanovg, scrollBarPos, scrollBarSize, scrollBar.getBackgroundColor(), arrowsEnabled ? 0 : scrollBar.getCornerRadius());
+                NvgShapes.drawRect(nanovg, scrollBarPos, scrollBarSize, scrollBar.getStyle().getBackground().getColor(),
+                    arrowsEnabled ? new Vector4f(0) : scrollBar.getStyle().getCornerRadius());
             }
             // draw arrows
             drawArrows(nanovg, scrollBar, pos, size);
@@ -88,7 +89,7 @@ public class NvgScrollBarRenderer extends NvgDefaultComponentRenderer<ScrollBar>
             Vector2f arrowBgSize = new Vector2f();
             Vector2f arrow2pos = new Vector2f();
             float arrowSize = scrollBar.getArrowSize();
-            float cornerRadius = scrollBar.getCornerRadius();
+            Vector4f cornerRadius = scrollBar.getStyle().getCornerRadius();
             boolean vertical = VERTICAL.equals(scrollBar.getOrientation());
             if (vertical) {
                 firstArrowIcon = T;
@@ -157,6 +158,6 @@ public class NvgScrollBarRenderer extends NvgDefaultComponentRenderer<ScrollBar>
             scrollSize.set(barSize - 2 * offset, size.y - 2 * offset);
         }
 
-        NvgShapes.drawRect(nanovg, scrollPos, scrollSize, scrollBar.getScrollColor(), scrollBar.getCornerRadius());
+        NvgShapes.drawRect(nanovg, scrollPos, scrollSize, scrollBar.getScrollColor(), scrollBar.getStyle().getCornerRadius());
     }
 }

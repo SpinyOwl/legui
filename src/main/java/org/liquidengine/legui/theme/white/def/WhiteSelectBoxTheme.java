@@ -1,6 +1,6 @@
 package org.liquidengine.legui.theme.white.def;
 
-import org.liquidengine.legui.color.ColorConstants;
+import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.component.SelectBox;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
@@ -23,10 +23,10 @@ public class WhiteSelectBoxTheme<T extends SelectBox> extends WhiteComponentThem
     @Override
     public void apply(T component) {
         super.apply(component);
-        component.getExpandButton().setBorder(null);
-        component.getExpandButton().setBackgroundColor(ColorConstants.transparent());
-        component.getSelectionButton().setBorder(null);
-        component.getSelectionButton().setBackgroundColor(ColorConstants.transparent());
+        component.getExpandButton().getStyle().setBorder(null);
+        component.getExpandButton().getStyle().getBackground().setColor(ColorConstants.transparent());
+        component.getSelectionButton().getStyle().setBorder(null);
+        component.getSelectionButton().getStyle().getBackground().setColor(ColorConstants.transparent());
         component.getSelectionButton().getTextState().setTextColor(ColorConstants.black());
         Icon collapseIcon = component.getCollapseIcon();
         if (collapseIcon != null && collapseIcon instanceof CharIcon) {

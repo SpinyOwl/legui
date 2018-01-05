@@ -11,6 +11,7 @@ import com.google.gson.JsonParseException;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.Type;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 import org.liquidengine.legui.binding.BindingRegistry;
 import org.liquidengine.legui.binding.accessor.AbstractFieldAccessor;
@@ -210,6 +211,8 @@ public class BindingBasedJsonDeserializer<T> implements JsonDeserializer<T> {
 
         T instance = classBinding.createInstance(targetClass);
 
+        Map<String, Object> fieldValues = new HashMap<>();
+
         for (Binding binding : classBinding.getBindingList()) {
             String javaFieldName = binding.getJavaFieldName();
             String bindingFieldName = binding.getBindingFieldName();
@@ -270,6 +273,8 @@ public class BindingBasedJsonDeserializer<T> implements JsonDeserializer<T> {
                     }
                 }
             }
+
+            fieldValues.put(javaFieldName, fieldValue);
 
             if (fieldAccessor != null) {
                 fieldAccessor.setFieldValue(instance, fieldValue);

@@ -4,7 +4,9 @@ import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderBorde
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.createScissor;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.resetScissor;
 
+import org.joml.Vector4f;
 import org.liquidengine.legui.component.Component;
+import org.liquidengine.legui.style.Style;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.RendererProvider;
 import org.liquidengine.legui.system.renderer.nvg.NvgComponentRenderer;
@@ -29,9 +31,7 @@ public class NvgDefaultComponentRenderer<C extends Component> extends NvgCompone
         if (component.isVisible() && component.getSize().lengthSquared() > 0.01) {
             renderSelf(component, context, nanovg);
             renderChildComponents(component, context, nanovg);
-            if (component.getBorder() != null && component.getBorder().isEnabled()) {
-                renderBorder(component, context, nanovg);
-            }
+            renderBorder(component, context, nanovg);
         }
     }
 
@@ -45,7 +45,10 @@ public class NvgDefaultComponentRenderer<C extends Component> extends NvgCompone
     protected void renderSelf(C component, Context context, long nanovg) {
         createScissor(nanovg, component);
         {
-            NvgShapes.drawRect(nanovg, component.getAbsolutePosition(), component.getSize(), component.getBackgroundColor(), component.getCornerRadius());
+            Style style = component.getStyle();
+            Vector4f radius = new Vector4f(style.getTopLeftCornerRadius(), style.getTopRightCornerRadius(), style.getBottomRightCornerRadius(),
+                style.getBottomLeftCornerRadius());
+            NvgShapes.drawRect(nanovg, component.getAbsolutePosition(), component.getSize(), style.getBackground().getColor(), radius);
         }
         resetScissor(nanovg);
     }

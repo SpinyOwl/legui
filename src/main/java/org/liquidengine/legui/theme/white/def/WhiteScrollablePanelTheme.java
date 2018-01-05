@@ -1,6 +1,6 @@
 package org.liquidengine.legui.theme.white.def;
 
-import org.liquidengine.legui.color.ColorConstants;
+import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.ScrollablePanel;
 import org.liquidengine.legui.theme.Themes;
@@ -19,8 +19,8 @@ public class WhiteScrollablePanelTheme<T extends ScrollablePanel> extends WhiteC
         Themes.getDefaultTheme().apply(viewport);
         Themes.getDefaultTheme().apply(component.getVerticalScrollBar());
         Themes.getDefaultTheme().apply(component.getHorizontalScrollBar());
-        viewport.setBorder(null);
-        viewport.setBackgroundColor(ColorConstants.transparent());
+        viewport.getStyle().setBorder(null);
+        viewport.getStyle().getBackground().setColor(ColorConstants.transparent());
     }
 
     @Override
@@ -28,7 +28,7 @@ public class WhiteScrollablePanelTheme<T extends ScrollablePanel> extends WhiteC
         super.applyAll(component);
         Component viewport = component.getViewport();
         Themes.getDefaultTheme().applyAll(viewport);
-        viewport.setBorder(null);
-        viewport.setBackgroundColor(ColorConstants.transparent());
+        viewport.getStyle().setBorder(null);
+        viewport.getStyle().getBackground().setColor(ColorConstants.transparent());
     }
 }

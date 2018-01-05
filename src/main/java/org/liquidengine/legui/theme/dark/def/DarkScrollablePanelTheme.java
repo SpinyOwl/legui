@@ -1,6 +1,6 @@
 package org.liquidengine.legui.theme.dark.def;
 
-import org.liquidengine.legui.color.ColorConstants;
+import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.ScrollablePanel;
 import org.liquidengine.legui.theme.Themes;
@@ -24,8 +24,8 @@ public class DarkScrollablePanelTheme<T extends ScrollablePanel> extends DarkCom
         Themes.getDefaultTheme().apply(viewport);
         Themes.getDefaultTheme().applyAll(component.getVerticalScrollBar());
         Themes.getDefaultTheme().applyAll(component.getHorizontalScrollBar());
-        viewport.setBorder(null);
-        viewport.setBackgroundColor(ColorConstants.transparent());
+        viewport.getStyle().setBorder(null);
+        viewport.getStyle().getBackground().setColor(ColorConstants.transparent());
     }
 
     /**
@@ -38,7 +38,7 @@ public class DarkScrollablePanelTheme<T extends ScrollablePanel> extends DarkCom
         super.applyAll(component);
         Component viewport = component.getViewport();
         Themes.getDefaultTheme().applyAll(viewport);
-        viewport.setBorder(null);
-        viewport.setBackgroundColor(ColorConstants.transparent());
+        viewport.getStyle().setBorder(null);
+        viewport.getStyle().getBackground().setColor(ColorConstants.transparent());
     }
 }

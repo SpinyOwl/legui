@@ -4,22 +4,22 @@
     <using-binding path="org/liquidengine/legui/binding/common/Vector2fSize.xml"/>
   </bind>
 
-  <bind field="backgroundColor" to="backgroundColor" as="field">
-    <using-binding path="org/liquidengine/legui/binding/common/Vector4fColor.xml"/>
-  </bind>
-  <bind field="focusedStrokeColor" to="focusedStrokeColor" as="field">
-    <using-binding path="org/liquidengine/legui/binding/common/Vector4fColor.xml"/>
-  </bind>
+  <!--<bind field="backgroundColor" to="backgroundColor" as="field">-->
+    <!--<using-binding path="org/liquidengine/legui/binding/common/Vector4fColor.xml"/>-->
+  <!--</bind>-->
+  <!--<bind field="focusedStrokeColor" to="focusedStrokeColor" as="field">-->
+    <!--<using-binding path="org/liquidengine/legui/binding/common/Vector4fColor.xml"/>-->
+  <!--</bind>-->
 
-  <bind field="border"/>
-  <bind field="cornerRadius"/>
+  <!--<bind field="border"/>-->
+  <!--<bind field="cornerRadius"/>-->
 
   <bind field="enabled"/>
   <bind field="visible"/>
 
   <bind field="intersector"/>
 
-  <bind field="enabled"/>
+  <bind field="hovered"/>
   <bind field="focused"/>
   <bind field="pressed"/>
 
@@ -27,6 +27,8 @@
 
   <bind field="tabIndex"/>
   <bind field="tabFocusable"/>
+
+  <bind field="style"/>
 
   <bind field="childs" as="field" to="childs">
     <using-accessor class="org.liquidengine.legui.binding.accessor.component.ComponentChildsAccessor"/>
