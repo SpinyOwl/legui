@@ -1,3 +1,11 @@
+## [1.4.2]
+### Major
+- Updated component structure to DOM-like. More information you can find in commits.
+ 
+## [1.4.1]
+### Fixed
+- Fixed issue with ToggleButton renderer.
+ 
 ## [1.4.0]
 ### Major
 - Added class bindings which describe how object should be marshalled.
