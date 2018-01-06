@@ -1,6 +1,6 @@
 package org.liquidengine.legui.component;
 
-import static org.liquidengine.legui.font.FontRegistry.MATERIAL_ICONS_REGULAR;
+import static org.liquidengine.legui.style.font.FontRegistry.MATERIAL_ICONS_REGULAR;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -125,7 +125,7 @@ public class RadioButton extends Component implements TextComponent {
      */
     private void initialize(String text) {
         textState = new TextState(text);
-        setBorder(null);
+        getStyle().setBorder(null);
         getListenerMap().addListener(MouseClickEvent.class, new RadioButtonClickEventListener());
         iconUnchecked.setHorizontalAlign(HorizontalAlign.LEFT);
         iconChecked.setHorizontalAlign(HorizontalAlign.LEFT);

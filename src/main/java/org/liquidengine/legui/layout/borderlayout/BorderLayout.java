@@ -58,6 +58,7 @@ public class BorderLayout implements Layout {
      *
      * @param component component to add.
      * @param constraint layout constraint (must be instance of {@link BorderLayoutConstraint}.
+     *
      * @throws IllegalArgumentException if provided constraint is not instance of {@link BorderLayoutConstraint}.
      */
     @Override
@@ -114,6 +115,7 @@ public class BorderLayout implements Layout {
      * Used to retrieve component attached to one of regions.
      *
      * @param constraint region constraint.
+     *
      * @return component or null.
      */
     public Component getComponent(BorderLayoutConstraint constraint) {
@@ -139,35 +141,36 @@ public class BorderLayout implements Layout {
      * Used to calculate minimum size for parent component.
      *
      * @param parent component to calculate minimum size.
+     *
      * @return calculated minimum size for specified component.
      */
     @Override
     public Vector2f getMinimumSize(Component parent) {
         Vector2f minimumSize = new Vector2f(0);
         if (leftComponent != null) {
-            Vector2f min = leftComponent.getMinimumSize();
+            Vector2f min = leftComponent.getStyle().getMinimumSize();
             minimumSize.x += min.x + horizontalGap;
             minimumSize.y = Math.max(min.y, minimumSize.y);
         }
         if (centerComponent != null) {
-            Vector2f min = centerComponent.getMinimumSize();
+            Vector2f min = centerComponent.getStyle().getMinimumSize();
             minimumSize.x += min.x + horizontalGap;
             minimumSize.y = Math.max(min.y, minimumSize.y);
 
         }
         if (rightComponent != null) {
-            Vector2f min = rightComponent.getMinimumSize();
+            Vector2f min = rightComponent.getStyle().getMinimumSize();
             minimumSize.x += min.x + horizontalGap;
             minimumSize.y = Math.max(min.y, minimumSize.y);
 
         }
         if (topComponent != null) {
-            Vector2f min = topComponent.getMinimumSize();
+            Vector2f min = topComponent.getStyle().getMinimumSize();
             minimumSize.x = Math.max(min.x, minimumSize.x);
             minimumSize.y += min.y + verticalGap;
         }
         if (bottomComponent != null) {
-            Vector2f min = bottomComponent.getMinimumSize();
+            Vector2f min = bottomComponent.getStyle().getMinimumSize();
             minimumSize.x = Math.max(min.x, minimumSize.x);
             minimumSize.y += min.y + verticalGap;
         }
@@ -178,35 +181,36 @@ public class BorderLayout implements Layout {
      * Used to calculate preferred size for parent component.
      *
      * @param parent component to calculate preferred size.
+     *
      * @return calculated preferred size for specified component.
      */
     @Override
     public Vector2f getPreferredSize(Component parent) {
         Vector2f prefSize = new Vector2f(0);
         if (leftComponent != null) {
-            Vector2f pref = leftComponent.getPreferredSize();
+            Vector2f pref = leftComponent.getStyle().getPreferredSize();
             prefSize.x += pref.x + horizontalGap;
             prefSize.y = Math.max(pref.y, prefSize.y);
         }
         if (centerComponent != null) {
-            Vector2f pref = centerComponent.getPreferredSize();
+            Vector2f pref = centerComponent.getStyle().getPreferredSize();
             prefSize.x += pref.x + horizontalGap;
             prefSize.y = Math.max(pref.y, prefSize.y);
 
         }
         if (rightComponent != null) {
-            Vector2f pref = rightComponent.getPreferredSize();
+            Vector2f pref = rightComponent.getStyle().getPreferredSize();
             prefSize.x += pref.x + horizontalGap;
             prefSize.y = Math.max(pref.y, prefSize.y);
 
         }
         if (topComponent != null) {
-            Vector2f pref = topComponent.getPreferredSize();
+            Vector2f pref = topComponent.getStyle().getPreferredSize();
             prefSize.x = Math.max(pref.x, prefSize.x);
             prefSize.y += pref.y + verticalGap;
         }
         if (bottomComponent != null) {
-            Vector2f pref = bottomComponent.getPreferredSize();
+            Vector2f pref = bottomComponent.getStyle().getPreferredSize();
             prefSize.x = Math.max(pref.x, prefSize.x);
             prefSize.y += pref.y + verticalGap;
         }
@@ -217,6 +221,7 @@ public class BorderLayout implements Layout {
      * Used to calculate maximum size for parent component.
      *
      * @param parent component to calculate maximum size.
+     *
      * @return calculated maximum size for specified component.
      */
     @Override
@@ -370,11 +375,25 @@ public class BorderLayout implements Layout {
 
 
     private Vector2f getMinSize(Component bottomComponent) {
-        return bottomComponent != null ? bottomComponent.getMinimumSize() : new Vector2f();
+        Vector2f vector2f = null;
+        if (bottomComponent != null) {
+            vector2f = bottomComponent.getStyle().getMinimumSize();
+        }
+        if (vector2f == null) {
+            vector2f = new Vector2f(0, 0);
+        }
+        return vector2f;
     }
 
     private Vector2f getMaxSize(Component centerComponent) {
-        return centerComponent != null ? centerComponent.getMaximumSize() : new Vector2f(Float.MAX_VALUE);
+        Vector2f vector2f = null;
+        if (centerComponent != null) {
+            vector2f = centerComponent.getStyle().getMaximumSize();
+        }
+        if (vector2f == null) {
+            vector2f = new Vector2f(Float.MAX_VALUE);
+        }
+        return vector2f;
     }
 
     private void setSizeAndPos(Component component, float x, float y, float w, float h) {

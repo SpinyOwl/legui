@@ -7,7 +7,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
-import org.liquidengine.legui.color.ColorConstants;
+import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.component.event.widget.WidgetCloseEvent;
 import org.liquidengine.legui.component.misc.listener.widget.WidgetCloseButMouseClickEventListener;
 import org.liquidengine.legui.component.misc.listener.widget.WidgetDragListener;
@@ -17,7 +17,7 @@ import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
 import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.event.MouseDragEvent;
-import org.liquidengine.legui.font.FontRegistry;
+import org.liquidengine.legui.style.font.FontRegistry;
 import org.liquidengine.legui.icon.CharIcon;
 import org.liquidengine.legui.icon.Icon;
 import org.liquidengine.legui.layout.LayoutConstraint;
@@ -29,7 +29,7 @@ import org.liquidengine.legui.theme.Themes;
 /**
  * Widget component is container which have predefined components such as container, title label, close and minimize buttons and predefined event listeners.
  * This component can be moved, minimized and restored, closed. Also now you can enable or disable title.
- *
+ * <p>
  * TODO: REIMPLEMENT THIS COMPONENT ACCORDING TO NEW LAYOUT SYSTEM
  */
 public class Widget extends Component {
@@ -133,17 +133,18 @@ public class Widget extends Component {
     private void initialize(String title) {
         titleContainer = new Panel();
         titleContainer.setLayout(null);
-        titleContainer.getMaximumSize().y = INITIAL_TITLE_HEIGHT;
-        titleContainer.getMinimumSize().y = INITIAL_TITLE_HEIGHT;
-        titleContainer.setBackgroundColor(ColorConstants.white());
+        titleContainer.getStyle().setMaximumSize(new Vector2f(Float.MAX_VALUE, INITIAL_TITLE_HEIGHT));
+        titleContainer.getStyle().setMinimumSize(new Vector2f(0, INITIAL_TITLE_HEIGHT));
+        titleContainer.getStyle().getBackground().setColor(ColorConstants.white());
+        titleContainer.getSize().y = INITIAL_TITLE_HEIGHT;
         titleContainer.setTabFocusable(false);
 
         this.title = new Label(title);
         this.title.setPosition(0, 0);
         this.title.getSize().y = INITIAL_TITLE_HEIGHT;
         this.title.getTextState().getPadding().set(10, 5, 10, 5);
-        this.title.setBackgroundColor(ColorConstants.transparent());
-        this.title.setBorder(null);
+        this.title.getStyle().getBackground().setColor(ColorConstants.transparent());
+        this.title.getStyle().setBorder(null);
         this.title.setTabFocusable(false);
 
         mouseDragEventLeguiEventListener = new WidgetDragListener(this);
@@ -151,7 +152,7 @@ public class Widget extends Component {
 
         closeButton = new Button("");
         closeButton.setSize(new Vector2f(INITIAL_TITLE_HEIGHT));
-        closeButton.setBackgroundColor(ColorConstants.transparent());
+        closeButton.getStyle().getBackground().setColor(ColorConstants.transparent());
         closeIcon = new CharIcon(new Vector2f(INITIAL_TITLE_HEIGHT * 2 / 3), FontRegistry.MATERIAL_DESIGN_ICONS, (char) CLOSE_ICON_CHAR,
             ColorConstants.black());
         closeIcon.setHorizontalAlign(HorizontalAlign.CENTER);
@@ -159,14 +160,14 @@ public class Widget extends Component {
         closeButton.setBackgroundIcon(closeIcon);
 
         closeButton.getListenerMap().addListener(MouseClickEvent.class, new WidgetCloseButMouseClickEventListener(this));
-        closeButton.setBorder(null);
+        closeButton.getStyle().setBorder(null);
         closeButton.getTextState().setVerticalAlign(VerticalAlign.MIDDLE);
         closeButton.getTextState().setHorizontalAlign(HorizontalAlign.CENTER);
         closeButton.setTabFocusable(false);
 
         minimizeButton = new Button("");
         minimizeButton.setSize(new Vector2f(INITIAL_TITLE_HEIGHT));
-        minimizeButton.setBackgroundColor(ColorConstants.transparent());
+        minimizeButton.getStyle().getBackground().setColor(ColorConstants.transparent());
         minimizeButton.setTabFocusable(false);
 
         minimizeIcon = new CharIcon(new Vector2f(INITIAL_TITLE_HEIGHT * 2 / 3), FontRegistry.MATERIAL_DESIGN_ICONS, (char) MINIMIZE_ICON_CHAR,
@@ -182,7 +183,7 @@ public class Widget extends Component {
         minimizeButton.setBackgroundIcon(minimizeIcon);
 
         minimizeButton.getListenerMap().addListener(MouseClickEvent.class, new WidgetMinimizeButMouseClickEventListener(this));
-        minimizeButton.setBorder(null);
+        minimizeButton.getStyle().setBorder(null);
         minimizeButton.getTextState().setVerticalAlign(VerticalAlign.MIDDLE);
         minimizeButton.getTextState().setHorizontalAlign(HorizontalAlign.CENTER);
 
@@ -360,24 +361,6 @@ public class Widget extends Component {
     }
 
     /**
-     * Returns background color of title container.
-     *
-     * @return background color of title container.
-     */
-    public Vector4f getTitleBackgroundColor() {
-        return titleContainer.getBackgroundColor();
-    }
-
-    /**
-     * Used to set title background color.
-     *
-     * @param titleBackgroundColor title background color to set.
-     */
-    public void setTitleBackgroundColor(Vector4f titleBackgroundColor) {
-        this.titleContainer.setBackgroundColor(titleBackgroundColor);
-    }
-
-    /**
      * Returns title text state.
      *
      * @return title text state.
@@ -402,24 +385,6 @@ public class Widget extends Component {
      */
     public void setCloseButtonColor(Vector4f closeButtonColor) {
         this.closeButton.getTextState().setTextColor(closeButtonColor);
-    }
-
-    /**
-     * Returns close button background color.
-     *
-     * @return close button background color.
-     */
-    public Vector4f getCloseButtonBackgroundColor() {
-        return this.closeButton.getBackgroundColor();
-    }
-
-    /**
-     * Used to set close button background color.
-     *
-     * @param closeButtonBackgroundColor close button background color to set.
-     */
-    public void setCloseButtonBackgroundColor(Vector4f closeButtonBackgroundColor) {
-        this.closeButton.setBackgroundColor(closeButtonBackgroundColor);
     }
 
     /**

@@ -1,8 +1,8 @@
 package org.liquidengine.legui.system.renderer;
 
 import java.util.concurrent.atomic.AtomicBoolean;
-import org.liquidengine.legui.border.Border;
 import org.liquidengine.legui.component.Component;
+import org.liquidengine.legui.style.Border;
 import org.liquidengine.legui.system.context.Context;
 
 /**

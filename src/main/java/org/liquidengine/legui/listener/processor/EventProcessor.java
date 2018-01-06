@@ -4,7 +4,8 @@ import org.liquidengine.legui.event.Event;
 
 /**
  * UI Events processor interface.
- * @author Aliaksandr_Shcherbin.
+ *
+ * @author ShchAlexander.
  */
 public abstract class EventProcessor {
 

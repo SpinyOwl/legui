@@ -5,10 +5,11 @@ import static org.lwjgl.nanovg.NanoVG.nvgBeginPath;
 import static org.lwjgl.nanovg.NanoVG.nvgFill;
 import static org.lwjgl.nanovg.NanoVG.nvgFillPaint;
 import static org.lwjgl.nanovg.NanoVG.nvgImagePattern;
-import static org.lwjgl.nanovg.NanoVG.nvgRoundedRect;
+import static org.lwjgl.nanovg.NanoVG.nvgRoundedRectVarying;
 
 import java.util.Map;
 import org.joml.Vector2fc;
+import org.joml.Vector4f;
 import org.liquidengine.legui.image.LoadableImage;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.nvg.NvgImageRenderer;
@@ -16,7 +17,7 @@ import org.liquidengine.legui.system.renderer.nvg.NvgLoadableImageReferenceManag
 import org.lwjgl.nanovg.NVGPaint;
 
 /**
- * Created by Aliaksandr_Shcherbin on 3/31/2017.
+ * Created by ShchAlexander on 3/31/2017.
  */
 public class NvgLoadableImageRenderer<I extends LoadableImage> extends NvgImageRenderer<I> {
 
@@ -41,11 +42,11 @@ public class NvgLoadableImageRenderer<I extends LoadableImage> extends NvgImageR
         float y = position.y();
         float w = size.x();
         float h = size.y();
-        float r = (float) properties.getOrDefault(C_RADIUS, 0);
+        Vector4f r = (Vector4f) properties.getOrDefault(C_RADIUS, 0);
 
         nvgBeginPath(nanovg);
         nvgImagePattern(nanovg, x, y, w, h, 0, imageRef, 1, imagePaint);
-        nvgRoundedRect(nanovg, x, y, w, h, r);
+        nvgRoundedRectVarying(nanovg, x, y, w, h, r.x, r.y, r.z, r.w);
         nvgFillPaint(nanovg, imagePaint);
         nvgFill(nanovg);
         imagePaint.free();

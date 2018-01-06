@@ -1,6 +1,6 @@
 package org.liquidengine.legui.theme.dark.def;
 
-import org.liquidengine.legui.color.ColorConstants;
+import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.component.Label;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 
@@ -19,8 +19,8 @@ public class DarkLabelTheme<T extends Label> extends DarkComponentTheme<T> {
     @Override
     public void apply(T component) {
         super.apply(component);
-        component.setBorder(null);
-        component.setBackgroundColor(ColorConstants.transparent());
+        component.getStyle().setBorder(null);
+        component.getStyle().getBackground().setColor(ColorConstants.transparent());
         component.getTextState().setTextColor(ColorConstants.white());
         component.getTextState().setHorizontalAlign(HorizontalAlign.LEFT);
     }

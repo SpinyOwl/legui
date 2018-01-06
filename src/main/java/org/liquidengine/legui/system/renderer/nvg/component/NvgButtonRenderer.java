@@ -9,7 +9,7 @@ import static org.lwjgl.nanovg.NanoVG.nvgSave;
 
 import org.joml.Vector2f;
 import org.joml.Vector4f;
-import org.liquidengine.legui.color.ColorUtil;
+import org.liquidengine.legui.style.color.ColorUtil;
 import org.liquidengine.legui.component.Button;
 import org.liquidengine.legui.icon.Icon;
 import org.liquidengine.legui.system.context.Context;
@@ -43,7 +43,7 @@ public class NvgButtonRenderer extends NvgDefaultComponentRenderer<Button> {
         boolean focused = button.isFocused();
         boolean hovered = button.isHovered();
         boolean pressed = button.isPressed();
-        Vector4f backgroundColor = new Vector4f(button.getBackgroundColor());
+        Vector4f backgroundColor = new Vector4f(button.getStyle().getBackground().getColor());
 
         Icon bgIcon = button.getBackgroundIcon();
         Icon image;
@@ -58,16 +58,16 @@ public class NvgButtonRenderer extends NvgDefaultComponentRenderer<Button> {
         }
 
         nvgSave(nvg);
-        NvgShapes.drawRect(nvg, pos, size, backgroundColor, button.getCornerRadius());
+        NvgShapes.drawRect(nvg, pos, size, backgroundColor, button.getStyle().getCornerRadius());
         if (hovered) {
             if (!pressed) {
                 Vector4f opp = ColorUtil.oppositeBlackOrWhite(backgroundColor);
                 opp.w = 0.3f;
-                NvgShapes.drawRect(nvg, pos, size, opp, button.getCornerRadius());
+                NvgShapes.drawRect(nvg, pos, size, opp, button.getStyle().getCornerRadius());
             } else {
                 Vector4f opp = ColorUtil.oppositeBlackOrWhite(backgroundColor);
                 opp.w = 0.6f;
-                NvgShapes.drawRect(nvg, pos, size, opp, button.getCornerRadius());
+                NvgShapes.drawRect(nvg, pos, size, opp, button.getStyle().getCornerRadius());
             }
         }
         if (image != null) {

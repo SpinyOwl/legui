@@ -16,9 +16,6 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
-import org.joml.Vector4f;
-import org.liquidengine.legui.border.Border;
-import org.liquidengine.legui.color.ColorConstants;
 import org.liquidengine.legui.component.misc.listener.component.TabKeyEventListener;
 import org.liquidengine.legui.component.misc.listener.component.TooltipCursorEnterListener;
 import org.liquidengine.legui.event.CursorEnterEvent;
@@ -29,6 +26,7 @@ import org.liquidengine.legui.layout.Layout;
 import org.liquidengine.legui.layout.LayoutConstraint;
 import org.liquidengine.legui.layout.borderlayout.BorderLayout;
 import org.liquidengine.legui.listener.ListenerMap;
+import org.liquidengine.legui.style.Style;
 import org.liquidengine.legui.theme.Themes;
 
 /**
@@ -60,26 +58,7 @@ public abstract class Component implements Serializable {
      * Size of component.
      */
     private Vector2f size = new Vector2f();
-    /**
-     * Component background color.
-     * <p>
-     * Represented by vector where (x=r,y=g,z=b,w=a).
-     * <p>
-     * For example white = {@code new Vector4f(1,1,1,1)}
-     */
-    private Vector4f backgroundColor = ColorConstants.white();
-    /**
-     * Stroke color. Used to render stroke if component is focused.
-     */
-    private Vector4f focusedStrokeColor = ColorConstants.lightBlue();
-    /**
-     * Component border.
-     */
-    private Border border = null;
-    /**
-     * Used to store corner radius of component.
-     */
-    private float cornerRadius = 0;
+
     /**
      * Used to enable and disable event processing for this component. If enabled==false then component won't receive events.
      */
@@ -128,34 +107,19 @@ public abstract class Component implements Serializable {
      */
     private Layout layout = new BorderLayout();
 
-    /**
-     * Preferred size of component. Used to set preferred size of component for layout manager. Layout manager will try to make this component size equal to
-     * preferred.
-     * <p>
-     * {@code -1} is default value - that means that layout manager will calculate preferred size.
-     */
-    private Vector2f preferredSize;
-
-    /**
-     * Minimum size of component. Used to set minimum size of component for layout manager. Layout manager uses this minimum size if component should be as
-     * small as possible. If one of dimensions is <= 0 this minimum size is 0.
-     */
-    private Vector2f minimumSize;
-
-    /**
-     * Maximum size of component. Used to set maximum size of component for layout manager. Layout manager uses this maximum size if component should be as
-     * small as possible. If one of dimensions is <= 0 this maximum size is 0.
-     */
-    private Vector2f maximumSize;
-
     ////////////////////////////////
     //// CONTAINER BASE DATA
     ////////////////////////////////
 
     /**
+     * Component style.
+     */
+    private Style style = new Style();
+
+    /**
      * List of child components.
      */
-    private List<Component> components = new CopyOnWriteArrayList<>();
+    private List<Component> childs = new CopyOnWriteArrayList<>();
 
     /**
      * Default constructor. Used to create component instance without any parameters.
@@ -166,6 +130,9 @@ public abstract class Component implements Serializable {
         this(0, 0, 10, 10);
     }
 
+    ////////////////////////////////
+    //// CONTAINER BASE DATA
+    ////////////////////////////////
 
     /**
      * Constructor with position and size parameters.
@@ -189,6 +156,26 @@ public abstract class Component implements Serializable {
         this.position = position;
         this.size = size;
         initialize();
+    }
+
+    /**
+     * Returns component style.
+     *
+     * @return component style.
+     */
+    public Style getStyle() {
+        return style;
+    }
+
+    /**
+     * Used to set component style.
+     *
+     * @param style component style to set.
+     */
+    public void setStyle(Style style) {
+        if (style != null) {
+            this.style = style;
+        }
     }
 
     /**
@@ -334,70 +321,6 @@ public abstract class Component implements Serializable {
     }
 
     /**
-     * Returns {@link Vector4f} background color vector where x,y,z,w mapped to r,g,b,a values. <ul> <li>vector.x - red.</li> <li>vector.y - green.</li>
-     * <li>vector.z - blue.</li> <li>vector.a - alpha.</li> </ul>
-     *
-     * @return background color vector.
-     */
-    public Vector4f getBackgroundColor() {
-        return backgroundColor;
-    }
-
-    /**
-     * Used to set background color vector where x,y,z,w mapped to r,g,b,a values. <ul> <li>vector.x - red.</li> <li>vector.y - green.</li> <li>vector.z -
-     * blue.</li> <li>vector.a - alpha.</li> </ul>
-     *
-     * @param backgroundColor background color vector.
-     */
-    public void setBackgroundColor(Vector4f backgroundColor) {
-        this.backgroundColor = backgroundColor;
-    }
-
-    /**
-     * Used to set background color vector.
-     *
-     * @param r red value.
-     * @param g green value.
-     * @param b blue value.
-     * @param a alpha value.
-     */
-    public void setBackgroundColor(float r, float g, float b, float a) {
-        backgroundColor.set(r, g, b, a);
-    }
-
-    /**
-     * Returns {@link Vector4f} focused stroke color vector where x,y,z,w mapped to r,g,b,a values. <ul> <li>vector.x - red.</li> <li>vector.y - green.</li>
-     * <li>vector.z - blue.</li> <li>vector.a - alpha.</li> </ul>
-     *
-     * @return background color vector.
-     */
-    public Vector4f getFocusedStrokeColor() {
-        return focusedStrokeColor;
-    }
-
-    /**
-     * Used to set focused stroke color vector where x,y,z,w mapped to r,g,b,a values. <ul> <li>vector.x - red.</li> <li>vector.y - green.</li> <li>vector.z -
-     * blue.</li> <li>vector.a - alpha.</li> </ul>
-     *
-     * @param focusedStrokeColor focused stroke color vector.
-     */
-    public void setFocusedStrokeColor(Vector4f focusedStrokeColor) {
-        this.focusedStrokeColor = focusedStrokeColor;
-    }
-
-    /**
-     * Used to set focused stroke color vector.
-     *
-     * @param r red value.
-     * @param g green value.
-     * @param b blue value.
-     * @param a alpha value.
-     */
-    public void setFocusedStrokeColor(float r, float g, float b, float a) {
-        backgroundColor.set(r, g, b, a);
-    }
-
-    /**
      * Returns true if component enabled. By default if component enabled it receives and proceed events.
      *
      * @return true if component enabled. default value is {@link Boolean#TRUE}.
@@ -472,42 +395,6 @@ public abstract class Component implements Serializable {
      */
     public Map<String, Object> getMetadata() {
         return metadata;
-    }
-
-    /**
-     * Returns border of component.
-     *
-     * @return border.
-     */
-    public Border getBorder() {
-        return border;
-    }
-
-    /**
-     * Used to set border for component.
-     *
-     * @param border border.
-     */
-    public void setBorder(Border border) {
-        this.border = border;
-    }
-
-    /**
-     * Returns corner radius of component.
-     *
-     * @return corner radius.
-     */
-    public float getCornerRadius() {
-        return cornerRadius;
-    }
-
-    /**
-     * Used to set corner radius.
-     *
-     * @param cornerRadius corner radius.
-     */
-    public void setCornerRadius(float cornerRadius) {
-        this.cornerRadius = cornerRadius;
     }
 
     /**
@@ -656,144 +543,6 @@ public abstract class Component implements Serializable {
         this.layout = layout;
     }
 
-    /**
-     * Gets preferred size.
-     * <p>
-     * Preferred size of component. Used to set preferred size of component for layout manager. Layout manager will try to make this component size equal to
-     * preferred.
-     * <p>
-     * {@code -1} is default value - that means that layout manager will calculate preferred size.
-     *
-     * @return the preferred size.
-     */
-    public Vector2f getPreferredSize() {
-        if (preferredSize == null) {
-            if (layout != null) {
-                preferredSize = layout.getPreferredSize(this);
-            } else {
-                preferredSize = new Vector2f(size);
-            }
-        }
-        return preferredSize;
-    }
-
-    /**
-     * Sets preferred size.
-     * <p>
-     * Preferred size of component. Used to set preferred size of component for layout manager. Layout manager will try to make this component size equal to
-     * preferred.
-     * <p>
-     * {@code -1} is default value - that means that layout manager will calculate preferred size.
-     *
-     * @param preferredSize the preferred size.
-     */
-    public void setPreferredSize(Vector2f preferredSize) {
-        this.preferredSize = preferredSize;
-    }
-
-    /**
-     * Sets preferred size.
-     * <p>
-     * Preferred size of component. Used to set preferred size of component for layout manager. Layout manager will try to make this component size equal to
-     * preferred.
-     * <p>
-     * {@code -1} is default value - that means that layout manager will calculate preferred size.
-     *
-     * @param prefWidth the preferred width.
-     * @param prefHeight the preferred height.
-     */
-    public void setPreferredSize(float prefWidth, float prefHeight) {
-        this.preferredSize = new Vector2f(prefWidth, prefHeight);
-    }
-
-    /**
-     * Gets minimum size.
-     * <p>
-     * Minimum size of component. Used to set minimum size of component for layout manager. Layout manager uses this minimum size if component should be as
-     * small as possible. If one of dimensions is <= 0 this minimum size is 0.
-     *
-     * @return the minimum size.
-     */
-    public Vector2f getMinimumSize() {
-        if (minimumSize == null) {
-            if (layout != null) {
-                minimumSize = layout.getMinimumSize(this);
-            } else {
-                minimumSize = new Vector2f();
-            }
-        }
-        return minimumSize;
-    }
-
-    /**
-     * Sets minimum size.
-     * <p>
-     * Minimum size of component. Used to set minimum size of component for layout manager. Layout manager uses this minimum size if component should be as
-     * small as possible. If one of dimensions is <= 0 this minimum size is 0.
-     *
-     * @param minimumSize the minimum size.
-     */
-    public void setMinimumSize(Vector2f minimumSize) {
-        this.minimumSize = minimumSize;
-    }
-
-    /**
-     * Sets minimum size.
-     * <p>
-     * Minimum size of component. Used to set minimum size of component for layout manager. Layout manager uses this minimum size if component should be as
-     * small as possible. If one of dimensions is <= 0 this minimum size is 0.
-     *
-     * @param minWidth the minimum width.
-     * @param minHeight the minimum height.
-     */
-    public void setMinimumSize(float minWidth, float minHeight) {
-        this.minimumSize = new Vector2f(minWidth, minHeight);
-    }
-
-    /**
-     * Gets maximum size.
-     * <p>
-     * Maximum size of component. Used to set maximum size of component for layout manager. Layout manager uses this maximum size if component should be as
-     * small as possible. If one of dimensions is <= 0 this maximum size is 0.
-     *
-     * @return the maximum size.
-     */
-    public Vector2f getMaximumSize() {
-        if (maximumSize == null) {
-            if (layout != null) {
-                maximumSize = layout.getMaximumSize(this);
-            } else {
-                maximumSize = new Vector2f(Float.MAX_VALUE);
-            }
-        }
-        return maximumSize;
-    }
-
-    /**
-     * Sets maximum size.
-     * <p>
-     * Maximum size of component. Used to set maximum size of component for layout manager. Layout manager uses this maximum size if component should be as
-     * small as possible. If one of dimensions is <= 0 this maximum size is 0.
-     *
-     * @param maximumSize the maximum size.
-     */
-    public void setMaximumSize(Vector2f maximumSize) {
-        this.maximumSize = maximumSize;
-    }
-
-    /**
-     * Sets maximum size.
-     * <p>
-     * Maximum size of component. Used to set maximum size of component for layout manager. Layout manager uses this maximum size if component should be as
-     * small as possible. If one of dimensions is <= 0 this maximum size is 0.
-     *
-     * @param maxWidth the maximum width.
-     * @param maxHeight the maximum height.
-     */
-    public void setMaximumSize(float maxWidth, float maxHeight) {
-        this.maximumSize = new Vector2f(maxWidth, maxHeight);
-    }
-
     /////////////////////////////////
     //// CONTAINER METHODS
     /////////////////////////////////
@@ -806,7 +555,7 @@ public abstract class Component implements Serializable {
      * @see List#size()
      */
     public int count() {
-        return components.size();
+        return childs.size();
     }
 
     /**
@@ -817,7 +566,7 @@ public abstract class Component implements Serializable {
      * @see List#isEmpty()
      */
     public boolean isEmpty() {
-        return components.isEmpty();
+        return childs.isEmpty();
     }
 
     /**
@@ -841,7 +590,7 @@ public abstract class Component implements Serializable {
      * @see List#iterator()
      */
     public Iterator<Component> containerIterator() {
-        return components.iterator();
+        return childs.iterator();
     }
 
     /**
@@ -869,7 +618,7 @@ public abstract class Component implements Serializable {
         if (component == null || component == this || isContains(component)) {
             return false;
         }
-        boolean added = components.add(component);
+        boolean added = childs.add(component);
         if (added) {
             if (layout != null) {
                 layout.addComponent(component, constraint);
@@ -887,7 +636,18 @@ public abstract class Component implements Serializable {
      * @return true if collection contains provided component.
      */
     private boolean isContains(Component component) {
-        return components.stream().anyMatch(c -> c == component);
+        return childs.stream().anyMatch(c -> c == component);
+    }
+
+    /**
+     * Used to add components.
+     *
+     * @param components components nodes to add.
+     */
+    public void addAll(Collection<? extends Component> components) {
+        if (components != null) {
+            components.forEach(this::add);
+        }
     }
 
     /**
@@ -919,7 +679,7 @@ public abstract class Component implements Serializable {
         if (component != null) {
             Component parent = component.getParent();
             if (parent != null && parent == this && isContains(component)) {
-                boolean removed = components.remove(component);
+                boolean removed = childs.remove(component);
                 if (removed) {
                     component.setParent(null);
                 }
@@ -944,7 +704,7 @@ public abstract class Component implements Serializable {
                 toRemove.add(compo);
             }
         });
-        this.components.removeAll(toRemove);
+        this.childs.removeAll(toRemove);
     }
 
     /**
@@ -958,8 +718,8 @@ public abstract class Component implements Serializable {
      * @see List#removeIf(Predicate)
      */
     public boolean removeIf(Predicate<? super Component> filter) {
-        components.stream().filter(filter).forEach(compo -> compo.setParent(null));
-        return components.removeIf(filter);
+        childs.stream().filter(filter).forEach(compo -> compo.setParent(null));
+        return childs.removeIf(filter);
     }
 
     /**
@@ -968,8 +728,8 @@ public abstract class Component implements Serializable {
      * @see List#clear()
      */
     public void clearChilds() {
-        components.forEach(compo -> compo.setParent(null));
-        components.clear();
+        childs.forEach(compo -> compo.setParent(null));
+        childs.clear();
     }
 
     /**
@@ -982,7 +742,7 @@ public abstract class Component implements Serializable {
      * @see List#containsAll(Collection)
      */
     public boolean containsAll(Collection<Component> components) {
-        return this.components.containsAll(components);
+        return this.childs.containsAll(components);
     }
 
     /**
@@ -993,7 +753,7 @@ public abstract class Component implements Serializable {
      * @see List#stream()
      */
     public Stream<Component> stream() {
-        return components.stream();
+        return childs.stream();
     }
 
     /**
@@ -1004,7 +764,7 @@ public abstract class Component implements Serializable {
      * @see List#parallelStream()
      */
     public Stream<Component> parallelStream() {
-        return components.parallelStream();
+        return childs.parallelStream();
     }
 
     /**
@@ -1013,7 +773,7 @@ public abstract class Component implements Serializable {
      * @param action The action to be performed for each element.
      */
     public void forEach(Consumer<? super Component> action) {
-        components.forEach(action);
+        childs.forEach(action);
     }
 
     /**
@@ -1024,7 +784,7 @@ public abstract class Component implements Serializable {
      * @return list of child components.
      */
     public List<Component> getChilds() {
-        return new ArrayList<>(components);
+        return new ArrayList<>(childs);
     }
 
     @Override
@@ -1040,7 +800,6 @@ public abstract class Component implements Serializable {
         Component component = (Component) o;
 
         return new EqualsBuilder()
-            .append(this.getCornerRadius(), component.getCornerRadius())
             .append(this.isEnabled(), component.isEnabled())
             .append(this.isVisible(), component.isVisible())
             .append(this.isHovered(), component.isHovered())
@@ -1049,24 +808,19 @@ public abstract class Component implements Serializable {
             .append(this.getListenerMap(), component.getListenerMap())
             .append(this.getPosition(), component.getPosition())
             .append(this.getSize(), component.getSize())
-            .append(this.getBackgroundColor(), component.getBackgroundColor())
-            .append(this.getBorder(), component.getBorder())
             .append(this.getIntersector(), component.getIntersector())
             .append(this.getTabIndex(), component.getTabIndex())
             .append(this.isTabFocusable(), component.isTabFocusable())
-            .append(components, component.components)
+            .append(childs, component.childs)
             .isEquals();
     }
 
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
-            .append(cornerRadius)
             .append(listenerMap)
             .append(position)
             .append(size)
-            .append(backgroundColor)
-            .append(border)
             .append(enabled)
             .append(visible)
             .append(intersector)
@@ -1075,19 +829,16 @@ public abstract class Component implements Serializable {
             .append(pressed)
             .append(tabIndex)
             .append(tabFocusable)
-            .append(components)
+            .append(childs)
             .toHashCode();
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-            .append("cornerRadius", cornerRadius)
             .append("listenerMap", listenerMap)
             .append("position", position)
             .append("size", size)
-            .append("backgroundColor", backgroundColor)
-            .append("border", border)
             .append("enabled", enabled)
             .append("visible", visible)
             .append("intersector", intersector)

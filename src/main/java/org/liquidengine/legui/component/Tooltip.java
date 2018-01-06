@@ -9,7 +9,7 @@ import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.theme.Themes;
 
 /**
- * Created by Aliaksandr_Shcherbin on 1/24/2017.
+ * Created by ShchAlexander on 1/24/2017.
  */
 public class Tooltip extends Component implements TextComponent {
 

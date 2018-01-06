@@ -1,6 +1,6 @@
 package org.liquidengine.legui.component;
 
-import static org.liquidengine.legui.font.FontRegistry.MATERIAL_ICONS_REGULAR;
+import static org.liquidengine.legui.style.font.FontRegistry.MATERIAL_ICONS_REGULAR;
 
 import java.util.List;
 import java.util.Objects;
@@ -12,7 +12,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
-import org.liquidengine.legui.color.ColorConstants;
+import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.component.event.selectbox.SelectBoxChangeSelectionEvent;
 import org.liquidengine.legui.component.misc.listener.selectbox.SelectBoxClickListener;
 import org.liquidengine.legui.component.misc.listener.selectbox.SelectBoxElementClickListener;
@@ -249,8 +249,8 @@ public class SelectBox extends Component {
         collapseIcon.setSize(new Vector2f(buttonWidth, getSize().y).mul(2f / 3f));
         expandIcon.setSize(new Vector2f(buttonWidth, getSize().y).mul(2f / 3f));
 
-        selectionListPanel.getVerticalScrollBar().getMinimumSize().x = buttonWidth;
-        selectionListPanel.getVerticalScrollBar().getMaximumSize().x = buttonWidth;
+        selectionListPanel.getVerticalScrollBar().getStyle().getMinimumSize().x = buttonWidth;
+        selectionListPanel.getVerticalScrollBar().getStyle().getMaximumSize().x = buttonWidth;
 //        selectionListPanel.getVerticalScrollBar().getSize().x = buttonWidth;
 
         for (int i = 0; i < selectBoxElements.size(); i++) {
@@ -556,7 +556,7 @@ public class SelectBox extends Component {
             super(text == null ? "null" : text);
             this.selected = selected;
             this.text = text;
-            this.setBorder(null);
+            this.getStyle().setBorder(null);
         }
 
         public String getText() {

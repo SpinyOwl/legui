@@ -5,7 +5,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
-import org.liquidengine.legui.color.ColorConstants;
+import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.component.misc.listener.scrollablepanel.ScrollablePanelViewportScrollListener;
 import org.liquidengine.legui.component.optional.Orientation;
 import org.liquidengine.legui.event.ScrollEvent;
@@ -15,7 +15,7 @@ import org.liquidengine.legui.theme.Themes;
 /**
  * Panel with scroll bars.
  * Default container layout is null.
- *
+ * <p>
  * TODO: REIMPLEMENT THIS COMPONENT ACCORDING TO NEW LAYOUT SYSTEM
  */
 public class ScrollablePanel extends Component implements Viewport {
@@ -83,36 +83,46 @@ public class ScrollablePanel extends Component implements Viewport {
         float viewportHeight = getSize().y - INITIAL_SCROLL_SIZE;
 
         verticalScrollBar = new ScrollBar();
-        verticalScrollBar.setMaximumSize(INITIAL_SCROLL_SIZE, Float.MAX_VALUE);
-        verticalScrollBar.setMinimumSize(INITIAL_SCROLL_SIZE, 0);
+        verticalScrollBar.getStyle().setMaximumSize(INITIAL_SCROLL_SIZE, Float.MAX_VALUE);
+        verticalScrollBar.getStyle().setMinimumSize(INITIAL_SCROLL_SIZE, 0);
         verticalScrollBar.setOrientation(Orientation.VERTICAL);
         verticalScrollBar.setViewport(this);
         verticalScrollBar.setTabFocusable(false);
 
         horizontalScrollBar = new ScrollBar();
-        horizontalScrollBar.setMaximumSize(Float.MAX_VALUE, INITIAL_SCROLL_SIZE);
-        horizontalScrollBar.setMinimumSize(0, INITIAL_SCROLL_SIZE);
+        horizontalScrollBar.getStyle().setMaximumSize(Float.MAX_VALUE, INITIAL_SCROLL_SIZE);
+        horizontalScrollBar.getStyle().setMinimumSize(0, INITIAL_SCROLL_SIZE);
         horizontalScrollBar.setOrientation(Orientation.HORIZONTAL);
         horizontalScrollBar.setViewport(this);
         horizontalScrollBar.setTabFocusable(false);
 
         viewport = new Panel(0, 0, viewportWidth, viewportHeight);
         viewport.setLayout(null);
-        viewport.setBackgroundColor(1, 1, 1, 0);
-        viewport.setBorder(null);
+        viewport.getStyle().getBackground().setColor(1, 1, 1, 0);
+        viewport.getStyle().setBorder(null);
         viewport.getListenerMap().addListener(ScrollEvent.class, new ScrollablePanelViewportScrollListener());
         viewport.setTabFocusable(false);
 
         container = new Panel(0, 0, viewportWidth, viewportHeight);
         container.setLayout(null);
-        container.setBorder(null);
+        container.getStyle().setBorder(null);
         container.setTabFocusable(false);
         viewport.add(container);
 
         this.add(viewport, BorderLayoutConstraint.CENTER);
         this.add(verticalScrollBar, BorderLayoutConstraint.RIGHT);
         this.add(horizontalScrollBar, BorderLayoutConstraint.BOTTOM);
-        this.setBackgroundColor(ColorConstants.transparent());
+        this.getStyle().getBackground().setColor(ColorConstants.transparent());
+
+        container.getStyle().setBorder(null);
+        container.setTabFocusable(false);
+        viewport.add(container);
+
+        this.add(viewport);
+        this.add(verticalScrollBar);
+        this.add(horizontalScrollBar);
+        this.getStyle().getBackground().setColor(ColorConstants.transparent());
+
         Themes.getDefaultTheme().getThemeManager().getComponentTheme(ScrollablePanel.class).applyAll(this);
 
         resize();

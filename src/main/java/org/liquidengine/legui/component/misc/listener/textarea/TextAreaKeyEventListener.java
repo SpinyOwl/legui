@@ -82,12 +82,14 @@ public class TextAreaKeyEventListener implements KeyEventListener {
      * @param textArea text area to work with.
      */
     private void addTab(TextArea textArea) {
-        int oldCPos = textArea.getCaretPosition();
-        textArea.getTextState().insert(oldCPos, "\t");
-        int caretPosition = oldCPos + 1;
-        textArea.setCaretPosition(caretPosition);
-        textArea.setStartSelectionIndex(caretPosition);
-        textArea.setEndSelectionIndex(caretPosition);
+        if (textArea.isEditable()) {
+            int oldCPos = textArea.getCaretPosition();
+            textArea.getTextState().insert(oldCPos, "\t");
+            int caretPosition = oldCPos + 1;
+            textArea.setCaretPosition(caretPosition);
+            textArea.setStartSelectionIndex(caretPosition);
+            textArea.setEndSelectionIndex(caretPosition);
+        }
     }
 
     /**

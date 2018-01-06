@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import org.liquidengine.legui.border.Border;
-import org.liquidengine.legui.border.SimpleLineBorder;
 import org.liquidengine.legui.component.Button;
 import org.liquidengine.legui.component.CheckBox;
 import org.liquidengine.legui.component.Component;
@@ -25,6 +23,8 @@ import org.liquidengine.legui.icon.Icon;
 import org.liquidengine.legui.icon.ImageIcon;
 import org.liquidengine.legui.image.Image;
 import org.liquidengine.legui.image.LoadableImage;
+import org.liquidengine.legui.style.Border;
+import org.liquidengine.legui.style.border.SimpleLineBorder;
 import org.liquidengine.legui.system.renderer.BorderRenderer;
 import org.liquidengine.legui.system.renderer.ComponentRenderer;
 import org.liquidengine.legui.system.renderer.IconRenderer;
@@ -53,7 +53,7 @@ import org.liquidengine.legui.system.renderer.nvg.image.NvgDefaultImageRenderer;
 import org.liquidengine.legui.system.renderer.nvg.image.NvgLoadableImageRenderer;
 
 /**
- * Created by Aliaksandr_Shcherbin on 1/26/2017.
+ * Created by ShchAlexander on 1/26/2017.
  */
 public class NvgRendererProvider extends RendererProvider {
 

@@ -45,6 +45,8 @@ repositories {
 }
 
 dependencies {
+    // https://mvnrepository.com/artifact/org.reflections/reflections
+    compile group: 'org.reflections', name: 'reflections', version: '0.9.11'
 
     //@formatter:off
     compile group: "org.joml",                   name: "joml",                 version: joml_version,          changing: true
