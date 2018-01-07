@@ -67,8 +67,8 @@ public class BorderLayout implements Layout {
             if (constraint == null) {
                 centerComponent = component;
             } else {
-                BorderLayoutConstraint r = (BorderLayoutConstraint) constraint;
-                switch (r) {
+                BorderLayoutConstraint layoutConstraint = (BorderLayoutConstraint) constraint;
+                switch (layoutConstraint) {
                     case TOP:
                         topComponent = component;
                         break;
@@ -83,6 +83,9 @@ public class BorderLayout implements Layout {
                         break;
                     case BOTTOM:
                         bottomComponent = component;
+                        break;
+                    default:
+                        centerComponent = component;
                         break;
                 }
             }
@@ -249,27 +252,7 @@ public class BorderLayout implements Layout {
         long rNode = Yoga.YGNodeNew();
         long bNode = Yoga.YGNodeNew();
 
-        int row = 0;
-        if (topComponent != null) {
-            Yoga.YGNodeInsertChild(rootNode, tNode, row++);
-        }
-        if (leftComponent != null || centerComponent != null || rightComponent != null) {
-            Yoga.YGNodeInsertChild(rootNode, mNode, row++);
-        }
-        if (bottomComponent != null) {
-            Yoga.YGNodeInsertChild(rootNode, bNode, row++);
-        }
-
-        int column = 0;
-        if (leftComponent != null) {
-            Yoga.YGNodeInsertChild(mNode, lNode, column++);
-        }
-        if (centerComponent != null) {
-            Yoga.YGNodeInsertChild(mNode, cNode, column++);
-        }
-        if (rightComponent != null) {
-            Yoga.YGNodeInsertChild(mNode, rNode, column++);
-        }
+        prepareNodes(rootNode, mNode, tNode, lNode, cNode, rNode, bNode);
 
         Yoga.YGNodeStyleSetFlexDirection(rootNode, Yoga.YGFlexDirectionColumn);
         Yoga.YGNodeStyleSetAlignItems(rootNode, Yoga.YGAlignStretch);
@@ -364,6 +347,21 @@ public class BorderLayout implements Layout {
             Yoga.YGNodeLayoutGetWidth(cNode), Yoga.YGNodeLayoutGetHeight(cNode)
         );
 
+        freeMem(rootNode, mNode, tNode, lNode, cNode, rNode, bNode);
+    }
+
+    /**
+     * Used to free native memory.
+     *
+     * @param rootNode root node.
+     * @param mNode mid row node.
+     * @param tNode top node.
+     * @param lNode left node.
+     * @param cNode center node.
+     * @param rNode right node.
+     * @param bNode bottom node.
+     */
+    private void freeMem(long rootNode, long mNode, long tNode, long lNode, long cNode, long rNode, long bNode) {
         Yoga.YGNodeFree(rootNode);
         Yoga.YGNodeFree(mNode);
         Yoga.YGNodeFree(tNode);
@@ -373,11 +371,51 @@ public class BorderLayout implements Layout {
         Yoga.YGNodeFree(bNode);
     }
 
-
-    private Vector2f getMinSize(Component bottomComponent) {
-        Vector2f vector2f = null;
+    /**
+     * Used to prepare nodes for calculations.
+     *
+     * @param rootNode root node.
+     * @param mNode mid row node.
+     * @param tNode top node.
+     * @param lNode left node.
+     * @param cNode center node.
+     * @param rNode right node.
+     * @param bNode bottom node.
+     */
+    private void prepareNodes(long rootNode, long mNode, long tNode, long lNode, long cNode, long rNode, long bNode) {
+        if (topComponent != null) {
+            Yoga.YGNodeInsertChild(rootNode, tNode, 0);
+        }
+        if (leftComponent != null || centerComponent != null || rightComponent != null) {
+            Yoga.YGNodeInsertChild(rootNode, mNode, 1);
+        }
         if (bottomComponent != null) {
-            vector2f = bottomComponent.getStyle().getMinimumSize();
+            Yoga.YGNodeInsertChild(rootNode, bNode, 2);
+        }
+
+        if (leftComponent != null) {
+            Yoga.YGNodeInsertChild(mNode, lNode, 0);
+        }
+        if (centerComponent != null) {
+            Yoga.YGNodeInsertChild(mNode, cNode, 1);
+        }
+        if (rightComponent != null) {
+            Yoga.YGNodeInsertChild(mNode, rNode, 2);
+        }
+    }
+
+
+    /**
+     * Used to get minimum size for component.
+     *
+     * @param component component to get minimum size.
+     *
+     * @return minimum size of component.
+     */
+    private Vector2f getMinSize(Component component) {
+        Vector2f vector2f = null;
+        if (component != null) {
+            vector2f = component.getStyle().getMinimumSize();
         }
         if (vector2f == null) {
             vector2f = new Vector2f(0, 0);
@@ -385,10 +423,17 @@ public class BorderLayout implements Layout {
         return vector2f;
     }
 
-    private Vector2f getMaxSize(Component centerComponent) {
+    /**
+     * Used to get maximum size for component.
+     *
+     * @param component component to get maximum size.
+     *
+     * @return maximum size of component.
+     */
+    private Vector2f getMaxSize(Component component) {
         Vector2f vector2f = null;
-        if (centerComponent != null) {
-            vector2f = centerComponent.getStyle().getMaximumSize();
+        if (component != null) {
+            vector2f = component.getStyle().getMaximumSize();
         }
         if (vector2f == null) {
             vector2f = new Vector2f(Float.MAX_VALUE);
@@ -396,6 +441,14 @@ public class BorderLayout implements Layout {
         return vector2f;
     }
 
+    /**
+     * Used to set size and position of component.
+     * @param component component to fill.
+     * @param x x pos.
+     * @param y y pos.
+     * @param w width.
+     * @param h height.
+     */
     private void setSizeAndPos(Component component, float x, float y, float w, float h) {
         if (component != null) {
             component.getSize().set(w, h);
