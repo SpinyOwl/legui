@@ -136,8 +136,9 @@ public class BorderLayout implements Layout {
                 return rightComponent;
             case BOTTOM:
                 return bottomComponent;
+            default:
+                throw new IllegalArgumentException("Cannot get component: unknown constraint: " + constraint)
         }
-        throw new IllegalArgumentException("Cannot get component: unknown constraint: " + constraint);
     }
 
     /**
@@ -443,6 +444,7 @@ public class BorderLayout implements Layout {
 
     /**
      * Used to set size and position of component.
+     *
      * @param component component to fill.
      * @param x x pos.
      * @param y y pos.
