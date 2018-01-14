@@ -384,24 +384,26 @@ public class BorderLayout implements Layout {
      * @param bNode bottom node.
      */
     private void prepareNodes(long rootNode, long mNode, long tNode, long lNode, long cNode, long rNode, long bNode) {
+        int rowIndex = 0;
+        int colIndex = 0;
         if (topComponent != null) {
-            Yoga.YGNodeInsertChild(rootNode, tNode, 0);
+            Yoga.YGNodeInsertChild(rootNode, tNode, rowIndex++);
         }
         if (leftComponent != null || centerComponent != null || rightComponent != null) {
-            Yoga.YGNodeInsertChild(rootNode, mNode, 1);
+            Yoga.YGNodeInsertChild(rootNode, mNode, rowIndex++);
         }
         if (bottomComponent != null) {
-            Yoga.YGNodeInsertChild(rootNode, bNode, 2);
+            Yoga.YGNodeInsertChild(rootNode, bNode, rowIndex++);
         }
 
         if (leftComponent != null) {
-            Yoga.YGNodeInsertChild(mNode, lNode, 0);
+            Yoga.YGNodeInsertChild(mNode, lNode, colIndex++);
         }
         if (centerComponent != null) {
-            Yoga.YGNodeInsertChild(mNode, cNode, 1);
+            Yoga.YGNodeInsertChild(mNode, cNode, colIndex++);
         }
         if (rightComponent != null) {
-            Yoga.YGNodeInsertChild(mNode, rNode, 2);
+            Yoga.YGNodeInsertChild(mNode, rNode, colIndex++);
         }
     }
 
