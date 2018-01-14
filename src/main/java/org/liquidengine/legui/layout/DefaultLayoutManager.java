@@ -37,8 +37,8 @@ public class DefaultLayoutManager extends LayoutManager {
             }
 
             if (!component.isEmpty()) {
-                List<Component> childs = component.getChilds();
-                for (Component child : childs) {
+                List<Component> childComponents = component.getChildComponents();
+                for (Component child : childComponents) {
                     layout(child);
                 }
             }

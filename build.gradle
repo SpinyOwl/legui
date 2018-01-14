@@ -31,7 +31,7 @@ def guava_version        = '19.0'
 def gson_version         = '2.7'
 
 def joml_version         = "1.9.5-SNAPSHOT"
-def lwjgl_version        = '3.1.5-SNAPSHOT'
+def lwjgl_version        = '3.1.6-SNAPSHOT'
 def le_cbchain           = '0.1.2'
 def le_util              = '0.0.3-SNAPSHOT'
 //@formatter:on

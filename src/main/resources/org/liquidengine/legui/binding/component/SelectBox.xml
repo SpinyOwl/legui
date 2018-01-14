@@ -2,7 +2,7 @@
   for="org.liquidengine.legui.component.SelectBox" to="selectBox" default="true"
   inherit="org/liquidengine/legui/binding/component/Component.xml">
 
-  <unbind field="childs"/>
+  <unbind field="childComponents"/>
 
   <bind field="selectedElement"/>
   <bind field="elementHeight"/>

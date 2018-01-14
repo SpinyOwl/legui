@@ -119,7 +119,7 @@ public abstract class Component implements Serializable {
     /**
      * List of child components.
      */
-    private List<Component> childs = new CopyOnWriteArrayList<>();
+    private List<Component> childComponents = new CopyOnWriteArrayList<>();
 
     /**
      * Default constructor. Used to create component instance without any parameters.
@@ -555,7 +555,7 @@ public abstract class Component implements Serializable {
      * @see List#size()
      */
     public int count() {
-        return childs.size();
+        return childComponents.size();
     }
 
     /**
@@ -566,7 +566,7 @@ public abstract class Component implements Serializable {
      * @see List#isEmpty()
      */
     public boolean isEmpty() {
-        return childs.isEmpty();
+        return childComponents.isEmpty();
     }
 
     /**
@@ -590,7 +590,7 @@ public abstract class Component implements Serializable {
      * @see List#iterator()
      */
     public Iterator<Component> containerIterator() {
-        return childs.iterator();
+        return childComponents.iterator();
     }
 
     /**
@@ -618,7 +618,7 @@ public abstract class Component implements Serializable {
         if (component == null || component == this || isContains(component)) {
             return false;
         }
-        boolean added = childs.add(component);
+        boolean added = childComponents.add(component);
         if (added) {
             if (layout != null) {
                 layout.addComponent(component, constraint);
@@ -636,7 +636,7 @@ public abstract class Component implements Serializable {
      * @return true if collection contains provided component.
      */
     private boolean isContains(Component component) {
-        return childs.stream().anyMatch(c -> c == component);
+        return childComponents.stream().anyMatch(c -> c == component);
     }
 
     /**
@@ -679,7 +679,7 @@ public abstract class Component implements Serializable {
         if (component != null) {
             Component parent = component.getParent();
             if (parent != null && parent == this && isContains(component)) {
-                boolean removed = childs.remove(component);
+                boolean removed = childComponents.remove(component);
                 if (removed) {
                     component.setParent(null);
                 }
@@ -704,7 +704,7 @@ public abstract class Component implements Serializable {
                 toRemove.add(compo);
             }
         });
-        this.childs.removeAll(toRemove);
+        this.childComponents.removeAll(toRemove);
     }
 
     /**
@@ -718,8 +718,8 @@ public abstract class Component implements Serializable {
      * @see List#removeIf(Predicate)
      */
     public boolean removeIf(Predicate<? super Component> filter) {
-        childs.stream().filter(filter).forEach(compo -> compo.setParent(null));
-        return childs.removeIf(filter);
+        childComponents.stream().filter(filter).forEach(compo -> compo.setParent(null));
+        return childComponents.removeIf(filter);
     }
 
     /**
@@ -727,9 +727,9 @@ public abstract class Component implements Serializable {
      *
      * @see List#clear()
      */
-    public void clearChilds() {
-        childs.forEach(compo -> compo.setParent(null));
-        childs.clear();
+    public void clearChildComponents() {
+        childComponents.forEach(compo -> compo.setParent(null));
+        childComponents.clear();
     }
 
     /**
@@ -742,7 +742,7 @@ public abstract class Component implements Serializable {
      * @see List#containsAll(Collection)
      */
     public boolean containsAll(Collection<Component> components) {
-        return this.childs.containsAll(components);
+        return this.childComponents.containsAll(components);
     }
 
     /**
@@ -753,7 +753,7 @@ public abstract class Component implements Serializable {
      * @see List#stream()
      */
     public Stream<Component> stream() {
-        return childs.stream();
+        return childComponents.stream();
     }
 
     /**
@@ -764,7 +764,7 @@ public abstract class Component implements Serializable {
      * @see List#parallelStream()
      */
     public Stream<Component> parallelStream() {
-        return childs.parallelStream();
+        return childComponents.parallelStream();
     }
 
     /**
@@ -773,7 +773,7 @@ public abstract class Component implements Serializable {
      * @param action The action to be performed for each element.
      */
     public void forEach(Consumer<? super Component> action) {
-        childs.forEach(action);
+        childComponents.forEach(action);
     }
 
     /**
@@ -783,8 +783,8 @@ public abstract class Component implements Serializable {
      *
      * @return list of child components.
      */
-    public List<Component> getChilds() {
-        return new ArrayList<>(childs);
+    public List<Component> getChildComponents() {
+        return new ArrayList<>(childComponents);
     }
 
     @Override
@@ -811,7 +811,7 @@ public abstract class Component implements Serializable {
             .append(this.getIntersector(), component.getIntersector())
             .append(this.getTabIndex(), component.getTabIndex())
             .append(this.isTabFocusable(), component.isTabFocusable())
-            .append(childs, component.childs)
+            .append(childComponents, component.childComponents)
             .isEquals();
     }
 
@@ -829,7 +829,7 @@ public abstract class Component implements Serializable {
             .append(pressed)
             .append(tabIndex)
             .append(tabFocusable)
-            .append(childs)
+            .append(childComponents)
             .toHashCode();
     }
 

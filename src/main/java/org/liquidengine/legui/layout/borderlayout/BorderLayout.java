@@ -7,9 +7,16 @@ import org.liquidengine.legui.layout.LayoutConstraint;
 import org.lwjgl.util.yoga.Yoga;
 
 /**
- * A border layout lays out a container, arranging and resizing its components to fit in five regions: TOP, LEFT, CENTER, RIGHT, and BOTTOM. Each region may
- * contain no more than one component, and is identified by a corresponding constant: <code>TOP</code>, <code>LEFT</code>, <code>CENTER</code>,
- * <code>RIGHT</code>, and <code>BOTTOM</code>.  When adding a component to a container with a border layout, use one of these five constants, for example:
+ * A border layout lays out a container, arranging and resizing its components to fit in five regions: TOP, LEFT, CENTER, RIGHT, and BOTTOM.
+ * Each region may contain no more than one component, and is identified by a corresponding constant:
+ * <ul>
+ * <li><code>TOP</code></li>
+ * <li><code>LEFT</code></li>
+ * <li><code>CENTER</code></li>
+ * <li><code>RIGHT</code></li>
+ * <li><code>BOTTOM</code></li>
+ * </ul>.
+ * When adding a component to a container with a border layout, use one of these five constants, for example:
  * <pre>
  *    {@link org.liquidengine.legui.component.Panel} p = new {@link org.liquidengine.legui.component.Panel}();
  *    p.setLayout(new {@link BorderLayout}());
@@ -24,7 +31,7 @@ import org.lwjgl.util.yoga.Yoga;
  * </pre>
  * <p>. Created by ShchAlexander on 23.11.2017.
  */
-public class BorderLayout implements Layout {
+public class    BorderLayout implements Layout {
 
     private float horizontalGap;
     private float verticalGap;

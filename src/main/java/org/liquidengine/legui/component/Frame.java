@@ -32,8 +32,8 @@ public class Frame {
 //    /**
 //     * Holds related to this frame data shared between renderer and event processors: <br>
 //     * <ul>
-//     *     <li>system event handlers - {@link SystemEventHandler} childs.</li>
-//     *     <li>legui event listeners - {@link org.liquidengine.legui.listener.EventListener} childs.</li>
+//     *     <li>system event handlers - {@link SystemEventHandler} childComponents.</li>
+//     *     <li>legui event listeners - {@link org.liquidengine.legui.listener.EventListener} childComponents.</li>
 //     * </ul>
 //     */
 //    private Context context = new Context();
