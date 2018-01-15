@@ -44,46 +44,6 @@ public class BoxLayout implements Layout {
     }
 
     /**
-     * Used to calculate minimum size for parent component.
-     *
-     * @param parent component to calculate minimum size.
-     *
-     * @return calculated minimum size for specified component.
-     */
-    @Override
-    public Vector2f getMinimumSize(Component parent) {
-        Vector2f min = new Vector2f();
-
-        List<Component> childComponents = parent.getChildComponents();
-
-        return min;
-    }
-
-    /**
-     * Used to calculate preferred size for parent component.
-     *
-     * @param parent component to calculate preferred size.
-     *
-     * @return calculated preferred size for specified component.
-     */
-    @Override
-    public Vector2f getPreferredSize(Component parent) {
-        return null;
-    }
-
-    /**
-     * Used to calculate maximum size for parent component.
-     *
-     * @param parent component to calculate maximum size.
-     *
-     * @return calculated maximum size for specified component.
-     */
-    @Override
-    public Vector2f getMaximumSize(Component parent) {
-        return null;
-    }
-
-    /**
      * Used to lay out child components for parent component.
      *
      * @param parent component to lay out.

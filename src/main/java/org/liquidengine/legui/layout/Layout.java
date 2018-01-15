@@ -25,30 +25,6 @@ public interface Layout {
     void removeComponent(Component component);
 
     /**
-     * Used to calculate minimum size for parent component.
-     *
-     * @param parent component to calculate minimum size.
-     * @return calculated minimum size for specified component.
-     */
-    Vector2f getMinimumSize(Component parent);
-
-    /**
-     * Used to calculate preferred size for parent component.
-     *
-     * @param parent component to calculate preferred size.
-     * @return calculated preferred size for specified component.
-     */
-    Vector2f getPreferredSize(Component parent);
-
-    /**
-     * Used to calculate maximum size for parent component.
-     *
-     * @param parent component to calculate maximum size.
-     * @return calculated maximum size for specified component.
-     */
-    Vector2f getMaximumSize(Component parent);
-
-    /**
      * Used to lay out child components for parent component.
      *
      * @param parent component to lay out.

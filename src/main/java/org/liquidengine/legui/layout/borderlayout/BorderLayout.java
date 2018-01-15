@@ -153,98 +153,6 @@ public class BorderLayout implements Layout {
     }
 
     /**
-     * Used to calculate minimum size for parent component.
-     *
-     * @param parent component to calculate minimum size.
-     *
-     * @return calculated minimum size for specified component.
-     */
-    @Override
-    public Vector2f getMinimumSize(Component parent) {
-        Vector2f minimumSize = new Vector2f(0);
-        if (leftComponent != null) {
-            Vector2f min = leftComponent.getStyle().getMinimumSize();
-            minimumSize.x += min.x;
-            minimumSize.y = Math.max(min.y, minimumSize.y);
-        }
-        if (centerComponent != null) {
-            Vector2f min = centerComponent.getStyle().getMinimumSize();
-            minimumSize.x += min.x;
-            minimumSize.y = Math.max(min.y, minimumSize.y);
-
-        }
-        if (rightComponent != null) {
-            Vector2f min = rightComponent.getStyle().getMinimumSize();
-            minimumSize.x += min.x;
-            minimumSize.y = Math.max(min.y, minimumSize.y);
-
-        }
-        if (topComponent != null) {
-            Vector2f min = topComponent.getStyle().getMinimumSize();
-            minimumSize.x = Math.max(min.x, minimumSize.x);
-            minimumSize.y += min.y;
-        }
-        if (bottomComponent != null) {
-            Vector2f min = bottomComponent.getStyle().getMinimumSize();
-            minimumSize.x = Math.max(min.x, minimumSize.x);
-            minimumSize.y += min.y;
-        }
-        return minimumSize;
-    }
-
-    /**
-     * Used to calculate preferred size for parent component.
-     *
-     * @param parent component to calculate preferred size.
-     *
-     * @return calculated preferred size for specified component.
-     */
-    @Override
-    public Vector2f getPreferredSize(Component parent) {
-        Vector2f prefSize = new Vector2f(0);
-        if (leftComponent != null) {
-            Vector2f pref = leftComponent.getStyle().getPreferredSize();
-            prefSize.x += pref.x;
-            prefSize.y = Math.max(pref.y, prefSize.y);
-        }
-        if (centerComponent != null) {
-            Vector2f pref = centerComponent.getStyle().getPreferredSize();
-            prefSize.x += pref.x;
-            prefSize.y = Math.max(pref.y, prefSize.y);
-
-        }
-        if (rightComponent != null) {
-            Vector2f pref = rightComponent.getStyle().getPreferredSize();
-            prefSize.x += pref.x;
-            prefSize.y = Math.max(pref.y, prefSize.y);
-
-        }
-        if (topComponent != null) {
-            Vector2f pref = topComponent.getStyle().getPreferredSize();
-            prefSize.x = Math.max(pref.x, prefSize.x);
-            prefSize.y += pref.y;
-        }
-        if (bottomComponent != null) {
-            Vector2f pref = bottomComponent.getStyle().getPreferredSize();
-            prefSize.x = Math.max(pref.x, prefSize.x);
-            prefSize.y += pref.y;
-        }
-        return prefSize;
-    }
-
-    /**
-     * Used to calculate maximum size for parent component.
-     *
-     * @param parent component to calculate maximum size.
-     *
-     * @return calculated maximum size for specified component.
-     */
-    @Override
-    public Vector2f getMaximumSize(Component parent) {
-        return new Vector2f(Float.MAX_VALUE);
-    }
-
-    /**
      * Used to lay out child components for parent component.
      *
      * @param parent component to lay out.
@@ -269,19 +177,14 @@ public class BorderLayout implements Layout {
 
         prepareBaseNode(parent, baseNode, size);
 
-        Vector2f minLeft = getMinSize(leftComponent);
-        Vector2f minCenter = getMinSize(centerComponent);
-        Vector2f minRight = getMinSize(rightComponent);
-        float minHeightForMidRow = Math.max(Math.max(minLeft.y, minCenter.y), minRight.y);
-
         prepareTopOrBottomNode(tNode, topComponent);
         prepareTopOrBottomNode(bNode, bottomComponent);
 
-        prepareMidRowNode(mNode, minHeightForMidRow);
+        prepareMidRowNode(mNode);
 
-        prepareLeftMidRightNode(lNode, minLeft, minHeightForMidRow, leftComponent);
-        prepareLeftMidRightNode(cNode, minCenter, minHeightForMidRow, centerComponent);
-        prepareLeftMidRightNode(rNode, minRight, minHeightForMidRow, rightComponent);
+        prepareLeftMidRightNode(lNode, leftComponent);
+        prepareLeftMidRightNode(cNode, centerComponent);
+        prepareLeftMidRightNode(rNode, rightComponent);
 
         applyMargin(tNode, topComponent);
         applyMargin(lNode, leftComponent);
@@ -317,7 +220,30 @@ public class BorderLayout implements Layout {
         freeMem(baseNode, mNode, tNode, lNode, cNode, rNode, bNode);
     }
 
-    private void prepareMidRowNode(long mNode, float midMaxOfMin) {
+    private void prepareMidRowNode(long mNode) {
+        float minLY = getMinSize(leftComponent).y;
+        float minCY = getMinSize(centerComponent).y;
+        float minRY = getMinSize(rightComponent).y;
+        if (leftComponent != null) {
+            Vector4f margin = leftComponent.getStyle().getMargin();
+            if (margin != null) {
+                minLY += margin.y + margin.w;
+            }
+        }
+        if (centerComponent != null) {
+            Vector4f margin = centerComponent.getStyle().getMargin();
+            if (margin != null) {
+                minCY += margin.y + margin.w;
+            }
+        }
+        if (rightComponent != null) {
+            Vector4f margin = rightComponent.getStyle().getMargin();
+            if (margin != null) {
+                minRY += margin.y + margin.w;
+            }
+        }
+        float midMaxOfMin = Math.max(Math.max(minLY, minCY), minRY);
+
         Yoga.YGNodeStyleSetFlexDirection(mNode, Yoga.YGFlexDirectionRow);
         Yoga.YGNodeStyleSetAlignItems(mNode, Yoga.YGAlignStretch);
         Yoga.YGNodeStyleSetJustifyContent(mNode, Yoga.YGJustifySpaceBetween);
@@ -353,8 +279,9 @@ public class BorderLayout implements Layout {
         }
     }
 
-    private void prepareLeftMidRightNode(long yogaNode, Vector2f minSize, float midMaxOfMin, Component component) {
+    private void prepareLeftMidRightNode(long yogaNode, Component component) {
         if (component != null) {
+            Vector2f minSize = getMinSize(component);
             Vector2f maxSize = getMaxSize(component);
             Yoga.YGNodeStyleSetMaxWidth(yogaNode, maxSize.x);
             Yoga.YGNodeStyleSetMaxHeight(yogaNode, maxSize.y);
@@ -362,7 +289,6 @@ public class BorderLayout implements Layout {
             Yoga.YGNodeStyleSetMinHeight(yogaNode, minSize.y);
             Yoga.YGNodeStyleSetFlexGrow(yogaNode, 1);
             Yoga.YGNodeStyleSetFlexShrink(yogaNode, 1);
-            Yoga.YGNodeStyleSetMinHeight(yogaNode, midMaxOfMin);
             Vector2f preferredSize = component.getStyle().getPreferredSize();
             if (preferredSize != null) {
                 Yoga.YGNodeStyleSetWidth(yogaNode, preferredSize.x);
