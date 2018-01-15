@@ -1,3 +1,7 @@
+## [1.4.3]
+### Fixed
+- Fixed nvg password input renderer bug (with empty password rendering).
+ 
 ## [1.4.2]
 ### Major
 - Updated component structure to DOM-like. More information you can find in commits.
