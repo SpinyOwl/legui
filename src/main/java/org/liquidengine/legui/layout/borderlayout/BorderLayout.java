@@ -1,6 +1,7 @@
 package org.liquidengine.legui.layout.borderlayout;
 
 import org.joml.Vector2f;
+import org.joml.Vector4f;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.layout.Layout;
 import org.liquidengine.legui.layout.LayoutConstraint;
@@ -31,10 +32,7 @@ import org.lwjgl.util.yoga.Yoga;
  * </pre>
  * <p>. Created by ShchAlexander on 23.11.2017.
  */
-public class    BorderLayout implements Layout {
-
-    private float horizontalGap;
-    private float verticalGap;
+public class BorderLayout implements Layout {
 
     private Component topComponent;
     private Component leftComponent;
@@ -49,15 +47,21 @@ public class    BorderLayout implements Layout {
     }
 
     /**
-     * Constructor allows to set gaps between components.
+     * Used to apply component margins to yoga nodes.
      *
-     * @param horizontalGap horizontal gap.
-     * @param verticalGap vertical gap.
+     * @param node node to apply margin.
+     * @param component component associated to node.
      */
-    public BorderLayout(float horizontalGap, float verticalGap) {
-
-        this.horizontalGap = horizontalGap;
-        this.verticalGap = verticalGap;
+    private static void applyMargin(long node, Component component) {
+        if (component != null) {
+            Vector4f margin = component.getStyle().getMargin();
+            if (margin != null) {
+                Yoga.YGNodeStyleSetMargin(node, Yoga.YGEdgeLeft, margin.x);
+                Yoga.YGNodeStyleSetMargin(node, Yoga.YGEdgeTop, margin.y);
+                Yoga.YGNodeStyleSetMargin(node, Yoga.YGEdgeRight, margin.z);
+                Yoga.YGNodeStyleSetMargin(node, Yoga.YGEdgeBottom, margin.w);
+            }
+        }
     }
 
     /**
@@ -160,30 +164,30 @@ public class    BorderLayout implements Layout {
         Vector2f minimumSize = new Vector2f(0);
         if (leftComponent != null) {
             Vector2f min = leftComponent.getStyle().getMinimumSize();
-            minimumSize.x += min.x + horizontalGap;
+            minimumSize.x += min.x;
             minimumSize.y = Math.max(min.y, minimumSize.y);
         }
         if (centerComponent != null) {
             Vector2f min = centerComponent.getStyle().getMinimumSize();
-            minimumSize.x += min.x + horizontalGap;
+            minimumSize.x += min.x;
             minimumSize.y = Math.max(min.y, minimumSize.y);
 
         }
         if (rightComponent != null) {
             Vector2f min = rightComponent.getStyle().getMinimumSize();
-            minimumSize.x += min.x + horizontalGap;
+            minimumSize.x += min.x;
             minimumSize.y = Math.max(min.y, minimumSize.y);
 
         }
         if (topComponent != null) {
             Vector2f min = topComponent.getStyle().getMinimumSize();
             minimumSize.x = Math.max(min.x, minimumSize.x);
-            minimumSize.y += min.y + verticalGap;
+            minimumSize.y += min.y;
         }
         if (bottomComponent != null) {
             Vector2f min = bottomComponent.getStyle().getMinimumSize();
             minimumSize.x = Math.max(min.x, minimumSize.x);
-            minimumSize.y += min.y + verticalGap;
+            minimumSize.y += min.y;
         }
         return minimumSize;
     }
@@ -200,30 +204,30 @@ public class    BorderLayout implements Layout {
         Vector2f prefSize = new Vector2f(0);
         if (leftComponent != null) {
             Vector2f pref = leftComponent.getStyle().getPreferredSize();
-            prefSize.x += pref.x + horizontalGap;
+            prefSize.x += pref.x;
             prefSize.y = Math.max(pref.y, prefSize.y);
         }
         if (centerComponent != null) {
             Vector2f pref = centerComponent.getStyle().getPreferredSize();
-            prefSize.x += pref.x + horizontalGap;
+            prefSize.x += pref.x;
             prefSize.y = Math.max(pref.y, prefSize.y);
 
         }
         if (rightComponent != null) {
             Vector2f pref = rightComponent.getStyle().getPreferredSize();
-            prefSize.x += pref.x + horizontalGap;
+            prefSize.x += pref.x;
             prefSize.y = Math.max(pref.y, prefSize.y);
 
         }
         if (topComponent != null) {
             Vector2f pref = topComponent.getStyle().getPreferredSize();
             prefSize.x = Math.max(pref.x, prefSize.x);
-            prefSize.y += pref.y + verticalGap;
+            prefSize.y += pref.y;
         }
         if (bottomComponent != null) {
             Vector2f pref = bottomComponent.getStyle().getPreferredSize();
             prefSize.x = Math.max(pref.x, prefSize.x);
-            prefSize.y += pref.y + verticalGap;
+            prefSize.y += pref.y;
         }
         return prefSize;
     }
@@ -250,7 +254,7 @@ public class    BorderLayout implements Layout {
         if (parent == null) {
             return;
         }
-        long rootNode = Yoga.YGNodeNew();
+        long baseNode = Yoga.YGNodeNew();
 
         long mNode = Yoga.YGNodeNew();
 
@@ -259,78 +263,33 @@ public class    BorderLayout implements Layout {
         long cNode = Yoga.YGNodeNew();
         long rNode = Yoga.YGNodeNew();
         long bNode = Yoga.YGNodeNew();
+        Vector2f size = parent.getSize();
 
-        prepareNodes(rootNode, mNode, tNode, lNode, cNode, rNode, bNode);
+        prepareNodesStructure(baseNode, mNode, tNode, lNode, cNode, rNode, bNode);
 
-        Yoga.YGNodeStyleSetFlexDirection(rootNode, Yoga.YGFlexDirectionColumn);
-        Yoga.YGNodeStyleSetAlignItems(rootNode, Yoga.YGAlignStretch);
-        Yoga.YGNodeStyleSetJustifyContent(rootNode, Yoga.YGJustifySpaceBetween);
-
-        Yoga.YGNodeStyleSetFlexDirection(mNode, Yoga.YGFlexDirectionRow);
-        Yoga.YGNodeStyleSetAlignItems(mNode, Yoga.YGAlignStretch);
-        Yoga.YGNodeStyleSetJustifyContent(mNode, Yoga.YGJustifySpaceBetween);
+        prepareBaseNode(parent, baseNode, size);
 
         Vector2f minLeft = getMinSize(leftComponent);
         Vector2f minCenter = getMinSize(centerComponent);
         Vector2f minRight = getMinSize(rightComponent);
-        float midMaxOfMin = Math.max(Math.max(minLeft.y, minCenter.y), minRight.y);
-        Yoga.YGNodeStyleSetMinHeight(mNode, midMaxOfMin);
-        Yoga.YGNodeStyleSetMaxHeight(mNode, Float.MAX_VALUE);
+        float minHeightForMidRow = Math.max(Math.max(minLeft.y, minCenter.y), minRight.y);
 
-        Vector2f size = parent.getSize();
-        Yoga.YGNodeStyleSetWidth(mNode, size.x);
+        prepareTopOrBottomNode(tNode, topComponent);
+        prepareTopOrBottomNode(bNode, bottomComponent);
 
-        Yoga.YGNodeStyleSetFlexGrow(mNode, 1);
-        Yoga.YGNodeStyleSetFlexShrink(mNode, 1);
+        prepareMidRowNode(mNode, minHeightForMidRow);
 
-        Vector2f maxTop = getMaxSize(topComponent);
-        Yoga.YGNodeStyleSetMaxWidth(tNode, maxTop.x);
-        Yoga.YGNodeStyleSetMaxHeight(tNode, maxTop.y);
-        Vector2f minTop = getMinSize(topComponent);
-        Yoga.YGNodeStyleSetMinWidth(tNode, minTop.x);
-        Yoga.YGNodeStyleSetMinHeight(tNode, minTop.y);
-        Yoga.YGNodeStyleSetFlexGrow(tNode, 1);
-        Yoga.YGNodeStyleSetFlexShrink(tNode, 1);
-        Yoga.YGNodeStyleSetWidth(tNode, size.x);
+        prepareLeftMidRightNode(lNode, minLeft, minHeightForMidRow, leftComponent);
+        prepareLeftMidRightNode(cNode, minCenter, minHeightForMidRow, centerComponent);
+        prepareLeftMidRightNode(rNode, minRight, minHeightForMidRow, rightComponent);
 
-        Vector2f maxBottom = getMaxSize(bottomComponent);
-        Yoga.YGNodeStyleSetMaxWidth(bNode, maxBottom.x);
-        Yoga.YGNodeStyleSetMaxHeight(bNode, maxBottom.y);
-        Vector2f minBottom = getMinSize(bottomComponent);
-        Yoga.YGNodeStyleSetMinWidth(bNode, minBottom.x);
-        Yoga.YGNodeStyleSetMinHeight(bNode, minBottom.y);
-        Yoga.YGNodeStyleSetFlexGrow(bNode, 1);
-        Yoga.YGNodeStyleSetFlexShrink(bNode, 1);
-        Yoga.YGNodeStyleSetWidth(bNode, size.x);
+        applyMargin(tNode, topComponent);
+        applyMargin(lNode, leftComponent);
+        applyMargin(cNode, centerComponent);
+        applyMargin(rNode, rightComponent);
+        applyMargin(bNode, bottomComponent);
 
-        Vector2f maxLeft = getMaxSize(leftComponent);
-        Yoga.YGNodeStyleSetMaxWidth(lNode, maxLeft.x);
-        Yoga.YGNodeStyleSetMaxHeight(lNode, maxLeft.y);
-        Yoga.YGNodeStyleSetMinWidth(lNode, minLeft.x);
-        Yoga.YGNodeStyleSetMinHeight(lNode, minLeft.y);
-        Yoga.YGNodeStyleSetFlexGrow(lNode, 1);
-        Yoga.YGNodeStyleSetFlexShrink(lNode, 1);
-        Yoga.YGNodeStyleSetMinHeight(lNode, midMaxOfMin);
-
-        Vector2f maxCenter = getMaxSize(centerComponent);
-        Yoga.YGNodeStyleSetMaxWidth(cNode, maxCenter.x);
-        Yoga.YGNodeStyleSetMaxHeight(cNode, maxCenter.y);
-        Yoga.YGNodeStyleSetMinWidth(cNode, minCenter.x);
-        Yoga.YGNodeStyleSetMinHeight(cNode, minCenter.y);
-        Yoga.YGNodeStyleSetFlexGrow(cNode, 1);
-        Yoga.YGNodeStyleSetFlexShrink(cNode, 1);
-        Yoga.YGNodeStyleSetMinHeight(cNode, midMaxOfMin);
-
-        Vector2f maxRight = getMaxSize(rightComponent);
-        Yoga.YGNodeStyleSetMaxWidth(rNode, maxRight.x);
-        Yoga.YGNodeStyleSetMaxHeight(rNode, maxRight.y);
-        Yoga.YGNodeStyleSetMinWidth(rNode, minRight.x);
-        Yoga.YGNodeStyleSetMinHeight(rNode, minRight.y);
-        Yoga.YGNodeStyleSetFlexGrow(rNode, 1);
-        Yoga.YGNodeStyleSetFlexShrink(rNode, 1);
-        Yoga.YGNodeStyleSetMinHeight(rNode, midMaxOfMin);
-
-        Yoga.nYGNodeCalculateLayout(rootNode, size.x, size.y, Yoga.YGDirectionLTR);
+        Yoga.nYGNodeCalculateLayout(baseNode, size.x, size.y, Yoga.YGDirectionLTR);
 
         Vector2f d = new Vector2f(Yoga.YGNodeLayoutGetLeft(mNode), Yoga.YGNodeLayoutGetTop(mNode));
 
@@ -355,13 +314,88 @@ public class    BorderLayout implements Layout {
             Yoga.YGNodeLayoutGetWidth(cNode), Yoga.YGNodeLayoutGetHeight(cNode)
         );
 
-        freeMem(rootNode, mNode, tNode, lNode, cNode, rNode, bNode);
+        freeMem(baseNode, mNode, tNode, lNode, cNode, rNode, bNode);
+    }
+
+    private void prepareMidRowNode(long mNode, float midMaxOfMin) {
+        Yoga.YGNodeStyleSetFlexDirection(mNode, Yoga.YGFlexDirectionRow);
+        Yoga.YGNodeStyleSetAlignItems(mNode, Yoga.YGAlignStretch);
+        Yoga.YGNodeStyleSetJustifyContent(mNode, Yoga.YGJustifySpaceBetween);
+
+        Yoga.YGNodeStyleSetMinHeight(mNode, midMaxOfMin);
+        Yoga.YGNodeStyleSetMaxHeight(mNode, Float.MAX_VALUE);
+
+        Yoga.YGNodeStyleSetFlexGrow(mNode, 1);
+        Yoga.YGNodeStyleSetFlexShrink(mNode, 1);
+    }
+
+    private void prepareBaseNode(Component parent, long baseNode, Vector2f size) {
+        Yoga.YGNodeStyleSetFlexDirection(baseNode, Yoga.YGFlexDirectionColumn);
+        Yoga.YGNodeStyleSetAlignItems(baseNode, Yoga.YGAlignStretch);
+        Yoga.YGNodeStyleSetJustifyContent(baseNode, Yoga.YGJustifySpaceBetween);
+
+        Vector2f maximumSize = parent.getStyle().getMaximumSize();
+        Vector2f minimumSize = parent.getStyle().getMinimumSize();
+        Vector2f preferredSize = parent.getStyle().getPreferredSize();
+        Yoga.YGNodeStyleSetMinWidth(baseNode, minimumSize == null ? 0 : minimumSize.x);
+        Yoga.YGNodeStyleSetMinHeight(baseNode, minimumSize == null ? 0 : minimumSize.y);
+        Yoga.YGNodeStyleSetMaxWidth(baseNode, maximumSize == null ? Float.MAX_VALUE : maximumSize.x);
+        Yoga.YGNodeStyleSetMaxHeight(baseNode, maximumSize == null ? Float.MAX_VALUE : maximumSize.y);
+        Yoga.YGNodeStyleSetWidth(baseNode, preferredSize == null ? size.x : preferredSize.x);
+        Yoga.YGNodeStyleSetHeight(baseNode, preferredSize == null ? size.y : preferredSize.y);
+
+        Vector4f padding = parent.getStyle().getPadding();
+        if (padding != null) {
+            Yoga.YGNodeStyleSetPadding(baseNode, Yoga.YGEdgeLeft, padding.x);
+            Yoga.YGNodeStyleSetPadding(baseNode, Yoga.YGEdgeTop, padding.y);
+            Yoga.YGNodeStyleSetPadding(baseNode, Yoga.YGEdgeRight, padding.z);
+            Yoga.YGNodeStyleSetPadding(baseNode, Yoga.YGEdgeBottom, padding.w);
+        }
+    }
+
+    private void prepareLeftMidRightNode(long yogaNode, Vector2f minSize, float midMaxOfMin, Component component) {
+        if (component != null) {
+            Vector2f maxSize = getMaxSize(component);
+            Yoga.YGNodeStyleSetMaxWidth(yogaNode, maxSize.x);
+            Yoga.YGNodeStyleSetMaxHeight(yogaNode, maxSize.y);
+            Yoga.YGNodeStyleSetMinWidth(yogaNode, minSize.x);
+            Yoga.YGNodeStyleSetMinHeight(yogaNode, minSize.y);
+            Yoga.YGNodeStyleSetFlexGrow(yogaNode, 1);
+            Yoga.YGNodeStyleSetFlexShrink(yogaNode, 1);
+            Yoga.YGNodeStyleSetMinHeight(yogaNode, midMaxOfMin);
+            Vector2f preferredSize = component.getStyle().getPreferredSize();
+            if (preferredSize != null) {
+                Yoga.YGNodeStyleSetWidth(yogaNode, preferredSize.x);
+                Yoga.YGNodeStyleSetHeight(yogaNode, preferredSize.y);
+            }
+        }
+    }
+
+    private void prepareTopOrBottomNode(long bNode, Component component) {
+        if (component != null) {
+            Vector2f maxTop = getMaxSize(component);
+            Yoga.YGNodeStyleSetMaxWidth(bNode, maxTop.x);
+            Yoga.YGNodeStyleSetMaxHeight(bNode, maxTop.y);
+
+            Vector2f minTop = getMinSize(component);
+            Yoga.YGNodeStyleSetMinWidth(bNode, minTop.x);
+            Yoga.YGNodeStyleSetMinHeight(bNode, minTop.y);
+
+            Yoga.YGNodeStyleSetFlexGrow(bNode, 1);
+            Yoga.YGNodeStyleSetFlexShrink(bNode, 1);
+
+            Vector2f preferredSize = component.getStyle().getPreferredSize();
+            if (preferredSize != null) {
+                Yoga.YGNodeStyleSetWidth(bNode, preferredSize.x);
+                Yoga.YGNodeStyleSetHeight(bNode, preferredSize.y);
+            }
+        }
     }
 
     /**
      * Used to free native memory.
      *
-     * @param rootNode root node.
+     * @param baseNode base node.
      * @param mNode mid row node.
      * @param tNode top node.
      * @param lNode left node.
@@ -369,8 +403,8 @@ public class    BorderLayout implements Layout {
      * @param rNode right node.
      * @param bNode bottom node.
      */
-    private void freeMem(long rootNode, long mNode, long tNode, long lNode, long cNode, long rNode, long bNode) {
-        Yoga.YGNodeFree(rootNode);
+    private void freeMem(long baseNode, long mNode, long tNode, long lNode, long cNode, long rNode, long bNode) {
+        Yoga.YGNodeFree(baseNode);
         Yoga.YGNodeFree(mNode);
         Yoga.YGNodeFree(tNode);
         Yoga.YGNodeFree(lNode);
@@ -390,7 +424,7 @@ public class    BorderLayout implements Layout {
      * @param rNode right node.
      * @param bNode bottom node.
      */
-    private void prepareNodes(long rootNode, long mNode, long tNode, long lNode, long cNode, long rNode, long bNode) {
+    private void prepareNodesStructure(long rootNode, long mNode, long tNode, long lNode, long cNode, long rNode, long bNode) {
         int rowIndex = 0;
         int colIndex = 0;
         if (topComponent != null) {
