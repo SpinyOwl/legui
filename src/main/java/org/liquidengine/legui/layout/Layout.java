@@ -1,6 +1,5 @@
 package org.liquidengine.legui.layout;
 
-import org.joml.Vector2f;
 import org.liquidengine.legui.component.Component;
 
 /**
