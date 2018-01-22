@@ -16,13 +16,42 @@ import org.lwjgl.util.yoga.Yoga;
  */
 public class BoxLayout implements Layout {
 
+    /**
+     * Box layout orientation.
+     */
     private Orientation orientation;
 
+    /**
+     * Default constructor. Initialize orientation with {@link Orientation#HORIZONTAL}.
+     */
     public BoxLayout() {
         this.orientation = Orientation.HORIZONTAL;
     }
 
+    /**
+     * Box layout constructor with orientation attribute.
+     *
+     * @param orientation orientation for box layout.
+     */
     public BoxLayout(Orientation orientation) {
+        this.orientation = orientation;
+    }
+
+    /**
+     * Returns layout orientation.
+     *
+     * @return layout orientation.
+     */
+    public Orientation getOrientation() {
+        return orientation;
+    }
+
+    /**
+     * Used to set layout orientation.
+     *
+     * @param orientation layout orientation to set.
+     */
+    public void setOrientation(Orientation orientation) {
         this.orientation = orientation;
     }
 
@@ -67,38 +96,8 @@ public class BoxLayout implements Layout {
         int index = 0;
         for (Component childComponent : childComponents) {
             long node = Yoga.YGNodeNew();
-
-            Vector2f minimumSize = childComponent.getStyle().getMinimumSize();
-            if (minimumSize != null) {
-                Yoga.YGNodeStyleSetMinWidth(node, minimumSize.x);
-                Yoga.YGNodeStyleSetMinHeight(node, minimumSize.y);
-            }
-
-            Vector2f maximumSize = childComponent.getStyle().getMaximumSize();
-            if (maximumSize != null) {
-                Yoga.YGNodeStyleSetMaxWidth(node, maximumSize.x);
-                Yoga.YGNodeStyleSetMaxHeight(node, maximumSize.y);
-            }
-
-            Vector2f preferredSize = childComponent.getStyle().getPreferredSize();
-            if (preferredSize != null) {
-                Yoga.YGNodeStyleSetWidth(node, preferredSize.x);
-                Yoga.YGNodeStyleSetHeight(node, preferredSize.y);
-            }
-
-            Yoga.YGNodeStyleSetFlexGrow(node, 1);
-            Yoga.YGNodeStyleSetFlexShrink(node, 1);
-
-            Vector4f margin = childComponent.getStyle().getMargin();
-            if (margin != null) {
-                Yoga.YGNodeStyleSetMargin(node, Yoga.YGEdgeLeft, margin.x);
-                Yoga.YGNodeStyleSetMargin(node, Yoga.YGEdgeTop, margin.y);
-                Yoga.YGNodeStyleSetMargin(node, Yoga.YGEdgeRight, margin.z);
-                Yoga.YGNodeStyleSetMargin(node, Yoga.YGEdgeBottom, margin.w);
-            }
-
+            prepareChildNode(childComponent, node);
             yogaNodes.add(node);
-
             Yoga.YGNodeInsertChild(rootNode, node, index++);
         }
 
@@ -112,8 +111,57 @@ public class BoxLayout implements Layout {
             childComponent.setSize(Yoga.YGNodeLayoutGetWidth(yogaNode), Yoga.YGNodeLayoutGetHeight(yogaNode));
         }
 
+        // free native memory
+        for (Long yogaNode : yogaNodes) {
+            Yoga.YGNodeFree(yogaNode);
+        }
+        Yoga.YGNodeFree(rootNode);
+
     }
 
+    /**
+     * Used to prepare child yoga node.
+     *
+     * @param childComponent child gui component associated with child yoga node.
+     * @param node child yoga node.
+     */
+    private void prepareChildNode(Component childComponent, long node) {
+        Vector2f minimumSize = childComponent.getStyle().getMinimumSize();
+        if (minimumSize != null) {
+            Yoga.YGNodeStyleSetMinWidth(node, minimumSize.x);
+            Yoga.YGNodeStyleSetMinHeight(node, minimumSize.y);
+        }
+
+        Vector2f maximumSize = childComponent.getStyle().getMaximumSize();
+        if (maximumSize != null) {
+            Yoga.YGNodeStyleSetMaxWidth(node, maximumSize.x);
+            Yoga.YGNodeStyleSetMaxHeight(node, maximumSize.y);
+        }
+
+        Vector2f preferredSize = childComponent.getStyle().getPreferredSize();
+        if (preferredSize != null) {
+            Yoga.YGNodeStyleSetWidth(node, preferredSize.x);
+            Yoga.YGNodeStyleSetHeight(node, preferredSize.y);
+        }
+
+        Yoga.YGNodeStyleSetFlexGrow(node, 1);
+        Yoga.YGNodeStyleSetFlexShrink(node, 1);
+
+        Vector4f margin = childComponent.getStyle().getMargin();
+        if (margin != null) {
+            Yoga.YGNodeStyleSetMargin(node, Yoga.YGEdgeLeft, margin.x);
+            Yoga.YGNodeStyleSetMargin(node, Yoga.YGEdgeTop, margin.y);
+            Yoga.YGNodeStyleSetMargin(node, Yoga.YGEdgeRight, margin.z);
+            Yoga.YGNodeStyleSetMargin(node, Yoga.YGEdgeBottom, margin.w);
+        }
+    }
+
+    /**
+     * Used to prepare root yoga node.
+     *
+     * @param parent parent gui component associated with root yoga node.
+     * @param rootNode root yoga node.
+     */
     private void prepareRootNode(Component parent, long rootNode) {
         if (Orientation.HORIZONTAL == orientation) {
             Yoga.YGNodeStyleSetFlexDirection(rootNode, Yoga.YGFlexDirectionRow);
