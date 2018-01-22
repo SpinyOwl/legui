@@ -95,8 +95,8 @@ public class MouseClickEventHandler implements SystemEventHandler<SystemMouseCli
     private void removeFocus(Component targetComponent, Frame frame, Context context) {
         List<Layer> allLayers = frame.getAllLayers();
         for (Layer layer : allLayers) {
-            List<Component> childs = layer.getContainer().getChilds();
-            for (Component child : childs) {
+            List<Component> childComponents = layer.getContainer().getChildComponents();
+            for (Component child : childComponents) {
                 removeFocus(targetComponent, child, context, frame);
             }
         }
@@ -108,8 +108,8 @@ public class MouseClickEventHandler implements SystemEventHandler<SystemMouseCli
             component.setPressed(false);
             EventProcessor.getInstance().pushEvent(new FocusEvent<>(component, context, frame, focused, false));
         }
-        List<? extends Component> childs = component.getChilds();
-        for (Component child : childs) {
+        List<? extends Component> childComponents = component.getChildComponents();
+        for (Component child : childComponents) {
             removeFocus(focused, child, context, frame);
         }
     }
