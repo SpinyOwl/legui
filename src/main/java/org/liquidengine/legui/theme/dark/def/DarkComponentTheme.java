@@ -30,8 +30,8 @@ public class DarkComponentTheme<T extends Component> extends AbstractTheme<T> {
         if (tooltip != null) {
             Themes.getDefaultTheme().applyAll(tooltip);
         }
-        List<? extends Component> childs = component.getChilds();
-        for (Component child : childs) {
+        List<? extends Component> childComponents = component.getChildComponents();
+        for (Component child : childComponents) {
             Themes.getDefaultTheme().applyAll(child);
         }
     }

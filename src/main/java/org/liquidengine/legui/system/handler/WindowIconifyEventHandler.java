@@ -26,8 +26,8 @@ public class WindowIconifyEventHandler extends AbstractSystemEventHandler<System
             return;
         }
         EventProcessor.getInstance().pushEvent(new WindowIconifyEvent(component, context, frame, event.iconified));
-        List<Component> childs = component.getChilds();
-        for (Component child : childs) {
+        List<Component> childComponents = component.getChildComponents();
+        for (Component child : childComponents) {
             pushEvent(child, event, context, frame);
         }
     }
