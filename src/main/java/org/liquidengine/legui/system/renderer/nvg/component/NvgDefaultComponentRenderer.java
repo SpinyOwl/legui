@@ -9,7 +9,6 @@ import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.layout.Layout;
 import org.liquidengine.legui.layout.borderlayout.BorderLayout;
 import org.liquidengine.legui.layout.borderlayout.BorderLayoutConstraint;
-import org.liquidengine.legui.layout.boxlayout.BoxLayout;
 import org.liquidengine.legui.style.Style;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.RendererProvider;
@@ -67,7 +66,7 @@ public class NvgDefaultComponentRenderer<C extends Component> extends NvgCompone
     protected void renderChildComponents(C component, Context context, long nanovg) {
         // TODO : Could be created per layout renderer for child components.
         Layout layout = component.getLayout();
-        if (layout == null || (layout instanceof BoxLayout)) {
+        if (layout == null) {
             for (Component child : component.getChildComponents()) {
                 RendererProvider.getInstance().getComponentRenderer(child.getClass()).render(child, context);
             }
@@ -78,6 +77,10 @@ public class NvgDefaultComponentRenderer<C extends Component> extends NvgCompone
             renderBorderLayoutComponent(context, borderLayout.getComponent(BorderLayoutConstraint.CENTER));
             renderBorderLayoutComponent(context, borderLayout.getComponent(BorderLayoutConstraint.RIGHT));
             renderBorderLayoutComponent(context, borderLayout.getComponent(BorderLayoutConstraint.BOTTOM));
+        } else {
+            for (Component child : component.getChildComponents()) {
+                RendererProvider.getInstance().getComponentRenderer(child.getClass()).render(child, context);
+            }
         }
     }
 
