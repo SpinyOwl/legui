@@ -124,20 +124,21 @@ public class TabKeyEventListener implements EventListener<KeyEvent> {
      * @return previous component.
      */
     private Component findPrevInChildComponents(List<Component> childComponents, Component prev) {
+        Component previousComponent = prev;
         childComponents.sort(comparator);
         Collections.reverse(childComponents);
         for (Component child : childComponents) {
             if (child.isVisible()) {
                 if (child.isTabFocusable()) {
-                    prev = child;
+                    previousComponent = child;
                     if (!child.isEmpty()) {
-                        prev = findPrevInChildComponents(child.getChildComponents(), prev);
+                        previousComponent = findPrevInChildComponents(child.getChildComponents(), previousComponent);
                     }
-                    return prev;
+                    return previousComponent;
                 } else {
                     if (!child.isEmpty()) {
-                        Component cprev = findPrevInChildComponents(child.getChildComponents(), prev);
-                        if (prev != cprev) {
+                        Component cprev = findPrevInChildComponents(child.getChildComponents(), previousComponent);
+                        if (previousComponent != cprev) {
                             return cprev;
                         }
                     }
@@ -145,7 +146,7 @@ public class TabKeyEventListener implements EventListener<KeyEvent> {
             }
         }
 
-        return prev;
+        return previousComponent;
     }
 
     /**
@@ -188,17 +189,18 @@ public class TabKeyEventListener implements EventListener<KeyEvent> {
             return next;
         }
 
+        Component nextComponent = next;
         childComponents.sort(comparator);
 
         for (Component child : childComponents) {
             if (child.isVisible()) {
                 if (child.isTabFocusable()) {
-                    next = child;
-                    return next;
+                    nextComponent = child;
+                    return nextComponent;
                 } else {
                     if (!child.isEmpty()) {
-                        Component cnext = findNextInChildComponents(child.getChildComponents(), next);
-                        if (next != cnext) {
+                        Component cnext = findNextInChildComponents(child.getChildComponents(), nextComponent);
+                        if (nextComponent != cnext) {
                             return cnext;
                         }
                     }
@@ -206,7 +208,7 @@ public class TabKeyEventListener implements EventListener<KeyEvent> {
             }
         }
 
-        return next;
+        return nextComponent;
     }
 
     /**
