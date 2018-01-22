@@ -63,7 +63,7 @@ public class BoxLayout implements Layout {
      */
     @Override
     public void addComponent(Component component, LayoutConstraint constraint) {
-
+        // there is no specific logic on adding component to parent to layout.
     }
 
     /**
@@ -73,7 +73,7 @@ public class BoxLayout implements Layout {
      */
     @Override
     public void removeComponent(Component component) {
-
+        // there is no specific logic on removing component from parent to layout.
     }
 
     /**
