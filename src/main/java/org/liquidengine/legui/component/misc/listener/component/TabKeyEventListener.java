@@ -119,12 +119,12 @@ public class TabKeyEventListener implements EventListener<KeyEvent> {
      * Used to find previous component in child components.
      *
      * @param childComponents child components.
-     * @param prev current previous component.
+     * @param previous current previous component.
      *
      * @return previous component.
      */
-    private Component findPrevInChildComponents(List<Component> childComponents, Component prev) {
-        Component previousComponent = prev;
+    private Component findPrevInChildComponents(List<Component> childComponents, Component previous) {
+        Component previousComponent = previous;
         childComponents.sort(comparator);
         Collections.reverse(childComponents);
         for (Component child : childComponents) {
