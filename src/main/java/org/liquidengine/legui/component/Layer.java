@@ -509,8 +509,8 @@ public class Layer<T extends Component> {
      *
      * @see List#removeIf(Predicate)
      */
-    public boolean removeIf(Predicate<? super Component> filter) {
-        return container.removeIf(filter);
+    public void removeIf(Predicate<? super Component> filter) {
+        container.removeIf(filter);
     }
 
     /**
