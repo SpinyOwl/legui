@@ -11,7 +11,7 @@ public class DialogLayer extends Layer<Dialog> {
     public DialogLayer() {
         setEventPassable(false);
         setEventReceivable(true);
-        getContainer().setLayout(null);
+
         getContainer().getStyle().getBackground().setColor(0, 0, 0, 0.2f);
     }
 }

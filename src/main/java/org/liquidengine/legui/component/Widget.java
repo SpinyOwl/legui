@@ -18,6 +18,7 @@ import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.event.MouseDragEvent;
 import org.liquidengine.legui.icon.CharIcon;
 import org.liquidengine.legui.icon.Icon;
+import org.liquidengine.legui.layout.borderlayout.BorderLayout;
 import org.liquidengine.legui.layout.borderlayout.BorderLayoutConstraint;
 import org.liquidengine.legui.listener.EventListener;
 import org.liquidengine.legui.listener.MouseDragEventListener;
@@ -130,8 +131,10 @@ public class Widget extends Component {
      * @param title title to set.
      */
     private void initialize(String title) {
+        this.setLayout(new BorderLayout());
+
         titleContainer = new Panel();
-        titleContainer.setLayout(null);
+        titleContainer.setLayout(new BorderLayout());
         titleContainer.getStyle().setMaximumSize(new Vector2f(Float.MAX_VALUE, INITIAL_TITLE_HEIGHT));
         titleContainer.getStyle().setMinimumSize(new Vector2f(0, INITIAL_TITLE_HEIGHT));
         titleContainer.getStyle().getBackground().setColor(ColorConstants.white());
@@ -142,6 +145,8 @@ public class Widget extends Component {
         this.title.setPosition(0, 0);
         this.title.getSize().y = INITIAL_TITLE_HEIGHT;
         this.title.getTextState().getPadding().set(10, 5, 10, 5);
+        this.title.getStyle().setMaximumSize(Float.MAX_VALUE, INITIAL_TITLE_HEIGHT);
+        this.title.getStyle().setMinimumSize(0, INITIAL_TITLE_HEIGHT);
         this.title.getStyle().getBackground().setColor(ColorConstants.transparent());
         this.title.getStyle().setBorder(null);
         this.title.setTabFocusable(false);
@@ -158,6 +163,8 @@ public class Widget extends Component {
         closeIcon.setVerticalAlign(VerticalAlign.MIDDLE);
         closeButton.setBackgroundIcon(closeIcon);
 
+        closeButton.getStyle().setMaximumSize(INITIAL_TITLE_HEIGHT, INITIAL_TITLE_HEIGHT);
+        closeButton.getStyle().setMinimumSize(INITIAL_TITLE_HEIGHT, INITIAL_TITLE_HEIGHT);
         closeButton.getListenerMap().addListener(MouseClickEvent.class, new WidgetCloseButMouseClickEventListener(this));
         closeButton.getStyle().setBorder(null);
         closeButton.getTextState().setVerticalAlign(VerticalAlign.MIDDLE);
@@ -168,6 +175,8 @@ public class Widget extends Component {
         minimizeButton.setSize(new Vector2f(INITIAL_TITLE_HEIGHT));
         minimizeButton.getStyle().getBackground().setColor(ColorConstants.transparent());
         minimizeButton.setTabFocusable(false);
+        minimizeButton.getStyle().setMaximumSize(INITIAL_TITLE_HEIGHT, INITIAL_TITLE_HEIGHT);
+        minimizeButton.getStyle().setMinimumSize(INITIAL_TITLE_HEIGHT, INITIAL_TITLE_HEIGHT);
 
         minimizeIcon = new CharIcon(new Vector2f(INITIAL_TITLE_HEIGHT * 2 / 3), FontRegistry.MATERIAL_DESIGN_ICONS, (char) MINIMIZE_ICON_CHAR,
             ColorConstants.black());
@@ -188,11 +197,10 @@ public class Widget extends Component {
 
         container = new Panel();
         container.setTabFocusable(false);
-        container.setLayout(null);
 
-        titleContainer.add(this.title);
-        titleContainer.add(closeButton);
-        titleContainer.add(minimizeButton);
+        titleContainer.add(this.title, BorderLayoutConstraint.LEFT);
+        titleContainer.add(closeButton, BorderLayoutConstraint.RIGHT);
+        titleContainer.add(minimizeButton, BorderLayoutConstraint.CENTER);
 
         add(titleContainer, BorderLayoutConstraint.TOP);
         add(container, BorderLayoutConstraint.CENTER);

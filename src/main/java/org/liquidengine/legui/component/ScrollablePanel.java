@@ -5,6 +5,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
+import org.liquidengine.legui.layout.borderlayout.BorderLayout;
 import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.component.misc.listener.scrollablepanel.ScrollablePanelViewportScrollListener;
 import org.liquidengine.legui.component.optional.Orientation;
@@ -78,6 +79,7 @@ public class ScrollablePanel extends Component implements Viewport {
     }
 
     private void initialize() {
+        this.setLayout(new BorderLayout());
 
         float viewportWidth = getSize().x - INITIAL_SCROLL_SIZE;
         float viewportHeight = getSize().y - INITIAL_SCROLL_SIZE;
@@ -97,14 +99,14 @@ public class ScrollablePanel extends Component implements Viewport {
         horizontalScrollBar.setTabFocusable(false);
 
         viewport = new Panel(0, 0, viewportWidth, viewportHeight);
-        viewport.setLayout(null);
+
         viewport.getStyle().getBackground().setColor(1, 1, 1, 0);
         viewport.getStyle().setBorder(null);
         viewport.getListenerMap().addListener(ScrollEvent.class, new ScrollablePanelViewportScrollListener());
         viewport.setTabFocusable(false);
 
         container = new Panel(0, 0, viewportWidth, viewportHeight);
-        container.setLayout(null);
+
         container.getStyle().setBorder(null);
         container.setTabFocusable(false);
         viewport.add(container);

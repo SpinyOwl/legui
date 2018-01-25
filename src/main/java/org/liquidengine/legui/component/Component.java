@@ -24,7 +24,6 @@ import org.liquidengine.legui.intersection.Intersector;
 import org.liquidengine.legui.intersection.RectangleIntersector;
 import org.liquidengine.legui.layout.Layout;
 import org.liquidengine.legui.layout.LayoutConstraint;
-import org.liquidengine.legui.layout.borderlayout.BorderLayout;
 import org.liquidengine.legui.listener.ListenerMap;
 import org.liquidengine.legui.style.Style;
 import org.liquidengine.legui.theme.Themes;
