@@ -5,9 +5,10 @@
 [![DEVELOP BUILD](https://img.shields.io/jenkins/s/http/jenkins.liquidengine.tk/job/LEGUI_DEVELOP.svg?label=develop&style=flat-square)](http://jenkins.liquidengine.tk/job/LEGUI_DEVELOP/)
 [![](https://img.shields.io/jenkins/s/http/jenkins.liquidengine.tk/job/LEGUI_SNAPSHOTS.svg?label=snapshot&style=flat-square)](http://jenkins.liquidengine.tk/job/LEGUI_SNAPSHOTS/)
 [![](https://img.shields.io/jenkins/s/http/jenkins.liquidengine.tk/job/LEGUI_RELEASES.svg?label=release&style=flat-square)](http://jenkins.liquidengine.tk/job/LEGUI_RELEASES/)  
-![](https://img.shields.io/badge/dynamic/json.svg?label=develop&colorB=00796b&prefix=&suffix=&query=$.version&uri=http%3A%2F%2Fjenkins.liquidengine.tk%2Fjob%2FLEGUI_DEVELOP%2FlastSuccessfulBuild%2Fartifact%2FfullVersion.json&style=flat-square)
-![](https://img.shields.io/badge/dynamic/json.svg?label=snapshot&colorB=00796b&prefix=&suffix=&query=$.version&uri=http%3A%2F%2Fjenkins.liquidengine.tk%2Fjob%2FLEGUI_SNAPSHOTS%2FlastSuccessfulBuild%2Fartifact%2FfullVersion.json&style=flat-square)
-![](https://img.shields.io/badge/dynamic/json.svg?label=release&colorB=00796b&prefix=&suffix=&query=$.version&uri=http%3A%2F%2Fjenkins.liquidengine.tk%2Fjob%2FLEGUI_RELEASES%2FlastSuccessfulBuild%2Fartifact%2FfullVersion.json&style=flat-square)
+![STABLE DEVELOP VERSION](https://img.shields.io/badge/dynamic/json.svg?label=develop&colorB=00796b&prefix=&suffix=&query=$.version&uri=http%3A%2F%2Fjenkins.liquidengine.tk%2Fjob%2FLEGUI_DEVELOP%2FlastSuccessfulBuild%2Fartifact%2FfullVersion.json&style=flat-square)
+![STABLE SNAPSHOT VERSION](https://img.shields.io/badge/dynamic/json.svg?label=snapshot&colorB=00796b&prefix=&suffix=&query=$.version&uri=http%3A%2F%2Fjenkins.liquidengine.tk%2Fjob%2FLEGUI_SNAPSHOTS%2FlastSuccessfulBuild%2Fartifact%2FfullVersion.json&style=flat-square)
+![STABLE RELEASE VERSION](https://img.shields.io/badge/dynamic/json.svg?label=release&colorB=00796b&prefix=&suffix=&query=$.version&uri=http%3A%2F%2Fjenkins.liquidengine.tk%2Fjob%2FLEGUI_RELEASES%2FlastSuccessfulBuild%2Fartifact%2FfullVersion.json&style=flat-square)  
+![LAST FEATURE VERSION](https://img.shields.io/badge/dynamic/json.svg?label=feature&colorB=00796b&prefix=&suffix=&query=$.version&uri=http%3A%2F%2Fjenkins.liquidengine.tk%2Fjob%2FLEGUI_FEATURE%2FlastSuccessfulBuild%2Fartifact%2FfullVersion.json&style=flat-square)
 
 ___
 # TOC
@@ -86,8 +87,14 @@ For **[LWJGL](https://github.com/LWJGL/lwjgl3)** and **[JOML](https://github.com
 Also you can add your own versions of these libraries using [LWJGL form](https://www.lwjgl.org/download).
 
 For **LEGUI** and **[CBCHAIN](https://github.com/LiquidEngine/cbchain)** dependency  
-`https://raw.github.com/LiquidEngine/repo/releases` or  
+`https://raw.github.com/LiquidEngine/repo/releases`  
 `https://raw.github.com/LiquidEngine/repo/snapshots` 
+
+For latest develop build you can use next repository:
+`https://raw.github.com/LiquidEngine/repo/develop`
+ 
+And for feature you can use feature repository:
+`https://raw.github.com/LiquidEngine/repo/feature`
 
 And add this dependency to your build script:  
 #### Add dependency (Maven):
@@ -101,7 +108,7 @@ And add this dependency to your build script:
  ```
 **OR** 
  ```xml
-<!-- LEGUI - RELEASE - https://github.com/LiquidEngine/legui -->
+<!-- LEGUI - RELEASE/DEVELOP/FEATURE - https://github.com/LiquidEngine/legui -->
 <dependency>
     <groupId>org.liquidengine</groupId>
     <artifactId>legui</artifactId>
@@ -113,7 +120,7 @@ And add this dependency to your build script:
 // LEGUI - SNAPSHOT - https://github.com/LiquidEngine/legui
 compile group: 'org.liquidengine', name: 'legui', version: legui_version + '-SNAPSHOT', changing: true;
 // OR
-// LEGUI - RELEASE - https://github.com/LiquidEngine/legui
+// LEGUI - RELEASE/DEVELOP/FEATURE - https://github.com/LiquidEngine/legui
 compile group: 'org.liquidengine', name: 'legui', version: legui_version, changing: true;
   ```
 
