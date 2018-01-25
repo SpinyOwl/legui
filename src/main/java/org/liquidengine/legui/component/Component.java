@@ -681,6 +681,9 @@ public abstract class Component implements Serializable {
             if (parent != null && parent == this && isContains(component)) {
                 boolean removed = childComponents.remove(component);
                 if (removed) {
+                    if (layout != null) {
+                        layout.removeComponent(component);
+                    }
                     component.setParent(null);
                 }
                 return removed;
@@ -697,14 +700,9 @@ public abstract class Component implements Serializable {
      * @see List#removeAll(Collection)
      */
     public void removeAll(Collection<? extends Component> components) {
-        List<Component> toRemove = new ArrayList<>();
-        components.forEach(compo -> {
-            if (compo != null) {
-                compo.setParent(null);
-                toRemove.add(compo);
-            }
-        });
-        this.childComponents.removeAll(toRemove);
+        if (components != null) {
+            components.forEach(this::remove);
+        }
     }
 
     /**
@@ -717,9 +715,8 @@ public abstract class Component implements Serializable {
      *
      * @see List#removeIf(Predicate)
      */
-    public boolean removeIf(Predicate<? super Component> filter) {
-        childComponents.stream().filter(filter).forEach(compo -> compo.setParent(null));
-        return childComponents.removeIf(filter);
+    public void removeIf(Predicate<? super Component> filter) {
+        childComponents.stream().filter(filter).forEach(this::remove);
     }
 
     /**
