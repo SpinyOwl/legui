@@ -99,13 +99,13 @@ public abstract class Component implements Serializable {
     private boolean tabFocusable = true;
 
     ////////////////////////////////
-    //// COMPONENT LAYER DATA
+    //// COMPONENT LAYOUT DATA
     ////////////////////////////////
 
     /**
      * Layout. Used to layout
      */
-    private Layout layout = new BorderLayout();
+    private Layout layout = null;
 
     ////////////////////////////////
     //// CONTAINER BASE DATA
@@ -613,8 +613,9 @@ public abstract class Component implements Serializable {
      * @param constraint layout constraint.
      * @return true if component is added.
      * @see List#add(Object)
+     * @throws IllegalArgumentException if provided constraint is not supported by layout.
      */
-    public boolean add(Component component, LayoutConstraint constraint) {
+    public boolean add(Component component, LayoutConstraint constraint) throws IllegalArgumentException {
         if (component == null || component == this || isContains(component)) {
             return false;
         }

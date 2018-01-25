@@ -4,6 +4,7 @@ import java.util.List;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.component.Layer;
+import org.liquidengine.legui.util.Utilites;
 
 /**
  * Default layout manager.
@@ -29,8 +30,8 @@ public class DefaultLayoutManager extends LayoutManager {
      *
      * @param component component to lay out.
      */
-    private void layout(Component component) {
-        if (component != null && component.isVisible()) {
+    public void layout(Component component) {
+        if (component != null && component.isVisible() && Utilites.visibleInParents(component)) {
             Layout layout = component.getLayout();
             if (layout != null) {
                 layout.layout(component);

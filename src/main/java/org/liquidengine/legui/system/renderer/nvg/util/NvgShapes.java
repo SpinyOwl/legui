@@ -23,6 +23,7 @@ import org.lwjgl.nanovg.NVGColor;
 public class NvgShapes {
 
     public static final Vector4fc ZERO_CORNDERS = new Vector4f(0);
+    public static final float MIN_ALPHA = 0.001f;
 
     /**
      * Private constructor for utility class.
@@ -39,7 +40,7 @@ public class NvgShapes {
      * @param bgColor rectangle background color.
      */
     public static void drawRect(long nvg, Vector2fc position, Vector2fc size, Vector4fc bgColor) {
-        if (bgColor.w() == 0) {
+        if (bgColor.w() <= MIN_ALPHA) {
             return;
         }
         NVGColor fillColor = NVGColor.calloc();
@@ -59,7 +60,7 @@ public class NvgShapes {
      * @param bgColor rectangle background color.
      */
     public static void drawRect(long nvg, Vector4fc rectangle, Vector4fc bgColor) {
-        if (bgColor.w() == 0) {
+        if (bgColor.w() <= MIN_ALPHA) {
             return;
         }
         NVGColor fillColor = NVGColor.calloc();
@@ -81,7 +82,7 @@ public class NvgShapes {
      * @param radius cornder radius
      */
     public static void drawRect(long nvg, Vector2fc position, Vector2fc size, Vector4fc bgColor, float radius) {
-        if (bgColor.w() == 0) {
+        if (bgColor.w() <= MIN_ALPHA) {
             return;
         }
         NVGColor fillColor = NVGColor.calloc();
@@ -130,7 +131,7 @@ public class NvgShapes {
      * @param radius cornder radius
      */
     public static void drawRect(long nvg, Vector4fc rectangle, Vector4fc bgColor, float radius) {
-        if (bgColor.w() == 0) {
+        if (bgColor.w() <= MIN_ALPHA) {
             return;
         }
         NVGColor fillColor = NVGColor.calloc();
@@ -174,7 +175,7 @@ public class NvgShapes {
      * @param rectStrokeColor rectangle color.
      */
     public static void drawRectStroke(long nvg, Vector2fc position, Vector2fc size, Vector4fc rectStrokeColor, float strokeWidth) {
-        if (rectStrokeColor.w() == 0) {
+        if (rectStrokeColor.w() <= MIN_ALPHA) {
             return;
         }
         NVGColor strokeColor = NVGColor.calloc();
@@ -195,7 +196,7 @@ public class NvgShapes {
      * @param rectStrokeColor rectangle color.
      */
     public static void drawRectStroke(long nvg, Vector4fc rectangle, Vector4fc rectStrokeColor, float strokeWidth) {
-        if (rectStrokeColor.w() == 0) {
+        if (rectStrokeColor.w() <= MIN_ALPHA) {
             return;
         }
         NVGColor strokeColor = NVGColor.calloc();
@@ -242,7 +243,7 @@ public class NvgShapes {
      * @param radius cornder radius
      */
     public static void drawRectStroke(long nvg, Vector2fc position, Vector2fc size, Vector4fc rectStrokeColor, float strokeWidth, float radius) {
-        if (rectStrokeColor.w() == 0) {
+        if (rectStrokeColor.w() <= MIN_ALPHA) {
             return;
         }
         NVGColor strokeColor = NVGColor.calloc();
@@ -290,7 +291,7 @@ public class NvgShapes {
      * @param radius corner radius.
      */
     public static void drawRectStroke(long nvg, Vector4fc rectangle, Vector4fc rectStrokeColor, float strokeWidth, float radius) {
-        if (rectStrokeColor.w() == 0) {
+        if (rectStrokeColor.w() <= MIN_ALPHA) {
             return;
         }
         NVGColor strokeColor = NVGColor.calloc();

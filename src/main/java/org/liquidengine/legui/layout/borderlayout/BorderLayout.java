@@ -67,7 +67,7 @@ public class BorderLayout implements Layout {
      * @throws IllegalArgumentException if provided constraint is not instance of {@link BorderLayoutConstraint}.
      */
     @Override
-    public void addComponent(Component component, LayoutConstraint constraint) {
+    public void addComponent(Component component, LayoutConstraint constraint) throws IllegalArgumentException {
         if (constraint == null || constraint instanceof BorderLayoutConstraint) {
             if (constraint == null) {
                 centerComponent = component;

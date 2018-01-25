@@ -1,5 +1,6 @@
 package org.liquidengine.legui.layout;
 
+import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.Frame;
 
 /**
@@ -37,4 +38,11 @@ public abstract class LayoutManager {
      * @param frame frame to lay out.
      */
     public abstract void layout(Frame frame);
+
+    /**
+     * Used to layout component and all of his child components.
+     *
+     * @param component component to lay out.
+     */
+    public abstract void layout(Component component);
 }

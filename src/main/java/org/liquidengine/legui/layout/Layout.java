@@ -13,8 +13,10 @@ public interface Layout {
      *
      * @param component component to add.
      * @param constraint layout constraint.
+     *
+     * @throws IllegalArgumentException if provided constraint is not supported by this layout.
      */
-    void addComponent(Component component, LayoutConstraint constraint);
+    void addComponent(Component component, LayoutConstraint constraint) throws IllegalArgumentException;
 
     /**
      * Used to remove component from layout.
