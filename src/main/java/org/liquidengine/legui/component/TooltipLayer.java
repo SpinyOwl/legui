@@ -5,10 +5,6 @@ package org.liquidengine.legui.component;
  */
 public class TooltipLayer extends Layer<Tooltip> {
 
-    public TooltipLayer() {
-
-    }
-
     @Override
     public boolean isEventPassable() {
         return true;
