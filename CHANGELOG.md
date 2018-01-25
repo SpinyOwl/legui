@@ -1,3 +1,10 @@
+## [1.4.4]
+### Fixed
+- Fixed default initializer.
+### Changed
+- Changed context api to frame buffer size (now returns `Vector2i` instead of `Vector2f`).
+- Changed api to child components of component (was `getChilds()` - now `getChildComponents()`).
+ 
 ## [1.4.3]
 ### Fixed
 - Fixed nvg password input renderer bug (with empty password rendering).

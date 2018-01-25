@@ -35,7 +35,7 @@ public class DefaultInitializer {
         // (will be added callbacks which will push system events to event queue and after that processed by SystemEventProcessor)
         callbackKeeper = new DefaultCallbackKeeper();
         // register callbacks for window. Note: all previously binded callbacks will be unbinded.
-        ((DefaultCallbackKeeper) callbackKeeper).registerCallbacks(this.window);
+        CallbackKeeper.registerCallbacks(window, callbackKeeper);
 
         // Event processor for system events. System events should be processed and translated to gui events.
         systemEventProcessor = new SystemEventProcessor();
