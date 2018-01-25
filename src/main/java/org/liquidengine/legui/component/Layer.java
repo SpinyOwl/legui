@@ -518,8 +518,8 @@ public class Layer<T extends Component> {
      *
      * @see List#clear()
      */
-    public void clearChilds() {
-        container.clearChilds();
+    public void clearChildComponents() {
+        container.clearChildComponents();
     }
 
     /**
@@ -573,7 +573,7 @@ public class Layer<T extends Component> {
      *
      * @return list of child components.
      */
-    public List<Component> getChilds() {
-        return container.getChilds();
+    public List<Component> getChildComponents() {
+        return container.getChildComponents();
     }
 }

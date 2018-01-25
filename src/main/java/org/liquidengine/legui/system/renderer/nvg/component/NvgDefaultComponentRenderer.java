@@ -36,7 +36,7 @@ public class NvgDefaultComponentRenderer<C extends Component> extends NvgCompone
     }
 
     /**
-     * Used to render component without childs.
+     * Used to render component without childComponents.
      *
      * @param component component to render.
      * @param context context.
@@ -54,14 +54,14 @@ public class NvgDefaultComponentRenderer<C extends Component> extends NvgCompone
     }
 
     /**
-     * Used to render component childs.
+     * Used to render component childComponents.
      *
      * @param component component to render.
      * @param context context.
      * @param nanovg nanovg context pointer.
      */
     protected void renderChildComponents(C component, Context context, long nanovg) {
-        for (Component child : component.getChilds()) {
+        for (Component child : component.getChildComponents()) {
             RendererProvider.getInstance().getComponentRenderer(child.getClass()).render(child, context);
         }
     }

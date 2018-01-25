@@ -2,7 +2,7 @@
   for="org.liquidengine.legui.component.ScrollablePanel" to="scrollablePanel" default="true"
   inherit="org/liquidengine/legui/binding/component/Component.xml">
 
-  <unbind field="childs"/>
+  <unbind field="childComponents"/>
 
   <bind field="verticalScrollBar" to="verticalScrollBar"/>
   <bind field="horizontalScrollBar" to="horizontalScrollBar"/>

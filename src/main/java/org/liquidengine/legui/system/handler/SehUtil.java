@@ -26,8 +26,8 @@ public final class SehUtil {
     public static Component getTargetComponent(Layer layer, Vector2f vector) {
         LayerContainer container = layer.getContainer();
         Component target = container;
-        List<Component> childs = container.getChilds();
-        for (Component child : childs) {
+        List<Component> childComponents = container.getChildComponents();
+        for (Component child : childComponents) {
             target = recursiveTargetComponentSearch(vector, child, target);
         }
         return target;
@@ -46,8 +46,8 @@ public final class SehUtil {
         Component newtarget = target;
         if (component.isVisible() /*&& component.isEnabled()*/ && component.intersects(vector)) {
             newtarget = component;
-            List<Component> childs = component.getChilds();
-            for (Component child : childs) {
+            List<Component> childComponents = component.getChildComponents();
+            for (Component child : childComponents) {
                 newtarget = recursiveTargetComponentSearch(vector, child, newtarget);
             }
         }
@@ -81,8 +81,8 @@ public final class SehUtil {
     public static void recursiveTargetComponentListSearch(Vector2f vector, Component component, List<Component> targetList) {
         if (component.isVisible() /*&& component.isEnabled()*/ && component.intersects(vector)) {
             targetList.add(component);
-            List<Component> childs = component.getChilds();
-            for (Component child : childs) {
+            List<Component> childComponents = component.getChildComponents();
+            for (Component child : childComponents) {
                 recursiveTargetComponentListSearch(vector, child, targetList);
             }
         }
@@ -92,8 +92,8 @@ public final class SehUtil {
 //    public static Controller getTargetController(Layer layer, Vector2f vector) {
 //        Controller target = null;
 //        LayerContainer container = layer.getContainer();
-//        List<Component> childs = container.getChilds();
-//        for (Component child : childs) {
+//        List<Component> childComponents = container.getChildComponents();
+//        for (Component child : childComponents) {
 //            if (child instanceof Controller) {
 //                target = recursiveTargetControllerSearch(vector, (Controller) child, target);
 //            }
@@ -106,8 +106,8 @@ public final class SehUtil {
 //        if (component.isVisible() && component.isEnabled() && component.intersects(vector)) {
 //            newtarget = component;
 //            if (component instanceof Container) {
-//                List<Component> childs = ((Container) component).getChilds();
-//                for (Component child : childs) {
+//                List<Component> childComponents = ((Container) component).getChildComponents();
+//                for (Component child : childComponents) {
 //                    if (child instanceof Controller) {
 //                        newtarget = recursiveTargetControllerSearch(vector, (Controller) child, newtarget);
 //                    }

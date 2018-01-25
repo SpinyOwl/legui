@@ -73,8 +73,8 @@ public class CursorPosEventHandler extends AbstractSystemEventHandler<SystemCurs
      */
     @Override
     protected boolean handle(SystemCursorPosEvent event, Layer layer, Context context, Frame frame) {
-        List<Component> childs = layer.getContainer().getChilds();
-        for (Component child : childs) {
+        List<Component> childComponents = layer.getContainer().getChildComponents();
+        for (Component child : childComponents) {
             handle(child, context, frame);
         }
         return false;
@@ -94,8 +94,8 @@ public class CursorPosEventHandler extends AbstractSystemEventHandler<SystemCurs
                 EventProcessor.getInstance().pushEvent(new MouseDragEvent(component, context, frame, delta));
             }
         } else {
-            List<Component> childs = component.getChilds();
-            for (Component child : childs) {
+            List<Component> childComponents = component.getChildComponents();
+            for (Component child : childComponents) {
                 handle(child, context, frame);
             }
         }

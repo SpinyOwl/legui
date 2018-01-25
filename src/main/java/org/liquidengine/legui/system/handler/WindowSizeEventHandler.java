@@ -34,8 +34,8 @@ public class WindowSizeEventHandler implements SystemEventHandler<SystemWindowSi
             return;
         }
         EventProcessor.getInstance().pushEvent(new WindowSizeEvent(component, context, frame, event.width, event.height));
-        List<Component> childs = component.getChilds();
-        for (Component child : childs) {
+        List<Component> childComponents = component.getChildComponents();
+        for (Component child : childComponents) {
             pushEvent(child, event, context, frame);
         }
     }
