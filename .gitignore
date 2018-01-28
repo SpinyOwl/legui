@@ -9,3 +9,8 @@ hs_err_pid*
 /logs/
 
 *.class
+/bin/
+
+.classpath
+.project
+/.settings/

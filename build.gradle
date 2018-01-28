@@ -129,6 +129,14 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
     from javadoc.destinationDir
 }
 
+sourceSets {
+    main {
+        java {
+            exclude 'org/liquidengine/legui/demo/**'
+        }
+    }
+}
+
 javadocJar.dependsOn javadoc
 publishArchives.dependsOn jar
 publishArchives.dependsOn sourcesJar
