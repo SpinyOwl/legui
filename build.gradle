@@ -16,6 +16,7 @@ configurations.all {
 
 apply plugin: 'java'
 apply plugin: 'idea'
+apply plugin: 'eclipse'
 apply plugin: 'maven'
 apply plugin: 'maven-publish'
 idea { module { downloadJavadoc = true; downloadSources = true } }
@@ -31,7 +32,7 @@ def guava_version        = '19.0'
 def gson_version         = '2.7'
 
 def joml_version         = "1.9.5-SNAPSHOT"
-def lwjgl_version        = '3.1.4-SNAPSHOT'
+def lwjgl_version        = '3.1.6-SNAPSHOT'
 def le_cbchain           = '0.1.2'
 def le_util              = '0.0.3-SNAPSHOT'
 //@formatter:on
@@ -118,22 +119,21 @@ task publishArchives {
     }
 }
 
+jar {
+    exclude("org/liquidengine/legui/demo/**")
+}
+
 task sourcesJar(type: Jar, dependsOn: classes) {
     classifier = 'sources'
-    from sourceSets.main.allSource
-    dependsOn classes
+    from(sourceSets.main.allSource) {
+        exclude("org/liquidengine/legui/demo/**")
+    }
 }
 
 task javadocJar(type: Jar, dependsOn: javadoc) {
     classifier = 'javadoc'
-    from javadoc.destinationDir
-}
-
-sourceSets {
-    main {
-        java {
-            exclude 'org/liquidengine/legui/demo/**'
-        }
+    from(javadoc.destinationDir) {
+        exclude("org/liquidengine/legui/demo/**")
     }
 }
 

@@ -9,6 +9,7 @@ hs_err_pid*
 /logs/
 
 *.class
+*.iml
 /bin/
 
 .classpath
