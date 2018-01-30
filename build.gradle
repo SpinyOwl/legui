@@ -16,6 +16,7 @@ configurations.all {
 
 apply plugin: 'java'
 apply plugin: 'idea'
+apply plugin: 'eclipse'
 apply plugin: 'maven'
 apply plugin: 'maven-publish'
 idea { module { downloadJavadoc = true; downloadSources = true } }
@@ -123,15 +124,22 @@ task publishArchives {
     }
 }
 
+jar {
+    exclude("org/liquidengine/legui/demo/**")
+}
+
 task sourcesJar(type: Jar, dependsOn: classes) {
     classifier = 'sources'
-    from sourceSets.main.allSource
-    dependsOn classes
+    from(sourceSets.main.allSource) {
+        exclude("org/liquidengine/legui/demo/**")
+    }
 }
 
 task javadocJar(type: Jar, dependsOn: javadoc) {
     classifier = 'javadoc'
-    from javadoc.destinationDir
+    from(javadoc.destinationDir) {
+        exclude("org/liquidengine/legui/demo/**")
+    }
 }
 
 javadocJar.dependsOn javadoc
