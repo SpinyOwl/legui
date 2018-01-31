@@ -47,6 +47,7 @@ import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.context.DefaultCallbackKeeper;
 import org.liquidengine.legui.system.handler.processor.SystemEventProcessor;
 import org.liquidengine.legui.system.renderer.Renderer;
+import org.liquidengine.legui.system.renderer.nvg.NvgRenderer;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWKeyCallbackI;
@@ -152,49 +153,23 @@ public abstract class Demo {
     glCapabilities = createCapabilities();
     glfwSwapInterval(0);
 
-//        renderer = new NvgRenderer();
-//        renderer.initialize();
+    renderer = new NvgRenderer();
+    renderer.initialize();
 
     glfwMakeContextCurrent(window);
     setCapabilities(glCapabilities);
     glfwSwapInterval(0);
 
-    long nvg = NanoVGGL3.nvgCreate(NanoVGGL3.NVG_ANTIALIAS | NanoVGGL3.NVG_STENCIL_STROKES | NanoVGGL3.NVG_DEBUG);
-
     while (running) {
       try {
         context.updateGlfwWindow();
-        Vector2i windowSize = context.getWindowSize();
         Vector2i framebufferSize = context.getFramebufferSize();
 
         glClearColor(1, 1, 1, 1);
         glViewport(0, 0, framebufferSize.x, framebufferSize.y);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        {
-          glEnable(GL_BLEND);
-          glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-          nvgBeginFrame(nvg, windowSize.x, windowSize.y, windowSize.x / framebufferSize.x);
-
-          nvgScissor(nvg, 10, 10, framebufferSize.x - 20, framebufferSize.y - 20);
-          {
-            NVGColor nvgColor = NVGColor.calloc();
-            nvgColor.r(1);
-            nvgColor.g(0);
-            nvgColor.b(0);
-            nvgColor.a(1);
-            nvgBeginPath(nvg);
-            nvgFillColor(nvg, nvgColor);
-            nvgRect(nvg, 0, 0, framebufferSize.x, framebufferSize.y);
-            nvgFill(nvg);
-            nvgColor.free();
-          }
-          nvgResetScissor(nvg);
-
-          nvgEndFrame(nvg);
-          glDisable(GL_BLEND);
-        }
-//                renderer.render(frame, context);
+        renderer.render(frame, context);
 
         glfwSwapBuffers(window);
 
@@ -205,7 +180,7 @@ public abstract class Demo {
       }
     }
 
-//        renderer.destroy();
+    renderer.destroy();
   }
 
   private void initialize() {
