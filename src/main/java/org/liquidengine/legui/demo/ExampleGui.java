@@ -154,7 +154,7 @@ public class ExampleGui extends Panel {
             boolean entered = event.isEntered();
             Vector4f newColor = ColorConstants.green();
             if (entered) {
-                createColorAnimationOnHover(event.getComponent(), newColor, checkBox2).startAnimation();
+              createColorAnimationOnHover(event.getTargetComponent(), newColor, checkBox2).startAnimation();
             }
         });
 
@@ -163,7 +163,7 @@ public class ExampleGui extends Panel {
             boolean entered = event.isEntered();
             Vector4f newColor = ColorConstants.red();
             if (entered) {
-                createColorAnimationOnHover(event.getComponent(), newColor, checkBox1).startAnimation();
+              createColorAnimationOnHover(event.getTargetComponent(), newColor, checkBox1).startAnimation();
             }
         });
 

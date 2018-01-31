@@ -22,7 +22,6 @@ import static org.lwjgl.opengl.GL11.glClearColor;
 import static org.lwjgl.opengl.GL11.glViewport;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
-import java.io.IOException;
 import org.joml.Vector2i;
 import org.liquidengine.legui.DefaultInitializer;
 import org.liquidengine.legui.animation.Animator;
@@ -53,7 +52,7 @@ public class Example {
 
 //    private static String json = IOUtil.loadResourceAsString("org/liquidengine/legui/demo/json.json", 1024);
 
-    public static void main(String[] args) throws IOException {
+  public static void main(String[] args) {
         System.setProperty("joml.nounsafe", Boolean.TRUE.toString());
         System.setProperty("java.awt.headless", Boolean.TRUE.toString());
         if (!glfwInit()) {
