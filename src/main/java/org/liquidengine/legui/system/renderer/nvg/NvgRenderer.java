@@ -36,7 +36,7 @@ public class NvgRenderer extends AbstractRenderer {
     protected Map<String, Font> loadedFonts = new ConcurrentHashMap<>();
     private long nvgContext;
     private NvgLoadableImageReferenceManager imageReferenceManager;
-    private boolean isVersionNew = (glGetInteger(GL30.GL_MAJOR_VERSION) > 3) || (glGetInteger(GL30.GL_MAJOR_VERSION) == 3 && glGetInteger(GL30.GL_MINOR_VERSION) >= 2);
+    private boolean isVersionNew;
 
     /**
      * Used to render border.
@@ -97,6 +97,8 @@ public class NvgRenderer extends AbstractRenderer {
 
     @Override
     public void initialize() {
+        isVersionNew = (glGetInteger(GL30.GL_MAJOR_VERSION) > 3) || (glGetInteger(GL30.GL_MAJOR_VERSION) == 3 && glGetInteger(GL30.GL_MINOR_VERSION) >= 2);
+
         if (isVersionNew) {
             int flags = NanoVGGL3.NVG_STENCIL_STROKES | NanoVGGL3.NVG_ANTIALIAS;
             nvgContext = NanoVGGL3.nvgCreate(flags);
