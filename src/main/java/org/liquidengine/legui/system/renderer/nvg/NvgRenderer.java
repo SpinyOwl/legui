@@ -96,7 +96,6 @@ public class NvgRenderer extends AbstractRenderer {
 
     @Override
     public void initialize() {
-
         if (glGetInteger(GL30.GL_MAJOR_VERSION) >= 4) {
             int flags = NanoVGGL3.NVG_STENCIL_STROKES | NanoVGGL3.NVG_ANTIALIAS;
             nvgContext = NanoVGGL3.nvgCreate(flags);
@@ -152,7 +151,6 @@ public class NvgRenderer extends AbstractRenderer {
             NanoVGGL3.nnvgDeleteGL3(nvgContext);
         } else {
             NanoVGGL2.nnvgDeleteGL2(nvgContext);
-
         }
         RendererProvider.getInstance().getComponentRenderers().forEach(ComponentRenderer::destroy);
         imageReferenceManager.destroy();
