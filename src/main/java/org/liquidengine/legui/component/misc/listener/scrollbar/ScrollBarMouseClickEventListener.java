@@ -5,7 +5,6 @@ import static org.liquidengine.legui.input.Mouse.MouseButton.MOUSE_BUTTON_LEFT;
 import org.joml.Vector2f;
 import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.component.ScrollBar;
-import org.liquidengine.legui.component.Viewport;
 import org.liquidengine.legui.component.event.scrollbar.ScrollBarChangeValueEvent;
 import org.liquidengine.legui.component.optional.Orientation;
 import org.liquidengine.legui.event.Event;
@@ -104,11 +103,6 @@ public class ScrollBarMouseClickEventListener implements MouseClickEventListener
         float curValue = scrollBar.getCurValue();
         EventProcessor.getInstance().pushEvent(new ScrollBarChangeValueEvent<>(scrollBar, context, frame, curValue, valueToUse));
         scrollBar.setCurValue(valueToUse);
-
-        Viewport viewport = scrollBar.getViewport();
-        if (viewport != null) {
-            viewport.updateViewport();
-        }
     }
 
     @Override

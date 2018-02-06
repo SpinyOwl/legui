@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.ScrollBar;
 import org.liquidengine.legui.component.ScrollablePanel;
-import org.liquidengine.legui.component.Viewport;
 import org.liquidengine.legui.component.event.scrollbar.ScrollBarChangeValueEvent;
 import org.liquidengine.legui.event.ScrollEvent;
 import org.liquidengine.legui.input.Mouse;
@@ -50,11 +49,6 @@ public class ScrollablePanelViewportScrollListener implements EventListener<Scro
 
         EventProcessor.getInstance().pushEvent(new ScrollBarChangeValueEvent<>(scrollBar, event.getContext(), event.getFrame(), curValue, newVal));
         scrollBar.setCurValue(newVal);
-
-        Viewport viewport = scrollBar.getViewport();
-        if (viewport != null) {
-            viewport.updateViewport();
-        }
     }
 
     @Override
