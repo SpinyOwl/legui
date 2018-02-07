@@ -292,7 +292,7 @@ public class BorderLayout implements Layout {
      * @param component gui component associated to yoga node.
      */
     private void prepareLeftMidRightNode(long yogaNode, Component component) {
-        if (component != null) {
+        if (component != null && component.isVisible()) {
             Vector2f minSize = getMinSize(component);
             Vector2f maxSize = getMaxSize(component);
             Yoga.YGNodeStyleSetMaxWidth(yogaNode, maxSize.x);
@@ -316,7 +316,7 @@ public class BorderLayout implements Layout {
      * @param component gui component associated to yoga node.
      */
     private void prepareTopOrBottomNode(long yogaNode, Component component) {
-        if (component != null) {
+        if (component != null && component.isVisible()) {
             Vector2f maxTop = getMaxSize(component);
             Yoga.YGNodeStyleSetMaxWidth(yogaNode, maxTop.x);
             Yoga.YGNodeStyleSetMaxHeight(yogaNode, maxTop.y);
@@ -371,23 +371,25 @@ public class BorderLayout implements Layout {
     private void prepareNodesStructure(long rootNode, long mNode, long tNode, long lNode, long cNode, long rNode, long bNode) {
         int rowIndex = 0;
         int colIndex = 0;
-        if (topComponent != null) {
+        if (topComponent != null && topComponent.isVisible()) {
             Yoga.YGNodeInsertChild(rootNode, tNode, rowIndex++);
         }
-        if (leftComponent != null || centerComponent != null || rightComponent != null) {
+        if ((leftComponent != null && leftComponent.isVisible()) ||
+            (centerComponent != null && centerComponent.isVisible()) ||
+            (rightComponent != null && rightComponent.isVisible())) {
             Yoga.YGNodeInsertChild(rootNode, mNode, rowIndex++);
         }
-        if (bottomComponent != null) {
+        if (bottomComponent != null && bottomComponent.isVisible()) {
             Yoga.YGNodeInsertChild(rootNode, bNode, rowIndex++);
         }
 
-        if (leftComponent != null) {
+        if (leftComponent != null && leftComponent.isVisible()) {
             Yoga.YGNodeInsertChild(mNode, lNode, colIndex++);
         }
-        if (centerComponent != null) {
+        if (centerComponent != null && centerComponent.isVisible()) {
             Yoga.YGNodeInsertChild(mNode, cNode, colIndex++);
         }
-        if (rightComponent != null) {
+        if (rightComponent != null && rightComponent.isVisible()) {
             Yoga.YGNodeInsertChild(mNode, rNode, colIndex++);
         }
     }
