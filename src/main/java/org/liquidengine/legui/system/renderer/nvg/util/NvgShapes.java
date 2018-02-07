@@ -16,9 +16,7 @@ import org.joml.Vector4fc;
 import org.lwjgl.nanovg.NVGColor;
 
 /**
- * NanoVG Shape utility. Used to draw shapes with NanoVG.
- * <p>
- * Created by ShchAlexander on 19.09.2017.
+ * NanoVG Shape utility. Used to draw shapes with NanoVG. <p> Created by ShchAlexander on 19.09.2017.
  */
 public class NvgShapes {
 

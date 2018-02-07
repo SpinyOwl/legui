@@ -307,7 +307,6 @@ public class NvgTextAreaRenderer extends NvgDefaultComponentRenderer<TextArea> {
      * Used to get space width.
      *
      * @param context nanovg context.
-     *
      * @return space width.
      */
     private float getSpaceWidth(long context) {
@@ -452,7 +451,6 @@ public class NvgTextAreaRenderer extends NvgDefaultComponentRenderer<TextArea> {
      * @param caretLineBounds text bounds on screen.
      * @param glyphs glyphs.
      * @param spaceWidth space width.
-     *
      * @return caret x position on screen.
      */
     private float getCaretx(long context, int caretPosInText, String text, float[] caretLineBounds, NVGGlyphPosition.Buffer glyphs, float spaceWidth,

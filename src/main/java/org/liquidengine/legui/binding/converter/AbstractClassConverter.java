@@ -3,9 +3,7 @@ package org.liquidengine.legui.binding.converter;
 /**
  * Class converter. Should be used to convert class to string representation and vise versa.
  *
- * @param <T> type of class converter.
- * <p>
- * Created by ShchAlexander on 02.12.2017.
+ * @param <T> type of class converter. <p> Created by ShchAlexander on 02.12.2017.
  */
 public abstract class AbstractClassConverter<T> {
 
@@ -13,7 +11,6 @@ public abstract class AbstractClassConverter<T> {
      * Used to convert java object to string representation.
      *
      * @param o object to convert.
-     *
      * @return string representation of object.
      */
     public abstract String convertFromJava(T o);
@@ -22,7 +19,6 @@ public abstract class AbstractClassConverter<T> {
      * Used to convert string representation to java object.
      *
      * @param o string representation of object to convert.
-     *
      * @return object of string representation.
      */
     public abstract T convertToJava(String o);

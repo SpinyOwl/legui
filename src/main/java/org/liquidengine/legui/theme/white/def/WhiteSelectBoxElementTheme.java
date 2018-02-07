@@ -1,7 +1,7 @@
 package org.liquidengine.legui.theme.white.def;
 
-import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.component.SelectBox;
+import org.liquidengine.legui.style.color.ColorConstants;
 
 /**
  * White SelectBox Theme for all select boxes. Used to make select box white.

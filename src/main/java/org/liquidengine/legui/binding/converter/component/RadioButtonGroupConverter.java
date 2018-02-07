@@ -14,7 +14,6 @@ public class RadioButtonGroupConverter extends AbstractClassConverter<RadioButto
      * Used to convert java object to string representation.
      *
      * @param o object to convert.
-     *
      * @return string representation of object.
      */
     @Override
@@ -26,7 +25,6 @@ public class RadioButtonGroupConverter extends AbstractClassConverter<RadioButto
      * Used to convert string representation to java object.
      *
      * @param o string representation of object to convert.
-     *
      * @return object of string representation.
      */
     @Override

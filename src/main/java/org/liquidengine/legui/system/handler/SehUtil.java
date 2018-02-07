@@ -20,7 +20,6 @@ public final class SehUtil {
      *
      * @param layer layer to search.
      * @param vector point to search.
-     *
      * @return top component from layer intersected by vector.
      */
     public static Component getTargetComponent(Layer layer, Vector2f vector) {
@@ -39,7 +38,6 @@ public final class SehUtil {
      * @param vector vector to point.
      * @param component source component to search target.
      * @param target current target.
-     *
      * @return the top visible component under point.
      */
     private static Component recursiveTargetComponentSearch(Vector2f vector, Component component, Component target) {
@@ -60,7 +58,6 @@ public final class SehUtil {
      *
      * @param vector vector to point.
      * @param layer layer to search.
-     *
      * @return all top visible components in layer under point(vector).
      */
     public static List<Component> getTargetComponentList(Layer layer, Vector2f vector) {

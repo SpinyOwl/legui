@@ -32,7 +32,6 @@ public class CheckBoxMouseClickEventListener implements MouseClickEventListener 
      * Used to compare instances of this event listener.
      *
      * @param obj object to compare.
-     *
      * @return true if equals.
      */
     @Override

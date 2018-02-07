@@ -29,6 +29,7 @@ public class SelectBoxElementClickListener implements MouseClickEventListener {
             selectBox.setSelected(newValue, true);
             EventProcessor.getInstance().pushEvent(new SelectBoxChangeSelectionEvent(selectBox, event.getContext(), event.getFrame(), selection, newValue));
             selectBox.setCollapsed(true);
+            event.getFrame().removeLayer(selectBox.getSelectBoxLayer());
         }
     }
 

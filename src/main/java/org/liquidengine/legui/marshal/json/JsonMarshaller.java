@@ -18,7 +18,6 @@ public class JsonMarshaller {
      * Used to marshal object to json using bindings for special marshalling cases.
      *
      * @param o object to marshal.
-     *
      * @return json in string representation.
      */
     public static String marshal(Object o) {
@@ -48,7 +47,6 @@ public class JsonMarshaller {
      * @param json json to unmarshal.
      * @param tClass target class.
      * @param <T> class type.
-     *
      * @return unmarshalled instance from json.
      */
     public static <T> T unmarshal(String json, Class<T> tClass) {

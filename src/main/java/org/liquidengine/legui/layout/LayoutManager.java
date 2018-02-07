@@ -5,6 +5,7 @@ import org.liquidengine.legui.component.Frame;
 
 /**
  * Layout manager. Used to layout component and it's child components.
+ *
  * @author Aliaksandr_Shcherbin.
  */
 public abstract class LayoutManager {

@@ -5,20 +5,17 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
-import org.liquidengine.legui.layout.borderlayout.BorderLayout;
 import org.liquidengine.legui.component.misc.animation.scrollablepanel.ScrollablePanelAnimation;
-import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.component.misc.listener.scrollablepanel.ScrollablePanelViewportScrollListener;
 import org.liquidengine.legui.component.optional.Orientation;
 import org.liquidengine.legui.event.ScrollEvent;
+import org.liquidengine.legui.layout.borderlayout.BorderLayout;
 import org.liquidengine.legui.layout.borderlayout.BorderLayoutConstraint;
+import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.theme.Themes;
 
 /**
- * Panel with scroll bars.
- * Default container layout is null.
- * <p>
- * TODO: REIMPLEMENT THIS COMPONENT ACCORDING TO NEW LAYOUT SYSTEM
+ * Panel with scroll bars. Default container layout is null.
  */
 public class ScrollablePanel extends Component implements Viewport {
 
@@ -46,6 +43,10 @@ public class ScrollablePanel extends Component implements Viewport {
      * Used to hold components added by user.
      */
     private Component container;
+
+    /**
+     * Scrollable panel animation. Updates container position in viewport.
+     */
     private ScrollablePanelAnimation animation;
 
     /**
@@ -128,7 +129,6 @@ public class ScrollablePanel extends Component implements Viewport {
         this.getStyle().getBackground().setColor(ColorConstants.transparent());
 
         Themes.getDefaultTheme().getThemeManager().getComponentTheme(ScrollablePanel.class).applyAll(this);
-
 
         animation = new ScrollablePanelAnimation(this);
         animation.startAnimation();

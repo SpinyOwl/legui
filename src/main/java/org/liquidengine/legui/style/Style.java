@@ -2,10 +2,10 @@ package org.liquidengine.legui.style;
 
 import org.joml.Vector2f;
 import org.joml.Vector4f;
+import org.liquidengine.legui.style.border.SimpleLineBorder;
 import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.style.font.Font;
 import org.liquidengine.legui.style.font.FontRegistry;
-import org.liquidengine.legui.style.border.SimpleLineBorder;
 
 /**
  * The type Style.
@@ -25,9 +25,7 @@ public class Style {
 
     /**
      * Preferred size of component. Used to set preferred size of component for layout manager. Layout manager will try to make this component size equal to
-     * preferred.
-     * <p>
-     * {@code -1} is default value - that means that layout manager will calculate preferred size.
+     * preferred. <p> {@code -1} is default value - that means that layout manager will calculate preferred size.
      */
     private Vector2f preferredSize;
 
@@ -265,10 +263,8 @@ public class Style {
     }
 
     /**
-     * Sets minimum size.
-     * <p>
-     * Minimum size of component. Used to set minimum size of component for layout manager. Layout manager uses this minimum size if component should be as
-     * small as possible. If one of dimensions is {@code <= 0} this minimum size is 0.
+     * Sets minimum size. <p> Minimum size of component. Used to set minimum size of component for layout manager. Layout manager uses this minimum size if
+     * component should be as small as possible. If one of dimensions is {@code <= 0} this minimum size is 0.
      *
      * @param minWidth the minimum width.
      * @param minHeight the minimum height.
@@ -296,10 +292,8 @@ public class Style {
     }
 
     /**
-     * Sets maximum size.
-     * <p>
-     * Maximum size of component. Used to set maximum size of component for layout manager. Layout manager uses this maximum size if component should be as
-     * small as possible. If one of dimensions is {@code <= 0} this maximum size is 0.
+     * Sets maximum size. <p> Maximum size of component. Used to set maximum size of component for layout manager. Layout manager uses this maximum size if
+     * component should be as small as possible. If one of dimensions is {@code <= 0} this maximum size is 0.
      *
      * @param maxWidth the maximum width.
      * @param maxHeight the maximum height.
@@ -327,12 +321,8 @@ public class Style {
     }
 
     /**
-     * Sets preferred size.
-     * <p>
-     * Preferred size of component. Used to set preferred size of component for layout manager. Layout manager will try to make this component size equal to
-     * preferred.
-     * <p>
-     * {@code -1} is default value - that means that layout manager will calculate preferred size.
+     * Sets preferred size. <p> Preferred size of component. Used to set preferred size of component for layout manager. Layout manager will try to make this
+     * component size equal to preferred. <p> {@code -1} is default value - that means that layout manager will calculate preferred size.
      *
      * @param prefWidth the preferred width.
      * @param prefHeight the preferred height.

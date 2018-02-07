@@ -83,7 +83,7 @@ public class Font {
      * @param path path to set.
      */
     public void setPath(String path) {
-        if (this.path == null && path!=null) {
+        if (this.path == null && path != null) {
             this.path = path;
         }
     }

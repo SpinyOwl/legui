@@ -68,7 +68,6 @@ public class CursorPosEventHandler extends AbstractSystemEventHandler<SystemCurs
      * @param layer target event layer.
      * @param context context.
      * @param frame frame.
-     *
      * @return true if event processed and it shouldn't be processed for other underlying layers.
      */
     @Override

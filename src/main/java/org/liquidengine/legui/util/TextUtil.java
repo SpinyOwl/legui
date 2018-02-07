@@ -38,7 +38,6 @@ public class TextUtil {
      *
      * @param text string to search next word start index.
      * @param current current character index(current caret position in text).
-     *
      * @return character index where starts next word.
      */
     public static int findNextWord(String text, int current) {
@@ -71,7 +70,6 @@ public class TextUtil {
      *
      * @param text string to search previous word start index.
      * @param current current character index(current caret position in text).
-     *
      * @return character index where starts previous word.
      */
     public static int findPrevWord(String text, int current) {
@@ -102,7 +100,6 @@ public class TextUtil {
      * Used to convert character codepoint to string.
      *
      * @param cp codepoint.
-     *
      * @return string from codepoint.
      */
     public static String cpToStr(int cp) {

@@ -1,9 +1,7 @@
 package org.liquidengine.legui.animation;
 
 /**
- * Draft animation realization.
- * <p>
- * Created by ShchAlexander on 31.07.2017.
+ * Draft animation realization. <p> Created by ShchAlexander on 31.07.2017.
  *
  * @author ShchAlexander
  */
@@ -28,7 +26,6 @@ public abstract class Animation {
      * true if animation is finished and could be removed from animator.
      *
      * @param delta delta time (from previous call).
-     *
      * @return true if animation is finished and could be removed from animator.
      */
     protected abstract boolean animate(double delta);

@@ -1,8 +1,7 @@
 package org.liquidengine.legui.binding.model;
 
 /**
- * Default binding class.
- * Created by ShchAlexander on 30.11.2017.
+ * Default binding class. Created by ShchAlexander on 30.11.2017.
  */
 public final class Binding extends AbstractBinding {
 

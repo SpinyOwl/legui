@@ -14,7 +14,6 @@ public class Vector4fToStyleStringConverter extends AbstractClassConverter<Vecto
      * Used to convert java object to string representation.
      *
      * @param o object to convert.
-     *
      * @return string representation of object.
      */
     @Override
@@ -30,7 +29,6 @@ public class Vector4fToStyleStringConverter extends AbstractClassConverter<Vecto
      * Used to convert string representation to java object.
      *
      * @param o string representation of object to convert.
-     *
      * @return object of string representation.
      */
     @Override

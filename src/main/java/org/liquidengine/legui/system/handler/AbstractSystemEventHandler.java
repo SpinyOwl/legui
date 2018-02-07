@@ -58,7 +58,6 @@ public abstract class AbstractSystemEventHandler<E extends SystemEvent> implemen
      * @param event event to be processed.
      * @param layer target event layer.
      * @param context context.
-     *
      * @return true if event processed and it shouldn't be processed for other underlying layers.
      */
     protected boolean handle(E event, Layer layer, Context context, Frame frame) {

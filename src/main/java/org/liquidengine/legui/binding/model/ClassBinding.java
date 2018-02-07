@@ -4,7 +4,6 @@ package org.liquidengine.legui.binding.model;
  * Default binding implementation.
  *
  * @param <T> type of class binding.
- *
  * @author ShchAlexander.
  */
 public final class ClassBinding<T> extends AbstractClassBinding<T> {

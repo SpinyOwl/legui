@@ -17,7 +17,6 @@ public class SelectBoxElementsAccessor extends AbstractFieldAccessor<SelectBox, 
      * Used to get field value from object.
      *
      * @param object object to get field value.
-     *
      * @return field value of object.
      */
     @Override

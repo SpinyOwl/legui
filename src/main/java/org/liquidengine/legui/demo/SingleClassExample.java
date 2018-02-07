@@ -49,8 +49,9 @@ import org.lwjgl.opengl.GL;
  * Created by Alexander on 17.12.2016.
  */
 public class SingleClassExample {
-    public static final     int     WIDTH   = 400;
-    public static final     int     HEIGHT  = 200;
+
+    public static final int WIDTH = 400;
+    public static final int HEIGHT = 200;
     private static volatile boolean running = false;
 
     public static void main(String[] args) throws IOException {

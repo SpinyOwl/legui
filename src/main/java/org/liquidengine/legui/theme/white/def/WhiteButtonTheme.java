@@ -1,7 +1,7 @@
 package org.liquidengine.legui.theme.white.def;
 
-import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.component.Button;
+import org.liquidengine.legui.style.color.ColorConstants;
 
 /**
  * White Button Theme for all buttons. Used to make button white.

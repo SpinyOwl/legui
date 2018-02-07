@@ -8,16 +8,10 @@ import org.liquidengine.legui.layout.LayoutConstraint;
 import org.lwjgl.util.yoga.Yoga;
 
 /**
- * A border layout lays out a container, arranging and resizing its components to fit in five regions: TOP, LEFT, CENTER, RIGHT, and BOTTOM.
- * Each region may contain no more than one component, and is identified by a corresponding constant:
- * <ul>
- * <li><code>TOP</code></li>
- * <li><code>LEFT</code></li>
- * <li><code>CENTER</code></li>
- * <li><code>RIGHT</code></li>
- * <li><code>BOTTOM</code></li>
- * </ul>.
- * When adding a component to a container with a border layout, use one of these five constants, for example:
+ * A border layout lays out a container, arranging and resizing its components to fit in five regions: TOP, LEFT, CENTER, RIGHT, and BOTTOM. Each region may
+ * contain no more than one component, and is identified by a corresponding constant: <ul> <li><code>TOP</code></li> <li><code>LEFT</code></li>
+ * <li><code>CENTER</code></li> <li><code>RIGHT</code></li> <li><code>BOTTOM</code></li> </ul>. When adding a component to a container with a border layout, use
+ * one of these five constants, for example:
  * <pre>
  *    {@link org.liquidengine.legui.component.Panel} p = new {@link org.liquidengine.legui.component.Panel}();
  *    p.setLayout(new {@link BorderLayout}());
@@ -63,7 +57,6 @@ public class BorderLayout implements Layout {
      *
      * @param component component to add.
      * @param constraint layout constraint (must be instance of {@link BorderLayoutConstraint}.
-     *
      * @throws IllegalArgumentException if provided constraint is not instance of {@link BorderLayoutConstraint}.
      */
     @Override
@@ -123,7 +116,6 @@ public class BorderLayout implements Layout {
      * Used to retrieve component attached to one of regions.
      *
      * @param constraint region constraint.
-     *
      * @return component or null.
      */
     public Component getComponent(BorderLayoutConstraint constraint) {
@@ -399,7 +391,6 @@ public class BorderLayout implements Layout {
      * Used to get minimum size for component.
      *
      * @param component component to get minimum size.
-     *
      * @return minimum size of component.
      */
     private Vector2f getMinSize(Component component) {
@@ -417,7 +408,6 @@ public class BorderLayout implements Layout {
      * Used to get maximum size for component.
      *
      * @param component component to get maximum size.
-     *
      * @return maximum size of component.
      */
     private Vector2f getMaxSize(Component component) {

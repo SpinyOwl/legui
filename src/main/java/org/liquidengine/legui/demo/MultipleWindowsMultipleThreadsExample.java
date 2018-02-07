@@ -55,6 +55,7 @@ import org.lwjgl.opengl.GLCapabilities;
  * Created by Alexander on 17.12.2016.
  */
 public class MultipleWindowsMultipleThreadsExample {
+
     public static final int WIDTH = 400;
     public static final int HEIGHT = 200;
     private static final int WINDOW_COUNT = 3;
@@ -91,7 +92,9 @@ public class MultipleWindowsMultipleThreadsExample {
 
         mainThread.start();
         // wait while not initialized
-        while (!running) Thread.yield();
+        while (!running) {
+            Thread.yield();
+        }
     }
 
     private static void sleep(long sleepTime) {

@@ -23,7 +23,6 @@ import org.liquidengine.legui.binding.model.BindingUtilities;
  * Json deserializer based on bindings.
  *
  * @param <T> type of class.
- *
  * @author Aliaksandr_Shcherbin.
  */
 public class BindingBasedJsonDeserializer<T> implements JsonDeserializer<T> {
@@ -49,7 +48,6 @@ public class BindingBasedJsonDeserializer<T> implements JsonDeserializer<T> {
      * @param current current default binding.
      * @param classTypeHolder holder which keeps type or class name and class instance.
      * @param <T> type of class.
-     *
      * @return deserialized instance.
      */
     private static <T> AbstractClassBinding<T> getClassBinding(Class<T> targetClass, AbstractClassBinding current, ClassTypeHolder classTypeHolder) {
@@ -72,7 +70,6 @@ public class BindingBasedJsonDeserializer<T> implements JsonDeserializer<T> {
      * @param json json to read.
      * @param targetClass default type to use during unmarshal.
      * @param <T> type of class.
-     *
      * @return deserialized instance.
      */
     private static <T> ClassTypeHolder<T> getClassFromJson(JsonObject json, Class<T> targetClass) {
@@ -105,20 +102,14 @@ public class BindingBasedJsonDeserializer<T> implements JsonDeserializer<T> {
     }
 
     /**
-     * Gson invokes this call-back method during deserialization when it encounters a field of the
-     * specified type.
-     * <p>In the implementation of this call-back method, you should consider invoking
-     * {@link JsonDeserializationContext#deserialize(JsonElement, Type)} method to create objects
-     * for any non-trivial field of the returned object. However, you should never invoke it on the
-     * the same type passing {@code json} since that will cause an infinite loop (Gson will call your
-     * call-back method again).
+     * Gson invokes this call-back method during deserialization when it encounters a field of the specified type. <p>In the implementation of this call-back
+     * method, you should consider invoking {@link JsonDeserializationContext#deserialize(JsonElement, Type)} method to create objects for any non-trivial field
+     * of the returned object. However, you should never invoke it on the the same type passing {@code json} since that will cause an infinite loop (Gson will
+     * call your call-back method again).
      *
      * @param json The Json data being deserialized
      * @param typeOfT The type of the Object to deserialize to
-     * @param context
-     *
      * @return a deserialized object of the specified type typeOfT which is a subclass of {@code T}
-     *
      * @throws JsonParseException if json is not in the expected format of {@code typeofT}
      */
     @Override
@@ -140,15 +131,14 @@ public class BindingBasedJsonDeserializer<T> implements JsonDeserializer<T> {
     }
 
     /**
-     * Used to unmarshal json using specified type and class binding.
-     * In case if json have @type or @class attribute classBinding and type will be replaced with more suitable for this case.
+     * Used to unmarshal json using specified type and class binding. In case if json have @type or @class attribute classBinding and type will be replaced with
+     * more suitable for this case.
      *
      * @param json json to unmarshal.
      * @param typeOfT type to use during unmarshal.
      * @param classBinding class binding to use.
      * @param context context.
      * @param holder holder which keeps type or class name and class instance.
-     *
      * @return deserialized instance.
      */
     private T unmarshal(JsonElement json, Type typeOfT, AbstractClassBinding<T> classBinding, JsonDeserializationContext context, ClassTypeHolder holder) {
@@ -192,7 +182,6 @@ public class BindingBasedJsonDeserializer<T> implements JsonDeserializer<T> {
      * @param classBinding class binding to use.
      * @param context context.
      * @param <T> type of class.
-     *
      * @return deserialized instance.
      */
     private <T> T unmarshalClass(JsonElement jsonElement, Class<T> targetClass, AbstractClassBinding<T> classBinding, JsonDeserializationContext context) {
@@ -288,15 +277,14 @@ public class BindingBasedJsonDeserializer<T> implements JsonDeserializer<T> {
     }
 
     /**
-     * Used to unmarshal json using specified type and class binding.
-     * In case if json have @type or @class attribute classBinding and type will be replaced with more suitable for this case.
+     * Used to unmarshal json using specified type and class binding. In case if json have @type or @class attribute classBinding and type will be replaced with
+     * more suitable for this case.
      *
      * @param jsonObject json to unmarshal.
      * @param fieldClass type to use during unmarshal.
      * @param context context.
      * @param holder holder which keeps type or class name and class instance.
      * @param <T> type of class.
-     *
      * @return deserialized instance.
      */
     private <T> T unmarshal(JsonObject jsonObject, Class<T> fieldClass, JsonDeserializationContext context, ClassTypeHolder holder) {

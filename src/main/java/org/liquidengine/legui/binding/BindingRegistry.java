@@ -10,9 +10,7 @@ import org.liquidengine.legui.binding.model.ClassBinding;
 import org.liquidengine.legui.binding.parser.BindingParserService;
 
 /**
- * Binding registry. Holds bindings mapped to class.
- * <p>
- * Created by ShchAlexander on 29.11.2017.
+ * Binding registry. Holds bindings mapped to class. <p> Created by ShchAlexander on 29.11.2017.
  */
 public final class BindingRegistry {
 
@@ -68,7 +66,6 @@ public final class BindingRegistry {
      *
      * @param c class.
      * @param b binding.
-     *
      * @return true if binding can't be used with specified type.
      */
     private boolean bindingIsNotForType(Class c, AbstractClassBinding b) {
@@ -83,8 +80,7 @@ public final class BindingRegistry {
     }
 
     /**
-     * Used to set specified binding for specified class.
-     * If binding is not set as default ({@link ClassBinding#byDefault}) it will not be added.
+     * Used to set specified binding for specified class. If binding is not set as default ({@link ClassBinding#byDefault}) it will not be added.
      *
      * @param c class to bind.
      * @param b binding for class.
@@ -100,8 +96,8 @@ public final class BindingRegistry {
     }
 
     /**
-     * Used to add specified binding for specified class (without type check).
-     * If binding is not set as default ({@link ClassBinding#byDefault}) it will not be added.
+     * Used to add specified binding for specified class (without type check). If binding is not set as default ({@link ClassBinding#byDefault}) it will not be
+     * added.
      *
      * @param c class to bind.
      * @param b binding for class.
@@ -134,12 +130,10 @@ public final class BindingRegistry {
     }
 
     /**
-     * Used to retrieve binding for specified class.
-     * If there is no binding for this concrete class it will search binding for all of it's superclasses.
+     * Used to retrieve binding for specified class. If there is no binding for this concrete class it will search binding for all of it's superclasses.
      *
      * @param c class to search binding.
      * @param <T> class type.
-     *
      * @return returns default binding for class or null.
      */
     public <T> AbstractClassBinding<T> getBinding(Class<T> c) {
@@ -150,7 +144,6 @@ public final class BindingRegistry {
      * Used to retrieve binding for specified type alias.
      *
      * @param alias class alias.
-     *
      * @return returns binding for alias or null.
      */
     public AbstractClassBinding getBindingByTypeAlias(String alias) {
@@ -180,7 +173,6 @@ public final class BindingRegistry {
      *
      * @param clazz class to search binding.
      * @param <T> type of class.
-     *
      * @return binding or null if not found.
      */
     protected <T> AbstractClassBinding<T> cycledSearch(Class<T> clazz) {

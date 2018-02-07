@@ -12,9 +12,7 @@ import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_8;
 import org.joml.Vector2f;
 
 /**
- * This class used to hold mouse state.
- * <p>
- * Created by ShchAlexander on 2/9/2017.
+ * This class used to hold mouse state. <p> Created by ShchAlexander on 2/9/2017.
  */
 public class Mouse {
 
@@ -124,7 +122,6 @@ public class Mouse {
          * Gets by code.
          *
          * @param code the code
-         *
          * @return the by code
          */
         public static MouseButton getByCode(int code) {

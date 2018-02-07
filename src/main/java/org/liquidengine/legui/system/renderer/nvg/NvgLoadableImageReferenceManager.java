@@ -98,7 +98,6 @@ public class NvgLoadableImageReferenceManager {
      *
      * @param image image to get reference.
      * @param context nanovg context.
-     *
      * @return reference of provided image or 0 if not found.
      */
     public int getImageReference(LoadableImage image, long context) {

@@ -30,9 +30,6 @@ public class ScrollablePanelAnimation extends Animation {
      */
     @Override
     protected boolean animate(double delta) {
-        if (scrollablePanel == null) {
-            return true;
-        }
         ScrollablePanel scrollablePanel = this.scrollablePanel.get();
         if (scrollablePanel != null) {
             deltaSum += delta;

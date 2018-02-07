@@ -48,9 +48,8 @@ public abstract class Component implements Serializable {
      */
     private ListenerMap listenerMap = new ListenerMap();
     /**
-     * Position of component relative top left corner in parent component.
-     * <p>
-     * If component is the root component then position calculated relative window top left corner.
+     * Position of component relative top left corner in parent component. <p> If component is the root component then position calculated relative window top
+     * left corner.
      */
     private Vector2f position = new Vector2f();
     /**
@@ -121,9 +120,8 @@ public abstract class Component implements Serializable {
     private List<Component> childComponents = new CopyOnWriteArrayList<>();
 
     /**
-     * Default constructor. Used to create component instance without any parameters.
-     * <p>
-     * Also if you want to make it easy to use with Json marshaller/unmarshaller component should contain empty constructor.
+     * Default constructor. Used to create component instance without any parameters. <p> Also if you want to make it easy to use with Json
+     * marshaller/unmarshaller component should contain empty constructor.
      */
     public Component() {
         this(0, 0, 10, 10);
@@ -197,9 +195,7 @@ public abstract class Component implements Serializable {
 
     /**
      * Used to set parent component. By default used by containers to attach component to container. Parent component used by renderers and event listeners and
-     * processors.
-     * <p>
-     * Don't use this method if you want to attach component to container. In this case use {@link Component#add(Component)} method.
+     * processors. <p> Don't use this method if you want to attach component to container. In this case use {@link Component#add(Component)} method.
      *
      * @param parent component container.
      */
@@ -359,7 +355,6 @@ public abstract class Component implements Serializable {
      * Used to determine if point intersects component (in screen space). This method uses component intersector.
      *
      * @param point point to check.
-     *
      * @return true if component intersected by point.
      */
     public boolean intersects(Vector2f point) {
@@ -550,7 +545,6 @@ public abstract class Component implements Serializable {
      * Returns count of child components.
      *
      * @return count of child components.
-     *
      * @see List#size()
      */
     public int count() {
@@ -561,7 +555,6 @@ public abstract class Component implements Serializable {
      * Returns true if component contains no elements.
      *
      * @return true if component contains no elements.
-     *
      * @see List#isEmpty()
      */
     public boolean isEmpty() {
@@ -572,9 +565,7 @@ public abstract class Component implements Serializable {
      * Returns true if component contains specified component.
      *
      * @param component component to check.
-     *
      * @return true if component contains specified component.
-     *
      * @see List#contains(Object)
      */
     public boolean contains(Component component) {
@@ -585,7 +576,6 @@ public abstract class Component implements Serializable {
      * Returns an iterator over the elements in this component. The elements are returned in no particular order.
      *
      * @return an iterator over the elements in this component.
-     *
      * @see List#iterator()
      */
     public Iterator<Component> containerIterator() {
@@ -596,9 +586,7 @@ public abstract class Component implements Serializable {
      * Used to add component to component.
      *
      * @param component component to add.
-     *
      * @return true if component is added.
-     *
      * @see List#add(Object)
      */
     public boolean add(Component component) {
@@ -611,8 +599,8 @@ public abstract class Component implements Serializable {
      * @param component component to add.
      * @param constraint layout constraint.
      * @return true if component is added.
-     * @see List#add(Object)
      * @throws IllegalArgumentException if provided constraint is not supported by layout.
+     * @see List#add(Object)
      */
     public boolean add(Component component, LayoutConstraint constraint) throws IllegalArgumentException {
         if (component == null || component == this || isContains(component)) {
@@ -632,7 +620,6 @@ public abstract class Component implements Serializable {
      * Used to check if component collection contains component or not. Checked by reference.
      *
      * @param component component to check.
-     *
      * @return true if collection contains provided component.
      */
     private boolean isContains(Component component) {
@@ -670,9 +657,7 @@ public abstract class Component implements Serializable {
      * Used to remove component.
      *
      * @param component component to remove.
-     *
      * @return true if removed.
-     *
      * @see List#remove(Object)
      */
     public boolean remove(Component component) {
@@ -696,7 +681,6 @@ public abstract class Component implements Serializable {
      * Used to remove components.
      *
      * @param components components to remove.
-     *
      * @see List#removeAll(Collection)
      */
     public void removeAll(Collection<? extends Component> components) {
@@ -710,9 +694,7 @@ public abstract class Component implements Serializable {
      * are relayed to the caller.
      *
      * @param filter a predicate which returns true for elements to be removed.
-     *
      * @return true if any components were removed.
-     *
      * @see List#removeIf(Predicate)
      */
     public void removeIf(Predicate<? super Component> filter) {
@@ -733,9 +715,7 @@ public abstract class Component implements Serializable {
      * Returns true if this Container contains all of the elements of the specified collection.
      *
      * @param components components collection to check.
-     *
      * @return true if this Container contains all of the elements of the specified collection.
-     *
      * @see List#containsAll(Collection)
      */
     public boolean containsAll(Collection<Component> components) {
@@ -746,7 +726,6 @@ public abstract class Component implements Serializable {
      * Returns a sequential Stream with this collection as its source.
      *
      * @return a sequential Stream with this collection as its source.
-     *
      * @see List#stream()
      */
     public Stream<Component> stream() {
@@ -757,7 +736,6 @@ public abstract class Component implements Serializable {
      * Returns a possibly parallel Stream with this collection as its source. It is allowable for this method to return a sequential stream.
      *
      * @return possibly parallel Stream with this collection as its source.
-     *
      * @see List#parallelStream()
      */
     public Stream<Component> parallelStream() {
@@ -774,9 +752,7 @@ public abstract class Component implements Serializable {
     }
 
     /**
-     * Used to retrieve child components as {@link List}.
-     * <p>
-     * <span style="color:red">NOTE: this method returns NEW {@link List} of components</span>.
+     * Used to retrieve child components as {@link List}. <p> <span style="color:red">NOTE: this method returns NEW {@link List} of components</span>.
      *
      * @return list of child components.
      */

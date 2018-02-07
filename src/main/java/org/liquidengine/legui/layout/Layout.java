@@ -4,6 +4,7 @@ import org.liquidengine.legui.component.Component;
 
 /**
  * Layout interface.
+ *
  * @author Aliaksandr_Shcherbin.
  */
 public interface Layout {
@@ -13,7 +14,6 @@ public interface Layout {
      *
      * @param component component to add.
      * @param constraint layout constraint.
-     *
      * @throws IllegalArgumentException if provided constraint is not supported by this layout.
      */
     void addComponent(Component component, LayoutConstraint constraint) throws IllegalArgumentException;

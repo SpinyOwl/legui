@@ -5,10 +5,10 @@
   </bind>
 
   <!--<bind field="backgroundColor" to="backgroundColor" as="field">-->
-    <!--<using-binding path="org/liquidengine/legui/binding/common/Vector4fColor.xml"/>-->
+  <!--<using-binding path="org/liquidengine/legui/binding/common/Vector4fColor.xml"/>-->
   <!--</bind>-->
   <!--<bind field="focusedStrokeColor" to="focusedStrokeColor" as="field">-->
-    <!--<using-binding path="org/liquidengine/legui/binding/common/Vector4fColor.xml"/>-->
+  <!--<using-binding path="org/liquidengine/legui/binding/common/Vector4fColor.xml"/>-->
   <!--</bind>-->
 
   <!--<bind field="border"/>-->

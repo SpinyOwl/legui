@@ -47,7 +47,6 @@ public class TabKeyEventListener implements EventListener<KeyEvent> {
      * Used to find previous component (components sorted by tab index).
      *
      * @param component current component.
-     *
      * @return previous component.
      */
     private Component findPrev(Component component) {
@@ -70,7 +69,6 @@ public class TabKeyEventListener implements EventListener<KeyEvent> {
      * @param component current component.
      * @param parent parent component.
      * @param prev current previous component.
-     *
      * @return previous component.
      */
     private Component findPrevInParent(Component component, Component parent, Component prev) {
@@ -120,7 +118,6 @@ public class TabKeyEventListener implements EventListener<KeyEvent> {
      *
      * @param childComponents child components.
      * @param previous current previous component.
-     *
      * @return previous component.
      */
     private Component findPrevInChildComponents(List<Component> childComponents, Component previous) {
@@ -153,7 +150,6 @@ public class TabKeyEventListener implements EventListener<KeyEvent> {
      * Used to find next component (components sorted by tab index).
      *
      * @param component current component.
-     *
      * @return next component.
      */
     private Component findNext(Component component) {
@@ -181,7 +177,6 @@ public class TabKeyEventListener implements EventListener<KeyEvent> {
      *
      * @param childComponents child components.
      * @param next current next component.
-     *
      * @return next component.
      */
     private Component findNextInChildComponents(List<Component> childComponents, Component next) {
@@ -217,7 +212,6 @@ public class TabKeyEventListener implements EventListener<KeyEvent> {
      * @param component current component.
      * @param parent parent component.
      * @param next current next component.
-     *
      * @return next component.
      */
     private Component findNextInParent(Component component, Component parent, Component next) {
@@ -283,7 +277,6 @@ public class TabKeyEventListener implements EventListener<KeyEvent> {
      * Used to compare instances of this event listener.
      *
      * @param obj object to compare.
-     *
      * @return true if equals.
      */
     @Override
