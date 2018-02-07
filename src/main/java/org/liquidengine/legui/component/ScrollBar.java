@@ -85,7 +85,7 @@ public class ScrollBar extends Component {
     /**
      * Viewport.
      */
-    private Viewport viewport;
+    private Component viewport;
 
     /**
      * Default constructor. Used to create component instance without any parameters. <p> Also if you want to make it easy to use with Json
@@ -190,16 +190,16 @@ public class ScrollBar extends Component {
      *
      * @return scrollbar viewport.
      */
-    public Viewport getViewport() {
+    public Component getViewport() {
         return viewport;
     }
 
     /**
-     * Used to attach scrollbar to viewport. So if scrollbar value updated - called {@link Viewport#updateViewport()} method.
+     * Used to attach scrollbar to viewport.
      *
      * @param viewport viewport to set.
      */
-    public void setViewport(Viewport viewport) {
+    public void setViewport(Component viewport) {
         this.viewport = viewport;
     }
 

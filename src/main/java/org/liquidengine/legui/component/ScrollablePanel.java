@@ -6,6 +6,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 import org.liquidengine.legui.layout.borderlayout.BorderLayout;
+import org.liquidengine.legui.component.misc.animation.scrollablepanel.ScrollablePanelAnimation;
 import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.component.misc.listener.scrollablepanel.ScrollablePanelViewportScrollListener;
 import org.liquidengine.legui.component.optional.Orientation;
@@ -19,7 +20,7 @@ import org.liquidengine.legui.theme.Themes;
  * <p>
  * TODO: REIMPLEMENT THIS COMPONENT ACCORDING TO NEW LAYOUT SYSTEM
  */
-public class ScrollablePanel extends Component implements Viewport {
+public class ScrollablePanel extends Component {
 
     /**
      * Initial scrollbar width/height.
@@ -45,6 +46,7 @@ public class ScrollablePanel extends Component implements Viewport {
      * Used to hold components added by user.
      */
     private Component container;
+    private ScrollablePanelAnimation animation;
 
     /**
      * Default constructor. Used to create component instance without any parameters. <p> Also if you want to make it easy to use with Json
@@ -127,6 +129,10 @@ public class ScrollablePanel extends Component implements Viewport {
 
         Themes.getDefaultTheme().getThemeManager().getComponentTheme(ScrollablePanel.class).applyAll(this);
 
+
+        animation = new ScrollablePanelAnimation(this);
+        animation.startAnimation();
+
         resize();
     }
 
@@ -155,32 +161,6 @@ public class ScrollablePanel extends Component implements Viewport {
 
         float verticalRange = verticalScrollBar.getMaxValue() - verticalScrollBar.getMinValue();
         verticalScrollBar.setVisibleAmount(containerSize.y >= viewportSize.y ? (verticalRange * viewportSize.y / containerSize.y) : verticalRange);
-
-        updateViewport();
-    }
-
-    /**
-     * Used to update container position in viewport.
-     */
-    public void updateViewport() {
-        float vh = viewport.getSize().y;
-        float ch = container.getSize().y;
-        float newPosY;
-        if (vh > ch) {
-            newPosY = 0;
-        } else {
-            newPosY = (vh - ch) * verticalScrollBar.getCurValue() / (verticalScrollBar.getMaxValue() - verticalScrollBar.getMinValue());
-        }
-
-        float vw = viewport.getSize().x;
-        float cw = container.getSize().x;
-        float newPosX;
-        if (vw > cw) {
-            newPosX = 0;
-        } else {
-            newPosX = (vw - cw) * horizontalScrollBar.getCurValue() / (horizontalScrollBar.getMaxValue() - horizontalScrollBar.getMinValue());
-        }
-        container.setPosition(new Vector2f(newPosX, newPosY));
     }
 
     /**
