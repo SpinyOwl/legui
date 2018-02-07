@@ -27,6 +27,7 @@ import org.liquidengine.legui.DefaultInitializer;
 import org.liquidengine.legui.animation.Animator;
 import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.event.WindowSizeEvent;
+import org.liquidengine.legui.layout.LayoutManager;
 import org.liquidengine.legui.listener.WindowSizeEventListener;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.Renderer;
@@ -168,6 +169,10 @@ public class Example {
                 fullscreen = !fullscreen;
                 toggleFullscreen = false;
             }
+
+            // When everything done we need to relayout components.
+            LayoutManager.getInstance().layout(frame);
+
             update();
             updCntr++;
             if (System.currentTimeMillis() >= time + 1000) {

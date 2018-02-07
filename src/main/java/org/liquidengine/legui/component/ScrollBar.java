@@ -7,8 +7,8 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
-import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.component.event.scrollbar.ScrollBarChangeValueEvent;
+import org.liquidengine.legui.component.misc.animation.scrollbar.ScrollBarAnimation;
 import org.liquidengine.legui.component.misc.listener.scrollbar.ScrollBarMouseClickEventListener;
 import org.liquidengine.legui.component.misc.listener.scrollbar.ScrollBarMouseDragEventListener;
 import org.liquidengine.legui.component.misc.listener.scrollbar.ScrollBarScrollListener;
@@ -17,6 +17,7 @@ import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.event.MouseDragEvent;
 import org.liquidengine.legui.event.ScrollEvent;
 import org.liquidengine.legui.listener.EventListener;
+import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.theme.Themes;
 
 /**
@@ -85,7 +86,7 @@ public class ScrollBar extends Component {
     /**
      * Viewport.
      */
-    private Component viewport;
+    private Viewport viewport;
 
     /**
      * Default constructor. Used to create component instance without any parameters. <p> Also if you want to make it easy to use with Json
@@ -164,6 +165,10 @@ public class ScrollBar extends Component {
         getListenerMap().addListener(ScrollEvent.class, new ScrollBarScrollListener());
         getListenerMap().addListener(MouseDragEvent.class, new ScrollBarMouseDragEventListener());
         getListenerMap().addListener(MouseClickEvent.class, new ScrollBarMouseClickEventListener());
+
+        ScrollBarAnimation animation = new ScrollBarAnimation(this);
+        animation.startAnimation();
+
         Themes.getDefaultTheme().getThemeManager().getComponentTheme(ScrollBar.class).applyAll(this);
     }
 
@@ -190,7 +195,7 @@ public class ScrollBar extends Component {
      *
      * @return scrollbar viewport.
      */
-    public Component getViewport() {
+    public Viewport getViewport() {
         return viewport;
     }
 
@@ -199,7 +204,7 @@ public class ScrollBar extends Component {
      *
      * @param viewport viewport to set.
      */
-    public void setViewport(Component viewport) {
+    public void setViewport(Viewport viewport) {
         this.viewport = viewport;
     }
 
@@ -218,7 +223,9 @@ public class ScrollBar extends Component {
      * @param orientation scrollbar orientation to set.
      */
     public void setOrientation(Orientation orientation) {
-        this.orientation = orientation;
+        if (orientation != null) {
+            this.orientation = orientation;
+        }
     }
 
     /**

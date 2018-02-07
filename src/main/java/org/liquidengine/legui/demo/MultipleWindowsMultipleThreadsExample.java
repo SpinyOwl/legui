@@ -33,6 +33,7 @@ import org.liquidengine.legui.component.RadioButton;
 import org.liquidengine.legui.component.RadioButtonGroup;
 import org.liquidengine.legui.event.CursorEnterEvent;
 import org.liquidengine.legui.event.MouseClickEvent;
+import org.liquidengine.legui.layout.LayoutManager;
 import org.liquidengine.legui.listener.CursorEnterEventListener;
 import org.liquidengine.legui.listener.MouseClickEventListener;
 import org.liquidengine.legui.listener.processor.EventProcessor;
@@ -161,6 +162,9 @@ public class MultipleWindowsMultipleThreadsExample {
                 renderers[i].render(frames[i], contexts[i]);
 
                 glfwSwapBuffers(windows[i]);
+
+                // When everything done we need to relayout components.
+                LayoutManager.getInstance().layout(frames[i]);
             }
         }
 

@@ -37,7 +37,6 @@ public class BoxLayoutDemo extends Demo {
 
   @Override
   protected void update() {
-    LayoutManager.getInstance().layout(frame);
   }
 
   @Override

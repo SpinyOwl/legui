@@ -44,8 +44,6 @@ public class BorderLayoutDemo extends Demo {
 
   @Override
   protected void update() {
-    LayoutManager.getInstance().layout(frame);
-
     topLabel.getTextState().setText("" + top.getSize().x + " " + top.getSize().y);
     bottomLabel.getTextState().setText("" + bottom.getSize().x + " " + bottom.getSize().y);
     leftLabel.getTextState().setText("" + left.getSize().x + " " + left.getSize().y);

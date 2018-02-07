@@ -345,11 +345,9 @@ public class ExampleGui extends Panel {
         ScrollablePanel scrollablePanel = new ScrollablePanel(420, 10, 250, 150);
         scrollablePanel.getStyle().getBackground().setColor(1, 1, 1, 1);
         scrollablePanel.getContainer().setSize(300, 200);
-        scrollablePanel.resize();
 
         ScrollablePanel scp = new ScrollablePanel(10, 10, 150, 100);
         scp.getContainer().setSize(300, 300);
-        scp.resize();
 
         scp.getContainer().add(new TextInput("Hello Scrollable", 10, 10, 150, 20));
 
@@ -357,12 +355,10 @@ public class ExampleGui extends Panel {
         this.add(scrollablePanel);
 
         slider2.getListenerMap().addListener(SliderChangeValueEvent.class, (SliderChangeValueEventListener) event -> {
-            scrollablePanel.getHorizontalScrollBar().getSize().y = event.getNewValue() / 2f + 10;
-            scrollablePanel.resize();
+            scrollablePanel.getHorizontalScrollBar().getStyle().getMinimumSize().y = event.getNewValue() / 2f + 10;
         });
         slider1.getListenerMap().addListener(SliderChangeValueEvent.class, (SliderChangeValueEventListener) event -> {
             scrollablePanel.getHorizontalScrollBar().setArrowSize(event.getNewValue() / 4f + 10);
-            scrollablePanel.resize();
         });
 
         textArea = new TextArea(420, 280, 150, 100);

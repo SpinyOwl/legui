@@ -327,7 +327,6 @@ public class SelectBox extends Component {
     private void addSelectBoxComponent(SelectBoxElement element) {
         selectionListPanel.getContainer().add(element);
         selectionListPanel.getContainer().getSize().y = selectionListPanel.getContainer().count() * elementHeight;
-        selectionListPanel.resize();
     }
 
     /**

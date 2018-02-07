@@ -28,6 +28,7 @@ import org.liquidengine.legui.component.RadioButton;
 import org.liquidengine.legui.component.RadioButtonGroup;
 import org.liquidengine.legui.event.CursorEnterEvent;
 import org.liquidengine.legui.event.MouseClickEvent;
+import org.liquidengine.legui.layout.LayoutManager;
 import org.liquidengine.legui.listener.CursorEnterEventListener;
 import org.liquidengine.legui.listener.MouseClickEventListener;
 import org.liquidengine.legui.listener.processor.EventProcessor;
@@ -155,6 +156,9 @@ public class SingleClassExample {
             // When system events are translated to GUI events we need to process them.
             // This event processor calls listeners added to ui components
             EventProcessor.getInstance().processEvents();
+
+            // When everything done we need to relayout components.
+            LayoutManager.getInstance().layout(frame);
         }
 
         // And when rendering is ended we need to destroy renderer

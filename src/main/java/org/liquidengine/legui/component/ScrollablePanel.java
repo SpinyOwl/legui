@@ -20,7 +20,7 @@ import org.liquidengine.legui.theme.Themes;
  * <p>
  * TODO: REIMPLEMENT THIS COMPONENT ACCORDING TO NEW LAYOUT SYSTEM
  */
-public class ScrollablePanel extends Component {
+public class ScrollablePanel extends Component implements Viewport {
 
     /**
      * Initial scrollbar width/height.
@@ -132,35 +132,6 @@ public class ScrollablePanel extends Component {
 
         animation = new ScrollablePanelAnimation(this);
         animation.startAnimation();
-
-        resize();
-    }
-
-    /**
-     * Used to resize scrollable panel.
-     */
-    public void resize() {
-        boolean horizontalScrollBarVisible = horizontalScrollBar.isVisible();
-        boolean verticalScrollBarVisible = verticalScrollBar.isVisible();
-
-        Vector2f scrollablePanelSize = new Vector2f(getSize());
-        Vector2f containerSize = new Vector2f(container.getSize());
-        Vector2f viewportSize = new Vector2f(getSize());
-
-        if (horizontalScrollBarVisible) {
-            horizontalScrollBar.getPosition().y = viewportSize.y = scrollablePanelSize.y - horizontalScrollBar.getSize().y;
-        }
-        if (verticalScrollBarVisible) {
-            verticalScrollBar.getPosition().x = viewportSize.x = scrollablePanelSize.x - verticalScrollBar.getSize().x;
-        }
-        viewport.setSize(viewportSize);
-        horizontalScrollBar.getSize().x = viewportSize.x;
-        verticalScrollBar.getSize().y = viewportSize.y;
-        float horizontalRange = horizontalScrollBar.getMaxValue() - horizontalScrollBar.getMinValue();
-        horizontalScrollBar.setVisibleAmount(containerSize.x >= viewportSize.x ? (horizontalRange * viewportSize.x / containerSize.x) : horizontalRange);
-
-        float verticalRange = verticalScrollBar.getMaxValue() - verticalScrollBar.getMinValue();
-        verticalScrollBar.setVisibleAmount(containerSize.y >= viewportSize.y ? (verticalRange * viewportSize.y / containerSize.y) : verticalRange);
     }
 
     /**
@@ -271,5 +242,15 @@ public class ScrollablePanel extends Component {
 
     public Component getViewport() {
         return viewport;
+    }
+
+    @Override
+    public Vector2f getViewportSize() {
+        return new Vector2f(viewport.getSize());
+    }
+
+    @Override
+    public Vector2f getViewportViewSize() {
+        return new Vector2f(container.getSize());
     }
 }

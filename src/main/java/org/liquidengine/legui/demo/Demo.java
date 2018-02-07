@@ -41,6 +41,7 @@ import java.util.concurrent.TimeUnit;
 import org.joml.Vector2i;
 import org.liquidengine.cbchain.impl.ChainErrorCallback;
 import org.liquidengine.legui.component.Frame;
+import org.liquidengine.legui.layout.LayoutManager;
 import org.liquidengine.legui.listener.processor.EventProcessor;
 import org.liquidengine.legui.system.context.CallbackKeeper;
 import org.liquidengine.legui.system.context.Context;
@@ -175,6 +176,9 @@ public abstract class Demo {
 
         // update system. could be moved for example to game loop.
         update();
+
+        // When everything done we need to relayout components.
+        LayoutManager.getInstance().layout(frame);
       } catch (Throwable e) {
         e.printStackTrace();
       }
