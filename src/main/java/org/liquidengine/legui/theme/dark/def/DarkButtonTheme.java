@@ -1,8 +1,8 @@
 package org.liquidengine.legui.theme.dark.def;
 
+import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.component.Button;
 import org.liquidengine.legui.style.border.SimpleLineBorder;
-import org.liquidengine.legui.style.color.ColorConstants;
 
 /**
  * Dark Button Theme for all buttons. Used to make button dark.

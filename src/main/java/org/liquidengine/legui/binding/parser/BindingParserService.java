@@ -43,6 +43,7 @@ public class BindingParserService {
      * Used to parse binding list.
      *
      * @param listPath binding list location.
+     *
      * @return created class bindings map.
      */
     public Map<Class, AbstractClassBinding> parseList(String listPath) {
@@ -66,6 +67,7 @@ public class BindingParserService {
      * Used to parse class binding from binding path.
      *
      * @param bindingPath class binding path.
+     *
      * @return parsed class binding or null.
      */
     public ClassBinding parseBinding(String bindingPath) {
@@ -77,6 +79,7 @@ public class BindingParserService {
      *
      * @param bindingPath class binding path.
      * @param parentPath path to parent binding.
+     *
      * @return parsed class binding or null.
      */
     protected ClassBinding parseBinding(String bindingPath, String parentPath) {
@@ -105,7 +108,9 @@ public class BindingParserService {
      * Used to get input stream of file.
      *
      * @param filePath file path.
+     *
      * @return input stream of file.
+     *
      * @throws FileNotFoundException in case if file not found.
      */
     private InputStream getInputStream(String filePath) throws FileNotFoundException {

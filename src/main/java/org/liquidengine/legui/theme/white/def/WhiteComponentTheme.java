@@ -1,10 +1,10 @@
 package org.liquidengine.legui.theme.white.def;
 
 import java.util.List;
+import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.Tooltip;
 import org.liquidengine.legui.style.border.SimpleLineBorder;
-import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.theme.AbstractTheme;
 import org.liquidengine.legui.theme.Themes;
 

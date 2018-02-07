@@ -6,7 +6,9 @@ import java.lang.reflect.Type;
  * Field accessor. Used to access field (get/set) and retrieve field type.
  *
  * @param <T> type of class binding.
- * @param <V> type of field value. Created by ShchAlexander on 04.12.2017.
+ * @param <V> type of field value.
+ * <p>
+ * Created by ShchAlexander on 04.12.2017.
  */
 public abstract class AbstractFieldAccessor<T, V> {
 
@@ -14,6 +16,7 @@ public abstract class AbstractFieldAccessor<T, V> {
      * Used to get field value from object.
      *
      * @param object object to get field value.
+     *
      * @return field value of object.
      */
     public abstract V getFieldValue(T object);

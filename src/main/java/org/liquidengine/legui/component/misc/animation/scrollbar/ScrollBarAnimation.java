@@ -23,30 +23,33 @@ public class ScrollBarAnimation extends Animation {
      * true if animation is finished and could be removed from animator.
      *
      * @param delta delta time (from previous call).
+     *
      * @return true if animation is finished and could be removed from animator.
      */
     @Override
     protected boolean animate(double delta) {
         ScrollBar scrollBar = this.scrollBar.get();
-        if (scrollBar != null) {
-            Viewport viewport = scrollBar.getViewport();
-            if (scrollBar.isVisible() && viewport != null) {
-
-                Vector2f viewportSize = viewport.getViewportSize();
-                Vector2f viewportViewSize = viewport.getViewportViewSize();
-
-                if (viewportSize == null || viewportViewSize == null) {
-                    return true;
-                }
-
-                float range = scrollBar.getMaxValue() - scrollBar.getMinValue();
-                float allSize = Orientation.HORIZONTAL.equals(scrollBar.getOrientation()) ? viewportViewSize.x : viewportViewSize.y;
-                float viewSize = Orientation.HORIZONTAL.equals(scrollBar.getOrientation()) ? viewportSize.x : viewportSize.y;
-
-                scrollBar.setVisibleAmount(allSize >= viewSize ? (range * viewSize / allSize) : range);
-            }
-            return false;
+        if (scrollBar == null) {
+            return true;
         }
-        return true;
+
+        Viewport viewport = scrollBar.getViewport();
+        if (scrollBar.isVisible() && viewport != null) {
+
+            Vector2f viewportSize = viewport.getViewportSize();
+            Vector2f viewportViewSize = viewport.getViewportViewSize();
+
+            if (viewportSize == null || viewportViewSize == null) {
+                return true;
+            }
+
+            float range = scrollBar.getMaxValue() - scrollBar.getMinValue();
+            float allSize = Orientation.HORIZONTAL.equals(scrollBar.getOrientation()) ? viewportViewSize.x : viewportViewSize.y;
+            float viewSize = Orientation.HORIZONTAL.equals(scrollBar.getOrientation()) ? viewportSize.x : viewportSize.y;
+
+            scrollBar.setVisibleAmount(allSize >= viewSize ? (range * viewSize / allSize) : range);
+        }
+
+        return false;
     }
 }

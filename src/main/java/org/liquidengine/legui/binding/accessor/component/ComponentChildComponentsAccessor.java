@@ -15,6 +15,7 @@ public class ComponentChildComponentsAccessor extends AbstractFieldAccessor<Comp
      * Used to get childComponents of {@link Component}.
      *
      * @param object {@link Component} instance.
+     *
      * @return childComponents of component.
      */
     @Override

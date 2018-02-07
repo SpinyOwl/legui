@@ -26,6 +26,7 @@ public class ScrollablePanelAnimation extends Animation {
      * true if animation is finished and could be removed from animator.
      *
      * @param delta delta time (from previous call).
+     *
      * @return true if animation is finished and could be removed from animator.
      */
     @Override

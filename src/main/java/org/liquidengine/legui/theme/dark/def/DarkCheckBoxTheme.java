@@ -3,10 +3,10 @@ package org.liquidengine.legui.theme.dark.def;
 import static org.liquidengine.legui.style.font.FontRegistry.MATERIAL_ICONS_REGULAR;
 
 import org.joml.Vector2f;
+import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.component.CheckBox;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.icon.CharIcon;
-import org.liquidengine.legui.style.color.ColorConstants;
 
 /**
  * Dark CheckBox Theme for all check boxes. Used to make check box dark.

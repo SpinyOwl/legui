@@ -1,8 +1,8 @@
 package org.liquidengine.legui.theme.dark.def;
 
+import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.component.Label;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
-import org.liquidengine.legui.style.color.ColorConstants;
 
 /**
  * Dark Label Theme for all labels. Used to make label dark.

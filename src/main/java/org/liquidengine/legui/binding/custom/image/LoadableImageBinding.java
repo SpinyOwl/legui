@@ -6,7 +6,9 @@ import org.liquidengine.legui.binding.model.TargetType;
 import org.liquidengine.legui.image.LoadableImage;
 
 /**
- * Binding for {@link LoadableImage} instances. <p> Created by ShchAlexander on 01.12.2017.
+ * Binding for {@link LoadableImage} instances.
+ * <p>
+ * Created by ShchAlexander on 01.12.2017.
  */
 public class LoadableImageBinding extends AbstractClassBinding<LoadableImage> {
 

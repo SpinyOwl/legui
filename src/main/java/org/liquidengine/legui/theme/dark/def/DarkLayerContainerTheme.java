@@ -1,7 +1,7 @@
 package org.liquidengine.legui.theme.dark.def;
 
-import org.liquidengine.legui.component.LayerContainer;
 import org.liquidengine.legui.style.color.ColorConstants;
+import org.liquidengine.legui.component.LayerContainer;
 
 /**
  * Dark LayerContainer Theme for all layer containers. Used to make layer container dark.

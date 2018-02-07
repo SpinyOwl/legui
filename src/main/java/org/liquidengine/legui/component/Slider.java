@@ -7,6 +7,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
+import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.component.event.slider.SliderChangeValueEvent;
 import org.liquidengine.legui.component.misc.listener.slider.SliderMouseClickEventListener;
 import org.liquidengine.legui.component.misc.listener.slider.SliderMouseDragEventListener;
@@ -18,7 +19,6 @@ import org.liquidengine.legui.event.ScrollEvent;
 import org.liquidengine.legui.intersection.Intersector;
 import org.liquidengine.legui.intersection.RectangleIntersector;
 import org.liquidengine.legui.listener.EventListener;
-import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.theme.Themes;
 
 /**

@@ -18,6 +18,7 @@ public class FrameComponentLayerAccessor extends AbstractFieldAccessor<Frame, La
      * Used to get field value from object.
      *
      * @param object object to get field value.
+     *
      * @return field value of object.
      */
     @Override

@@ -1,7 +1,7 @@
 package org.liquidengine.legui.system.renderer.nvg.component;
 
-import static org.liquidengine.legui.component.optional.Orientation.VERTICAL;
 import static org.liquidengine.legui.style.color.ColorUtil.oppositeBlackOrWhite;
+import static org.liquidengine.legui.component.optional.Orientation.VERTICAL;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.createScissor;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.resetScissor;
 import static org.liquidengine.legui.util.TextUtil.cpToStr;

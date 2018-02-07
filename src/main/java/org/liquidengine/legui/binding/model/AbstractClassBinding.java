@@ -10,6 +10,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
  * Class binding. Used to map java class to external view.
  *
  * @param <T> type of class binding.
+ *
  * @author ShchAlexander.
  */
 public abstract class AbstractClassBinding<T> {
@@ -106,6 +107,7 @@ public abstract class AbstractClassBinding<T> {
      * Returns field binding by java field name.
      *
      * @param fieldName field name to search binding.
+     *
      * @return field binding by java field name or null if not found.
      */
     public Binding getBinding(String fieldName) {
@@ -156,6 +158,7 @@ public abstract class AbstractClassBinding<T> {
      * Used to create instance of class binding type.
      *
      * @param clazz class to create instance.
+     *
      * @return created instance.
      */
     public T createInstance(Class<T> clazz) {

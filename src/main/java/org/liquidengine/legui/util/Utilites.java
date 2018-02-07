@@ -20,6 +20,7 @@ public final class Utilites {
      * Used to determine if component is visible in parent components.
      *
      * @param component component to check.
+     *
      * @return true if component is visible in all chain of parent components.
      */
     public static boolean visibleInParents(Component component) {

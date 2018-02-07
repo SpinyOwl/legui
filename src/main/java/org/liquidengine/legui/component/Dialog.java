@@ -8,7 +8,7 @@ import org.liquidengine.legui.theme.Themes;
 /**
  * Dialog component is component which extended from {@link Widget} and have some additional functionality. On {@link #show(Frame)} method it added to new
  * created {@link DialogLayer} which forbid underlying layers to receive mouse click and keyboard events.
- *
+ * <p>
  * TODO: REIMPLEMENT THIS COMPONENT ACCORDING TO NEW LAYOUT SYSTEM
  */
 public class Dialog extends Widget {

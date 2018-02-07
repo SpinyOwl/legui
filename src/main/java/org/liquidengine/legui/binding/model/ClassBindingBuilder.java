@@ -42,6 +42,7 @@ public final class ClassBindingBuilder {
      *
      * @param clazz class to create binding.
      * @param to target binding name.
+     *
      * @return builder instance to complete binding creation.
      */
     public static ClassBindingBuilder createForClass(Class clazz, String to) {
@@ -55,6 +56,7 @@ public final class ClassBindingBuilder {
      * @param to target binding name.
      * @param byDefault should binding used as default for specified class or not
      * @param inherited base class binding.
+     *
      * @return builder instance to complete binding creation.
      */
     public static ClassBindingBuilder createForClass(Class clazz, String to, boolean byDefault, AbstractClassBinding inherited) {
@@ -70,6 +72,7 @@ public final class ClassBindingBuilder {
      * Used to bind specified field.
      *
      * @param field field to bind.
+     *
      * @return builder instance to complete binding creation.
      */
     public ClassBindingBuilder bind(String field) {
@@ -81,6 +84,7 @@ public final class ClassBindingBuilder {
      *
      * @param field field to bind.
      * @param accessor field accessor.
+     *
      * @return builder instance to complete binding creation.
      */
     public ClassBindingBuilder bind(String field, AbstractFieldAccessor accessor) {
@@ -92,6 +96,7 @@ public final class ClassBindingBuilder {
      *
      * @param field field to bind.
      * @param to target field name in binding.
+     *
      * @return builder instance to complete binding creation.
      */
     public ClassBindingBuilder bind(String field, String to) {
@@ -104,6 +109,7 @@ public final class ClassBindingBuilder {
      * @param field field to bind.
      * @param to target field name in binding.
      * @param accessor field accessor.
+     *
      * @return builder instance to complete binding creation.
      */
     public ClassBindingBuilder bind(String field, String to, AbstractFieldAccessor accessor) {
@@ -116,6 +122,7 @@ public final class ClassBindingBuilder {
      * @param field field to bind.
      * @param to target field name in binding.
      * @param using binding for specified field.
+     *
      * @return builder instance to complete binding creation.
      */
     public ClassBindingBuilder bind(String field, String to, AbstractClassBinding using) {
@@ -129,6 +136,7 @@ public final class ClassBindingBuilder {
      * @param to target field name in binding.
      * @param using binding for specified field.
      * @param accessor field accessor.
+     *
      * @return builder instance to complete binding creation.
      */
     public ClassBindingBuilder bind(String field, String to, AbstractClassBinding using, AbstractFieldAccessor accessor) {
@@ -141,6 +149,7 @@ public final class ClassBindingBuilder {
      * @param field field to bind.
      * @param to target field name in binding.
      * @param attribute target type of binding should be attribute or not.
+     *
      * @return builder instance to complete binding creation.
      */
     public ClassBindingBuilder bind(String field, String to, boolean attribute) {
@@ -154,6 +163,7 @@ public final class ClassBindingBuilder {
      * @param to target field name in binding.
      * @param attribute target type of binding should be attribute or not.
      * @param accessor field accessor.
+     *
      * @return builder instance to complete binding creation.
      */
     public ClassBindingBuilder bind(String field, String to, boolean attribute, AbstractFieldAccessor accessor) {
@@ -164,6 +174,7 @@ public final class ClassBindingBuilder {
      * Used to unbind specified field.
      *
      * @param field field to unbind.
+     *
      * @return builder instance to complete binding creation.
      */
     public ClassBindingBuilder unbind(String field) {
@@ -178,6 +189,7 @@ public final class ClassBindingBuilder {
      * @param to target field name in binding.
      * @param attribute target type of binding should be attribute or not.
      * @param linkedClassBinding binding for specified field.
+     *
      * @return builder instance to complete binding creation.
      */
     public ClassBindingBuilder bind(String field, String to, boolean attribute, AbstractClassBinding linkedClassBinding) {
@@ -192,6 +204,7 @@ public final class ClassBindingBuilder {
      * @param attribute target type of binding should be attribute or not.
      * @param linkedClassBinding binding for specified field.
      * @param accessor field accessor.
+     *
      * @return builder instance to complete binding creation.
      */
     public ClassBindingBuilder bind(String field, String to, boolean attribute, AbstractClassBinding linkedClassBinding, AbstractFieldAccessor accessor) {
@@ -211,6 +224,7 @@ public final class ClassBindingBuilder {
      * @param to target field name in binding.
      * @param attribute target type of binding should be attribute or not.
      * @param classConverter class converter for specified field.
+     *
      * @return builder instance to complete binding creation.
      */
     public ClassBindingBuilder bind(String field, String to, boolean attribute, AbstractClassConverter classConverter) {
@@ -225,6 +239,7 @@ public final class ClassBindingBuilder {
      * @param attribute target type of binding should be attribute or not.
      * @param classConverter class converter for specified field.
      * @param accessor field accessor.
+     *
      * @return builder instance to complete binding creation.
      */
     public ClassBindingBuilder bind(String field, String to, boolean attribute, AbstractClassConverter classConverter, AbstractFieldAccessor accessor) {
@@ -246,6 +261,7 @@ public final class ClassBindingBuilder {
      * @param attribute target type of binding should be attribute or not.
      * @param linkedClassBinding binding for specified field.
      * @param fieldAccessor field accessor.
+     *
      * @return binding instance.
      */
     private Binding createBinding(String field, String to, boolean attribute, AbstractClassBinding linkedClassBinding, AbstractFieldAccessor fieldAccessor) {

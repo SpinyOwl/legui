@@ -2,10 +2,10 @@ package org.liquidengine.legui.style;
 
 import org.joml.Vector2f;
 import org.joml.Vector4f;
-import org.liquidengine.legui.style.border.SimpleLineBorder;
 import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.style.font.Font;
 import org.liquidengine.legui.style.font.FontRegistry;
+import org.liquidengine.legui.style.border.SimpleLineBorder;
 
 /**
  * The type Style.
@@ -25,7 +25,9 @@ public class Style {
 
     /**
      * Preferred size of component. Used to set preferred size of component for layout manager. Layout manager will try to make this component size equal to
-     * preferred. <p> {@code -1} is default value - that means that layout manager will calculate preferred size.
+     * preferred.
+     * <p>
+     * {@code -1} is default value - that means that layout manager will calculate preferred size.
      */
     private Vector2f preferredSize;
 

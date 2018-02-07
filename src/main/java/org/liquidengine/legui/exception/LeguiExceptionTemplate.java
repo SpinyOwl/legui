@@ -43,6 +43,7 @@ public enum LeguiExceptionTemplate {
      * Error message constructor.
      *
      * @param args error message variables.
+     *
      * @return constructed message.
      */
     public String message(String... args) {
@@ -53,6 +54,7 @@ public enum LeguiExceptionTemplate {
      * Used to create LeguiException with specified message and provided variables.
      *
      * @param args error message variables.
+     *
      * @return exception constructed with message template.
      */
     public LeguiException create(String... args) {
@@ -63,6 +65,7 @@ public enum LeguiExceptionTemplate {
      * Used to create LeguiException with specified message, {@link Throwable} cause and provided variables.
      *
      * @param args error message variables.
+     *
      * @return exception constructed with message template.
      */
     public LeguiException create(Throwable e, String... args) {

@@ -5,7 +5,9 @@ import java.util.Map;
 import org.liquidengine.legui.binding.model.AbstractClassBinding;
 
 /**
- * Internal binding storage. Used only by parsers. <p> Created by ShchAlexander on 30.11.2017.
+ * Internal binding storage. Used only by parsers.
+ * <p>
+ * Created by ShchAlexander on 30.11.2017.
  */
 class BindingStorage {
 
@@ -33,6 +35,7 @@ class BindingStorage {
      * Returns binding by binding path.
      *
      * @param path path to get binding.
+     *
      * @return binding by binding path.
      */
     protected AbstractClassBinding getBinding(String path) {

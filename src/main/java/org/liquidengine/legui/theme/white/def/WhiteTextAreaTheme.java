@@ -1,8 +1,8 @@
 package org.liquidengine.legui.theme.white.def;
 
+import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.component.TextArea;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
-import org.liquidengine.legui.style.color.ColorConstants;
 
 /**
  * White TextArea Theme for all text areas. Used to make text area white.

@@ -10,7 +10,9 @@ import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.listener.MouseClickEventListener;
 
 /**
- * Default mouse click listener for selectbox. <p> Used to expand/collapse selectbox if clicked on it.
+ * Default mouse click listener for selectbox.
+ * <p>
+ * Used to expand/collapse selectbox if clicked on it.
  */
 public class SelectBoxClickListener implements MouseClickEventListener {
 

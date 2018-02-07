@@ -90,6 +90,7 @@ public class FontRegistry {
      * Used to retrieve font by name
      *
      * @param name font name.
+     *
      * @return font or null.
      */
     public static Font getFont(String name) {

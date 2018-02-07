@@ -16,6 +16,7 @@ public class FrameSizeAccessor extends AbstractFieldAccessor<Frame, Vector2f> {
      * Used to get field value from object.
      *
      * @param object object to get field value.
+     *
      * @return field value of object.
      */
     @Override

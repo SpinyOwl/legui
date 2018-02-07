@@ -2,9 +2,9 @@ package org.liquidengine.legui.system.renderer.nvg.icon;
 
 import org.joml.Vector2f;
 import org.joml.Vector4f;
+import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.icon.Icon;
-import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.nvg.NvgIconRenderer;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgShapes;

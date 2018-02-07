@@ -9,9 +9,9 @@ import static org.lwjgl.nanovg.NanoVG.nvgSave;
 
 import org.joml.Vector2f;
 import org.joml.Vector4f;
+import org.liquidengine.legui.style.color.ColorUtil;
 import org.liquidengine.legui.component.Button;
 import org.liquidengine.legui.icon.Icon;
-import org.liquidengine.legui.style.color.ColorUtil;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgShapes;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgText;

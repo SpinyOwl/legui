@@ -1,8 +1,8 @@
 package org.liquidengine.legui.theme.white.def;
 
+import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.component.TextInput;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
-import org.liquidengine.legui.style.color.ColorConstants;
 
 /**
  * White TextInput Theme for all text inputs. Used to make text input white.

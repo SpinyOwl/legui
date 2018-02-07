@@ -60,6 +60,7 @@ public class RadioButtonGroup implements Serializable {
      * Returns radioButtonGroup selected by index or new one.
      *
      * @param index index to search.
+     *
      * @return RadioButtonGroup instance.
      */
     public static RadioButtonGroup getGroupByIndex(int index) {
@@ -158,6 +159,7 @@ public class RadioButtonGroup implements Serializable {
      * Returns true if provided radio button selected.
      *
      * @param radioButton radio button to check.
+     *
      * @return true if provided radio button selected.
      */
     public boolean isSelected(RadioButton radioButton) {

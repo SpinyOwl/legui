@@ -24,6 +24,7 @@ public class BindingUtilities {
      *
      * @param objectClass class to check.
      * @param fieldName field name to search in hierarchy.
+     *
      * @return true if class hierarchy has specified field.
      */
     public static boolean classTreeHasField(Class objectClass, String fieldName) {
@@ -42,6 +43,7 @@ public class BindingUtilities {
      *
      * @param objectClass class to check.
      * @param fieldName field name to search in hierarchy.
+     *
      * @return true if class has specified field.
      */
     private static boolean classHasField(Class objectClass, String fieldName) {
@@ -64,6 +66,7 @@ public class BindingUtilities {
      *
      * @param objectClass class to retrieve field class.
      * @param fieldName field name to search field type.
+     *
      * @return field type or null if field not found.
      */
     public static Type classTreeGetFieldType(Class objectClass, String fieldName) {
@@ -83,6 +86,7 @@ public class BindingUtilities {
      *
      * @param objectClass class to retrieve field class.
      * @param fieldName field name to search field type.
+     *
      * @return field type or null if field not found.
      */
     public static Class classTreeGetFieldClass(Class objectClass, String fieldName) {
@@ -102,6 +106,7 @@ public class BindingUtilities {
      *
      * @param objectClass class to retrieve field class.
      * @param fieldName field name to search field type.
+     *
      * @return field type or null if field not found.
      */
     private static Class getFieldClass(Class objectClass, String fieldName) {
@@ -154,6 +159,7 @@ public class BindingUtilities {
      *
      * @param objectClass class to retrieve field class.
      * @param fieldName field name to search field type.
+     *
      * @return field type or null if field not found.
      */
     private static Type getFieldType(Class objectClass, String fieldName) {
@@ -204,6 +210,7 @@ public class BindingUtilities {
      *
      * @param object object to get field.
      * @param fieldName field name.
+     *
      * @return field value or null if not found.
      */
     public static Object getFieldValue(Object object, String fieldName) {
@@ -226,6 +233,7 @@ public class BindingUtilities {
      * @param fieldName field name.
      * @param objectClass object class.
      * @param found if field found should be changed [0] element to true.
+     *
      * @return field value or null if not found.
      */
     private static Object getFieldValueFromObject(Object object, String fieldName, Class<?> objectClass, boolean[] found) {
@@ -337,6 +345,7 @@ public class BindingUtilities {
      * Used to retrieve non-primitive type of field (if field is primitive - it returns primitive wrapper).
      *
      * @param fieldType field type.
+     *
      * @return non-primitive field type.
      */
     private static Class<?> getNonPrimitiveType(Class<?> fieldType) {

@@ -1,7 +1,7 @@
 package org.liquidengine.legui.theme.white.def;
 
-import org.liquidengine.legui.component.ScrollBar;
 import org.liquidengine.legui.style.color.ColorConstants;
+import org.liquidengine.legui.component.ScrollBar;
 
 /**
  * White ScrollBar Theme for all scroll bars. Used to make scroll bar white.

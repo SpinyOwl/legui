@@ -8,7 +8,9 @@ import org.liquidengine.legui.event.Event;
 import org.liquidengine.legui.listener.EventListener;
 
 /**
- * Default implementation of event processor. Created by ShchAlexander on 1/25/2017.
+ * Default implementation of event processor.
+ * <p>
+ * Created by ShchAlexander on 1/25/2017.
  */
 public class EventProcessorImpl extends EventProcessor {
 

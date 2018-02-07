@@ -1,9 +1,9 @@
 package org.liquidengine.legui.theme.white.def;
 
 import org.joml.Vector4f;
+import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.component.Tooltip;
 import org.liquidengine.legui.style.border.SimpleLineBorder;
-import org.liquidengine.legui.style.color.ColorConstants;
 
 /**
  * White Tooltip Theme for all tooltips. Used to make tooltip white.

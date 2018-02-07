@@ -34,7 +34,7 @@ import org.liquidengine.legui.theme.Themes;
 
 /**
  * Creates drop-down list with select options.
- *
+ * <p>
  * TODO: REIMPLEMENT THIS COMPONENT ACCORDING TO NEW LAYOUT SYSTEM
  */
 public class SelectBox extends Component {
@@ -291,6 +291,7 @@ public class SelectBox extends Component {
      * Used to create {@link SelectBoxElement}.
      *
      * @param element element.
+     *
      * @return {@link SelectBoxElement} created on base of element.
      */
     private SelectBoxElement createSelectBoxElement(String element) {
@@ -304,6 +305,7 @@ public class SelectBox extends Component {
      * Used to get element index.
      *
      * @param element element to find index.
+     *
      * @return index of element or -1 if no such element in selectbox.
      */
     public int getElementIndex(String element) {

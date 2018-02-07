@@ -1,12 +1,12 @@
 package org.liquidengine.legui.theme.dark.def;
 
+import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.component.Widget;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
 import org.liquidengine.legui.icon.CharIcon;
 import org.liquidengine.legui.icon.Icon;
-import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.theme.Themes;
 
 /**
