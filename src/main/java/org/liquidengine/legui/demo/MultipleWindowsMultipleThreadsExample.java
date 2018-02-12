@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import org.joml.Vector2i;
+import org.liquidengine.legui.animation.Animator;
 import org.liquidengine.legui.component.Button;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.Frame;
@@ -168,6 +169,9 @@ public class MultipleWindowsMultipleThreadsExample {
 
                 // When everything done we need to relayout components.
                 LayoutManager.getInstance().layout(frames[i]);
+
+                // Run animations. Should be also called cause some components use animations for updating state.
+                Animator.getInstance().runAnimations();
             }
         }
 

@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import org.joml.Vector2i;
+import org.liquidengine.legui.animation.Animator;
 import org.liquidengine.legui.component.Button;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.Frame;
@@ -160,6 +161,9 @@ public class SingleClassExample {
 
             // When everything done we need to relayout components.
             LayoutManager.getInstance().layout(frame);
+
+            // Run animations. Should be also called cause some components use animations for updating state.
+            Animator.getInstance().runAnimations();
         }
 
         // And when rendering is ended we need to destroy renderer
