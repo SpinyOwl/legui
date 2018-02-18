@@ -7,6 +7,7 @@ import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.component.Label;
 import org.liquidengine.legui.component.Panel;
 import org.liquidengine.legui.component.SelectBox;
+import org.liquidengine.legui.component.Widget;
 import org.liquidengine.legui.demo.Demo;
 import org.liquidengine.legui.layout.LayoutManager;
 import org.liquidengine.legui.layout.borderlayout.BorderLayout;
@@ -125,25 +126,11 @@ public class BorderLayoutDemo extends Demo {
 
         component.setLayout(new BorderLayout());
 
-        SelectBox selectBox = new SelectBox(20, 260, 100, 20);
-        selectBox.addElement("Just");
-        selectBox.addElement("Hello");
-        selectBox.addElement("World");
-        final int[] i = {1};
-        selectBox.addElement("World" + i[0]++);
-        selectBox.addElement("World" + i[0]++);
-        selectBox.addElement("World" + i[0]++);
-        selectBox.addElement("World" + i[0]++);
-        selectBox.addElement("World" + i[0]++);
-        selectBox.addElement("World" + i[0]++);
-        selectBox.addElement("World" + i[0]++);
-        selectBox.addElement("World" + i[0]++);
-        selectBox.addElement("World" + i[0]++);
-        selectBox.addElement("World" + i[0]++);
-        selectBox.addElement("World" + i[0]++);
-        selectBox.addElement("World" + i[0]++);
-        selectBox.setVisibleCount(5);
-        selectBox.setElementHeight(20);
-        component.add(selectBox);
+        Widget widget = new Widget("Test widget");
+        widget.setDraggable(false);
+        Widget widget2 = new Widget("Test widget2");
+        widget2.setDraggable(false);
+        component.add(widget/*, BorderLayoutConstraint.TOP*/);
+        component.add(widget2, BorderLayoutConstraint.BOTTOM);
     }
 }

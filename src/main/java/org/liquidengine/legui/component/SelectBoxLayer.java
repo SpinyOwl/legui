@@ -13,7 +13,5 @@ public class SelectBoxLayer extends Layer<SelectBoxScrollablePanel> {
     public SelectBoxLayer() {
         setEventPassable(true);
         setEventReceivable(true);
-
-        getContainer().getStyle().getBackground().setColor(0, 0, 1, 0.2f);
     }
 }
