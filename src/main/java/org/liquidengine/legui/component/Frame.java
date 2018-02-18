@@ -110,10 +110,8 @@ public class Frame {
             layer == componentLayer) {
             return;
         }
-        if (!containsLayer(layer)) {
-            if (layers.add(layer)) {
-                changeFrame(layer);
-            }
+        if (!containsLayer(layer) && layers.add(layer)) {
+            changeFrame(layer);
         }
     }
 

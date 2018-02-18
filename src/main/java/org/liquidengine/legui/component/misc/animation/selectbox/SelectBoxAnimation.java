@@ -14,7 +14,7 @@ public class SelectBoxAnimation extends Animation {
     private final WeakReference<SelectBox> selectBox;
     private final WeakReference<SelectBoxScrollablePanel> selectionListPanel;
 
-    double deltaSum = 0d;
+    private double deltaSum = 0d;
 
     public SelectBoxAnimation(SelectBox selectBox, SelectBoxScrollablePanel selectionListPanel) {
         this.selectBox = new WeakReference<>(selectBox);

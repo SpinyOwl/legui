@@ -67,7 +67,6 @@ public class SelectBox extends Component {
     private Lock lock = new ReentrantLock(false);
 
     private SelectBoxLayer selectBoxLayer = new SelectBoxLayer();
-    private SelectBoxAnimation animation;
 
     /**
      * Default constructor. Used to create component instance without any parameters. <p> Also if you want to make it easy to use with Json
@@ -171,7 +170,7 @@ public class SelectBox extends Component {
 
         selectBoxLayer.add(selectionListPanel);
 
-        animation = new SelectBoxAnimation(this, selectionListPanel);
+        SelectBoxAnimation animation = new SelectBoxAnimation(this, selectionListPanel);
         animation.startAnimation();
 
         Themes.getDefaultTheme().getThemeManager().getComponentTheme(SelectBox.class).applyAll(this);

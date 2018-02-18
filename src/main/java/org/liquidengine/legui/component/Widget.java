@@ -56,8 +56,6 @@ public class Widget extends Component {
     private Vector2f maximizedMaxSize = new Vector2f();
     private Vector2f maximizedMinSize = new Vector2f();
 
-    private float titleHeight;
-
     private Component container;
     private Component titleContainer;
     private Label title;
@@ -253,7 +251,6 @@ public class Widget extends Component {
      * @param titleHeight title height to set.
      */
     public void setTitleHeight(float titleHeight) {
-        this.titleHeight = titleHeight;
         this.titleContainer.getSize().y = titleHeight;
         this.title.getSize().y = titleHeight;
     }
