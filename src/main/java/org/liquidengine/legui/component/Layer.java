@@ -56,10 +56,16 @@ public class Layer<T extends Component> {
      * @param frame frame to attach.
      */
     protected void setFrame(Frame frame) {
-        if (!frame.containsLayer(this)) {
-            frame.addLayer(this);
+        if (frame == this.frame) {
+            return;
+        }
+        if (this.frame != null) {
+            this.frame.removeLayer(this);
         }
         this.frame = frame;
+        if (frame != null) {
+            frame.addLayer(this);
+        }
     }
 
     /**
@@ -165,9 +171,7 @@ public class Layer<T extends Component> {
 
     /**
      * Used to set parent component. By default used by containers to attach component to container. Parent component used by renderers and event listeners and
-     * processors.
-     * <p>
-     * Don't use this method if you want to attach component to container. In this case use {@link Component#add(Component)} method.
+     * processors. <p> Don't use this method if you want to attach component to container. In this case use {@link Component#add(Component)} method.
      *
      * @param parent component container.
      */
@@ -509,8 +513,8 @@ public class Layer<T extends Component> {
      *
      * @see List#removeIf(Predicate)
      */
-    public boolean removeIf(Predicate<? super Component> filter) {
-        return container.removeIf(filter);
+    public void removeIf(Predicate<? super Component> filter) {
+        container.removeIf(filter);
     }
 
     /**
@@ -567,9 +571,7 @@ public class Layer<T extends Component> {
     }
 
     /**
-     * Used to retrieve child components as {@link List}.
-     * <p>
-     * <span style="color:red">NOTE: this method returns NEW {@link List} of components</span>.
+     * Used to retrieve child components as {@link List}. <p> <span style="color:red">NOTE: this method returns NEW {@link List} of components</span>.
      *
      * @return list of child components.
      */

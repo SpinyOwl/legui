@@ -20,7 +20,7 @@ public class TextAreaCharEventListener implements CharEventListener {
      */
     @Override
     public void process(CharEvent event) {
-        TextArea textArea = (TextArea) event.getComponent();
+        TextArea textArea = (TextArea) event.getTargetComponent();
         if (textArea.isFocused() && textArea.isEditable() && !MOUSE_BUTTON_LEFT.isPressed()) {
             String str = cpToStr(event.getCodepoint());
             TextState textState = textArea.getTextState();

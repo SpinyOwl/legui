@@ -16,7 +16,7 @@ public class TextInputMouseClickEventListener implements MouseClickEventListener
      */
     @Override
     public void process(MouseClickEvent event) {
-        TextInput gui = (TextInput) event.getComponent();
+        TextInput gui = (TextInput) event.getTargetComponent();
         int mouseCaretPosition = gui.getMouseCaretPosition();
         if (event.getAction() == MouseClickEvent.MouseClickAction.PRESS) {
             gui.setCaretPosition(mouseCaretPosition);

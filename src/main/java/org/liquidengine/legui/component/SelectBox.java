@@ -12,23 +12,30 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
-import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.component.event.selectbox.SelectBoxChangeSelectionEvent;
+import org.liquidengine.legui.component.misc.animation.selectbox.SelectBoxAnimation;
 import org.liquidengine.legui.component.misc.listener.selectbox.SelectBoxClickListener;
 import org.liquidengine.legui.component.misc.listener.selectbox.SelectBoxElementClickListener;
 import org.liquidengine.legui.component.misc.listener.selectbox.SelectBoxFocusListener;
 import org.liquidengine.legui.component.misc.listener.selectbox.SelectBoxScrollListener;
+import org.liquidengine.legui.component.optional.Orientation;
 import org.liquidengine.legui.event.FocusEvent;
 import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.icon.CharIcon;
 import org.liquidengine.legui.icon.Icon;
+import org.liquidengine.legui.layout.borderlayout.BorderLayout;
+import org.liquidengine.legui.layout.borderlayout.BorderLayoutConstraint;
+import org.liquidengine.legui.layout.boxlayout.BoxLayout;
 import org.liquidengine.legui.listener.EventListener;
 import org.liquidengine.legui.listener.FocusEventListener;
 import org.liquidengine.legui.listener.MouseClickEventListener;
+import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.theme.Themes;
 
 /**
  * Creates drop-down list with select options.
+ * <p>
+ * TODO: REIMPLEMENT THIS COMPONENT ACCORDING TO NEW LAYOUT SYSTEM
  */
 public class SelectBox extends Component {
 
@@ -58,6 +65,8 @@ public class SelectBox extends Component {
     private Button expandButton = new Button("");
     private boolean collapsed = true;
     private Lock lock = new ReentrantLock(false);
+
+    private SelectBoxLayer selectBoxLayer = new SelectBoxLayer();
 
     /**
      * Default constructor. Used to create component instance without any parameters. <p> Also if you want to make it easy to use with Json
@@ -132,26 +141,39 @@ public class SelectBox extends Component {
      */
     private void initialize() {
         selectionListPanel.getHorizontalScrollBar().setVisible(false);
+        selectionListPanel.getLayout().removeComponent(selectionListPanel.getHorizontalScrollBar());
+        selectionListPanel.getContainer().setLayout(new BoxLayout(Orientation.VERTICAL));
 
         expandIcon = new CharIcon(new Vector2f(expandButton.getSize()), DEFAULT_ICON_FONT, (char) EXPAND_ICON_CHAR, ColorConstants.black());
         collapseIcon = new CharIcon(new Vector2f(expandButton.getSize()), DEFAULT_ICON_FONT, (char) COLLAPSE_ICON_CHAR, ColorConstants.black());
         expandButton.setBackgroundIcon(expandIcon);
 
-        this.add(expandButton);
-        this.add(selectionButton);
+        expandButton.getStyle().setMinimumSize(buttonWidth, 0);
+        expandButton.getStyle().setMaximumSize(buttonWidth, Float.MAX_VALUE);
+
+        selectionButton.getStyle().setMinimumSize(0, 0);
+        selectionButton.getStyle().setMaximumSize(Float.MAX_VALUE, Float.MAX_VALUE);
+
+        this.setLayout(new BorderLayout());
+        this.add(expandButton, BorderLayoutConstraint.RIGHT);
+        this.add(selectionButton, BorderLayoutConstraint.CENTER);
 
         MouseClickEventListener mouseClickEventListener = new SelectBoxClickListener(this);
         selectionButton.getListenerMap().addListener(MouseClickEvent.class, mouseClickEventListener);
         expandButton.getListenerMap().addListener(MouseClickEvent.class, mouseClickEventListener);
+        selectBoxLayer.getContainer().getListenerMap().addListener(MouseClickEvent.class, mouseClickEventListener);
 
         FocusEventListener focusEventListener = new SelectBoxFocusListener(this);
         selectionListPanel.getVerticalScrollBar().getListenerMap().getListeners(FocusEvent.class).add(focusEventListener);
         selectionButton.getListenerMap().getListeners(FocusEvent.class).add(focusEventListener);
         expandButton.getListenerMap().getListeners(FocusEvent.class).add(focusEventListener);
 
-        Themes.getDefaultTheme().getThemeManager().getComponentTheme(SelectBox.class).applyAll(this);
+        selectBoxLayer.add(selectionListPanel);
 
-        resize();
+        SelectBoxAnimation animation = new SelectBoxAnimation(this, selectionListPanel);
+        animation.startAnimation();
+
+        Themes.getDefaultTheme().getThemeManager().getComponentTheme(SelectBox.class).applyAll(this);
     }
 
     public Icon getCollapseIcon() {
@@ -204,7 +226,6 @@ public class SelectBox extends Component {
      */
     public void setVisibleCount(int visibleCount) {
         this.visibleCount = visibleCount;
-        resize();
     }
 
     /**
@@ -223,55 +244,20 @@ public class SelectBox extends Component {
      */
     public void setCollapsed(boolean collapsed) {
         this.collapsed = collapsed;
-        if (collapsed) {
-            getParent().remove(selectionListPanel);
-        } else {
-            getParent().add(selectionListPanel);
+        if (!collapsed) {
             selectionListPanel.getVerticalScrollBar().setCurValue(0);
         }
-        resize();
     }
 
     /**
      * Used to resize selectbox.
      */
     private void resize() {
-        selectionButton.setPosition(0, 0);
-        selectionButton.setSize(getSize().x - buttonWidth, getSize().y);
-
         updateIcons();
-        expandButton.setPosition(getSize().x - buttonWidth, 0);
-        expandButton.setSize(buttonWidth, getSize().y);
-
-        collapseIcon.setSize(new Vector2f(buttonWidth, getSize().y).mul(2f / 3f));
-        expandIcon.setSize(new Vector2f(buttonWidth, getSize().y).mul(2f / 3f));
-
-        selectionListPanel.getVerticalScrollBar().getSize().x = buttonWidth;
-
         for (int i = 0; i < selectBoxElements.size(); i++) {
             SelectBoxElement selectBoxElement = selectBoxElements.get(i);
-            selectBoxElement.setSize(new Vector2f(selectionListPanel.getContainer().getSize().x, elementHeight));
-            selectBoxElement.setPosition(0, i * elementHeight);
+            selectBoxElement.getStyle().setMinimumSize(0, elementHeight);
         }
-
-        Vector2f psize = new Vector2f();
-        Component parent = getParent();
-        if (parent != null) {
-            psize.set(getParent().getSize());
-        }
-        Vector2f wsize = new Vector2f(this.getSize().x, visibleCount * elementHeight);
-        Vector2f wpos = new Vector2f();
-        if (parent != null && getPosition().y + wsize.y > psize.y) {
-            wpos.set(getPosition().x, getPosition().y - wsize.y);
-        } else {
-            wpos.set(getPosition().x, getPosition().y + getSize().y);
-        }
-        selectionListPanel.setSize(wsize);
-        selectionListPanel.setPosition(wpos);
-        selectionListPanel.getContainer().getSize().y = selectionListPanel.getContainer().count() * elementHeight;
-        selectionListPanel.getContainer().getSize().x = this.getSize().x - selectionListPanel.getVerticalScrollBar().getSize().x;
-        selectionListPanel.resize();
-
     }
 
 
@@ -292,8 +278,8 @@ public class SelectBox extends Component {
                 }
                 elements.add(element);
                 selectBoxElements.add(boxElement);
-                addSelectBoxComponent(boxElement);
-                resize();
+                selectionListPanel.getContainer().add(boxElement);
+                selectionListPanel.getContainer().getSize().y = selectionListPanel.getContainer().count() * elementHeight;
             }
         } finally {
             lock.unlock();
@@ -309,21 +295,9 @@ public class SelectBox extends Component {
      */
     private SelectBoxElement createSelectBoxElement(String element) {
         SelectBoxElement boxElement = new SelectBoxElement(element, false);
-        boxElement.setSize(new Vector2f(selectionListPanel.getContainer().getSize().x, elementHeight));
-        boxElement.setPosition(0, selectionListPanel.getContainer().count() * elementHeight);
+        boxElement.getStyle().setMinimumSize(0, elementHeight);
         boxElement.getListenerMap().getListeners(MouseClickEvent.class).add(new SelectBoxElementClickListener(this));
         return boxElement;
-    }
-
-    /**
-     * Used to add {@link SelectBoxElement} to selectbox.
-     *
-     * @param element element to add.
-     */
-    private void addSelectBoxComponent(SelectBoxElement element) {
-        selectionListPanel.getContainer().add(element);
-        selectionListPanel.getContainer().getSize().y = selectionListPanel.getContainer().count() * elementHeight;
-        selectionListPanel.resize();
     }
 
     /**
@@ -367,7 +341,6 @@ public class SelectBox extends Component {
                     setSelected(0, true);
                 }
             }
-            resize();
         } finally {
             lock.unlock();
         }
@@ -540,6 +513,10 @@ public class SelectBox extends Component {
             .toHashCode();
     }
 
+    public SelectBoxLayer getSelectBoxLayer() {
+        return selectBoxLayer;
+    }
+
     /**
      * Selectbox element which is subclass of button.
      */
@@ -617,34 +594,6 @@ public class SelectBox extends Component {
      */
     public class SelectBoxScrollablePanel extends ScrollablePanel {
 
-        /**
-         * Default constructor. Used to create component instance without any parameters. <p> Also if you want to make it easy to use with Json
-         * marshaller/unmarshaller component should contain empty constructor.
-         */
-        public SelectBoxScrollablePanel() {
-        }
-
-        /**
-         * Constructor with position and size parameters.
-         *
-         * @param x x position position in parent component.
-         * @param y y position position in parent component.
-         * @param width width of component.
-         * @param height height of component.
-         */
-        public SelectBoxScrollablePanel(float x, float y, float width, float height) {
-            super(x, y, width, height);
-        }
-
-        /**
-         * Constructor with position and size parameters.
-         *
-         * @param position position position in parent component.
-         * @param size size of component.
-         */
-        public SelectBoxScrollablePanel(Vector2f position, Vector2f size) {
-            super(position, size);
-        }
     }
 
 }

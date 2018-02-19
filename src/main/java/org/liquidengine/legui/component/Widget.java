@@ -7,7 +7,6 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
-import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.component.event.widget.WidgetCloseEvent;
 import org.liquidengine.legui.component.misc.listener.widget.WidgetCloseButMouseClickEventListener;
 import org.liquidengine.legui.component.misc.listener.widget.WidgetDragListener;
@@ -17,16 +16,21 @@ import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
 import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.event.MouseDragEvent;
-import org.liquidengine.legui.style.font.FontRegistry;
 import org.liquidengine.legui.icon.CharIcon;
 import org.liquidengine.legui.icon.Icon;
+import org.liquidengine.legui.layout.borderlayout.BorderLayout;
+import org.liquidengine.legui.layout.borderlayout.BorderLayoutConstraint;
 import org.liquidengine.legui.listener.EventListener;
 import org.liquidengine.legui.listener.MouseDragEventListener;
+import org.liquidengine.legui.style.color.ColorConstants;
+import org.liquidengine.legui.style.font.FontRegistry;
 import org.liquidengine.legui.theme.Themes;
 
 /**
  * Widget component is container which have predefined components such as container, title label, close and minimize buttons and predefined event listeners.
  * This component can be moved, minimized and restored, closed. Also now you can enable or disable title.
+ * <p>
+ * TODO: REIMPLEMENT THIS COMPONENT ACCORDING TO NEW LAYOUT SYSTEM
  */
 public class Widget extends Component {
 
@@ -49,6 +53,9 @@ public class Widget extends Component {
      * Used to store widget size in maximized state when minimizing widget.
      */
     private Vector2f maximizedSize = new Vector2f();
+    private Vector2f maximizedMaxSize = new Vector2f();
+    private Vector2f maximizedMinSize = new Vector2f();
+
     private Component container;
     private Component titleContainer;
     private Label title;
@@ -127,15 +134,22 @@ public class Widget extends Component {
      * @param title title to set.
      */
     private void initialize(String title) {
+        this.setLayout(new BorderLayout());
+
         titleContainer = new Panel();
-        titleContainer.getSize().y = INITIAL_TITLE_HEIGHT;
+        titleContainer.setLayout(new BorderLayout());
+        titleContainer.getStyle().setMaximumSize(new Vector2f(Float.MAX_VALUE, INITIAL_TITLE_HEIGHT));
+        titleContainer.getStyle().setMinimumSize(new Vector2f(0, INITIAL_TITLE_HEIGHT));
         titleContainer.getStyle().getBackground().setColor(ColorConstants.white());
+        titleContainer.getSize().y = INITIAL_TITLE_HEIGHT;
         titleContainer.setTabFocusable(false);
 
         this.title = new Label(title);
         this.title.setPosition(0, 0);
         this.title.getSize().y = INITIAL_TITLE_HEIGHT;
         this.title.getTextState().getPadding().set(10, 5, 10, 5);
+        this.title.getStyle().setMaximumSize(Float.MAX_VALUE, INITIAL_TITLE_HEIGHT);
+        this.title.getStyle().setMinimumSize(0, INITIAL_TITLE_HEIGHT);
         this.title.getStyle().getBackground().setColor(ColorConstants.transparent());
         this.title.getStyle().setBorder(null);
         this.title.setTabFocusable(false);
@@ -144,13 +158,16 @@ public class Widget extends Component {
         this.title.getListenerMap().addListener(MouseDragEvent.class, mouseDragEventLeguiEventListener);
 
         closeButton = new Button("");
+        closeButton.setSize(new Vector2f(INITIAL_TITLE_HEIGHT));
         closeButton.getStyle().getBackground().setColor(ColorConstants.transparent());
         closeIcon = new CharIcon(new Vector2f(INITIAL_TITLE_HEIGHT * 2 / 3), FontRegistry.MATERIAL_DESIGN_ICONS, (char) CLOSE_ICON_CHAR,
-            ColorConstants.black());
+                                 ColorConstants.black());
         closeIcon.setHorizontalAlign(HorizontalAlign.CENTER);
         closeIcon.setVerticalAlign(VerticalAlign.MIDDLE);
         closeButton.setBackgroundIcon(closeIcon);
 
+        closeButton.getStyle().setMaximumSize(INITIAL_TITLE_HEIGHT, INITIAL_TITLE_HEIGHT);
+        closeButton.getStyle().setMinimumSize(INITIAL_TITLE_HEIGHT, INITIAL_TITLE_HEIGHT);
         closeButton.getListenerMap().addListener(MouseClickEvent.class, new WidgetCloseButMouseClickEventListener(this));
         closeButton.getStyle().setBorder(null);
         closeButton.getTextState().setVerticalAlign(VerticalAlign.MIDDLE);
@@ -158,16 +175,19 @@ public class Widget extends Component {
         closeButton.setTabFocusable(false);
 
         minimizeButton = new Button("");
+        minimizeButton.setSize(new Vector2f(INITIAL_TITLE_HEIGHT));
         minimizeButton.getStyle().getBackground().setColor(ColorConstants.transparent());
         minimizeButton.setTabFocusable(false);
+        minimizeButton.getStyle().setMaximumSize(INITIAL_TITLE_HEIGHT, INITIAL_TITLE_HEIGHT);
+        minimizeButton.getStyle().setMinimumSize(INITIAL_TITLE_HEIGHT, INITIAL_TITLE_HEIGHT);
 
         minimizeIcon = new CharIcon(new Vector2f(INITIAL_TITLE_HEIGHT * 2 / 3), FontRegistry.MATERIAL_DESIGN_ICONS, (char) MINIMIZE_ICON_CHAR,
-            ColorConstants.black());
+                                    ColorConstants.black());
         minimizeIcon.setHorizontalAlign(HorizontalAlign.CENTER);
         minimizeIcon.setVerticalAlign(VerticalAlign.MIDDLE);
 
         maximizeIcon = new CharIcon(new Vector2f(INITIAL_TITLE_HEIGHT * 2 / 3), FontRegistry.MATERIAL_DESIGN_ICONS, (char) MAXIMIZE_ICON_CHAR,
-            ColorConstants.black());
+                                    ColorConstants.black());
         maximizeIcon.setHorizontalAlign(HorizontalAlign.CENTER);
         maximizeIcon.setVerticalAlign(VerticalAlign.MIDDLE);
 
@@ -181,53 +201,14 @@ public class Widget extends Component {
         container = new Panel();
         container.setTabFocusable(false);
 
-        titleContainer.add(this.title);
-        titleContainer.add(closeButton);
-        titleContainer.add(minimizeButton);
+        titleContainer.add(this.title, BorderLayoutConstraint.LEFT);
+        titleContainer.add(closeButton, BorderLayoutConstraint.RIGHT);
+        titleContainer.add(minimizeButton, BorderLayoutConstraint.CENTER);
 
-        add(titleContainer);
-        add(container);
+        add(titleContainer, BorderLayoutConstraint.TOP);
+        add(container, BorderLayoutConstraint.CENTER);
 
         Themes.getDefaultTheme().getThemeManager().getComponentTheme(Widget.class).applyAll(this);
-
-        resize();
-    }
-
-    /**
-     * Used to resize widget container and title elements.
-     */
-    public void resize() {
-        float titHei = titleContainer.getSize().y;
-        if (titleContainer.isVisible()) {
-            titleContainer.getPosition().set(0);
-
-            float widgetWidth = getSize().x;
-            float titleWidth = widgetWidth;
-
-            titleContainer.getSize().set(titleWidth, titHei);
-            if (closeButton.isVisible()) {
-                titleWidth -= titHei;
-            }
-            if (minimizeButton.isVisible()) {
-                titleWidth -= titHei;
-            }
-
-            title.getSize().x = titleWidth;
-            container.getPosition().set(0, titHei);
-            container.getSize().set(widgetWidth, getSize().y - titHei);
-
-            closeButton.getSize().set(titHei);
-            closeButton.getPosition().set(widgetWidth - titHei, 0);
-
-            minimizeButton.getSize().set(titHei);
-            minimizeButton.getPosition().set(titleWidth, 0);
-
-        } else {
-            container.getPosition().set(0, 0);
-            container.getSize().set(getSize());
-            closeButton.getSize().set(0);
-            minimizeButton.getSize().set(0);
-        }
     }
 
     /**
@@ -239,7 +220,6 @@ public class Widget extends Component {
     public void setSize(Vector2f size) {
         if (!minimized) {
             super.setSize(size);
-            resize();
         }
     }
 
@@ -253,7 +233,6 @@ public class Widget extends Component {
     public void setSize(float width, float height) {
         if (!minimized) {
             super.setSize(width, height);
-            resize();
         }
     }
 
@@ -274,7 +253,6 @@ public class Widget extends Component {
     public void setTitleHeight(float titleHeight) {
         this.titleContainer.getSize().y = titleHeight;
         this.title.getSize().y = titleHeight;
-        resize();
     }
 
     /**
@@ -296,7 +274,11 @@ public class Widget extends Component {
             return;
         }
         this.titleContainer.setVisible(titleEnabled);
-        resize();
+        if (titleEnabled) {
+            this.getLayout().addComponent(titleContainer, BorderLayoutConstraint.TOP);
+        } else {
+            this.getLayout().removeComponent(titleContainer);
+        }
     }
 
     /**
@@ -315,7 +297,6 @@ public class Widget extends Component {
      */
     public void setCloseable(boolean closeable) {
         this.closeButton.setVisible(closeable);
-        resize();
     }
 
     /**
@@ -432,7 +413,6 @@ public class Widget extends Component {
      */
     public void setMinimizable(boolean minimizable) {
         this.minimizeButton.setVisible(minimizable);
-        resize();
     }
 
     /**
@@ -468,8 +448,13 @@ public class Widget extends Component {
         if (isTitleEnabled()) {
             Vector2f size = getSize();
             maximizedSize.set(size);
+            maximizedMinSize = getStyle().getMinimumSize();
+            maximizedMaxSize = getStyle().getMaximumSize();
+
             size.set(size.x, getTitleHeight());
-            resize();
+
+            this.getStyle().setMaximumSize(maximizedMaxSize == null ? Float.MAX_VALUE : maximizedMaxSize.x, size.y);
+            this.getStyle().setMinimumSize(maximizedMinSize == null ? 0 : maximizedMinSize.x, size.y);
         }
     }
 
@@ -478,8 +463,10 @@ public class Widget extends Component {
      */
     private void maximize() {
         if (isTitleEnabled()) {
-            getSize().set(maximizedSize);
-            resize();
+
+            this.getSize().set(maximizedSize);
+            this.getStyle().setMaximumSize(maximizedMaxSize);
+            this.getStyle().setMinimumSize(maximizedMinSize);
         }
     }
 

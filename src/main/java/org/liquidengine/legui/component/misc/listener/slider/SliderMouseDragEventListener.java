@@ -16,7 +16,7 @@ public class SliderMouseDragEventListener implements MouseDragEventListener {
 
     @Override
     public void process(MouseDragEvent event) {
-        Slider slider = (Slider) event.getComponent();
+        Slider slider = (Slider) event.getTargetComponent();
         if (!Mouse.MouseButton.MOUSE_BUTTON_LEFT.isPressed()) {
             return;
         }

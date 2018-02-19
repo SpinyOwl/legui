@@ -6,8 +6,7 @@ import org.liquidengine.legui.binding.accessor.AbstractFieldAccessor;
 import org.liquidengine.legui.component.Frame;
 
 /**
- * Frame size accessor.
- * Created cause there is no such field but you can set it during initialization.
+ * Frame size accessor. Created cause there is no such field but you can set it during initialization.
  *
  * @author Aliaksandr_Shcherbin.
  */

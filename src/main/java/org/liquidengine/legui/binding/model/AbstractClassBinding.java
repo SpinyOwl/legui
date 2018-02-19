@@ -45,8 +45,12 @@ public abstract class AbstractClassBinding<T> {
      * @param byDefault should this binding used as default or not.
      */
     public AbstractClassBinding(Class<? extends T> bindingForType, String toName, boolean byDefault) {
-        if(bindingForType==null) throw new IllegalArgumentException("bindingForType cannot be null.");
-        if(toName==null) throw new IllegalArgumentException("toName cannot be null.");
+        if (bindingForType == null) {
+            throw new IllegalArgumentException("bindingForType cannot be null.");
+        }
+        if (toName == null) {
+            throw new IllegalArgumentException("toName cannot be null.");
+        }
         this.bindingForType = bindingForType;
         this.toName = toName;
         this.byDefault = byDefault;
@@ -133,8 +137,7 @@ public abstract class AbstractClassBinding<T> {
     }
 
     /**
-     * Returns true if binding should be used as default binding for specified class.
-     * Mostly used while parsing bindings.
+     * Returns true if binding should be used as default binding for specified class. Mostly used while parsing bindings.
      *
      * @return true if binding should be used as default binding for specified class.
      */
@@ -143,8 +146,7 @@ public abstract class AbstractClassBinding<T> {
     }
 
     /**
-     * Set true if binding should be used as default binding for specified class.
-     * Mostly used while parsing bindings.
+     * Set true if binding should be used as default binding for specified class. Mostly used while parsing bindings.
      *
      * @param byDefault true if binding should be used as default binding for specified class.
      */

@@ -22,13 +22,14 @@ public class SelectBoxElementClickListener implements MouseClickEventListener {
 
     @Override
     public void process(MouseClickEvent event) {
-        SelectBox.SelectBoxElement component = (SelectBox.SelectBoxElement) event.getComponent();
+        SelectBox.SelectBoxElement component = (SelectBox.SelectBoxElement) event.getTargetComponent();
         if (event.getAction() == CLICK && event.getButton().equals(Mouse.MouseButton.MOUSE_BUTTON_1)) {
             String selection = selectBox.getSelection();
             String newValue = component.getText();
             selectBox.setSelected(newValue, true);
             EventProcessor.getInstance().pushEvent(new SelectBoxChangeSelectionEvent(selectBox, event.getContext(), event.getFrame(), selection, newValue));
             selectBox.setCollapsed(true);
+            event.getFrame().removeLayer(selectBox.getSelectBoxLayer());
         }
     }
 

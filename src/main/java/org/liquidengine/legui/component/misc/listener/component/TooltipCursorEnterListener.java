@@ -17,7 +17,7 @@ public class TooltipCursorEnterListener implements CursorEnterEventListener {
      */
     @Override
     public void process(CursorEnterEvent event) {
-        Component component = event.getComponent();
+        Component component = event.getTargetComponent();
         Tooltip tooltip = component.getTooltip();
         if (tooltip != null) {
             if (event.isEntered()) {

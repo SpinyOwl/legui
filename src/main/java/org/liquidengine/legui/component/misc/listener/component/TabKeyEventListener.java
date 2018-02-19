@@ -26,19 +26,19 @@ public class TabKeyEventListener implements EventListener<KeyEvent> {
      */
     @Override
     public void process(KeyEvent event) {
-        if (event.getComponent() == null) {
+        if (event.getTargetComponent() == null) {
             return;
         }
         if (event.getKey() == GLFW.GLFW_KEY_TAB && event.getAction() != GLFW.GLFW_PRESS) {
             boolean controlPressed = (event.getMods() & GLFW.GLFW_MOD_CONTROL) != 0;
             boolean shiftPressed = (event.getMods() & GLFW.GLFW_MOD_SHIFT) != 0;
             if (controlPressed && !shiftPressed) {
-                Component next = findNext(event.getComponent());
+                Component next = findNext(event.getTargetComponent());
                 // if ((next == null || next == component) && cycled) next = event.getContext().getFrame().getContainer();
-                moveToNextTabFocusableComponent(event.getContext(), event.getComponent(), next, event.getFrame());
+                moveToNextTabFocusableComponent(event.getContext(), event.getTargetComponent(), next, event.getFrame());
             } else if (controlPressed && shiftPressed) {
-                Component prev = findPrev(event.getComponent());
-                moveToNextTabFocusableComponent(event.getContext(), event.getComponent(), prev, event.getFrame());
+                Component prev = findPrev(event.getTargetComponent());
+                moveToNextTabFocusableComponent(event.getContext(), event.getTargetComponent(), prev, event.getFrame());
             }
         }
     }
@@ -188,8 +188,8 @@ public class TabKeyEventListener implements EventListener<KeyEvent> {
         if (childComponents.isEmpty()) {
             return next;
         }
-        Component nextComponent = next;
 
+        Component nextComponent = next;
         childComponents.sort(comparator);
 
         for (Component child : childComponents) {

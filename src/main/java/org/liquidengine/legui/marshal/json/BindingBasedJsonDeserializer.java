@@ -115,7 +115,7 @@ public class BindingBasedJsonDeserializer<T> implements JsonDeserializer<T> {
      *
      * @param json The Json data being deserialized
      * @param typeOfT The type of the Object to deserialize to
-     * @param context
+     * @param context deserialization context.
      *
      * @return a deserialized object of the specified type typeOfT which is a subclass of {@code T}
      *
@@ -140,8 +140,8 @@ public class BindingBasedJsonDeserializer<T> implements JsonDeserializer<T> {
     }
 
     /**
-     * Used to unmarshal json using specified type and class binding.
-     * In case if json have @type or @class attribute classBinding and type will be replaced with more suitable for this case.
+     * Used to unmarshal json using specified type and class binding. In case if json have @type or @class attribute classBinding and type will be replaced with
+     * more suitable for this case.
      *
      * @param json json to unmarshal.
      * @param typeOfT type to use during unmarshal.
@@ -288,8 +288,8 @@ public class BindingBasedJsonDeserializer<T> implements JsonDeserializer<T> {
     }
 
     /**
-     * Used to unmarshal json using specified type and class binding.
-     * In case if json have @type or @class attribute classBinding and type will be replaced with more suitable for this case.
+     * Used to unmarshal json using specified type and class binding. In case if json have @type or @class attribute classBinding and type will be replaced with
+     * more suitable for this case.
      *
      * @param jsonObject json to unmarshal.
      * @param fieldClass type to use during unmarshal.

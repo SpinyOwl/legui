@@ -7,6 +7,7 @@ import java.lang.reflect.Type;
  *
  * @param <T> type of class binding.
  * @param <V> type of field value.
+ * <p>
  * Created by ShchAlexander on 04.12.2017.
  */
 public abstract class AbstractFieldAccessor<T, V> {

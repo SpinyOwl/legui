@@ -21,6 +21,7 @@ import org.xml.sax.SAXException;
  * @author ShchAlexander.
  */
 public class BindingParserService {
+
     public static final Logger LOGGER = LogManager.getLogger();
 
     /**

@@ -1,6 +1,5 @@
 package org.liquidengine.legui.demo;
 
-import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_ESCAPE;
 import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
 import static org.lwjgl.glfw.GLFW.glfwCreateWindow;
@@ -13,7 +12,6 @@ import static org.lwjgl.glfw.GLFW.glfwShowWindow;
 import static org.lwjgl.glfw.GLFW.glfwSwapBuffers;
 import static org.lwjgl.glfw.GLFW.glfwSwapInterval;
 import static org.lwjgl.glfw.GLFW.glfwTerminate;
-import static org.lwjgl.nanovg.NanoVG.*;
 import static org.lwjgl.nanovg.NanoVG.nvgBeginFrame;
 import static org.lwjgl.nanovg.NanoVG.nvgBeginPath;
 import static org.lwjgl.nanovg.NanoVG.nvgEndFrame;
@@ -22,7 +20,6 @@ import static org.lwjgl.nanovg.NanoVG.nvgFillColor;
 import static org.lwjgl.nanovg.NanoVG.nvgRect;
 import static org.lwjgl.nanovg.NanoVG.nvgResetScissor;
 import static org.lwjgl.nanovg.NanoVG.nvgScissor;
-import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL11.GL_BLEND;
 import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.GL_ONE_MINUS_SRC_ALPHA;
@@ -45,6 +42,7 @@ import org.lwjgl.opengl.GL;
  * Created by Alexander on 17.12.2016.
  */
 public class MultipleWindowsNanoVG {
+
     public static final int WIDTH = 200;
     public static final int HEIGHT = 200;
     private static volatile boolean running = false;
@@ -70,7 +68,7 @@ public class MultipleWindowsNanoVG {
             glfwSwapInterval(0);
 
             glfwSetKeyCallback(windows[i],
-                    (window, key, scancode, action, mods) -> running = !(key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE));
+                (window, key, scancode, action, mods) -> running = !(key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE));
 
             nvgContexts[i] = NanoVGGL3.nvgCreate(NanoVGGL3.NVG_ANTIALIAS | NanoVGGL3.NVG_STENCIL_STROKES | NanoVGGL3.NVG_DEBUG);
         }

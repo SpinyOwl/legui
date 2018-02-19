@@ -34,6 +34,7 @@ import org.liquidengine.legui.component.RadioButton;
 import org.liquidengine.legui.component.RadioButtonGroup;
 import org.liquidengine.legui.event.CursorEnterEvent;
 import org.liquidengine.legui.event.MouseClickEvent;
+import org.liquidengine.legui.layout.LayoutManager;
 import org.liquidengine.legui.listener.CursorEnterEventListener;
 import org.liquidengine.legui.listener.MouseClickEventListener;
 import org.liquidengine.legui.listener.processor.EventProcessor;
@@ -55,6 +56,7 @@ import org.lwjgl.opengl.GLCapabilities;
  * Created by Alexander on 17.12.2016.
  */
 public class MultipleWindowsMultipleThreadsExample {
+
     public static final int WIDTH = 400;
     public static final int HEIGHT = 200;
     private static final int WINDOW_COUNT = 3;
@@ -91,7 +93,9 @@ public class MultipleWindowsMultipleThreadsExample {
 
         mainThread.start();
         // wait while not initialized
-        while (!running) Thread.yield();
+        while (!running) {
+            Thread.yield();
+        }
     }
 
     private static void sleep(long sleepTime) {
@@ -162,6 +166,9 @@ public class MultipleWindowsMultipleThreadsExample {
                 renderers[i].render(frames[i], contexts[i]);
 
                 glfwSwapBuffers(windows[i]);
+
+                // When everything done we need to relayout components.
+                LayoutManager.getInstance().layout(frames[i]);
 
                 // Run animations. Should be also called cause some components use animations for updating state.
                 Animator.getInstance().runAnimations();

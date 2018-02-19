@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.ScrollBar;
 import org.liquidengine.legui.component.ScrollablePanel;
-import org.liquidengine.legui.component.Viewport;
 import org.liquidengine.legui.component.event.scrollbar.ScrollBarChangeValueEvent;
 import org.liquidengine.legui.event.ScrollEvent;
 import org.liquidengine.legui.input.Mouse;
@@ -25,14 +24,14 @@ public class ScrollablePanelViewportScrollListener implements EventListener<Scro
     @Override
     public void process(ScrollEvent event) {
         ArrayList<Component> targetList = new ArrayList<>();
-        SehUtil.recursiveTargetComponentListSearch(Mouse.getCursorPosition(), event.getComponent(), targetList);
+        SehUtil.recursiveTargetComponentListSearch(Mouse.getCursorPosition(), event.getTargetComponent(), targetList);
         for (Component component : targetList) {
             if (component instanceof ScrollablePanel) {
                 return;
             }
         }
 
-        ScrollablePanel scrollablePanel = (ScrollablePanel) event.getComponent().getParent();
+        ScrollablePanel scrollablePanel = (ScrollablePanel) event.getTargetComponent().getParent();
         ScrollBar scrollBar = scrollablePanel.getVerticalScrollBar();
         float maxValue = scrollBar.getMaxValue();
         float minValue = scrollBar.getMinValue();
@@ -50,11 +49,6 @@ public class ScrollablePanelViewportScrollListener implements EventListener<Scro
 
         EventProcessor.getInstance().pushEvent(new ScrollBarChangeValueEvent<>(scrollBar, event.getContext(), event.getFrame(), curValue, newVal));
         scrollBar.setCurValue(newVal);
-
-        Viewport viewport = scrollBar.getViewport();
-        if (viewport != null) {
-            viewport.updateViewport();
-        }
     }
 
     @Override

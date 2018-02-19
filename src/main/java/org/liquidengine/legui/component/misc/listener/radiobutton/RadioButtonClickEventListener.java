@@ -19,7 +19,7 @@ public class RadioButtonClickEventListener implements MouseClickEventListener {
     @Override
     public void process(MouseClickEvent event) {
         if (event.getAction() == CLICK) {
-            RadioButton component = (RadioButton) event.getComponent();
+            RadioButton component = (RadioButton) event.getTargetComponent();
             component.setChecked(true);
         }
     }

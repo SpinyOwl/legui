@@ -66,6 +66,7 @@ import org.lwjgl.glfw.GLFW;
  * Created by Shcherbin Alexander on 9/19/2016.
  */
 public class ExampleGui extends Panel {
+
     private final Label mouseTargetLabel;
     private final Label mouseLabel;
     private final Label upsLabel;
@@ -154,7 +155,7 @@ public class ExampleGui extends Panel {
             boolean entered = event.isEntered();
             Vector4f newColor = ColorConstants.green();
             if (entered) {
-                createColorAnimationOnHover(event.getComponent(), newColor, checkBox2).startAnimation();
+              createColorAnimationOnHover(event.getTargetComponent(), newColor, checkBox2).startAnimation();
             }
         });
 
@@ -163,7 +164,7 @@ public class ExampleGui extends Panel {
             boolean entered = event.isEntered();
             Vector4f newColor = ColorConstants.red();
             if (entered) {
-                createColorAnimationOnHover(event.getComponent(), newColor, checkBox1).startAnimation();
+              createColorAnimationOnHover(event.getTargetComponent(), newColor, checkBox1).startAnimation();
             }
         });
 
@@ -345,11 +346,9 @@ public class ExampleGui extends Panel {
         ScrollablePanel scrollablePanel = new ScrollablePanel(420, 10, 250, 150);
         scrollablePanel.getStyle().getBackground().setColor(1, 1, 1, 1);
         scrollablePanel.getContainer().setSize(300, 200);
-        scrollablePanel.resize();
 
         ScrollablePanel scp = new ScrollablePanel(10, 10, 150, 100);
         scp.getContainer().setSize(300, 300);
-        scp.resize();
 
         scp.getContainer().add(new TextInput("Hello Scrollable", 10, 10, 150, 20));
 
@@ -357,12 +356,10 @@ public class ExampleGui extends Panel {
         this.add(scrollablePanel);
 
         slider2.getListenerMap().addListener(SliderChangeValueEvent.class, (SliderChangeValueEventListener) event -> {
-            scrollablePanel.getHorizontalScrollBar().getSize().y = event.getNewValue() / 2f + 10;
-            scrollablePanel.resize();
+            scrollablePanel.getHorizontalScrollBar().getStyle().getMinimumSize().y = event.getNewValue() / 2f + 10;
         });
         slider1.getListenerMap().addListener(SliderChangeValueEvent.class, (SliderChangeValueEventListener) event -> {
             scrollablePanel.getHorizontalScrollBar().setArrowSize(event.getNewValue() / 4f + 10);
-            scrollablePanel.resize();
         });
 
         textArea = new TextArea(420, 280, 150, 100);
@@ -442,7 +439,7 @@ public class ExampleGui extends Panel {
         toggleButton.setTooltip(new Tooltip("Just toggle button with long tooltipText text"));
         toggleButton.getListenerMap().addListener(CursorEnterEvent.class, (CursorEnterEventListener) event -> {
             if (event.isEntered()) {
-               getColorAnimation(toggleButton, ColorConstants.blue()).startAnimation();
+                getColorAnimation(toggleButton, ColorConstants.blue()).startAnimation();
             } else {
                 getColorAnimation(toggleButton, ColorConstants.red()).startAnimation();
             }
@@ -481,7 +478,6 @@ public class ExampleGui extends Panel {
             }
         });
 
-
         bgImageNormal.setSize(new Vector2f(100 * 40 / 60, 20));
         bgImageNormal.setPosition(new Vector2f(40 - 100 * 40 / 60, 0));
         toggleButton.setBackgroundIcon(bgImageNormal);
@@ -501,7 +497,7 @@ public class ExampleGui extends Panel {
         String light = "light";
         Button switchTheme = new Button(text + dark, 600, 400, 120, 30);
         switchTheme.getListenerMap().addListener(MouseClickEvent.class,
-                switchThemeClickListener(current, darkTheme, defaultTheme, text, dark, light, switchTheme));
+            switchThemeClickListener(current, darkTheme, defaultTheme, text, dark, light, switchTheme));
         this.add(switchTheme);
     }
 
@@ -521,8 +517,8 @@ public class ExampleGui extends Panel {
             protected boolean animate(double delta) {
                 time += delta;
                 targetComponent.getStyle().getBackground().getColor().set(new Vector4f(initialColor)
-                                                    .add(new Vector4f(colorRange)
-                                                                 .mul((float) Math.abs(Math.sin(time * 2)))));
+                    .add(new Vector4f(colorRange)
+                        .mul((float) Math.abs(Math.sin(time * 2)))));
                 return !component.isHovered();
             }
 

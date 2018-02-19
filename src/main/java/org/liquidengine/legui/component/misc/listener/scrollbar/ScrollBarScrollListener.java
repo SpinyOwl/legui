@@ -1,7 +1,6 @@
 package org.liquidengine.legui.component.misc.listener.scrollbar;
 
 import org.liquidengine.legui.component.ScrollBar;
-import org.liquidengine.legui.component.Viewport;
 import org.liquidengine.legui.component.event.scrollbar.ScrollBarChangeValueEvent;
 import org.liquidengine.legui.event.ScrollEvent;
 import org.liquidengine.legui.listener.ScrollEventListener;
@@ -13,7 +12,7 @@ import org.liquidengine.legui.listener.processor.EventProcessor;
 public class ScrollBarScrollListener implements ScrollEventListener {
 
     public void process(ScrollEvent event) {
-        ScrollBar scrollBar = (ScrollBar) event.getComponent();
+        ScrollBar scrollBar = (ScrollBar) event.getTargetComponent();
         float maxValue = scrollBar.getMaxValue();
         float minValue = scrollBar.getMinValue();
         float curValue = scrollBar.getCurValue();
@@ -30,11 +29,6 @@ public class ScrollBarScrollListener implements ScrollEventListener {
 
         EventProcessor.getInstance().pushEvent(new ScrollBarChangeValueEvent<>(scrollBar, event.getContext(), event.getFrame(), curValue, newVal));
         scrollBar.setCurValue(newVal);
-
-        Viewport viewport = scrollBar.getViewport();
-        if (viewport != null) {
-            viewport.updateViewport();
-        }
     }
 
     @Override

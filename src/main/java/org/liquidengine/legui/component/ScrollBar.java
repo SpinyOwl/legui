@@ -7,8 +7,8 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
-import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.component.event.scrollbar.ScrollBarChangeValueEvent;
+import org.liquidengine.legui.component.misc.animation.scrollbar.ScrollBarAnimation;
 import org.liquidengine.legui.component.misc.listener.scrollbar.ScrollBarMouseClickEventListener;
 import org.liquidengine.legui.component.misc.listener.scrollbar.ScrollBarMouseDragEventListener;
 import org.liquidengine.legui.component.misc.listener.scrollbar.ScrollBarScrollListener;
@@ -17,6 +17,7 @@ import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.event.MouseDragEvent;
 import org.liquidengine.legui.event.ScrollEvent;
 import org.liquidengine.legui.listener.EventListener;
+import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.theme.Themes;
 
 /**
@@ -164,6 +165,10 @@ public class ScrollBar extends Component {
         getListenerMap().addListener(ScrollEvent.class, new ScrollBarScrollListener());
         getListenerMap().addListener(MouseDragEvent.class, new ScrollBarMouseDragEventListener());
         getListenerMap().addListener(MouseClickEvent.class, new ScrollBarMouseClickEventListener());
+
+        ScrollBarAnimation animation = new ScrollBarAnimation(this);
+        animation.startAnimation();
+
         Themes.getDefaultTheme().getThemeManager().getComponentTheme(ScrollBar.class).applyAll(this);
     }
 
@@ -195,7 +200,7 @@ public class ScrollBar extends Component {
     }
 
     /**
-     * Used to attach scrollbar to viewport. So if scrollbar value updated - called {@link Viewport#updateViewport()} method.
+     * Used to attach scrollbar to viewport.
      *
      * @param viewport viewport to set.
      */
@@ -218,7 +223,9 @@ public class ScrollBar extends Component {
      * @param orientation scrollbar orientation to set.
      */
     public void setOrientation(Orientation orientation) {
-        this.orientation = orientation;
+        if (orientation != null) {
+            this.orientation = orientation;
+        }
     }
 
     /**

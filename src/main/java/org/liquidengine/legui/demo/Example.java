@@ -22,12 +22,12 @@ import static org.lwjgl.opengl.GL11.glClearColor;
 import static org.lwjgl.opengl.GL11.glViewport;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
-import java.io.IOException;
 import org.joml.Vector2i;
 import org.liquidengine.legui.DefaultInitializer;
 import org.liquidengine.legui.animation.Animator;
 import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.event.WindowSizeEvent;
+import org.liquidengine.legui.layout.LayoutManager;
 import org.liquidengine.legui.listener.WindowSizeEventListener;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.Renderer;
@@ -53,7 +53,7 @@ public class Example {
 
 //    private static String json = IOUtil.loadResourceAsString("org/liquidengine/legui/demo/json.json", 1024);
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         System.setProperty("joml.nounsafe", Boolean.TRUE.toString());
         System.setProperty("java.awt.headless", Boolean.TRUE.toString());
         if (!glfwInit()) {
@@ -169,6 +169,10 @@ public class Example {
                 fullscreen = !fullscreen;
                 toggleFullscreen = false;
             }
+
+            // When everything done we need to relayout components.
+            LayoutManager.getInstance().layout(frame);
+
             update();
             updCntr++;
             if (System.currentTimeMillis() >= time + 1000) {

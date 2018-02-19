@@ -22,6 +22,8 @@ import org.liquidengine.legui.event.CursorEnterEvent;
 import org.liquidengine.legui.event.KeyEvent;
 import org.liquidengine.legui.intersection.Intersector;
 import org.liquidengine.legui.intersection.RectangleIntersector;
+import org.liquidengine.legui.layout.Layout;
+import org.liquidengine.legui.layout.LayoutConstraint;
 import org.liquidengine.legui.listener.ListenerMap;
 import org.liquidengine.legui.style.Style;
 import org.liquidengine.legui.theme.Themes;
@@ -94,6 +96,19 @@ public abstract class Component implements Serializable {
      * Show if component can be focused by tabbing.
      */
     private boolean tabFocusable = true;
+
+    ////////////////////////////////
+    //// COMPONENT LAYOUT DATA
+    ////////////////////////////////
+
+    /**
+     * Layout. Used to layout
+     */
+    private Layout layout = null;
+
+    ////////////////////////////////
+    //// CONTAINER BASE DATA
+    ////////////////////////////////
 
     /**
      * Component style.
@@ -504,6 +519,29 @@ public abstract class Component implements Serializable {
         this.tabFocusable = tabFocusable;
     }
 
+    ////////////////////////////////
+    //// COMPONENT LAYER DATA
+    ////////////////////////////////
+
+
+    /**
+     * Returns layout.
+     *
+     * @return layout.
+     */
+    public Layout getLayout() {
+        return layout;
+    }
+
+    /**
+     * Used to set layout for this component.
+     *
+     * @param layout layout to set.
+     */
+    public void setLayout(Layout layout) {
+        this.layout = layout;
+    }
+
     /////////////////////////////////
     //// CONTAINER METHODS
     /////////////////////////////////
@@ -520,9 +558,9 @@ public abstract class Component implements Serializable {
     }
 
     /**
-     * Returns true if layerFrame contains no elements.
+     * Returns true if component contains no elements.
      *
-     * @return true if layerFrame contains no elements.
+     * @return true if component contains no elements.
      *
      * @see List#isEmpty()
      */
@@ -531,11 +569,11 @@ public abstract class Component implements Serializable {
     }
 
     /**
-     * Returns true if layerFrame contains specified component.
+     * Returns true if component contains specified component.
      *
      * @param component component to check.
      *
-     * @return true if layerFrame contains specified component.
+     * @return true if component contains specified component.
      *
      * @see List#contains(Object)
      */
@@ -544,9 +582,9 @@ public abstract class Component implements Serializable {
     }
 
     /**
-     * Returns an iterator over the elements in this layerFrame. The elements are returned in no particular order.
+     * Returns an iterator over the elements in this component. The elements are returned in no particular order.
      *
-     * @return an iterator over the elements in this layerFrame.
+     * @return an iterator over the elements in this component.
      *
      * @see List#iterator()
      */
@@ -555,7 +593,7 @@ public abstract class Component implements Serializable {
     }
 
     /**
-     * Used to add component to layerFrame.
+     * Used to add component to component.
      *
      * @param component component to add.
      *
@@ -564,11 +602,29 @@ public abstract class Component implements Serializable {
      * @see List#add(Object)
      */
     public boolean add(Component component) {
+        return this.add(component, null);
+    }
+
+    /**
+     * Used to add component to component.
+     *
+     * @param component component to add.
+     * @param constraint layout constraint.
+     *
+     * @return true if component is added.
+     *
+     * @throws IllegalArgumentException if provided constraint is not supported by layout.
+     * @see List#add(Object)
+     */
+    public boolean add(Component component, LayoutConstraint constraint) throws IllegalArgumentException {
         if (component == null || component == this || isContains(component)) {
             return false;
         }
         boolean added = childComponents.add(component);
         if (added) {
+            if (layout != null) {
+                layout.addComponent(component, constraint);
+            }
             changeParent(component);
         }
         return added;
@@ -627,6 +683,9 @@ public abstract class Component implements Serializable {
             if (parent != null && parent == this && isContains(component)) {
                 boolean removed = childComponents.remove(component);
                 if (removed) {
+                    if (layout != null) {
+                        layout.removeComponent(component);
+                    }
                     component.setParent(null);
                 }
                 return removed;
@@ -643,18 +702,13 @@ public abstract class Component implements Serializable {
      * @see List#removeAll(Collection)
      */
     public void removeAll(Collection<? extends Component> components) {
-        List<Component> toRemove = new ArrayList<>();
-        components.forEach(compo -> {
-            if (compo != null) {
-                compo.setParent(null);
-                toRemove.add(compo);
-            }
-        });
-        this.childComponents.removeAll(toRemove);
+        if (components != null) {
+            components.forEach(this::remove);
+        }
     }
 
     /**
-     * Removes all of the elements of this layerFrame that satisfy the given predicate. Errors or runtime exceptions thrown during iteration or by the predicate
+     * Removes all of the elements of this component that satisfy the given predicate. Errors or runtime exceptions thrown during iteration or by the predicate
      * are relayed to the caller.
      *
      * @param filter a predicate which returns true for elements to be removed.
@@ -663,13 +717,12 @@ public abstract class Component implements Serializable {
      *
      * @see List#removeIf(Predicate)
      */
-    public boolean removeIf(Predicate<? super Component> filter) {
-        childComponents.stream().filter(filter).forEach(compo -> compo.setParent(null));
-        return childComponents.removeIf(filter);
+    public void removeIf(Predicate<? super Component> filter) {
+        childComponents.stream().filter(filter).forEach(this::remove);
     }
 
     /**
-     * Used to remove all child components from layerFrame.
+     * Used to remove all child components from component.
      *
      * @see List#clear()
      */

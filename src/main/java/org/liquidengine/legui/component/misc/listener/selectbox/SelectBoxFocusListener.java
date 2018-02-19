@@ -34,6 +34,7 @@ public class SelectBoxFocusListener implements FocusEventListener {
             }
             if (selectBox.isCollapsed() != collapse) {
                 selectBox.setCollapsed(collapse);
+                event.getFrame().removeLayer(selectBox.getSelectBoxLayer());
             }
         }
     }

@@ -29,6 +29,7 @@ import org.liquidengine.legui.component.RadioButton;
 import org.liquidengine.legui.component.RadioButtonGroup;
 import org.liquidengine.legui.event.CursorEnterEvent;
 import org.liquidengine.legui.event.MouseClickEvent;
+import org.liquidengine.legui.layout.LayoutManager;
 import org.liquidengine.legui.listener.CursorEnterEventListener;
 import org.liquidengine.legui.listener.MouseClickEventListener;
 import org.liquidengine.legui.listener.processor.EventProcessor;
@@ -49,8 +50,9 @@ import org.lwjgl.opengl.GL;
  * Created by Alexander on 17.12.2016.
  */
 public class SingleClassExample {
-    public static final     int     WIDTH   = 400;
-    public static final     int     HEIGHT  = 200;
+
+    public static final int WIDTH = 400;
+    public static final int HEIGHT = 200;
     private static volatile boolean running = false;
 
     public static void main(String[] args) throws IOException {
@@ -156,6 +158,9 @@ public class SingleClassExample {
             // When system events are translated to GUI events we need to process them.
             // This event processor calls listeners added to ui components
             EventProcessor.getInstance().processEvents();
+
+            // When everything done we need to relayout components.
+            LayoutManager.getInstance().layout(frame);
 
             // Run animations. Should be also called cause some components use animations for updating state.
             Animator.getInstance().runAnimations();
