@@ -713,8 +713,6 @@ public abstract class Component implements Serializable {
      *
      * @param filter a predicate which returns true for elements to be removed.
      *
-     * @return true if any components were removed.
-     *
      * @see List#removeIf(Predicate)
      */
     public void removeIf(Predicate<? super Component> filter) {
