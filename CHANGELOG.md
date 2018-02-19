@@ -1,6 +1,13 @@
 ## [1.4.4]
+### Added
+- Moved demo classes to repo.
+- Added layout system.
+  - Added border layout.
+  - Added box layout.
 ### Fixed
+- Added OpenGL version checking in renderer.
 - Fixed default initializer.
+- Use simple point in axis-aligned rectangle test.
 ### Changed
 - Changed context api to frame buffer size (now returns `Vector2i` instead of `Vector2f`).
 - Changed api to child components of component (was `getChilds()` - now `getChildComponents()`).
