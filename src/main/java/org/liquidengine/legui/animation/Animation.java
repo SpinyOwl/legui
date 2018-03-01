@@ -9,11 +9,16 @@ package org.liquidengine.legui.animation;
  */
 public abstract class Animation {
 
+    private boolean animationStarted = false;
+
     /**
      * Adds animation to animator.
      */
     public void startAnimation() {
-        Animator.getInstance().pushAnimation(this);
+        if (!animationStarted) {
+            Animator.getInstance().pushAnimation(this);
+            animationStarted = true;
+        }
     }
 
     /**
@@ -38,6 +43,17 @@ public abstract class Animation {
      */
     protected void afterAnimation() {
         // Could be implemented later.
+    }
+
+    /**
+     * Used to stop animation. Removes animation from animator.
+     */
+    public void stopAnimation() {
+        Animator.getInstance().removeAnimation(this);
+    }
+
+    public boolean isAnimationStarted() {
+        return animationStarted;
     }
 
 }

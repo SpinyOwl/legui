@@ -5,6 +5,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
+import org.liquidengine.legui.animation.Animation;
 import org.liquidengine.legui.component.misc.animation.scrollablepanel.ScrollablePanelAnimation;
 import org.liquidengine.legui.component.misc.listener.scrollablepanel.ScrollablePanelViewportScrollListener;
 import org.liquidengine.legui.component.optional.Orientation;
@@ -43,6 +44,10 @@ public class ScrollablePanel extends Component implements Viewport {
      * Used to hold components added by user.
      */
     private Component container;
+    /**
+     * Scrollable panel animation. Updates container position in viewport.
+     */
+    private Animation animation;
 
     /**
      * Default constructor. Used to create component instance without any parameters. <p> Also if you want to make it easy to use with Json
@@ -74,6 +79,30 @@ public class ScrollablePanel extends Component implements Viewport {
     public ScrollablePanel(Vector2f position, Vector2f size) {
         super(position, size);
         initialize();
+    }
+
+    /**
+     * Returns animation of scrollable panel.
+     *
+     * @return animation.
+     */
+    public Animation getAnimation() {
+        return animation;
+    }
+
+    /**
+     * Used to set scrollable panel animation. Automatically starts animation.
+     *
+     * @param animation scroll bar animation to set.
+     */
+    public void setAnimation(Animation animation) {
+        if (this.animation != null) {
+            this.animation.stopAnimation();
+        }
+        this.animation = animation;
+        if (animation != null) {
+            this.animation.startAnimation();
+        }
     }
 
     private void initialize() {
@@ -125,10 +154,7 @@ public class ScrollablePanel extends Component implements Viewport {
 
         Themes.getDefaultTheme().getThemeManager().getComponentTheme(ScrollablePanel.class).applyAll(this);
 
-        /*
-      Scrollable panel animation. Updates container position in viewport.
-     */
-        ScrollablePanelAnimation animation = new ScrollablePanelAnimation(this);
+        animation = new ScrollablePanelAnimation(this);
         animation.startAnimation();
     }
 

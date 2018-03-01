@@ -49,6 +49,13 @@ public abstract class Animator {
      */
     protected abstract void pushAnimation(Animation animation);
 
+    /**
+     * Used to remove animation from animator. In case if animation is not finished animation still should be removed and terminated.
+     *
+     * @param animation animation to remove.
+     */
+    public abstract void removeAnimation(Animation animation);
+
     private static class AnimatorImpl extends Animator {
 
         /**
@@ -63,6 +70,10 @@ public abstract class Animator {
          * List of animation to destroy.
          */
         private List<Animation> animationsToDestroy = new CopyOnWriteArrayList<>();
+        /**
+         * List of animation to destroy.
+         */
+        private List<Animation> animationsToRemove = new CopyOnWriteArrayList<>();
         /**
          * Used to store previous time.
          */
@@ -84,7 +95,11 @@ public abstract class Animator {
 
             List<Animation> processList = new ArrayList<>(animations);
             for (Animation animation : processList) {
-                if (animation.animate(delta)) {
+                if (animationsToRemove.contains(animation)) {
+                    animationsToRemove.remove(animation);
+                    animations.remove(animation);
+                    animationsToDestroy.add(animation);
+                } else if (animation.animate(delta)) {
                     animations.remove(animation);
                     animationsToDestroy.add(animation);
                 }
@@ -106,6 +121,16 @@ public abstract class Animator {
          */
         protected void pushAnimation(Animation animation) {
             animationsToInitialize.add(animation);
+        }
+
+        /**
+         * Used to remove animation from animator. In case if animation is not finished animation still should be removed and terminated.
+         *
+         * @param animation animation to remove.
+         */
+        @Override
+        public void removeAnimation(Animation animation) {
+            animationsToRemove.add(animation);
         }
 
     }
