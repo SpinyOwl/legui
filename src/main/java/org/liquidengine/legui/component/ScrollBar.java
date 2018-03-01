@@ -7,6 +7,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
+import org.liquidengine.legui.animation.Animation;
 import org.liquidengine.legui.component.event.scrollbar.ScrollBarChangeValueEvent;
 import org.liquidengine.legui.component.misc.animation.scrollbar.ScrollBarAnimation;
 import org.liquidengine.legui.component.misc.listener.scrollbar.ScrollBarMouseClickEventListener;
@@ -87,6 +88,7 @@ public class ScrollBar extends Component {
      * Viewport.
      */
     private Viewport viewport;
+    private Animation animation;
 
     /**
      * Default constructor. Used to create component instance without any parameters. <p> Also if you want to make it easy to use with Json
@@ -129,7 +131,7 @@ public class ScrollBar extends Component {
      */
     public ScrollBar(float curValue) {
         this();
-        this.curValue = curValue;
+        setCurValue(curValue);
     }
 
     /**
@@ -143,7 +145,7 @@ public class ScrollBar extends Component {
      */
     public ScrollBar(float x, float y, float width, float height, float curValue) {
         this(x, y, width, height);
-        this.curValue = curValue;
+        setCurValue(curValue);
     }
 
     /**
@@ -155,7 +157,7 @@ public class ScrollBar extends Component {
      */
     public ScrollBar(Vector2f position, Vector2f size, float curValue) {
         this(position, size);
-        this.curValue = curValue;
+        setCurValue(curValue);
     }
 
     /**
@@ -166,7 +168,7 @@ public class ScrollBar extends Component {
         getListenerMap().addListener(MouseDragEvent.class, new ScrollBarMouseDragEventListener());
         getListenerMap().addListener(MouseClickEvent.class, new ScrollBarMouseClickEventListener());
 
-        ScrollBarAnimation animation = new ScrollBarAnimation(this);
+        animation = new ScrollBarAnimation(this);
         animation.startAnimation();
 
         Themes.getDefaultTheme().getThemeManager().getComponentTheme(ScrollBar.class).applyAll(this);
@@ -425,6 +427,30 @@ public class ScrollBar extends Component {
      */
     public void removeScrollBarChangeValueEventListener(EventListener<ScrollBarChangeValueEvent> eventListener) {
         this.getListenerMap().removeListener(ScrollBarChangeValueEvent.class, eventListener);
+    }
+
+    /**
+     * Returns ScrollBarAnimation.
+     *
+     * @return scroll bar animation.
+     */
+    public Animation getAnimation() {
+        return animation;
+    }
+
+    /**
+     * Used to set scroll bar animation. Automatically starts animation.
+     *
+     * @param animation scroll bar animation to set.
+     */
+    public void setAnimation(Animation animation) {
+        if (this.animation != null) {
+            this.animation.stopAnimation();
+        }
+        this.animation = animation;
+        if (animation != null) {
+            this.animation.startAnimation();
+        }
     }
 
     @Override
