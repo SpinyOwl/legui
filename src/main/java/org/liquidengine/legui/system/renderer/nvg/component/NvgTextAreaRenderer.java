@@ -67,7 +67,9 @@ public class NvgTextAreaRenderer extends NvgDefaultComponentRenderer<TextArea> {
             Vector4f intersectRect = new Vector4f(pos.x + p.x, pos.y + p.y, size.x - p.x - p.z, size.y - p.y - p.w);
 
             intersectScissor(nanovg, new Vector4f(intersectRect).sub(1, 1, -2, -2));
-            renderText(context, nanovg, component, size, intersectRect, bc);
+            if (component.getTextState().getText() == null || !component.getTextState().getText().isEmpty()) {
+                renderText(context, nanovg, component, size, intersectRect, bc);
+            }
         }
         resetScissor(nanovg);
     }
@@ -177,7 +179,7 @@ public class NvgTextAreaRenderer extends NvgDefaultComponentRenderer<TextArea> {
 
         // render selection background
         renderSelectionBackground(context, gui, fontSize, focused, highlightColor, lines, lineCount, lineStartIndeces, voffset, poffsetx, poffsety, bounds,
-            glyphs, spaceWidth);
+                                  glyphs, spaceWidth);
 
         // render every line of text
         for (int i = 0; i < lineCount; i++) {
@@ -279,7 +281,8 @@ public class NvgTextAreaRenderer extends NvgDefaultComponentRenderer<TextArea> {
                 char[] spaces = new char[gui.getTabSize()];
                 Arrays.fill(spaces, SPACEC);
                 NvgText.drawTextLineToRect(context, new Vector4f(lineX, lineY, bounds[i][6], bounds[i][7]),
-                    false, HorizontalAlign.LEFT, VerticalAlign.MIDDLE, fontSize, font, line.replace(TABS, new String(spaces)), textColor);
+                                           false, HorizontalAlign.LEFT, VerticalAlign.MIDDLE, fontSize, font, line.replace(TABS, new String(spaces)),
+                                           textColor);
                 if (i == caretLine && focused) {
                     // render caret
                     NvgShapes.drawRectStroke(context, new Vector4f(caretx - poffsetx - 1, lineY, 1, bounds[i][7]), caretColor, 1);
@@ -340,7 +343,8 @@ public class NvgTextAreaRenderer extends NvgDefaultComponentRenderer<TextArea> {
     }
 
     private void renderSelectionBackground(long context, TextArea gui, float fontSize, boolean focused, Vector4f selectionColor, String[] lines, int lineCount,
-        int[] lineStartIndeces, float voffset, Float poffsetx, Float poffsety, float[][] bounds, NVGGlyphPosition.Buffer glyphs, float spaceWidth) {
+                                           int[] lineStartIndeces, float voffset, Float poffsetx, Float poffsety, float[][] bounds,
+                                           NVGGlyphPosition.Buffer glyphs, float spaceWidth) {
         if (focused) {
             int startSelectionIndex = gui.getStartSelectionIndex();
             int endSelectionIndex = gui.getEndSelectionIndex();
@@ -412,7 +416,7 @@ public class NvgTextAreaRenderer extends NvgDefaultComponentRenderer<TextArea> {
     }
 
     private Float recalculateOffsetX(Vector4f rect, HorizontalAlign halign, float caretx, float rat, float offsetX, Float poffsetx, Float pratio,
-        HorizontalAlign phalign) {
+                                     HorizontalAlign phalign) {
         float newPOffsetX = poffsetx;
         if (pratio != rat || phalign != halign) {
             newPOffsetX = offsetX;
@@ -428,7 +432,7 @@ public class NvgTextAreaRenderer extends NvgDefaultComponentRenderer<TextArea> {
     }
 
     private Float recalculateOffsetY(Vector4f rect, float fontSize, VerticalAlign valign, float rat, float carety, float offsetY, Float poffsety, Float pratio,
-        VerticalAlign pvalign) {
+                                     VerticalAlign pvalign) {
         float newPOffsetY = poffsety;
         if (pratio != rat || pvalign != valign) {
             newPOffsetY = offsetY;
@@ -456,7 +460,7 @@ public class NvgTextAreaRenderer extends NvgDefaultComponentRenderer<TextArea> {
      * @return caret x position on screen.
      */
     private float getCaretx(long context, int caretPosInText, String text, float[] caretLineBounds, NVGGlyphPosition.Buffer glyphs, float spaceWidth,
-        int tabSize) {
+                            int tabSize) {
         float caretx;
         ByteBuffer caretLineBytes = null;
         try {
