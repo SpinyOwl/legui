@@ -138,7 +138,7 @@ public class BoxLayout implements Layout {
             Yoga.YGNodeStyleSetMaxHeight(node, maximumSize.y);
         }
 
-        Vector2f preferredSize = childComponent.getStyle().getPreferredSize();
+        Vector2f preferredSize = childComponent.getStyle().getSize();
         if (preferredSize != null) {
             Yoga.YGNodeStyleSetWidth(node, preferredSize.x);
             Yoga.YGNodeStyleSetHeight(node, preferredSize.y);
@@ -179,7 +179,7 @@ public class BoxLayout implements Layout {
         Yoga.YGNodeStyleSetMaxWidth(rootNode, maximumSize == null ? Float.MAX_VALUE : maximumSize.x);
         Yoga.YGNodeStyleSetMaxHeight(rootNode, maximumSize == null ? Float.MAX_VALUE : maximumSize.y);
 
-        Vector2f preferredSize = parent.getStyle().getPreferredSize();
+        Vector2f preferredSize = parent.getStyle().getSize();
         Vector2f size = parent.getSize();
         Yoga.YGNodeStyleSetWidth(rootNode, preferredSize == null ? size.x : preferredSize.x);
         Yoga.YGNodeStyleSetHeight(rootNode, preferredSize == null ? size.y : preferredSize.y);

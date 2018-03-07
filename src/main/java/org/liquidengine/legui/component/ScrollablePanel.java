@@ -12,6 +12,7 @@ import org.liquidengine.legui.component.optional.Orientation;
 import org.liquidengine.legui.event.ScrollEvent;
 import org.liquidengine.legui.layout.borderlayout.BorderLayout;
 import org.liquidengine.legui.layout.borderlayout.BorderLayoutConstraint;
+import org.liquidengine.legui.style.Style.DisplayType;
 import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.theme.Themes;
 
@@ -106,7 +107,7 @@ public class ScrollablePanel extends Component implements Viewport {
     }
 
     private void initialize() {
-        this.setLayout(new BorderLayout());
+        this.getStyle().setDisplay(DisplayType.FLEX);
 
         float viewportWidth = getSize().x - INITIAL_SCROLL_SIZE;
         float viewportHeight = getSize().y - INITIAL_SCROLL_SIZE;
@@ -138,9 +139,9 @@ public class ScrollablePanel extends Component implements Viewport {
         container.setTabFocusable(false);
         viewport.add(container);
 
-        this.add(viewport, BorderLayoutConstraint.CENTER);
-        this.add(verticalScrollBar, BorderLayoutConstraint.RIGHT);
-        this.add(horizontalScrollBar, BorderLayoutConstraint.BOTTOM);
+        this.add(viewport);
+        this.add(verticalScrollBar);
+        this.add(horizontalScrollBar);
         this.getStyle().getBackground().setColor(ColorConstants.transparent());
 
         container.getStyle().setBorder(null);

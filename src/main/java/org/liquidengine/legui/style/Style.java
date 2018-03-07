@@ -3,6 +3,7 @@ package org.liquidengine.legui.style;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.style.color.ColorConstants;
+import org.liquidengine.legui.style.flex.FlexStyle;
 import org.liquidengine.legui.style.font.Font;
 import org.liquidengine.legui.style.font.FontRegistry;
 import org.liquidengine.legui.style.border.SimpleLineBorder;
@@ -14,39 +15,47 @@ import org.liquidengine.legui.style.border.SimpleLineBorder;
  */
 public class Style {
 
+    private DisplayType display = DisplayType.NONE;
+    private PositionType position = PositionType.ABSOLUTE;
+
+    private FlexStyle flexStyle = new FlexStyle();
     private Background background = new Background();
     private Border border = new SimpleLineBorder(ColorConstants.gray(), 1);
     private Font font = FontRegistry.getFont(FontRegistry.DEFAULT);
-
     private Vector4f cornerRadius = new Vector4f(0, 0, 0, 0);
-
     private Vector4f padding;
     private Vector4f margin;
 
     /**
      * Preferred size of component. Used to set preferred size of component for layout manager. Layout manager will try to make this component size equal to
-     * preferred.
-     * <p>
-     * {@code -1} is default value - that means that layout manager will calculate preferred size.
+     * preferred. <p> {@code -1} is default value - that means that layout manager will calculate preferred size.
      */
-    private Vector2f preferredSize;
-
+    private Vector2f size;
     /**
      * Minimum size of component. Used to set minimum size of component for layout manager. Layout manager uses this minimum size if component should be as
      * small as possible. If one of dimensions is <= 0 this minimum size is 0.
      */
     private Vector2f minimumSize;
-
     /**
      * Maximum size of component. Used to set maximum size of component for layout manager. Layout manager uses this maximum size if component should be as
      * small as possible. If one of dimensions is <= 0 this maximum size is 0.
      */
     private Vector2f maximumSize;
-
     /**
      * Stroke color. Used to render stroke if component is focused.
      */
     private Vector4f focusedStrokeColor = ColorConstants.lightBlue();
+
+    public DisplayType getDisplay() {
+        return display;
+    }
+
+    public void setDisplay(DisplayType display) {
+        if (display == null) {
+            this.display = DisplayType.NONE;
+        }
+        this.display = display;
+    }
 
     /**
      * Gets background.
@@ -309,8 +318,8 @@ public class Style {
      *
      * @return the size
      */
-    public Vector2f getPreferredSize() {
-        return preferredSize;
+    public Vector2f getSize() {
+        return size;
     }
 
     /**
@@ -318,8 +327,8 @@ public class Style {
      *
      * @param preferredSize the size
      */
-    public void setPreferredSize(Vector2f preferredSize) {
-        this.preferredSize = preferredSize;
+    public void setSize(Vector2f preferredSize) {
+        this.size = preferredSize;
     }
 
     /**
@@ -329,8 +338,8 @@ public class Style {
      * @param prefWidth the preferred width.
      * @param prefHeight the preferred height.
      */
-    public void setPreferredSize(float prefWidth, float prefHeight) {
-        this.preferredSize = new Vector2f(prefWidth, prefHeight);
+    public void setSize(float prefWidth, float prefHeight) {
+        this.size = new Vector2f(prefWidth, prefHeight);
     }
 
     /**
@@ -365,61 +374,28 @@ public class Style {
         focusedStrokeColor.set(r, g, b, a);
     }
 
-//    /**
-//     * Gets preferred size.
-//     * <p>
-//     * Preferred size of component. Used to set preferred size of component for layout manager. Layout manager will try to make this component size equal to
-//     * preferred.
-//     * <p>
-//     * {@code -1} is default value - that means that layout manager will calculate preferred size.
-//     *
-//     * @return the preferred size.
-//     */
-//    public Vector2f getPreferredSize() {
-//        if (preferredSize == null) {
-//            if (layout != null) {
-//                preferredSize = layout.getPreferredSize(this);
-//            } else {
-//                preferredSize = new Vector2f(size);
-//            }
-//        }
-//        return preferredSize;
-//    }
-//    /**
-//     * Gets maximum size.
-//     * <p>
-//     * Maximum size of component. Used to set maximum size of component for layout manager. Layout manager uses this maximum size if component should be as
-//     * small as possible. If one of dimensions is <= 0 this maximum size is 0.
-//     *
-//     * @return the maximum size.
-//     */
-//    public Vector2f getMaximumSize() {
-//        if (maximumSize == null) {
-//            if (layout != null) {
-//                maximumSize = layout.getMaximumSize(this);
-//            } else {
-//                maximumSize = new Vector2f(Float.MAX_VALUE);
-//            }
-//        }
-//        return maximumSize;
-//    }
-//    /**
-//     * Gets minimum size.
-//     * <p>
-//     * Minimum size of component. Used to set minimum size of component for layout manager. Layout manager uses this minimum size if component should be as
-//     * small as possible. If one of dimensions is <= 0 this minimum size is 0.
-//     *
-//     * @return the minimum size.
-//     */
-//    public Vector2f getMinimumSize() {
-//        if (minimumSize == null) {
-//            if (layout != null) {
-//                minimumSize = layout.getMinimumSize(this);
-//            } else {
-//                minimumSize = new Vector2f();
-//            }
-//        }
-//        return minimumSize;
-//    }
+    public FlexStyle getFlexStyle() {
+        return flexStyle;
+    }
+
+    public PositionType getPosition() {
+        return position;
+    }
+
+    public void setPosition(PositionType position) {
+        if (position != null) {
+            this.position = position;
+        }
+    }
+
+    public enum DisplayType {
+        FLEX,
+        NONE
+    }
+
+    public enum PositionType {
+        RELATIVE,
+        ABSOLUTE
+    }
 
 }

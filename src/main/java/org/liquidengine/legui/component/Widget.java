@@ -22,15 +22,16 @@ import org.liquidengine.legui.layout.borderlayout.BorderLayout;
 import org.liquidengine.legui.layout.borderlayout.BorderLayoutConstraint;
 import org.liquidengine.legui.listener.EventListener;
 import org.liquidengine.legui.listener.MouseDragEventListener;
+import org.liquidengine.legui.style.Style.DisplayType;
 import org.liquidengine.legui.style.color.ColorConstants;
+import org.liquidengine.legui.style.flex.FlexStyle.FlexDirection;
 import org.liquidengine.legui.style.font.FontRegistry;
 import org.liquidengine.legui.theme.Themes;
 
 /**
  * Widget component is container which have predefined components such as container, title label, close and minimize buttons and predefined event listeners.
- * This component can be moved, minimized and restored, closed. Also now you can enable or disable title.
- * <p>
- * TODO: REIMPLEMENT THIS COMPONENT ACCORDING TO NEW LAYOUT SYSTEM
+ * This component can be moved, minimized and restored, closed. Also now you can enable or disable title. <p> TODO: REIMPLEMENT THIS COMPONENT ACCORDING TO NEW
+ * LAYOUT SYSTEM
  */
 public class Widget extends Component {
 
@@ -134,15 +135,21 @@ public class Widget extends Component {
      * @param title title to set.
      */
     private void initialize(String title) {
-        this.setLayout(new BorderLayout());
+
+        this.getStyle().setDisplay(DisplayType.FLEX);
+        this.getStyle().getFlexStyle().setFlexDirection(FlexDirection.COLUMN);
 
         titleContainer = new Panel();
-        titleContainer.setLayout(new BorderLayout());
         titleContainer.getStyle().setMaximumSize(new Vector2f(Float.MAX_VALUE, INITIAL_TITLE_HEIGHT));
         titleContainer.getStyle().setMinimumSize(new Vector2f(0, INITIAL_TITLE_HEIGHT));
         titleContainer.getStyle().getBackground().setColor(ColorConstants.white());
         titleContainer.getSize().y = INITIAL_TITLE_HEIGHT;
         titleContainer.setTabFocusable(false);
+        // flex
+        titleContainer.getStyle().setDisplay(DisplayType.FLEX);
+        titleContainer.getStyle().getFlexStyle().setFlexGrow(1);
+        titleContainer.getStyle().getFlexStyle().setFlexShrink(1);
+        titleContainer.getStyle().getFlexStyle().setFlexDirection(FlexDirection.ROW);
 
         this.title = new Label(title);
         this.title.setPosition(0, 0);
@@ -154,6 +161,10 @@ public class Widget extends Component {
         this.title.getStyle().setBorder(null);
         this.title.setTabFocusable(false);
 
+        // flex
+        this.title.getStyle().getFlexStyle().setFlexGrow(1);
+        this.title.getStyle().getFlexStyle().setFlexShrink(1);
+
         mouseDragEventLeguiEventListener = new WidgetDragListener(this);
         this.title.getListenerMap().addListener(MouseDragEvent.class, mouseDragEventLeguiEventListener);
 
@@ -161,7 +172,7 @@ public class Widget extends Component {
         closeButton.setSize(new Vector2f(INITIAL_TITLE_HEIGHT));
         closeButton.getStyle().getBackground().setColor(ColorConstants.transparent());
         closeIcon = new CharIcon(new Vector2f(INITIAL_TITLE_HEIGHT * 2 / 3), FontRegistry.MATERIAL_DESIGN_ICONS, (char) CLOSE_ICON_CHAR,
-                                 ColorConstants.black());
+            ColorConstants.black());
         closeIcon.setHorizontalAlign(HorizontalAlign.CENTER);
         closeIcon.setVerticalAlign(VerticalAlign.MIDDLE);
         closeButton.setBackgroundIcon(closeIcon);
@@ -173,6 +184,9 @@ public class Widget extends Component {
         closeButton.getTextState().setVerticalAlign(VerticalAlign.MIDDLE);
         closeButton.getTextState().setHorizontalAlign(HorizontalAlign.CENTER);
         closeButton.setTabFocusable(false);
+        // flex
+        closeButton.getStyle().getFlexStyle().setFlexGrow(1);
+        closeButton.getStyle().getFlexStyle().setFlexShrink(1);
 
         minimizeButton = new Button("");
         minimizeButton.setSize(new Vector2f(INITIAL_TITLE_HEIGHT));
@@ -182,12 +196,12 @@ public class Widget extends Component {
         minimizeButton.getStyle().setMinimumSize(INITIAL_TITLE_HEIGHT, INITIAL_TITLE_HEIGHT);
 
         minimizeIcon = new CharIcon(new Vector2f(INITIAL_TITLE_HEIGHT * 2 / 3), FontRegistry.MATERIAL_DESIGN_ICONS, (char) MINIMIZE_ICON_CHAR,
-                                    ColorConstants.black());
+            ColorConstants.black());
         minimizeIcon.setHorizontalAlign(HorizontalAlign.CENTER);
         minimizeIcon.setVerticalAlign(VerticalAlign.MIDDLE);
 
         maximizeIcon = new CharIcon(new Vector2f(INITIAL_TITLE_HEIGHT * 2 / 3), FontRegistry.MATERIAL_DESIGN_ICONS, (char) MAXIMIZE_ICON_CHAR,
-                                    ColorConstants.black());
+            ColorConstants.black());
         maximizeIcon.setHorizontalAlign(HorizontalAlign.CENTER);
         maximizeIcon.setVerticalAlign(VerticalAlign.MIDDLE);
 
@@ -198,15 +212,22 @@ public class Widget extends Component {
         minimizeButton.getTextState().setVerticalAlign(VerticalAlign.MIDDLE);
         minimizeButton.getTextState().setHorizontalAlign(HorizontalAlign.CENTER);
 
+        // flex
+        closeButton.getStyle().getFlexStyle().setFlexGrow(1);
+        closeButton.getStyle().getFlexStyle().setFlexShrink(1);
+
         container = new Panel();
         container.setTabFocusable(false);
+        // flex
+        container.getStyle().getFlexStyle().setFlexShrink(1);
+        container.getStyle().getFlexStyle().setFlexGrow(1);
 
-        titleContainer.add(this.title, BorderLayoutConstraint.LEFT);
-        titleContainer.add(closeButton, BorderLayoutConstraint.RIGHT);
-        titleContainer.add(minimizeButton, BorderLayoutConstraint.CENTER);
+        titleContainer.add(this.title);
+        titleContainer.add(minimizeButton);
+        titleContainer.add(closeButton);
 
-        add(titleContainer, BorderLayoutConstraint.TOP);
-        add(container, BorderLayoutConstraint.CENTER);
+        add(titleContainer);
+        add(container);
 
         Themes.getDefaultTheme().getThemeManager().getComponentTheme(Widget.class).applyAll(this);
     }
@@ -274,11 +295,6 @@ public class Widget extends Component {
             return;
         }
         this.titleContainer.setVisible(titleEnabled);
-        if (titleEnabled) {
-            this.getLayout().addComponent(titleContainer, BorderLayoutConstraint.TOP);
-        } else {
-            this.getLayout().removeComponent(titleContainer);
-        }
     }
 
     /**

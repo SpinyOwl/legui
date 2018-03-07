@@ -268,7 +268,7 @@ public class BorderLayout implements Layout {
 
         Vector2f maximumSize = parent.getStyle().getMaximumSize();
         Vector2f minimumSize = parent.getStyle().getMinimumSize();
-        Vector2f preferredSize = parent.getStyle().getPreferredSize();
+        Vector2f preferredSize = parent.getStyle().getSize();
         Vector2f size = parent.getSize();
         Yoga.YGNodeStyleSetMinWidth(rootNode, minimumSize == null ? 0 : minimumSize.x);
         Yoga.YGNodeStyleSetMinHeight(rootNode, minimumSize == null ? 0 : minimumSize.y);
@@ -304,7 +304,7 @@ public class BorderLayout implements Layout {
 
             Yoga.YGNodeStyleSetFlexGrow(yogaNode, 1);
             Yoga.YGNodeStyleSetFlexShrink(yogaNode, 1);
-            Vector2f preferredSize = component.getStyle().getPreferredSize();
+            Vector2f preferredSize = component.getStyle().getSize();
             if (preferredSize != null) {
                 Yoga.YGNodeStyleSetWidth(yogaNode, preferredSize.x);
                 Yoga.YGNodeStyleSetHeight(yogaNode, preferredSize.y);
@@ -331,7 +331,7 @@ public class BorderLayout implements Layout {
             Yoga.YGNodeStyleSetFlexGrow(yogaNode, 1);
             Yoga.YGNodeStyleSetFlexShrink(yogaNode, 1);
 
-            Vector2f preferredSize = component.getStyle().getPreferredSize();
+            Vector2f preferredSize = component.getStyle().getSize();
             if (preferredSize != null) {
                 Yoga.YGNodeStyleSetWidth(yogaNode, preferredSize.x);
                 Yoga.YGNodeStyleSetHeight(yogaNode, preferredSize.y);

@@ -98,15 +98,6 @@ public abstract class Component implements Serializable {
     private boolean tabFocusable = true;
 
     ////////////////////////////////
-    //// COMPONENT LAYOUT DATA
-    ////////////////////////////////
-
-    /**
-     * Layout. Used to layout
-     */
-    private Layout layout = null;
-
-    ////////////////////////////////
     //// CONTAINER BASE DATA
     ////////////////////////////////
 
@@ -519,29 +510,6 @@ public abstract class Component implements Serializable {
         this.tabFocusable = tabFocusable;
     }
 
-    ////////////////////////////////
-    //// COMPONENT LAYER DATA
-    ////////////////////////////////
-
-
-    /**
-     * Returns layout.
-     *
-     * @return layout.
-     */
-    public Layout getLayout() {
-        return layout;
-    }
-
-    /**
-     * Used to set layout for this component.
-     *
-     * @param layout layout to set.
-     */
-    public void setLayout(Layout layout) {
-        this.layout = layout;
-    }
-
     /////////////////////////////////
     //// CONTAINER METHODS
     /////////////////////////////////
@@ -602,34 +570,15 @@ public abstract class Component implements Serializable {
      * @see List#add(Object)
      */
     public boolean add(Component component) {
-        return this.add(component, null);
-    }
-
-    /**
-     * Used to add component to component.
-     *
-     * @param component component to add.
-     * @param constraint layout constraint.
-     *
-     * @return true if component is added.
-     *
-     * @throws IllegalArgumentException if provided constraint is not supported by layout.
-     * @see List#add(Object)
-     */
-    public boolean add(Component component, LayoutConstraint constraint) throws IllegalArgumentException {
         if (component == null || component == this || isContains(component)) {
             return false;
         }
         boolean added = childComponents.add(component);
         if (added) {
-            if (layout != null) {
-                layout.addComponent(component, constraint);
-            }
             changeParent(component);
         }
         return added;
     }
-
     /**
      * Used to check if component collection contains component or not. Checked by reference.
      *
@@ -683,9 +632,6 @@ public abstract class Component implements Serializable {
             if (parent != null && parent == this && isContains(component)) {
                 boolean removed = childComponents.remove(component);
                 if (removed) {
-                    if (layout != null) {
-                        layout.removeComponent(component);
-                    }
                     component.setParent(null);
                 }
                 return removed;

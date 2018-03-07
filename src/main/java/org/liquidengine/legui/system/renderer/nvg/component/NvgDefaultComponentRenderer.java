@@ -64,35 +64,8 @@ public class NvgDefaultComponentRenderer<C extends Component> extends NvgCompone
      * @param nanovg nanovg context pointer.
      */
     protected void renderChildComponents(C component, Context context, long nanovg) {
-        // TODO : Could be created per layout renderer for child components.
-        Layout layout = component.getLayout();
-        if (layout == null) {
-            for (Component child : component.getChildComponents()) {
-                RendererProvider.getInstance().getComponentRenderer(child.getClass()).render(child, context);
-            }
-        } else if (layout instanceof BorderLayout) {
-            BorderLayout borderLayout = (BorderLayout) layout;
-            renderBorderLayoutComponent(context, borderLayout.getComponent(BorderLayoutConstraint.TOP));
-            renderBorderLayoutComponent(context, borderLayout.getComponent(BorderLayoutConstraint.LEFT));
-            renderBorderLayoutComponent(context, borderLayout.getComponent(BorderLayoutConstraint.CENTER));
-            renderBorderLayoutComponent(context, borderLayout.getComponent(BorderLayoutConstraint.RIGHT));
-            renderBorderLayoutComponent(context, borderLayout.getComponent(BorderLayoutConstraint.BOTTOM));
-        } else {
-            for (Component child : component.getChildComponents()) {
-                RendererProvider.getInstance().getComponentRenderer(child.getClass()).render(child, context);
-            }
-        }
-    }
-
-    /**
-     * Used to render border layout components.
-     *
-     * @param context context.
-     * @param cToRender component to render.
-     */
-    private void renderBorderLayoutComponent(Context context, Component cToRender) {
-        if (cToRender != null) {
-            RendererProvider.getInstance().getComponentRenderer(cToRender.getClass()).render(cToRender, context);
+        for (Component child : component.getChildComponents()) {
+            RendererProvider.getInstance().getComponentRenderer(child.getClass()).render(child, context);
         }
     }
 

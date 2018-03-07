@@ -33,9 +33,7 @@ import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.theme.Themes;
 
 /**
- * Creates drop-down list with select options.
- * <p>
- * TODO: REIMPLEMENT THIS COMPONENT ACCORDING TO NEW LAYOUT SYSTEM
+ * Creates drop-down list with select options. <p> TODO: REIMPLEMENT THIS COMPONENT ACCORDING TO NEW LAYOUT SYSTEM
  */
 public class SelectBox extends Component {
 
@@ -141,8 +139,6 @@ public class SelectBox extends Component {
      */
     private void initialize() {
         selectionListPanel.getHorizontalScrollBar().setVisible(false);
-        selectionListPanel.getLayout().removeComponent(selectionListPanel.getHorizontalScrollBar());
-        selectionListPanel.getContainer().setLayout(new BoxLayout(Orientation.VERTICAL));
 
         expandIcon = new CharIcon(new Vector2f(expandButton.getSize()), DEFAULT_ICON_FONT, (char) EXPAND_ICON_CHAR, ColorConstants.black());
         collapseIcon = new CharIcon(new Vector2f(expandButton.getSize()), DEFAULT_ICON_FONT, (char) COLLAPSE_ICON_CHAR, ColorConstants.black());
@@ -154,9 +150,8 @@ public class SelectBox extends Component {
         selectionButton.getStyle().setMinimumSize(0, 0);
         selectionButton.getStyle().setMaximumSize(Float.MAX_VALUE, Float.MAX_VALUE);
 
-        this.setLayout(new BorderLayout());
-        this.add(expandButton, BorderLayoutConstraint.RIGHT);
-        this.add(selectionButton, BorderLayoutConstraint.CENTER);
+        this.add(expandButton);
+        this.add(selectionButton);
 
         MouseClickEventListener mouseClickEventListener = new SelectBoxClickListener(this);
         selectionButton.getListenerMap().addListener(MouseClickEvent.class, mouseClickEventListener);
@@ -290,7 +285,6 @@ public class SelectBox extends Component {
      * Used to create {@link SelectBoxElement}.
      *
      * @param element element.
-     *
      * @return {@link SelectBoxElement} created on base of element.
      */
     private SelectBoxElement createSelectBoxElement(String element) {
@@ -304,7 +298,6 @@ public class SelectBox extends Component {
      * Used to get element index.
      *
      * @param element element to find index.
-     *
      * @return index of element or -1 if no such element in selectbox.
      */
     public int getElementIndex(String element) {
