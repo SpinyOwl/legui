@@ -8,7 +8,6 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
-import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.component.event.checkbox.CheckBoxChangeValueEvent;
 import org.liquidengine.legui.component.misc.listener.checkbox.CheckBoxMouseClickEventListener;
 import org.liquidengine.legui.component.optional.TextState;
@@ -17,6 +16,7 @@ import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.icon.CharIcon;
 import org.liquidengine.legui.icon.Icon;
 import org.liquidengine.legui.listener.EventListener;
+import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.theme.Themes;
 
 /**

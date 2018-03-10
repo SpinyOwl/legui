@@ -2,8 +2,8 @@ package org.liquidengine.legui.style;
 
 import org.joml.Vector2f;
 import org.joml.Vector4f;
-import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.icon.Icon;
+import org.liquidengine.legui.style.color.ColorConstants;
 
 /**
  * The type Background.
@@ -12,7 +12,7 @@ import org.liquidengine.legui.icon.Icon;
  */
 public class Background {
 
-    private Vector4f color = ColorConstants.transparent();
+    private Vector4f color = null;
     private Icon icon;
     private Vector2f position;
     private Vector2f size;

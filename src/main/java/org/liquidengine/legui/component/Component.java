@@ -22,8 +22,6 @@ import org.liquidengine.legui.event.CursorEnterEvent;
 import org.liquidengine.legui.event.KeyEvent;
 import org.liquidengine.legui.intersection.Intersector;
 import org.liquidengine.legui.intersection.RectangleIntersector;
-import org.liquidengine.legui.layout.Layout;
-import org.liquidengine.legui.layout.LayoutConstraint;
 import org.liquidengine.legui.listener.ListenerMap;
 import org.liquidengine.legui.style.Style;
 import org.liquidengine.legui.theme.Themes;
@@ -105,7 +103,18 @@ public abstract class Component implements Serializable {
      * Component style.
      */
     private Style style = new Style();
-
+    /**
+     * Component style.
+     */
+    private Style hoveredStyle = new Style();
+    /**
+     * Component style.
+     */
+    private Style focusedStyle = new Style();
+    /**
+     * Component style.
+     */
+    private Style pressedStyle = new Style();
     /**
      * List of child components.
      */
@@ -119,10 +128,6 @@ public abstract class Component implements Serializable {
     public Component() {
         this(0, 0, 10, 10);
     }
-
-    ////////////////////////////////
-    //// CONTAINER BASE DATA
-    ////////////////////////////////
 
     /**
      * Constructor with position and size parameters.
@@ -146,6 +151,22 @@ public abstract class Component implements Serializable {
         this.position = position;
         this.size = size;
         initialize();
+    }
+
+    ////////////////////////////////
+    //// CONTAINER BASE DATA
+    ////////////////////////////////
+
+    public Style getFocusedStyle() {
+        return focusedStyle;
+    }
+
+    public Style getHoveredStyle() {
+        return hoveredStyle;
+    }
+
+    public Style getPressedStyle() {
+        return pressedStyle;
     }
 
     /**
@@ -579,6 +600,7 @@ public abstract class Component implements Serializable {
         }
         return added;
     }
+
     /**
      * Used to check if component collection contains component or not. Checked by reference.
      *

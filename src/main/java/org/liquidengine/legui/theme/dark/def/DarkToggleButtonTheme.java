@@ -1,7 +1,7 @@
 package org.liquidengine.legui.theme.dark.def;
 
-import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.component.ToggleButton;
+import org.liquidengine.legui.style.color.ColorConstants;
 
 /**
  * Dark ToggleButton Theme for all toggle buttons. Used to make toggle button dark.

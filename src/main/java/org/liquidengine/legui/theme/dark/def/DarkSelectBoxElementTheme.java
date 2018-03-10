@@ -1,7 +1,7 @@
 package org.liquidengine.legui.theme.dark.def;
 
-import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.component.SelectBox;
+import org.liquidengine.legui.style.color.ColorConstants;
 
 /**
  * Dark SelectBox Theme for all select boxes. Used to make select box dark.

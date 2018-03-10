@@ -6,9 +6,6 @@ import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.res
 
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.Component;
-import org.liquidengine.legui.layout.Layout;
-import org.liquidengine.legui.layout.borderlayout.BorderLayout;
-import org.liquidengine.legui.layout.borderlayout.BorderLayoutConstraint;
 import org.liquidengine.legui.style.Style;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.RendererProvider;
@@ -49,8 +46,7 @@ public class NvgDefaultComponentRenderer<C extends Component> extends NvgCompone
         createScissor(nanovg, component);
         {
             Style style = component.getStyle();
-            Vector4f radius = new Vector4f(style.getTopLeftCornerRadius(), style.getTopRightCornerRadius(), style.getBottomRightCornerRadius(),
-                style.getBottomLeftCornerRadius());
+            Vector4f radius = style.getCornerRadius();
             NvgShapes.drawRect(nanovg, component.getAbsolutePosition(), component.getSize(), style.getBackground().getColor(), radius);
         }
         resetScissor(nanovg);

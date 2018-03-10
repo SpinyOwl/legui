@@ -18,14 +18,10 @@ import org.liquidengine.legui.component.misc.listener.selectbox.SelectBoxClickLi
 import org.liquidengine.legui.component.misc.listener.selectbox.SelectBoxElementClickListener;
 import org.liquidengine.legui.component.misc.listener.selectbox.SelectBoxFocusListener;
 import org.liquidengine.legui.component.misc.listener.selectbox.SelectBoxScrollListener;
-import org.liquidengine.legui.component.optional.Orientation;
 import org.liquidengine.legui.event.FocusEvent;
 import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.icon.CharIcon;
 import org.liquidengine.legui.icon.Icon;
-import org.liquidengine.legui.layout.borderlayout.BorderLayout;
-import org.liquidengine.legui.layout.borderlayout.BorderLayoutConstraint;
-import org.liquidengine.legui.layout.boxlayout.BoxLayout;
 import org.liquidengine.legui.listener.EventListener;
 import org.liquidengine.legui.listener.FocusEventListener;
 import org.liquidengine.legui.listener.MouseClickEventListener;
@@ -142,7 +138,7 @@ public class SelectBox extends Component {
 
         expandIcon = new CharIcon(new Vector2f(expandButton.getSize()), DEFAULT_ICON_FONT, (char) EXPAND_ICON_CHAR, ColorConstants.black());
         collapseIcon = new CharIcon(new Vector2f(expandButton.getSize()), DEFAULT_ICON_FONT, (char) COLLAPSE_ICON_CHAR, ColorConstants.black());
-        expandButton.setBackgroundIcon(expandIcon);
+        expandButton.getStyle().getBackground().setIcon(expandIcon);
 
         expandButton.getStyle().setMinimumSize(buttonWidth, 0);
         expandButton.getStyle().setMaximumSize(buttonWidth, Float.MAX_VALUE);
@@ -190,7 +186,7 @@ public class SelectBox extends Component {
     }
 
     private void updateIcons() {
-        expandButton.setBackgroundIcon(collapsed ? expandIcon : collapseIcon);
+        expandButton.getStyle().getBackground().setIcon(collapsed ? expandIcon : collapseIcon);
     }
 
     public Button getExpandButton() {

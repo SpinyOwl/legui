@@ -1,12 +1,11 @@
 package org.liquidengine.legui.style;
 
-import org.joml.Vector2f;
 import org.joml.Vector4f;
+import org.liquidengine.legui.style.border.SimpleLineBorder;
 import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.style.flex.FlexStyle;
 import org.liquidengine.legui.style.font.Font;
 import org.liquidengine.legui.style.font.FontRegistry;
-import org.liquidengine.legui.style.border.SimpleLineBorder;
 
 /**
  * The type Style.
@@ -22,29 +21,205 @@ public class Style {
     private Background background = new Background();
     private Border border = new SimpleLineBorder(ColorConstants.gray(), 1);
     private Font font = FontRegistry.getFont(FontRegistry.DEFAULT);
-    private Vector4f cornerRadius = new Vector4f(0, 0, 0, 0);
-    private Vector4f padding;
-    private Vector4f margin;
+    private Vector4f cornerRadius = null;
 
-    /**
-     * Preferred size of component. Used to set preferred size of component for layout manager. Layout manager will try to make this component size equal to
-     * preferred. <p> {@code -1} is default value - that means that layout manager will calculate preferred size.
-     */
-    private Vector2f size;
-    /**
-     * Minimum size of component. Used to set minimum size of component for layout manager. Layout manager uses this minimum size if component should be as
-     * small as possible. If one of dimensions is <= 0 this minimum size is 0.
-     */
-    private Vector2f minimumSize;
-    /**
-     * Maximum size of component. Used to set maximum size of component for layout manager. Layout manager uses this maximum size if component should be as
-     * small as possible. If one of dimensions is <= 0 this maximum size is 0.
-     */
-    private Vector2f maximumSize;
+    private Float width;
+    private Float height;
+
+    private Float minWidth;
+    private Float minHeight;
+
+    private Float maxWidth;
+    private Float maxHeight;
+
+    private Float paddingTop;
+    private Float paddingBottom;
+    private Float paddingRight;
+    private Float paddingLeft;
+
+    private Float marginTop;
+    private Float marginBottom;
+    private Float marginRight;
+    private Float marginLeft;
+
+    private Float top;
+    private Float bottom;
+    private Float right;
+    private Float left;
     /**
      * Stroke color. Used to render stroke if component is focused.
      */
     private Vector4f focusedStrokeColor = ColorConstants.lightBlue();
+
+    public Float getWidth() {
+        return width;
+    }
+
+    public void setWidth(Float width) {
+        this.width = width;
+    }
+
+    public Float getHeight() {
+        return height;
+    }
+
+    public void setHeight(Float height) {
+        this.height = height;
+    }
+
+    public Float getMinWidth() {
+        return minWidth;
+    }
+
+    public void setMinWidth(Float minWidth) {
+        this.minWidth = minWidth;
+    }
+
+    public Float getMinHeight() {
+        return minHeight;
+    }
+
+    public void setMinHeight(Float minHeight) {
+        this.minHeight = minHeight;
+    }
+
+    public Float getMaxWidth() {
+        return maxWidth;
+    }
+
+    public void setMaxWidth(Float maxWidth) {
+        this.maxWidth = maxWidth;
+    }
+
+    public Float getMaxHeight() {
+        return maxHeight;
+    }
+
+    public void setMaxHeight(Float maxHeight) {
+        this.maxHeight = maxHeight;
+    }
+
+    public void setPadding(float topBottom, float leftRight) {
+        paddingLeft = paddingRight = leftRight;
+        paddingTop = paddingBottom = topBottom;
+    }
+
+
+    public void setPadding(float top, float right, float bottom, float left) {
+        paddingTop = top;
+        paddingRight = right;
+        paddingBottom = bottom;
+        paddingLeft = left;
+    }
+
+    public Float getPaddingTop() {
+        return paddingTop;
+    }
+
+    public void setPaddingTop(Float paddingTop) {
+        this.paddingTop = paddingTop;
+    }
+
+    public Float getPaddingBottom() {
+        return paddingBottom;
+    }
+
+    public void setPaddingBottom(Float paddingBottom) {
+        this.paddingBottom = paddingBottom;
+    }
+
+    public Float getPaddingRight() {
+        return paddingRight;
+    }
+
+    public void setPaddingRight(Float paddingRight) {
+        this.paddingRight = paddingRight;
+    }
+
+    public Float getPaddingLeft() {
+        return paddingLeft;
+    }
+
+    public void setPaddingLeft(Float paddingLeft) {
+        this.paddingLeft = paddingLeft;
+    }
+
+    public void setMargin(float topBottom, float leftRight) {
+        marginLeft = marginRight = leftRight;
+        marginTop = marginBottom = topBottom;
+    }
+
+
+    public void setMargin(float top, float right, float bottom, float left) {
+        marginTop = top;
+        marginRight = right;
+        marginBottom = bottom;
+        marginLeft = left;
+    }
+
+    public Float getMarginTop() {
+        return marginTop;
+    }
+
+    public void setMarginTop(Float marginTop) {
+        this.marginTop = marginTop;
+    }
+
+    public Float getMarginBottom() {
+        return marginBottom;
+    }
+
+    public void setMarginBottom(Float marginBottom) {
+        this.marginBottom = marginBottom;
+    }
+
+    public Float getMarginRight() {
+        return marginRight;
+    }
+
+    public void setMarginRight(Float marginRight) {
+        this.marginRight = marginRight;
+    }
+
+    public Float getMarginLeft() {
+        return marginLeft;
+    }
+
+    public void setMarginLeft(Float marginLeft) {
+        this.marginLeft = marginLeft;
+    }
+
+    public Float getTop() {
+        return top;
+    }
+
+    public void setTop(Float top) {
+        this.top = top;
+    }
+
+    public Float getBottom() {
+        return bottom;
+    }
+
+    public void setBottom(Float bottom) {
+        this.bottom = bottom;
+    }
+
+    public Float getRight() {
+        return right;
+    }
+
+    public void setRight(Float right) {
+        this.right = right;
+    }
+
+    public Float getLeft() {
+        return left;
+    }
+
+    public void setLeft(Float left) {
+        this.left = left;
+    }
 
     public DisplayType getDisplay() {
         return display;
@@ -95,7 +270,11 @@ public class Style {
      * @param radius the radius
      */
     public void setCornerRadius(float radius) {
-        cornerRadius.set(radius);
+        if (cornerRadius != null) {
+            cornerRadius.set(radius);
+        } else {
+            cornerRadius = new Vector4f(radius);
+        }
     }
 
     /**
@@ -104,11 +283,7 @@ public class Style {
      * @param cornerRadius the radius.
      */
     public void setCornerRadius(Vector4f cornerRadius) {
-        if (cornerRadius != null) {
-            this.cornerRadius = cornerRadius;
-        } else {
-            this.cornerRadius.set(0, 0, 0, 0);
-        }
+        this.cornerRadius = cornerRadius;
     }
 
     /**
@@ -145,201 +320,6 @@ public class Style {
      */
     public void setFont(Font font) {
         this.font = font;
-    }
-
-    /**
-     * Gets top left corner radius.
-     *
-     * @return the top left corner radius
-     */
-    public float getTopLeftCornerRadius() {
-        return cornerRadius.x;
-    }
-
-    /**
-     * Sets top left corner radius.
-     *
-     * @param topLeftCornerRadius the top left corner radius
-     */
-    public void setTopLeftCornerRadius(float topLeftCornerRadius) {
-        cornerRadius.x = topLeftCornerRadius;
-    }
-
-    /**
-     * Gets top right corner radius.
-     *
-     * @return the top right corner radius
-     */
-    public float getTopRightCornerRadius() {
-        return cornerRadius.y;
-    }
-
-    /**
-     * Sets top right corner radius.
-     *
-     * @param topRightCornerRadius the top right corner radius
-     */
-    public void setTopRightCornerRadius(float topRightCornerRadius) {
-        cornerRadius.y = topRightCornerRadius;
-    }
-
-    /**
-     * Gets bottom left corner radius.
-     *
-     * @return the bottom left corner radius
-     */
-    public float getBottomLeftCornerRadius() {
-        return cornerRadius.w;
-    }
-
-    /**
-     * Sets bottom left corner radius.
-     *
-     * @param bottomLeftCornerRadius the bottom left corner radius
-     */
-    public void setBottomLeftCornerRadius(float bottomLeftCornerRadius) {
-        cornerRadius.w = bottomLeftCornerRadius;
-    }
-
-    /**
-     * Gets bottom right corner radius.
-     *
-     * @return the bottom right corner radius
-     */
-    public float getBottomRightCornerRadius() {
-        return cornerRadius.z;
-    }
-
-    /**
-     * Sets bottom right corner radius.
-     *
-     * @param bottomRightCornerRadius the bottom right corner radius
-     */
-    public void setBottomRightCornerRadius(float bottomRightCornerRadius) {
-        cornerRadius.z = bottomRightCornerRadius;
-    }
-
-    /**
-     * Gets padding.
-     *
-     * @return the padding
-     */
-    public Vector4f getPadding() {
-        return padding;
-    }
-
-    /**
-     * Sets padding.
-     *
-     * @param padding the padding
-     */
-    public void setPadding(Vector4f padding) {
-        this.padding = padding;
-    }
-
-    /**
-     * Gets margin.
-     *
-     * @return the margin
-     */
-    public Vector4f getMargin() {
-        return margin;
-    }
-
-    /**
-     * Sets margin.
-     *
-     * @param margin the margin
-     */
-    public void setMargin(Vector4f margin) {
-        this.margin = margin;
-    }
-
-    /**
-     * Gets min size.
-     *
-     * @return the min size
-     */
-    public Vector2f getMinimumSize() {
-        return minimumSize;
-    }
-
-    /**
-     * Sets min size.
-     *
-     * @param minimumSize the min size
-     */
-    public void setMinimumSize(Vector2f minimumSize) {
-        this.minimumSize = minimumSize;
-    }
-
-    /**
-     * Sets minimum size. <p> Minimum size of component. Used to set minimum size of component for layout manager. Layout manager uses this minimum size if
-     * component should be as small as possible. If one of dimensions is {@code <= 0} this minimum size is 0.
-     *
-     * @param minWidth the minimum width.
-     * @param minHeight the minimum height.
-     */
-    public void setMinimumSize(float minWidth, float minHeight) {
-        this.minimumSize = new Vector2f(minWidth, minHeight);
-    }
-
-    /**
-     * Gets max size.
-     *
-     * @return the max size
-     */
-    public Vector2f getMaximumSize() {
-        return maximumSize;
-    }
-
-    /**
-     * Sets max size.
-     *
-     * @param maximumSize the max size
-     */
-    public void setMaximumSize(Vector2f maximumSize) {
-        this.maximumSize = maximumSize;
-    }
-
-    /**
-     * Sets maximum size. <p> Maximum size of component. Used to set maximum size of component for layout manager. Layout manager uses this maximum size if
-     * component should be as small as possible. If one of dimensions is {@code <= 0} this maximum size is 0.
-     *
-     * @param maxWidth the maximum width.
-     * @param maxHeight the maximum height.
-     */
-    public void setMaximumSize(float maxWidth, float maxHeight) {
-        this.maximumSize = new Vector2f(maxWidth, maxHeight);
-    }
-
-    /**
-     * Gets size.
-     *
-     * @return the size
-     */
-    public Vector2f getSize() {
-        return size;
-    }
-
-    /**
-     * Sets size.
-     *
-     * @param preferredSize the size
-     */
-    public void setSize(Vector2f preferredSize) {
-        this.size = preferredSize;
-    }
-
-    /**
-     * Sets preferred size. <p> Preferred size of component. Used to set preferred size of component for layout manager. Layout manager will try to make this
-     * component size equal to preferred. <p> {@code -1} is default value - that means that layout manager will calculate preferred size.
-     *
-     * @param prefWidth the preferred width.
-     * @param prefHeight the preferred height.
-     */
-    public void setSize(float prefWidth, float prefHeight) {
-        this.size = new Vector2f(prefWidth, prefHeight);
     }
 
     /**
@@ -386,6 +366,16 @@ public class Style {
         if (position != null) {
             this.position = position;
         }
+    }
+
+    public void setMinimumSize(float width, float height) {
+        setMinWidth(width);
+        setMinHeight(height);
+    }
+
+    public void setMaximumSize(float width, float height) {
+        setMaxWidth(width);
+        setMaxHeight(height);
     }
 
     public enum DisplayType {

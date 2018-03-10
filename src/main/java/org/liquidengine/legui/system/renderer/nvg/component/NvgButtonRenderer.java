@@ -9,9 +9,9 @@ import static org.lwjgl.nanovg.NanoVG.nvgSave;
 
 import org.joml.Vector2f;
 import org.joml.Vector4f;
-import org.liquidengine.legui.style.color.ColorUtil;
 import org.liquidengine.legui.component.Button;
 import org.liquidengine.legui.icon.Icon;
+import org.liquidengine.legui.style.Style;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgShapes;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgText;
@@ -43,35 +43,32 @@ public class NvgButtonRenderer extends NvgDefaultComponentRenderer<Button> {
         boolean focused = button.isFocused();
         boolean hovered = button.isHovered();
         boolean pressed = button.isPressed();
-        Vector4f backgroundColor = new Vector4f(button.getStyle().getBackground().getColor());
+        Style style = button.getStyle();
 
-        Icon bgIcon = button.getBackgroundIcon();
-        Icon image;
-        if (!focused && !hovered && !pressed) {
-            image = bgIcon;
-        } else if (hovered && !pressed) {
-            image = (image = button.getHoveredBackgroundIcon()) == null ? bgIcon : image;
-        } else if (pressed) {
-            image = (image = button.getPressedBackgroundIcon()) == null ? bgIcon : image;
-        } else {
-            image = (image = button.getFocusedBackgroundIcon()) == null ? bgIcon : image;
+        Icon bgIcon = style.getBackground().getIcon();
+        Vector4f bgColor = style.getBackground().getColor();
+        Vector4f cornerRadius = style.getCornerRadius();
+
+        if (hovered) {
+            if (!pressed) {
+                Style hoveredStyle = button.getHoveredStyle();
+                if (hoveredStyle.getBackground().getColor() != null) {
+                    bgColor = hoveredStyle.getBackground().getColor();
+                }
+                if (hoveredStyle.getBackground().getIcon() != null) {
+                    bgIcon = hoveredStyle.getBackground().getIcon();
+                }
+                if (hoveredStyle.getCornerRadius() != null) {
+                    cornerRadius = hoveredStyle.getCornerRadius();
+                }
+            } else {
+            }
         }
 
         nvgSave(nvg);
-        NvgShapes.drawRect(nvg, pos, size, backgroundColor, button.getStyle().getCornerRadius());
-        if (hovered) {
-            if (!pressed) {
-                Vector4f opp = ColorUtil.oppositeBlackOrWhite(backgroundColor);
-                opp.w = 0.3f;
-                NvgShapes.drawRect(nvg, pos, size, opp, button.getStyle().getCornerRadius());
-            } else {
-                Vector4f opp = ColorUtil.oppositeBlackOrWhite(backgroundColor);
-                opp.w = 0.6f;
-                NvgShapes.drawRect(nvg, pos, size, opp, button.getStyle().getCornerRadius());
-            }
-        }
-        if (image != null) {
-            renderIcon(image, button, context);
+        NvgShapes.drawRect(nvg, pos, size, bgColor, cornerRadius);
+        if (bgIcon != null) {
+            renderIcon(bgIcon, button, context);
         }
         nvgRestore(nvg);
     }

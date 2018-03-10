@@ -5,7 +5,9 @@ import static org.liquidengine.legui.layout.flex.FlexUtils.setFlexDirection;
 import static org.liquidengine.legui.layout.flex.FlexUtils.setJustifyContent;
 import static org.liquidengine.legui.layout.flex.FlexUtils.setPadding;
 
-import org.joml.Vector2f;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.layout.Layout;
 import org.liquidengine.legui.layout.LayoutConstraint;
@@ -24,6 +26,7 @@ public class FlexLayout implements Layout {
      *
      * @param component component to add.
      * @param constraint layout constraint.
+     *
      * @throws IllegalArgumentException if provided constraint is not supported by this layout.
      */
     @Override
@@ -48,7 +51,36 @@ public class FlexLayout implements Layout {
      */
     @Override
     public void layout(Component parent) {
+        // initialize
         long rootNode = Yoga.YGNodeNew();
+        prepareNode(parent, rootNode);
+        Yoga.YGNodeStyleSetDisplay(rootNode, Yoga.YGDisplayFlex);
+
+        List<Long> childNodes = new ArrayList<>();
+        List<Component> components = parent.getChildComponents().stream().filter(Component::isVisible).collect(Collectors.toList());
+        for (Component component : components) {
+            long childNode = Yoga.YGNodeNew();
+            prepareNode(component, childNode);
+            Yoga.YGNodeInsertChild(rootNode, childNode, childNodes.size());
+            childNodes.add(childNode);
+        }
+
+        // calculate
+        Yoga.nYGNodeCalculateLayout(rootNode, parent.getSize().x, parent.getSize().y, Yoga.YGDirectionLTR);
+
+        // apply to components
+        for (int i = 0; i < components.size(); i++) {
+            Component childComponent = components.get(i);
+            Long yogaNode = childNodes.get(i);
+
+            childComponent.setPosition(Yoga.YGNodeLayoutGetLeft(yogaNode), Yoga.YGNodeLayoutGetTop(yogaNode));
+            childComponent.setSize(Yoga.YGNodeLayoutGetWidth(yogaNode), Yoga.YGNodeLayoutGetHeight(yogaNode));
+        }
+
+        // free mem
+        for (Long childNode : childNodes) {
+            Yoga.YGNodeFree(childNode);
+        }
 
         Yoga.YGNodeFree(rootNode);
     }
@@ -57,28 +89,61 @@ public class FlexLayout implements Layout {
      * Used to prepare root node.
      *
      * @param parent parent component associated to root node.
-     * @param rootNode root yoga node.
+     * @param node root yoga node.
      */
-    private void prepareRootNode(Component parent, long rootNode) {
+    private void prepareNode(Component parent, long node) {
         Style style = parent.getStyle();
         FlexStyle flexStyle = style.getFlexStyle();
-        setFlexDirection(rootNode, flexStyle.getFlexDirection());
-        setJustifyContent(rootNode, flexStyle.getJustifyContent(), parent);
-        setAlignItems(rootNode, flexStyle.getAlignItems(), parent);
+        setFlexDirection(node, flexStyle.getFlexDirection());
+        setJustifyContent(node, flexStyle.getJustifyContent(), parent);
+        setAlignItems(node, flexStyle.getAlignItems(), parent);
 
-        Vector2f maximumSize = style.getMaximumSize();
-        Vector2f minimumSize = style.getMinimumSize();
-        Vector2f preferredSize = style.getSize();
-        Vector2f size = parent.getSize();
-        Yoga.YGNodeStyleSetMinWidth(rootNode, minimumSize == null ? 0 : minimumSize.x);
-        Yoga.YGNodeStyleSetMinHeight(rootNode, minimumSize == null ? 0 : minimumSize.y);
-        Yoga.YGNodeStyleSetMaxWidth(rootNode, maximumSize == null ? Float.MAX_VALUE : maximumSize.x);
-        Yoga.YGNodeStyleSetMaxHeight(rootNode, maximumSize == null ? Float.MAX_VALUE : maximumSize.y);
-        Yoga.YGNodeStyleSetWidth(rootNode, preferredSize == null ? size.x : preferredSize.x);
-        Yoga.YGNodeStyleSetHeight(rootNode, preferredSize == null ? size.y : preferredSize.y);
+        Float minWidth = style.getMinWidth();
+        if (minWidth != null) {
+            Yoga.YGNodeStyleSetMinWidth(node, minWidth);
+        }
+        Float minHeight = style.getMinHeight();
+        if (minHeight != null) {
+            Yoga.YGNodeStyleSetMinHeight(node, minHeight);
+        }
 
-        Yoga.YGNodeStyleSetPositionType(rootNode, style.getPosition() == PositionType.RELATIVE ? Yoga.YGPositionTypeRelative : Yoga.YGPositionTypeAbsolute);
-        setPadding(rootNode, style.getPadding());
+        Float maxWidth = style.getMaxWidth();
+        if (maxWidth != null) {
+            Yoga.YGNodeStyleSetMaxWidth(node, maxWidth);
+        }
+        Float maxHeight = style.getMaxHeight();
+        if (maxHeight != null) {
+            Yoga.YGNodeStyleSetMaxHeight(node, maxHeight);
+        }
+
+        Float width = style.getWidth();
+        if (width != null) {
+            Yoga.YGNodeStyleSetWidth(node, width);
+        }
+        Float height = style.getHeight();
+        if (height != null) {
+            Yoga.YGNodeStyleSetHeight(node, height);
+        }
+
+        if (style.getTop() != null) {
+            Yoga.YGNodeStyleSetPosition(node, Yoga.YGEdgeTop, style.getTop());
+        }
+        if (style.getBottom() != null) {
+            Yoga.YGNodeStyleSetPosition(node, Yoga.YGEdgeBottom, style.getBottom());
+        }
+        if (style.getRight() != null) {
+            Yoga.YGNodeStyleSetPosition(node, Yoga.YGEdgeRight, style.getRight());
+        }
+        if (style.getLeft() != null) {
+            Yoga.YGNodeStyleSetPosition(node, Yoga.YGEdgeLeft, style.getLeft());
+        }
+
+        setPadding(node, style);
+
+        Yoga.YGNodeStyleSetPositionType(node, style.getPosition() == PositionType.RELATIVE ? Yoga.YGPositionTypeRelative : Yoga.YGPositionTypeAbsolute);
+
+        Yoga.YGNodeStyleSetFlexGrow(node, flexStyle.getFlexGrow());
+        Yoga.YGNodeStyleSetFlexShrink(node, flexStyle.getFlexShrink());
     }
 
 
