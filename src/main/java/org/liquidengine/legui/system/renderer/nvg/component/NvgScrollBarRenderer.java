@@ -61,7 +61,7 @@ public class NvgScrollBarRenderer extends NvgDefaultComponentRenderer<ScrollBar>
                     scrollBarSize.set(size.x - 2 * diff, size.y);
                 }
                 NvgShapes.drawRect(nanovg, scrollBarPos, scrollBarSize, scrollBar.getStyle().getBackground().getColor(),
-                    arrowsEnabled ? new Vector4f(0) : scrollBar.getStyle().getCornerRadius());
+                                   arrowsEnabled ? new Vector4f(0) : scrollBar.getStyle().getCornerRadius());
             }
             // draw arrows
             drawArrows(nanovg, scrollBar, pos, size);
@@ -121,9 +121,9 @@ public class NvgScrollBarRenderer extends NvgDefaultComponentRenderer<ScrollBar>
                 Vector4f secondArrowBounds = new Vector4f(arrow2pos.x, arrow2pos.y, arrowBgSize.x, arrowBgSize.y);
 
                 NvgText.drawTextLineToRect(nanovg, firstArrowBounds, false, HorizontalAlign.CENTER, VerticalAlign.MIDDLE, fontSize,
-                    FontRegistry.MATERIAL_ICONS_REGULAR, firstArrowIcon, color);
+                                           FontRegistry.MATERIAL_ICONS_REGULAR, firstArrowIcon, color);
                 NvgText.drawTextLineToRect(nanovg, secondArrowBounds, false, HorizontalAlign.CENTER, VerticalAlign.MIDDLE, fontSize,
-                    FontRegistry.MATERIAL_ICONS_REGULAR, secondArrowIcon, color);
+                                           FontRegistry.MATERIAL_ICONS_REGULAR, secondArrowIcon, color);
             }
         }
     }

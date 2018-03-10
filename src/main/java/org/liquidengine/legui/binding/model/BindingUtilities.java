@@ -338,7 +338,7 @@ public class BindingUtilities {
         }
 
         LOGGER.warn("Can't set field value '" + fieldValue + "' to field '" + fieldName
-            + "' in object '" + object + "' ('" + objectClass + "') cause value type is not equal to field type or there is no such field.");
+                        + "' in object '" + object + "' ('" + objectClass + "') cause value type is not equal to field type or there is no such field.");
     }
 
     /**

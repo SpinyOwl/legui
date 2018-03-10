@@ -121,7 +121,7 @@ public class MouseClickEventHandler implements SystemEventHandler<SystemMouseCli
         if (parent != null) {
             boolean push = false;
             while (parent != null) {
-                push = (parent instanceof Widget) && (parent.getParent()!=null) && (parent.getParent().getStyle().getDisplay()== DisplayType.NONE);
+                push = (parent instanceof Widget) && (parent.getParent() != null) && (parent.getParent().getStyle().getDisplay() == DisplayType.NONE);
                 current = parent;
                 parent = parent.getParent();
                 if (push) {

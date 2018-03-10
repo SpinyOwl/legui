@@ -17,6 +17,7 @@ import org.xml.sax.helpers.DefaultHandler;
  * @author ShchAlexander.
  */
 public class BindingListParser extends DefaultHandler {
+
     public static final Logger LOGGER = LogManager.getLogger();
 
     /**
@@ -105,8 +106,8 @@ public class BindingListParser extends DefaultHandler {
                 Class bType = binding.getBindingForType();
                 if (!bForType.equals(bType) && !bType.isAssignableFrom(bForType)) {
                     LOGGER.warn("Binding skipped. "
-                        + "Binding type '" + bForType.getCanonicalName() + "' is not instance of '"
-                        + bType.getCanonicalName() + "' specified in '" + bindingClassName + "'.");
+                                    + "Binding type '" + bForType.getCanonicalName() + "' is not instance of '"
+                                    + bType.getCanonicalName() + "' specified in '" + bindingClassName + "'.");
                 } else {
                     bindings.put(bForType, binding);
                 }
@@ -155,8 +156,8 @@ public class BindingListParser extends DefaultHandler {
                 Class bType = binding.getBindingForType();
                 if (bType != bForType && !bType.isAssignableFrom(bForType)) {
                     LOGGER.warn("Binding skipped. "
-                        + "Binding type '" + bForType.getCanonicalName() + "' is not instance of '"
-                        + bType.getCanonicalName() + "' specified in '" + path + "'.");
+                                    + "Binding type '" + bForType.getCanonicalName() + "' is not instance of '"
+                                    + bType.getCanonicalName() + "' specified in '" + path + "'.");
                 } else {
                     bindings.put(bForType, binding);
                 }

@@ -8,5 +8,6 @@ import org.joml.Vector4fc;
 public interface ICSSStyle {
 
     CSSProperty getBackground();
+
     void setBackground(Vector4fc color);
 }

@@ -51,7 +51,7 @@ public final class NvgRenderUtils {
     }
 
     public static float[] calculateTextBoundsRect(long context, float x, float y, float w, float h, String text, HorizontalAlign horizontalAlign,
-        VerticalAlign verticalAlign) {
+                                                  VerticalAlign verticalAlign) {
         ByteBuffer byteText = null;
         try {
             byteText = memUTF8(text, false);
@@ -64,7 +64,7 @@ public final class NvgRenderUtils {
     }
 
     public static float[] calculateTextBoundsRect(long context, float x, float y, float w, float h, ByteBuffer text, HorizontalAlign horizontalAlign,
-        VerticalAlign verticalAlign) {
+                                                  VerticalAlign verticalAlign) {
         float bounds[] = new float[4];
         nvgTextBounds(context, x, y, text, bounds);
         return createBounds(x, y, w, h, horizontalAlign, verticalAlign, bounds);
@@ -120,7 +120,7 @@ public final class NvgRenderUtils {
         NVGColor colorB = NVGColor.calloc();
 
         nvgBoxGradient(context, x, y + 2, w, h, cornerRadius * 2, 10, NvgColorUtil.rgba(shadowColor, colorA), NvgColorUtil.rgba(0, 0, 0, 0, colorB),
-            shadowPaint);
+                       shadowPaint);
         nvgBeginPath(context);
         nvgRect(context, x - 10, y - 10, w + 20, h + 30);
         nvgRoundedRect(context, x, y, w, h, cornerRadius);

@@ -169,21 +169,12 @@ public class BindingParser extends DefaultHandler {
     }
 
     /**
-     * Receive notification of the end of an element.
-     * <p>
-     * <p>By default, do nothing.  Application writers may override this
-     * method in a subclass to take specific actions at the end of
-     * each element (such as finalising a tree node or writing
-     * output to a file).</p>
+     * Receive notification of the end of an element. <p> <p>By default, do nothing.  Application writers may override this method in a subclass to take
+     * specific actions at the end of each element (such as finalising a tree node or writing output to a file).</p>
      *
-     * @param uri The Namespace URI, or the empty string if the
-     * element has no Namespace URI or if Namespace
-     * processing is not being performed.
-     * @param localName The local name (without prefix), or the
-     * empty string if Namespace processing is not being
-     * performed.
-     * @param qName The qualified name (with prefix), or the
-     * empty string if qualified names are not available.
+     * @param uri The Namespace URI, or the empty string if the element has no Namespace URI or if Namespace processing is not being performed.
+     * @param localName The local name (without prefix), or the empty string if Namespace processing is not being performed.
+     * @param qName The qualified name (with prefix), or the empty string if qualified names are not available.
      *
      * @see ContentHandler#endElement
      */

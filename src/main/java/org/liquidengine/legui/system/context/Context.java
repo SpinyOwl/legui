@@ -84,10 +84,10 @@ public class Context {
         glfwGetWindowPos(glfwWindow, xpos, ypos);
 
         update(windowWidth[0], windowHeight[0],
-            frameBufferWidth[0], frameBufferHeight[0],
-            xpos[0], ypos[0],
-            glfwGetWindowAttrib(glfwWindow, GLFW_ICONIFIED) == GLFW_TRUE
-        );
+               frameBufferWidth[0], frameBufferHeight[0],
+               xpos[0], ypos[0],
+               glfwGetWindowAttrib(glfwWindow, GLFW_ICONIFIED) == GLFW_TRUE
+              );
     }
 
     /**
@@ -102,7 +102,7 @@ public class Context {
      * @param iconified the iconified
      */
     public void update(int targetWidth, int targetHeight, int framebufferWidth, int framebufferHeight,
-        int targetPosX, int targetPosY, boolean iconified) {
+                       int targetPosX, int targetPosY, boolean iconified) {
         setWindowSize(new Vector2i(targetWidth, targetHeight));
         setFramebufferSize(new Vector2i(framebufferWidth, framebufferHeight));
         setPixelRatio((float) framebufferWidth / (float) targetWidth);

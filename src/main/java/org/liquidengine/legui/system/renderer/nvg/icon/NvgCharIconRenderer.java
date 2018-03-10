@@ -45,11 +45,11 @@ public class NvgCharIconRenderer<I extends CharIcon> extends NvgIconRenderer<I> 
             Vector4f focusedStrokeColor = component.getStyle().getFocusedStrokeColor();
             if (focusedStrokeColor != null) {
                 NvgText.drawTextLineToRect(context, new Vector4f(x - 0.5f, y + 1, w, h), false, icon.getHorizontalAlign(), icon.getVerticalAlign(),
-                    icon.getSize().y, icon.getFont(), TextUtil.cpToStr(icon.getCharCode()), focusedStrokeColor);
+                                           icon.getSize().y, icon.getFont(), TextUtil.cpToStr(icon.getCharCode()), focusedStrokeColor);
             }
         }
 
         NvgText.drawTextLineToRect(context, new Vector4f(x + 0.5f, y, w, h), false, icon.getHorizontalAlign(), icon.getVerticalAlign(),
-            icon.getSize().y, icon.getFont(), TextUtil.cpToStr(icon.getCharCode()), icon.getColor());
+                                   icon.getSize().y, icon.getFont(), TextUtil.cpToStr(icon.getCharCode()), icon.getColor());
     }
 }

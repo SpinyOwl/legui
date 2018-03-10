@@ -319,7 +319,7 @@ public final class ClassBindingBuilder {
      * @param accessor field accessor.
      */
     private void checkLinkedBindingFieldTypeIsValid(String field, AbstractClassBinding linkedClassBinding,
-        AbstractFieldAccessor accessor) {
+                                                    AbstractFieldAccessor accessor) {
         if (linkedClassBinding != null && accessor == null) {
             Class bindingClass = classBinding.getBindingForType();
             Class bType = linkedClassBinding.getBindingForType();

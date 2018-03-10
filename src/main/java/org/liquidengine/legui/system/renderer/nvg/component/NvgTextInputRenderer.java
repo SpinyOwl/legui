@@ -224,12 +224,12 @@ public class NvgTextInputRenderer extends NvgDefaultComponentRenderer<TextInput>
                     float nCaretX = caretx - poffset;
 
                     drawSelection(context, rect, highlightColor,
-                        startSelectionIndex, endSelectionIndex,
-                        focused, startSelectionX, endSelectionX, poffset);
+                                  startSelectionIndex, endSelectionIndex,
+                                  focused, startSelectionX, endSelectionX, poffset);
                     // render text
 
                     NvgText.drawTextLineToRect(context, new Vector4f(textBounds[4] - poffset, textBounds[5], textBounds[6], textBounds[7]),
-                        false, HorizontalAlign.LEFT, VerticalAlign.MIDDLE, fontSize, font, text, textColor);
+                                               false, HorizontalAlign.LEFT, VerticalAlign.MIDDLE, fontSize, font, text, textColor);
 
                     if (focused) {
                         // render caret
@@ -263,8 +263,8 @@ public class NvgTextInputRenderer extends NvgDefaultComponentRenderer<TextInput>
     }
 
     private void drawSelection(long context, Vector4f rect, Vector4f highlightColor,
-        int startSelectionIndex, int endSelectionIndex, boolean focused,
-        float startSelectionX, float endSelectionX, Float poffset) {
+                               int startSelectionIndex, int endSelectionIndex, boolean focused,
+                               float startSelectionX, float endSelectionX, Float poffset) {
         if (focused && startSelectionIndex != endSelectionIndex) {
             Vector2f position = new Vector2f(startSelectionX - poffset, rect.y);
             Vector2f size = new Vector2f(endSelectionX - startSelectionX, rect.w);
@@ -278,8 +278,8 @@ public class NvgTextInputRenderer extends NvgDefaultComponentRenderer<TextInput>
     }
 
     private Float recalculateOffsetX(Vector4f rect, HorizontalAlign halign,
-        float caretx, float ratio, float offsetX,
-        Float poffset, Float pratio, HorizontalAlign palign) {
+                                     float caretx, float ratio, float offsetX,
+                                     Float poffset, Float pratio, HorizontalAlign palign) {
         float newpoffset = poffset;
         if (pratio != ratio || palign != halign) {
             newpoffset = offsetX;

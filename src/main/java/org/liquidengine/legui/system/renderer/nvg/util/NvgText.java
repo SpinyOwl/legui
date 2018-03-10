@@ -48,11 +48,11 @@ public class NvgText {
 
     public static void drawTextLineToRect(long nvg, TextState text, Vector4fc rect, boolean hideOverflow) {
         drawTextLineToRect(nvg, rect, hideOverflow, text.getHorizontalAlign(), text.getVerticalAlign(),
-            text.getFontSize(), text.getFont(), text.getText(), text.getTextColor());
+                           text.getFontSize(), text.getFont(), text.getText(), text.getTextColor());
     }
 
     public static void drawTextLineToRect(long nvg, Vector4fc rect, boolean hideOverflow, HorizontalAlign horizontalAlign, VerticalAlign verticalAlign,
-        float fontSize, String font, String textToRender, Vector4f fontColor) {
+                                          float fontSize, String font, String textToRender, Vector4f fontColor) {
         nvgFontSize(nvg, fontSize);
         nvgFontFace(nvg, font);
         textAlign(nvg, horizontalAlign, verticalAlign);

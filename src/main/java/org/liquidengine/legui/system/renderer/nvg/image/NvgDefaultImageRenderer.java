@@ -42,7 +42,7 @@ public class NvgDefaultImageRenderer<I extends Image> extends NvgImageRenderer<I
         NvgShapes.drawRectStroke(nanovg, position, size, ColorConstants.black, 1, 1);
 
         NvgText.drawTextLineToRect(nanovg, new Vector4f(x, y, w, h), true, HorizontalAlign.LEFT, VerticalAlign.MIDDLE,
-            h / 3, FontRegistry.DEFAULT, IMAGE, ColorConstants.black());
+                                   h / 3, FontRegistry.DEFAULT, IMAGE, ColorConstants.black());
 
     }
 }
