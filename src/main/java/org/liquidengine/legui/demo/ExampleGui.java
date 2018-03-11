@@ -365,10 +365,13 @@ public class ExampleGui extends Panel {
             if (event.getAction() == CLICK) {
                 widget3.setTitleEnabled(!widget3.isTitleEnabled());
                 b.getTextState().setText(widget3.isTitleEnabled() ? up : down);
-                widget3.setResizable(!widget3.isResizable());
+//                widget3.setResizable(!widget3.isResizable());
             }
         });
         widget3.getContainer().add(b);
+
+        widget3.getStyle().setMinWidth(100f);
+        widget3.getStyle().setMinHeight(50f);
 
         ScrollBar scrollBar1 = new ScrollBar(360, 170, 20, 100, 20);
         scrollBar1.setOrientation(Orientation.VERTICAL);

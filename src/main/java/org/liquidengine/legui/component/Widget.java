@@ -11,6 +11,7 @@ import org.liquidengine.legui.component.event.widget.WidgetCloseEvent;
 import org.liquidengine.legui.component.misc.listener.widget.WidgetCloseButMouseClickEventListener;
 import org.liquidengine.legui.component.misc.listener.widget.WidgetDragListener;
 import org.liquidengine.legui.component.misc.listener.widget.WidgetMinimizeButMouseClickEventListener;
+import org.liquidengine.legui.component.misc.listener.widget.WidgetResizeButtonDragListener;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
@@ -252,20 +253,16 @@ public class Widget extends Component {
         resizeButton.getStyle().setBottom(0f);
         resizeButton.getStyle().setRight(0f);
         resizeButton.getStyle().setBorder(null);
+        resizeButton.getStyle().setBorder(null);
+        resizeButton.getStyle().getBackground().setColor(ColorConstants.transparent());
 
-        resizeButton.getListenerMap().addListener(MouseDragEvent.class, (MouseDragEventListener) event -> {
-            Vector2f delta = event.getDelta();
-            if (this.getSize().x + delta.x >= 1 && this.getSize().y + delta.y >= titleContainer.getSize().y) {
-                this.getSize().add(delta);
-            }
-        });
+        resizeButton.getListenerMap().addListener(MouseDragEvent.class, new WidgetResizeButtonDragListener(resizeButton, this));
 
         this.add(titleContainer);
         this.add(container);
         this.add(resizeButton);
 
         Themes.getDefaultTheme().getThemeManager().getComponentTheme(Widget.class).applyAll(this);
-        resizeButton.getStyle().setBorder(null);
     }
 
     /**
@@ -512,6 +509,10 @@ public class Widget extends Component {
             this.getStyle().setMaxHeight(maximizedMinHeight);
             this.getStyle().setMinWidth(maximizedMaxWidth);
             this.getStyle().setMinHeight(maximizedMaxHeight);
+
+            if (resizable) {
+                resizeButton.setVisible(false);
+            }
         }
     }
 
@@ -527,6 +528,10 @@ public class Widget extends Component {
             this.getStyle().setMaxHeight(maximizedMinHeight);
             this.getStyle().setMinWidth(maximizedMaxWidth);
             this.getStyle().setMinHeight(maximizedMaxHeight);
+
+            if (resizable) {
+                resizeButton.setVisible(true);
+            }
         }
     }
 
@@ -680,4 +685,12 @@ public class Widget extends Component {
     public void setResizable(boolean resizable) {
         this.resizeButton.setVisible(this.resizable = resizable);
     }
+
+    public Button getResizeButton() {
+        return resizeButton;
+    }
+//
+//    public void setResizeButton(Button resizeButton) {
+//        this.resizeButton = resizeButton;
+//    }
 }
