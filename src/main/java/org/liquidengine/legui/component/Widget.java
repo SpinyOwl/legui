@@ -144,6 +144,8 @@ public class Widget extends Component {
     private void initialize(String title) {
         this.getStyle().setDisplay(DisplayType.FLEX);
         this.getStyle().getFlexStyle().setFlexDirection(FlexDirection.COLUMN);
+        this.getStyle().setMinWidth(50f);
+        this.getStyle().setMinHeight(50f);
 
         titleContainer = new Panel();
         titleContainer.setTabFocusable(false);

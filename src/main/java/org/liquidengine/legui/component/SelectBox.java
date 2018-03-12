@@ -25,7 +25,10 @@ import org.liquidengine.legui.icon.Icon;
 import org.liquidengine.legui.listener.EventListener;
 import org.liquidengine.legui.listener.FocusEventListener;
 import org.liquidengine.legui.listener.MouseClickEventListener;
+import org.liquidengine.legui.style.Style.DisplayType;
+import org.liquidengine.legui.style.Style.PositionType;
 import org.liquidengine.legui.style.color.ColorConstants;
+import org.liquidengine.legui.style.flex.FlexStyle.FlexDirection;
 import org.liquidengine.legui.theme.Themes;
 
 /**
@@ -134,7 +137,13 @@ public class SelectBox extends Component {
      * Used to initialize selectbox.
      */
     private void initialize() {
-        selectionListPanel.getHorizontalScrollBar().setVisible(false);
+        selectionListPanel.setHorizontalScrollBarVisible(false);
+
+        selectionListPanel.getContainer().getStyle().setDisplay(DisplayType.FLEX);
+        selectionListPanel.getContainer().getStyle().getFlexStyle().setFlexDirection(FlexDirection.COLUMN);
+        selectionListPanel.getContainer().getStyle().getBackground().setColor(ColorConstants.lightBlue());
+
+        this.getStyle().setDisplay(DisplayType.FLEX);
 
         expandIcon = new CharIcon(new Vector2f(expandButton.getSize()), DEFAULT_ICON_FONT, (char) EXPAND_ICON_CHAR, ColorConstants.black());
         collapseIcon = new CharIcon(new Vector2f(expandButton.getSize()), DEFAULT_ICON_FONT, (char) COLLAPSE_ICON_CHAR, ColorConstants.black());
@@ -142,9 +151,14 @@ public class SelectBox extends Component {
 
         expandButton.getStyle().setMinimumSize(buttonWidth, 0);
         expandButton.getStyle().setMaximumSize(buttonWidth, Float.MAX_VALUE);
+        expandButton.getStyle().setRight(0f);
+        expandButton.getStyle().setTop(0f);
+        expandButton.getStyle().setBottom(0f);
 
-        selectionButton.getStyle().setMinimumSize(0, 0);
-        selectionButton.getStyle().setMaximumSize(Float.MAX_VALUE, Float.MAX_VALUE);
+        selectionButton.getStyle().setTop(0f);
+        selectionButton.getStyle().setLeft(0f);
+        selectionButton.getStyle().setBottom(0f);
+        selectionButton.getStyle().setRight(buttonWidth);
 
         this.add(expandButton);
         this.add(selectionButton);
@@ -281,12 +295,12 @@ public class SelectBox extends Component {
      * Used to create {@link SelectBoxElement}.
      *
      * @param element element.
-     *
      * @return {@link SelectBoxElement} created on base of element.
      */
     private SelectBoxElement createSelectBoxElement(String element) {
         SelectBoxElement boxElement = new SelectBoxElement(element, false);
-        boxElement.getStyle().setMinimumSize(0, elementHeight);
+        boxElement.getStyle().setHeight(elementHeight);
+        boxElement.getStyle().setPosition(PositionType.RELATIVE);
         boxElement.getListenerMap().getListeners(MouseClickEvent.class).add(new SelectBoxElementClickListener(this));
         return boxElement;
     }
@@ -295,7 +309,6 @@ public class SelectBox extends Component {
      * Used to get element index.
      *
      * @param element element to find index.
-     *
      * @return index of element or -1 if no such element in selectbox.
      */
     public int getElementIndex(String element) {

@@ -436,7 +436,7 @@ public class ExampleGui extends Panel {
         this.add(scrollablePanel);
 
         slider2.getListenerMap().addListener(SliderChangeValueEvent.class, (SliderChangeValueEventListener) event -> {
-            scrollablePanel.getHorizontalScrollBar().getStyle().setMinHeight(event.getNewValue() / 2f + 10);
+            scrollablePanel.setHorizontalScrollBarHeight(event.getNewValue() / 2f + 10);
         });
         slider1.getListenerMap().addListener(SliderChangeValueEvent.class, (SliderChangeValueEventListener) event -> {
             scrollablePanel.getHorizontalScrollBar().setArrowSize(event.getNewValue() / 4f + 10);
