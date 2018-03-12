@@ -255,7 +255,6 @@ public class Widget extends Component {
         resizeButton.getStyle().setBottom(0f);
         resizeButton.getStyle().setRight(0f);
         resizeButton.getStyle().setBorder(null);
-        resizeButton.getStyle().setBorder(null);
         resizeButton.getStyle().getBackground().setColor(ColorConstants.transparent());
 
         resizeButton.getListenerMap().addListener(MouseDragEvent.class, new WidgetResizeButtonDragListener(resizeButton, this));
@@ -691,8 +690,4 @@ public class Widget extends Component {
     public Button getResizeButton() {
         return resizeButton;
     }
-//
-//    public void setResizeButton(Button resizeButton) {
-//        this.resizeButton = resizeButton;
-//    }
 }
