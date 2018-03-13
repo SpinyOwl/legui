@@ -21,7 +21,7 @@ public class NvgProgressBarRenderer extends NvgDefaultComponentRenderer<Progress
         {
             nvgSave(nanovg);
             Vector2f pos = progressBar.getAbsolutePosition();
-            Vector4f cornerRadius = progressBar.getStyle().getCornerRadius();
+            Vector4f cornerRadius = progressBar.getStyle().getBorderRadius();
 
             Vector2f size = progressBar.getSize();
             Vector4f backgroundColor = progressBar.getStyle().getBackground().getColor();

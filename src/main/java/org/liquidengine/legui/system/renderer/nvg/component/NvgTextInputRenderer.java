@@ -76,7 +76,7 @@ public class NvgTextInputRenderer extends NvgDefaultComponentRenderer<TextInput>
             if (!textInput.isEditable()) {
                 bc.w *= 0.3f;
             }
-            NvgShapes.drawRect(nanovg, pos, size, bc, textInput.getStyle().getCornerRadius());
+            NvgShapes.drawRect(nanovg, pos, size, bc, textInput.getStyle().getBorderRadius());
 
             TextState textState = textInput.getTextState();
             Vector4f p = new Vector4f(textState.getPadding()).add(2, 2, 2, 2);

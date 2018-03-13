@@ -47,7 +47,7 @@ public class NvgScrollBarRenderer extends NvgDefaultComponentRenderer<ScrollBar>
             boolean vertical = VERTICAL.equals(scrollBar.getOrientation());
 
             // draw background
-            NvgShapes.drawRect(nanovg, pos, size, backgroundColor, scrollBar.getStyle().getCornerRadius());
+            NvgShapes.drawRect(nanovg, pos, size, backgroundColor, scrollBar.getStyle().getBorderRadius());
 
             // draw scroll bar back
             {
@@ -61,7 +61,7 @@ public class NvgScrollBarRenderer extends NvgDefaultComponentRenderer<ScrollBar>
                     scrollBarSize.set(size.x - 2 * diff, size.y);
                 }
                 NvgShapes.drawRect(nanovg, scrollBarPos, scrollBarSize, scrollBar.getStyle().getBackground().getColor(),
-                                   arrowsEnabled ? new Vector4f(0) : scrollBar.getStyle().getCornerRadius());
+                                   arrowsEnabled ? new Vector4f(0) : scrollBar.getStyle().getBorderRadius());
             }
             // draw arrows
             drawArrows(nanovg, scrollBar, pos, size);
@@ -89,7 +89,7 @@ public class NvgScrollBarRenderer extends NvgDefaultComponentRenderer<ScrollBar>
             Vector2f arrowBgSize = new Vector2f();
             Vector2f arrow2pos = new Vector2f();
             float arrowSize = scrollBar.getArrowSize();
-            Vector4f cornerRadius = scrollBar.getStyle().getCornerRadius();
+            Vector4f cornerRadius = scrollBar.getStyle().getBorderRadius();
             boolean vertical = VERTICAL.equals(scrollBar.getOrientation());
             if (vertical) {
                 firstArrowIcon = T;
@@ -158,6 +158,6 @@ public class NvgScrollBarRenderer extends NvgDefaultComponentRenderer<ScrollBar>
             scrollSize.set(barSize - 2 * offset, size.y - 2 * offset);
         }
 
-        NvgShapes.drawRect(nanovg, scrollPos, scrollSize, scrollBar.getScrollColor(), scrollBar.getStyle().getCornerRadius());
+        NvgShapes.drawRect(nanovg, scrollPos, scrollSize, scrollBar.getScrollColor(), scrollBar.getStyle().getBorderRadius());
     }
 }

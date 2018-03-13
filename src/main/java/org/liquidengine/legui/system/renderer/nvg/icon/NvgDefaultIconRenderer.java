@@ -36,7 +36,7 @@ public class NvgDefaultIconRenderer extends NvgIconRenderer {
         float w = iconSize.x;
         float h = iconSize.y;
 
-        NvgShapes.drawRect(nanovg, new Vector4f(x, y, w, h), ColorConstants.red, component.getStyle().getCornerRadius());
-        NvgShapes.drawRectStroke(nanovg, new Vector4f(x, y, w, h), ColorConstants.black, 1, component.getStyle().getCornerRadius());
+        NvgShapes.drawRect(nanovg, new Vector4f(x, y, w, h), ColorConstants.red, component.getStyle().getBorderRadius());
+        NvgShapes.drawRectStroke(nanovg, new Vector4f(x, y, w, h), ColorConstants.black, 1, component.getStyle().getBorderRadius());
     }
 }

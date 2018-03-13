@@ -24,7 +24,7 @@ public class DarkComponentTheme<T extends Component> extends AbstractTheme<T> {
     public void apply(T component) {
         super.apply(component);
         component.getStyle().setBorder(new SimpleLineBorder(ColorConstants.lightGray(), 1.2f));
-        component.getStyle().setCornerRadius(2);
+        component.getStyle().setBorderRadius(2f);
         component.getStyle().getBackground().setColor(ColorConstants.darkGray());
         Tooltip tooltip = component.getTooltip();
         if (tooltip != null) {

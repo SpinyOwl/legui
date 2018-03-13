@@ -47,7 +47,7 @@ public class NvgButtonRenderer extends NvgDefaultComponentRenderer<Button> {
 
         Icon bgIcon = style.getBackground().getIcon();
         Vector4f bgColor = style.getBackground().getColor();
-        Vector4f cornerRadius = style.getCornerRadius();
+        Vector4f cornerRadius = style.getBorderRadius();
 
         if (hovered) {
             if (!pressed) {
@@ -58,8 +58,8 @@ public class NvgButtonRenderer extends NvgDefaultComponentRenderer<Button> {
                 if (hoveredStyle.getBackground().getIcon() != null) {
                     bgIcon = hoveredStyle.getBackground().getIcon();
                 }
-                if (hoveredStyle.getCornerRadius() != null) {
-                    cornerRadius = hoveredStyle.getCornerRadius();
+                if (hoveredStyle.getBorderRadius() != null) {
+                    cornerRadius = hoveredStyle.getBorderRadius();
                 }
             } else {
             }

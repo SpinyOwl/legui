@@ -58,7 +58,7 @@ public class NvgSliderRenderer<T extends Slider> extends NvgDefaultComponentRend
             boolean vertical = Orientation.VERTICAL.equals(slider.getOrientation());
             Vector4f sliderInactiveColor = slider.getSliderColor();
             Vector4f sliderColor = slider.getSliderActiveColor();
-            Vector4f cornerRadius = slider.getStyle().getCornerRadius();
+            Vector4f cornerRadius = slider.getStyle().getBorderRadius();
             float sliderSize = slider.getSliderSize();
 
             NvgShapes.drawRect(nanovg, pos, size, backgroundColor, cornerRadius);

@@ -68,7 +68,7 @@ public class NvgPasswordInputRenderer extends NvgDefaultComponentRenderer<Passwo
             if (!passwordInput.isEditable()) {
                 bc.w *= 0.3f;
             }
-            NvgShapes.drawRect(nanovg, pos, size, bc, passwordInput.getStyle().getCornerRadius());
+            NvgShapes.drawRect(nanovg, pos, size, bc, passwordInput.getStyle().getBorderRadius());
 
             TextState textState = passwordInput.getTextState();
             Vector4f p = new Vector4f(textState.getPadding()).add(2, 2, 2, 2);

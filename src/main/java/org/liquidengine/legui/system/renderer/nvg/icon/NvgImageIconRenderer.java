@@ -36,7 +36,7 @@ public class NvgImageIconRenderer<I extends ImageIcon> extends NvgIconRenderer<I
         }
 
         HashMap<String, Object> p = new HashMap<>();
-        p.put(ImageRenderer.C_RADIUS, component.getStyle().getCornerRadius());
+        p.put(ImageRenderer.C_RADIUS, component.getStyle().getBorderRadius());
         renderImage(icon.getImage(), new Vector2f(x, y), iconSize, p, context);
     }
 }

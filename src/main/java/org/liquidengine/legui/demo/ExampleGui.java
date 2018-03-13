@@ -134,7 +134,7 @@ public class ExampleGui extends Panel {
         imageView = new ImageView(new BufferedImage("org/liquidengine/legui/demo/1.jpg"));
         imageView.setPosition(15, 5);
         imageView.setSize(70, 70);
-        imageView.getStyle().setCornerRadius(10);
+        imageView.getStyle().setBorderRadius(10f);
         imageWrapper.getContainer().add(imageView);
 
         Button button = new Button(20, 170, 50, 20); /*button.getStyle().getBackground().setColor(new Vector4f(1));*/
@@ -389,8 +389,8 @@ public class ExampleGui extends Panel {
         scrollBar11.setArrowsEnabled(false);
         scrollBar11.getStyle().getBackground().setColor(ColorConstants.white());
         scrollBar11.setScrollColor(ColorConstants.darkGray());
-        scrollBar11.getStyle().setBorder(new SimpleLineBorder(ColorConstants.red(), 1));
-        scrollBar11.getStyle().setCornerRadius(3);
+        scrollBar11.getStyle().setBorder(new SimpleLineBorder(ColorConstants.darkGray(), 1));
+        scrollBar11.getStyle().setBorderRadius(null);
         this.add(scrollBar11);
 
         ScrollBar scrollBar2 = new ScrollBar(250, 280, 100, 20, 20);

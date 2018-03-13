@@ -48,7 +48,7 @@ public class NvgToggleButtonRenderer extends NvgDefaultComponentRenderer<ToggleB
 
         Icon icon = agui.getStyle().getBackground().getIcon();
 
-        Vector4f cornerRadius = style.getCornerRadius();
+        Vector4f cornerRadius = style.getBorderRadius();
         NvgShapes.drawRect(nvg, pos, size, backgroundColor, cornerRadius);
         if (hovered) {
             if (!pressed) {

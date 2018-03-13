@@ -46,7 +46,7 @@ public class NvgDefaultComponentRenderer<C extends Component> extends NvgCompone
         createScissor(nanovg, component);
         {
             Style style = component.getStyle();
-            Vector4f radius = style.getCornerRadius();
+            Vector4f radius = style.getBorderRadius();
             NvgShapes.drawRect(nanovg, component.getAbsolutePosition(), component.getSize(), style.getBackground().getColor(), radius);
         }
         resetScissor(nanovg);

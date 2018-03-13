@@ -21,7 +21,11 @@ public class Style {
     private Background background = new Background();
     private Border border = new SimpleLineBorder(ColorConstants.gray(), 1);
     private Font font = FontRegistry.getFont(FontRegistry.DEFAULT);
-    private Vector4f cornerRadius = null;
+
+    private Float borderTopLeftRadius;
+    private Float borderTopRightRadius;
+    private Float borderBottomRightRadius;
+    private Float borderBottomLeftRadius;
 
     private Float width;
     private Float height;
@@ -46,10 +50,73 @@ public class Style {
     private Float bottom;
     private Float right;
     private Float left;
+
     /**
      * Stroke color. Used to render stroke if component is focused.
      */
     private Vector4f focusedStrokeColor = ColorConstants.lightBlue();
+
+    public void setBorderRadius(Float topLeftBottomRight, Float topRightBottomLeft) {
+        borderTopLeftRadius = borderBottomRightRadius = topLeftBottomRight;
+        borderTopRightRadius = borderBottomLeftRadius = topRightBottomLeft;
+    }
+
+    public void setBorderRadius(Float topLeft, Float topRightBottomLeft, Float bottomRight) {
+        borderTopLeftRadius = topLeft;
+        borderTopRightRadius = borderBottomLeftRadius = topRightBottomLeft;
+        borderBottomRightRadius = bottomRight;
+    }
+
+    public void setBorderRadius(Float topLeft, Float topRight, Float bottomRight, Float bottomLeft) {
+        borderTopLeftRadius = topLeft;
+        borderTopRightRadius = topRight;
+        borderBottomRightRadius = bottomRight;
+        borderBottomLeftRadius = bottomLeft;
+    }
+
+    public Vector4f getBorderRadius() {
+        return new Vector4f(borderTopLeftRadius == null ? 0 : borderTopLeftRadius,
+            borderTopRightRadius == null ? 0 : borderTopRightRadius,
+            borderBottomRightRadius == null ? 0 : borderBottomRightRadius,
+            borderBottomLeftRadius == null ? 0 : borderBottomLeftRadius);
+    }
+
+    public void setBorderRadius(Float radius) {
+        borderTopLeftRadius = borderTopRightRadius =
+            borderBottomRightRadius = borderBottomLeftRadius = radius;
+    }
+
+    public Float getBorderTopLeftRadius() {
+        return borderTopLeftRadius;
+    }
+
+    public void setBorderTopLeftRadius(Float borderTopLeftRadius) {
+        this.borderTopLeftRadius = borderTopLeftRadius;
+    }
+
+    public Float getBorderTopRightRadius() {
+        return borderTopRightRadius;
+    }
+
+    public void setBorderTopRightRadius(Float borderTopRightRadius) {
+        this.borderTopRightRadius = borderTopRightRadius;
+    }
+
+    public Float getBorderBottomRightRadius() {
+        return borderBottomRightRadius;
+    }
+
+    public void setBorderBottomRightRadius(Float borderBottomRightRadius) {
+        this.borderBottomRightRadius = borderBottomRightRadius;
+    }
+
+    public Float getBorderBottomLeftRadius() {
+        return borderBottomLeftRadius;
+    }
+
+    public void setBorderBottomLeftRadius(Float borderBottomLeftRadius) {
+        this.borderBottomLeftRadius = borderBottomLeftRadius;
+    }
 
     public Float getWidth() {
         return width;
@@ -99,13 +166,17 @@ public class Style {
         this.maxHeight = maxHeight;
     }
 
-    public void setPadding(float topBottom, float leftRight) {
+    public void setPadding(Float padding) {
+        paddingLeft = paddingRight =
+            paddingTop = paddingBottom = padding;
+    }
+
+    public void setPadding(Float topBottom, Float leftRight) {
         paddingLeft = paddingRight = leftRight;
         paddingTop = paddingBottom = topBottom;
     }
 
-
-    public void setPadding(float top, float right, float bottom, float left) {
+    public void setPadding(Float top, Float right, Float bottom, Float left) {
         paddingTop = top;
         paddingRight = right;
         paddingBottom = bottom;
@@ -252,38 +323,6 @@ public class Style {
         } else {
             this.background = new Background();
         }
-    }
-
-    /**
-     * Returns corner radius for all corners as vector <code>new Vector4f(topLeftCornerRadius, topRightCornerRadius, bottomRightCornerRadius,
-     * bottomLeftCornerRadius)</code>.
-     *
-     * @return vector of corner radius for all corners.
-     */
-    public Vector4f getCornerRadius() {
-        return cornerRadius;
-    }
-
-    /**
-     * Sets corner radius.
-     *
-     * @param radius the radius
-     */
-    public void setCornerRadius(float radius) {
-        if (cornerRadius != null) {
-            cornerRadius.set(radius);
-        } else {
-            cornerRadius = new Vector4f(radius);
-        }
-    }
-
-    /**
-     * Sets corner radius.
-     *
-     * @param cornerRadius the radius.
-     */
-    public void setCornerRadius(Vector4f cornerRadius) {
-        this.cornerRadius = cornerRadius;
     }
 
     /**
