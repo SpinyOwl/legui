@@ -69,6 +69,8 @@ public class Widget extends Component {
     private Float maximizedMinHeight;
     private Float maximizedMaxWidth;
     private Float maximizedMaxHeight;
+    private Float maximizedWidth;
+    private Float maximizedHeight;
 
     /**
      * Creates a widget with default title text.
@@ -499,17 +501,17 @@ public class Widget extends Component {
             Vector2f size = getSize();
             maximizedSize.set(size);
 
-            maximizedMinWidth = getStyle().getMaxWidth();
-            maximizedMinHeight = getStyle().getMaxHeight();
+            maximizedMinWidth = getStyle().getMinWidth();
+            maximizedMinHeight = getStyle().getMinHeight();
             maximizedMaxWidth = getStyle().getMaxWidth();
             maximizedMaxHeight = getStyle().getMaxHeight();
+            maximizedWidth = getStyle().getWidth();
+            maximizedHeight = getStyle().getHeight();
 
             size.set(size.x, getTitleHeight());
 
-            this.getStyle().setMaxWidth(maximizedMinWidth);
-            this.getStyle().setMaxHeight(maximizedMinHeight);
-            this.getStyle().setMinWidth(maximizedMaxWidth);
-            this.getStyle().setMinHeight(maximizedMaxHeight);
+//            this.getStyle().setWidth(size.x);
+//            this.getStyle().setHeight(getTitleHeight());
 
             if (resizable) {
                 resizeButton.getStyle().setDisplay(DisplayType.NONE);
@@ -525,10 +527,12 @@ public class Widget extends Component {
 
             this.getSize().set(maximizedSize);
 
-            this.getStyle().setMaxWidth(maximizedMinWidth);
-            this.getStyle().setMaxHeight(maximizedMinHeight);
-            this.getStyle().setMinWidth(maximizedMaxWidth);
-            this.getStyle().setMinHeight(maximizedMaxHeight);
+            this.getStyle().setMaxWidth(maximizedMaxWidth);
+            this.getStyle().setMaxHeight(maximizedMaxHeight);
+            this.getStyle().setMinWidth(maximizedMinWidth);
+            this.getStyle().setMinHeight(maximizedMinHeight);
+            this.getStyle().setWidth(maximizedWidth);
+            this.getStyle().setHeight(maximizedHeight);
 
             if (resizable) {
                 resizeButton.getStyle().setDisplay(DisplayType.MANUAL);
