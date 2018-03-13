@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.layout.Layout;
-import org.liquidengine.legui.layout.LayoutConstraint;
 import org.liquidengine.legui.style.Style;
 import org.liquidengine.legui.style.Style.PositionType;
 import org.liquidengine.legui.style.flex.FlexStyle;
@@ -20,29 +19,6 @@ import org.lwjgl.util.yoga.Yoga;
  * @author Aliaksandr_Shcherbin.
  */
 public class FlexLayout implements Layout {
-
-    /**
-     * Used to add component to layout.
-     *
-     * @param component component to add.
-     * @param constraint layout constraint.
-     *
-     * @throws IllegalArgumentException if provided constraint is not supported by this layout.
-     */
-    @Override
-    public void addComponent(Component component, LayoutConstraint constraint) throws IllegalArgumentException {
-
-    }
-
-    /**
-     * Used to remove component from layout.
-     *
-     * @param component component to remove.
-     */
-    @Override
-    public void removeComponent(Component component) {
-
-    }
 
     /**
      * Used to lay out child components for parent component.
