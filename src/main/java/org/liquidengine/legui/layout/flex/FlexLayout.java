@@ -29,7 +29,7 @@ public class FlexLayout implements Layout {
     public void layout(Component parent) {
         // initialize
         long rootNode = Yoga.YGNodeNew();
-        prepareNode(parent, rootNode);
+        prepareParentNode(parent, rootNode);
         Yoga.YGNodeStyleSetDisplay(rootNode, Yoga.YGDisplayFlex);
 
         List<Long> childNodes = new ArrayList<>();
@@ -61,18 +61,24 @@ public class FlexLayout implements Layout {
         Yoga.YGNodeFree(rootNode);
     }
 
+    private void prepareParentNode(Component parent, long rootNode) {
+        prepareNode(parent, rootNode);
+        Yoga.YGNodeStyleSetWidth(rootNode, parent.getSize().x);
+        Yoga.YGNodeStyleSetHeight(rootNode, parent.getSize().y);
+    }
+
     /**
      * Used to prepare root node.
      *
-     * @param parent parent component associated to root node.
+     * @param component parent component associated to root node.
      * @param node root yoga node.
      */
-    private void prepareNode(Component parent, long node) {
-        Style style = parent.getStyle();
+    private void prepareNode(Component component, long node) {
+        Style style = component.getStyle();
         FlexStyle flexStyle = style.getFlexStyle();
         setFlexDirection(node, flexStyle.getFlexDirection());
-        setJustifyContent(node, flexStyle.getJustifyContent(), parent);
-        setAlignItems(node, flexStyle.getAlignItems(), parent);
+        setJustifyContent(node, flexStyle.getJustifyContent(), component);
+        setAlignItems(node, flexStyle.getAlignItems(), component);
 
         Float minWidth = style.getMinWidth();
         if (minWidth != null) {

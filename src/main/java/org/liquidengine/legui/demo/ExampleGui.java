@@ -51,6 +51,8 @@ import org.liquidengine.legui.listener.CursorEnterEventListener;
 import org.liquidengine.legui.listener.FocusEventListener;
 import org.liquidengine.legui.listener.KeyEventListener;
 import org.liquidengine.legui.listener.MouseClickEventListener;
+import org.liquidengine.legui.style.Style.DisplayType;
+import org.liquidengine.legui.style.Style.PositionType;
 import org.liquidengine.legui.style.border.SimpleLineBorder;
 import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.style.font.FontRegistry;
@@ -246,6 +248,16 @@ public class ExampleGui extends Panel {
         widget.getTitleContainer().getStyle().getBackground().setColor(ColorConstants.lightGreen());
         widget.getTitleTextState().setTextColor(ColorConstants.black());
 
+        Widget inner = new Widget();
+        inner.getStyle().setPosition(PositionType.RELATIVE);
+        inner.setResizable(false);
+        inner.getStyle().getFlexStyle().setFlexGrow(1);
+        inner.getContainer().getStyle().getBackground().setColor(ColorConstants.lightGreen());
+        widget.getContainer().getStyle().setDisplay(DisplayType.FLEX);
+        widget.getContainer().add(inner);
+
+        this.add(widget);
+
         Button turnWidVisible = new Button("", 360, 280, 20, 20);
         turnWidVisible.getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
             if (CLICK == (event.getAction())) {
@@ -264,23 +276,6 @@ public class ExampleGui extends Panel {
 
         this.add(turnWidVisible);
 
-        Panel c0 = new Panel(-5, -5, 10, 10);
-        c0.getStyle().getBackground().setColor(1, 0, 0, 1);
-        widget.getContainer().add(c0);
-        Panel c1 = new Panel(-5, 75, 10, 10);
-        c1.getStyle().getBackground().setColor(1, 0, 0, 1);
-        widget.getContainer().add(c1);
-        Panel c2 = new Panel(95, -5, 10, 10);
-        c2.getStyle().getBackground().setColor(1, 0, 0, 1);
-        widget.getContainer().add(c2);
-        c2.setVisible(false);
-        Panel c3 = new Panel(95, 75, 10, 10);
-        c3.getStyle().getBackground().setColor(1, 0, 0, 1);
-        widget.getContainer().add(c3);
-        Panel c4 = new Panel(45, 35, 10, 10);
-        c4.getStyle().getBackground().setColor(1, 0, 0, 1);
-        widget.getContainer().add(c4);
-        this.add(widget);
 
         Widget widget2 = new Widget("Hello 2 widget", 250, 310, 100, 100);
         widget2.setTitleHeight(20);
@@ -372,6 +367,8 @@ public class ExampleGui extends Panel {
 
         widget3.getStyle().setMinWidth(100f);
         widget3.getStyle().setMinHeight(50f);
+        widget3.getStyle().setMaxWidth(400f);
+        widget3.getStyle().setMaxHeight(150f);
 
         ScrollBar scrollBar1 = new ScrollBar(360, 170, 20, 100, 20);
         scrollBar1.setOrientation(Orientation.VERTICAL);

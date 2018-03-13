@@ -45,6 +45,10 @@ public class WidgetResizeButtonDragListener implements MouseDragEventListener {
         if (minHeight == null) {
             minHeight = widget.getTitleContainer().getSize().y;
         }
+
+        Float maxWidth = widget.getStyle().getMaxWidth();
+        Float maxHeight = widget.getStyle().getMaxHeight();
+
         if (
             (
                 delta.x < 0 && (cursorPositionPrev.x <= resizeButton.getAbsolutePosition().x + resizeButton.getSize().x
@@ -53,7 +57,7 @@ public class WidgetResizeButtonDragListener implements MouseDragEventListener {
                 (delta.x > 0 && (cursorPositionPrev.x >= resizeButton.getAbsolutePosition().x
                     || cursorPosition.x >= resizeButton.getAbsolutePosition().x)))
             ) {
-            if (xx >= minWidth) {
+            if (xx >= minWidth && (maxWidth == null || xx <= maxWidth)) {
                 deltaSize.x = delta.x;
             }
         }
@@ -65,7 +69,7 @@ public class WidgetResizeButtonDragListener implements MouseDragEventListener {
                 (delta.y > 0 && (cursorPositionPrev.y >= resizeButton.getAbsolutePosition().y
                     || cursorPosition.y >= resizeButton.getAbsolutePosition().y)))
             ) {
-            if (yy >= minHeight) {
+            if (yy >= minHeight && (maxHeight == null || yy <= maxHeight)) {
                 deltaSize.y = delta.y;
             }
         }
