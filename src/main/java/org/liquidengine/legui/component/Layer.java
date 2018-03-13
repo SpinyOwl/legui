@@ -1,13 +1,5 @@
 package org.liquidengine.legui.component;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-import org.joml.Vector2f;
-import org.liquidengine.legui.intersection.Intersector;
-import org.liquidengine.legui.listener.ListenerMap;
-
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -15,6 +7,13 @@ import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+import org.joml.Vector2f;
+import org.liquidengine.legui.intersection.Intersector;
+import org.liquidengine.legui.listener.ListenerMap;
 
 /**
  * Layer one of base structures. Holds layer containers which are used to hold all of other components. <p> Layer can be eventPassable - that's mean that
