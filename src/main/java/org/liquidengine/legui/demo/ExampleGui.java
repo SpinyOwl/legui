@@ -52,6 +52,7 @@ import org.liquidengine.legui.listener.FocusEventListener;
 import org.liquidengine.legui.listener.KeyEventListener;
 import org.liquidengine.legui.listener.MouseClickEventListener;
 import org.liquidengine.legui.style.Style;
+import org.liquidengine.legui.style.Style.DisplayType;
 import org.liquidengine.legui.style.border.SimpleLineBorder;
 import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.style.font.FontRegistry;
@@ -250,7 +251,7 @@ public class ExampleGui extends Panel {
         Button turnWidVisible = new Button("", 360, 280, 20, 20);
         turnWidVisible.getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
             if (CLICK == (event.getAction())) {
-                widget.getStyle().setDisplay(Style.DisplayType.MANUAL);
+                widget.getStyle().setDisplay(DisplayType.FLEX);
             }
         });
         Icon bgIm = new ImageIcon(new BufferedImage("org/liquidengine/legui/demo/1.png"));
