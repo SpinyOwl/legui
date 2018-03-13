@@ -1,6 +1,5 @@
 package org.liquidengine.legui.component;
 
-import java.util.List;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -27,6 +26,8 @@ import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.style.flex.FlexStyle.FlexDirection;
 import org.liquidengine.legui.style.font.FontRegistry;
 import org.liquidengine.legui.theme.Themes;
+
+import java.util.List;
 
 /**
  * Widget component is container which have predefined components such as container, title label, close and minimize buttons and predefined event listeners.
@@ -328,7 +329,7 @@ public class Widget extends Component {
         if (minimized) {
             return;
         }
-        this.titleContainer.setVisible(titleEnabled);
+        this.titleContainer.getStyle().setDisplay(titleEnabled ? DisplayType.BLOCK : DisplayType.NONE);
     }
 
     /**
@@ -346,7 +347,7 @@ public class Widget extends Component {
      * @param closeable widget state (closeable or not) to set.
      */
     public void setCloseable(boolean closeable) {
-        this.closeButton.setVisible(closeable);
+        this.closeButton.getStyle().setDisplay(closeable ? DisplayType.BLOCK : DisplayType.NONE);
     }
 
     /**
@@ -462,7 +463,7 @@ public class Widget extends Component {
      * @param minimizable new minimizable state of widget.
      */
     public void setMinimizable(boolean minimizable) {
-        this.minimizeButton.setVisible(minimizable);
+        this.minimizeButton.getStyle().setDisplay(minimizable ? DisplayType.BLOCK : DisplayType.NONE);
     }
 
     /**
@@ -512,7 +513,7 @@ public class Widget extends Component {
             this.getStyle().setMinHeight(maximizedMaxHeight);
 
             if (resizable) {
-                resizeButton.setVisible(false);
+                resizeButton.getStyle().setDisplay(DisplayType.NONE);
             }
         }
     }
@@ -531,7 +532,7 @@ public class Widget extends Component {
             this.getStyle().setMinHeight(maximizedMaxHeight);
 
             if (resizable) {
-                resizeButton.setVisible(true);
+                resizeButton.getStyle().setDisplay(DisplayType.BLOCK);
             }
         }
     }
@@ -684,7 +685,8 @@ public class Widget extends Component {
     }
 
     public void setResizable(boolean resizable) {
-        this.resizeButton.setVisible(this.resizable = resizable);
+        this.resizable = resizable;
+        this.resizeButton.getStyle().setDisplay(resizable ? DisplayType.BLOCK : DisplayType.NONE);
     }
 
     public Button getResizeButton() {

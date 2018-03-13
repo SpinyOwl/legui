@@ -14,7 +14,7 @@ import org.liquidengine.legui.style.font.FontRegistry;
  */
 public class Style {
 
-    private DisplayType display = DisplayType.NONE;
+    private DisplayType display = DisplayType.BLOCK;
     private PositionType position = PositionType.ABSOLUTE;
 
     private FlexStyle flexStyle = new FlexStyle();
@@ -298,7 +298,7 @@ public class Style {
 
     public void setDisplay(DisplayType display) {
         if (display == null) {
-            this.display = DisplayType.NONE;
+            this.display = DisplayType.BLOCK;
         }
         this.display = display;
     }
@@ -419,6 +419,7 @@ public class Style {
 
     public enum DisplayType {
         FLEX,
+        BLOCK,
         NONE
     }
 

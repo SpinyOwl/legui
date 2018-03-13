@@ -1,40 +1,9 @@
 package org.liquidengine.legui.demo;
 
-import static org.liquidengine.legui.component.optional.align.HorizontalAlign.CENTER;
-import static org.liquidengine.legui.component.optional.align.HorizontalAlign.LEFT;
-import static org.liquidengine.legui.component.optional.align.HorizontalAlign.RIGHT;
-import static org.liquidengine.legui.component.optional.align.VerticalAlign.BASELINE;
-import static org.liquidengine.legui.component.optional.align.VerticalAlign.BOTTOM;
-import static org.liquidengine.legui.component.optional.align.VerticalAlign.MIDDLE;
-import static org.liquidengine.legui.component.optional.align.VerticalAlign.TOP;
-import static org.liquidengine.legui.event.MouseClickEvent.MouseClickAction.CLICK;
-import static org.liquidengine.legui.event.MouseClickEvent.MouseClickAction.PRESS;
-import static org.liquidengine.legui.event.MouseClickEvent.MouseClickAction.RELEASE;
-import static org.liquidengine.legui.input.Mouse.MouseButton.MOUSE_BUTTON_LEFT;
-
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.animation.Animation;
-import org.liquidengine.legui.component.Button;
-import org.liquidengine.legui.component.CheckBox;
-import org.liquidengine.legui.component.Component;
-import org.liquidengine.legui.component.Dialog;
-import org.liquidengine.legui.component.ImageView;
-import org.liquidengine.legui.component.Label;
-import org.liquidengine.legui.component.Panel;
-import org.liquidengine.legui.component.PasswordInput;
-import org.liquidengine.legui.component.ProgressBar;
-import org.liquidengine.legui.component.RadioButton;
-import org.liquidengine.legui.component.RadioButtonGroup;
-import org.liquidengine.legui.component.ScrollBar;
-import org.liquidengine.legui.component.ScrollablePanel;
-import org.liquidengine.legui.component.SelectBox;
-import org.liquidengine.legui.component.Slider;
-import org.liquidengine.legui.component.TextArea;
-import org.liquidengine.legui.component.TextInput;
-import org.liquidengine.legui.component.ToggleButton;
-import org.liquidengine.legui.component.Tooltip;
-import org.liquidengine.legui.component.Widget;
+import org.liquidengine.legui.component.*;
 import org.liquidengine.legui.component.event.slider.SliderChangeValueEvent;
 import org.liquidengine.legui.component.event.slider.SliderChangeValueEventListener;
 import org.liquidengine.legui.component.optional.Orientation;
@@ -51,6 +20,7 @@ import org.liquidengine.legui.listener.CursorEnterEventListener;
 import org.liquidengine.legui.listener.FocusEventListener;
 import org.liquidengine.legui.listener.KeyEventListener;
 import org.liquidengine.legui.listener.MouseClickEventListener;
+import org.liquidengine.legui.style.Style;
 import org.liquidengine.legui.style.border.SimpleLineBorder;
 import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.style.font.FontRegistry;
@@ -60,6 +30,11 @@ import org.liquidengine.legui.theme.dark.DarkTheme;
 import org.liquidengine.legui.theme.white.WhiteTheme;
 import org.liquidengine.legui.util.TextUtil;
 import org.lwjgl.glfw.GLFW;
+
+import static org.liquidengine.legui.component.optional.align.HorizontalAlign.*;
+import static org.liquidengine.legui.component.optional.align.VerticalAlign.*;
+import static org.liquidengine.legui.event.MouseClickEvent.MouseClickAction.*;
+import static org.liquidengine.legui.input.Mouse.MouseButton.MOUSE_BUTTON_LEFT;
 
 
 /**
@@ -249,7 +224,7 @@ public class ExampleGui extends Panel {
         Button turnWidVisible = new Button("", 360, 280, 20, 20);
         turnWidVisible.getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
             if (CLICK == (event.getAction())) {
-                widget.setVisible(true);
+                widget.getStyle().setDisplay(Style.DisplayType.BLOCK);
             }
         });
         Icon bgIm = new ImageIcon(new BufferedImage("org/liquidengine/legui/demo/1.png"));
@@ -273,7 +248,7 @@ public class ExampleGui extends Panel {
         Panel c2 = new Panel(95, -5, 10, 10);
         c2.getStyle().getBackground().setColor(1, 0, 0, 1);
         widget.getContainer().add(c2);
-        c2.setVisible(false);
+        c2.getStyle().setDisplay(Style.DisplayType.NONE);
         Panel c3 = new Panel(95, 75, 10, 10);
         c3.getStyle().getBackground().setColor(1, 0, 0, 1);
         widget.getContainer().add(c3);
@@ -325,7 +300,7 @@ public class ExampleGui extends Panel {
         Button turnWidVisible2 = new Button("", 360, 310, 20, 20);
         turnWidVisible2.getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
             if (CLICK == event.getAction()) {
-                widget2.setVisible(true);
+                widget2.getStyle().setDisplay(Style.DisplayType.BLOCK);
             }
         });
         this.add(turnWidVisible2);
@@ -342,7 +317,7 @@ public class ExampleGui extends Panel {
         Button turnWidVisible3 = new Button("", 360, 340, 20, 20);
         turnWidVisible3.getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
             if (CLICK == event.getAction()) {
-                widget3.setVisible(true);
+                widget3.getStyle().setDisplay(Style.DisplayType.BLOCK);
             }
         });
         this.add(turnWidVisible3);
@@ -413,7 +388,7 @@ public class ExampleGui extends Panel {
         button.getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
             MouseClickEvent.MouseClickAction action = event.getAction();
             if (CLICK == action) {
-                mouseTargetLabel.setVisible(!mouseTargetLabel.isVisible());
+                mouseTargetLabel.getStyle().setDisplay(mouseTargetLabel.isVisible() ? Style.DisplayType.NONE : Style.DisplayType.BLOCK);
             }
             if (RELEASE == action) {
                 System.out.println("RELEASE");
@@ -589,7 +564,7 @@ public class ExampleGui extends Panel {
         String light = "light";
         Button switchTheme = new Button(text + dark, 600, 400, 120, 30);
         switchTheme.getListenerMap().addListener(MouseClickEvent.class,
-                                                 switchThemeClickListener(current, darkTheme, defaultTheme, text, dark, light, switchTheme));
+                switchThemeClickListener(current, darkTheme, defaultTheme, text, dark, light, switchTheme));
         this.add(switchTheme);
     }
 
@@ -609,8 +584,8 @@ public class ExampleGui extends Panel {
             protected boolean animate(double delta) {
                 time += delta;
                 targetComponent.getStyle().getBackground().getColor().set(new Vector4f(initialColor)
-                                                                              .add(new Vector4f(colorRange)
-                                                                                       .mul((float) Math.abs(Math.sin(time * 2)))));
+                        .add(new Vector4f(colorRange)
+                                .mul((float) Math.abs(Math.sin(time * 2)))));
                 return !component.isHovered();
             }
 

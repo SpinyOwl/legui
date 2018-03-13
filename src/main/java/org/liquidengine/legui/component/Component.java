@@ -1,16 +1,5 @@
 package org.liquidengine.legui.component;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.function.Consumer;
-import java.util.function.Predicate;
-import java.util.stream.Stream;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -25,6 +14,13 @@ import org.liquidengine.legui.intersection.RectangleIntersector;
 import org.liquidengine.legui.listener.ListenerMap;
 import org.liquidengine.legui.style.Style;
 import org.liquidengine.legui.theme.Themes;
+
+import java.io.Serializable;
+import java.util.*;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
+import java.util.stream.Stream;
 
 /**
  * Component is an object that have graphical representation in legui system.
@@ -60,10 +56,6 @@ public abstract class Component implements Serializable {
      * Used to enable and disable event processing for this component. If enabled==false then component won't receive events.
      */
     private boolean enabled = true;
-    /**
-     * Determines whether this component should be visible when its parent is visible. Components are initially visible.
-     */
-    private boolean visible = true;
     /**
      * Intersector which used to determine for example if cursor intersects component or not. Cannot be null.
      */
@@ -355,16 +347,7 @@ public abstract class Component implements Serializable {
      * @return true if component visible. default value is {@link Boolean#TRUE}.
      */
     public boolean isVisible() {
-        return visible;
-    }
-
-    /**
-     * Used to make component visible or invisible. By default if component visible it will be rendered and will receive events.
-     *
-     * @param visible flag to set.
-     */
-    public void setVisible(boolean visible) {
-        this.visible = visible;
+        return this.style.getDisplay() != Style.DisplayType.NONE;
     }
 
     /**
@@ -787,7 +770,6 @@ public abstract class Component implements Serializable {
             .append(position)
             .append(size)
             .append(enabled)
-            .append(visible)
             .append(intersector)
             .append(hovered)
             .append(focused)
@@ -805,7 +787,6 @@ public abstract class Component implements Serializable {
             .append("position", position)
             .append("size", size)
             .append("enabled", enabled)
-            .append("visible", visible)
             .append("intersector", intersector)
             .append("hovered", hovered)
             .append("focused", focused)
