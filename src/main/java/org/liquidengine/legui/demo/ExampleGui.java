@@ -224,7 +224,7 @@ public class ExampleGui extends Panel {
         Button turnWidVisible = new Button("", 360, 280, 20, 20);
         turnWidVisible.getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
             if (CLICK == (event.getAction())) {
-                widget.getStyle().setDisplay(Style.DisplayType.BLOCK);
+                widget.getStyle().setDisplay(Style.DisplayType.MANUAL);
             }
         });
         Icon bgIm = new ImageIcon(new BufferedImage("org/liquidengine/legui/demo/1.png"));
@@ -300,7 +300,7 @@ public class ExampleGui extends Panel {
         Button turnWidVisible2 = new Button("", 360, 310, 20, 20);
         turnWidVisible2.getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
             if (CLICK == event.getAction()) {
-                widget2.getStyle().setDisplay(Style.DisplayType.BLOCK);
+                widget2.getStyle().setDisplay(Style.DisplayType.MANUAL);
             }
         });
         this.add(turnWidVisible2);
@@ -317,7 +317,7 @@ public class ExampleGui extends Panel {
         Button turnWidVisible3 = new Button("", 360, 340, 20, 20);
         turnWidVisible3.getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
             if (CLICK == event.getAction()) {
-                widget3.getStyle().setDisplay(Style.DisplayType.BLOCK);
+                widget3.getStyle().setDisplay(Style.DisplayType.MANUAL);
             }
         });
         this.add(turnWidVisible3);
@@ -388,7 +388,7 @@ public class ExampleGui extends Panel {
         button.getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
             MouseClickEvent.MouseClickAction action = event.getAction();
             if (CLICK == action) {
-                mouseTargetLabel.getStyle().setDisplay(mouseTargetLabel.isVisible() ? Style.DisplayType.NONE : Style.DisplayType.BLOCK);
+                mouseTargetLabel.getStyle().setDisplay(mouseTargetLabel.isVisible() ? Style.DisplayType.NONE : Style.DisplayType.MANUAL);
             }
             if (RELEASE == action) {
                 System.out.println("RELEASE");

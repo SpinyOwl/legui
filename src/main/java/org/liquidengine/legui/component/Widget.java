@@ -328,7 +328,7 @@ public class Widget extends Component {
         if (minimized) {
             return;
         }
-        this.titleContainer.getStyle().setDisplay(titleEnabled ? DisplayType.BLOCK : DisplayType.NONE);
+        this.titleContainer.getStyle().setDisplay(titleEnabled ? DisplayType.MANUAL : DisplayType.NONE);
     }
 
     /**
@@ -346,7 +346,7 @@ public class Widget extends Component {
      * @param closeable widget state (closeable or not) to set.
      */
     public void setCloseable(boolean closeable) {
-        this.closeButton.getStyle().setDisplay(closeable ? DisplayType.BLOCK : DisplayType.NONE);
+        this.closeButton.getStyle().setDisplay(closeable ? DisplayType.MANUAL : DisplayType.NONE);
     }
 
     /**
@@ -462,7 +462,7 @@ public class Widget extends Component {
      * @param minimizable new minimizable state of widget.
      */
     public void setMinimizable(boolean minimizable) {
-        this.minimizeButton.getStyle().setDisplay(minimizable ? DisplayType.BLOCK : DisplayType.NONE);
+        this.minimizeButton.getStyle().setDisplay(minimizable ? DisplayType.MANUAL : DisplayType.NONE);
     }
 
     /**
@@ -531,7 +531,7 @@ public class Widget extends Component {
             this.getStyle().setMinHeight(maximizedMaxHeight);
 
             if (resizable) {
-                resizeButton.getStyle().setDisplay(DisplayType.BLOCK);
+                resizeButton.getStyle().setDisplay(DisplayType.MANUAL);
             }
         }
     }
@@ -685,7 +685,7 @@ public class Widget extends Component {
 
     public void setResizable(boolean resizable) {
         this.resizable = resizable;
-        this.resizeButton.getStyle().setDisplay(resizable ? DisplayType.BLOCK : DisplayType.NONE);
+        this.resizeButton.getStyle().setDisplay(resizable ? DisplayType.MANUAL : DisplayType.NONE);
     }
 
     public Button getResizeButton() {

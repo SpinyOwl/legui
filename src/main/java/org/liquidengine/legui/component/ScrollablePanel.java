@@ -221,7 +221,7 @@ public class ScrollablePanel extends Component implements Viewport {
             this.viewport.getStyle().setBottom(0f);
             this.verticalScrollBar.getStyle().setBottom(0f);
         }
-        this.horizontalScrollBar.getStyle().setDisplay(enabled ? DisplayType.BLOCK : DisplayType.NONE);
+        this.horizontalScrollBar.getStyle().setDisplay(enabled ? DisplayType.MANUAL : DisplayType.NONE);
     }
 
     public void setVerticalScrollBarVisible(boolean enabled) {
@@ -236,7 +236,7 @@ public class ScrollablePanel extends Component implements Viewport {
             this.viewport.getStyle().setRight(0f);
             this.horizontalScrollBar.getStyle().setRight(0f);
         }
-        this.verticalScrollBar.getStyle().setDisplay(enabled ? DisplayType.BLOCK : DisplayType.NONE);
+        this.verticalScrollBar.getStyle().setDisplay(enabled ? DisplayType.MANUAL : DisplayType.NONE);
     }
 
     public void setHorizontalScrollBarHeight(float height) {
