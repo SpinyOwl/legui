@@ -297,15 +297,6 @@ public class Layer<T extends Component> {
     }
 
     /**
-     * Used to make component visible or invisible. By default if component visible it will be rendered and will receive events.
-     *
-     * @param visible flag to set.
-     */
-    public void setVisible(boolean visible) {
-        container.setVisible(visible);
-    }
-
-    /**
      * Used to determine if point intersects component (in screen space). This method uses component intersector.
      *
      * @param point point to check.

@@ -61,10 +61,6 @@ public abstract class Component implements Serializable {
      */
     private boolean enabled = true;
     /**
-     * Determines whether this component should be visible when its parent is visible. Components are initially visible.
-     */
-    private boolean visible = true;
-    /**
      * Intersector which used to determine for example if cursor intersects component or not. Cannot be null.
      */
     private Intersector intersector = new RectangleIntersector();
@@ -355,16 +351,7 @@ public abstract class Component implements Serializable {
      * @return true if component visible. default value is {@link Boolean#TRUE}.
      */
     public boolean isVisible() {
-        return visible;
-    }
-
-    /**
-     * Used to make component visible or invisible. By default if component visible it will be rendered and will receive events.
-     *
-     * @param visible flag to set.
-     */
-    public void setVisible(boolean visible) {
-        this.visible = visible;
+        return this.style.getDisplay() != Style.DisplayType.NONE;
     }
 
     /**
@@ -787,7 +774,6 @@ public abstract class Component implements Serializable {
             .append(position)
             .append(size)
             .append(enabled)
-            .append(visible)
             .append(intersector)
             .append(hovered)
             .append(focused)
@@ -805,7 +791,6 @@ public abstract class Component implements Serializable {
             .append("position", position)
             .append("size", size)
             .append("enabled", enabled)
-            .append("visible", visible)
             .append("intersector", intersector)
             .append("hovered", hovered)
             .append("focused", focused)

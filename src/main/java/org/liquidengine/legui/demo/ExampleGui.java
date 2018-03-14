@@ -261,7 +261,7 @@ public class ExampleGui extends Panel {
         Button turnWidVisible = new Button("", 360, 280, 20, 20);
         turnWidVisible.getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
             if (CLICK == (event.getAction())) {
-                widget.setVisible(true);
+                widget.getStyle().setDisplay(DisplayType.FLEX);
             }
         });
         Icon bgIm = new ImageIcon(new BufferedImage("org/liquidengine/legui/demo/1.png"));
@@ -275,7 +275,6 @@ public class ExampleGui extends Panel {
 //        turnWidVisible.setPressedBackgroundIcon(pbIm);
 
         this.add(turnWidVisible);
-
 
         Widget widget2 = new Widget("Hello 2 widget", 250, 310, 100, 100);
         widget2.setTitleHeight(20);
@@ -320,7 +319,7 @@ public class ExampleGui extends Panel {
         Button turnWidVisible2 = new Button("", 360, 310, 20, 20);
         turnWidVisible2.getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
             if (CLICK == event.getAction()) {
-                widget2.setVisible(true);
+                widget2.getStyle().setDisplay(Style.DisplayType.MANUAL);
             }
         });
         this.add(turnWidVisible2);
@@ -337,7 +336,7 @@ public class ExampleGui extends Panel {
         Button turnWidVisible3 = new Button("", 360, 340, 20, 20);
         turnWidVisible3.getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
             if (CLICK == event.getAction()) {
-                widget3.setVisible(true);
+                widget3.getStyle().setDisplay(Style.DisplayType.MANUAL);
             }
         });
         this.add(turnWidVisible3);
@@ -410,7 +409,7 @@ public class ExampleGui extends Panel {
         button.getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
             MouseClickEvent.MouseClickAction action = event.getAction();
             if (CLICK == action) {
-                mouseTargetLabel.setVisible(!mouseTargetLabel.isVisible());
+                mouseTargetLabel.getStyle().setDisplay(mouseTargetLabel.isVisible() ? Style.DisplayType.NONE : Style.DisplayType.MANUAL);
             }
             if (RELEASE == action) {
                 System.out.println("RELEASE");
@@ -586,7 +585,7 @@ public class ExampleGui extends Panel {
         String light = "light";
         Button switchTheme = new Button(text + dark, 600, 400, 120, 30);
         switchTheme.getListenerMap().addListener(MouseClickEvent.class,
-                                                 switchThemeClickListener(current, darkTheme, defaultTheme, text, dark, light, switchTheme));
+                switchThemeClickListener(current, darkTheme, defaultTheme, text, dark, light, switchTheme));
         this.add(switchTheme);
     }
 
@@ -606,8 +605,8 @@ public class ExampleGui extends Panel {
             protected boolean animate(double delta) {
                 time += delta;
                 targetComponent.getStyle().getBackground().getColor().set(new Vector4f(initialColor)
-                                                                              .add(new Vector4f(colorRange)
-                                                                                       .mul((float) Math.abs(Math.sin(time * 2)))));
+                        .add(new Vector4f(colorRange)
+                                .mul((float) Math.abs(Math.sin(time * 2)))));
                 return !component.isHovered();
             }
 

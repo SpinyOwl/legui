@@ -11,7 +11,6 @@ import org.liquidengine.legui.component.misc.listener.scrollablepanel.Scrollable
 import org.liquidengine.legui.component.optional.Orientation;
 import org.liquidengine.legui.event.ScrollEvent;
 import org.liquidengine.legui.style.Style.DisplayType;
-import org.liquidengine.legui.style.Style.PositionType;
 import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.theme.Themes;
 
@@ -222,7 +221,7 @@ public class ScrollablePanel extends Component implements Viewport {
             this.viewport.getStyle().setBottom(0f);
             this.verticalScrollBar.getStyle().setBottom(0f);
         }
-        this.horizontalScrollBar.setVisible(enabled);
+        this.horizontalScrollBar.getStyle().setDisplay(enabled ? DisplayType.MANUAL : DisplayType.NONE);
     }
 
     public void setVerticalScrollBarVisible(boolean enabled) {
@@ -237,7 +236,7 @@ public class ScrollablePanel extends Component implements Viewport {
             this.viewport.getStyle().setRight(0f);
             this.horizontalScrollBar.getStyle().setRight(0f);
         }
-        this.verticalScrollBar.setVisible(enabled);
+        this.verticalScrollBar.getStyle().setDisplay(enabled ? DisplayType.MANUAL : DisplayType.NONE);
     }
 
     public void setHorizontalScrollBarHeight(float height) {
