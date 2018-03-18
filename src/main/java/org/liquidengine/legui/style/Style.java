@@ -56,17 +56,38 @@ public class Style {
      */
     private Vector4f focusedStrokeColor = ColorConstants.lightBlue();
 
+    /**
+     * Used to set border radius.
+     *
+     * @param topLeftBottomRight top left and bottom right radius.
+     * @param topRightBottomLeft top right and bottom left radius.
+     */
     public void setBorderRadius(Float topLeftBottomRight, Float topRightBottomLeft) {
         borderTopLeftRadius = borderBottomRightRadius = topLeftBottomRight;
         borderTopRightRadius = borderBottomLeftRadius = topRightBottomLeft;
     }
 
+    /**
+     * Used to set border radius.
+     *
+     * @param topLeft top left radius.
+     * @param bottomRight bottom right radius.
+     * @param topRightBottomLeft top right and bottom left radius.
+     */
     public void setBorderRadius(Float topLeft, Float topRightBottomLeft, Float bottomRight) {
         borderTopLeftRadius = topLeft;
         borderTopRightRadius = borderBottomLeftRadius = topRightBottomLeft;
         borderBottomRightRadius = bottomRight;
     }
 
+    /**
+     * Used to set border radius.
+     *
+     * @param topLeft top left radius.
+     * @param topRight top right radius.
+     * @param bottomRight bottom right radius.
+     * @param bottomLeft bottom left radius.
+     */
     public void setBorderRadius(Float topLeft, Float topRight, Float bottomRight, Float bottomLeft) {
         borderTopLeftRadius = topLeft;
         borderTopRightRadius = topRight;
@@ -74,54 +95,115 @@ public class Style {
         borderBottomLeftRadius = bottomLeft;
     }
 
+    /**
+     * Returns vector of four border radius elements where: x = top left, y = top right, z = bottom right, w = bottom left
+     *
+     * @return vector of four border radius.
+     */
     public Vector4f getBorderRadius() {
         return new Vector4f(borderTopLeftRadius == null ? 0 : borderTopLeftRadius,
-            borderTopRightRadius == null ? 0 : borderTopRightRadius,
-            borderBottomRightRadius == null ? 0 : borderBottomRightRadius,
-            borderBottomLeftRadius == null ? 0 : borderBottomLeftRadius);
+                            borderTopRightRadius == null ? 0 : borderTopRightRadius,
+                            borderBottomRightRadius == null ? 0 : borderBottomRightRadius,
+                            borderBottomLeftRadius == null ? 0 : borderBottomLeftRadius);
     }
 
+    /**
+     * Used to set border radius for all four corners.
+     */
     public void setBorderRadius(Float radius) {
         borderTopLeftRadius = borderTopRightRadius =
             borderBottomRightRadius = borderBottomLeftRadius = radius;
     }
 
+    /**
+     * Returns top left border radius.
+     *
+     * @return top left border radius.
+     */
     public Float getBorderTopLeftRadius() {
         return borderTopLeftRadius;
     }
 
+    /**
+     * Used to set top left border radius.
+     *
+     * @param borderTopLeftRadius top left border radius.
+     */
     public void setBorderTopLeftRadius(Float borderTopLeftRadius) {
         this.borderTopLeftRadius = borderTopLeftRadius;
     }
 
+    /**
+     * Returns top right border radius.
+     *
+     * @return top right border radius.
+     */
     public Float getBorderTopRightRadius() {
         return borderTopRightRadius;
     }
 
+
+    /**
+     * Used to set top right border radius.
+     *
+     * @param borderTopRightRadius top right border radius.
+     */
     public void setBorderTopRightRadius(Float borderTopRightRadius) {
         this.borderTopRightRadius = borderTopRightRadius;
     }
 
+    /**
+     * Returns bottom right border radius.
+     *
+     * @return bottom right border radius.
+     */
     public Float getBorderBottomRightRadius() {
         return borderBottomRightRadius;
     }
 
+
+    /**
+     * Used to set bottom right border radius.
+     *
+     * @param borderBottomRightRadius bottom right border radius.
+     */
     public void setBorderBottomRightRadius(Float borderBottomRightRadius) {
         this.borderBottomRightRadius = borderBottomRightRadius;
     }
 
+    /**
+     * Returns bottom left border radius.
+     *
+     * @return bottom left border radius.
+     */
     public Float getBorderBottomLeftRadius() {
         return borderBottomLeftRadius;
     }
 
+
+    /**
+     * Used to set bottom left border radius.
+     *
+     * @param borderBottomLeftRadius bottom left border radius.
+     */
     public void setBorderBottomLeftRadius(Float borderBottomLeftRadius) {
         this.borderBottomLeftRadius = borderBottomLeftRadius;
     }
 
+    /**
+     * Returns width.
+     *
+     * @return width.
+     */
     public Float getWidth() {
         return width;
     }
 
+    /**
+     * Used to set width.
+     *
+     * @param width width to set.
+     */
     public void setWidth(Float width) {
         this.width = width;
     }
@@ -260,42 +342,92 @@ public class Style {
         this.marginLeft = marginLeft;
     }
 
+    /**
+     * Returns top style.
+     *
+     * @return top style.
+     */
     public Float getTop() {
         return top;
     }
 
+    /**
+     * Used tp set top style.
+     *
+     * @param top top style.
+     */
     public void setTop(Float top) {
         this.top = top;
     }
 
+    /**
+     * Returns bottom style.
+     *
+     * @return bottom style.
+     */
     public Float getBottom() {
         return bottom;
     }
 
+    /**
+     * Used tp set bottom style.
+     *
+     * @param bottom bottom style.
+     */
     public void setBottom(Float bottom) {
         this.bottom = bottom;
     }
 
+    /**
+     * Returns right style.
+     *
+     * @return right style.
+     */
     public Float getRight() {
         return right;
     }
 
+    /**
+     * Used tp set right style.
+     *
+     * @param right right style.
+     */
     public void setRight(Float right) {
         this.right = right;
     }
 
+    /**
+     * Returns left style.
+     *
+     * @return left style.
+     */
     public Float getLeft() {
         return left;
     }
 
+    /**
+     * Used tp set left style.
+     *
+     * @param left left style.
+     */
     public void setLeft(Float left) {
         this.left = left;
     }
 
+    /**
+     * Returns display style.
+     *
+     * @return display style.
+     */
     public DisplayType getDisplay() {
         return display;
     }
 
+    /**
+     * Used to set display type.
+     *
+     * @param display display to set.
+     */
     public void setDisplay(DisplayType display) {
         if (display == null) {
             this.display = DisplayType.MANUAL;
@@ -393,36 +525,78 @@ public class Style {
         focusedStrokeColor.set(r, g, b, a);
     }
 
+    /**
+     * Flex style object.
+     *
+     * @return flex style object.
+     */
     public FlexStyle getFlexStyle() {
         return flexStyle;
     }
 
+    /**
+     * Returns position type or null.
+     *
+     * @return position type or null.
+     */
     public PositionType getPosition() {
         return position;
     }
 
+    /**
+     * Used to set position style.
+     *
+     * @param position position type to set.
+     */
     public void setPosition(PositionType position) {
         if (position != null) {
             this.position = position;
         }
     }
 
+    /**
+     * Used to set minimum width and height
+     *
+     * @param width minimum width to set.
+     * @param height minimum height to set.
+     */
     public void setMinimumSize(float width, float height) {
         setMinWidth(width);
         setMinHeight(height);
     }
 
+    /**
+     * sed to set max width and height.
+     *
+     * @param width max width to set.
+     * @param height max height to set.
+     */
     public void setMaximumSize(float width, float height) {
         setMaxWidth(width);
         setMaxHeight(height);
     }
 
+    /**
+     * Css display type.
+     */
     public enum DisplayType {
+        /**
+         * Flex display means that it is parent for flex child.
+         */
         FLEX,
+        /**
+         * Manual display type.
+         */
         MANUAL,
+        /**
+         * None display means that component with such style will not be rendered and used during laying out.
+         */
         NONE
     }
 
+    /**
+     * Css position type.
+     */
     public enum PositionType {
         RELATIVE,
         ABSOLUTE
