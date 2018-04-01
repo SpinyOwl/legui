@@ -51,6 +51,7 @@ import org.liquidengine.legui.listener.CursorEnterEventListener;
 import org.liquidengine.legui.listener.FocusEventListener;
 import org.liquidengine.legui.listener.KeyEventListener;
 import org.liquidengine.legui.listener.MouseClickEventListener;
+import org.liquidengine.legui.style.Style;
 import org.liquidengine.legui.style.Style.DisplayType;
 import org.liquidengine.legui.style.Style.PositionType;
 import org.liquidengine.legui.style.border.SimpleLineBorder;
