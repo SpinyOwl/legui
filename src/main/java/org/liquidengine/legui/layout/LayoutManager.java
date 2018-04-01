@@ -2,6 +2,7 @@ package org.liquidengine.legui.layout;
 
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.Frame;
+import org.liquidengine.legui.style.Style.DisplayType;
 
 /**
  * Layout manager. Used to layout component and it's child components.
@@ -32,6 +33,14 @@ public abstract class LayoutManager {
     public static void setInstance(LayoutManager instance) {
         LayoutManager.instance = instance;
     }
+
+    /**
+     * Used to register layout for specified display type.
+     *
+     * @param displayType display type.
+     * @param layout layout to register.
+     */
+    public abstract void registerLayout(DisplayType displayType, Layout layout);
 
     /**
      * Used to layout frame layers and all of their child components.

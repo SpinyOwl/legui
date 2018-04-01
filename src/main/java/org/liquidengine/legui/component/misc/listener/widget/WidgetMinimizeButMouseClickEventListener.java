@@ -20,7 +20,7 @@ public class WidgetMinimizeButMouseClickEventListener implements MouseClickEvent
     public void process(MouseClickEvent event) {
         if (CLICK == event.getAction()) {
             boolean newValue = !widget.isMinimized();
-            widget.getMinimizeButton().setBackgroundIcon(newValue ? widget.getMaximizeIcon() : widget.getMinimizeIcon());
+            widget.getMinimizeButton().getStyle().getBackground().setIcon(newValue ? widget.getMaximizeIcon() : widget.getMinimizeIcon());
             widget.setMinimized(newValue);
         }
     }

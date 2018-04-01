@@ -3,9 +3,5 @@
     inherit="org/liquidengine/legui/binding/component/Component.xml">
 
     <bind field="textState" to="textState" as="field"/>
-    <bind field="backgroundIcon" as="field"/>
-    <bind field="focusedBackgroundIcon" as="field"/>
-    <bind field="pressedBackgroundIcon" as="field"/>
-    <bind field="hoveredBackgroundIcon" as="field"/>
 
 </class-binding>

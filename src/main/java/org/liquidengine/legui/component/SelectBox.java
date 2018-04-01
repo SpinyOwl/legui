@@ -18,24 +18,21 @@ import org.liquidengine.legui.component.misc.listener.selectbox.SelectBoxClickLi
 import org.liquidengine.legui.component.misc.listener.selectbox.SelectBoxElementClickListener;
 import org.liquidengine.legui.component.misc.listener.selectbox.SelectBoxFocusListener;
 import org.liquidengine.legui.component.misc.listener.selectbox.SelectBoxScrollListener;
-import org.liquidengine.legui.component.optional.Orientation;
 import org.liquidengine.legui.event.FocusEvent;
 import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.icon.CharIcon;
 import org.liquidengine.legui.icon.Icon;
-import org.liquidengine.legui.layout.borderlayout.BorderLayout;
-import org.liquidengine.legui.layout.borderlayout.BorderLayoutConstraint;
-import org.liquidengine.legui.layout.boxlayout.BoxLayout;
 import org.liquidengine.legui.listener.EventListener;
 import org.liquidengine.legui.listener.FocusEventListener;
 import org.liquidengine.legui.listener.MouseClickEventListener;
+import org.liquidengine.legui.style.Style.DisplayType;
+import org.liquidengine.legui.style.Style.PositionType;
 import org.liquidengine.legui.style.color.ColorConstants;
+import org.liquidengine.legui.style.flex.FlexStyle.FlexDirection;
 import org.liquidengine.legui.theme.Themes;
 
 /**
- * Creates drop-down list with select options.
- * <p>
- * TODO: REIMPLEMENT THIS COMPONENT ACCORDING TO NEW LAYOUT SYSTEM
+ * Creates drop-down list with select options. <p> TODO: REIMPLEMENT THIS COMPONENT ACCORDING TO NEW LAYOUT SYSTEM
  */
 public class SelectBox extends Component {
 
@@ -140,23 +137,31 @@ public class SelectBox extends Component {
      * Used to initialize selectbox.
      */
     private void initialize() {
-        selectionListPanel.getHorizontalScrollBar().setVisible(false);
-        selectionListPanel.getLayout().removeComponent(selectionListPanel.getHorizontalScrollBar());
-        selectionListPanel.getContainer().setLayout(new BoxLayout(Orientation.VERTICAL));
+        selectionListPanel.setHorizontalScrollBarVisible(false);
+
+        selectionListPanel.getContainer().getStyle().setDisplay(DisplayType.FLEX);
+        selectionListPanel.getContainer().getStyle().getFlexStyle().setFlexDirection(FlexDirection.COLUMN);
+        selectionListPanel.getContainer().getStyle().getBackground().setColor(ColorConstants.lightBlue());
+
+        this.getStyle().setDisplay(DisplayType.FLEX);
 
         expandIcon = new CharIcon(new Vector2f(expandButton.getSize()), DEFAULT_ICON_FONT, (char) EXPAND_ICON_CHAR, ColorConstants.black());
         collapseIcon = new CharIcon(new Vector2f(expandButton.getSize()), DEFAULT_ICON_FONT, (char) COLLAPSE_ICON_CHAR, ColorConstants.black());
-        expandButton.setBackgroundIcon(expandIcon);
+        expandButton.getStyle().getBackground().setIcon(expandIcon);
 
         expandButton.getStyle().setMinimumSize(buttonWidth, 0);
         expandButton.getStyle().setMaximumSize(buttonWidth, Float.MAX_VALUE);
+        expandButton.getStyle().setRight(0f);
+        expandButton.getStyle().setTop(0f);
+        expandButton.getStyle().setBottom(0f);
 
-        selectionButton.getStyle().setMinimumSize(0, 0);
-        selectionButton.getStyle().setMaximumSize(Float.MAX_VALUE, Float.MAX_VALUE);
+        selectionButton.getStyle().setTop(0f);
+        selectionButton.getStyle().setLeft(0f);
+        selectionButton.getStyle().setBottom(0f);
+        selectionButton.getStyle().setRight(buttonWidth);
 
-        this.setLayout(new BorderLayout());
-        this.add(expandButton, BorderLayoutConstraint.RIGHT);
-        this.add(selectionButton, BorderLayoutConstraint.CENTER);
+        this.add(expandButton);
+        this.add(selectionButton);
 
         MouseClickEventListener mouseClickEventListener = new SelectBoxClickListener(this);
         selectionButton.getListenerMap().addListener(MouseClickEvent.class, mouseClickEventListener);
@@ -195,7 +200,7 @@ public class SelectBox extends Component {
     }
 
     private void updateIcons() {
-        expandButton.setBackgroundIcon(collapsed ? expandIcon : collapseIcon);
+        expandButton.getStyle().getBackground().setIcon(collapsed ? expandIcon : collapseIcon);
     }
 
     public Button getExpandButton() {
@@ -290,12 +295,12 @@ public class SelectBox extends Component {
      * Used to create {@link SelectBoxElement}.
      *
      * @param element element.
-     *
      * @return {@link SelectBoxElement} created on base of element.
      */
     private SelectBoxElement createSelectBoxElement(String element) {
         SelectBoxElement boxElement = new SelectBoxElement(element, false);
-        boxElement.getStyle().setMinimumSize(0, elementHeight);
+        boxElement.getStyle().setHeight(elementHeight);
+        boxElement.getStyle().setPosition(PositionType.RELATIVE);
         boxElement.getListenerMap().getListeners(MouseClickEvent.class).add(new SelectBoxElementClickListener(this));
         return boxElement;
     }
@@ -304,7 +309,6 @@ public class SelectBox extends Component {
      * Used to get element index.
      *
      * @param element element to find index.
-     *
      * @return index of element or -1 if no such element in selectbox.
      */
     public int getElementIndex(String element) {

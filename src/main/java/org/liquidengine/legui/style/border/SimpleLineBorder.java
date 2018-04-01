@@ -5,8 +5,8 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector4f;
-import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.style.Border;
+import org.liquidengine.legui.style.color.ColorConstants;
 
 /**
  * Simple one line rectangle border with specified thickness and color.

@@ -43,8 +43,8 @@ public class SelectBoxAnimation extends Animation {
         }
         float buttonWidth = selectBox.getButtonWidth();
 
-        selectionListPanel.getVerticalScrollBar().getStyle().getMinimumSize().x = buttonWidth;
-        selectionListPanel.getVerticalScrollBar().getStyle().getMaximumSize().x = buttonWidth;
+        selectionListPanel.getVerticalScrollBar().getStyle().setMaxWidth(buttonWidth);
+        selectionListPanel.getVerticalScrollBar().getStyle().setMaxWidth(buttonWidth);
 
         int visibleCount = selectBox.getVisibleCount();
         float elementHeight = selectBox.getElementHeight();

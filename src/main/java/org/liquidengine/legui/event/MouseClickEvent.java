@@ -19,7 +19,7 @@ public class MouseClickEvent<T extends Component> extends Event<T> {
     private final Vector2f absolutePosition;
 
     public MouseClickEvent(T component, Context context, Frame frame, MouseClickAction action, Mouse.MouseButton button, Vector2f position,
-        Vector2f absolutePosition) {
+                           Vector2f absolutePosition) {
         super(component, context, frame);
         this.action = action;
         this.button = button;

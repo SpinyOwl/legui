@@ -1,23 +1,13 @@
 package org.liquidengine.legui.demo.layout;
 
-import org.joml.Vector4f;
-import org.liquidengine.legui.component.Button;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.component.Panel;
-import org.liquidengine.legui.component.Tooltip;
-import org.liquidengine.legui.component.optional.Orientation;
 import org.liquidengine.legui.demo.Demo;
-import org.liquidengine.legui.event.MouseClickEvent;
-import org.liquidengine.legui.event.MouseClickEvent.MouseClickAction;
-import org.liquidengine.legui.layout.LayoutManager;
-import org.liquidengine.legui.layout.borderlayout.BorderLayout;
-import org.liquidengine.legui.layout.borderlayout.BorderLayoutConstraint;
-import org.liquidengine.legui.layout.boxlayout.BoxLayout;
-import org.liquidengine.legui.listener.MouseClickEventListener;
-import org.liquidengine.legui.style.border.SimpleLineBorder;
+import org.liquidengine.legui.style.Style.DisplayType;
+import org.liquidengine.legui.style.Style.PositionType;
 import org.liquidengine.legui.style.color.ColorConstants;
-import org.liquidengine.legui.style.color.ColorUtil;
+import org.liquidengine.legui.style.flex.FlexStyle.FlexDirection;
 
 /**
  * @author Aliaksandr_Shcherbin.
@@ -25,6 +15,12 @@ import org.liquidengine.legui.style.color.ColorUtil;
 public class BoxLayoutDemo extends Demo {
 
     private Frame frame;
+    private Panel c1;
+    private Panel c2;
+
+    private Panel c11;
+    private Panel c12;
+    private Panel c13;
 
     public BoxLayoutDemo(int width, int height, String title) {
         super(width, height, title);
@@ -37,70 +33,51 @@ public class BoxLayoutDemo extends Demo {
 
     @Override
     protected void update() {
+        c1.getStyle().getBackground().setColor(ColorConstants.lightGreen());
+        c1.getStyle().setHeight(50f);
+        c1.getStyle().setLeft(0f);
+        c1.getStyle().setRight(0f);
+
+        c2.getStyle().getBackground().setColor(ColorConstants.lightBlue());
+        c2.getStyle().setHeight(50f);
+//        c2.getStyle().setWidth(50f);
+        c2.getStyle().setLeft(0f);
+        c2.getStyle().setRight(0f);
+        c2.getStyle().setBottom(0f);
+
+        c1.getStyle().setDisplay(DisplayType.FLEX);
+        c1.getStyle().getFlexStyle().setFlexDirection(FlexDirection.ROW);
+
+        c11.getStyle().setPosition(PositionType.ABSOLUTE);
+        c11.getStyle().setTop(10f);
+        c11.getStyle().setRight(0f);
+        c11.getStyle().setWidth(50f);
+        c11.getStyle().setHeight(50f);
+        c12.getStyle().setPosition(PositionType.ABSOLUTE);
+        c12.getStyle().setTop(10f);
+        c12.getStyle().setRight(50f);
+        c12.getStyle().setWidth(50f);
+        c12.getStyle().setHeight(50f);
+//        c2.getStyle().setPosition(PositionType.ABSOLUTE);
+
     }
 
     @Override
     protected void createGuiElements(Frame frame, int width, int height) {
         this.frame = frame;
         Component frameContainer = frame.getContainer();
-        frameContainer.setLayout(new BorderLayout());
+        frameContainer.getStyle().setDisplay(DisplayType.FLEX);
+        frameContainer.getStyle().getBackground().setColor(ColorConstants.lightGray());
 
-        Component topPanel = new Panel();
+        c1 = new Panel();
+        frameContainer.add(c1);
 
-        topPanel.getStyle().setMinimumSize(330, 50);
-        topPanel.getStyle().setMaximumSize(Float.MAX_VALUE, 50);
+        c2 = new Panel(0, 0, 100, 100);
+        frameContainer.add(c2);
 
-        Component centerPanel = new Panel();
-        Component bottomPanel = new Panel();
-
-        Button addToVertical = new Button("Add to vertical", 10, 10, 150, 30);
-        addToVertical.getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
-            if (event.getAction() == MouseClickAction.CLICK) {
-                Panel component = new Panel();
-                component.getStyle().getBackground().setColor(ColorUtil.randomColor());
-                centerPanel.add(component);
-            }
-        });
-        topPanel.add(addToVertical);
-
-        Button addToHorizontal = new Button("Add to horizontal", 170, 10, 150, 30);
-        addToHorizontal.getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
-            if (event.getAction() == MouseClickAction.CLICK) {
-                Panel component = new Panel();
-                component.getStyle().getBackground().setColor(ColorUtil.randomColor());
-                bottomPanel.add(component);
-            }
-        });
-        topPanel.add(addToHorizontal);
-        frameContainer.add(topPanel, BorderLayoutConstraint.TOP);
-
-        centerPanel.getStyle().getBackground().setColor(ColorConstants.white());
-        centerPanel.getStyle().setBorder(new SimpleLineBorder(ColorConstants.black(), 1));
-        centerPanel.setLayout(new BoxLayout(Orientation.VERTICAL));
-        centerPanel.getStyle().setPadding(new Vector4f(10, 10, 10, 10));
-
-        for (int i = 0; i < 10; i++) {
-            Component c = new Panel();
-            c.getStyle().getBackground().setColor(ColorUtil.randomColor().add(0.1f, 0.1f, 0.1f, 0));
-            centerPanel.add(c);
-        }
-        Component component = centerPanel.getChildComponents().get(0);
-        Tooltip hello = new Tooltip("Hello");
-        hello.setSize(100, 20);
-        component.setTooltip(hello);
-        frameContainer.add(centerPanel, BorderLayoutConstraint.CENTER);
-
-        bottomPanel.getStyle().setMaximumSize(Float.MAX_VALUE, 200);
-        bottomPanel.getStyle().getBackground().setColor(ColorConstants.white());
-        bottomPanel.setLayout(new BoxLayout(Orientation.HORIZONTAL));
-        bottomPanel.getStyle().setPadding(new Vector4f(10, 10, 10, 10));
-
-        for (int i = 0; i < 10; i++) {
-            Component c = new Panel();
-            c.getStyle().getBackground().setColor(ColorUtil.randomColor().add(0.1f, 0.1f, 0.1f, 0));
-            bottomPanel.add(c);
-        }
-        frameContainer.add(bottomPanel, BorderLayoutConstraint.BOTTOM);
-        LayoutManager.getInstance().layout(frame);
+        c11 = new Panel();
+        c1.add(c11);
+        c12 = new Panel();
+        c1.add(c12);
     }
 }

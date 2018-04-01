@@ -22,8 +22,6 @@ import org.liquidengine.legui.event.CursorEnterEvent;
 import org.liquidengine.legui.event.KeyEvent;
 import org.liquidengine.legui.intersection.Intersector;
 import org.liquidengine.legui.intersection.RectangleIntersector;
-import org.liquidengine.legui.layout.Layout;
-import org.liquidengine.legui.layout.LayoutConstraint;
 import org.liquidengine.legui.listener.ListenerMap;
 import org.liquidengine.legui.style.Style;
 import org.liquidengine.legui.theme.Themes;
@@ -63,10 +61,6 @@ public abstract class Component implements Serializable {
      */
     private boolean enabled = true;
     /**
-     * Determines whether this component should be visible when its parent is visible. Components are initially visible.
-     */
-    private boolean visible = true;
-    /**
      * Intersector which used to determine for example if cursor intersects component or not. Cannot be null.
      */
     private Intersector intersector = new RectangleIntersector();
@@ -98,15 +92,6 @@ public abstract class Component implements Serializable {
     private boolean tabFocusable = true;
 
     ////////////////////////////////
-    //// COMPONENT LAYOUT DATA
-    ////////////////////////////////
-
-    /**
-     * Layout. Used to layout
-     */
-    private Layout layout = null;
-
-    ////////////////////////////////
     //// CONTAINER BASE DATA
     ////////////////////////////////
 
@@ -114,7 +99,18 @@ public abstract class Component implements Serializable {
      * Component style.
      */
     private Style style = new Style();
-
+    /**
+     * Component style.
+     */
+    private Style hoveredStyle = new Style();
+    /**
+     * Component style.
+     */
+    private Style focusedStyle = new Style();
+    /**
+     * Component style.
+     */
+    private Style pressedStyle = new Style();
     /**
      * List of child components.
      */
@@ -128,10 +124,6 @@ public abstract class Component implements Serializable {
     public Component() {
         this(0, 0, 10, 10);
     }
-
-    ////////////////////////////////
-    //// CONTAINER BASE DATA
-    ////////////////////////////////
 
     /**
      * Constructor with position and size parameters.
@@ -155,6 +147,22 @@ public abstract class Component implements Serializable {
         this.position = position;
         this.size = size;
         initialize();
+    }
+
+    ////////////////////////////////
+    //// CONTAINER BASE DATA
+    ////////////////////////////////
+
+    public Style getFocusedStyle() {
+        return focusedStyle;
+    }
+
+    public Style getHoveredStyle() {
+        return hoveredStyle;
+    }
+
+    public Style getPressedStyle() {
+        return pressedStyle;
     }
 
     /**
@@ -343,16 +351,7 @@ public abstract class Component implements Serializable {
      * @return true if component visible. default value is {@link Boolean#TRUE}.
      */
     public boolean isVisible() {
-        return visible;
-    }
-
-    /**
-     * Used to make component visible or invisible. By default if component visible it will be rendered and will receive events.
-     *
-     * @param visible flag to set.
-     */
-    public void setVisible(boolean visible) {
-        this.visible = visible;
+        return this.style.getDisplay() != Style.DisplayType.NONE;
     }
 
     /**
@@ -519,29 +518,6 @@ public abstract class Component implements Serializable {
         this.tabFocusable = tabFocusable;
     }
 
-    ////////////////////////////////
-    //// COMPONENT LAYER DATA
-    ////////////////////////////////
-
-
-    /**
-     * Returns layout.
-     *
-     * @return layout.
-     */
-    public Layout getLayout() {
-        return layout;
-    }
-
-    /**
-     * Used to set layout for this component.
-     *
-     * @param layout layout to set.
-     */
-    public void setLayout(Layout layout) {
-        this.layout = layout;
-    }
-
     /////////////////////////////////
     //// CONTAINER METHODS
     /////////////////////////////////
@@ -602,29 +578,11 @@ public abstract class Component implements Serializable {
      * @see List#add(Object)
      */
     public boolean add(Component component) {
-        return this.add(component, null);
-    }
-
-    /**
-     * Used to add component to component.
-     *
-     * @param component component to add.
-     * @param constraint layout constraint.
-     *
-     * @return true if component is added.
-     *
-     * @throws IllegalArgumentException if provided constraint is not supported by layout.
-     * @see List#add(Object)
-     */
-    public boolean add(Component component, LayoutConstraint constraint) throws IllegalArgumentException {
         if (component == null || component == this || isContains(component)) {
             return false;
         }
         boolean added = childComponents.add(component);
         if (added) {
-            if (layout != null) {
-                layout.addComponent(component, constraint);
-            }
             changeParent(component);
         }
         return added;
@@ -683,9 +641,6 @@ public abstract class Component implements Serializable {
             if (parent != null && parent == this && isContains(component)) {
                 boolean removed = childComponents.remove(component);
                 if (removed) {
-                    if (layout != null) {
-                        layout.removeComponent(component);
-                    }
                     component.setParent(null);
                 }
                 return removed;
@@ -819,7 +774,6 @@ public abstract class Component implements Serializable {
             .append(position)
             .append(size)
             .append(enabled)
-            .append(visible)
             .append(intersector)
             .append(hovered)
             .append(focused)
@@ -837,7 +791,6 @@ public abstract class Component implements Serializable {
             .append("position", position)
             .append("size", size)
             .append("enabled", enabled)
-            .append("visible", visible)
             .append("intersector", intersector)
             .append("hovered", hovered)
             .append("focused", focused)

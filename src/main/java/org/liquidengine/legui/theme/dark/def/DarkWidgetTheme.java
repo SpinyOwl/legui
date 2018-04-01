@@ -1,12 +1,14 @@
 package org.liquidengine.legui.theme.dark.def;
 
-import org.liquidengine.legui.style.color.ColorConstants;
+import org.joml.Vector2f;
 import org.liquidengine.legui.component.Widget;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
 import org.liquidengine.legui.icon.CharIcon;
 import org.liquidengine.legui.icon.Icon;
+import org.liquidengine.legui.style.color.ColorConstants;
+import org.liquidengine.legui.style.font.FontRegistry;
 import org.liquidengine.legui.theme.Themes;
 
 /**
@@ -31,6 +33,15 @@ public class DarkWidgetTheme<T extends Widget> extends DarkComponentTheme<T> {
         component.getCloseButton().getTextState().setTextColor(ColorConstants.white());
         component.getCloseButton().getStyle().setBorder(null);
         component.getTitleContainer().getStyle().getBackground().setColor(ColorConstants.lightBlack());
+        component.getResizeButton().getStyle().getBackground().setColor(ColorConstants.transparent());
+        component.getResizeButton().getStyle().setBorder(null);
+
+        CharIcon icon = new CharIcon(FontRegistry.MATERIAL_DESIGN_ICONS, '\uF45D');
+        icon.setSize(new Vector2f(20, 20));
+        icon.setPosition(new Vector2f(-10, -10));
+        icon.setColor(ColorConstants.white());
+        component.getResizeButton().getStyle().getBackground().setIcon(icon);
+
         TextState titleTextState = component.getTitleTextState();
         titleTextState.setPadding(7, 3, 5, 2);
         titleTextState.setTextColor(ColorConstants.white());

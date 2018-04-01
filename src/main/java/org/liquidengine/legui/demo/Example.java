@@ -113,6 +113,7 @@ public class Example {
         int updCntr = 0;
 
         context = initializer.getContext();
+//        context.setDebugEnabled(true);
         while (running) {
 
             // Before rendering we need to update context with window size and window framebuffer size

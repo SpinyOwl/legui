@@ -100,7 +100,7 @@ public class TestMarshallers {
         Button component = new Button();
         BufImageStub image = new BufImageStub("org/liquidengine/legui/example/1.jpg");
         ImageIcon backgroundIcon = new ImageIcon(new Vector2f(100, 200), image);
-        component.setBackgroundIcon(backgroundIcon);
+        component.getStyle().getBackground().setIcon(backgroundIcon);
         panel.add(component);
 
         RadioButtonGroup g1 = new RadioButtonGroup();

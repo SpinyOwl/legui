@@ -1,10 +1,10 @@
 package org.liquidengine.legui.theme.white.def;
 
 import java.util.List;
-import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.Tooltip;
 import org.liquidengine.legui.style.border.SimpleLineBorder;
+import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.theme.AbstractTheme;
 import org.liquidengine.legui.theme.Themes;
 
@@ -19,7 +19,7 @@ public class WhiteComponentTheme<T extends Component> extends AbstractTheme<T> {
     public void apply(T component) {
         super.apply(component);
         component.getStyle().setBorder(new SimpleLineBorder(ColorConstants.darkGray(), .7f));
-        component.getStyle().setCornerRadius(2);
+        component.getStyle().setBorderRadius(2f);
         component.getStyle().getBackground().setColor(ColorConstants.white());
         Tooltip tooltip = component.getTooltip();
         if (tooltip != null) {

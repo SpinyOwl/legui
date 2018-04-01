@@ -23,17 +23,20 @@ public class NvgSimpleLineBorderRenderer extends NvgBorderRenderer<SimpleLineBor
                 return;
             }
 
-//            float cornerRadius = component.getCornerRadius();
+//            float cornerRadius = component.getBorderRadius();
             Vector2f size = component.getSize();
             Style style = component.getStyle();
+            Vector2f absolutePosition = component.getAbsolutePosition();
             if (component.isFocused() && style.getFocusedStrokeColor() != null) {
                 Vector4f strokeColor = style.getFocusedStrokeColor();
-                Vector2f pos = component.getAbsolutePosition();
-                NvgShapes.drawRectStroke(nanovg, pos.add(-1f, +1f), size, strokeColor, 1f, style.getCornerRadius());
+                Vector2f pos = new Vector2f(absolutePosition);
+                NvgShapes.drawRectStroke(nanovg, pos.add(-0.5f, +0.5f), size, strokeColor, 1f, style.getBorderRadius());
             }
 
-            NvgShapes.drawRectStroke(
-                nanovg, component.getAbsolutePosition(), size, borderColor, thickness, style.getCornerRadius());
+            Vector2f bSize = new Vector2f(size);
+            bSize.add(thickness, thickness);
+            Vector2f bPos = new Vector2f(absolutePosition).sub(thickness / 2f, thickness / 2f);
+            NvgShapes.drawRectStroke(nanovg, bPos, bSize, borderColor, thickness, style.getBorderRadius());
 
         }
     }

@@ -68,7 +68,7 @@ public class NvgPasswordInputRenderer extends NvgDefaultComponentRenderer<Passwo
             if (!passwordInput.isEditable()) {
                 bc.w *= 0.3f;
             }
-            NvgShapes.drawRect(nanovg, pos, size, bc, passwordInput.getStyle().getCornerRadius());
+            NvgShapes.drawRect(nanovg, pos, size, bc, passwordInput.getStyle().getBorderRadius());
 
             TextState textState = passwordInput.getTextState();
             Vector4f p = new Vector4f(textState.getPadding()).add(2, 2, 2, 2);
@@ -225,11 +225,11 @@ public class NvgPasswordInputRenderer extends NvgDefaultComponentRenderer<Passwo
                     float nCaretX = caretx - poffset;
 
                     drawSelectionAndUpdateCaret(context, rect, bc, highlightColor, startSelectionIndex, endSelectionIndex, focused, startSelectionX,
-                        endSelectionX,
-                        poffset);
+                                                endSelectionX,
+                                                poffset);
                     // render text
                     NvgText.drawTextLineToRect(context, new Vector4f(textBounds[4] - poffset, textBounds[5], textBounds[6], textBounds[7]),
-                        false, HorizontalAlign.LEFT, VerticalAlign.MIDDLE, fontSize, font, maskedText, textColor);
+                                               false, HorizontalAlign.LEFT, VerticalAlign.MIDDLE, fontSize, font, maskedText, textColor);
 
                     if (focused) {
                         // render caret
@@ -278,7 +278,7 @@ public class NvgPasswordInputRenderer extends NvgDefaultComponentRenderer<Passwo
     }
 
     private void drawSelectionAndUpdateCaret(long context, Vector4f rect, Vector4f bc, Vector4f highlightColor, int startSelectionIndex, int endSelectionIndex,
-        boolean focused, float startSelectionX, float endSelectionX, Float poffset) {
+                                             boolean focused, float startSelectionX, float endSelectionX, Float poffset) {
         if (focused) {
             // calculate caret color based on time
             oppositeBlackOrWhite(bc, caretColor);
@@ -292,7 +292,7 @@ public class NvgPasswordInputRenderer extends NvgDefaultComponentRenderer<Passwo
     }
 
     private Float recalculateOffsetX(Vector4f rect, HorizontalAlign halign, float caretx, float ratio, float offsetX, Float poffset, Float pratio,
-        HorizontalAlign palign) {
+                                     HorizontalAlign palign) {
         float newpoffset = poffset;
         if (pratio != ratio || palign != halign) {
             newpoffset = offsetX;

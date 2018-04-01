@@ -52,7 +52,7 @@ public class NvgTooltipRenderer extends NvgDefaultComponentRenderer<Tooltip> {
             Vector4f backgroundColor = component.getStyle().getBackground().getColor();
             Vector4f padding = new Vector4f(textState.getPadding());
 
-            NvgShapes.drawRect(nanovg, pos, size, backgroundColor, component.getStyle().getCornerRadius());
+            NvgShapes.drawRect(nanovg, pos, size, backgroundColor, component.getStyle().getBorderRadius());
 
             nvgFontSize(nanovg, fontSize);
             nvgFontFace(nanovg, font);

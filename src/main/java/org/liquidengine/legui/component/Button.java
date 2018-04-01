@@ -7,7 +7,6 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
-import org.liquidengine.legui.icon.Icon;
 import org.liquidengine.legui.theme.Themes;
 
 /**
@@ -20,25 +19,25 @@ public class Button extends Component implements TextComponent {
      */
     private TextState textState;
 
-    /**
-     * Default button background image.
-     */
-    private Icon backgroundIcon;
-
-    /**
-     * Background image for focused state.
-     */
-    private Icon focusedBackgroundIcon;
-
-    /**
-     * Background image for pressed state.
-     */
-    private Icon pressedBackgroundIcon;
-
-    /**
-     * Background image for hovered state.
-     */
-    private Icon hoveredBackgroundIcon;
+//    /**
+//     * Default button background image.
+//     */
+//    private Icon backgroundIcon;
+//
+//    /**
+//     * Background image for focused state.
+//     */
+//    private Icon focusedBackgroundIcon;
+//
+//    /**
+//     * Background image for pressed state.
+//     */
+//    private Icon pressedBackgroundIcon;
+//
+//    /**
+//     * Background image for hovered state.
+//     */
+//    private Icon hoveredBackgroundIcon;
 
     /**
      * Creates a button with default text.
@@ -124,79 +123,78 @@ public class Button extends Component implements TextComponent {
         return textState;
     }
 
+//    /**
+//     * Returns background image.
+//     *
+//     * @return background image.
+//     */
+//    public Icon getStyle().getBackground().getIcon() {
+//        return backgroundIcon;
+//    }
 
-    /**
-     * Returns background image.
-     *
-     * @return background image.
-     */
-    public Icon getBackgroundIcon() {
-        return backgroundIcon;
-    }
+//    /**
+//     * Used to change background image.
+//     *
+//     * @param backgroundIcon background image.
+//     */
+//    public void getStyle().getBackground().setIcon(Icon backgroundIcon) {
+//        this.backgroundIcon = backgroundIcon;
+//    }
 
-    /**
-     * Used to change background image.
-     *
-     * @param backgroundIcon background image.
-     */
-    public void setBackgroundIcon(Icon backgroundIcon) {
-        this.backgroundIcon = backgroundIcon;
-    }
+//    /**
+//     * Returns focused background image.
+//     *
+//     * @return focused background image.
+//     */
+//    public Icon getFocusedBackgroundIcon() {
+//        return focusedBackgroundIcon;
+//    }
 
-    /**
-     * Returns focused background image.
-     *
-     * @return focused background image.
-     */
-    public Icon getFocusedBackgroundIcon() {
-        return focusedBackgroundIcon;
-    }
+//    /**
+//     * Used to change focused background image.
+//     *
+//     * @param focusedBackgroundIcon focused background image.
+//     */
+//    public void setFocusedBackgroundIcon(Icon focusedBackgroundIcon) {
+//        this.focusedBackgroundIcon = focusedBackgroundIcon;
+//    }
 
-    /**
-     * Used to change focused background image.
-     *
-     * @param focusedBackgroundIcon focused background image.
-     */
-    public void setFocusedBackgroundIcon(Icon focusedBackgroundIcon) {
-        this.focusedBackgroundIcon = focusedBackgroundIcon;
-    }
-
-    /**
-     * Returns pressed background image.
-     *
-     * @return pressed background image.
-     */
-    public Icon getPressedBackgroundIcon() {
-        return pressedBackgroundIcon;
-    }
-
-    /**
-     * Used to change pressed background image.
-     *
-     * @param pressedBackgroundIcon pressed background image.
-     */
-    public void setPressedBackgroundIcon(Icon pressedBackgroundIcon) {
-        this.pressedBackgroundIcon = pressedBackgroundIcon;
-    }
-
-    /**
-     * Returns hovered background image.
-     *
-     * @return hovered background image.
-     */
-    public Icon getHoveredBackgroundIcon() {
-        return hoveredBackgroundIcon;
-    }
-
-    /**
-     * Used to change hovered background image.
-     *
-     * @param hoveredBackgroundIcon hovered background image.
-     */
-    public void setHoveredBackgroundIcon(Icon hoveredBackgroundIcon) {
-        this.hoveredBackgroundIcon = hoveredBackgroundIcon;
-    }
-
+    //    /**
+//     * Returns pressed background image.
+//     *
+//     * @return pressed background image.
+//     */
+//    public Icon getPressedBackgroundIcon() {
+//        return pressedBackgroundIcon;
+//    }
+//
+//    /**
+//     * Used to change pressed background image.
+//     *
+//     * @param pressedBackgroundIcon pressed background image.
+//     */
+//    public void setPressedBackgroundIcon(Icon pressedBackgroundIcon) {
+//        this.pressedBackgroundIcon = pressedBackgroundIcon;
+//    }
+//
+//    /**
+//     * Returns hovered background image.
+//     *
+//     * @return hovered background image.
+//     */
+//    public Icon getHoveredBackgroundIcon() {
+//        return hoveredBackgroundIcon;
+//    }
+//
+//    /**
+//     * Used to change hovered background image.
+//     *
+//     * @param hoveredBackgroundIcon hovered background image.
+//     */
+//    public void setHoveredBackgroundIcon(Icon hoveredBackgroundIcon) {
+//        this.hoveredBackgroundIcon = hoveredBackgroundIcon;
+//    }
+//
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -212,10 +210,10 @@ public class Button extends Component implements TextComponent {
         return new EqualsBuilder()
             .appendSuper(super.equals(o))
             .append(getTextState(), button.getTextState())
-            .append(getBackgroundIcon(), button.getBackgroundIcon())
-            .append(getFocusedBackgroundIcon(), button.getFocusedBackgroundIcon())
-            .append(getPressedBackgroundIcon(), button.getPressedBackgroundIcon())
-            .append(getHoveredBackgroundIcon(), button.getHoveredBackgroundIcon())
+//            .append(getStyle().getBackground().getIcon(), button.getStyle().getBackground().getIcon())
+//            .append(getFocusedBackgroundIcon(), button.getFocusedBackgroundIcon())
+//            .append(getPressedBackgroundIcon(), button.getPressedBackgroundIcon())
+//            .append(getHoveredBackgroundIcon(), button.getHoveredBackgroundIcon())
             .isEquals();
     }
 

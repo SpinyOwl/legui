@@ -1,7 +1,7 @@
 package org.liquidengine.legui.theme.dark.def;
 
-import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.component.Slider;
+import org.liquidengine.legui.style.color.ColorConstants;
 
 /**
  * Dark Slider Theme for all sliders. Used to make slider dark.

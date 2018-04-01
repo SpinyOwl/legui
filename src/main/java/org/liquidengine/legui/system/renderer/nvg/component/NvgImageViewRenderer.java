@@ -23,7 +23,7 @@ public class NvgImageViewRenderer extends NvgDefaultComponentRenderer<ImageView>
         createScissor(nanovg, imageView);
         {
             HashMap<String, Object> p = new HashMap<>();
-            p.put(C_RADIUS, imageView.getStyle().getCornerRadius());
+            p.put(C_RADIUS, imageView.getStyle().getBorderRadius());
 
             renderImage(imageView.getImage(), position, size, p, context);
         }

@@ -157,9 +157,9 @@ public class NvgRenderer extends AbstractRenderer {
     @Override
     public void destroy() {
         if (isVersionNew) {
-            NanoVGGL3.nnvgDeleteGL3(nvgContext);
+            NanoVGGL3.nnvgDelete(nvgContext);
         } else {
-            NanoVGGL2.nnvgDeleteGL2(nvgContext);
+            NanoVGGL2.nnvgDelete(nvgContext);
         }
         RendererProvider.getInstance().getComponentRenderers().forEach(ComponentRenderer::destroy);
         imageReferenceManager.destroy();

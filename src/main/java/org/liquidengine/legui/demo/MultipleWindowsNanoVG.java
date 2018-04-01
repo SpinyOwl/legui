@@ -68,7 +68,7 @@ public class MultipleWindowsNanoVG {
             glfwSwapInterval(0);
 
             glfwSetKeyCallback(windows[i],
-                (window, key, scancode, action, mods) -> running = !(key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE));
+                               (window, key, scancode, action, mods) -> running = !(key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE));
 
             nvgContexts[i] = NanoVGGL3.nvgCreate(NanoVGGL3.NVG_ANTIALIAS | NanoVGGL3.NVG_STENCIL_STROKES | NanoVGGL3.NVG_DEBUG);
         }

@@ -83,8 +83,7 @@ public final class BindingRegistry {
     }
 
     /**
-     * Used to set specified binding for specified class.
-     * If binding is not set as default ({@link ClassBinding#byDefault}) it will not be added.
+     * Used to set specified binding for specified class. If binding is not set as default ({@link ClassBinding#byDefault}) it will not be added.
      *
      * @param c class to bind.
      * @param b binding for class.
@@ -100,8 +99,8 @@ public final class BindingRegistry {
     }
 
     /**
-     * Used to add specified binding for specified class (without type check).
-     * If binding is not set as default ({@link ClassBinding#byDefault}) it will not be added.
+     * Used to add specified binding for specified class (without type check). If binding is not set as default ({@link ClassBinding#byDefault}) it will not be
+     * added.
      *
      * @param c class to bind.
      * @param b binding for class.
@@ -110,8 +109,8 @@ public final class BindingRegistry {
     private <T> void addDefaultBinding(Class<? extends T> c, AbstractClassBinding<? extends T> b) {
         if (!b.isByDefault()) {
             LOGGER.warn("Can't add binding for class '" + c.getCanonicalName()
-                + "' and binding type '" + b.getBindingForType().getCanonicalName()
-                + "' cause it is not default for this type.");
+                            + "' and binding type '" + b.getBindingForType().getCanonicalName()
+                            + "' cause it is not default for this type.");
             return;
         }
         bindingMap.put(c, b);
@@ -134,8 +133,7 @@ public final class BindingRegistry {
     }
 
     /**
-     * Used to retrieve binding for specified class.
-     * If there is no binding for this concrete class it will search binding for all of it's superclasses.
+     * Used to retrieve binding for specified class. If there is no binding for this concrete class it will search binding for all of it's superclasses.
      *
      * @param c class to search binding.
      * @param <T> class type.
