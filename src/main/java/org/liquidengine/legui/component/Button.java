@@ -19,26 +19,6 @@ public class Button extends Component implements TextComponent {
      */
     private TextState textState;
 
-//    /**
-//     * Default button background image.
-//     */
-//    private Icon backgroundIcon;
-//
-//    /**
-//     * Background image for focused state.
-//     */
-//    private Icon focusedBackgroundIcon;
-//
-//    /**
-//     * Background image for pressed state.
-//     */
-//    private Icon pressedBackgroundIcon;
-//
-//    /**
-//     * Background image for hovered state.
-//     */
-//    private Icon hoveredBackgroundIcon;
-
     /**
      * Creates a button with default text.
      */

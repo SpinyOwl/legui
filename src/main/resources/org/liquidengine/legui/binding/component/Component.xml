@@ -18,6 +18,9 @@
     <bind field="tabFocusable"/>
 
     <bind field="style"/>
+    <bind field="hoveredStyle"/>
+    <bind field="focusedStyle"/>
+    <bind field="pressedStyle"/>
 
     <bind field="childComponents" as="field" to="childComponents">
         <using-accessor class="org.liquidengine.legui.binding.accessor.component.ComponentChildComponentsAccessor"/>

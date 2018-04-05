@@ -3,6 +3,7 @@
 
     <bind field="display"/>
     <bind field="position"/>
+
     <bind field="flexStyle"/>
     <bind field="background">
         <using-binding path="org/liquidengine/legui/binding/style/StyleBackground.xml"/>
@@ -38,5 +39,9 @@
     <bind field="bottom"/>
     <bind field="right"/>
     <bind field="left"/>
+
+    <bind field="focusedStrokeColor">
+        <using-binding path="org/liquidengine/legui/binding/common/Vector4fColor.xml"/>
+    </bind>
 
 </class-binding>
