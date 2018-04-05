@@ -5,7 +5,6 @@
     </bind>
 
     <bind field="enabled"/>
-    <bind field="visible"/>
 
     <bind field="intersector"/>
 
