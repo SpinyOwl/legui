@@ -250,9 +250,10 @@ public class ExampleGui extends Panel {
         widget.getTitleTextState().setTextColor(ColorConstants.black());
 
         Widget inner = new Widget();
-        inner.getStyle().setPosition(PositionType.RELATIVE);
         inner.setResizable(false);
+        inner.getStyle().setPosition(PositionType.RELATIVE);
         inner.getStyle().getFlexStyle().setFlexGrow(1);
+        inner.getStyle().setMargin(10f);
         inner.getContainer().getStyle().getBackground().setColor(ColorConstants.lightGreen());
         widget.getContainer().getStyle().setDisplay(DisplayType.FLEX);
         widget.getContainer().add(inner);

@@ -297,13 +297,17 @@ public class Style {
         this.paddingLeft = paddingLeft;
     }
 
-    public void setMargin(float topBottom, float leftRight) {
+    public void setMargin(Float topBottom, Float leftRight) {
         marginLeft = marginRight = leftRight;
         marginTop = marginBottom = topBottom;
     }
 
+    public void setMargin(Float margin) {
+        marginLeft = marginRight = marginTop = marginBottom = margin;
+    }
 
-    public void setMargin(float top, float right, float bottom, float left) {
+
+    public void setMargin(Float top, Float right, Float bottom, Float left) {
         marginTop = top;
         marginRight = right;
         marginBottom = bottom;

@@ -116,4 +116,23 @@ final class FlexUtils {
         }
     }
 
+    public static void setMargin(long node, Style style) {
+        Float paddingLeft = style.getMarginLeft();
+        if (paddingLeft != null) {
+            Yoga.YGNodeStyleSetMargin(node, Yoga.YGEdgeLeft, paddingLeft);
+        }
+        Float paddingTop = style.getMarginTop();
+        if (paddingTop != null) {
+            Yoga.YGNodeStyleSetMargin(node, Yoga.YGEdgeTop, paddingTop);
+        }
+        Float paddingRight = style.getMarginRight();
+        if (paddingRight != null) {
+            Yoga.YGNodeStyleSetMargin(node, Yoga.YGEdgeRight, paddingRight);
+        }
+        Float paddingBottom = style.getMarginBottom();
+        if (paddingBottom != null) {
+            Yoga.YGNodeStyleSetMargin(node, Yoga.YGEdgeBottom, paddingBottom);
+        }
+    }
+
 }

@@ -3,6 +3,7 @@ package org.liquidengine.legui.system.layout.flex;
 import static org.liquidengine.legui.system.layout.flex.FlexUtils.setAlignItems;
 import static org.liquidengine.legui.system.layout.flex.FlexUtils.setFlexDirection;
 import static org.liquidengine.legui.system.layout.flex.FlexUtils.setJustifyContent;
+import static org.liquidengine.legui.system.layout.flex.FlexUtils.setMargin;
 import static org.liquidengine.legui.system.layout.flex.FlexUtils.setPadding;
 
 import java.util.ArrayList;
@@ -121,6 +122,7 @@ public class FlexLayout implements Layout {
         }
 
         setPadding(node, style);
+        setMargin(node, style);
 
         Yoga.YGNodeStyleSetPositionType(node, style.getPosition() == PositionType.RELATIVE ? Yoga.YGPositionTypeRelative : Yoga.YGPositionTypeAbsolute);
 
