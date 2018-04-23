@@ -28,7 +28,7 @@ import org.joml.Vector2i;
 import org.liquidengine.cbchain.impl.ChainErrorCallback;
 import org.liquidengine.legui.animation.Animator;
 import org.liquidengine.legui.component.Frame;
-import org.liquidengine.legui.layout.LayoutManager;
+import org.liquidengine.legui.system.layout.LayoutManager;
 import org.liquidengine.legui.listener.processor.EventProcessor;
 import org.liquidengine.legui.system.context.CallbackKeeper;
 import org.liquidengine.legui.system.context.Context;

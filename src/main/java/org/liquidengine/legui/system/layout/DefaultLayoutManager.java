@@ -1,4 +1,4 @@
-package org.liquidengine.legui.layout;
+package org.liquidengine.legui.system.layout;
 
 import java.util.List;
 import java.util.Map;
@@ -6,7 +6,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.component.Layer;
-import org.liquidengine.legui.layout.flex.FlexLayout;
+import org.liquidengine.legui.system.layout.flex.FlexLayout;
 import org.liquidengine.legui.style.Style.DisplayType;
 import org.liquidengine.legui.util.Utilites;
 

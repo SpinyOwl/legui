@@ -1,4 +1,4 @@
-package org.liquidengine.legui.layout;
+package org.liquidengine.legui.system.layout;
 
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.Frame;

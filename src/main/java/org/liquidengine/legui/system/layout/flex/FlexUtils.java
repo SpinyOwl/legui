@@ -1,4 +1,4 @@
-package org.liquidengine.legui.layout.flex;
+package org.liquidengine.legui.system.layout.flex;
 
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.style.Style;

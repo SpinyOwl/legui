@@ -1,3 +1,58 @@
+## [1.4.5]
+### Added
+- CSS-like styles
+- Display types: FLEX, NONE and MANUAL.
+- Style options:
+  - display
+    - NONE
+    - FLEX
+    - MANUAL
+  - position
+    - ABSOLUTE
+    - RELATIVE
+  - flexStyle
+  - background
+  - border
+  - font
+  - borderTopLeftRadius
+  - borderTopRightRadius
+  - borderBottomRightRadius
+  - borderBottomLeftRadius
+  - width
+  - height
+  - minWidth
+  - minHeight
+  - maxWidth
+  - maxHeight
+  - paddingTop
+  - paddingBottom
+  - paddingRight
+  - paddingLeft
+  - marginTop
+  - marginBottom
+  - marginRight
+  - marginLeft
+  - top
+  - bottom
+  - right
+  - left
+- FLEX style options:
+  - flexDirection
+  - justifyContent
+  - alignItems
+  - flexWrap
+  - alignContent
+  - alignSelf
+  - flexGrow
+  - flexShrink
+  - flexBasis
+### Fixed
+- Fixed javadoc issues.
+- Fixed issue with rendering empty text area.
+
+### Changed
+- Updated animations for scrollable panel and scrollbar
+
 ## [1.4.4]
 ### Added
 - Moved demo classes to repo.
@@ -11,7 +66,7 @@
 ### Changed
 - Changed context api to frame buffer size (now returns `Vector2i` instead of `Vector2f`).
 - Changed api to child components of component (was `getChilds()` - now `getChildComponents()`).
- 
+
 ## [1.4.3]
 ### Fixed
 - Fixed nvg password input renderer bug (with empty password rendering).

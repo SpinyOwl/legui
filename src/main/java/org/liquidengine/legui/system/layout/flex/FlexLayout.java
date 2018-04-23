@@ -1,15 +1,15 @@
-package org.liquidengine.legui.layout.flex;
+package org.liquidengine.legui.system.layout.flex;
 
-import static org.liquidengine.legui.layout.flex.FlexUtils.setAlignItems;
-import static org.liquidengine.legui.layout.flex.FlexUtils.setFlexDirection;
-import static org.liquidengine.legui.layout.flex.FlexUtils.setJustifyContent;
-import static org.liquidengine.legui.layout.flex.FlexUtils.setPadding;
+import static org.liquidengine.legui.system.layout.flex.FlexUtils.setAlignItems;
+import static org.liquidengine.legui.system.layout.flex.FlexUtils.setFlexDirection;
+import static org.liquidengine.legui.system.layout.flex.FlexUtils.setJustifyContent;
+import static org.liquidengine.legui.system.layout.flex.FlexUtils.setPadding;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.liquidengine.legui.component.Component;
-import org.liquidengine.legui.layout.Layout;
+import org.liquidengine.legui.system.layout.Layout;
 import org.liquidengine.legui.style.Style;
 import org.liquidengine.legui.style.Style.PositionType;
 import org.liquidengine.legui.style.flex.FlexStyle;
