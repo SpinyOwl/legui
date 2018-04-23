@@ -263,7 +263,7 @@ public class ExampleGui extends Panel {
         Button turnWidVisible = new Button("", 360, 280, 20, 20);
         turnWidVisible.getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
             if (CLICK == (event.getAction())) {
-                widget.getStyle().setDisplay(DisplayType.FLEX);
+                widget.show();
             }
         });
         Icon bgIm = new ImageIcon(new BufferedImage("org/liquidengine/legui/demo/1.png"));
@@ -321,7 +321,7 @@ public class ExampleGui extends Panel {
         Button turnWidVisible2 = new Button("", 360, 310, 20, 20);
         turnWidVisible2.getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
             if (CLICK == event.getAction()) {
-                widget2.getStyle().setDisplay(Style.DisplayType.MANUAL);
+                widget2.show();
             }
         });
         this.add(turnWidVisible2);
@@ -338,7 +338,7 @@ public class ExampleGui extends Panel {
         Button turnWidVisible3 = new Button("", 360, 340, 20, 20);
         turnWidVisible3.getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
             if (CLICK == event.getAction()) {
-                widget3.getStyle().setDisplay(Style.DisplayType.MANUAL);
+                widget3.show();
             }
         });
         this.add(turnWidVisible3);
@@ -348,7 +348,7 @@ public class ExampleGui extends Panel {
         widget3.getContainer().add(new Panel(30, 30, 20, 20));
         widget3.getContainer().add(new Panel(5, 30, 20, 20));
         widget3.getContainer().add(new Panel(5, 30, 20, 20));
-        Button b = new Button(55, 5, 40, 45);
+        Button b = new Button(55, 5, 40, 20);
         b.getTextState().setFont(FontRegistry.MATERIAL_ICONS_REGULAR);
         b.getTextState().setVerticalAlign(MIDDLE);
         b.getTextState().setHorizontalAlign(CENTER);
@@ -365,6 +365,22 @@ public class ExampleGui extends Panel {
             }
         });
         widget3.getContainer().add(b);
+
+        Button b2 = new Button(55, 30, 40, 20);
+        b2.getTextState().setVerticalAlign(MIDDLE);
+        b2.getTextState().setHorizontalAlign(CENTER);
+        b2.getTextState().setFontSize(20);
+
+        String up2 = "-";
+        String down2 = "+";
+        b2.getTextState().setText(down2);
+        b2.getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
+            if (event.getAction() == CLICK) {
+                widget3.setCloseable(!widget3.isCloseable());
+                b2.getTextState().setText(widget3.isCloseable() ? up2 : down2);
+            }
+        });
+        widget3.getContainer().add(b2);
 
         widget3.getStyle().setMinWidth(100f);
         widget3.getStyle().setMinHeight(50f);

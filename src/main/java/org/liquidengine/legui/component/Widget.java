@@ -330,7 +330,7 @@ public class Widget extends Component {
         if (minimized) {
             return;
         }
-        this.titleContainer.getStyle().setDisplay(titleEnabled ? DisplayType.MANUAL : DisplayType.NONE);
+        this.titleContainer.getStyle().setDisplay(titleEnabled ? DisplayType.FLEX : DisplayType.NONE);
     }
 
     /**
@@ -491,6 +491,14 @@ public class Widget extends Component {
             }
             updateIcons();
         }
+    }
+
+    public void hide() {
+        getStyle().setDisplay(DisplayType.NONE);
+    }
+
+    public void show() {
+        getStyle().setDisplay(DisplayType.FLEX);
     }
 
     /**
