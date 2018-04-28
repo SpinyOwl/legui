@@ -47,7 +47,7 @@ public class NvgScrollBarRenderer extends NvgDefaultComponentRenderer<ScrollBar>
             boolean vertical = VERTICAL.equals(scrollBar.getOrientation());
 
             // draw background
-            NvgShapes.drawRect(nanovg, pos, size, backgroundColor, scrollBar.getStyle().getBorderRadius());
+            renderBackground(scrollBar, context, nanovg);
 
             // draw scroll bar back
             {

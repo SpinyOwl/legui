@@ -52,7 +52,6 @@ public class NvgSliderRenderer<T extends Slider> extends NvgDefaultComponentRend
             float y = pos.y;
             float w = size.x;
             float h = size.y;
-            Vector4f backgroundColor = new Vector4f(slider.getStyle().getBackground().getColor());
 
             float value = slider.getValue();
             boolean vertical = Orientation.VERTICAL.equals(slider.getOrientation());
@@ -61,7 +60,7 @@ public class NvgSliderRenderer<T extends Slider> extends NvgDefaultComponentRend
             Vector4f cornerRadius = slider.getStyle().getBorderRadius();
             float sliderSize = slider.getSliderSize();
 
-            NvgShapes.drawRect(nanovg, pos, size, backgroundColor, cornerRadius);
+            renderBackground(slider, context, nanovg);
 
             float lx,
                 rx,

@@ -25,6 +25,7 @@ public class NvgImageViewRenderer extends NvgDefaultComponentRenderer<ImageView>
             HashMap<String, Object> p = new HashMap<>();
             p.put(C_RADIUS, imageView.getStyle().getBorderRadius());
 
+            renderBackground(imageView, context, nanovg);
             renderImage(imageView.getImage(), position, size, p, context);
         }
         resetScissor(nanovg);

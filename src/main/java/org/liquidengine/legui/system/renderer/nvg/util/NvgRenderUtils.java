@@ -31,6 +31,7 @@ import org.joml.Vector4f;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
+import org.liquidengine.legui.style.Style;
 import org.lwjgl.nanovg.NVGColor;
 import org.lwjgl.nanovg.NVGPaint;
 
@@ -203,4 +204,35 @@ public final class NvgRenderUtils {
         nvgResetScissor(context);
     }
 
+    public static Vector4f getBorderRadius(Component component) {
+        Style style = component.getStyle();
+        Vector4f r = style.getBorderRadius();
+
+        if (component.isFocused()) {
+            applyCurrentRadius(r, component.getFocusedStyle());
+        }
+        if (component.isHovered()) {
+            applyCurrentRadius(r, component.getHoveredStyle());
+        }
+        if (component.isPressed()) {
+            applyCurrentRadius(r, component.getPressedStyle());
+        }
+
+        return r;
+    }
+
+    private static void applyCurrentRadius(Vector4f r, Style curr) {
+        if (curr.getBorderTopLeftRadius() != null) {
+            r.x = curr.getBorderTopLeftRadius();
+        }
+        if (curr.getBorderTopRightRadius() != null) {
+            r.x = curr.getBorderTopRightRadius();
+        }
+        if (curr.getBorderBottomRightRadius() != null) {
+            r.x = curr.getBorderBottomRightRadius();
+        }
+        if (curr.getBorderBottomLeftRadius() != null) {
+            r.x = curr.getBorderBottomLeftRadius();
+        }
+    }
 }

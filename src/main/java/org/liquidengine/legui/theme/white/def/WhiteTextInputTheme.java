@@ -14,6 +14,7 @@ public class WhiteTextInputTheme<T extends TextInput> extends WhiteComponentThem
     @Override
     public void apply(T component) {
         super.apply(component);
+        component.getFocusedStyle().getBackground().setColor(ColorConstants.white().mul(.9f, .9f, .9f, 1f));
         component.getTextState().setTextColor(ColorConstants.black());
         component.getTextState().setHorizontalAlign(HorizontalAlign.LEFT);
         component.getTextState().setHighlightColor(ColorConstants.lightBlue());

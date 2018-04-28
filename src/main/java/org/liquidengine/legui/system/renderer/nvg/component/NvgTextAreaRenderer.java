@@ -57,10 +57,9 @@ public class NvgTextAreaRenderer extends NvgDefaultComponentRenderer<TextArea> {
         {
             Vector2f pos = component.getAbsolutePosition();
             Vector2f size = component.getSize();
-            Vector4f br = component.getStyle().getBorderRadius();
             Vector4f bc = new Vector4f(component.getStyle().getBackground().getColor());
 
-            NvgShapes.drawRect(nanovg, pos, size, bc, br);
+            renderBackground(component, context, nanovg);
 
             TextState textState = component.getTextState();
             Vector4f p = new Vector4f(textState.getPadding()).add(2, 2, 2, 2);

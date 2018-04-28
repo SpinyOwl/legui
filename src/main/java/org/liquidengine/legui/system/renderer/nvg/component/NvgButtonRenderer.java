@@ -29,7 +29,7 @@ public class NvgButtonRenderer extends NvgDefaultComponentRenderer<Button> {
             Vector2f size = button.getSize();
 
             // render background
-            renderBackground(nanovg, button, pos, size, context);
+            renderBackground(button, context, nanovg);
 
             // Render text
             nvgIntersectScissor(nanovg, pos.x, pos.y, size.x, size.y);
@@ -37,63 +37,6 @@ public class NvgButtonRenderer extends NvgDefaultComponentRenderer<Button> {
 
         }
         resetScissor(nanovg);
-    }
-
-    private void renderBackground(long nvg, Button button, Vector2f pos, Vector2f size, Context context) {
-        boolean focused = button.isFocused();
-        boolean hovered = button.isHovered();
-        boolean pressed = button.isPressed();
-
-        Style style = button.getStyle();
-        Style currStyle = button.getStyle();
-
-        Icon bgIcon = style.getBackground().getIcon();
-        Vector4f bgColor = style.getBackground().getColor();
-        Vector4f cornerRadius = style.getBorderRadius();
-
-        if(focused) {
-            currStyle = button.getFocusedStyle();
-            if (currStyle.getBackground().getColor() != null) {
-                bgColor = currStyle.getBackground().getColor();
-            }
-            if (currStyle.getBackground().getIcon() != null) {
-                bgIcon = currStyle.getBackground().getIcon();
-            }
-            if (currStyle.getBorderRadius() != null) {
-                cornerRadius = currStyle.getBorderRadius();
-            }
-        }
-        if(hovered) {
-            currStyle = button.getHoveredStyle();
-            if (currStyle.getBackground().getColor() != null) {
-                bgColor = currStyle.getBackground().getColor();
-            }
-            if (currStyle.getBackground().getIcon() != null) {
-                bgIcon = currStyle.getBackground().getIcon();
-            }
-            if (currStyle.getBorderRadius() != null) {
-                cornerRadius = currStyle.getBorderRadius();
-            }
-        }
-        if(pressed) {
-            currStyle = button.getPressedStyle();
-            if (currStyle.getBackground().getColor() != null) {
-                bgColor = currStyle.getBackground().getColor();
-            }
-            if (currStyle.getBackground().getIcon() != null) {
-                bgIcon = currStyle.getBackground().getIcon();
-            }
-            if (currStyle.getBorderRadius() != null) {
-                cornerRadius = currStyle.getBorderRadius();
-            }
-        }
-
-        nvgSave(nvg);
-        NvgShapes.drawRect(nvg, pos, size, bgColor, cornerRadius);
-        if (bgIcon != null) {
-            renderIcon(bgIcon, button, context);
-        }
-        nvgRestore(nvg);
     }
 
 }

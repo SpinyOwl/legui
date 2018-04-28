@@ -19,6 +19,7 @@ public class DarkTextInputTheme<T extends TextInput> extends DarkComponentTheme<
     @Override
     public void apply(T component) {
         super.apply(component);
+        component.getFocusedStyle().getBackground().setColor(ColorConstants.darkGray().mul(1.5f, 1.5f, 1.5f, 1f));
         component.getTextState().setTextColor(ColorConstants.white());
         component.getTextState().setHorizontalAlign(HorizontalAlign.LEFT);
         component.getTextState().setHighlightColor(ColorConstants.black());

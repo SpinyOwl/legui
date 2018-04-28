@@ -26,7 +26,6 @@ import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
 import org.liquidengine.legui.system.context.Context;
-import org.liquidengine.legui.system.renderer.nvg.util.NvgShapes;
 import org.lwjgl.nanovg.NVGColor;
 import org.lwjgl.nanovg.NVGTextRow;
 
@@ -49,10 +48,9 @@ public class NvgTooltipRenderer extends NvgDefaultComponentRenderer<Tooltip> {
             HorizontalAlign horizontalAlign = textState.getHorizontalAlign();
             VerticalAlign verticalAlign = textState.getVerticalAlign();
             Vector4f textColor = textState.getTextColor();
-            Vector4f backgroundColor = component.getStyle().getBackground().getColor();
             Vector4f padding = new Vector4f(textState.getPadding());
 
-            NvgShapes.drawRect(nanovg, pos, size, backgroundColor, component.getStyle().getBorderRadius());
+            renderBackground(component, context, nanovg);
 
             nvgFontSize(nanovg, fontSize);
             nvgFontFace(nanovg, font);

@@ -30,7 +30,7 @@ public class NvgCheckBoxRenderer extends NvgDefaultComponentRenderer<CheckBox> {
             float sw = size.x;
             float sh = size.y;
             /*Draw background rectangle*/
-            NvgShapes.drawRect(nanovg, pos, size, checkBox.getStyle().getBackground().getColor(), checkBox.getStyle().getBorderRadius());
+            renderBackground(checkBox, context, nanovg);
 
             TextState textState = checkBox.getTextState();
             Icon icon = checkBox.isChecked() ? checkBox.getIconChecked() : checkBox.getIconUnchecked();

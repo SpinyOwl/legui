@@ -2,15 +2,17 @@ package org.liquidengine.legui.system.renderer.nvg.component;
 
 import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderIcon;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.createScissorByParent;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.getBorderRadius;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.resetScissor;
 import static org.lwjgl.nanovg.NanoVG.nvgIntersectScissor;
+import static org.lwjgl.nanovg.NanoVG.nvgRestore;
+import static org.lwjgl.nanovg.NanoVG.nvgSave;
 
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.ToggleButton;
 import org.liquidengine.legui.icon.Icon;
 import org.liquidengine.legui.style.Style;
-import org.liquidengine.legui.style.color.ColorUtil;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgShapes;
@@ -42,26 +44,48 @@ public class NvgToggleButtonRenderer extends NvgDefaultComponentRenderer<ToggleB
         boolean focused = agui.isFocused();
         boolean hovered = agui.isHovered();
         boolean pressed = agui.isPressed();
-        boolean toggled = agui.isToggled();
+
         Style style = agui.getStyle();
-        Vector4f backgroundColor = new Vector4f(toggled ? agui.getToggledBackgroundColor() : style.getBackground().getColor());
+        Style currStyle = agui.getStyle();
 
-        Icon icon = agui.getStyle().getBackground().getIcon();
+        Icon icon = style.getBackground().getIcon();
+        Vector4f bgColor = style.getBackground().getColor();
+        Vector4f cornerRadius = getBorderRadius(agui);
 
-        Vector4f cornerRadius = style.getBorderRadius();
-        NvgShapes.drawRect(nvg, pos, size, backgroundColor, cornerRadius);
-        if (hovered) {
-            if (!pressed) {
-                Vector4f opp = ColorUtil.oppositeBlackOrWhite(backgroundColor);
-                opp.w = 0.3f;
-                NvgShapes.drawRect(nvg, pos, size, opp, cornerRadius);
-            } else {
-                Vector4f opp = ColorUtil.oppositeBlackOrWhite(backgroundColor);
-                opp.w = 0.6f;
-                NvgShapes.drawRect(nvg, pos, size, opp, cornerRadius);
+        if(focused) {
+            currStyle = agui.getFocusedStyle();
+            if (currStyle.getBackground().getColor() != null) {
+                bgColor = currStyle.getBackground().getColor();
+            }
+            if (currStyle.getBackground().getIcon() != null) {
+                icon = currStyle.getBackground().getIcon();
+            }
+        }
+        if(hovered) {
+            currStyle = agui.getHoveredStyle();
+            if (currStyle.getBackground().getColor() != null) {
+                bgColor = currStyle.getBackground().getColor();
+            }
+            if (currStyle.getBackground().getIcon() != null) {
+                icon = currStyle.getBackground().getIcon();
+            }
+        }
+        if(pressed) {
+            currStyle = agui.getPressedStyle();
+            if (currStyle.getBackground().getColor() != null) {
+                bgColor = currStyle.getBackground().getColor();
+            }
+            if (currStyle.getBackground().getIcon() != null) {
+                icon = currStyle.getBackground().getIcon();
             }
         }
 
+        boolean toggled = agui.isToggled();
+        if (toggled) {
+            NvgShapes.drawRect(nvg, pos, size, agui.getToggledBackgroundColor(), cornerRadius);
+        } else {
+            NvgShapes.drawRect(nvg, pos, size, bgColor, cornerRadius);
+        }
         if (icon != null) {
             createScissorByParent(nvg, agui);
             renderIcon(icon, agui, context);
