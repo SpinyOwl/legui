@@ -19,6 +19,8 @@ public class DarkToggleButtonTheme<T extends ToggleButton> extends DarkComponent
     public void apply(T component) {
         super.apply(component);
         component.getStyle().getBackground().setColor(ColorConstants.darkRed());
+        component.getHoveredStyle().getBackground().setColor(ColorConstants.darkRed().mul(1.3f, 1.3f, 1.3f, 1f));
+        component.getPressedStyle().getBackground().setColor(ColorConstants.darkRed().mul(1.6f, 1.6f, 1.6f, 1f));
         component.setToggledBackgroundColor(ColorConstants.darkGreen());
     }
 }

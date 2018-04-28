@@ -1,11 +1,15 @@
 package org.liquidengine.legui.system.renderer.nvg.component;
 
 import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderBorderWScissor;
+import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderIcon;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.createScissor;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.resetScissor;
+import static org.lwjgl.nanovg.NanoVG.nvgRestore;
+import static org.lwjgl.nanovg.NanoVG.nvgSave;
 
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.Component;
+import org.liquidengine.legui.icon.Icon;
 import org.liquidengine.legui.style.Style;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.RendererProvider;
@@ -45,9 +49,60 @@ public class NvgDefaultComponentRenderer<C extends Component> extends NvgCompone
     protected void renderSelf(C component, Context context, long nanovg) {
         createScissor(nanovg, component);
         {
+            boolean focused = component.isFocused();
+            boolean hovered = component.isHovered();
+            boolean pressed = component.isPressed();
+
             Style style = component.getStyle();
-            Vector4f radius = style.getBorderRadius();
-            NvgShapes.drawRect(nanovg, component.getAbsolutePosition(), component.getSize(), style.getBackground().getColor(), radius);
+            Style currStyle = component.getStyle();
+
+            Icon bgIcon = style.getBackground().getIcon();
+            Vector4f bgColor = style.getBackground().getColor();
+            Vector4f cornerRadius = style.getBorderRadius();
+
+            if(focused) {
+                currStyle = component.getFocusedStyle();
+                if (currStyle.getBackground().getColor() != null) {
+                    bgColor = currStyle.getBackground().getColor();
+                }
+                if (currStyle.getBackground().getIcon() != null) {
+                    bgIcon = currStyle.getBackground().getIcon();
+                }
+                if (currStyle.getBorderRadius() != null) {
+                    cornerRadius = currStyle.getBorderRadius();
+                }
+            }
+            if(hovered) {
+                currStyle = component.getHoveredStyle();
+                if (currStyle.getBackground().getColor() != null) {
+                    bgColor = currStyle.getBackground().getColor();
+                }
+                if (currStyle.getBackground().getIcon() != null) {
+                    bgIcon = currStyle.getBackground().getIcon();
+                }
+                if (currStyle.getBorderRadius() != null) {
+                    cornerRadius = currStyle.getBorderRadius();
+                }
+            }
+            if(pressed) {
+                currStyle = component.getPressedStyle();
+                if (currStyle.getBackground().getColor() != null) {
+                    bgColor = currStyle.getBackground().getColor();
+                }
+                if (currStyle.getBackground().getIcon() != null) {
+                    bgIcon = currStyle.getBackground().getIcon();
+                }
+                if (currStyle.getBorderRadius() != null) {
+                    cornerRadius = currStyle.getBorderRadius();
+                }
+            }
+
+            nvgSave(nanovg);
+            NvgShapes.drawRect(nanovg, component.getAbsolutePosition(), component.getSize(), bgColor, cornerRadius);
+            if (bgIcon != null) {
+                renderIcon(bgIcon, component, context);
+            }
+            nvgRestore(nanovg);
         }
         resetScissor(nanovg);
     }

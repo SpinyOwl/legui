@@ -27,13 +27,17 @@ public class DarkWidgetTheme<T extends Widget> extends DarkComponentTheme<T> {
     public void applyAll(T component) {
         super.applyAll(component);
         component.getMinimizeButton().getStyle().getBackground().setColor(ColorConstants.lightBlack());
-        component.getMinimizeButton().getTextState().setTextColor(ColorConstants.white());
+        component.getMinimizeButton().getHoveredStyle().getBackground().setColor(ColorConstants.lightBlack().mul(2f, 2f, 2f, 1f));
         component.getMinimizeButton().getStyle().setBorder(null);
+        component.getMinimizeButton().getTextState().setTextColor(ColorConstants.white());
         component.getCloseButton().getStyle().getBackground().setColor(ColorConstants.lightBlack());
-        component.getCloseButton().getTextState().setTextColor(ColorConstants.white());
+        component.getCloseButton().getHoveredStyle().getBackground().setColor(ColorConstants.lightBlack().mul(2f, 2f, 2f, 1f));
         component.getCloseButton().getStyle().setBorder(null);
+        component.getCloseButton().getTextState().setTextColor(ColorConstants.white());
         component.getTitleContainer().getStyle().getBackground().setColor(ColorConstants.lightBlack());
         component.getResizeButton().getStyle().getBackground().setColor(ColorConstants.transparent());
+        component.getResizeButton().getHoveredStyle().getBackground().setColor(ColorConstants.transparent());
+        component.getResizeButton().getPressedStyle().getBackground().setColor(ColorConstants.transparent());
         component.getResizeButton().getStyle().setBorder(null);
 
         CharIcon icon = new CharIcon(FontRegistry.MATERIAL_DESIGN_ICONS, '\uF45D');

@@ -22,13 +22,17 @@ public class WhiteWidgetTheme<T extends Widget> extends WhiteComponentTheme<T> {
     public void applyAll(T component) {
         super.applyAll(component);
         component.getMinimizeButton().getStyle().getBackground().setColor(ColorConstants.lightGray());
-        component.getMinimizeButton().getTextState().setTextColor(ColorConstants.black());
+        component.getMinimizeButton().getHoveredStyle().getBackground().setColor(ColorConstants.lightGray().mul(0.8f, 0.8f, 0.8f, 1f));
         component.getMinimizeButton().getStyle().setBorder(null);
+        component.getMinimizeButton().getTextState().setTextColor(ColorConstants.black());
         component.getCloseButton().getStyle().getBackground().setColor(ColorConstants.lightGray());
-        component.getCloseButton().getTextState().setTextColor(ColorConstants.black());
+        component.getCloseButton().getHoveredStyle().getBackground().setColor(ColorConstants.lightGray().mul(0.8f, 0.8f, 0.8f, 1f));
         component.getCloseButton().getStyle().setBorder(null);
+        component.getCloseButton().getTextState().setTextColor(ColorConstants.black());
         component.getTitleContainer().getStyle().getBackground().setColor(ColorConstants.lightGray());
         component.getResizeButton().getStyle().getBackground().setColor(ColorConstants.transparent());
+        component.getResizeButton().getHoveredStyle().getBackground().setColor(ColorConstants.transparent());
+        component.getResizeButton().getPressedStyle().getBackground().setColor(ColorConstants.transparent());
         component.getResizeButton().getStyle().setBorder(null);
 
         CharIcon icon = new CharIcon(FontRegistry.MATERIAL_DESIGN_ICONS, '\uF45D');

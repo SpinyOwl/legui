@@ -20,6 +20,9 @@ public class DarkButtonTheme<T extends Button> extends DarkComponentTheme<T> {
     public void apply(T component) {
         super.apply(component);
         component.getStyle().setBorder(new SimpleLineBorder(ColorConstants.lightGray(), 1.2f));
+        component.getStyle().getBackground().setColor(ColorConstants.darkGray());
+        component.getHoveredStyle().getBackground().setColor(ColorConstants.darkGray().mul(1.5f,1.5f,1.5f,1));
+        component.getPressedStyle().getBackground().setColor(ColorConstants.darkGray().mul(2.5f,2.5f,2.5f,1));
         component.getTextState().setTextColor(ColorConstants.white());
     }
 }

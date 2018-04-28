@@ -14,6 +14,8 @@ public class WhiteToggleButtonTheme<T extends ToggleButton> extends WhiteCompone
     public void apply(T component) {
         super.apply(component);
         component.getStyle().getBackground().setColor(ColorConstants.red());
+        component.getHoveredStyle().getBackground().setColor(ColorConstants.red().mul(0.9f, 0.9f, 0.9f, 1f));
+        component.getPressedStyle().getBackground().setColor(ColorConstants.red().mul(0.7f, 0.7f, 0.7f, 1f));
         component.setToggledBackgroundColor(ColorConstants.green());
     }
 }

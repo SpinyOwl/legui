@@ -43,25 +43,48 @@ public class NvgButtonRenderer extends NvgDefaultComponentRenderer<Button> {
         boolean focused = button.isFocused();
         boolean hovered = button.isHovered();
         boolean pressed = button.isPressed();
+
         Style style = button.getStyle();
+        Style currStyle = button.getStyle();
 
         Icon bgIcon = style.getBackground().getIcon();
         Vector4f bgColor = style.getBackground().getColor();
         Vector4f cornerRadius = style.getBorderRadius();
 
-        if (hovered) {
-            if (!pressed) {
-                Style hoveredStyle = button.getHoveredStyle();
-                if (hoveredStyle.getBackground().getColor() != null) {
-                    bgColor = hoveredStyle.getBackground().getColor();
-                }
-                if (hoveredStyle.getBackground().getIcon() != null) {
-                    bgIcon = hoveredStyle.getBackground().getIcon();
-                }
-                if (hoveredStyle.getBorderRadius() != null) {
-                    cornerRadius = hoveredStyle.getBorderRadius();
-                }
-            } else {
+        if(focused) {
+            currStyle = button.getFocusedStyle();
+            if (currStyle.getBackground().getColor() != null) {
+                bgColor = currStyle.getBackground().getColor();
+            }
+            if (currStyle.getBackground().getIcon() != null) {
+                bgIcon = currStyle.getBackground().getIcon();
+            }
+            if (currStyle.getBorderRadius() != null) {
+                cornerRadius = currStyle.getBorderRadius();
+            }
+        }
+        if(hovered) {
+            currStyle = button.getHoveredStyle();
+            if (currStyle.getBackground().getColor() != null) {
+                bgColor = currStyle.getBackground().getColor();
+            }
+            if (currStyle.getBackground().getIcon() != null) {
+                bgIcon = currStyle.getBackground().getIcon();
+            }
+            if (currStyle.getBorderRadius() != null) {
+                cornerRadius = currStyle.getBorderRadius();
+            }
+        }
+        if(pressed) {
+            currStyle = button.getPressedStyle();
+            if (currStyle.getBackground().getColor() != null) {
+                bgColor = currStyle.getBackground().getColor();
+            }
+            if (currStyle.getBackground().getIcon() != null) {
+                bgIcon = currStyle.getBackground().getIcon();
+            }
+            if (currStyle.getBorderRadius() != null) {
+                cornerRadius = currStyle.getBorderRadius();
             }
         }
 

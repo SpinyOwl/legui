@@ -167,6 +167,7 @@ public class Widget extends Component {
         this.title.getStyle().setPosition(PositionType.RELATIVE);
         this.title.getStyle().setMaxWidth(Float.MAX_VALUE);
         this.title.getStyle().setMaxHeight((float) INITIAL_TITLE_HEIGHT);
+        this.title.getStyle().setHeight((float) INITIAL_TITLE_HEIGHT);
         this.title.getStyle().setMinWidth(0f);
         this.title.getStyle().setMinHeight((float) INITIAL_TITLE_HEIGHT);
         this.title.getStyle().getBackground().setColor(ColorConstants.transparent());
@@ -258,7 +259,7 @@ public class Widget extends Component {
         resizeButton.getStyle().setRight(0f);
         resizeButton.getStyle().setBorder(null);
         resizeButton.getStyle().getBackground().setColor(ColorConstants.transparent());
-
+        resizeButton.setTabFocusable(false);
         resizeButton.getListenerMap().addListener(MouseDragEvent.class, new WidgetResizeButtonDragListener(resizeButton, this));
 
         this.add(titleContainer);
@@ -266,31 +267,6 @@ public class Widget extends Component {
         this.add(resizeButton);
 
         Themes.getDefaultTheme().getThemeManager().getComponentTheme(Widget.class).applyAll(this);
-    }
-
-    /**
-     * Used to set size of widget.
-     *
-     * @param size size vector.
-     */
-    @Override
-    public void setSize(Vector2f size) {
-        if (!minimized) {
-            super.setSize(size);
-        }
-    }
-
-    /**
-     * Used to set size of widget.
-     *
-     * @param width width to set.
-     * @param height height to set.
-     */
-    @Override
-    public void setSize(float width, float height) {
-        if (!minimized) {
-            super.setSize(width, height);
-        }
     }
 
     /**
@@ -308,8 +284,12 @@ public class Widget extends Component {
      * @param titleHeight title height to set.
      */
     public void setTitleHeight(float titleHeight) {
-        this.titleContainer.getSize().y = titleHeight;
-        this.title.getSize().y = titleHeight;
+        this.titleContainer.getStyle().setMinHeight(titleHeight);
+        this.titleContainer.getStyle().setHeight(titleHeight);
+        this.titleContainer.getStyle().setMaxHeight(titleHeight);
+        this.title.getStyle().setMinHeight(titleHeight);
+        this.title.getStyle().setHeight(titleHeight);
+        this.title.getStyle().setMaxHeight(titleHeight);
     }
 
     /**
@@ -516,10 +496,12 @@ public class Widget extends Component {
             maximizedWidth = getStyle().getWidth();
             maximizedHeight = getStyle().getHeight();
 
-            size.set(size.x, getTitleHeight());
+            float titleHeight = getTitleHeight();
+            size.set(size.x, titleHeight);
 
-//            this.getStyle().setWidth(size.x);
-//            this.getStyle().setHeight(getTitleHeight());
+            this.getStyle().setMaxHeight(titleHeight);
+            this.getStyle().setHeight(titleHeight);
+            this.getStyle().setMinHeight(titleHeight);
 
             if (resizable) {
                 resizeButton.getStyle().setDisplay(DisplayType.NONE);
