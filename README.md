@@ -3,12 +3,12 @@
 [![CODACY](https://img.shields.io/codacy/grade/e3a864cc6d6a4f08938a7b368bdb35da.svg?style=flat-square)](https://www.codacy.com/app/LiquidEngine/legui) 
 ![License](https://img.shields.io/github/license/LiquidEngine/legui.svg?style=flat-square)  
 [![DEVELOP BUILD](https://img.shields.io/jenkins/s/http/jenkins.liquidengine.tk/job/LEGUI_DEVELOP.svg?label=develop&style=flat-square)](http://jenkins.liquidengine.tk/job/LEGUI_DEVELOP/)
-[![](https://img.shields.io/jenkins/s/http/jenkins.liquidengine.tk/job/LEGUI_SNAPSHOTS.svg?label=snapshot&style=flat-square)](http://jenkins.liquidengine.tk/job/LEGUI_SNAPSHOTS/)
-[![](https://img.shields.io/jenkins/s/http/jenkins.liquidengine.tk/job/LEGUI_RELEASES.svg?label=release&style=flat-square)](http://jenkins.liquidengine.tk/job/LEGUI_RELEASES/)  
-![STABLE DEVELOP VERSION](https://img.shields.io/badge/dynamic/json.svg?label=develop&colorB=00796b&prefix=&suffix=&query=$.version&uri=http%3A%2F%2Fjenkins.liquidengine.tk%2Fjob%2FLEGUI_DEVELOP%2FlastSuccessfulBuild%2Fartifact%2FfullVersion.json&style=flat-square)
-![STABLE SNAPSHOT VERSION](https://img.shields.io/badge/dynamic/json.svg?label=snapshot&colorB=00796b&prefix=&suffix=&query=$.version&uri=http%3A%2F%2Fjenkins.liquidengine.tk%2Fjob%2FLEGUI_SNAPSHOTS%2FlastSuccessfulBuild%2Fartifact%2FfullVersion.json&style=flat-square)
-![STABLE RELEASE VERSION](https://img.shields.io/badge/dynamic/json.svg?label=release&colorB=00796b&prefix=&suffix=&query=$.version&uri=http%3A%2F%2Fjenkins.liquidengine.tk%2Fjob%2FLEGUI_RELEASES%2FlastSuccessfulBuild%2Fartifact%2FfullVersion.json&style=flat-square)  
-![LAST FEATURE VERSION](https://img.shields.io/badge/dynamic/json.svg?label=feature&colorB=00796b&prefix=&suffix=&query=$.version&uri=http%3A%2F%2Fjenkins.liquidengine.tk%2Fjob%2FLEGUI_FEATURE%2FlastSuccessfulBuild%2Fartifact%2FfullVersion.json&style=flat-square)
+[![](https://img.shields.io/jenkins/s/https/jenkins.liquidengine.tk/job/LEGUI_SNAPSHOTS.svg?label=snapshot&style=flat-square)](https://jenkins.liquidengine.tk/job/LEGUI_SNAPSHOTS/)
+[![](https://img.shields.io/jenkins/s/https/jenkins.liquidengine.tk/job/LEGUI_RELEASES.svg?label=release&style=flat-square)](https://jenkins.liquidengine.tk/job/LEGUI_RELEASES/)  
+![STABLE DEVELOP VERSION](https://img.shields.io/badge/dynamic/json.svg?label=develop&colorB=00796b&prefix=&suffix=&query=$.version&uri=https%3A%2F%2Fjenkins.liquidengine.tk%2Fjob%2FLEGUI_DEVELOP%2FlastSuccessfulBuild%2Fartifact%2FfullVersion.json&style=flat-square)
+![STABLE SNAPSHOT VERSION](https://img.shields.io/badge/dynamic/json.svg?label=snapshot&colorB=00796b&prefix=&suffix=&query=$.version&uri=https%3A%2F%2Fjenkins.liquidengine.tk%2Fjob%2FLEGUI_SNAPSHOTS%2FlastSuccessfulBuild%2Fartifact%2FfullVersion.json&style=flat-square)
+![STABLE RELEASE VERSION](https://img.shields.io/badge/dynamic/json.svg?label=release&colorB=00796b&prefix=&suffix=&query=$.version&uri=https%3A%2F%2Fjenkins.liquidengine.tk%2Fjob%2FLEGUI_RELEASES%2FlastSuccessfulBuild%2Fartifact%2FfullVersion.json&style=flat-square)  
+![LAST FEATURE VERSION](https://img.shields.io/badge/dynamic/json.svg?label=feature&colorB=00796b&prefix=&suffix=&query=$.version&uri=https%3A%2F%2Fjenkins.liquidengine.tk%2Fjob%2FLEGUI_FEATURE%2FlastSuccessfulBuild%2Fartifact%2FfullVersion.json&style=flat-square)
 
 ___
 # TOC
