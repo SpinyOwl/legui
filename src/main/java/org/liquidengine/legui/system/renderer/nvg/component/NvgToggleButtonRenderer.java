@@ -80,6 +80,8 @@ public class NvgToggleButtonRenderer extends NvgDefaultComponentRenderer<ToggleB
             }
         }
 
+        NvgRenderUtils.renderShadow(nvg, agui);
+
         boolean toggled = agui.isToggled();
         if (toggled) {
             NvgShapes.drawRect(nvg, pos, size, agui.getToggledBackgroundColor(), cornerRadius);
