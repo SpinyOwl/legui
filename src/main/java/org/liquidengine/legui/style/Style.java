@@ -6,6 +6,7 @@ import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.style.flex.FlexStyle;
 import org.liquidengine.legui.style.font.Font;
 import org.liquidengine.legui.style.font.FontRegistry;
+import org.liquidengine.legui.style.shadow.Shadow;
 
 /**
  * The type Style.
@@ -50,6 +51,8 @@ public class Style {
     private Float bottom;
     private Float right;
     private Float left;
+
+    private Shadow shadow;
 
     /**
      * Stroke color. Used to render stroke if component is focused.
@@ -578,6 +581,14 @@ public class Style {
     public void setMaximumSize(float width, float height) {
         setMaxWidth(width);
         setMaxHeight(height);
+    }
+
+    public Shadow getShadow() {
+        return shadow;
+    }
+
+    public void setShadow(Shadow shadow) {
+        this.shadow = shadow;
     }
 
     /**

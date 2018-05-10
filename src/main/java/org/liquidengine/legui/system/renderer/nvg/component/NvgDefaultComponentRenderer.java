@@ -15,6 +15,7 @@ import org.liquidengine.legui.style.Style;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.RendererProvider;
 import org.liquidengine.legui.system.renderer.nvg.NvgComponentRenderer;
+import org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgShapes;
 
 /**
@@ -94,6 +95,8 @@ public class NvgDefaultComponentRenderer<C extends Component> extends NvgCompone
                 bgIcon = currStyle.getBackground().getIcon();
             }
         }
+
+        NvgRenderUtils.renderShadow(nanovg, component);
 
         nvgSave(nanovg);
         NvgShapes.drawRect(nanovg, component.getAbsolutePosition(), component.getSize(), bgColor, cornerRadius);

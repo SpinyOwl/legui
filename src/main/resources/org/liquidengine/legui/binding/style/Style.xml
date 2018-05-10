@@ -43,5 +43,8 @@
     <bind field="focusedStrokeColor">
         <using-binding path="org/liquidengine/legui/binding/common/Vector4fColor.xml"/>
     </bind>
+    <bind field="shadow">
+        <using-binding path="org/liquidengine/legui/binding/style/StyleShadow.xml"/>
+    </bind>
 
 </class-binding>

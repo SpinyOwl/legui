@@ -54,6 +54,7 @@ import org.liquidengine.legui.listener.MouseClickEventListener;
 import org.liquidengine.legui.style.Style;
 import org.liquidengine.legui.style.Style.DisplayType;
 import org.liquidengine.legui.style.Style.PositionType;
+import org.liquidengine.legui.style.shadow.Shadow;
 import org.liquidengine.legui.style.border.SimpleLineBorder;
 import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.style.font.FontRegistry;
@@ -605,6 +606,42 @@ public class ExampleGui extends Panel {
         switchTheme.getListenerMap().addListener(MouseClickEvent.class,
                 switchThemeClickListener(current, darkTheme, defaultTheme, text, dark, light, switchTheme));
         this.add(switchTheme);
+
+
+        Widget shadowWidget = new Widget(20, 310, 200, 120);
+
+        shadowWidget.getTitleTextState().setText("Shadow test widget");
+        shadowWidget.setCloseable(false);
+        shadowWidget.setResizable(false);
+
+        shadowWidget.getStyle().setShadow(new Shadow());
+        shadowWidget.getStyle().getShadow().setColor(ColorConstants.red());
+
+
+        Slider hOffsetSlider = new Slider(110, 5 + 20 * 0, 80, 10); shadowWidget.getContainer().add(hOffsetSlider); hOffsetSlider.setValue(50f);
+        hOffsetSlider.addSliderChangeValueEventListener((e)-> {shadowWidget.getStyle().getShadow().sethOffset(hOffsetSlider.getValue() - 50f);});
+        Label hOffsetLabel = new Label(10, 5 + 20 * 0, 90, 10); hOffsetLabel.getTextState().setText("HOffset: "); shadowWidget.getContainer().add(hOffsetLabel);
+
+        Slider vOffsetSlider = new Slider(110, 5 + 20 * 1, 80, 10); shadowWidget.getContainer().add(vOffsetSlider); vOffsetSlider.setValue(50f);
+        vOffsetSlider.addSliderChangeValueEventListener((e)-> {shadowWidget.getStyle().getShadow().setvOffset(vOffsetSlider.getValue() - 50f);});
+        Label vOffsetLabel = new Label(10, 5 + 20 * 1, 90, 10); vOffsetLabel.getTextState().setText("VOffset: "); shadowWidget.getContainer().add(vOffsetLabel);
+
+        Slider blurSlider = new Slider(110, 5 + 20 * 2, 80, 10); shadowWidget.getContainer().add(blurSlider);
+        blurSlider.addSliderChangeValueEventListener((e)-> {shadowWidget.getStyle().getShadow().setBlur(blurSlider.getValue());});
+        Label blurLabel = new Label(10, 5 + 20 * 2, 90, 10); blurLabel.getTextState().setText("Blur: "); shadowWidget.getContainer().add(blurLabel);
+
+        Slider spreadSlider = new Slider(110, 5 + 20 * 3, 80, 10); shadowWidget.getContainer().add(spreadSlider); spreadSlider.setValue(50f);
+        spreadSlider.addSliderChangeValueEventListener((e)-> {shadowWidget.getStyle().getShadow().setSpread(spreadSlider.getValue() - 50f);});
+        Label spreadLabel = new Label(10, 5 + 20 * 3, 90, 10); spreadLabel.getTextState().setText("Spread: "); shadowWidget.getContainer().add(spreadLabel);
+
+        Slider transparencySlider = new Slider(110, 5 + 20 * 4, 80, 10); shadowWidget.getContainer().add(transparencySlider);
+        transparencySlider.addSliderChangeValueEventListener((e)-> {
+            shadowWidget.getStyle().getBackground().getColor().w = 1- transparencySlider.getValue() / 100f;
+            shadowWidget.getContainer().getStyle().getBackground().getColor().w =1- transparencySlider.getValue() / 100f;
+        });
+        Label transparencyLabel = new Label(10, 5 + 20 * 4, 90, 10); transparencyLabel.getTextState().setText("W Transparency: "); shadowWidget.getContainer().add(transparencyLabel);
+
+        this.add(shadowWidget);
     }
 
     private Animation createColorAnimationOnHover(Component component, Vector4f newColor, Component targetComponent) {

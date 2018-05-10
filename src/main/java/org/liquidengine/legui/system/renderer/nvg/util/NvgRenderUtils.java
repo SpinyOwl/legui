@@ -32,6 +32,7 @@ import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
 import org.liquidengine.legui.style.Style;
+import org.liquidengine.legui.style.shadow.Shadow;
 import org.lwjgl.nanovg.NVGColor;
 import org.lwjgl.nanovg.NVGPaint;
 
@@ -233,6 +234,52 @@ public final class NvgRenderUtils {
         }
         if (curr.getBorderBottomLeftRadius() != null) {
             r.x = curr.getBorderBottomLeftRadius();
+        }
+    }
+
+    public static void renderShadow(long context, Component component) {
+        Shadow shadow = component.getStyle().getShadow();
+        if (shadow != null && shadow.getColor() != null && shadow.getColor().w > 0.01f) {
+            float hOffset = shadow.gethOffset();
+            float vOffset = shadow.getvOffset();
+            float blur = shadow.getBlur();
+            float spread = shadow.getSpread();
+            Vector2f absolutePosition = component.getAbsolutePosition();
+            Vector2f size = component.getSize();
+
+            float x = absolutePosition.x;
+            float y = absolutePosition.y;
+            float w = size.x;
+            float h = size.y;
+            Vector4f borderRadius = component.getStyle().getBorderRadius();
+            float cornerRadius = (borderRadius.x + borderRadius.y + borderRadius.z + borderRadius.w) / 4;
+
+            NVGPaint shadowPaint = NVGPaint.calloc();
+            NVGColor colorA = NVGColor.calloc();
+            NVGColor colorB = NVGColor.calloc();
+
+            nvgBoxGradient(context,
+                           x + hOffset - spread,
+                           y + vOffset - spread,
+                           w + 2 * spread,
+                           h + 2 * spread,
+                           cornerRadius * 2,
+                           blur,
+                           NvgColorUtil.rgba(shadow.getColor(), colorA),
+                           NvgColorUtil.rgba(0, 0, 0, 0, colorB),
+                           shadowPaint);
+            nvgBeginPath(context);
+            nvgRect(context,
+                    x + hOffset - spread - blur,
+                    y + vOffset - spread - blur,
+                    w + 2 * spread + 2 * blur,
+                    h + 2 * spread + 2 * blur);
+            nvgRoundedRect(context, x, y, w, h, cornerRadius);
+            nvgPathWinding(context, NVG_HOLE);
+            nvgFillPaint(context, shadowPaint);
+            nvgFill(context);
+
+            shadowPaint.free();
         }
     }
 }
