@@ -8,6 +8,7 @@ import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_MIDDLE;
 import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_RIGHT;
 import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_TOP;
 import static org.lwjgl.nanovg.NanoVG.NVG_HOLE;
+import static org.lwjgl.nanovg.NanoVG.NVG_SOLID;
 import static org.lwjgl.nanovg.NanoVG.nvgBeginPath;
 import static org.lwjgl.nanovg.NanoVG.nvgBoxGradient;
 import static org.lwjgl.nanovg.NanoVG.nvgFill;
@@ -16,7 +17,10 @@ import static org.lwjgl.nanovg.NanoVG.nvgIntersectScissor;
 import static org.lwjgl.nanovg.NanoVG.nvgPathWinding;
 import static org.lwjgl.nanovg.NanoVG.nvgRect;
 import static org.lwjgl.nanovg.NanoVG.nvgResetScissor;
+import static org.lwjgl.nanovg.NanoVG.nvgRestore;
 import static org.lwjgl.nanovg.NanoVG.nvgRoundedRect;
+import static org.lwjgl.nanovg.NanoVG.nvgRoundedRectVarying;
+import static org.lwjgl.nanovg.NanoVG.nvgSave;
 import static org.lwjgl.nanovg.NanoVG.nvgScissor;
 import static org.lwjgl.nanovg.NanoVG.nvgTextAlign;
 import static org.lwjgl.nanovg.NanoVG.nvgTextBounds;
@@ -53,7 +57,7 @@ public final class NvgRenderUtils {
     }
 
     public static float[] calculateTextBoundsRect(long context, float x, float y, float w, float h, String text, HorizontalAlign horizontalAlign,
-                                                  VerticalAlign verticalAlign) {
+        VerticalAlign verticalAlign) {
         ByteBuffer byteText = null;
         try {
             byteText = memUTF8(text, false);
@@ -66,7 +70,7 @@ public final class NvgRenderUtils {
     }
 
     public static float[] calculateTextBoundsRect(long context, float x, float y, float w, float h, ByteBuffer text, HorizontalAlign horizontalAlign,
-                                                  VerticalAlign verticalAlign) {
+        VerticalAlign verticalAlign) {
         float bounds[] = new float[4];
         nvgTextBounds(context, x, y, text, bounds);
         return createBounds(x, y, w, h, horizontalAlign, verticalAlign, bounds);
@@ -122,7 +126,7 @@ public final class NvgRenderUtils {
         NVGColor colorB = NVGColor.calloc();
 
         nvgBoxGradient(context, x, y + 2, w, h, cornerRadius * 2, 10, NvgColorUtil.rgba(shadowColor, colorA), NvgColorUtil.rgba(0, 0, 0, 0, colorB),
-                       shadowPaint);
+            shadowPaint);
         nvgBeginPath(context);
         nvgRect(context, x - 10, y - 10, w + 20, h + 30);
         nvgRoundedRect(context, x, y, w, h, cornerRadius);
@@ -258,24 +262,33 @@ public final class NvgRenderUtils {
             NVGColor colorA = NVGColor.calloc();
             NVGColor colorB = NVGColor.calloc();
 
+            NVGColor firstColor = NvgColorUtil.rgba(shadow.getColor(), colorA);
+            NVGColor secondColor = NvgColorUtil.rgba(0, 0, 0, 0, colorB);
+            // creating gradient and put it to shadowPaint
             nvgBoxGradient(context,
-                           x + hOffset - spread,
-                           y + vOffset - spread,
-                           w + 2 * spread,
-                           h + 2 * spread,
-                           cornerRadius * 2,
-                           blur,
-                           NvgColorUtil.rgba(shadow.getColor(), colorA),
-                           NvgColorUtil.rgba(0, 0, 0, 0, colorB),
-                           shadowPaint);
+                x + hOffset - spread,
+                y + vOffset - spread,
+                w + 2 * spread,
+                h + 2 * spread,
+                cornerRadius + spread,
+                blur,
+                firstColor,
+                secondColor,
+                shadowPaint);
             nvgBeginPath(context);
-            nvgRect(context,
-                    x + hOffset - spread - blur,
-                    y + vOffset - spread - blur,
-                    w + 2 * spread + 2 * blur,
-                    h + 2 * spread + 2 * blur);
-            nvgRoundedRect(context, x, y, w, h, cornerRadius);
+            nvgPathWinding(context, NVG_SOLID);
+            nvgRoundedRectVarying(context,
+                x + hOffset - spread - blur,
+                y + vOffset - spread - blur,
+                w + 2 * spread + 2 * blur,
+                h + 2 * spread + 2 * blur,
+                borderRadius.x + spread,
+                borderRadius.y + spread,
+                borderRadius.z + spread,
+                borderRadius.w + spread
+            );
             nvgPathWinding(context, NVG_HOLE);
+            nvgRoundedRectVarying(context, x, y, w, h, borderRadius.x, borderRadius.y, borderRadius.z, borderRadius.w);
             nvgFillPaint(context, shadowPaint);
             nvgFill(context);
 
