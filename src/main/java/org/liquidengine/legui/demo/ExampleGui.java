@@ -596,15 +596,13 @@ public class ExampleGui extends Panel {
         radioButton2.setRadioButtonGroup(radioButtonGroup);
 
         final Theme[] current = {Themes.getDefaultTheme()};
-        DarkTheme darkTheme = new DarkTheme();
-        WhiteTheme defaultTheme = new WhiteTheme();
+        final Theme[] list = {Themes.DARK_THEME, Themes.FLAT_PETERRIVER,Themes.FLAT_DARK, Themes.WHITE_THEME };
+        final int[] themeIndex = {0};
 
-        String text = "Switch theme to ";
-        String dark = "dark";
-        String light = "light";
-        Button switchTheme = new Button(text + dark, 600, 400, 120, 30);
+        String text = "Switch theme ";
+        Button switchTheme = new Button(text, 600, 400, 120, 30);
         switchTheme.getListenerMap().addListener(MouseClickEvent.class,
-                switchThemeClickListener(current, darkTheme, defaultTheme, text, dark, light, switchTheme));
+                switchThemeClickListener(current, list, themeIndex, switchTheme));
         this.add(switchTheme);
 
 
@@ -672,18 +670,18 @@ public class ExampleGui extends Panel {
         };
     }
 
-    private MouseClickEventListener switchThemeClickListener(Theme[] current, DarkTheme darkTheme, WhiteTheme defaultTheme, String text,
-                                                             String dark, String light, Button switchTheme) {
+    private MouseClickEventListener switchThemeClickListener(Theme[] current, Theme[] list, int[] index, Button switchTheme) {
         return event -> {
             if (event.getAction().equals(CLICK) && event.getButton().equals(MOUSE_BUTTON_LEFT)) {
-                if (current[0] instanceof DarkTheme) {
-                    current[0] = defaultTheme;
-                    switchTheme.getTextState().setText(text + dark);
+                Theme curr = current[0];
+                if(index[0] < list.length && index[0]>-1) {
+                    curr = list[index[0]];
+                    index[0] = (index[0] + 1) % list.length;
                 } else {
-                    current[0] = darkTheme;
-                    switchTheme.getTextState().setText(text + light);
+                    index[0] = 0;
+                    curr = list[0];
                 }
-                Themes.setDefaultTheme(current[0]);
+                Themes.setDefaultTheme(curr);
                 Themes.getDefaultTheme().applyAll(event.getFrame());
             }
         };

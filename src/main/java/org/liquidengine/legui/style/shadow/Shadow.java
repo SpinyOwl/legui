@@ -14,6 +14,17 @@ public class Shadow {
     private float spread;
     private Vector4f color = ColorConstants.transparent();
 
+    public Shadow() {
+    }
+
+    public Shadow(float hOffset, float vOffset, float blur, float spread, Vector4f color) {
+        this.hOffset = hOffset;
+        this.vOffset = vOffset;
+        this.blur = blur;
+        this.spread = spread;
+        this.color = color;
+    }
+
     public float gethOffset() {
         return hOffset;
     }

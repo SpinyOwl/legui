@@ -98,7 +98,7 @@ public final class ColorUtil {
      * @return opposite black or white color.
      */
     public static Vector4f oppositeBlackOrWhite(Vector4f color) {
-        return oppositeBlackOrWhite(color, new Vector4f(1));
+        return oppositeBlackOrWhite(color, new Vector4f(1,1,1,1));
     }
 
     /**
