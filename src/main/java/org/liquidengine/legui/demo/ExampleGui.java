@@ -60,8 +60,6 @@ import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.style.font.FontRegistry;
 import org.liquidengine.legui.theme.Theme;
 import org.liquidengine.legui.theme.Themes;
-import org.liquidengine.legui.theme.dark.DarkTheme;
-import org.liquidengine.legui.theme.white.WhiteTheme;
 import org.liquidengine.legui.util.TextUtil;
 import org.lwjgl.glfw.GLFW;
 
@@ -348,7 +346,6 @@ public class ExampleGui extends Panel {
         widget3.getContainer().add(new Panel(30, 5, 20, 20));
         widget3.getContainer().add(new Panel(30, 30, 20, 20));
         widget3.getContainer().add(new Panel(5, 30, 20, 20));
-        widget3.getContainer().add(new Panel(5, 30, 20, 20));
         Button b = new Button(55, 5, 40, 20);
         b.getTextState().setFont(FontRegistry.MATERIAL_ICONS_REGULAR);
         b.getTextState().setVerticalAlign(MIDDLE);
@@ -596,7 +593,7 @@ public class ExampleGui extends Panel {
         radioButton2.setRadioButtonGroup(radioButtonGroup);
 
         final Theme[] current = {Themes.getDefaultTheme()};
-        final Theme[] list = {Themes.DARK_THEME, Themes.FLAT_PETERRIVER,Themes.FLAT_DARK, Themes.WHITE_THEME };
+        final Theme[] list = { Themes.FLAT_DARK, Themes.FLAT_PETERRIVER,Themes.FLAT_PETERRIVER_DARK, Themes.FLAT_WHITE };
         final int[] themeIndex = {0};
 
         String text = "Switch theme ";
