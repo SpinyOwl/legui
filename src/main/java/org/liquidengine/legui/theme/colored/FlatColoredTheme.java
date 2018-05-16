@@ -23,6 +23,8 @@ import org.liquidengine.legui.component.Widget;
 import org.liquidengine.legui.theme.DefaultThemeManager;
 import org.liquidengine.legui.theme.Theme;
 import org.liquidengine.legui.theme.ThemeManager;
+import org.liquidengine.legui.theme.colored.def.FlatButtonTheme;
+import org.liquidengine.legui.theme.colored.def.FlatCheckBoxTheme;
 import org.liquidengine.legui.theme.colored.def.FlatComponentTheme;
 import org.liquidengine.legui.theme.colored.def.FlatLabelTheme;
 import org.liquidengine.legui.theme.colored.def.FlatLayerContainerTheme;
@@ -40,8 +42,6 @@ import org.liquidengine.legui.theme.colored.def.FlatTextInputTheme;
 import org.liquidengine.legui.theme.colored.def.FlatToggleButtonTheme;
 import org.liquidengine.legui.theme.colored.def.FlatTooltipTheme;
 import org.liquidengine.legui.theme.colored.def.FlatWidgetTheme;
-import org.liquidengine.legui.theme.colored.def.FlatButtonTheme;
-import org.liquidengine.legui.theme.colored.def.FlatCheckBoxTheme;
 
 /**
  * Dark Theme. Used to change theme of components to dark.
@@ -52,10 +52,10 @@ public class FlatColoredTheme extends Theme {
      * Used to create theme instance.
      */
     public FlatColoredTheme(
-        Vector4f defBgColor, Vector4f borderColor,
-        Vector4f strokeColor, Vector4f allowColor, Vector4f denyColor
+        Vector4f defBgColor, Vector4f borderColor, Vector4f strokeColor,
+        Vector4f allowColor, Vector4f denyColor, Vector4f shadowColor
     ) {
-        super(createThemeManager(defBgColor, borderColor, strokeColor, allowColor, denyColor));
+        super(createThemeManager(new FlatColoredThemeSettings(defBgColor, borderColor, strokeColor, allowColor, denyColor, shadowColor)));
     }
 
     /**
@@ -63,53 +63,103 @@ public class FlatColoredTheme extends Theme {
      *
      * @return initialized theme manager.
      */
-    private static ThemeManager createThemeManager(Vector4f bg1, Vector4f borderC, Vector4f sColor, Vector4f aColor, Vector4f dColor) {
+    private static ThemeManager createThemeManager(FlatColoredThemeSettings settings) {
         ThemeManager m = new DefaultThemeManager();
         //@formatter:off
         m.setComponentTheme(Button.class,
-                            new FlatButtonTheme<>                   (c(bg1), c(borderC), c(sColor), c(aColor), c(dColor)));
+                            new FlatButtonTheme<>                   (settings));
         m.setComponentTheme(Panel.class,
-                            new FlatPanelTheme<>                    (c(bg1), c(borderC), c(sColor), c(aColor), c(dColor)));
+                            new FlatPanelTheme<>                    (settings));
         m.setComponentTheme(CheckBox.class,
-                            new FlatCheckBoxTheme<>                 (c(bg1), c(borderC), c(sColor), c(aColor), c(dColor)));
+                            new FlatCheckBoxTheme<>                 (settings));
         m.setComponentTheme(Component.class,
-                            new FlatComponentTheme<>                (c(bg1), c(borderC), c(sColor), c(aColor), c(dColor)));
+                            new FlatComponentTheme<>                (settings));
         m.setComponentTheme(Label.class,
-                            new FlatLabelTheme<>                    (c(bg1), c(borderC), c(sColor), c(aColor), c(dColor)));
+                            new FlatLabelTheme<>                    (settings));
         m.setComponentTheme(LayerContainer.class,
-                            new FlatLayerContainerTheme<>           (c(bg1), c(borderC), c(sColor), c(aColor), c(dColor)));
+                            new FlatLayerContainerTheme<>           (settings));
         m.setComponentTheme(ProgressBar.class,
-                            new FlatProgressBarTheme<>              (c(bg1), c(borderC), c(sColor), c(aColor), c(dColor)));
+                            new FlatProgressBarTheme<>              (settings));
         m.setComponentTheme(ScrollablePanel.class,
-                            new FlatScrollablePanelTheme<>          (c(bg1), c(borderC), c(sColor), c(aColor), c(dColor)));
+                            new FlatScrollablePanelTheme<>          (settings));
         m.setComponentTheme(RadioButton.class,
-                            new FlatRadioButtonTheme<>              (c(bg1), c(borderC), c(sColor), c(aColor), c(dColor)));
+                            new FlatRadioButtonTheme<>              (settings));
         m.setComponentTheme(ScrollBar.class,
-                            new FlatScrollBarTheme<>                (c(bg1), c(borderC), c(sColor), c(aColor), c(dColor)));
+                            new FlatScrollBarTheme<>                (settings));
         m.setComponentTheme(SelectBox.class,
-                            new FlatSelectBoxTheme<>                (c(bg1), c(borderC), c(sColor), c(aColor), c(dColor)));
+                            new FlatSelectBoxTheme<>                (settings));
         m.setComponentTheme(SelectBoxScrollablePanel.class,
-                            new FlatSelectBoxScrollablePanelTheme<> (c(bg1), c(borderC), c(sColor), c(aColor), c(dColor)));
+                            new FlatSelectBoxScrollablePanelTheme<> (settings));
         m.setComponentTheme(SelectBoxElement.class,
-                            new FlatSelectBoxElementTheme<>         (c(bg1), c(borderC), c(sColor), c(aColor), c(dColor)));
+                            new FlatSelectBoxElementTheme<>         (settings));
         m.setComponentTheme(Slider.class,
-                            new FlatSliderTheme<>                   (c(bg1), c(borderC), c(sColor), c(aColor), c(dColor)));
+                            new FlatSliderTheme<>                   (settings));
         m.setComponentTheme(TextArea.class,
-                            new FlatTextAreaTheme<>                 (c(bg1), c(borderC), c(sColor), c(aColor), c(dColor)));
+                            new FlatTextAreaTheme<>                 (settings));
         m.setComponentTheme(TextInput.class,
-                            new FlatTextInputTheme<>                (c(bg1), c(borderC), c(sColor), c(aColor), c(dColor)));
+                            new FlatTextInputTheme<>                (settings));
         m.setComponentTheme(ToggleButton.class,
-                            new FlatToggleButtonTheme<>             (c(bg1), c(borderC), c(sColor), c(aColor), c(dColor)));
+                            new FlatToggleButtonTheme<>             (settings));
         m.setComponentTheme(Tooltip.class,
-                            new FlatTooltipTheme<>                  (c(bg1), c(borderC), c(sColor), c(aColor), c(dColor)));
+                            new FlatTooltipTheme<>                  (settings));
         m.setComponentTheme(Widget.class,
-                            new FlatWidgetTheme<>                   (c(bg1), c(borderC), c(sColor), c(aColor), c(dColor)));
+                            new FlatWidgetTheme<>                   (settings));
         //@formatter:on
         return m;
     }
 
     private static Vector4f c(Vector4f s) {
         return new Vector4f(s);
+    }
+
+    public static class FlatColoredThemeSettings {
+
+        private final Vector4f backgroundColor;
+        private final Vector4f borderColor;
+        private final Vector4f allowColor;
+        private final Vector4f strokeColor;
+        private final Vector4f denyColor;
+        private final Vector4f shadowColor;
+
+        public FlatColoredThemeSettings(
+            Vector4f backgroundColor, Vector4f borderColor, Vector4f strokeColor,
+            Vector4f allowColor, Vector4f denyColor, Vector4f shadowColor
+        ) {
+            this.backgroundColor = backgroundColor;
+            this.borderColor = borderColor;
+            this.allowColor = allowColor;
+            this.strokeColor = strokeColor;
+            this.denyColor = denyColor;
+            this.shadowColor = shadowColor;
+        }
+
+        public Vector4f backgroundColor() {
+            return new Vector4f(backgroundColor);
+        }
+
+        public Vector4f borderColor() {
+            return new Vector4f(borderColor);
+        }
+
+        public Vector4f strokeColor() {
+            return new Vector4f(strokeColor);
+        }
+
+        public Vector4f allowColor() {
+            return new Vector4f(allowColor);
+        }
+
+        public Vector4f denyColor() {
+            return new Vector4f(denyColor);
+        }
+
+        public Vector4f shadowColor() {
+            if (shadowColor != null) {
+                return new Vector4f(shadowColor);
+            } else {
+                return null;
+            }
+        }
     }
 
 }

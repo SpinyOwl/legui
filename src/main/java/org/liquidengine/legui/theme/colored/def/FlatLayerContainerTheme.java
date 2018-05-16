@@ -1,8 +1,8 @@
 package org.liquidengine.legui.theme.colored.def;
 
-import org.joml.Vector4f;
 import org.liquidengine.legui.component.LayerContainer;
 import org.liquidengine.legui.style.color.ColorConstants;
+import org.liquidengine.legui.theme.colored.FlatColoredTheme.FlatColoredThemeSettings;
 
 /**
  * Dark LayerContainer Theme for all layer containers. Used to make layer container dark.
@@ -11,9 +11,8 @@ import org.liquidengine.legui.style.color.ColorConstants;
  */
 public class FlatLayerContainerTheme<T extends LayerContainer> extends FlatComponentTheme<T> {
 
-    public FlatLayerContainerTheme(Vector4f backgroundColor, Vector4f borderColor, Vector4f strokeColor, Vector4f allowColor,
-        Vector4f denyColor) {
-        super(backgroundColor, borderColor, strokeColor, allowColor, denyColor);
+    public FlatLayerContainerTheme(FlatColoredThemeSettings settings) {
+        super(settings);
     }
 
     /**

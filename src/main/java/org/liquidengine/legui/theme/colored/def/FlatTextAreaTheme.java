@@ -1,10 +1,10 @@
 package org.liquidengine.legui.theme.colored.def;
 
-import org.joml.Vector4f;
 import org.liquidengine.legui.component.TextArea;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.style.color.ColorUtil;
 import org.liquidengine.legui.style.shadow.Shadow;
+import org.liquidengine.legui.theme.colored.FlatColoredTheme.FlatColoredThemeSettings;
 
 /**
  * Dark TextArea Theme for all text areas. Used to make text area dark.
@@ -13,13 +13,11 @@ import org.liquidengine.legui.style.shadow.Shadow;
  */
 public class FlatTextAreaTheme<T extends TextArea> extends FlatComponentTheme<T> {
 
-    private final Vector4f backgroundColor;
-    private final Vector4f strokeColor;
+    private FlatColoredThemeSettings settings;
 
-    public FlatTextAreaTheme(Vector4f backgroundColor, Vector4f borderColor, Vector4f strokeColor, Vector4f allowColor, Vector4f denyColor) {
-        super(backgroundColor, borderColor, strokeColor, allowColor, denyColor);
-        this.backgroundColor = backgroundColor;
-        this.strokeColor = strokeColor;
+    public FlatTextAreaTheme(FlatColoredThemeSettings settings) {
+        super(settings);
+        this.settings = settings;
     }
 
     /**
@@ -30,11 +28,16 @@ public class FlatTextAreaTheme<T extends TextArea> extends FlatComponentTheme<T>
     @Override
     public void apply(T component) {
         super.apply(component);
-        component.getStyle().setShadow(new Shadow(-4, 4, 17, -7, ColorUtil.oppositeBlackOrWhite(backgroundColor).mul(0.8f)));
-        component.getFocusedStyle().getBackground().setColor(new Vector4f(backgroundColor).mul(3).add(ColorUtil.oppositeBlackOrWhite(backgroundColor)).div(4));
-        component.getTextState().setTextColor(ColorUtil.oppositeBlackOrWhite(backgroundColor));
+        if (settings.shadowColor()== null || settings.shadowColor().length() > 0.00001f) {
+            component.getStyle().setShadow(new Shadow(-4, 4, 17, -7, settings.shadowColor()));
+        } else {
+            component.getStyle().setShadow(null);
+        }
+        component.getFocusedStyle().getBackground()
+            .setColor(settings.backgroundColor().mul(3).add(ColorUtil.oppositeBlackOrWhite(settings.backgroundColor())).div(4));
+        component.getTextState().setTextColor(ColorUtil.oppositeBlackOrWhite(settings.backgroundColor()));
         component.getTextState().setHorizontalAlign(HorizontalAlign.LEFT);
-        component.getTextState().setHighlightColor(new Vector4f(strokeColor));
-        component.getStyle().getBackground().setColor(new Vector4f(backgroundColor));
+        component.getTextState().setHighlightColor(settings.strokeColor());
+        component.getStyle().getBackground().setColor(settings.backgroundColor());
     }
 }

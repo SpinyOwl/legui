@@ -3,12 +3,12 @@ package org.liquidengine.legui.theme.colored.def;
 import static org.liquidengine.legui.style.font.FontRegistry.MATERIAL_ICONS_REGULAR;
 
 import org.joml.Vector2f;
-import org.joml.Vector4f;
 import org.liquidengine.legui.component.CheckBox;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.icon.CharIcon;
 import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.style.color.ColorUtil;
+import org.liquidengine.legui.theme.colored.FlatColoredTheme.FlatColoredThemeSettings;
 
 /**
  * Dark CheckBox Theme for all check boxes. Used to make check box dark.
@@ -17,11 +17,11 @@ import org.liquidengine.legui.style.color.ColorUtil;
  */
 public class FlatCheckBoxTheme<T extends CheckBox> extends FlatComponentTheme<T> {
 
-    private Vector4f backgroundColor;
+    private FlatColoredThemeSettings settings;
 
-    public FlatCheckBoxTheme(Vector4f backgroundColor, Vector4f borderColor, Vector4f strokeColor, Vector4f allowColor, Vector4f denyColor) {
-        super(backgroundColor, borderColor, strokeColor, allowColor, denyColor);
-        this.backgroundColor = backgroundColor;
+    public FlatCheckBoxTheme(FlatColoredThemeSettings settings) {
+        super(settings);
+        this.settings = settings;
     }
 
     /**
@@ -34,10 +34,12 @@ public class FlatCheckBoxTheme<T extends CheckBox> extends FlatComponentTheme<T>
         super.apply(component);
         component.getStyle().setBorder(null);
         component.getStyle().getBackground().setColor(ColorConstants.transparent());
-        component.getTextState().setTextColor(ColorUtil.oppositeBlackOrWhite(backgroundColor));
+        component.getTextState().setTextColor(ColorUtil.oppositeBlackOrWhite(settings.backgroundColor()));
         component.getTextState().setHorizontalAlign(HorizontalAlign.LEFT);
-        component.setIconUnchecked(new CharIcon(new Vector2f(16), MATERIAL_ICONS_REGULAR, (char) 0xE835, ColorUtil.oppositeBlackOrWhite(backgroundColor)));
-        component.setIconChecked(new CharIcon(new Vector2f(16), MATERIAL_ICONS_REGULAR, (char) 0xE834, ColorUtil.oppositeBlackOrWhite(backgroundColor)));
+        component.setIconUnchecked(
+            new CharIcon(new Vector2f(14), MATERIAL_ICONS_REGULAR, (char) 0xE835, ColorUtil.oppositeBlackOrWhite(settings.backgroundColor())));
+        component
+            .setIconChecked(new CharIcon(new Vector2f(14), MATERIAL_ICONS_REGULAR, (char) 0xE834, ColorUtil.oppositeBlackOrWhite(settings.backgroundColor())));
         component.getIconUnchecked().setHorizontalAlign(HorizontalAlign.LEFT);
         component.getIconChecked().setHorizontalAlign(HorizontalAlign.LEFT);
     }

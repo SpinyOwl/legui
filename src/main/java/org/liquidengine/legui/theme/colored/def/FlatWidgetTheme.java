@@ -1,7 +1,7 @@
 package org.liquidengine.legui.theme.colored.def;
 
 import org.joml.Vector2f;
-import org.joml.Vector4f;
+import org.liquidengine.legui.component.Button;
 import org.liquidengine.legui.component.Widget;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
@@ -14,6 +14,7 @@ import org.liquidengine.legui.style.color.ColorUtil;
 import org.liquidengine.legui.style.font.FontRegistry;
 import org.liquidengine.legui.style.shadow.Shadow;
 import org.liquidengine.legui.theme.Themes;
+import org.liquidengine.legui.theme.colored.FlatColoredTheme.FlatColoredThemeSettings;
 
 /**
  * Dark Widget Theme for all scrollable widgets. Used to make widget dark.
@@ -22,17 +23,11 @@ import org.liquidengine.legui.theme.Themes;
  */
 public class FlatWidgetTheme<T extends Widget> extends FlatComponentTheme<T> {
 
-    private final Vector4f backgroundColor;
-    private final Vector4f borderColor;
-    private final Vector4f allowColor;
-    private final Vector4f denyColor;
+    private final FlatColoredThemeSettings settings;
 
-    public FlatWidgetTheme(Vector4f backgroundColor, Vector4f borderColor, Vector4f strokeColor, Vector4f allowColor, Vector4f denyColor) {
-        super(backgroundColor, borderColor, strokeColor, allowColor, denyColor);
-        this.backgroundColor = backgroundColor;
-        this.borderColor = borderColor;
-        this.allowColor = allowColor;
-        this.denyColor = denyColor;
+    public FlatWidgetTheme(FlatColoredThemeSettings settings) {
+        super(settings);
+        this.settings = settings;
     }
 
     /**
@@ -43,21 +38,27 @@ public class FlatWidgetTheme<T extends Widget> extends FlatComponentTheme<T> {
     @Override
     public void applyAll(T component) {
         super.applyAll(component);
-        component.getStyle().getBackground().setColor(new Vector4f(backgroundColor));
+        component.getStyle().getBackground().setColor(settings.backgroundColor());
 
-        component.getStyle().setShadow(new Shadow(-4, 4, 17, -7, ColorUtil.oppositeBlackOrWhite(backgroundColor).mul(0.8f)));
+        if (settings.shadowColor()== null || settings.shadowColor().length() > 0.00001f) {
+            component.getStyle().setShadow(new Shadow(-4, 4, 17, -7, settings.shadowColor()));
+        } else {
+            component.getStyle().setShadow(null);
+        }
 
-        component.getMinimizeButton().getStyle().getBackground().setColor(new Vector4f(allowColor));
-        component.getMinimizeButton().getHoveredStyle().getBackground().setColor(new Vector4f(allowColor).add(ColorUtil.oppositeBlackOrWhite(allowColor)).div(2));
-        component.getMinimizeButton().getStyle().setBorder(null);
-        component.getMinimizeButton().getTextState().setTextColor(ColorUtil.oppositeBlackOrWhite(allowColor));
+        Button minimizeButton = component.getMinimizeButton();
+        minimizeButton.getStyle().getBackground().setColor(settings.allowColor());
+        minimizeButton.getHoveredStyle().getBackground().setColor(settings.allowColor().add(ColorUtil.oppositeBlackOrWhite(settings.allowColor())).div(2));
+        minimizeButton.getStyle().setBorder(null);
+        minimizeButton.getTextState().setTextColor(ColorUtil.oppositeBlackOrWhite(settings.allowColor()));
 
-        component.getCloseButton().getStyle().getBackground().setColor(new Vector4f(denyColor));
-        component.getCloseButton().getHoveredStyle().getBackground().setColor(new Vector4f(denyColor).add(ColorUtil.oppositeBlackOrWhite(allowColor)).div(2));
+        component.getCloseButton().getStyle().getBackground().setColor(settings.denyColor());
+        component.getCloseButton().getHoveredStyle().getBackground()
+            .setColor(settings.denyColor().add(ColorUtil.oppositeBlackOrWhite(settings.denyColor())).div(2));
         component.getCloseButton().getStyle().setBorder(null);
-        component.getCloseButton().getTextState().setTextColor(ColorUtil.oppositeBlackOrWhite(denyColor));
+        component.getCloseButton().getTextState().setTextColor(ColorUtil.oppositeBlackOrWhite(settings.denyColor()));
 
-        component.getTitleContainer().getStyle().getBackground().setColor(new Vector4f(backgroundColor));
+        component.getTitleContainer().getStyle().getBackground().setColor(settings.backgroundColor());
 
         component.getResizeButton().getStyle().getBackground().setColor(ColorConstants.transparent());
         component.getResizeButton().getHoveredStyle().getBackground().setColor(ColorConstants.transparent());
@@ -67,16 +68,16 @@ public class FlatWidgetTheme<T extends Widget> extends FlatComponentTheme<T> {
         CharIcon icon = new CharIcon(FontRegistry.MATERIAL_DESIGN_ICONS, '\uF45D');
         icon.setSize(new Vector2f(20, 20));
         icon.setPosition(new Vector2f(-10, -10));
-        icon.setColor(ColorUtil.oppositeBlackOrWhite(backgroundColor));
+        icon.setColor(ColorUtil.oppositeBlackOrWhite(settings.backgroundColor()));
         component.getResizeButton().getStyle().getBackground().setIcon(icon);
 
         TextState titleTextState = component.getTitleTextState();
         titleTextState.setPadding(7, 3, 5, 2);
-        titleTextState.setTextColor(ColorUtil.oppositeBlackOrWhite(backgroundColor));
+        titleTextState.setTextColor(ColorUtil.oppositeBlackOrWhite(settings.backgroundColor()));
         Icon closeIcon = component.getCloseIcon();
         if (closeIcon != null && closeIcon instanceof CharIcon) {
             CharIcon bgIcon = (CharIcon) closeIcon;
-            bgIcon.setColor(ColorUtil.oppositeBlackOrWhite(backgroundColor));
+            bgIcon.setColor(ColorUtil.oppositeBlackOrWhite(settings.backgroundColor()));
             bgIcon.setHorizontalAlign(HorizontalAlign.CENTER);
             bgIcon.setVerticalAlign(VerticalAlign.MIDDLE);
         }
@@ -84,7 +85,7 @@ public class FlatWidgetTheme<T extends Widget> extends FlatComponentTheme<T> {
         Icon minimizeIcon = component.getMinimizeIcon();
         if (minimizeIcon != null && minimizeIcon instanceof CharIcon) {
             CharIcon bgIcon = (CharIcon) minimizeIcon;
-            bgIcon.setColor(ColorUtil.oppositeBlackOrWhite(backgroundColor));
+            bgIcon.setColor(ColorUtil.oppositeBlackOrWhite(settings.backgroundColor()));
             bgIcon.setHorizontalAlign(HorizontalAlign.CENTER);
             bgIcon.setVerticalAlign(VerticalAlign.MIDDLE);
         }
@@ -92,22 +93,22 @@ public class FlatWidgetTheme<T extends Widget> extends FlatComponentTheme<T> {
         Icon maximizeIcon = component.getMaximizeIcon();
         if (maximizeIcon != null && maximizeIcon instanceof CharIcon) {
             CharIcon bgIcon = (CharIcon) maximizeIcon;
-            bgIcon.setColor(ColorUtil.oppositeBlackOrWhite(backgroundColor));
+            bgIcon.setColor(ColorUtil.oppositeBlackOrWhite(settings.backgroundColor()));
             bgIcon.setHorizontalAlign(HorizontalAlign.CENTER);
             bgIcon.setVerticalAlign(VerticalAlign.MIDDLE);
         }
 
         Themes.getDefaultTheme().applyAll(component.getContainer());
-        component.getContainer().getStyle().getBackground().setColor(new Vector4f(backgroundColor));
-        component.getContainer().getStyle().setBorder(new SimpleLineBorder(new Vector4f(borderColor), 1));
+        component.getContainer().getStyle().getBackground().setColor(settings.backgroundColor());
+        component.getContainer().getStyle().setBorder(new SimpleLineBorder(settings.borderColor(), 1));
         component.getContainer().getStyle().setShadow(null);
 
-        component.getStyle().setBorder(new SimpleLineBorder(new Vector4f(borderColor), 1));
-        component.getTitleContainer().getStyle().setBorder(new SimpleLineBorder(new Vector4f(borderColor), 1));
+        component.getStyle().setBorder(new SimpleLineBorder(settings.borderColor(), 1));
+        component.getTitleContainer().getStyle().setBorder(new SimpleLineBorder(settings.borderColor(), 1));
         component.getTitleContainer().getStyle().setShadow(null);
 
         component.getCloseButton().getStyle().setShadow(null);
-        component.getMinimizeButton().getStyle().setShadow(null);
+        minimizeButton.getStyle().setShadow(null);
         component.getResizeButton().getStyle().setShadow(null);
 
     }

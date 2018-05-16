@@ -1,8 +1,8 @@
 package org.liquidengine.legui.theme.colored.def;
 
-import org.joml.Vector4f;
 import org.liquidengine.legui.component.Slider;
 import org.liquidengine.legui.style.color.ColorConstants;
+import org.liquidengine.legui.theme.colored.FlatColoredTheme.FlatColoredThemeSettings;
 
 /**
  * Dark Slider Theme for all sliders. Used to make slider dark.
@@ -11,13 +11,11 @@ import org.liquidengine.legui.style.color.ColorConstants;
  */
 public class FlatSliderTheme<T extends Slider> extends FlatComponentTheme<T> {
 
-    private final Vector4f borderColor;
-    private final Vector4f allowColor;
+    private FlatColoredThemeSettings settings;
 
-    public FlatSliderTheme(Vector4f backgroundColor, Vector4f borderColor, Vector4f strokeColor, Vector4f allowColor, Vector4f denyColor) {
-        super(backgroundColor, borderColor, strokeColor, allowColor, denyColor);
-        this.borderColor = borderColor;
-        this.allowColor = allowColor;
+    public FlatSliderTheme(FlatColoredThemeSettings settings) {
+        super(settings);
+        this.settings = settings;
     }
 
     /**
@@ -29,8 +27,8 @@ public class FlatSliderTheme<T extends Slider> extends FlatComponentTheme<T> {
     public void apply(T component) {
         super.apply(component);
         component.getStyle().getBackground().setColor(ColorConstants.transparent());
-        component.setSliderColor(new Vector4f(borderColor));
-        component.setSliderActiveColor(new Vector4f(allowColor));
+        component.setSliderColor(settings.borderColor());
+        component.setSliderActiveColor(settings.allowColor());
         component.getStyle().setBorder(null);
     }
 }

@@ -36,12 +36,12 @@ public class RadioButton extends Component implements TextComponent {
     /**
      * Used to render unchecked state of radio button.
      */
-    private Icon iconUnchecked = new CharIcon(new Vector2f(16, 16), MATERIAL_ICONS_REGULAR, (char) 0xE836);
+    private Icon iconUnchecked = new CharIcon(new Vector2f(14, 14), MATERIAL_ICONS_REGULAR, (char) 0xE836);
 
     /**
      * Used to render checked state of radio button.
      */
-    private Icon iconChecked = new CharIcon(new Vector2f(16, 16), MATERIAL_ICONS_REGULAR, (char) 0xE837);
+    private Icon iconChecked = new CharIcon(new Vector2f(14, 14), MATERIAL_ICONS_REGULAR, (char) 0xE837);
 
     /**
      * Used to represent if radio button checked or not.

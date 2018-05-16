@@ -1,9 +1,9 @@
 package org.liquidengine.legui.theme.colored.def;
 
-import org.joml.Vector4f;
 import org.liquidengine.legui.component.SelectBox;
 import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.style.color.ColorUtil;
+import org.liquidengine.legui.theme.colored.FlatColoredTheme.FlatColoredThemeSettings;
 
 /**
  * Dark SelectBox Theme for all select boxes. Used to make select box dark.
@@ -12,12 +12,11 @@ import org.liquidengine.legui.style.color.ColorUtil;
  */
 public class FlatSelectBoxElementTheme<T extends SelectBox.SelectBoxElement> extends FlatButtonTheme<T> {
 
-    private final Vector4f backgroundColor;
+    private FlatColoredThemeSettings settings;
 
-    public FlatSelectBoxElementTheme(Vector4f backgroundColor, Vector4f borderColor, Vector4f strokeColor, Vector4f allowColor,
-        Vector4f denyColor) {
-        super(backgroundColor, borderColor, strokeColor, allowColor, denyColor);
-        this.backgroundColor = backgroundColor;
+    public FlatSelectBoxElementTheme(FlatColoredThemeSettings settings) {
+        super(settings);
+        this.settings = settings;
     }
 
     /**
@@ -31,6 +30,6 @@ public class FlatSelectBoxElementTheme<T extends SelectBox.SelectBoxElement> ext
         component.getStyle().setBorder(null);
         component.getStyle().setShadow(null);
         component.getStyle().getBackground().setColor(ColorConstants.transparent());
-        component.getTextState().setTextColor(ColorUtil.oppositeBlackOrWhite(backgroundColor));
+        component.getTextState().setTextColor(ColorUtil.oppositeBlackOrWhite(settings.backgroundColor()));
     }
 }

@@ -40,7 +40,7 @@ public class FontRegistry {
     /**
      * Font used by default. {@link #ROBOTO_BOLD}.
      */
-    public static final String DEFAULT = ROBOTO_BOLD;
+    public static final String DEFAULT = ROBOTO_LIGHT;
     /**
      * Font register.
      */

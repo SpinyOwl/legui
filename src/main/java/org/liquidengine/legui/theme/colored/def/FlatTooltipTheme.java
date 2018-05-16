@@ -4,6 +4,7 @@ import org.joml.Vector4f;
 import org.liquidengine.legui.component.Tooltip;
 import org.liquidengine.legui.style.color.ColorUtil;
 import org.liquidengine.legui.style.shadow.Shadow;
+import org.liquidengine.legui.theme.colored.FlatColoredTheme.FlatColoredThemeSettings;
 
 /**
  * Dark Tooltip Theme for all tooltips. Used to make tooltip dark.
@@ -12,11 +13,11 @@ import org.liquidengine.legui.style.shadow.Shadow;
  */
 public class FlatTooltipTheme<T extends Tooltip> extends FlatComponentTheme<T> {
 
-    private final Vector4f backgroundColor;
+    private FlatColoredThemeSettings settings;
 
-    public FlatTooltipTheme(Vector4f backgroundColor, Vector4f borderColor, Vector4f strokeColor, Vector4f allowColor, Vector4f denyColor) {
-        super(backgroundColor, borderColor, strokeColor, allowColor, denyColor);
-        this.backgroundColor = backgroundColor;
+    public FlatTooltipTheme(FlatColoredThemeSettings settings) {
+        super(settings);
+        this.settings = settings;
     }
 
     /**
@@ -28,7 +29,7 @@ public class FlatTooltipTheme<T extends Tooltip> extends FlatComponentTheme<T> {
     public void apply(T component) {
         super.apply(component);
         component.getStyle().setBorder(null);
-        Vector4f bgc = ColorUtil.negativeColorRGB(backgroundColor);
+        Vector4f bgc = ColorUtil.negativeColorRGB(settings.backgroundColor());
         component.getStyle().getBackground().setColor(bgc);
         component.getStyle().setShadow(new Shadow(-4, 4, 17, -7, ColorUtil.oppositeBlackOrWhite(bgc).mul(0.8f)));
 

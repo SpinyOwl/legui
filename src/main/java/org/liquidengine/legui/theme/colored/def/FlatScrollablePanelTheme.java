@@ -8,6 +8,7 @@ import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.style.color.ColorUtil;
 import org.liquidengine.legui.style.shadow.Shadow;
 import org.liquidengine.legui.theme.Themes;
+import org.liquidengine.legui.theme.colored.FlatColoredTheme.FlatColoredThemeSettings;
 
 /**
  * Dark ScrollablePanel Theme for all scrollable panels. Used to make scrollable panel dark.
@@ -16,14 +17,11 @@ import org.liquidengine.legui.theme.Themes;
  */
 public class FlatScrollablePanelTheme<T extends ScrollablePanel> extends FlatComponentTheme<T> {
 
-    private final Vector4f backgroundColor;
-    private final Vector4f borderColor;
+    private FlatColoredThemeSettings settings;
 
-    public FlatScrollablePanelTheme(Vector4f backgroundColor, Vector4f borderColor, Vector4f strokeColor, Vector4f allowColor,
-        Vector4f denyColor) {
-        super(backgroundColor, borderColor, strokeColor, allowColor, denyColor);
-        this.backgroundColor = backgroundColor;
-        this.borderColor = borderColor;
+    public FlatScrollablePanelTheme(FlatColoredThemeSettings settings) {
+        super(settings);
+        this.settings = settings;
     }
 
     /**
@@ -35,9 +33,13 @@ public class FlatScrollablePanelTheme<T extends ScrollablePanel> extends FlatCom
     public void apply(T component) {
         super.apply(component);
 
-        Vector4f bgc = ColorUtil.oppositeBlackOrWhite(new Vector4f(backgroundColor).mul(3)).add(new Vector4f(backgroundColor).mul(3)).div(4);
+        Vector4f bgc = ColorUtil.oppositeBlackOrWhite(settings.backgroundColor().mul(3)).add(settings.backgroundColor().mul(3)).div(4);
         component.getStyle().getBackground().setColor(bgc);
-        component.getStyle().setShadow(new Shadow(-4, 4, 17, -7, ColorUtil.oppositeBlackOrWhite(backgroundColor).mul(0.8f)));
+        if (settings.shadowColor()== null || settings.shadowColor().length() > 0.00001f) {
+            component.getStyle().setShadow(new Shadow(-4, 4, 17, -7, settings.shadowColor()));
+        } else {
+            component.getStyle().setShadow(null);
+        }
 
         Component viewport = component.getViewport();
         Themes.getDefaultTheme().apply(viewport);
@@ -46,8 +48,8 @@ public class FlatScrollablePanelTheme<T extends ScrollablePanel> extends FlatCom
         viewport.getStyle().getBackground().setColor(ColorConstants.transparent());
         component.getContainer().getStyle().getBackground().setColor(new Vector4f(bgc));
 
-        component.getStyle().setBorder(new SimpleLineBorder(new Vector4f(borderColor), 1));
-        component.getViewport().getStyle().setBorder(new SimpleLineBorder(new Vector4f(borderColor), 1));
+        component.getStyle().setBorder(new SimpleLineBorder(settings.borderColor(), 1));
+        component.getViewport().getStyle().setBorder(new SimpleLineBorder(settings.borderColor(), 1));
     }
 
 }

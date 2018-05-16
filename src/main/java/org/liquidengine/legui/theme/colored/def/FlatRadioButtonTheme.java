@@ -3,12 +3,12 @@ package org.liquidengine.legui.theme.colored.def;
 import static org.liquidengine.legui.style.font.FontRegistry.MATERIAL_ICONS_REGULAR;
 
 import org.joml.Vector2f;
-import org.joml.Vector4f;
 import org.liquidengine.legui.component.RadioButton;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.icon.CharIcon;
 import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.style.color.ColorUtil;
+import org.liquidengine.legui.theme.colored.FlatColoredTheme.FlatColoredThemeSettings;
 
 /**
  * Dark RadioButton Theme for all radio buttons. Used to make radio button dark.
@@ -17,11 +17,11 @@ import org.liquidengine.legui.style.color.ColorUtil;
  */
 public class FlatRadioButtonTheme<T extends RadioButton> extends FlatComponentTheme<T> {
 
-    private final Vector4f backgroundColor;
+    private FlatColoredThemeSettings settings;
 
-    public FlatRadioButtonTheme(Vector4f backgroundColor, Vector4f borderColor, Vector4f strokeColor, Vector4f allowColor, Vector4f denyColor) {
-        super(backgroundColor, borderColor, strokeColor, allowColor, denyColor);
-        this.backgroundColor = backgroundColor;
+    public FlatRadioButtonTheme(FlatColoredThemeSettings settings) {
+        super(settings);
+        this.settings = settings;
     }
 
     /**
@@ -34,9 +34,11 @@ public class FlatRadioButtonTheme<T extends RadioButton> extends FlatComponentTh
         super.apply(component);
         component.getStyle().setBorder(null);
         component.getStyle().getBackground().setColor(ColorConstants.transparent());
-        component.getTextState().setTextColor(ColorUtil.oppositeBlackOrWhite(backgroundColor));
-        component.setIconUnchecked(new CharIcon(new Vector2f(16), MATERIAL_ICONS_REGULAR, (char) 0xE836, ColorUtil.oppositeBlackOrWhite(backgroundColor)));
-        component.setIconChecked(new CharIcon(new Vector2f(16), MATERIAL_ICONS_REGULAR, (char) 0xE837, ColorUtil.oppositeBlackOrWhite(backgroundColor)));
+        component.getTextState().setTextColor(ColorUtil.oppositeBlackOrWhite(settings.backgroundColor()));
+        component.setIconUnchecked(
+            new CharIcon(new Vector2f(14), MATERIAL_ICONS_REGULAR, (char) 0xE836, ColorUtil.oppositeBlackOrWhite(settings.backgroundColor())));
+        component
+            .setIconChecked(new CharIcon(new Vector2f(14), MATERIAL_ICONS_REGULAR, (char) 0xE837, ColorUtil.oppositeBlackOrWhite(settings.backgroundColor())));
         component.getIconUnchecked().setHorizontalAlign(HorizontalAlign.LEFT);
         component.getIconChecked().setHorizontalAlign(HorizontalAlign.LEFT);
         component.getTextState().setHorizontalAlign(HorizontalAlign.LEFT);

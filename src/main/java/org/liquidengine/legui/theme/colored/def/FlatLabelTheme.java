@@ -1,10 +1,10 @@
 package org.liquidengine.legui.theme.colored.def;
 
-import org.joml.Vector4f;
 import org.liquidengine.legui.component.Label;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.style.color.ColorUtil;
+import org.liquidengine.legui.theme.colored.FlatColoredTheme.FlatColoredThemeSettings;
 
 /**
  * Dark Label Theme for all labels. Used to make label dark.
@@ -13,11 +13,11 @@ import org.liquidengine.legui.style.color.ColorUtil;
  */
 public class FlatLabelTheme<T extends Label> extends FlatComponentTheme<T> {
 
-    private final Vector4f backgroundColor;
+    private FlatColoredThemeSettings settings;
 
-    public FlatLabelTheme(Vector4f backgroundColor, Vector4f borderColor, Vector4f strokeColor, Vector4f allowColor, Vector4f denyColor) {
-        super(backgroundColor, borderColor, strokeColor, allowColor, denyColor);
-        this.backgroundColor = backgroundColor;
+    public FlatLabelTheme(FlatColoredThemeSettings settings) {
+        super(settings);
+        this.settings = settings;
     }
 
     /**
@@ -30,7 +30,7 @@ public class FlatLabelTheme<T extends Label> extends FlatComponentTheme<T> {
         super.apply(component);
         component.getStyle().setBorder(null);
         component.getStyle().getBackground().setColor(ColorConstants.transparent());
-        component.getTextState().setTextColor(ColorUtil.oppositeBlackOrWhite(backgroundColor));
+        component.getTextState().setTextColor(ColorUtil.oppositeBlackOrWhite(settings.backgroundColor()));
         component.getTextState().setHorizontalAlign(HorizontalAlign.LEFT);
     }
 }
