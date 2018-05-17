@@ -52,10 +52,10 @@ public class FlatColoredTheme extends Theme {
      * Used to create theme instance.
      */
     public FlatColoredTheme(
-        Vector4f defBgColor, Vector4f borderColor, Vector4f strokeColor,
+        Vector4f backgroundColor, Vector4f borderColor, Vector4f strokeColor,
         Vector4f allowColor, Vector4f denyColor, Vector4f shadowColor
     ) {
-        super(createThemeManager(new FlatColoredThemeSettings(defBgColor, borderColor, strokeColor, allowColor, denyColor, shadowColor)));
+        super(createThemeManager(new FlatColoredThemeSettings(backgroundColor, borderColor, strokeColor, allowColor, denyColor, shadowColor)));
     }
 
     /**
@@ -66,44 +66,25 @@ public class FlatColoredTheme extends Theme {
     private static ThemeManager createThemeManager(FlatColoredThemeSettings settings) {
         ThemeManager m = new DefaultThemeManager();
         //@formatter:off
-        m.setComponentTheme(Button.class,
-                            new FlatButtonTheme<>                   (settings));
-        m.setComponentTheme(Panel.class,
-                            new FlatPanelTheme<>                    (settings));
-        m.setComponentTheme(CheckBox.class,
-                            new FlatCheckBoxTheme<>                 (settings));
-        m.setComponentTheme(Component.class,
-                            new FlatComponentTheme<>                (settings));
-        m.setComponentTheme(Label.class,
-                            new FlatLabelTheme<>                    (settings));
-        m.setComponentTheme(LayerContainer.class,
-                            new FlatLayerContainerTheme<>           (settings));
-        m.setComponentTheme(ProgressBar.class,
-                            new FlatProgressBarTheme<>              (settings));
-        m.setComponentTheme(ScrollablePanel.class,
-                            new FlatScrollablePanelTheme<>          (settings));
-        m.setComponentTheme(RadioButton.class,
-                            new FlatRadioButtonTheme<>              (settings));
-        m.setComponentTheme(ScrollBar.class,
-                            new FlatScrollBarTheme<>                (settings));
-        m.setComponentTheme(SelectBox.class,
-                            new FlatSelectBoxTheme<>                (settings));
-        m.setComponentTheme(SelectBoxScrollablePanel.class,
-                            new FlatSelectBoxScrollablePanelTheme<> (settings));
-        m.setComponentTheme(SelectBoxElement.class,
-                            new FlatSelectBoxElementTheme<>         (settings));
-        m.setComponentTheme(Slider.class,
-                            new FlatSliderTheme<>                   (settings));
-        m.setComponentTheme(TextArea.class,
-                            new FlatTextAreaTheme<>                 (settings));
-        m.setComponentTheme(TextInput.class,
-                            new FlatTextInputTheme<>                (settings));
-        m.setComponentTheme(ToggleButton.class,
-                            new FlatToggleButtonTheme<>             (settings));
-        m.setComponentTheme(Tooltip.class,
-                            new FlatTooltipTheme<>                  (settings));
-        m.setComponentTheme(Widget.class,
-                            new FlatWidgetTheme<>                   (settings));
+        m.setComponentTheme(Button.class,                   new FlatButtonTheme<>                   (settings));
+        m.setComponentTheme(Panel.class,                    new FlatPanelTheme<>                    (settings));
+        m.setComponentTheme(CheckBox.class,                 new FlatCheckBoxTheme<>                 (settings));
+        m.setComponentTheme(Component.class,                new FlatComponentTheme<>                (settings));
+        m.setComponentTheme(Label.class,                    new FlatLabelTheme<>                    (settings));
+        m.setComponentTheme(LayerContainer.class,           new FlatLayerContainerTheme<>           (settings));
+        m.setComponentTheme(ProgressBar.class,              new FlatProgressBarTheme<>              (settings));
+        m.setComponentTheme(ScrollablePanel.class,          new FlatScrollablePanelTheme<>          (settings));
+        m.setComponentTheme(RadioButton.class,              new FlatRadioButtonTheme<>              (settings));
+        m.setComponentTheme(ScrollBar.class,                new FlatScrollBarTheme<>                (settings));
+        m.setComponentTheme(SelectBox.class,                new FlatSelectBoxTheme<>                (settings));
+        m.setComponentTheme(SelectBoxScrollablePanel.class, new FlatSelectBoxScrollablePanelTheme<> (settings));
+        m.setComponentTheme(SelectBoxElement.class,         new FlatSelectBoxElementTheme<>         (settings));
+        m.setComponentTheme(Slider.class,                   new FlatSliderTheme<>                   (settings));
+        m.setComponentTheme(TextArea.class,                 new FlatTextAreaTheme<>                 (settings));
+        m.setComponentTheme(TextInput.class,                new FlatTextInputTheme<>                (settings));
+        m.setComponentTheme(ToggleButton.class,             new FlatToggleButtonTheme<>             (settings));
+        m.setComponentTheme(Tooltip.class,                  new FlatTooltipTheme<>                  (settings));
+        m.setComponentTheme(Widget.class,                   new FlatWidgetTheme<>                   (settings));
         //@formatter:on
         return m;
     }

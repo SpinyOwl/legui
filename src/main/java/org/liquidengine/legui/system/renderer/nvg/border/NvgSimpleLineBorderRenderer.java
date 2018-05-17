@@ -27,15 +27,14 @@ public class NvgSimpleLineBorderRenderer extends NvgBorderRenderer<SimpleLineBor
             Vector2f size = component.getSize();
             Style style = component.getStyle();
             Vector2f absolutePosition = component.getAbsolutePosition();
-            if (component.isFocused() && style.getFocusedStrokeColor() != null) {
-                Vector4f strokeColor = style.getFocusedStrokeColor();
-                Vector2f pos = new Vector2f(absolutePosition);
-                NvgShapes.drawRectStroke(nanovg, pos.add(-0.5f, +0.5f), size, strokeColor, 1f, style.getBorderRadius());
-            }
 
             Vector2f bSize = new Vector2f(size);
             bSize.add(thickness, thickness);
             Vector2f bPos = new Vector2f(absolutePosition).sub(thickness / 2f, thickness / 2f);
+            if (component.isFocused() && style.getFocusedStrokeColor() != null) {
+                Vector4f strokeColor = style.getFocusedStrokeColor();
+                NvgShapes.drawRectStroke(nanovg, new Vector2f(bPos).add(-0.5f, +0.5f), new Vector2f(bSize).add(1f,1f), strokeColor, 1f, style.getBorderRadius());
+            }
             NvgShapes.drawRectStroke(nanovg, bPos, bSize, borderColor, thickness, style.getBorderRadius());
 
         }
