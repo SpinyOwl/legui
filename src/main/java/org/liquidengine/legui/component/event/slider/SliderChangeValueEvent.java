@@ -28,6 +28,7 @@ public class SliderChangeValueEvent<T extends Slider> extends Event<T> {
      * @param context legui context.
      * @param oldValue old slider value.
      * @param newValue new slider value.
+     * @param frame frame.
      */
     public SliderChangeValueEvent(T component, Context context, Frame frame, float oldValue, float newValue) {
         super(component, context, frame);

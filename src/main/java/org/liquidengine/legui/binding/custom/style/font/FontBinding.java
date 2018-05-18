@@ -21,6 +21,11 @@ public class FontBinding extends AbstractClassBinding<Font> {
         putBinding(binding);
     }
 
+    /**
+     * Used to load font after constructing and filling instance.
+     *
+     * @param instance instance to operate.
+     */
     @Override
     public void postConstruct(Font instance) {
         super.postConstruct(instance);

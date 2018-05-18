@@ -61,6 +61,8 @@ public final class ColorUtil {
      *
      * @param color color to negotiate.
      * @param dest target color object to set.
+     *
+     * @return destination color filled with negative color.
      */
     public static Vector4f negativeColorRGB(Vector4f color, Vector4f dest) {
         dest.zero().set(1).sub(color);

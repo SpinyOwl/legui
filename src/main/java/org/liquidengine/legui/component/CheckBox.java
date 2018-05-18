@@ -208,6 +208,8 @@ public class CheckBox extends Component implements TextComponent {
 
     /**
      * Used to remove event listener for checkbox change value event.
+     *
+     * @param listener listener to remove.
      */
     public void removeCheckBoxChangeValueListener(EventListener<CheckBoxChangeValueEvent> listener) {
         getListenerMap().removeListener(CheckBoxChangeValueEvent.class, listener);

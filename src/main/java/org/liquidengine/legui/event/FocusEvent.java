@@ -21,6 +21,7 @@ public class FocusEvent<T extends Component> extends Event<T> {
      * @param context context.
      * @param nextFocus focus receiver.
      * @param focused state of component.
+     * @param frame frame.
      */
     public FocusEvent(T component, Context context, Frame frame, Component nextFocus, boolean focused) {
         super(component, context, frame);

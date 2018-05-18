@@ -50,6 +50,13 @@ public class FlatColoredTheme extends Theme {
 
     /**
      * Used to create theme instance.
+     *
+     * @param backgroundColor background color.
+     * @param borderColor border color.
+     * @param strokeColor stroke color.
+     * @param allowColor allow color.
+     * @param denyColor deny color.
+     * @param shadowColor shadow color.
      */
     public FlatColoredTheme(
         Vector4f backgroundColor, Vector4f borderColor, Vector4f strokeColor,
@@ -61,6 +68,7 @@ public class FlatColoredTheme extends Theme {
     /**
      * Used to initialize theme manager.
      *
+     * @param settings settings to use by components theme.
      * @return initialized theme manager.
      */
     private static ThemeManager createThemeManager(FlatColoredThemeSettings settings) {
@@ -89,19 +97,46 @@ public class FlatColoredTheme extends Theme {
         return m;
     }
 
-    private static Vector4f c(Vector4f s) {
-        return new Vector4f(s);
-    }
-
+    /**
+     * Flat colored theme settings.
+     */
     public static class FlatColoredThemeSettings {
 
+        /**
+         * Background color.
+         */
         private final Vector4f backgroundColor;
+        /**
+         * Border color.
+         */
         private final Vector4f borderColor;
+        /**
+         * Stroke color.
+         */
         private final Vector4f allowColor;
+        /**
+         * Allow color.
+         */
         private final Vector4f strokeColor;
+        /**
+         * Deny color.
+         */
         private final Vector4f denyColor;
+        /**
+         * Shadow color.
+         */
         private final Vector4f shadowColor;
 
+        /**
+         * Used to create theme settings instance.
+         *
+         * @param backgroundColor background color.
+         * @param borderColor border color.
+         * @param strokeColor stroke color.
+         * @param allowColor allow color.
+         * @param denyColor deny color.
+         * @param shadowColor shadow color.
+         */
         public FlatColoredThemeSettings(
             Vector4f backgroundColor, Vector4f borderColor, Vector4f strokeColor,
             Vector4f allowColor, Vector4f denyColor, Vector4f shadowColor
@@ -114,32 +149,58 @@ public class FlatColoredTheme extends Theme {
             this.shadowColor = shadowColor;
         }
 
+        /**
+         * Returns background color.
+         *
+         * @return background color.
+         */
         public Vector4f backgroundColor() {
-            return new Vector4f(backgroundColor);
+            return backgroundColor == null ? null : new Vector4f(backgroundColor);
         }
 
+        /**
+         * Returns border color.
+         *
+         * @return border color.
+         */
         public Vector4f borderColor() {
-            return new Vector4f(borderColor);
+            return borderColor == null ? null : new Vector4f(borderColor);
         }
 
+        /**
+         * Returns stroke color.
+         *
+         * @return stroke color.
+         */
         public Vector4f strokeColor() {
-            return new Vector4f(strokeColor);
+            return strokeColor == null ? null : new Vector4f(strokeColor);
         }
 
+        /**
+         * Returns allow color.
+         *
+         * @return allow color.
+         */
         public Vector4f allowColor() {
-            return new Vector4f(allowColor);
+            return allowColor == null ? null : new Vector4f(allowColor);
         }
 
+        /**
+         * Returns deny color.
+         *
+         * @return deny color.
+         */
         public Vector4f denyColor() {
-            return new Vector4f(denyColor);
+            return denyColor == null ? null : new Vector4f(denyColor);
         }
 
+        /**
+         * Returns shadow color.
+         *
+         * @return shadow color.
+         */
         public Vector4f shadowColor() {
-            if (shadowColor != null) {
-                return new Vector4f(shadowColor);
-            } else {
-                return null;
-            }
+            return shadowColor == null ? null : new Vector4f(shadowColor);
         }
     }
 

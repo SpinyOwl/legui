@@ -26,7 +26,9 @@ public class BindingListParser extends DefaultHandler {
     private Map<Class, AbstractClassBinding> bindings = new LinkedHashMap<>();
 
     /**
-     * Receive notification of the start of an element. <p> <p>By default, do nothing.  Application writers may override this method in a subclass to take
+     * Receive notification of the start of an element.
+     * <p></p>
+     * <p>By default, do nothing.  Application writers may override this method in a subclass to take
      * specific actions at the start of each element (such as allocating a new tree node or writing output to a file).</p>
      *
      * @param uri The Namespace URI, or the empty string if the element has no Namespace URI or if Namespace processing is not being performed.

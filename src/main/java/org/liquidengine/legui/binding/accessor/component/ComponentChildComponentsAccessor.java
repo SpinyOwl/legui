@@ -34,6 +34,11 @@ public class ComponentChildComponentsAccessor extends AbstractFieldAccessor<Comp
         }
     }
 
+    /**
+     * Used to obtain field type.
+     *
+     * @return field type.
+     */
     @Override
     public Type getFieldType() {
         return new TypeToken<List<Component>>() {

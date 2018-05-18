@@ -65,6 +65,7 @@ public enum LeguiExceptionTemplate {
      * Used to create LeguiException with specified message, {@link Throwable} cause and provided variables.
      *
      * @param args error message variables.
+     * @param e throwable instance.
      *
      * @return exception constructed with message template.
      */

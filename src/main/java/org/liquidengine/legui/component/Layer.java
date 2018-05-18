@@ -478,6 +478,8 @@ public class Layer<T extends Component> {
      * Used to remove component.
      *
      * @param component component to remove.
+     *
+     * @return true if removed.
      */
     public boolean remove(T component) {
         return container.remove(component);

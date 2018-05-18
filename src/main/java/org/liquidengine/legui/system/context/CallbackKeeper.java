@@ -41,6 +41,7 @@ public interface CallbackKeeper {
      * Used to bind callbacks to OpenGL window. This method could be called only from main thread (Main OpenGL thread).
      *
      * @param window window to bind.
+     * @param keeper callback keeper with callbacks.
      */
     static void registerCallbacks(long window, CallbackKeeper keeper) {
         glfwSetCharCallback(window, keeper.getChainCharCallback());

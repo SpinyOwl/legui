@@ -173,6 +173,7 @@ public class NvgShapes {
      * @param position rectangle position.
      * @param size rectangle size.
      * @param rectStrokeColor rectangle color.
+     * @param strokeWidth stroke width.
      */
     public static void drawRectStroke(long nvg, Vector2fc position, Vector2fc size, Vector4fc rectStrokeColor, float strokeWidth) {
         if (rectStrokeColor.w() <= MIN_ALPHA) {
@@ -194,6 +195,7 @@ public class NvgShapes {
      * @param nvg nanovg context
      * @param rectangle rectangle size and position.
      * @param rectStrokeColor rectangle color.
+     * @param strokeWidth stroke width.
      */
     public static void drawRectStroke(long nvg, Vector4fc rectangle, Vector4fc rectStrokeColor, float strokeWidth) {
         if (rectStrokeColor.w() <= MIN_ALPHA) {
@@ -240,7 +242,8 @@ public class NvgShapes {
      * @param position rectangle position.
      * @param size rectangle size.
      * @param rectStrokeColor rectangle color.
-     * @param radius cornder radius
+     * @param radius corner radius
+     * @param strokeWidth stroke width.
      */
     public static void drawRectStroke(long nvg, Vector2fc position, Vector2fc size, Vector4fc rectStrokeColor, float strokeWidth, float radius) {
         if (rectStrokeColor.w() <= MIN_ALPHA) {

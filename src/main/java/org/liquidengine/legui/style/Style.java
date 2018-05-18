@@ -105,13 +105,15 @@ public class Style {
      */
     public Vector4f getBorderRadius() {
         return new Vector4f(borderTopLeftRadius == null ? 0 : borderTopLeftRadius,
-                            borderTopRightRadius == null ? 0 : borderTopRightRadius,
-                            borderBottomRightRadius == null ? 0 : borderBottomRightRadius,
-                            borderBottomLeftRadius == null ? 0 : borderBottomLeftRadius);
+            borderTopRightRadius == null ? 0 : borderTopRightRadius,
+            borderBottomRightRadius == null ? 0 : borderBottomRightRadius,
+            borderBottomLeftRadius == null ? 0 : borderBottomLeftRadius);
     }
 
     /**
      * Used to set border radius for all four corners.
+     *
+     * @param radius radius to set. Sets border radius to all corners.
      */
     public void setBorderRadius(Float radius) {
         borderTopLeftRadius = borderTopRightRadius =
@@ -211,6 +213,11 @@ public class Style {
         this.width = width;
     }
 
+    /**
+     * Used to set height.
+     *
+     * @return height to set.
+     */
     public Float getHeight() {
         return height;
     }

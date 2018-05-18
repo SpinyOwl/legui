@@ -38,6 +38,7 @@ public abstract class NvgImageRenderer<I extends Image> extends ImageRenderer<I>
      * @param size image size.
      * @param context context.
      * @param nanovg nanoVG context.
+     * @param properties properties map.
      */
     protected abstract void renderImage(I image, Vector2fc position, Vector2fc size, Map<String, Object> properties, Context context, long nanovg);
 }
