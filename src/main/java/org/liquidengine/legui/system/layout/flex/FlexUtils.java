@@ -3,6 +3,7 @@ package org.liquidengine.legui.system.layout.flex;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.style.Style;
 import org.liquidengine.legui.style.flex.FlexStyle.AlignItems;
+import org.liquidengine.legui.style.flex.FlexStyle.AlignSelf;
 import org.liquidengine.legui.style.flex.FlexStyle.FlexDirection;
 import org.liquidengine.legui.style.flex.FlexStyle.JustifyContent;
 import org.lwjgl.util.yoga.Yoga;
@@ -93,6 +94,37 @@ final class FlexUtils {
                 break;
             case AUTO:
                 Yoga.YGNodeStyleSetAlignItems(node, Yoga.YGAlignAuto);
+                break;
+        }
+    }
+
+    public static void setAlignSelf(long node, AlignSelf alignItems, Component component) {
+        AlignSelf toUse = alignItems;
+        for (Component lp = component; toUse == AlignSelf.INHERIT; lp = component.getParent()) {
+            if (lp != null) {
+                toUse = lp.getStyle().getFlexStyle().getAlignSelf();
+            } else {
+                toUse = AlignSelf.STRETCH;
+            }
+        }
+        switch (toUse) {
+            case FLEX_END:
+                Yoga.YGNodeStyleSetAlignSelf(node, Yoga.YGAlignFlexEnd);
+                break;
+            case CENTER:
+                Yoga.YGNodeStyleSetAlignSelf(node, Yoga.YGAlignCenter);
+                break;
+            case FLEX_START:
+                Yoga.YGNodeStyleSetAlignSelf(node, Yoga.YGAlignFlexStart);
+                break;
+            case STRETCH:
+                Yoga.YGNodeStyleSetAlignSelf(node, Yoga.YGAlignStretch);
+                break;
+            case BASELINE:
+                Yoga.YGNodeStyleSetAlignSelf(node, Yoga.YGAlignBaseline);
+                break;
+            case AUTO:
+                Yoga.YGNodeStyleSetAlignSelf(node, Yoga.YGAlignAuto);
                 break;
         }
     }

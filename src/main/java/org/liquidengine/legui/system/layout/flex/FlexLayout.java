@@ -1,6 +1,7 @@
 package org.liquidengine.legui.system.layout.flex;
 
 import static org.liquidengine.legui.system.layout.flex.FlexUtils.setAlignItems;
+import static org.liquidengine.legui.system.layout.flex.FlexUtils.setAlignSelf;
 import static org.liquidengine.legui.system.layout.flex.FlexUtils.setFlexDirection;
 import static org.liquidengine.legui.system.layout.flex.FlexUtils.setJustifyContent;
 import static org.liquidengine.legui.system.layout.flex.FlexUtils.setMargin;
@@ -80,6 +81,7 @@ public class FlexLayout implements Layout {
         setFlexDirection(node, flexStyle.getFlexDirection());
         setJustifyContent(node, flexStyle.getJustifyContent(), component);
         setAlignItems(node, flexStyle.getAlignItems(), component);
+        setAlignSelf(node, flexStyle.getAlignSelf(), component);
 
         Float minWidth = style.getMinWidth();
         if (minWidth != null) {
@@ -120,6 +122,8 @@ public class FlexLayout implements Layout {
         if (style.getLeft() != null) {
             Yoga.YGNodeStyleSetPosition(node, Yoga.YGEdgeLeft, style.getLeft());
         }
+
+        Yoga.YGNodeStyleSetFlexBasis(node, flexStyle.getFlexBasis());
 
         setPadding(node, style);
         setMargin(node, style);
