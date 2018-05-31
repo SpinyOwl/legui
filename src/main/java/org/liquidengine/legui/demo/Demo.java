@@ -18,6 +18,7 @@ import static org.lwjgl.glfw.GLFW.glfwWindowHint;
 import static org.lwjgl.opengl.GL.createCapabilities;
 import static org.lwjgl.opengl.GL.setCapabilities;
 import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
+import static org.lwjgl.opengl.GL11.GL_STENCIL_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.glClear;
 import static org.lwjgl.opengl.GL11.glClearColor;
 import static org.lwjgl.opengl.GL11.glViewport;
@@ -28,12 +29,12 @@ import org.joml.Vector2i;
 import org.liquidengine.cbchain.impl.ChainErrorCallback;
 import org.liquidengine.legui.animation.Animator;
 import org.liquidengine.legui.component.Frame;
-import org.liquidengine.legui.system.layout.LayoutManager;
 import org.liquidengine.legui.listener.processor.EventProcessor;
 import org.liquidengine.legui.system.context.CallbackKeeper;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.context.DefaultCallbackKeeper;
 import org.liquidengine.legui.system.handler.processor.SystemEventProcessor;
+import org.liquidengine.legui.system.layout.LayoutManager;
 import org.liquidengine.legui.system.renderer.Renderer;
 import org.liquidengine.legui.system.renderer.nvg.NvgRenderer;
 import org.lwjgl.glfw.GLFW;
@@ -153,7 +154,7 @@ public abstract class Demo {
 
                 glClearColor(1, 1, 1, 1);
                 glViewport(0, 0, framebufferSize.x, framebufferSize.y);
-                glClear(GL_COLOR_BUFFER_BIT);
+                glClear(GL_COLOR_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
                 renderer.render(frame, context);
 

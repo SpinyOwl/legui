@@ -18,8 +18,11 @@ import static org.lwjgl.nanovg.NanoVG.nvgFillColor;
 import static org.lwjgl.nanovg.NanoVG.nvgLineTo;
 import static org.lwjgl.nanovg.NanoVG.nvgMoveTo;
 import static org.lwjgl.nanovg.NanoVG.nvgRect;
+import static org.lwjgl.nanovg.NanoVG.nvgRotate;
+import static org.lwjgl.nanovg.NanoVG.nvgSkewX;
 import static org.lwjgl.nanovg.NanoVG.nvgStroke;
 import static org.lwjgl.nanovg.NanoVG.nvgStrokeColor;
+import static org.lwjgl.nanovg.NanoVG.nvgTranslate;
 import static org.lwjgl.opengl.GL11.GL_BLEND;
 import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.GL_DEPTH_COMPONENT;
@@ -198,7 +201,7 @@ public class FBOImageExample {
             imageView.getStyle().setPosition(PositionType.RELATIVE);
             imageView.getStyle().getFlexStyle().setFlexGrow(1);
             imageView.getStyle().setMargin(10f);
-            imageView.getStyle().setMinimumSize(50,50);
+            imageView.getStyle().setMinimumSize(50, 50);
 
             widget.getContainer().add(imageView);
 
@@ -260,12 +263,11 @@ public class FBOImageExample {
             Animator.getInstance().runAnimations();
         }
 
-
-        if(nvgContext!=0) {
+        if (nvgContext != 0) {
             glDeleteRenderbuffers(renderBufferID);
             glDeleteTextures(textureID);
             glDeleteFramebuffers(frameBufferID);
-            if(isVersionNew){
+            if (isVersionNew) {
                 NanoVGGL3.nnvgDelete(nvgContext);
             } else {
                 NanoVGGL2.nnvgDelete(nvgContext);
@@ -312,12 +314,19 @@ public class FBOImageExample {
         return new FBOImage(textureID, textureWidth, textureHeight);
     }
 
+    private static long lastTime = System.nanoTime();
+
     public static void renderToFBO(long nvgContext) {
         // bind fbo
+
+        long thisTime = System.nanoTime();
+        float angle = 5 * (lastTime - thisTime) / 1E10f;
+
         glBindFramebuffer(GL_FRAMEBUFFER, frameBufferID);
         glViewport(0, 0, textureWidth, textureHeight);
 
-        glClearColor(1, 1, 1, 1);
+        glClearColor(0.3f, 0.5f, 0.7f, 0.0f);
+
         // Clear screen
         glClear(GL_COLOR_BUFFER_BIT);
 
@@ -338,19 +347,16 @@ public class FBOImageExample {
         nvgColorTwo.b(0);
         nvgColorTwo.a(1);
 
+        nvgTranslate(nvgContext, textureWidth /2f, textureHeight/2f);
+        nvgRotate(nvgContext, angle);
+
         nvgBeginPath(nvgContext);
-        nvgMoveTo(nvgContext, 0, 0);
-        nvgLineTo(nvgContext, textureWidth / 2, textureHeight);
-        nvgLineTo(nvgContext, textureWidth, 0);
-        nvgLineTo(nvgContext, 0, 0);
+        nvgRect(nvgContext, - textureWidth / 4f, - textureHeight / 4f, textureWidth / 2f, textureHeight / 2f);
         nvgStrokeColor(nvgContext, nvgColorTwo);
         nvgStroke(nvgContext);
 
         nvgBeginPath(nvgContext);
-        nvgMoveTo(nvgContext, 0, 0);
-        nvgLineTo(nvgContext, textureWidth / 2, textureHeight);
-        nvgLineTo(nvgContext, textureWidth, 0);
-        nvgLineTo(nvgContext, 0, 0);
+        nvgRect(nvgContext, -textureWidth / 4f, -textureHeight / 4f, textureWidth / 2f, textureHeight / 2f);
         nvgFillColor(nvgContext, nvgColorOne);
         nvgFill(nvgContext);
 

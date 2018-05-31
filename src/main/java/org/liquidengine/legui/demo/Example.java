@@ -17,6 +17,7 @@ import static org.lwjgl.glfw.GLFW.glfwSwapBuffers;
 import static org.lwjgl.glfw.GLFW.glfwSwapInterval;
 import static org.lwjgl.glfw.GLFW.glfwTerminate;
 import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
+import static org.lwjgl.opengl.GL11.GL_STENCIL_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.glClear;
 import static org.lwjgl.opengl.GL11.glClearColor;
 import static org.lwjgl.opengl.GL11.glViewport;
@@ -27,9 +28,9 @@ import org.liquidengine.legui.DefaultInitializer;
 import org.liquidengine.legui.animation.Animator;
 import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.event.WindowSizeEvent;
-import org.liquidengine.legui.system.layout.LayoutManager;
 import org.liquidengine.legui.listener.WindowSizeEventListener;
 import org.liquidengine.legui.system.context.Context;
+import org.liquidengine.legui.system.layout.LayoutManager;
 import org.liquidengine.legui.system.renderer.Renderer;
 import org.lwjgl.PointerBuffer;
 import org.lwjgl.glfw.GLFWKeyCallbackI;
@@ -142,7 +143,7 @@ public class Example {
             // Set viewport size
             glViewport(0, 0, windowSize.x, windowSize.y);
             // Clear screen
-            glClear(GL_COLOR_BUFFER_BIT);
+            glClear(GL_COLOR_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
             // render frame
             renderer.render(frame, context);
