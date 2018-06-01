@@ -32,15 +32,15 @@ def gson_version         = '2.7'
 
 def joml_version         = "1.9.9"
 def lwjgl_version        = '3.1.6'
-def le_cbchain           = '0.1.2'
-def le_util              = '0.0.3'
+def le_cbchain           = "1.0.0"
+def le_util              = "1.0.0"
 //@formatter:on
 
 repositories {
     jcenter()
     mavenCentral()
     maven { url "https://oss.sonatype.org/content/repositories/releases/" }
-    maven { url "https://raw.github.com/LiquidEngine/repo/releases" }
+    maven { url "https://raw.githubusercontent.com/LiquidEngine/repo/releases" }
 }
 
 dependencies {
