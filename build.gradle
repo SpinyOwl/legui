@@ -41,8 +41,8 @@ repositories {
     jcenter()
     mavenCentral()
     maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
-    maven { url "https://raw.github.com/LiquidEngine/repo/snapshots" }
-    maven { url "https://raw.github.com/LiquidEngine/repo/releases" }
+    maven { url "https://raw.githubusercontent.com/LiquidEngine/repo/snapshots" }
+    maven { url "https://raw.githubusercontent.com/LiquidEngine/repo/releases" }
 }
 
 dependencies {
@@ -98,7 +98,7 @@ configurations {
     deployerJar
 }
 repositories {
-    maven { url 'https://raw.github.com/synergian/wagon-git/releases' }
+    maven { url 'https://raw.githubusercontent.com/synergian/wagon-git/releases' }
 }
 dependencies {
     deployerJar 'ar.com.synergian:wagon-git:0.2.5'
