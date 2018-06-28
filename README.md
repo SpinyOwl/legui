@@ -10,6 +10,8 @@
 ![STABLE RELEASE VERSION](https://img.shields.io/badge/dynamic/json.svg?label=release&colorB=00796b&prefix=&suffix=&query=$.version&uri=https%3A%2F%2Fjenkins.liquidengine.tk%2Fjob%2FLEGUI_RELEASES%2FlastSuccessfulBuild%2Fartifact%2FfullVersion.json&style=flat-square)  
 ![LAST FEATURE VERSION](https://img.shields.io/badge/dynamic/json.svg?label=feature&colorB=00796b&prefix=&suffix=&query=$.version&uri=https%3A%2F%2Fjenkins.liquidengine.tk%2Fjob%2FLEGUI_FEATURE%2FlastSuccessfulBuild%2Fartifact%2FfullVersion.json&style=flat-square)
 
+<img src="https://image.ibb.co/nh1GbJ/Dc63_KSPX4_AIEIc7.png" />
+
 ___
 # TOC
 * [LEGUI - What is it?](#legui---what-is-it)
@@ -33,16 +35,6 @@ GUI implementation for using with LWJGL3.
 
 This gui library made for using with OpenGL port (LWJGL) to allow programmers fast and easy integrate user interface to their OpenGL apps written in Java or Kotlin.  
 API is close to Swing API.  
-
-<table>
-  <tr>
-    <td><img src="https://liquidengine.github.io/legui/images/demo/0.bmp" height="100px"/></td>
-    <td><img src="https://liquidengine.github.io/legui/images/demo/55.bmp" height="100px"/></td>
-    <td><img src="https://liquidengine.github.io/legui/images/demo/209.bmp" height="100px"/></td>
-    <td><img src="https://liquidengine.github.io/legui/images/demo/646.bmp" height="100px"/></td>
-    <td><img src="https://liquidengine.github.io/legui/images/demo/813.bmp" height="100px"/></td>
-  </tr>
-</table>
 
 ## Contribution to LEGUI
 See the [contribution guide](CONTRIBUTING.md) for more information.
