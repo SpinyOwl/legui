@@ -129,7 +129,7 @@ public class NvgTextInputRenderer extends NvgDefaultComponentRenderer<TextInput>
                     caretPosition = (halign == HorizontalAlign.LEFT ? 0 : (halign == HorizontalAlign.RIGHT ? text.length() : text.length() / 2));
                 }
 
-                float[] textBounds = calculateTextBoundsRect(context, rect, text, halign, valign);
+                float[] textBounds = calculateTextBoundsRect(context, rect, text, halign, valign, fontSize);
 
                 // calculate caret coordinate and mouse caret coordinate
                 float caretx;

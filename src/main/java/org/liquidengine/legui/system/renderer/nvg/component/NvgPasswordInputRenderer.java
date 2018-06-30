@@ -130,7 +130,7 @@ public class NvgPasswordInputRenderer extends NvgDefaultComponentRenderer<Passwo
                 gui.setMouseCaretPosition(0);
                 return;
             } else {
-                float[] textBounds = calculateTextBoundsRect(context, rect, maskedText, halign, valign);
+                float[] textBounds = calculateTextBoundsRect(context, rect, maskedText, halign, valign, fontSize);
 
                 // calculate caret coordinate and mouse caret coordinate
                 float caretx;

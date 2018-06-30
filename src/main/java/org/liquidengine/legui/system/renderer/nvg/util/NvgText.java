@@ -18,6 +18,7 @@ import static org.lwjgl.system.MemoryUtil.memAddress;
 import static org.lwjgl.system.MemoryUtil.memUTF8;
 
 import java.nio.ByteBuffer;
+
 import org.joml.Vector2f;
 import org.joml.Vector2fc;
 import org.joml.Vector4f;
@@ -48,7 +49,7 @@ public class NvgText {
 
     public static void drawTextLineToRect(long nvg, TextState text, Vector4fc rect, boolean hideOverflow) {
         drawTextLineToRect(nvg, rect, hideOverflow, text.getHorizontalAlign(), text.getVerticalAlign(),
-                           text.getFontSize(), text.getFont(), text.getText(), text.getTextColor());
+                text.getFontSize(), text.getFont(), text.getText(), text.getTextColor());
     }
 
     public static void drawTextLineToRect(long nvg, Vector4fc rect, boolean hideOverflow, HorizontalAlign horizontalAlign, VerticalAlign verticalAlign,
@@ -77,15 +78,17 @@ public class NvgText {
             }
 
             Vector2f textPosition = new Vector2f(
-                rect.x() + rect.z() * horizontalAlign.index / 2f,
-                rect.y() + rect.w() * verticalAlign.index / 2f
+                    rect.x() + rect.z() * horizontalAlign.index / 2f,
+                    rect.y() + rect.w() * verticalAlign.index / 2f
             );
 
-            NVGColor textColor = NvgColorUtil.rgba(fontColor, NVGColor.calloc());
-            nvgBeginPath(nvg);
-            nvgFillColor(nvg, textColor);
-            nnvgText(nvg, textPosition.x, textPosition.y, rowStart, rowEnd);
-            textColor.free();
+            if (rowStart != 0 || rowEnd != 0) {
+                NVGColor textColor = NvgColorUtil.rgba(fontColor, NVGColor.calloc());
+                nvgBeginPath(nvg);
+                nvgFillColor(nvg, textColor);
+                nnvgText(nvg, textPosition.x, textPosition.y, rowStart, rowEnd);
+                textColor.free();
+            }
         } finally {
             if (byteText != null) {
                 MemoryUtil.memFree(byteText);

@@ -66,7 +66,7 @@ public class NvgTextAreaRenderer extends NvgDefaultComponentRenderer<TextArea> {
             Vector4f intersectRect = new Vector4f(pos.x + p.x, pos.y + p.y, size.x - p.x - p.z, size.y - p.y - p.w);
 
             intersectScissor(nanovg, new Vector4f(intersectRect).sub(1, 1, -2, -2));
-            if (component.getTextState().getText() == null || !component.getTextState().getText().isEmpty()) {
+            if (component.getTextState().getText() != null && !component.getTextState().getText().isEmpty()) {
                 renderText(context, nanovg, component, size, intersectRect, bc);
             }
         }
@@ -129,7 +129,7 @@ public class NvgTextAreaRenderer extends NvgDefaultComponentRenderer<TextArea> {
 
         // we need to calculate x and y offsets
         String caretLineText = lines[caretLine];
-        float[] caretLineBounds = calculateTextBoundsRect(context, rect, caretLineText, halign, valign);
+        float[] caretLineBounds = calculateTextBoundsRect(context, rect, caretLineText, halign, valign, fontSize);
         float carety = caretLineBounds[5] + voffset + fontSize * caretLine;
         float offsetY = 0;
         offsetY = calculateOffsetY(rect, fontSize, carety, offsetY);
@@ -156,7 +156,7 @@ public class NvgTextAreaRenderer extends NvgDefaultComponentRenderer<TextArea> {
         float[][] bounds = new float[lineCount][8];
         for (int i = 0; i < lineCount; i++) {
             String line = lines[i];
-            float[] lineBounds = calculateTextBoundsRect(context, rect, line, halign, valign);
+            float[] lineBounds = calculateTextBoundsRect(context, rect, line, halign, valign, fontSize);
             bounds[i] = lineBounds;
             if (line.contains(TABS)) {
                 bounds[i][6] += spaceWidth * (line.length() - line.replace(TABS, "").length()) * (gui.getTabSize() - 1);

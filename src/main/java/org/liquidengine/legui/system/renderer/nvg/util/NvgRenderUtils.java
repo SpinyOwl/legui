@@ -17,10 +17,8 @@ import static org.lwjgl.nanovg.NanoVG.nvgIntersectScissor;
 import static org.lwjgl.nanovg.NanoVG.nvgPathWinding;
 import static org.lwjgl.nanovg.NanoVG.nvgRect;
 import static org.lwjgl.nanovg.NanoVG.nvgResetScissor;
-import static org.lwjgl.nanovg.NanoVG.nvgRestore;
 import static org.lwjgl.nanovg.NanoVG.nvgRoundedRect;
 import static org.lwjgl.nanovg.NanoVG.nvgRoundedRectVarying;
-import static org.lwjgl.nanovg.NanoVG.nvgSave;
 import static org.lwjgl.nanovg.NanoVG.nvgScissor;
 import static org.lwjgl.nanovg.NanoVG.nvgTextAlign;
 import static org.lwjgl.nanovg.NanoVG.nvgTextBounds;
@@ -30,6 +28,7 @@ import static org.lwjgl.system.MemoryUtil.memUTF8;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
+
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.Component;
@@ -52,16 +51,20 @@ public final class NvgRenderUtils {
     }
 
 
-    public static float[] calculateTextBoundsRect(long context, Vector4f rect, String text, HorizontalAlign horizontalAlign, VerticalAlign verticalAlign) {
-        return calculateTextBoundsRect(context, rect.x, rect.y, rect.z, rect.w, text, horizontalAlign, verticalAlign);
+    public static float[] calculateTextBoundsRect(
+            long context, Vector4f rect, String text,
+            HorizontalAlign horizontalAlign, VerticalAlign verticalAlign, float fontSize) {
+        return calculateTextBoundsRect(context, rect.x, rect.y, rect.z, rect.w,
+                text, horizontalAlign, verticalAlign, fontSize);
     }
 
-    public static float[] calculateTextBoundsRect(long context, float x, float y, float w, float h, String text, HorizontalAlign horizontalAlign,
-        VerticalAlign verticalAlign) {
+    public static float[] calculateTextBoundsRect(
+            long context, float x, float y, float w, float h,
+            String text, HorizontalAlign horizontalAlign, VerticalAlign verticalAlign, float fontSize) {
         ByteBuffer byteText = null;
         try {
             byteText = memUTF8(text, false);
-            return calculateTextBoundsRect(context, x, y, w, h, byteText, horizontalAlign, verticalAlign);
+            return calculateTextBoundsRect(context, x, y, w, h, byteText, horizontalAlign, verticalAlign, fontSize);
         } finally {
             if (byteText != null) {
                 memFree(byteText);
@@ -69,13 +72,16 @@ public final class NvgRenderUtils {
         }
     }
 
-    public static float[] calculateTextBoundsRect(long context, float x, float y, float w, float h, ByteBuffer text, HorizontalAlign horizontalAlign,
-        VerticalAlign verticalAlign) {
+    public static float[] calculateTextBoundsRect(
+            long context, float x, float y, float w, float h,
+            ByteBuffer text, HorizontalAlign horizontalAlign, VerticalAlign verticalAlign, float fontSize) {
         float bounds[] = new float[4];
-        nvgTextBounds(context, x, y, text, bounds);
-        return createBounds(x, y, w, h, horizontalAlign, verticalAlign, bounds);
+        if (text != null && text.limit() != 0) {
+            nvgTextBounds(context, x, y, text, bounds);
+            return createBounds(x, y, w, h, horizontalAlign, verticalAlign, bounds);
+        }
+        return createBounds(x, y, w, h, horizontalAlign, verticalAlign, 0, fontSize);
     }
-
 
     public static float[] createBounds(float x, float y, float w, float h, HorizontalAlign horizontalAlign, VerticalAlign verticalAlign, float[] bounds) {
         float ww = bounds[2] - bounds[0];
@@ -92,8 +98,8 @@ public final class NvgRenderUtils {
         float vv = (vp == 3 ? 1 : vp);
         float y1 = bounds[1] + (h + hh) * 0.5f * vv + (vp > 2 ? (+baseline) : 0);
         return new float[]{
-            x1, y1, ww, hh,
-            x1 - (ww * 0.5f * hp), y1 - (hh * 0.5f * vv) - baseline, ww, hh
+                x1, y1, ww, hh,
+                x1 - (ww * 0.5f * hp), y1 - (hh * 0.5f * vv) - baseline, ww, hh
         };
     }
 
@@ -107,8 +113,8 @@ public final class NvgRenderUtils {
         float vv = (vp == 3 ? 1 : vp);
         float y1 = y + h * 0.5f * vv + (vp > 2 ? (+baseline) : 0);
         return new float[]{
-            x1, y1, tw, th,
-            x1 - (tw * 0.5f * hp), y1 - (th * 0.5f * vv) - baseline, tw, th
+                x1, y1, tw, th,
+                x1 - (tw * 0.5f * hp), y1 - (th * 0.5f * vv) - baseline, tw, th
         };
     }
 
@@ -116,7 +122,7 @@ public final class NvgRenderUtils {
     public static void alignTextInBox(long context, HorizontalAlign hAlig, VerticalAlign vAlig) {
         int hAlign = hAlig == HorizontalAlign.CENTER ? NVG_ALIGN_CENTER : hAlig == HorizontalAlign.LEFT ? NVG_ALIGN_LEFT : NVG_ALIGN_RIGHT;
         int vAlign = vAlig == VerticalAlign.TOP ? NVG_ALIGN_TOP : vAlig == VerticalAlign.BOTTOM ?
-            NVG_ALIGN_BOTTOM : vAlig == VerticalAlign.MIDDLE ? NVG_ALIGN_MIDDLE : NVG_ALIGN_BASELINE;
+                NVG_ALIGN_BOTTOM : vAlig == VerticalAlign.MIDDLE ? NVG_ALIGN_MIDDLE : NVG_ALIGN_BASELINE;
         nvgTextAlign(context, hAlign | vAlign);
     }
 
@@ -126,7 +132,7 @@ public final class NvgRenderUtils {
         NVGColor colorB = NVGColor.calloc();
 
         nvgBoxGradient(context, x, y + 2, w, h, cornerRadius * 2, 10, NvgColorUtil.rgba(shadowColor, colorA), NvgColorUtil.rgba(0, 0, 0, 0, colorB),
-            shadowPaint);
+                shadowPaint);
         nvgBeginPath(context);
         nvgRect(context, x - 10, y - 10, w + 20, h + 30);
         nvgRoundedRect(context, x, y, w, h, cornerRadius);
@@ -143,7 +149,7 @@ public final class NvgRenderUtils {
      * Creates scissor for provided component by it's parent components.
      *
      * @param context nanovg context.
-     * @param gui {@link Component}.
+     * @param gui     {@link Component}.
      */
     public static void createScissor(long context, Component gui) {
         Component parent = gui.getParent();
@@ -154,7 +160,7 @@ public final class NvgRenderUtils {
      * Creates scissor for provided bounds.
      *
      * @param context nanovg context.
-     * @param bounds bounds.
+     * @param bounds  bounds.
      */
     public static void createScissor(long context, Vector4f bounds) {
         nvgScissor(context, bounds.x, bounds.y, bounds.z, bounds.w);
@@ -164,7 +170,7 @@ public final class NvgRenderUtils {
      * Intersects scissor for provided bounds.
      *
      * @param context nanovg context.
-     * @param bounds bounds.
+     * @param bounds  bounds.
      */
     public static void intersectScissor(long context, Vector4f bounds) {
         nvgIntersectScissor(context, bounds.x, bounds.y, bounds.z, bounds.w);
@@ -174,7 +180,7 @@ public final class NvgRenderUtils {
      * Creates scissor by provided component and it's parent components.
      *
      * @param context nanovg context.
-     * @param parent parent component.
+     * @param parent  parent component.
      */
     public static void createScissorByParent(long context, Component parent) {
         List<Component> parents = new ArrayList<>();
@@ -266,26 +272,26 @@ public final class NvgRenderUtils {
             NVGColor secondColor = NvgColorUtil.rgba(0, 0, 0, 0, colorB);
             // creating gradient and put it to shadowPaint
             nvgBoxGradient(context,
-                x + hOffset - spread,
-                y + vOffset - spread,
-                w + 2 * spread,
-                h + 2 * spread,
-                cornerRadius + spread,
-                blur,
-                firstColor,
-                secondColor,
-                shadowPaint);
+                    x + hOffset - spread,
+                    y + vOffset - spread,
+                    w + 2 * spread,
+                    h + 2 * spread,
+                    cornerRadius + spread,
+                    blur,
+                    firstColor,
+                    secondColor,
+                    shadowPaint);
             nvgBeginPath(context);
             nvgPathWinding(context, NVG_SOLID);
             nvgRoundedRectVarying(context,
-                x + hOffset - spread - blur,
-                y + vOffset - spread - blur,
-                w + 2 * spread + 2 * blur,
-                h + 2 * spread + 2 * blur,
-                borderRadius.x + spread,
-                borderRadius.y + spread,
-                borderRadius.z + spread,
-                borderRadius.w + spread
+                    x + hOffset - spread - blur,
+                    y + vOffset - spread - blur,
+                    w + 2 * spread + 2 * blur,
+                    h + 2 * spread + 2 * blur,
+                    borderRadius.x + spread,
+                    borderRadius.y + spread,
+                    borderRadius.z + spread,
+                    borderRadius.w + spread
             );
             nvgPathWinding(context, NVG_HOLE);
             nvgRoundedRectVarying(context, x, y, w, h, borderRadius.x, borderRadius.y, borderRadius.z, borderRadius.w);
