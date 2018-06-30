@@ -66,7 +66,7 @@ public class NvgTextAreaRenderer extends NvgDefaultComponentRenderer<TextArea> {
             Vector4f intersectRect = new Vector4f(pos.x + p.x, pos.y + p.y, size.x - p.x - p.z, size.y - p.y - p.w);
 
             intersectScissor(nanovg, new Vector4f(intersectRect).sub(1, 1, -2, -2));
-            if (component.getTextState().getText() != null && !component.getTextState().getText().isEmpty()) {
+            if (component.getTextState().getText() != null) {
                 renderText(context, nanovg, component, size, intersectRect, bc);
             }
         }
