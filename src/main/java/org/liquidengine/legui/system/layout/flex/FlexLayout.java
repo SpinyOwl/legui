@@ -11,10 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.liquidengine.legui.component.Component;
-import org.liquidengine.legui.system.layout.Layout;
 import org.liquidengine.legui.style.Style;
 import org.liquidengine.legui.style.Style.PositionType;
 import org.liquidengine.legui.style.flex.FlexStyle;
+import org.liquidengine.legui.system.layout.Layout;
 import org.lwjgl.util.yoga.Yoga;
 
 /**

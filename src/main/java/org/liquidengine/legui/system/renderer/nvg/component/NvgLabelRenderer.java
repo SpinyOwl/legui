@@ -8,7 +8,6 @@ import org.joml.Vector4f;
 import org.liquidengine.legui.component.Label;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.system.context.Context;
-import org.liquidengine.legui.system.renderer.nvg.util.NvgShapes;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgText;
 
 /**

@@ -18,7 +18,6 @@ import static org.lwjgl.system.MemoryUtil.memAddress;
 import static org.lwjgl.system.MemoryUtil.memUTF8;
 
 import java.nio.ByteBuffer;
-
 import org.joml.Vector2f;
 import org.joml.Vector2fc;
 import org.joml.Vector4f;

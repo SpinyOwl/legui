@@ -1,5 +1,8 @@
 package org.liquidengine.legui.system.handler;
 
+import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
+
+import java.util.List;
 import org.joml.Vector2f;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.Frame;
@@ -13,10 +16,6 @@ import org.liquidengine.legui.style.Style.DisplayType;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.event.SystemMouseClickEvent;
 import org.lwjgl.glfw.GLFW;
-
-import java.util.List;
-
-import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
 
 /**
  * Created by ShchAlexander on 04.02.2017.

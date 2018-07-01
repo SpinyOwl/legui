@@ -5,8 +5,6 @@ import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.cre
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.getBorderRadius;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.resetScissor;
 import static org.lwjgl.nanovg.NanoVG.nvgIntersectScissor;
-import static org.lwjgl.nanovg.NanoVG.nvgRestore;
-import static org.lwjgl.nanovg.NanoVG.nvgSave;
 
 import org.joml.Vector2f;
 import org.joml.Vector4f;

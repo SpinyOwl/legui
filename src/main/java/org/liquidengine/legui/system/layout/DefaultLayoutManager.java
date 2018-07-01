@@ -6,8 +6,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.component.Layer;
-import org.liquidengine.legui.system.layout.flex.FlexLayout;
 import org.liquidengine.legui.style.Style.DisplayType;
+import org.liquidengine.legui.system.layout.flex.FlexLayout;
 import org.liquidengine.legui.util.Utilites;
 
 /**

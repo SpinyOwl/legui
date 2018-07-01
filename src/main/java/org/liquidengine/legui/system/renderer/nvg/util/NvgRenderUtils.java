@@ -28,7 +28,6 @@ import static org.lwjgl.system.MemoryUtil.memUTF8;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.Component;
