@@ -284,7 +284,7 @@ public class SelectBox extends Component {
                 elements.add(element);
                 selectBoxElements.add(boxElement);
                 selectionListPanel.getContainer().add(boxElement);
-                selectionListPanel.getContainer().getSize().y = selectionListPanel.getContainer().count() * elementHeight;
+                selectionListPanel.getContainer().getSize().y = selectBoxElements.size() * elementHeight;
             }
         } finally {
             lock.unlock();
@@ -300,6 +300,7 @@ public class SelectBox extends Component {
     private SelectBoxElement createSelectBoxElement(String element) {
         SelectBoxElement boxElement = new SelectBoxElement(element, false);
         boxElement.getStyle().setHeight(elementHeight);
+        boxElement.getStyle().setMinHeight(elementHeight);
         boxElement.getStyle().setPosition(PositionType.RELATIVE);
         boxElement.getListenerMap().getListeners(MouseClickEvent.class).add(new SelectBoxElementClickListener(this));
         return boxElement;

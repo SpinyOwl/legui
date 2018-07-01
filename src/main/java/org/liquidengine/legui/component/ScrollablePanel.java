@@ -1,5 +1,6 @@
 package org.liquidengine.legui.component;
 
+import javafx.scene.layout.Pane;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -128,7 +129,7 @@ public class ScrollablePanel extends Component implements Viewport {
         horizontalScrollBar.setViewport(this);
         horizontalScrollBar.setTabFocusable(false);
 
-        viewport = new Panel(0, 0, viewportWidth, viewportHeight);
+        viewport = new ScrollablePanelViewport(0, 0, viewportWidth, viewportHeight);
 
         viewport.getStyle().getBackground().setColor(1, 1, 1, 0);
         viewport.getStyle().setBorder(null);
@@ -139,7 +140,7 @@ public class ScrollablePanel extends Component implements Viewport {
         viewport.getListenerMap().addListener(ScrollEvent.class, new ScrollablePanelViewportScrollListener());
         viewport.setTabFocusable(false);
 
-        container = new Panel(0, 0, viewportWidth, viewportHeight);
+        container = new ScrollablePanelContainer(0, 0, viewportWidth, viewportHeight);
 
         container.getStyle().setBorder(null);
         container.setTabFocusable(false);
@@ -326,5 +327,16 @@ public class ScrollablePanel extends Component implements Viewport {
     @Override
     public Vector2f getViewportViewSize() {
         return new Vector2f(container.getSize());
+    }
+
+    public static class ScrollablePanelViewport extends Panel {
+        public ScrollablePanelViewport() {}
+        public ScrollablePanelViewport(float x, float y, float width, float height) {super(x, y, width, height);}
+        public ScrollablePanelViewport(Vector2f position, Vector2f size) {super(position, size);}
+    }
+    public static class ScrollablePanelContainer extends Panel {
+        public ScrollablePanelContainer() {}
+        public ScrollablePanelContainer(float x, float y, float width, float height) {super(x, y, width, height);}
+        public ScrollablePanelContainer(Vector2f position, Vector2f size) {super(position, size);}
     }
 }
