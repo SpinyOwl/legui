@@ -112,7 +112,7 @@ public class NvgTextAreaRenderer extends NvgDefaultComponentRenderer<TextArea> {
         // if not focused set caret line and caret position in line to default
         if (!focused) {
             caretLine = (valign == VerticalAlign.TOP ? 0 : (valign == VerticalAlign.BOTTOM ? lineCount - 1 : lineCount / 2));
-            lineCaretPosition = (halign == HorizontalAlign.LEFT ? 0 : (halign == HorizontalAlign.RIGHT ? lines[0].length() : lines[0].length() / 2));
+            lineCaretPosition = (halign == HorizontalAlign.LEFT ? 0 : (halign == HorizontalAlign.RIGHT ? lines[caretLine].length() : lines[caretLine].length() / 2));
         }
 
         int vp = valign == VerticalAlign.TOP ? 0 : valign == VerticalAlign.MIDDLE ? 1 : valign == VerticalAlign.BOTTOM ? 2 : 1;
