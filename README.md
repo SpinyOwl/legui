@@ -120,8 +120,7 @@ compile group: 'org.liquidengine', name: 'legui', version: legui_version, changi
   ```
 
 ### Demos:
-All examples located here: 
-[LEGUI.DEMO](https://github.com/LiquidEngine/legui.demo)
+All examples located under `demo` package.
 
 ## Projects using LEGUI:
 ### Modeler by Cout970
