@@ -10,6 +10,10 @@
 ![STABLE RELEASE VERSION](https://img.shields.io/badge/dynamic/json.svg?label=release&colorB=00796b&prefix=&suffix=&query=$.version&uri=https%3A%2F%2Fjenkins.liquidengine.tk%2Fjob%2FLEGUI_RELEASES%2FlastSuccessfulBuild%2Fartifact%2FfullVersion.json&style=flat-square)  
 ![LAST FEATURE VERSION](https://img.shields.io/badge/dynamic/json.svg?label=feature&colorB=00796b&prefix=&suffix=&query=$.version&uri=https%3A%2F%2Fjenkins.liquidengine.tk%2Fjob%2FLEGUI_FEATURE%2FlastSuccessfulBuild%2Fartifact%2FfullVersion.json&style=flat-square)
 
+[![Discord](https://img.shields.io/discord/245558983123927040.svg?slongCache=true&style=flat-square&label=Discord&logo=discord)](https://discord.gg/6wfqXpJ)
+[![Twitter Follow](https://img.shields.io/twitter/follow/ShchAlexander.svg?longCache=true&style=flat-square&label=Twitter&logo=twitter)](https://twitter.com/ShchAlexander)
+
+___
 # LEGUI
 
 <img src="https://image.ibb.co/nh1GbJ/Dc63_KSPX4_AIEIc7.png" />
