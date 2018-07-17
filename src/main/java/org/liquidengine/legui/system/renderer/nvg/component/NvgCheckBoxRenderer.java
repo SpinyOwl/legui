@@ -35,7 +35,7 @@ public class NvgCheckBoxRenderer extends NvgDefaultComponentRenderer<CheckBox> {
             Icon icon = checkBox.isChecked() ? checkBox.getIconChecked() : checkBox.getIconUnchecked();
             float iconWid = icon.getSize().x;
 
-            Vector4f pad = textState.getPadding();
+            Vector4f pad = checkBox.getStyle().getPadding();
 
             float iconWidthForUse = (icon.getHorizontalAlign().index == 0 ? 1 : 0) * iconWid;
 

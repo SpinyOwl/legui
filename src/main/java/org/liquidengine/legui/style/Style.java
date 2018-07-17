@@ -105,9 +105,9 @@ public class Style {
      */
     public Vector4f getBorderRadius() {
         return new Vector4f(borderTopLeftRadius == null ? 0 : borderTopLeftRadius,
-            borderTopRightRadius == null ? 0 : borderTopRightRadius,
-            borderBottomRightRadius == null ? 0 : borderBottomRightRadius,
-            borderBottomLeftRadius == null ? 0 : borderBottomLeftRadius);
+                            borderTopRightRadius == null ? 0 : borderTopRightRadius,
+                            borderBottomRightRadius == null ? 0 : borderBottomRightRadius,
+                            borderBottomLeftRadius == null ? 0 : borderBottomLeftRadius);
     }
 
     /**
@@ -258,11 +258,6 @@ public class Style {
         this.maxHeight = maxHeight;
     }
 
-    public void setPadding(Float padding) {
-        paddingLeft = paddingRight =
-            paddingTop = paddingBottom = padding;
-    }
-
     public void setPadding(Float topBottom, Float leftRight) {
         paddingLeft = paddingRight = leftRight;
         paddingTop = paddingBottom = topBottom;
@@ -283,12 +278,20 @@ public class Style {
         this.paddingTop = paddingTop;
     }
 
+    public float getPaddingTopF() {
+        return paddingTop == null ? 0f : paddingTop;
+    }
+
     public Float getPaddingBottom() {
         return paddingBottom;
     }
 
     public void setPaddingBottom(Float paddingBottom) {
         this.paddingBottom = paddingBottom;
+    }
+
+    public float getPaddingBottomF() {
+        return paddingBottom == null ? 0f : paddingBottom;
     }
 
     public Float getPaddingRight() {
@@ -299,12 +302,20 @@ public class Style {
         this.paddingRight = paddingRight;
     }
 
+    public float getPaddingRightF() {
+        return paddingRight == null ? 0f : paddingRight;
+    }
+
     public Float getPaddingLeft() {
         return paddingLeft;
     }
 
     public void setPaddingLeft(Float paddingLeft) {
         this.paddingLeft = paddingLeft;
+    }
+
+    public float getPaddingLeftF() {
+        return paddingLeft == null ? 0f : paddingLeft;
     }
 
     public void setMargin(Float topBottom, Float leftRight) {
@@ -315,7 +326,6 @@ public class Style {
     public void setMargin(Float margin) {
         marginLeft = marginRight = marginTop = marginBottom = margin;
     }
-
 
     public void setMargin(Float top, Float right, Float bottom, Float left) {
         marginTop = top;
@@ -596,6 +606,18 @@ public class Style {
 
     public void setShadow(Shadow shadow) {
         this.shadow = shadow;
+    }
+
+    public Vector4f getPadding() {
+        return new Vector4f(paddingTop == null ? 0 : paddingTop,
+                            paddingRight == null ? 0 : paddingRight,
+                            paddingBottom == null ? 0 : paddingBottom,
+                            paddingLeft == null ? 0 : paddingLeft);
+    }
+
+    public void setPadding(Float padding) {
+        paddingLeft = paddingRight =
+            paddingTop = paddingBottom = padding;
     }
 
     /**

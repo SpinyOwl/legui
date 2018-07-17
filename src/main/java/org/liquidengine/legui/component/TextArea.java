@@ -5,38 +5,57 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
-import org.liquidengine.legui.component.misc.listener.textarea.TextAreaCharEventListener;
-import org.liquidengine.legui.component.misc.listener.textarea.TextAreaDragEventListener;
-import org.liquidengine.legui.component.misc.listener.textarea.TextAreaKeyEventListener;
-import org.liquidengine.legui.component.misc.listener.textarea.TextAreaMouseClickEventListener;
+import org.liquidengine.legui.animation.Animation;
+import org.liquidengine.legui.component.event.textarea.TextAreaFieldUpdateEvent;
+import org.liquidengine.legui.component.event.textarea.TextAreaFieldUpdateEventListener;
+import org.liquidengine.legui.component.misc.animation.textarea.TextAreaScrollAnimation;
+import org.liquidengine.legui.component.misc.listener.textarea.TextAreaFieldUpdateListener;
+import org.liquidengine.legui.component.misc.listener.textarea.TextAreaViewportScrollListener;
+import org.liquidengine.legui.component.optional.Orientation;
 import org.liquidengine.legui.component.optional.TextState;
-import org.liquidengine.legui.event.CharEvent;
-import org.liquidengine.legui.event.KeyEvent;
-import org.liquidengine.legui.event.MouseClickEvent;
-import org.liquidengine.legui.event.MouseDragEvent;
+import org.liquidengine.legui.event.ScrollEvent;
+import org.liquidengine.legui.style.Style.DisplayType;
+import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.theme.Themes;
 
 /**
- * TextArea is multiline text component which allow to enter text.
+ * Panel with scroll bars. Default container layout is null.
  */
-public class TextArea extends Component implements TextComponent {
+public class TextArea extends Component implements TextComponent, Viewport {
 
     /**
-     * Used to hold text state of text area.
+     * Initial scrollbar width/height.
      */
-    protected TextState textState;
+    private static final float INITIAL_SCROLL_SIZE = 8f;
 
     /**
-     * Used to describe size of '\t' symbol in spaces.
+     * Used to scroll panel vertically.
      */
-    private int tabSize = 4;
+    private ScrollBar verticalScrollBar;
+
+    /**
+     * Used to scroll panel horizontally.
+     */
+    private ScrollBar horizontalScrollBar;
+
+    /**
+     * Base container which holds component container. Viewport size is limited by scroll bars and parent ScrollablePanel size.
+     */
+    private Component viewport;
+
+    private TextAreaField textAreaField;
+
+    /**
+     * Scrollable panel animation. Updates container position in viewport.
+     */
+    private Animation animation;
 
     /**
      * Default constructor. Used to create component instance without any parameters. <p> Also if you want to make it easy to use with Json
      * marshaller/unmarshaller component should contain empty constructor.
      */
     public TextArea() {
-        initialize("");
+        initialize();
     }
 
     /**
@@ -49,7 +68,7 @@ public class TextArea extends Component implements TextComponent {
      */
     public TextArea(float x, float y, float width, float height) {
         super(x, y, width, height);
-        initialize("");
+        initialize();
     }
 
     /**
@@ -60,187 +79,174 @@ public class TextArea extends Component implements TextComponent {
      */
     public TextArea(Vector2f position, Vector2f size) {
         super(position, size);
-        initialize("");
+        initialize();
     }
 
     /**
-     * Default constructor with text. <p> Also if you want to make it easy to use with Json marshaller/unmarshaller component should contain empty constructor.
+     * Returns animation of scrollable panel.
      *
-     * @param text text to set.
+     * @return animation.
      */
-    public TextArea(String text) {
-        initialize(text);
+    public Animation getAnimation() {
+        return animation;
     }
 
     /**
-     * Constructor with text, position and size parameters.
+     * Used to set scrollable panel animation. Automatically starts animation.
      *
-     * @param text text to set.
-     * @param x x position position in parent component.
-     * @param y y position position in parent component.
-     * @param width width of component.
-     * @param height height of component.
+     * @param animation scroll bar animation to set.
      */
-    public TextArea(String text, float x, float y, float width, float height) {
-        super(x, y, width, height);
-        initialize(text);
+    public void setAnimation(Animation animation) {
+        if (this.animation != null) {
+            this.animation.stopAnimation();
+        }
+        this.animation = animation;
+        if (animation != null) {
+            this.animation.startAnimation();
+        }
     }
 
-    /**
-     * Constructor with text, position and size parameters.
-     *
-     * @param text text to set.
-     * @param position position position in parent component.
-     * @param size size of component.
-     */
-    public TextArea(String text, Vector2f position, Vector2f size) {
-        super(position, size);
-        initialize(text);
-    }
+    private void initialize() {
+        this.getStyle().setDisplay(DisplayType.FLEX);
 
-    /**
-     * Used to initialize text area.
-     *
-     * @param s text to set.
-     */
-    private void initialize(String s) {
-        textState = new TextState(s);
-        textState.getPadding().set(5, 10, 5, 10);
+        float viewportWidth = getSize().x - INITIAL_SCROLL_SIZE;
+        float viewportHeight = getSize().y - INITIAL_SCROLL_SIZE;
 
-        getListenerMap().addListener(MouseDragEvent.class, new TextAreaDragEventListener());
-        getListenerMap().addListener(MouseClickEvent.class, new TextAreaMouseClickEventListener());
-        getListenerMap().addListener(KeyEvent.class, new TextAreaKeyEventListener());
-        getListenerMap().addListener(CharEvent.class, new TextAreaCharEventListener());
+        verticalScrollBar = new ScrollBar();
+        verticalScrollBar.getStyle().setWidth(INITIAL_SCROLL_SIZE);
+        verticalScrollBar.getStyle().setTop(0f);
+        verticalScrollBar.getStyle().setRight(0f);
+        verticalScrollBar.getStyle().setBottom(INITIAL_SCROLL_SIZE);
+        verticalScrollBar.setOrientation(Orientation.VERTICAL);
+        verticalScrollBar.setViewport(this);
+        verticalScrollBar.setTabFocusable(false);
+
+        horizontalScrollBar = new ScrollBar();
+        horizontalScrollBar.getStyle().setHeight(INITIAL_SCROLL_SIZE);
+        horizontalScrollBar.getStyle().setLeft(0f);
+        horizontalScrollBar.getStyle().setRight(INITIAL_SCROLL_SIZE);
+        horizontalScrollBar.getStyle().setBottom(0f);
+        horizontalScrollBar.setOrientation(Orientation.HORIZONTAL);
+        horizontalScrollBar.setViewport(this);
+        horizontalScrollBar.setTabFocusable(false);
+
+        viewport = new TextAreaViewport(0, 0, viewportWidth, viewportHeight);
+
+        viewport.getStyle().getBackground().setColor(1, 1, 1, 0);
+        viewport.getStyle().setBorder(null);
+        viewport.getStyle().setTop(0f);
+        viewport.getStyle().setLeft(0f);
+        viewport.getStyle().setBottom(INITIAL_SCROLL_SIZE);
+        viewport.getStyle().setRight(INITIAL_SCROLL_SIZE);
+        viewport.getListenerMap().addListener(ScrollEvent.class, new TextAreaViewportScrollListener());
+        viewport.setTabFocusable(false);
+
+        textAreaField = new TextAreaField(0, 0, viewportWidth, viewportHeight);
+
+        textAreaField.getStyle().setBorder(null);
+        textAreaField.setTabFocusable(false);
+        textAreaField.getListenerMap().addListener(TextAreaFieldUpdateEvent.class, new TextAreaFieldUpdateListener(this));
+        viewport.add(textAreaField);
+
+        this.add(viewport);
+        this.add(verticalScrollBar);
+        this.add(horizontalScrollBar);
+        this.getStyle().getBackground().setColor(ColorConstants.transparent());
 
         Themes.getDefaultTheme().getThemeManager().getComponentTheme(TextArea.class).applyAll(this);
+
+        animation = new TextAreaScrollAnimation(this);
+        animation.startAnimation();
     }
 
     /**
-     * Returns current text state.
+     * Returns vertical scrollbar.
      *
-     * @return text state of component.
+     * @return vertical scrollbar.
      */
-    public TextState getTextState() {
-        return textState;
+    public ScrollBar getVerticalScrollBar() {
+        return verticalScrollBar;
     }
 
     /**
-     * Returns caret position.
+     * Used to set vertical scroll bar.
      *
-     * @return caret position.
+     * @param verticalScrollBar vertical scroll bar to set.
      */
-    public int getCaretPosition() {
-        return textState.getCaretPosition();
+    public void setVerticalScrollBar(ScrollBar verticalScrollBar) {
+        this.verticalScrollBar.setViewport(null);
+        this.remove(this.verticalScrollBar);
+        this.verticalScrollBar = verticalScrollBar;
+        this.add(verticalScrollBar);
+        this.verticalScrollBar.setViewport(this);
     }
 
     /**
-     * Used to set caret position.
+     * Returns horizontal scrollbar.
      *
-     * @param caretPosition caret position to set.
+     * @return horizontal scrollbar.
      */
-    public void setCaretPosition(int caretPosition) {
-        textState.setCaretPosition(caretPosition);
+    public ScrollBar getHorizontalScrollBar() {
+        return horizontalScrollBar;
     }
 
     /**
-     * Returns true if text is editable.
+     * Used to set horizontal scroll bar.
      *
-     * @return true if text is editable.
+     * @param horizontalScrollBar horizontal scroll bar to set.
      */
-    public boolean isEditable() {
-        return textState.isEditable();
+    public void setHorizontalScrollBar(ScrollBar horizontalScrollBar) {
+        this.horizontalScrollBar.setViewport(null);
+        this.remove(this.horizontalScrollBar);
+        this.horizontalScrollBar = horizontalScrollBar;
+        this.add(horizontalScrollBar);
+        this.horizontalScrollBar.setViewport(this);
     }
 
-    /**
-     * Used to set editable text or not.
-     *
-     * @param editable editable text or not.
-     */
-    public void setEditable(boolean editable) {
-        textState.setEditable(editable);
-    }
-
-    /**
-     * Returns mouse caret position.
-     *
-     * @return mouse caret position.
-     */
-    public int getMouseCaretPosition() {
-        return textState.getMouseCaretPosition();
-    }
-
-    /**
-     * Used to set mouse caret position.
-     *
-     * @param mouseCaretPosition mouse caret position to set.
-     */
-    public void setMouseCaretPosition(int mouseCaretPosition) {
-        textState.setMouseCaretPosition(mouseCaretPosition);
-    }
-
-    /**
-     * Returns start selection index.
-     *
-     * @return start selection index.
-     */
-    public int getStartSelectionIndex() {
-        return textState.getStartSelectionIndex();
-    }
-
-    /**
-     * Used to set start selection index.
-     *
-     * @param startSelectionIndex start selection index to set.
-     */
-    public void setStartSelectionIndex(int startSelectionIndex) {
-        textState.setStartSelectionIndex(startSelectionIndex);
-    }
-
-    /**
-     * Returns end selection index.
-     *
-     * @return end selection index.
-     */
-    public int getEndSelectionIndex() {
-        return textState.getEndSelectionIndex();
-    }
-
-    /**
-     * Used to set end selection index.
-     *
-     * @param endSelectionIndex end selection index to set.
-     */
-    public void setEndSelectionIndex(int endSelectionIndex) {
-        textState.setEndSelectionIndex(endSelectionIndex);
-    }
-
-    /**
-     * Returns selected text.
-     *
-     * @return selected text.
-     */
-    public String getSelection() {
-        return textState.getSelection();
-    }
-
-    /**
-     * Returns tab size in spaces.
-     *
-     * @return tab size in spaces.
-     */
-    public int getTabSize() {
-        return tabSize;
-    }
-
-    /**
-     * Used to set tab size in spaces.
-     *
-     * @param tabSize tab size in spaces.
-     */
-    public void setTabSize(int tabSize) {
-        if (tabSize >= 1) {
-            this.tabSize = tabSize;
+    public void setHorizontalScrollBarVisible(boolean enabled) {
+        if (enabled) {
+            Float height = this.horizontalScrollBar.getStyle().getHeight();
+            if (height == null) {
+                this.horizontalScrollBar.getStyle().setHeight(height = this.horizontalScrollBar.getSize().y);
+            }
+            this.viewport.getStyle().setBottom(height);
+            this.verticalScrollBar.getStyle().setBottom(height);
+        } else {
+            this.viewport.getStyle().setBottom(0f);
+            this.verticalScrollBar.getStyle().setBottom(0f);
         }
+        this.horizontalScrollBar.getStyle().setDisplay(enabled ? DisplayType.MANUAL : DisplayType.NONE);
+    }
+
+    public void setVerticalScrollBarVisible(boolean enabled) {
+        if (enabled) {
+            Float width = this.verticalScrollBar.getStyle().getWidth();
+            if (width == null) {
+                this.verticalScrollBar.getStyle().setWidth(width = this.verticalScrollBar.getSize().x);
+            }
+            this.viewport.getStyle().setRight(width);
+            this.horizontalScrollBar.getStyle().setRight(width);
+        } else {
+            this.viewport.getStyle().setRight(0f);
+            this.horizontalScrollBar.getStyle().setRight(0f);
+        }
+        this.verticalScrollBar.getStyle().setDisplay(enabled ? DisplayType.MANUAL : DisplayType.NONE);
+    }
+
+    public void setHorizontalScrollBarHeight(float height) {
+        this.horizontalScrollBar.getStyle().setHeight(height);
+        this.viewport.getStyle().setBottom(height);
+        this.verticalScrollBar.getStyle().setBottom(height);
+    }
+
+    public void setVerticalScrollBarWidth(float width) {
+        this.verticalScrollBar.getStyle().setWidth(width);
+        this.viewport.getStyle().setRight(width);
+        this.horizontalScrollBar.getStyle().setRight(width);
+    }
+
+    public TextAreaField getTextAreaField() {
+        return textAreaField;
     }
 
     @Override
@@ -249,31 +255,190 @@ public class TextArea extends Component implements TextComponent {
             return true;
         }
 
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof TextArea)) {
             return false;
         }
 
-        TextArea textArea = (TextArea) o;
+        TextArea panel = (TextArea) o;
 
         return new EqualsBuilder()
             .appendSuper(super.equals(o))
-            .append(textState, textArea.textState)
+            .append(verticalScrollBar, panel.verticalScrollBar)
+            .append(horizontalScrollBar, panel.horizontalScrollBar)
+            .append(viewport, panel.viewport)
+            .append(textAreaField, panel.textAreaField)
             .isEquals();
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+            .append("verticalScrollBar", verticalScrollBar)
+            .append("horizontalScrollBar", horizontalScrollBar)
+            .append("viewport", viewport)
+            .append("textAreaField", textAreaField)
+            .toString();
     }
 
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
             .appendSuper(super.hashCode())
-            .append(textState)
+            .append(verticalScrollBar)
+            .append(horizontalScrollBar)
+            .append(viewport)
+            .append(textAreaField)
             .toHashCode();
     }
 
+    public Component getViewport() {
+        return viewport;
+    }
+
     @Override
-    public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-            .append("textState", textState)
-            .toString();
+    public Vector2f getViewportSize() {
+        return new Vector2f(viewport.getSize());
+    }
+
+    @Override
+    public Vector2f getViewportViewSize() {
+        return new Vector2f(textAreaField.getSize());
+    }
+
+    @Override
+    public TextState getTextState() {
+        return textAreaField.getTextState();
+    }
+
+    /**
+     * Returns caret position.
+     *
+     * @return caret position.
+     */
+    public int getCaretPosition() {
+        return textAreaField.getCaretPosition();
+    }
+
+    /**
+     * Used to set caret position.
+     *
+     * @param caretPosition caret position to set.
+     */
+    public void setCaretPosition(int caretPosition) {
+        textAreaField.setCaretPosition(caretPosition);
+    }
+
+    /**
+     * Returns true if text is editable.
+     *
+     * @return true if text is editable.
+     */
+    public boolean isEditable() {
+        return textAreaField.isEditable();
+    }
+
+    /**
+     * Used to set editable text or not.
+     *
+     * @param editable editable text or not.
+     */
+    public void setEditable(boolean editable) {
+        textAreaField.setEditable(editable);
+    }
+
+    /**
+     * Returns mouse caret position.
+     *
+     * @return mouse caret position.
+     */
+    public int getMouseCaretPosition() {
+        return textAreaField.getMouseCaretPosition();
+    }
+
+    /**
+     * Used to set mouse caret position.
+     *
+     * @param mouseCaretPosition mouse caret position to set.
+     */
+    public void setMouseCaretPosition(int mouseCaretPosition) {
+        textAreaField.setMouseCaretPosition(mouseCaretPosition);
+    }
+
+    /**
+     * Returns start selection index.
+     *
+     * @return start selection index.
+     */
+    public int getStartSelectionIndex() {
+        return textAreaField.getStartSelectionIndex();
+    }
+
+    /**
+     * Used to set start selection index.
+     *
+     * @param startSelectionIndex start selection index to set.
+     */
+    public void setStartSelectionIndex(int startSelectionIndex) {
+        textAreaField.setStartSelectionIndex(startSelectionIndex);
+    }
+
+    /**
+     * Returns end selection index.
+     *
+     * @return end selection index.
+     */
+    public int getEndSelectionIndex() {
+        return textAreaField.getEndSelectionIndex();
+    }
+
+    /**
+     * Used to set end selection index.
+     *
+     * @param endSelectionIndex end selection index to set.
+     */
+    public void setEndSelectionIndex(int endSelectionIndex) {
+        textAreaField.setEndSelectionIndex(endSelectionIndex);
+    }
+
+    /**
+     * Returns selected text.
+     *
+     * @return selected text.
+     */
+    public String getSelection() {
+        return textAreaField.getSelection();
+    }
+
+    /**
+     * Returns tab size in spaces.
+     *
+     * @return tab size in spaces.
+     */
+    public int getTabSize() {
+        return textAreaField.getTabSize();
+    }
+
+    /**
+     * Used to set tab size in spaces.
+     *
+     * @param tabSize tab size in spaces.
+     */
+    public void setTabSize(int tabSize) {
+        textAreaField.setTabSize(tabSize);
+    }
+
+    public static class TextAreaViewport extends Panel {
+
+        public TextAreaViewport() {
+        }
+
+        public TextAreaViewport(float x, float y, float width, float height) {
+            super(x, y, width, height);
+        }
+
+        public TextAreaViewport(Vector2f position, Vector2f size) {
+            super(position, size);
+        }
     }
 
 }

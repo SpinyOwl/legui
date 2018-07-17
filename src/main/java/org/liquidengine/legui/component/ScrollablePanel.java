@@ -150,15 +150,6 @@ public class ScrollablePanel extends Component implements Viewport {
         this.add(horizontalScrollBar);
         this.getStyle().getBackground().setColor(ColorConstants.transparent());
 
-        container.getStyle().setBorder(null);
-        container.setTabFocusable(false);
-        viewport.add(container);
-
-        this.add(viewport);
-        this.add(verticalScrollBar);
-        this.add(horizontalScrollBar);
-        this.getStyle().getBackground().setColor(ColorConstants.transparent());
-
         Themes.getDefaultTheme().getThemeManager().getComponentTheme(ScrollablePanel.class).applyAll(this);
 
         animation = new ScrollablePanelAnimation(this);

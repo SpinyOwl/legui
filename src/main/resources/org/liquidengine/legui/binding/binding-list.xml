@@ -20,7 +20,7 @@
     <binding for="org.liquidengine.legui.component.ScrollBar" is="org/liquidengine/legui/binding/component/ScrollBar.xml"/>
     <binding for="org.liquidengine.legui.component.SelectBox" is="org/liquidengine/legui/binding/component/SelectBox.xml"/>
     <binding for="org.liquidengine.legui.component.Slider" is="org/liquidengine/legui/binding/component/Slider.xml"/>
-    <binding for="org.liquidengine.legui.component.TextArea" is="org/liquidengine/legui/binding/component/TextArea.xml"/>
+    <binding for="org.liquidengine.legui.component.TextAreaField" is="org/liquidengine/legui/binding/component/TextArea.xml"/>
     <binding for="org.liquidengine.legui.component.TextInput" is="org/liquidengine/legui/binding/component/TextInput.xml"/>
     <binding for="org.liquidengine.legui.component.ToggleButton" is="org/liquidengine/legui/binding/component/ToggleButton.xml"/>
     <binding for="org.liquidengine.legui.component.Tooltip" is="org/liquidengine/legui/binding/component/Tooltip.xml"/>

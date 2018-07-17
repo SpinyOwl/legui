@@ -21,14 +21,14 @@ public class NvgLabelRenderer extends NvgDefaultComponentRenderer<Label> {
         {
             Vector2f pos = label.getAbsolutePosition();
             Vector2f size = label.getSize();
-            Vector4f backgroundColor = new Vector4f(label.getStyle().getBackground().getColor());
 
             /*Draw background rectangle*/
             renderBackground(label, context, nanovg);
 
             // draw text into box
             TextState textState = label.getTextState();
-            NvgText.drawTextLineToRect(nanovg, textState, pos, size, false);
+            Vector4f padding = label.getStyle().getPadding();
+            NvgText.drawTextLineToRect(nanovg, textState, pos.add(padding.w, padding.x), size.sub(padding.w + padding.y, padding.x + padding.z), false);
         }
         resetScissor(nanovg);
     }

@@ -40,7 +40,7 @@ public class FlatWidgetTheme<T extends Widget> extends FlatComponentTheme<T> {
         super.applyAll(component);
         component.getStyle().getBackground().setColor(settings.backgroundColor());
 
-        if (settings.shadowColor()== null || settings.shadowColor().length() > 0.00001f) {
+        if (settings.shadowColor() == null || settings.shadowColor().length() > 0.00001f) {
             component.getStyle().setShadow(new Shadow(-4, 4, 17, -7, settings.shadowColor()));
         } else {
             component.getStyle().setShadow(null);
@@ -72,7 +72,7 @@ public class FlatWidgetTheme<T extends Widget> extends FlatComponentTheme<T> {
         component.getResizeButton().getStyle().getBackground().setIcon(icon);
 
         TextState titleTextState = component.getTitleTextState();
-        titleTextState.setPadding(7, 3, 5, 2);
+        component.getTitle().getStyle().setPadding(3f, 5f);
         titleTextState.setTextColor(ColorUtil.oppositeBlackOrWhite(settings.backgroundColor()));
         Icon closeIcon = component.getCloseIcon();
         if (closeIcon != null && closeIcon instanceof CharIcon) {

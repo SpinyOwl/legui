@@ -146,7 +146,7 @@ public class ExampleGui extends Panel {
         button.setTooltip(new Tooltip("Just button"));
         button.getTooltip().setPosition(0, 25);
         button.getTooltip().getSize().set(50, 60);
-        button.getTooltip().getTextState().setPadding(4, 4, 4, 4);
+        button.getTooltip().getStyle().setPadding(4f);
 
         int idv[] = {0};
         button.getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) (MouseClickEvent event) -> {
@@ -461,7 +461,7 @@ public class ExampleGui extends Panel {
         textArea.getTextState().setVerticalAlign(BOTTOM);
         this.add(textArea);
 
-        textArea.getListenerMap().addListener(KeyEvent.class, (KeyEventListener) event -> {
+        textArea.getTextAreaField().getListenerMap().addListener(KeyEvent.class, (KeyEventListener) event -> {
             if (event.getKey() == GLFW.GLFW_KEY_F1 && event.getAction() == GLFW.GLFW_RELEASE) {
                 textArea.getTextState().setHorizontalAlign(LEFT);
             } else if (event.getKey() == GLFW.GLFW_KEY_F2 && event.getAction() == GLFW.GLFW_RELEASE) {
@@ -543,7 +543,7 @@ public class ExampleGui extends Panel {
         toggleButton.getTooltip().getSize().set(140, 40);
         toggleButton.getTooltip().getStyle().getBackground().setColor(ColorConstants.darkGray());
         toggleButton.getTooltip().getTextState().setTextColor(ColorConstants.white());
-        toggleButton.getTooltip().getTextState().setPadding(4, 4, 4, 4);
+        toggleButton.getTooltip().getStyle().setPadding(4f);
 
         int id[] = {0};
         toggleButton.getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {

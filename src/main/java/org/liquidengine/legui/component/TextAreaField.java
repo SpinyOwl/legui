@@ -1,39 +1,46 @@
 package org.liquidengine.legui.component;
 
-import java.util.List;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
-import org.liquidengine.legui.component.event.textinput.TextInputContentChangeEvent;
-import org.liquidengine.legui.component.misc.listener.textinput.TextInputCharEventListener;
-import org.liquidengine.legui.component.misc.listener.textinput.TextInputDragEventListener;
-import org.liquidengine.legui.component.misc.listener.textinput.TextInputKeyEventListener;
-import org.liquidengine.legui.component.misc.listener.textinput.TextInputMouseClickEventListener;
+import org.liquidengine.legui.component.misc.listener.textarea.TextAreaFieldCharEventListener;
+import org.liquidengine.legui.component.misc.listener.textarea.TextAreaFieldDragEventListener;
+import org.liquidengine.legui.component.misc.listener.textarea.TextAreaFieldKeyEventListener;
+import org.liquidengine.legui.component.misc.listener.textarea.TextAreaFieldMouseClickEventListener;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.event.CharEvent;
 import org.liquidengine.legui.event.KeyEvent;
 import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.event.MouseDragEvent;
-import org.liquidengine.legui.listener.EventListener;
 import org.liquidengine.legui.theme.Themes;
 
 /**
- * Text input is a single line text component which can be used to enter text.
+ * TextAreaField is multiline text component which allow to enter text.
  */
-public class TextInput extends Component implements TextComponent {
+public class TextAreaField extends Component implements TextComponent {
 
     /**
-     * Used to store text state of text input.
+     * Used to hold text state of text area.
      */
     protected TextState textState;
+
+    private float maxTextWidth;
+    private float maxTextHeight;
+    private float caretX;
+    private float caretY;
+
+    /**
+     * Used to describe size of '\t' symbol in spaces.
+     */
+    private int tabSize = 4;
 
     /**
      * Default constructor. Used to create component instance without any parameters. <p> Also if you want to make it easy to use with Json
      * marshaller/unmarshaller component should contain empty constructor.
      */
-    public TextInput() {
+    public TextAreaField() {
         initialize("");
     }
 
@@ -45,7 +52,7 @@ public class TextInput extends Component implements TextComponent {
      * @param width width of component.
      * @param height height of component.
      */
-    public TextInput(float x, float y, float width, float height) {
+    public TextAreaField(float x, float y, float width, float height) {
         super(x, y, width, height);
         initialize("");
     }
@@ -56,18 +63,17 @@ public class TextInput extends Component implements TextComponent {
      * @param position position position in parent component.
      * @param size size of component.
      */
-    public TextInput(Vector2f position, Vector2f size) {
+    public TextAreaField(Vector2f position, Vector2f size) {
         super(position, size);
         initialize("");
     }
 
     /**
-     * Default constructor with text to set. <p> Also if you want to make it easy to use with Json marshaller/unmarshaller component should contain empty
-     * constructor.
+     * Default constructor with text. <p> Also if you want to make it easy to use with Json marshaller/unmarshaller component should contain empty constructor.
      *
      * @param text text to set.
      */
-    public TextInput(String text) {
+    public TextAreaField(String text) {
         initialize(text);
     }
 
@@ -80,7 +86,7 @@ public class TextInput extends Component implements TextComponent {
      * @param width width of component.
      * @param height height of component.
      */
-    public TextInput(String text, float x, float y, float width, float height) {
+    public TextAreaField(String text, float x, float y, float width, float height) {
         super(x, y, width, height);
         initialize(text);
     }
@@ -92,44 +98,53 @@ public class TextInput extends Component implements TextComponent {
      * @param position position position in parent component.
      * @param size size of component.
      */
-    public TextInput(String text, Vector2f position, Vector2f size) {
+    public TextAreaField(String text, Vector2f position, Vector2f size) {
         super(position, size);
         initialize(text);
     }
 
     /**
-     * Used to initialize text input.
+     * Used to initialize text area.
      *
-     * @param text text to set.
+     * @param s text to set.
      */
-    private void initialize(String text) {
-        textState = new TextState(text);
-        getStyle().setPadding(1f, 5f);
+    private void initialize(String s) {
+        textState = new TextState(s);
+        getStyle().setPadding(10f, 5f);
 
-        getListenerMap().addListener(KeyEvent.class, new TextInputKeyEventListener());
-        getListenerMap().addListener(MouseClickEvent.class, new TextInputMouseClickEventListener());
-        getListenerMap().addListener(MouseDragEvent.class, new TextInputDragEventListener());
-        getListenerMap().addListener(CharEvent.class, new TextInputCharEventListener());
+        getListenerMap().addListener(MouseDragEvent.class, new TextAreaFieldDragEventListener());
+        getListenerMap().addListener(MouseClickEvent.class, new TextAreaFieldMouseClickEventListener());
+        getListenerMap().addListener(KeyEvent.class, new TextAreaFieldKeyEventListener());
+        getListenerMap().addListener(CharEvent.class, new TextAreaFieldCharEventListener());
 
-        Themes.getDefaultTheme().getThemeManager().getComponentTheme(TextInput.class).applyAll(this);
+        Themes.getDefaultTheme().getThemeManager().getComponentTheme(TextAreaField.class).applyAll(this);
     }
 
     /**
-     * Returns mouse caret position.
+     * Returns current text state.
      *
-     * @return mouse caret position.
+     * @return text state of component.
      */
-    public int getMouseCaretPosition() {
-        return textState.getMouseCaretPosition();
+    public TextState getTextState() {
+        return textState;
     }
 
     /**
-     * Used to set mouse caret position.
+     * Returns caret position.
      *
-     * @param mouseCaretPosition mouse caret position to set.
+     * @return caret position.
      */
-    public void setMouseCaretPosition(int mouseCaretPosition) {
-        textState.setMouseCaretPosition(mouseCaretPosition);
+    public int getCaretPosition() {
+        return textState.getCaretPosition();
+    }
+
+    /**
+     * Used to set caret position.
+     *
+     * @param caretPosition caret position to set.
+     */
+    public void setCaretPosition(int caretPosition) {
+        textState.setCaretPosition(caretPosition);
     }
 
     /**
@@ -151,21 +166,21 @@ public class TextInput extends Component implements TextComponent {
     }
 
     /**
-     * Returns caret position.
+     * Returns mouse caret position.
      *
-     * @return caret position.
+     * @return mouse caret position.
      */
-    public int getCaretPosition() {
-        return textState.getCaretPosition();
+    public int getMouseCaretPosition() {
+        return textState.getMouseCaretPosition();
     }
 
     /**
-     * Used to set caret position.
+     * Used to set mouse caret position.
      *
-     * @param caretPosition caret position to set.
+     * @param mouseCaretPosition mouse caret position to set.
      */
-    public void setCaretPosition(int caretPosition) {
-        textState.setCaretPosition(caretPosition);
+    public void setMouseCaretPosition(int mouseCaretPosition) {
+        textState.setMouseCaretPosition(mouseCaretPosition);
     }
 
     /**
@@ -214,46 +229,23 @@ public class TextInput extends Component implements TextComponent {
     }
 
     /**
-     * Returns current text state.
+     * Returns tab size in spaces.
      *
-     * @return text state of component.
+     * @return tab size in spaces.
      */
-    public TextState getTextState() {
-        return textState;
+    public int getTabSize() {
+        return tabSize;
     }
 
     /**
-     * Used to add event listener for text input content change event.
+     * Used to set tab size in spaces.
      *
-     * @param eventListener event listener to add.
+     * @param tabSize tab size in spaces.
      */
-    public void addTextInputContentChangeEventListener(EventListener<TextInputContentChangeEvent> eventListener) {
-        this.getListenerMap().addListener(TextInputContentChangeEvent.class, eventListener);
-    }
-
-    /**
-     * Returns all event listeners for text input content change event.
-     *
-     * @return all event listeners for text input content change event.
-     */
-    public List<EventListener<TextInputContentChangeEvent>> getTextInputContentChangeEvents() {
-        return this.getListenerMap().getListeners(TextInputContentChangeEvent.class);
-    }
-
-    /**
-     * Used to remove event listener for text input content change event.
-     *
-     * @param eventListener event listener to remove.
-     */
-    public void removeTextInputContentChangeEventListener(EventListener<TextInputContentChangeEvent> eventListener) {
-        this.getListenerMap().removeListener(TextInputContentChangeEvent.class, eventListener);
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-            .append("textState", textState)
-            .toString();
+    public void setTabSize(int tabSize) {
+        if (tabSize >= 1) {
+            this.tabSize = tabSize;
+        }
     }
 
     @Override
@@ -266,11 +258,11 @@ public class TextInput extends Component implements TextComponent {
             return false;
         }
 
-        TextInput input = (TextInput) o;
+        TextAreaField textAreaField = (TextAreaField) o;
 
         return new EqualsBuilder()
             .appendSuper(super.equals(o))
-            .append(textState, input.textState)
+            .append(textState, textAreaField.textState)
             .isEquals();
     }
 
@@ -282,4 +274,42 @@ public class TextInput extends Component implements TextComponent {
             .toHashCode();
     }
 
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+            .append("textState", textState)
+            .toString();
+    }
+
+    public float getMaxTextWidth() {
+        return maxTextWidth;
+    }
+
+    public void setMaxTextWidth(float maxTextWidth) {
+        this.maxTextWidth = maxTextWidth;
+    }
+
+    public float getMaxTextHeight() {
+        return maxTextHeight;
+    }
+
+    public void setMaxTextHeight(float maxTextHeight) {
+        this.maxTextHeight = maxTextHeight;
+    }
+
+    public float getCaretX() {
+        return caretX;
+    }
+
+    public void setCaretX(float caretX) {
+        this.caretX = caretX;
+    }
+
+    public float getCaretY() {
+        return caretY;
+    }
+
+    public void setCaretY(float caretY) {
+        this.caretY = caretY;
+    }
 }

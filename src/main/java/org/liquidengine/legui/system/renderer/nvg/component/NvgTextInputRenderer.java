@@ -78,8 +78,7 @@ public class NvgTextInputRenderer extends NvgDefaultComponentRenderer<TextInput>
             }
             renderBackground(textInput, context, nanovg);
 
-            TextState textState = textInput.getTextState();
-            Vector4f p = new Vector4f(textState.getPadding()).add(2, 2, 2, 2);
+            Vector4f p = new Vector4f(textInput.getStyle().getPadding()).add(2, 2, 2, 2);
 
             Vector4f intersectRect = new Vector4f(pos.x + p.x, pos.y + p.y, size.x - p.x - p.z, size.y - p.y - p.w);
             intersectScissor(nanovg, new Vector4f(intersectRect).sub(1, 1, -2, -2));

@@ -1,17 +1,17 @@
 package org.liquidengine.legui.theme.colored.def;
 
-import org.liquidengine.legui.component.TextArea;
+import org.liquidengine.legui.component.TextAreaField;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.style.color.ColorUtil;
 import org.liquidengine.legui.style.shadow.Shadow;
 import org.liquidengine.legui.theme.colored.FlatColoredTheme.FlatColoredThemeSettings;
 
 /**
- * Dark TextArea Theme for all text areas. Used to make text area dark.
+ * Dark TextAreaField Theme for all text areas. Used to make text area dark.
  *
- * @param <T> {@link TextArea} subclasses.
+ * @param <T> {@link TextAreaField} subclasses.
  */
-public class FlatTextAreaTheme<T extends TextArea> extends FlatComponentTheme<T> {
+public class FlatTextAreaTheme<T extends TextAreaField> extends FlatComponentTheme<T> {
 
     private FlatColoredThemeSettings settings;
 

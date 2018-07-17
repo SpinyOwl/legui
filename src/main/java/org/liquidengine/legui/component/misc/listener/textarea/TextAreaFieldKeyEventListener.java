@@ -21,16 +21,18 @@ import static org.lwjgl.glfw.GLFW.GLFW_MOD_CONTROL;
 import static org.lwjgl.glfw.GLFW.GLFW_MOD_SHIFT;
 import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
 
-import org.liquidengine.legui.component.TextArea;
+import org.liquidengine.legui.component.TextAreaField;
+import org.liquidengine.legui.component.event.textarea.TextAreaFieldUpdateEvent;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.event.KeyEvent;
 import org.liquidengine.legui.listener.KeyEventListener;
+import org.liquidengine.legui.listener.processor.EventProcessor;
 import org.liquidengine.legui.system.Clipboard;
 
 /**
  * Key event listener. Used to provide some text operations by keyboard.
  */
-public class TextAreaKeyEventListener implements KeyEventListener {
+public class TextAreaFieldKeyEventListener implements KeyEventListener {
 
     /**
      * Used to handle {@link KeyEvent}.
@@ -39,56 +41,57 @@ public class TextAreaKeyEventListener implements KeyEventListener {
      */
     @Override
     public void process(KeyEvent event) {
-        TextArea textArea = (TextArea) event.getTargetComponent();
+        TextAreaField textAreaField = (TextAreaField) event.getTargetComponent();
         int key = event.getKey();
         boolean pressed = event.getAction() != GLFW_RELEASE;
         boolean controlPressed = (event.getMods() & GLFW_MOD_CONTROL) != 0;
 
         if (key == GLFW_KEY_LEFT && pressed) {
-            keyLeftAction(textArea, event.getMods());
+            keyLeftAction(textAreaField, event.getMods());
         } else if (key == GLFW_KEY_RIGHT && pressed) {
-            keyRightAction(textArea, event.getMods());
+            keyRightAction(textAreaField, event.getMods());
         } else if (key == GLFW_KEY_UP && pressed) {
-            keyUpAction(textArea, event.getMods());
+            keyUpAction(textAreaField, event.getMods());
         } else if (key == GLFW_KEY_DOWN && pressed) {
-            keyDownAction(textArea, event.getMods());
+            keyDownAction(textAreaField, event.getMods());
         } else if (key == GLFW_KEY_HOME && pressed) {
-            keyHomeAction(textArea, event.getMods());
+            keyHomeAction(textAreaField, event.getMods());
         } else if (key == GLFW_KEY_END && pressed) {
-            keyEndAction(textArea, event.getMods());
+            keyEndAction(textAreaField, event.getMods());
         } else if ((key == GLFW_KEY_ENTER || key == GLFW_KEY_KP_ENTER) && pressed) {
-            keyEnterAction(textArea);
+            keyEnterAction(textAreaField);
         } else if (key == GLFW_KEY_BACKSPACE && pressed) {
-            keyBackSpaceAction(textArea, event.getMods());
+            keyBackSpaceAction(textAreaField, event.getMods());
         } else if (key == GLFW_KEY_DELETE && pressed) {
-            keyDeleteAction(textArea, event.getMods());
+            keyDeleteAction(textAreaField, event.getMods());
         } else if (key == GLFW_KEY_V && pressed && controlPressed) {
-            pasteAction(textArea);
+            pasteAction(textAreaField);
         } else if (key == GLFW_KEY_C && pressed && controlPressed) {
-            copyAction(textArea);
+            copyAction(textAreaField);
         } else if (key == GLFW_KEY_X && pressed && controlPressed) {
-            cutAction(textArea);
+            cutAction(textAreaField);
         } else if (key == GLFW_KEY_A && pressed && controlPressed) {
-            selectAllAction(textArea);
+            selectAllAction(textAreaField);
         } else if (key == GLFW_KEY_TAB && pressed && !controlPressed) {
-            addTab(textArea);
+            addTab(textAreaField);
         }
 
+        EventProcessor.getInstance().pushEvent(new TextAreaFieldUpdateEvent(textAreaField, event.getContext(), event.getFrame()));
     }
 
     /**
      * Used to insert '\t' symbol.
      *
-     * @param textArea text area to work with.
+     * @param textAreaField text area to work with.
      */
-    private void addTab(TextArea textArea) {
-        if (textArea.isEditable()) {
-            int oldCPos = textArea.getCaretPosition();
-            textArea.getTextState().insert(oldCPos, "\t");
+    private void addTab(TextAreaField textAreaField) {
+        if (textAreaField.isEditable()) {
+            int oldCPos = textAreaField.getCaretPosition();
+            textAreaField.getTextState().insert(oldCPos, "\t");
             int caretPosition = oldCPos + 1;
-            textArea.setCaretPosition(caretPosition);
-            textArea.setStartSelectionIndex(caretPosition);
-            textArea.setEndSelectionIndex(caretPosition);
+            textAreaField.setCaretPosition(caretPosition);
+            textAreaField.setStartSelectionIndex(caretPosition);
+            textAreaField.setEndSelectionIndex(caretPosition);
         }
     }
 
@@ -97,7 +100,7 @@ public class TextAreaKeyEventListener implements KeyEventListener {
      *
      * @param gui text area to work with.
      */
-    private void selectAllAction(TextArea gui) {
+    private void selectAllAction(TextAreaField gui) {
         TextState textState = gui.getTextState();
         gui.setStartSelectionIndex(0);
         gui.setEndSelectionIndex(textState.length());
@@ -109,7 +112,7 @@ public class TextAreaKeyEventListener implements KeyEventListener {
      *
      * @param gui text area to work with.
      */
-    private void cutAction(TextArea gui) {
+    private void cutAction(TextAreaField gui) {
         if (gui.isEditable()) {
             TextState textState = gui.getTextState();
             String s = gui.getSelection();
@@ -135,7 +138,7 @@ public class TextAreaKeyEventListener implements KeyEventListener {
      *
      * @param gui gui.
      */
-    private void copyAction(TextArea gui) {
+    private void copyAction(TextAreaField gui) {
         String s = gui.getSelection();
         if (s != null) {
             Clipboard.getInstance().setClipboardString(s);
@@ -147,7 +150,7 @@ public class TextAreaKeyEventListener implements KeyEventListener {
      *
      * @param gui gui to paste
      */
-    private void pasteAction(TextArea gui) {
+    private void pasteAction(TextAreaField gui) {
         if (gui.isEditable()) {
             TextState textState = gui.getTextState();
             int caretPosition = gui.getCaretPosition();
@@ -165,7 +168,7 @@ public class TextAreaKeyEventListener implements KeyEventListener {
      * @param gui gui to remove data from text state.
      * @param mods key mods.
      */
-    private void keyDeleteAction(TextArea gui, int mods) {
+    private void keyDeleteAction(TextAreaField gui, int mods) {
         if (gui.isEditable()) {
             TextState textState = gui.getTextState();
             int caretPosition = gui.getCaretPosition();
@@ -202,7 +205,7 @@ public class TextAreaKeyEventListener implements KeyEventListener {
      * @param gui gui to remove text data.
      * @param mods key mods.
      */
-    private void keyBackSpaceAction(TextArea gui, int mods) {
+    private void keyBackSpaceAction(TextAreaField gui, int mods) {
         if (gui.isEditable()) {
             TextState textState = gui.getTextState();
             int caretPosition = gui.getCaretPosition();
@@ -240,7 +243,7 @@ public class TextAreaKeyEventListener implements KeyEventListener {
      *
      * @param gui gui to add new line.
      */
-    private void keyEnterAction(TextArea gui) {
+    private void keyEnterAction(TextAreaField gui) {
         if (gui.isEditable()) {
             int start = gui.getStartSelectionIndex();
             int end = gui.getEndSelectionIndex();
@@ -264,7 +267,7 @@ public class TextAreaKeyEventListener implements KeyEventListener {
         }
     }
 
-    private void keyEndAction(TextArea gui, int mods) {
+    private void keyEndAction(TextAreaField gui, int mods) {
         TextState textState = gui.getTextState();
         int caretPosition = gui.getCaretPosition();
         String text = textState.getText();
@@ -282,7 +285,7 @@ public class TextAreaKeyEventListener implements KeyEventListener {
         gui.setCaretPosition(newCaretPosition);
     }
 
-    private void keyHomeAction(TextArea gui, int mods) {
+    private void keyHomeAction(TextAreaField gui, int mods) {
         TextState textState = gui.getTextState();
         int caretPosition = gui.getCaretPosition();
         String text = textState.getText();
@@ -298,7 +301,7 @@ public class TextAreaKeyEventListener implements KeyEventListener {
         gui.setCaretPosition(newCaretPosition);
     }
 
-    private void keyDownAction(TextArea gui, int mods) {
+    private void keyDownAction(TextAreaField gui, int mods) {
         TextState textState = gui.getTextState();
         int caretPosition = gui.getCaretPosition();
         if (caretPosition < textState.length()) {
@@ -324,7 +327,7 @@ public class TextAreaKeyEventListener implements KeyEventListener {
         }
     }
 
-    private void keyUpAction(TextArea gui, int mods) {
+    private void keyUpAction(TextAreaField gui, int mods) {
         int caretPosition = gui.getCaretPosition();
         if (caretPosition > 0) {
             TextState textState = gui.getTextState();
@@ -345,7 +348,7 @@ public class TextAreaKeyEventListener implements KeyEventListener {
         }
     }
 
-    private void keyRightAction(TextArea gui, int mods) {
+    private void keyRightAction(TextAreaField gui, int mods) {
         TextState textState = gui.getTextState();
         int caretPosition = gui.getCaretPosition();
         int newCaretPosition = caretPosition + 1;
@@ -363,7 +366,7 @@ public class TextAreaKeyEventListener implements KeyEventListener {
         gui.setCaretPosition(newCaretPosition);
     }
 
-    private void keyLeftAction(TextArea gui, int mods) {
+    private void keyLeftAction(TextAreaField gui, int mods) {
         int caretPosition = gui.getCaretPosition();
         int newCaretPosition = caretPosition - 1;
         // reset if out of bounds.

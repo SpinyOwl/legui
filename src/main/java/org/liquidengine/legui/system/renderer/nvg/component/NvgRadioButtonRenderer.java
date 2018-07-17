@@ -31,7 +31,7 @@ public class NvgRadioButtonRenderer extends NvgDefaultComponentRenderer<RadioBut
             TextState textState = radioButton.getTextState();
             Icon icon = radioButton.isChecked() ? radioButton.getIconChecked() : radioButton.getIconUnchecked();
 
-            Vector4f pad = textState.getPadding();
+            Vector4f pad = radioButton.getStyle().getPadding();
 
             // renderNvg text
             float iconWidthForUse = (icon.getHorizontalAlign().index == 0 ? 1 : 0) * icon.getSize().x;

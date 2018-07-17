@@ -14,7 +14,7 @@ import org.liquidengine.legui.component.ProgressBar;
 import org.liquidengine.legui.component.RadioButton;
 import org.liquidengine.legui.component.ScrollBar;
 import org.liquidengine.legui.component.Slider;
-import org.liquidengine.legui.component.TextArea;
+import org.liquidengine.legui.component.TextAreaField;
 import org.liquidengine.legui.component.TextInput;
 import org.liquidengine.legui.component.ToggleButton;
 import org.liquidengine.legui.component.Tooltip;
@@ -43,7 +43,7 @@ import org.liquidengine.legui.system.renderer.nvg.component.NvgProgressBarRender
 import org.liquidengine.legui.system.renderer.nvg.component.NvgRadioButtonRenderer;
 import org.liquidengine.legui.system.renderer.nvg.component.NvgScrollBarRenderer;
 import org.liquidengine.legui.system.renderer.nvg.component.NvgSliderRenderer;
-import org.liquidengine.legui.system.renderer.nvg.component.NvgTextAreaRenderer;
+import org.liquidengine.legui.system.renderer.nvg.component.NvgTextAreaFieldRenderer;
 import org.liquidengine.legui.system.renderer.nvg.component.NvgTextInputRenderer;
 import org.liquidengine.legui.system.renderer.nvg.component.NvgToggleButtonRenderer;
 import org.liquidengine.legui.system.renderer.nvg.component.NvgTooltipRenderer;
@@ -81,7 +81,7 @@ public class NvgRendererProvider extends RendererProvider {
         componentRendererMap.put(RadioButton.class, new NvgRadioButtonRenderer());
         componentRendererMap.put(ScrollBar.class, new NvgScrollBarRenderer());
         componentRendererMap.put(Slider.class, new NvgSliderRenderer());
-        componentRendererMap.put(TextArea.class, new NvgTextAreaRenderer());
+        componentRendererMap.put(TextAreaField.class, new NvgTextAreaFieldRenderer());
         componentRendererMap.put(TextInput.class, new NvgTextInputRenderer());
         componentRendererMap.put(PasswordInput.class, new NvgPasswordInputRenderer());
         componentRendererMap.put(Tooltip.class, new NvgTooltipRenderer());

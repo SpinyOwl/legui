@@ -148,6 +148,7 @@ public class Widget extends Component {
         this.getStyle().getFlexStyle().setFlexDirection(FlexDirection.COLUMN);
         this.getStyle().setMinWidth(50f);
         this.getStyle().setMinHeight(50f);
+        this.getStyle().setPadding(0f);
 
         titleContainer = new Panel();
         titleContainer.setTabFocusable(false);
@@ -163,7 +164,7 @@ public class Widget extends Component {
         titleContainer.getStyle().getFlexStyle().setFlexDirection(FlexDirection.ROW);
 
         this.title = new Label(title);
-        this.title.getTextState().getPadding().set(10, 5, 10, 5);
+//        this.title.getStyle().setPadding(5f, 10f);
         this.title.getStyle().setPosition(PositionType.RELATIVE);
         this.title.getStyle().setMaxWidth(Float.MAX_VALUE);
         this.title.getStyle().setMaxHeight((float) INITIAL_TITLE_HEIGHT);
@@ -365,6 +366,10 @@ public class Widget extends Component {
      */
     public TextState getTitleTextState() {
         return title.getTextState();
+    }
+
+    public Label getTitle() {
+        return title;
     }
 
     /**

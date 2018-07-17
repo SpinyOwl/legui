@@ -45,10 +45,6 @@ public class TextState implements Serializable {
      * Highlight color (used to highlight selection).
      */
     private Vector4f highlightColor = ColorConstants.blue();
-    /**
-     * Padding in component.
-     */
-    private Vector4f padding = new Vector4f(0);
 
     /**
      * Used to store caret position in text.
@@ -221,36 +217,6 @@ public class TextState implements Serializable {
      */
     public void setHighlightColor(float r, float g, float b, float a) {
         this.highlightColor = new Vector4f(r, g, b, a);
-    }
-
-    /**
-     * Returns padding. <ul> <li>x - left</li> <li>y - top</li> <li>z - right</li> <li>w - bottom</li> </ul>
-     *
-     * @return padding
-     */
-    public Vector4f getPadding() {
-        return padding;
-    }
-
-    /**
-     * Used to set padding. <ul> <li>x - left</li> <li>y - top</li> <li>z - right</li> <li>w - bottom</li> </ul>
-     *
-     * @param padding text padding.
-     */
-    public void setPadding(Vector4f padding) {
-        this.padding = padding;
-    }
-
-    /**
-     * Used to set padding.
-     *
-     * @param left left padding
-     * @param top top padding
-     * @param right right padding
-     * @param bottom bottom padding
-     */
-    public void setPadding(float left, float top, float right, float bottom) {
-        this.padding = new Vector4f(left, top, right, bottom);
     }
 
     /**
@@ -1020,7 +986,6 @@ public class TextState implements Serializable {
             .append("verticalAlign", verticalAlign)
             .append("textColor", textColor)
             .append("highlightColor", highlightColor)
-            .append("padding", padding)
             .append("caretPosition", caretPosition)
             .append("mouseCaretPosition", mouseCaretPosition)
             .append("startSelectionIndex", startSelectionIndex)
@@ -1052,7 +1017,6 @@ public class TextState implements Serializable {
             .append(verticalAlign, textState.verticalAlign)
             .append(textColor, textState.textColor)
             .append(highlightColor, textState.highlightColor)
-            .append(padding, textState.padding)
             .append(caretPosition, this.caretPosition)
             .append(mouseCaretPosition, this.mouseCaretPosition)
             .append(startSelectionIndex, this.startSelectionIndex)
@@ -1074,7 +1038,6 @@ public class TextState implements Serializable {
             .append(verticalAlign)
             .append(textColor)
             .append(highlightColor)
-            .append(padding)
             .append(caretPosition)
             .append(mouseCaretPosition)
             .append(startSelectionIndex)
@@ -1097,7 +1060,6 @@ public class TextState implements Serializable {
         this.verticalAlign = state.verticalAlign;
         this.textColor.set(state.textColor);
         this.highlightColor.set(state.highlightColor);
-        this.padding.set(state.padding);
     }
 
 
