@@ -39,11 +39,11 @@ import org.liquidengine.legui.theme.colored.def.FlatSelectBoxScrollablePanelThem
 import org.liquidengine.legui.theme.colored.def.FlatSelectBoxTheme;
 import org.liquidengine.legui.theme.colored.def.FlatSliderTheme;
 import org.liquidengine.legui.theme.colored.def.FlatTextAreaFieldTheme;
+import org.liquidengine.legui.theme.colored.def.FlatTextAreaTheme;
 import org.liquidengine.legui.theme.colored.def.FlatTextInputTheme;
 import org.liquidengine.legui.theme.colored.def.FlatToggleButtonTheme;
 import org.liquidengine.legui.theme.colored.def.FlatTooltipTheme;
 import org.liquidengine.legui.theme.colored.def.FlatWidgetTheme;
-import org.liquidengine.legui.theme.colored.def.FlatTextAreaTheme;
 
 /**
  * Dark Theme. Used to change theme of components to dark.

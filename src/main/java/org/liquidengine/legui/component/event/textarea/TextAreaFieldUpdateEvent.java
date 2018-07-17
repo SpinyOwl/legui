@@ -2,7 +2,6 @@ package org.liquidengine.legui.component.event.textarea;
 
 import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.component.TextAreaField;
-import org.liquidengine.legui.component.TextInput;
 import org.liquidengine.legui.event.Event;
 import org.liquidengine.legui.system.context.Context;
 

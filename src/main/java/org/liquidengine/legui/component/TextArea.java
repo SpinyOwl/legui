@@ -7,7 +7,6 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 import org.liquidengine.legui.animation.Animation;
 import org.liquidengine.legui.component.event.textarea.TextAreaFieldUpdateEvent;
-import org.liquidengine.legui.component.event.textarea.TextAreaFieldUpdateEventListener;
 import org.liquidengine.legui.component.misc.animation.textarea.TextAreaScrollAnimation;
 import org.liquidengine.legui.component.misc.listener.textarea.TextAreaFieldUpdateListener;
 import org.liquidengine.legui.component.misc.listener.textarea.TextAreaViewportScrollListener;
