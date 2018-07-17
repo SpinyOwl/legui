@@ -11,8 +11,5 @@
     <bind field="highlightColor" to="highlightColor" as="field">
         <using-binding path="org/liquidengine/legui/binding/common/Vector4fColor.xml"/>
     </bind>
-    <bind field="padding" to="padding" as="field">
-        <using-binding path="org/liquidengine/legui/binding/common/Vector4f.xml"/>
-    </bind>
     <bind field="editable"/>
 </class-binding>

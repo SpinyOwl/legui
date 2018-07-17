@@ -265,7 +265,7 @@ public class TextArea extends Component implements TextComponent, Viewport {
             .appendSuper(super.equals(o))
             .append(verticalScrollBar, panel.verticalScrollBar)
             .append(horizontalScrollBar, panel.horizontalScrollBar)
-            .append(viewport, panel.viewport)
+//            .append(viewport, panel.viewport)
             .append(textAreaField, panel.textAreaField)
             .isEquals();
     }

@@ -15,6 +15,7 @@ import org.liquidengine.legui.component.SelectBox;
 import org.liquidengine.legui.component.SelectBox.SelectBoxElement;
 import org.liquidengine.legui.component.SelectBox.SelectBoxScrollablePanel;
 import org.liquidengine.legui.component.Slider;
+import org.liquidengine.legui.component.TextArea;
 import org.liquidengine.legui.component.TextAreaField;
 import org.liquidengine.legui.component.TextInput;
 import org.liquidengine.legui.component.ToggleButton;
@@ -37,11 +38,12 @@ import org.liquidengine.legui.theme.colored.def.FlatSelectBoxElementTheme;
 import org.liquidengine.legui.theme.colored.def.FlatSelectBoxScrollablePanelTheme;
 import org.liquidengine.legui.theme.colored.def.FlatSelectBoxTheme;
 import org.liquidengine.legui.theme.colored.def.FlatSliderTheme;
-import org.liquidengine.legui.theme.colored.def.FlatTextAreaTheme;
+import org.liquidengine.legui.theme.colored.def.FlatTextAreaFieldTheme;
 import org.liquidengine.legui.theme.colored.def.FlatTextInputTheme;
 import org.liquidengine.legui.theme.colored.def.FlatToggleButtonTheme;
 import org.liquidengine.legui.theme.colored.def.FlatTooltipTheme;
 import org.liquidengine.legui.theme.colored.def.FlatWidgetTheme;
+import org.liquidengine.legui.theme.colored.def.FlatTextAreaTheme;
 
 /**
  * Dark Theme. Used to change theme of components to dark.
@@ -88,7 +90,8 @@ public class FlatColoredTheme extends Theme {
         m.setComponentTheme(SelectBoxScrollablePanel.class, new FlatSelectBoxScrollablePanelTheme<> (settings));
         m.setComponentTheme(SelectBoxElement.class,         new FlatSelectBoxElementTheme<>         (settings));
         m.setComponentTheme(Slider.class,                   new FlatSliderTheme<>                   (settings));
-        m.setComponentTheme(TextAreaField.class, new FlatTextAreaTheme<>                 (settings));
+        m.setComponentTheme(TextArea.class,                 new FlatTextAreaTheme<>                 (settings));
+        m.setComponentTheme(TextAreaField.class,            new FlatTextAreaFieldTheme<>            (settings));
         m.setComponentTheme(TextInput.class,                new FlatTextInputTheme<>                (settings));
         m.setComponentTheme(ToggleButton.class,             new FlatToggleButtonTheme<>             (settings));
         m.setComponentTheme(Tooltip.class,                  new FlatTooltipTheme<>                  (settings));

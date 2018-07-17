@@ -1,17 +1,22 @@
 package org.liquidengine.legui.theme.colored.def;
 
-import org.liquidengine.legui.component.TextAreaField;
-import org.liquidengine.legui.component.optional.align.HorizontalAlign;
+import org.joml.Vector4f;
+import org.liquidengine.legui.component.Component;
+import org.liquidengine.legui.component.ScrollablePanel;
+import org.liquidengine.legui.component.TextArea;
+import org.liquidengine.legui.style.border.SimpleLineBorder;
+import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.style.color.ColorUtil;
 import org.liquidengine.legui.style.shadow.Shadow;
+import org.liquidengine.legui.theme.Themes;
 import org.liquidengine.legui.theme.colored.FlatColoredTheme.FlatColoredThemeSettings;
 
 /**
- * Dark TextAreaField Theme for all text areas. Used to make text area dark.
+ * Dark ScrollablePanel Theme for all scrollable panels. Used to make scrollable panel dark.
  *
- * @param <T> {@link TextAreaField} subclasses.
+ * @param <T> {@link ScrollablePanel} subclasses.
  */
-public class FlatTextAreaTheme<T extends TextAreaField> extends FlatComponentTheme<T> {
+public class FlatTextAreaTheme<T extends TextArea> extends FlatComponentTheme<T> {
 
     private FlatColoredThemeSettings settings;
 
@@ -28,16 +33,23 @@ public class FlatTextAreaTheme<T extends TextAreaField> extends FlatComponentThe
     @Override
     public void apply(T component) {
         super.apply(component);
+
+        Vector4f bgc = ColorUtil.oppositeBlackOrWhite(settings.backgroundColor().mul(3)).add(settings.backgroundColor().mul(3)).div(4);
+        component.getStyle().getBackground().setColor(bgc);
         if (settings.shadowColor()== null || settings.shadowColor().length() > 0.00001f) {
             component.getStyle().setShadow(new Shadow(-4, 4, 17, -7, settings.shadowColor()));
         } else {
             component.getStyle().setShadow(null);
         }
-        component.getFocusedStyle().getBackground()
-            .setColor(settings.backgroundColor().mul(3).add(ColorUtil.oppositeBlackOrWhite(settings.backgroundColor())).div(4));
-        component.getTextState().setTextColor(ColorUtil.oppositeBlackOrWhite(settings.backgroundColor()));
-        component.getTextState().setHorizontalAlign(HorizontalAlign.LEFT);
-        component.getTextState().setHighlightColor(settings.strokeColor());
-        component.getStyle().getBackground().setColor(settings.backgroundColor());
+
+        Component viewport = component.getViewport();
+        Themes.getDefaultTheme().apply(viewport);
+        Themes.getDefaultTheme().applyAll(component.getVerticalScrollBar());
+        Themes.getDefaultTheme().applyAll(component.getHorizontalScrollBar());
+        viewport.getStyle().getBackground().setColor(ColorConstants.transparent());
+
+        component.getStyle().setBorder(new SimpleLineBorder(settings.borderColor(), 1));
+        component.getViewport().getStyle().setBorder(new SimpleLineBorder(settings.borderColor(), 1));
     }
+
 }
