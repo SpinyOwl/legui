@@ -23,12 +23,15 @@ import static org.lwjgl.opengl.GL11.glClearColor;
 import static org.lwjgl.opengl.GL11.glViewport;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
+import java.util.concurrent.TimeUnit;
 import org.joml.Vector2i;
 import org.liquidengine.legui.DefaultInitializer;
 import org.liquidengine.legui.animation.Animator;
 import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.event.WindowSizeEvent;
 import org.liquidengine.legui.listener.WindowSizeEventListener;
+import org.liquidengine.legui.system.LeguiSystem;
+import org.liquidengine.legui.system.Window;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.layout.LayoutManager;
 import org.liquidengine.legui.system.renderer.Renderer;
@@ -54,7 +57,24 @@ public class Example {
 
 //    private static String json = IOUtil.loadResourceAsString("org/liquidengine/legui/demo/json.json", 1024);
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
+
+        if (true) {
+            LeguiSystem.initialize();
+
+            Window window = LeguiSystem.createWindow(WIDTH, HEIGHT, "HELLO");
+            window.setVisible(true);
+            TimeUnit.SECONDS.sleep(3);
+            LeguiSystem.destroyWindow(window);
+            window = null;
+
+
+            LeguiSystem.destroy();
+            return;
+        }
+
+
+
         System.setProperty("joml.nounsafe", Boolean.TRUE.toString());
         System.setProperty("java.awt.headless", Boolean.TRUE.toString());
         if (!glfwInit()) {
