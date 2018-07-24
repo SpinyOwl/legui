@@ -3,7 +3,6 @@ package org.liquidengine.legui.demo;
 import org.liquidengine.legui.component.Button;
 import org.liquidengine.legui.component.Label;
 import org.liquidengine.legui.event.MouseClickEvent;
-import org.liquidengine.legui.listener.MouseClickEventListener;
 import org.liquidengine.legui.listener.impl.AbstractMouseClickEventListener;
 import org.liquidengine.legui.system.LeguiSystem;
 import org.liquidengine.legui.system.Window;
@@ -19,6 +18,17 @@ public class LeguiSystemUsageDemo {
         Window window = LeguiSystem.createWindow(800, 600, "HELLO");
         window.setVisible(true);
 
+        createGUI(window);
+
+        Window finalWindow = window;
+        finalWindow.setCloseEventListener(event -> {
+            System.out.println("CLOSE EVENT");
+            LeguiSystem.destroyWindow(finalWindow);
+            LeguiSystem.destroy();
+        });
+    }
+
+    private static void createGUI(Window window) {
         final Integer[] clickedTimes = {0};
 
         Button button = new Button("Button", 10, 20, 100, 30);
@@ -33,13 +43,6 @@ public class LeguiSystemUsageDemo {
 
         window.getFrame().getContainer().add(button);
         window.getFrame().getContainer().add(l);
-
-        Window finalWindow = window;
-        finalWindow.setCloseEventListener(event -> {
-            System.out.println("CLOSE EVENT");
-            LeguiSystem.destroyWindow(finalWindow);
-            LeguiSystem.destroy();
-        });
     }
 
     private static String getText(Integer clickedTimes) {
