@@ -58,23 +58,6 @@ public class Example {
 //    private static String json = IOUtil.loadResourceAsString("org/liquidengine/legui/demo/json.json", 1024);
 
     public static void main(String[] args) throws InterruptedException {
-
-        if (true) {
-            LeguiSystem.initialize();
-
-            Window window = LeguiSystem.createWindow(WIDTH, HEIGHT, "HELLO");
-            window.setVisible(true);
-            TimeUnit.SECONDS.sleep(3);
-            LeguiSystem.destroyWindow(window);
-            window = null;
-
-
-            LeguiSystem.destroy();
-            return;
-        }
-
-
-
         System.setProperty("joml.nounsafe", Boolean.TRUE.toString());
         System.setProperty("java.awt.headless", Boolean.TRUE.toString());
         if (!glfwInit()) {

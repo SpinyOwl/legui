@@ -1,6 +1,18 @@
 package org.liquidengine.legui.system;
 
+import static org.lwjgl.glfw.GLFW.glfwDestroyWindow;
+import static org.lwjgl.glfw.GLFW.glfwMakeContextCurrent;
+import static org.lwjgl.glfw.GLFW.glfwPollEvents;
+import static org.lwjgl.glfw.GLFW.glfwSwapBuffers;
+import static org.lwjgl.glfw.GLFW.glfwSwapInterval;
+import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
+import static org.lwjgl.opengl.GL11.GL_STENCIL_BUFFER_BIT;
+import static org.lwjgl.opengl.GL11.glClear;
+import static org.lwjgl.opengl.GL11.glClearColor;
+import static org.lwjgl.opengl.GL11.glViewport;
+
 import java.util.Queue;
+import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ExecutionException;
@@ -8,8 +20,23 @@ import java.util.concurrent.FutureTask;
 import java.util.concurrent.atomic.AtomicBoolean;
 import org.apache.commons.collections4.BidiMap;
 import org.apache.commons.collections4.bidimap.DualHashBidiMap;
+import org.joml.Vector2i;
+import org.liquidengine.legui.animation.Animator;
+import org.liquidengine.legui.component.Frame;
+import org.liquidengine.legui.listener.processor.EventProcessor;
+import org.liquidengine.legui.system.context.CallbackKeeper;
+import org.liquidengine.legui.system.context.Context;
+import org.liquidengine.legui.system.context.DefaultCallbackKeeper;
+import org.liquidengine.legui.system.handler.processor.SystemEventProcessor;
+import org.liquidengine.legui.system.layout.LayoutManager;
+import org.liquidengine.legui.system.renderer.nvg.NvgRenderer;
 import org.lwjgl.glfw.GLFW;
+import org.lwjgl.opengl.GL;
 
+/**
+ * Class that provides easy way to create windows, abstract from creating contexts and initializing subsystems and concentrate only on developing application
+ * using this library.
+ */
 public final class LeguiSystem {
 
     private static final LeguiSystem instance = new LeguiSystem();
@@ -33,12 +60,54 @@ public final class LeguiSystem {
         running = true;
         while (running) {
 
+            Set<Window> values = windowMap.values();
+
+            // render cycle
+            for (Window window : values) {
+                window.getContext().updateGlfwWindow();
+                Vector2i windowSize = window.getContext().getFramebufferSize();
+
+                glClearColor(1, 1, 1, 1);
+                glViewport(0, 0, windowSize.x, windowSize.y);
+                glClear(GL_COLOR_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+
+                window.getRenderer().render(window.getFrame(), window.getContext());
+
+                glfwSwapBuffers(window.getPointer());
+            }
+
+            // poll events
+            glfwPollEvents();
+
+            // process system events per window
+            for (Window window : values) {
+                window.getSystemEventProcessor().processEvents(window.getFrame(), window.getContext());
+            }
+
+            // process legui events
+            EventProcessor.getInstance().processEvents();
+
+            // When everything done we need to relayout components.
+            for (Window window : values) {
+                LayoutManager.getInstance().layout(window.getFrame());
+            }
+
+            // Run animations. Should be also called cause some components use animations for updating state.
+            Animator.getInstance().runAnimations();
+
+            // after all we can process other tasks.
             FutureTask task = wstTasks.poll();
             if (task != null) {
                 task.run();
             }
         }
 
+        for (Window window : windowMap.values()) {
+            window.getRenderer().destroy();
+            glfwDestroyWindow(window.getPointer());
+        }
+
+        GLFW.glfwTerminate();
     }
 
     // ------------------------------------------------------------------
@@ -57,7 +126,6 @@ public final class LeguiSystem {
     public static void destroy() {
         if (instance.initialized.compareAndSet(true, false)) {
             instance.running = false;
-            GLFW.glfwTerminate();
         }
     }
 
@@ -100,6 +168,20 @@ public final class LeguiSystem {
 
             if (pointer != 0) {
                 Window window = new Window(pointer);
+
+                window.setFrame(new Frame(width, height));
+                window.setContext(new Context(pointer));
+                window.setCallbackKeeper(new DefaultCallbackKeeper());
+                CallbackKeeper.registerCallbacks(pointer, window.getCallbackKeeper());
+                window.setRenderer(new NvgRenderer());
+                window.setSystemEventProcessor(new SystemEventProcessor());
+                window.getSystemEventProcessor().addDefaultCallbacks(window.getCallbackKeeper());
+
+                glfwMakeContextCurrent(pointer);
+                GL.createCapabilities();
+                glfwSwapInterval(0);
+                window.getRenderer().initialize();
+
                 windowMap.put(pointer, window);
                 return window;
             } else {
@@ -110,10 +192,11 @@ public final class LeguiSystem {
 
     private void destroyWindowP(Window window) {
         if (windowMap.containsValue(window)) {
-            Long key = windowMap.getKey(window);
-            createTaskAndGet(() -> {
-                GLFW.glfwDestroyWindow(key);
+            createTaskNoWait(() -> {
                 windowMap.removeValue(window);
+                window.getRenderer().destroy();
+                window.setPointer(0);
+                GLFW.glfwDestroyWindow(window.getPointer());
                 return null;
             });
         }
@@ -138,5 +221,9 @@ public final class LeguiSystem {
         } catch (InterruptedException | ExecutionException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private void createTaskNoWait(Callable<?> callable) {
+        wstTasks.add(new FutureTask<>(callable));
     }
 }
