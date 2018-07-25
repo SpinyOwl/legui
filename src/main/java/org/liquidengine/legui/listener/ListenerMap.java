@@ -60,6 +60,15 @@ public class ListenerMap {
         getListeners(eventClass).remove(listener);
     }
 
+    /**
+     * Used to remove all listeners for specified event type.
+     * @param eventClass event class.
+     * @param <E> event type.
+     */
+    public <E extends Event> void removeAllListeners(Class<E> eventClass) {
+        listenerMap.remove(eventClass);
+    }
+
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
