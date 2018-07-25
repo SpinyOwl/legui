@@ -150,9 +150,22 @@ public final class LeguiSystem {
         instance.setVisibleP(pointer);
     }
 
+    protected static Vector2i getWindowSize(long pointer) {
+        return instance.getWindowSizeP(pointer);
+    }
+
     // ------------------------------------------------------------------
     // --------    PRIVATE API     --------------------------------------
     // ------------------------------------------------------------------
+
+    private Vector2i getWindowSizeP(long pointer) {
+        return createTaskAndGet(() -> {
+            int width[] = {0};
+            int height[] = {0};
+            GLFW.glfwGetWindowSize(pointer, width, height);
+            return new Vector2i(width[0], height[0]);
+        });
+    }
 
     private Window createWindowP(int width, int height, String title, boolean fullscreen) {
         return createTaskAndGet(() -> {

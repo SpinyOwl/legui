@@ -1,5 +1,6 @@
 package org.liquidengine.legui.system;
 
+import org.joml.Vector2i;
 import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.event.WindowCloseEvent;
 import org.liquidengine.legui.listener.WindowCloseEventListener;
@@ -26,6 +27,9 @@ public class Window {
         LeguiSystem.setVisible(pointer);
     }
 
+    public Vector2i getSize() {
+        return LeguiSystem.getWindowSize(pointer);
+    }
 
     protected long getPointer() {
         return pointer;
