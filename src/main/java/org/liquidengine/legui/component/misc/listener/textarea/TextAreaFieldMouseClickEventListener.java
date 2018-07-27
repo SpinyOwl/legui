@@ -23,8 +23,10 @@ public class TextAreaFieldMouseClickEventListener implements MouseClickEventList
         if (event.getAction() == MouseClickEvent.MouseClickAction.PRESS) {
             int mouseCaretPosition = textAreaField.getMouseCaretPosition();
             textAreaField.setCaretPosition(mouseCaretPosition);
-            textAreaField.setStartSelectionIndex(mouseCaretPosition);
             textAreaField.setEndSelectionIndex(mouseCaretPosition);
+            if (!event.isModShift()) {
+                textAreaField.setStartSelectionIndex(mouseCaretPosition);
+            }
         }
         if (event.getAction() == MouseClickAction.RELEASE) {
             EventProcessor.getInstance().pushEvent(new TextAreaFieldUpdateEvent(textAreaField, event.getContext(), event.getFrame()));

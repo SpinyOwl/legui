@@ -34,13 +34,17 @@ public class TextInputCharEventListener implements CharEventListener {
                 end = textInput.getStartSelectionIndex();
             }
             if (start != end) {
-                textState.delete(start, end);
+                StringBuilder t = new StringBuilder(textState.getText());
+                t.delete(start, end);
+                textState.setText(t.toString());
                 textInput.setCaretPosition(start);
                 textInput.setStartSelectionIndex(start);
                 textInput.setEndSelectionIndex(start);
             }
             int caretPosition = textInput.getCaretPosition();
-            textState.insert(caretPosition, str);
+            StringBuilder t = new StringBuilder(textState.getText());
+            t.insert(caretPosition, str);
+            textState.setText(t.toString());
             int newCaretPosition = caretPosition + str.length();
             textInput.setCaretPosition(newCaretPosition);
             textInput.setEndSelectionIndex(newCaretPosition);

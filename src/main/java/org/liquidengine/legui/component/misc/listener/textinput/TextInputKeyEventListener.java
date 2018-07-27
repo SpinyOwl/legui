@@ -96,12 +96,15 @@ public class TextInputKeyEventListener implements KeyEventListener {
                     start = end;
                     end = swap;
                 }
-                String oldText = gui.getTextState().getText();
-                gui.getTextState().delete(start, end);
+                TextState textState = gui.getTextState();
+                String oldText = textState.getText();
+                StringBuilder builder = new StringBuilder(textState.getText());
+                builder.delete(start, end);
+                textState.setText(builder.toString());
                 gui.setCaretPosition(start);
                 gui.setStartSelectionIndex(start);
                 gui.setEndSelectionIndex(start);
-                String newText = gui.getTextState().getText();
+                String newText = textState.getText();
                 EventProcessor.getInstance().pushEvent(new TextInputContentChangeEvent(gui, leguiContext, frame, oldText, newText));
                 Clipboard.getInstance().setClipboardString(s);
             }
@@ -133,11 +136,29 @@ public class TextInputKeyEventListener implements KeyEventListener {
         if (gui.isEditable()) {
             TextState textState = gui.getTextState();
             int caretPosition = gui.getCaretPosition();
-            String s =
-                Clipboard.getInstance().getClipboardString();
+            String s = Clipboard.getInstance().getClipboardString();
             if (s != null) {
+
+                int start = gui.getStartSelectionIndex();
+                int end = gui.getEndSelectionIndex();
+                if (start > end) {
+                    start = gui.getEndSelectionIndex();
+                    end = gui.getStartSelectionIndex();
+                }
+                if (start != end) {
+                    StringBuilder t = new StringBuilder(textState.getText());
+                    t.delete(start, end);
+                    textState.setText(t.toString());
+                    gui.setCaretPosition(start);
+                    gui.setStartSelectionIndex(start);
+                    gui.setEndSelectionIndex(start);
+                    caretPosition = start;
+                }
+
                 String oldText = textState.getText();
-                textState.insert(caretPosition, s);
+                StringBuilder builder = new StringBuilder(textState.getText());
+                builder.insert(caretPosition, s);
+                textState.setText(builder.toString());
                 gui.setCaretPosition(caretPosition + s.length());
                 String newText = textState.getText();
                 EventProcessor.getInstance().pushEvent(new TextInputContentChangeEvent(gui, leguiContext, frame, oldText, newText));
@@ -165,17 +186,23 @@ public class TextInputKeyEventListener implements KeyEventListener {
             if (start == end && caretPosition != textState.length()) {
                 if ((mods & GLFW_MOD_CONTROL) != 0) {
                     end = findNextWord(textState.getText(), caretPosition);
-                    textState.delete(start, end);
+                    StringBuilder builder = new StringBuilder(textState.getText());
+                    builder.delete(start, end);
+                    textState.setText(builder.toString());
                     gui.setCaretPosition(start);
                     gui.setStartSelectionIndex(start);
                     gui.setEndSelectionIndex(start);
                 } else {
-                    textState.deleteCharAt(caretPosition);
+                    StringBuilder builder = new StringBuilder(textState.getText());
+                    builder.deleteCharAt(caretPosition);
+                    textState.setText(builder.toString());
                     gui.setStartSelectionIndex(caretPosition);
                     gui.setEndSelectionIndex(caretPosition);
                 }
             } else {
-                textState.delete(start, end);
+                StringBuilder builder = new StringBuilder(textState.getText());
+                builder.delete(start, end);
+                textState.setText(builder.toString());
                 gui.setCaretPosition(start);
                 gui.setStartSelectionIndex(start);
                 gui.setEndSelectionIndex(start);
@@ -205,19 +232,25 @@ public class TextInputKeyEventListener implements KeyEventListener {
             if (start == end && caretPosition != 0) {
                 if ((mods & GLFW_MOD_CONTROL) != 0) {
                     start = findPrevWord(textState.getText(), caretPosition);
-                    textState.delete(start, end);
+                    StringBuilder builder = new StringBuilder(textState.getText());
+                    builder.delete(start, end);
+                    textState.setText(builder.toString());
                     gui.setCaretPosition(start);
                     gui.setStartSelectionIndex(start);
                     gui.setEndSelectionIndex(start);
                 } else {
                     int newCaretPosition = caretPosition - 1;
-                    textState.deleteCharAt(newCaretPosition);
+                    StringBuilder builder = new StringBuilder(textState.getText());
+                    builder.deleteCharAt(newCaretPosition);
+                    textState.setText(builder.toString());
                     gui.setCaretPosition(newCaretPosition);
                     gui.setStartSelectionIndex(newCaretPosition);
                     gui.setEndSelectionIndex(newCaretPosition);
                 }
             } else {
-                textState.delete(start, end);
+                StringBuilder builder = new StringBuilder(textState.getText());
+                builder.delete(start, end);
+                textState.setText(builder.toString());
                 gui.setCaretPosition(start);
                 gui.setStartSelectionIndex(start);
                 gui.setEndSelectionIndex(start);
