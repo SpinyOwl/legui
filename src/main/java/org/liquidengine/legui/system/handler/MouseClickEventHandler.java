@@ -13,7 +13,6 @@ import org.liquidengine.legui.component.Layer;
 import org.liquidengine.legui.component.Widget;
 import org.liquidengine.legui.event.FocusEvent;
 import org.liquidengine.legui.event.MouseClickEvent;
-import org.liquidengine.legui.event.MouseClickEvent.MouseClickAction;
 import org.liquidengine.legui.input.Mouse;
 import org.liquidengine.legui.listener.processor.EventProcessor;
 import org.liquidengine.legui.style.Style.DisplayType;

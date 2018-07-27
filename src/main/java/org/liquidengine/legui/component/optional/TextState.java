@@ -1,7 +1,6 @@
 package org.liquidengine.legui.component.optional;
 
 import java.io.Serializable;
-import java.util.stream.IntStream;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -28,7 +27,7 @@ public class TextState implements Serializable {
     /**
      * Text data.
      */
-    private String text = new String();
+    private String text = "";
     /**
      * Horizontal alignment. By default used {@link HorizontalAlign#CENTER}.
      */
@@ -234,7 +233,11 @@ public class TextState implements Serializable {
      * @param text new text.
      */
     public void setText(String text) {
-        this.text = text;
+        if (text != null)
+            this.text = text;
+        else {
+            this.text = "";
+        }
         this.caretPosition = this.startSelectionIndex = this.endSelectionIndex = 0;
 
     }
