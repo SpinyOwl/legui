@@ -1,8 +1,10 @@
 package org.liquidengine.legui.system;
 
+import java.util.List;
 import org.joml.Vector2i;
 import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.event.WindowCloseEvent;
+import org.liquidengine.legui.listener.EventListener;
 import org.liquidengine.legui.listener.WindowCloseEventListener;
 import org.liquidengine.legui.system.context.CallbackKeeper;
 import org.liquidengine.legui.system.context.Context;
@@ -81,7 +83,20 @@ public class Window {
         this.renderer = renderer;
     }
 
-    public void setCloseEventListener(WindowCloseEventListener closeEvent) {
+    public void addCloseEventListener(WindowCloseEventListener closeEvent) {
         frame.getContainer().getListenerMap().addListener(WindowCloseEvent.class, closeEvent);
     }
+
+    public List<EventListener<WindowCloseEvent>> getWindowCloseEventListeners() {
+        return frame.getContainer().getListenerMap().getListeners(WindowCloseEvent.class);
+    }
+
+    public void removeWindowCloseEventListener(EventListener<WindowCloseEvent> listener) {
+        frame.getContainer().getListenerMap().removeListener(WindowCloseEvent.class, listener);
+    }
+
+    public void removeAllWindowCloseEventListeners() {
+        frame.getContainer().getListenerMap().removeAllListeners(WindowCloseEvent.class);
+    }
+
 }

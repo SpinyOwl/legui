@@ -21,7 +21,7 @@ public class LeguiSystemUsageDemo {
         createGUI(window);
 
         Window finalWindow = window;
-        finalWindow.setCloseEventListener(event -> {
+        finalWindow.addCloseEventListener(event -> {
             System.out.println("CLOSE EVENT");
             LeguiSystem.destroyWindow(finalWindow);
             LeguiSystem.destroy();
