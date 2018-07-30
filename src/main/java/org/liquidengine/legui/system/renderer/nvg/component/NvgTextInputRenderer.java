@@ -55,34 +55,37 @@ public class NvgTextInputRenderer extends NvgDefaultComponentRenderer<TextInput>
     /**
      * Used to render textInput.
      *
-     * @param textInput textInput to render.
+     * @param component textInput to render.
      * @param context legui context.
      * @param nanovg nanovg context pointer.
      */
     @Override
-    protected void renderSelf(TextInput textInput, Context context, long nanovg) {
-        createScissor(nanovg, textInput);
+    protected void renderSelf(TextInput component, Context context, long nanovg) {
+        createScissor(nanovg, component);
         {
-            Vector2f pos = textInput.getAbsolutePosition();
-            Vector2f size = textInput.getSize();
-            boolean enabled = textInput.isEnabled();
-            Vector4f bc = new Vector4f(textInput.getStyle().getBackground().getColor());
+            Vector2f pos = component.getAbsolutePosition();
+            Vector2f size = component.getSize();
+            boolean enabled = component.isEnabled();
+            Vector4f bc = new Vector4f(component.getStyle().getBackground().getColor());
 
-            if (enabled && textInput.isFocused()) {
+            if (enabled && component.isFocused()) {
                 bc.w *= 1.1f;
             } else if (!enabled) {
                 bc.w *= 0.5f;
             }
-            if (!textInput.isEditable()) {
+            if (!component.isEditable()) {
                 bc.w *= 0.3f;
             }
-            renderBackground(textInput, context, nanovg);
+            renderBackground(component, context, nanovg);
 
-            Vector4f p = new Vector4f(textInput.getStyle().getPadding()).add(2, 2, 2, 2);
+            Vector4f p = new Vector4f(component.getStyle().getPadding().w,
+                                      component.getStyle().getPadding().x,
+                                      component.getStyle().getPadding().y,
+                                      component.getStyle().getPadding().z);
 
             Vector4f intersectRect = new Vector4f(pos.x + p.x, pos.y + p.y, size.x - p.x - p.z, size.y - p.y - p.w);
             intersectScissor(nanovg, new Vector4f(intersectRect).sub(1, 1, -2, -2));
-            renderText(context, nanovg, textInput, size, intersectRect, bc);
+            renderText(context, nanovg, component, size, intersectRect, bc);
         }
         resetScissor(nanovg);
     }

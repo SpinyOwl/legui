@@ -52,29 +52,32 @@ public class NvgPasswordInputRenderer extends NvgDefaultComponentRenderer<Passwo
     private final int maxGlyphCount = 1024;
 
     @Override
-    public void renderSelf(PasswordInput passwordInput, Context leguiContext, long nanovg) {
-        createScissor(nanovg, passwordInput);
+    public void renderSelf(PasswordInput component, Context leguiContext, long nanovg) {
+        createScissor(nanovg, component);
         {
-            Vector2f pos = passwordInput.getAbsolutePosition();
-            Vector2f size = passwordInput.getSize();
-            boolean enabled = passwordInput.isEnabled();
-            Vector4f bc = new Vector4f(passwordInput.getStyle().getBackground().getColor());
+            Vector2f pos = component.getAbsolutePosition();
+            Vector2f size = component.getSize();
+            boolean enabled = component.isEnabled();
+            Vector4f bc = new Vector4f(component.getStyle().getBackground().getColor());
 
-            if (enabled && passwordInput.isFocused()) {
+            if (enabled && component.isFocused()) {
                 bc.w *= 1.1f;
             } else if (!enabled) {
                 bc.w *= 0.5f;
             }
-            if (!passwordInput.isEditable()) {
+            if (!component.isEditable()) {
                 bc.w *= 0.3f;
             }
-            renderBackground(passwordInput, leguiContext, nanovg);
+            renderBackground(component, leguiContext, nanovg);
 
-            Vector4f p = new Vector4f(passwordInput.getStyle().getPadding()).add(2, 2, 2, 2);
+            Vector4f p = new Vector4f(component.getStyle().getPadding().w,
+                                      component.getStyle().getPadding().x,
+                                      component.getStyle().getPadding().y,
+                                      component.getStyle().getPadding().z);
 
             Vector4f intersectRect = new Vector4f(pos.x + p.x, pos.y + p.y, size.x - p.x - p.z, size.y - p.y - p.w);
             intersectScissor(nanovg, new Vector4f(intersectRect).sub(1, 1, -2, -2));
-            renderText(leguiContext, nanovg, passwordInput, size, intersectRect, bc);
+            renderText(leguiContext, nanovg, component, size, intersectRect, bc);
         }
         resetScissor(nanovg);
     }
