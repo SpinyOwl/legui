@@ -6,7 +6,6 @@ import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.style.flex.FlexStyle;
 import org.liquidengine.legui.style.font.Font;
 import org.liquidengine.legui.style.font.FontRegistry;
-import org.liquidengine.legui.style.outline.Outline;
 import org.liquidengine.legui.style.shadow.Shadow;
 
 /**
@@ -54,8 +53,6 @@ public class Style {
     private Float left;
 
     private Shadow shadow;
-
-    private Outline outline;
 
     /**
      * Stroke color. Used to render stroke if component is focused.
