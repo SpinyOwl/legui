@@ -35,14 +35,18 @@ public class NvgCheckBoxRenderer extends NvgDefaultComponentRenderer<CheckBox> {
             Icon icon = checkBox.isChecked() ? checkBox.getIconChecked() : checkBox.getIconUnchecked();
             float iconWid = icon.getSize().x;
 
-            Vector4f pad = checkBox.getStyle().getPadding();
+            Vector4f padding = checkBox.getStyle().getPadding();
+            Vector4f p = new Vector4f(padding.w,
+                                      padding.x,
+                                      padding.y,
+                                      padding.z);
 
             float iconWidthForUse = (icon.getHorizontalAlign().index == 0 ? 1 : 0) * iconWid;
 
-            float h = sh - (pad.y + pad.w);
-            float y = py + pad.y;
-            float x = px + iconWidthForUse;
-            float w = sw - iconWidthForUse - pad.z;
+            float h = sh - (p.y + p.w);
+            float y = py + p.y;
+            float x = px + iconWidthForUse + p.x;
+            float w = sw - iconWidthForUse - p.z - p.x;
 
             NvgText.drawTextLineToRect(nanovg, textState, new Vector2f(x, y), new Vector2f(w, h), true);
 

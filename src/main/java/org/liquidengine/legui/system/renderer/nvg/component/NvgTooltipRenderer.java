@@ -48,7 +48,8 @@ public class NvgTooltipRenderer extends NvgDefaultComponentRenderer<Tooltip> {
             HorizontalAlign horizontalAlign = textState.getHorizontalAlign();
             VerticalAlign verticalAlign = textState.getVerticalAlign();
             Vector4f textColor = textState.getTextColor();
-            Vector4f padding = new Vector4f(component.getStyle().getPadding());
+            Vector4f p = component.getStyle().getPadding();
+            Vector4f padding = new Vector4f(p.w, p.x, p.y, p.z);
 
             renderBackground(component, context, nanovg);
 

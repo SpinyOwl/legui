@@ -520,8 +520,9 @@ public class ExampleGui extends Panel {
     }
 
     private CheckBox createCheckboxWithAnimation(CheckBox checkBox1) {
-        CheckBox checkBox2 = new CheckBox(20, 230, 50, 20);
+        CheckBox checkBox2 = new CheckBox(20, 230, 100, 20);
         checkBox2.getStyle().getBackground().setColor(new Vector4f(1, 0, 0, 1));
+        checkBox2.getStyle().setPadding(5f,10f,5f,20f);
         checkBox2.setChecked(true);
 
         checkBox2.getListenerMap().addListener(CursorEnterEvent.class, (CursorEnterEventListener) event -> {
