@@ -27,8 +27,9 @@ public class NvgLabelRenderer extends NvgDefaultComponentRenderer<Label> {
 
             // draw text into box
             TextState textState = label.getTextState();
-            Vector4f padding = label.getStyle().getPadding();
-            NvgText.drawTextLineToRect(nanovg, textState, pos.add(padding.w, padding.x), size.sub(padding.w + padding.y, padding.x + padding.z), false);
+            Vector4f p = label.getStyle().getPadding();
+            Vector4f rect = new Vector4f(pos.x + p.w, pos.y + p.x, size.x - p.w - p.y, size.y - p.x - p.z);
+            NvgText.drawTextLineToRect(nanovg, textState, rect, false);
         }
         resetScissor(nanovg);
     }
