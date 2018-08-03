@@ -113,115 +113,42 @@ public class ExampleGui extends Panel {
         this.add(p9);
         p9.getListenerMap().addListener(FocusEvent.class, (FocusEventListener) System.out::println);
 
-        mouseTargetLabel = new Label("Hello Label 1", 10, height - 30, width - 20, 20);
-        this.add(mouseTargetLabel);
+        this.add(mouseTargetLabel = new Label("Hello Label 1", 10, height - 30, width - 20, 20));
 
         focusedGuiLabel = new Label("Hello Label 2", 10, height - 50, width - 20, 20);
         focusedGuiLabel.getStyle().setBorder(new SimpleLineBorder(ColorConstants.red(), 1));
         this.add(focusedGuiLabel);
 
-        debugLabel = new Label("Debug Label", 10, height - 75, width - 20, 20);
-        this.add(debugLabel);
+        this.add(debugLabel = new Label("Debug Label", 10, height - 75, width - 20, 20));
+        this.add(mouseLabel = new Label("Hello Label 3", 130, 30, 100, 20));
+        this.add(upsLabel = new Label("Hello Label 4", 130, 60, 100, 20));
 
-        mouseLabel = new Label("Hello Label 3", 130, 30, 100, 20);
-        this.add(mouseLabel);
-
-        upsLabel = new Label("Hello Label 4", 130, 60, 100, 20);
-        this.add(upsLabel);
-
-        Widget imageWrapper = new Widget(20, 30, 100, 100);
-        imageWrapper.setTitleEnabled(true);
-        this.add(imageWrapper);
-
-        imageView = new ImageView(new BufferedImage("org/liquidengine/legui/demo/1.jpg"));
-        imageView.setPosition(15, 5);
-        imageView.setSize(70, 70);
-        imageView.getStyle().setBorderRadius(10f);
-        imageWrapper.getContainer().add(imageView);
-
-        Button button = new Button(20, 170, 50, 20); /*button.getStyle().getBackground().setColor(new Vector4f(1));*/
-        this.add(button);
-        button.getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) System.out::println);
-
-        button.setTooltip(new Tooltip("Just button"));
-        button.getTooltip().setPosition(0, 25);
-        button.getTooltip().getSize().set(50, 60);
-        button.getTooltip().getStyle().setPadding(4f);
-
-        int idv[] = {0};
-        button.getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) (MouseClickEvent event) -> {
-            if (event.getAction().equals(CLICK)) {
-                idv[0]++;
-                HorizontalAlign h;
-                VerticalAlign v;
-                int hh = idv[0] % 3;
-                int vv = (idv[0] / 3) % 3;
-                switch (hh) {
-                    case 0:
-                        h = LEFT;
-                        break;
-                    case 1:
-                        h = CENTER;
-                        break;
-                    case 2:
-                    default:
-                        h = RIGHT;
-                        break;
-                }
-                switch (vv) {
-                    case 0:
-                        v = TOP;
-                        break;
-                    case 1:
-                        v = MIDDLE;
-                        break;
-                    case 2:
-                    default:
-                        v = BOTTOM;
-                        break;
-                }
-                System.out.println(h + " " + v);
-                button.getTooltip().getTextState().setHorizontalAlign(h);
-                button.getTooltip().getTextState().setVerticalAlign(v);
-            }
-        });
+        this.add(createImageWrapperWidgetWithImage());
+        this.add(createButtonWithTooltip());
 
         CheckBox checkBox1 = new CheckBox(20, 200, 50, 20);
         this.add(checkBox1);
-        CheckBox checkBox2 = new CheckBox(20, 230, 50, 20);
-        checkBox2.getStyle().getBackground().setColor(new Vector4f(1, 0, 0, 1));
-        checkBox2.setChecked(true);
-        this.add(checkBox2);
-
-        checkBox2.getListenerMap().addListener(CursorEnterEvent.class, (CursorEnterEventListener) event -> {
-            boolean entered = event.isEntered();
-            Vector4f newColor = ColorConstants.green();
-            if (entered) {
-                createColorAnimationOnHover(event.getTargetComponent(), newColor, checkBox2).startAnimation();
-            }
-        });
-
-        checkBox2.getListenerMap().addListener(CursorEnterEvent.class, (CursorEnterEventListener) event -> {
-            boolean entered = event.isEntered();
-            Vector4f newColor = ColorConstants.red();
-            if (entered) {
-                createColorAnimationOnHover(event.getTargetComponent(), newColor, checkBox1).startAnimation();
-            }
-        });
+        this.add(createCheckboxWithAnimation(checkBox1));
 
         ProgressBar progressBar = new ProgressBar(250, 10, 100, 10);
         progressBar.setValue(50);
         this.add(progressBar);
 
-        RadioButtonGroup radioButtonGroup = new RadioButtonGroup();
-        RadioButton radioButton1 = new RadioButton(250, 30, 100, 20);
-        this.add(radioButton1);
-        radioButton1.setChecked(true);
-        radioButton1.setRadioButtonGroup(radioButtonGroup);
-        RadioButton radioButton2 = new RadioButton(250, 60, 100, 20);
-        this.add(radioButton2);
-        radioButton2.setChecked(false);
-        radioButton2.setRadioButtonGroup(radioButtonGroup);
+        {
+            RadioButtonGroup radioButtonGroup = new RadioButtonGroup();
+
+            RadioButton radioButton1 = new RadioButton(250, 30, 100, 20);
+            RadioButton radioButton2 = new RadioButton(250, 60, 100, 20);
+
+            radioButton1.setChecked(true);
+            radioButton2.setChecked(false);
+
+            radioButton1.setRadioButtonGroup(radioButtonGroup);
+            radioButton2.setRadioButtonGroup(radioButtonGroup);
+
+            this.add(radioButton1);
+            this.add(radioButton2);
+        }
 
         Slider slider1 = new Slider(250, 90, 100, 20, 30);
         this.add(slider1);
@@ -422,7 +349,7 @@ public class ExampleGui extends Panel {
         panel2.getStyle().getBackground().setColor(ColorConstants.green());
         this.add(panel2);
 
-        button.getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
+        createButtonWithTooltip().getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
             MouseClickEvent.MouseClickAction action = event.getAction();
             if (CLICK == action) {
                 mouseTargetLabel.getStyle().setDisplay(mouseTargetLabel.isVisible() ? Style.DisplayType.NONE : Style.DisplayType.MANUAL);
@@ -522,8 +449,102 @@ public class ExampleGui extends Panel {
         });
         this.add(sbb);
 
+        this.add(createToggleButtonWithLongTooltip());
+        //@formatter:on
+
+        this.add(createSwitchThemeButton());
+
+        this.add(createShadowWidget());
+    }
+
+    private Widget createImageWrapperWidgetWithImage() {
+        Widget imageWrapper = new Widget(20, 30, 100, 100);
+        imageWrapper.setTitleEnabled(true);
+
+        imageView = new ImageView(new BufferedImage("org/liquidengine/legui/demo/1.jpg"));
+        imageView.setPosition(15, 5);
+        imageView.setSize(70, 70);
+        imageView.getStyle().setBorderRadius(10f);
+        imageWrapper.getContainer().add(imageView);
+        imageWrapper.setCloseable(false);
+        return imageWrapper;
+    }
+
+    private Button createButtonWithTooltip() {
+        Button button = new Button(20, 170, 50, 20); /*button.getStyle().getBackground().setColor(new Vector4f(1));*/
+        button.getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) System.out::println);
+
+        button.setTooltip(new Tooltip("Just button"));
+        button.getTooltip().setPosition(0, 25);
+        button.getTooltip().getSize().set(50, 60);
+        button.getTooltip().getStyle().setPadding(4f);
+
+        int idv[] = {0};
+        button.getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) (MouseClickEvent event) -> {
+            if (event.getAction().equals(CLICK)) {
+                idv[0]++;
+                HorizontalAlign h;
+                VerticalAlign v;
+                int hh = idv[0] % 3;
+                int vv = (idv[0] / 3) % 3;
+                switch (hh) {
+                    case 0:
+                        h = LEFT;
+                        break;
+                    case 1:
+                        h = CENTER;
+                        break;
+                    case 2:
+                    default:
+                        h = RIGHT;
+                        break;
+                }
+                switch (vv) {
+                    case 0:
+                        v = TOP;
+                        break;
+                    case 1:
+                        v = MIDDLE;
+                        break;
+                    case 2:
+                    default:
+                        v = BOTTOM;
+                        break;
+                }
+                System.out.println(h + " " + v);
+                button.getTooltip().getTextState().setHorizontalAlign(h);
+                button.getTooltip().getTextState().setVerticalAlign(v);
+            }
+        });
+        return button;
+    }
+
+    private CheckBox createCheckboxWithAnimation(CheckBox checkBox1) {
+        CheckBox checkBox2 = new CheckBox(20, 230, 100, 20);
+        checkBox2.getStyle().getBackground().setColor(new Vector4f(1, 0, 0, 1));
+        checkBox2.getStyle().setPadding(5f,10f,5f,20f);
+        checkBox2.setChecked(true);
+
+        checkBox2.getListenerMap().addListener(CursorEnterEvent.class, (CursorEnterEventListener) event -> {
+            boolean entered = event.isEntered();
+            Vector4f newColor = ColorConstants.green();
+            if (entered) {
+                createColorAnimationOnHover(event.getTargetComponent(), newColor, checkBox2).startAnimation();
+            }
+        });
+
+        checkBox2.getListenerMap().addListener(CursorEnterEvent.class, (CursorEnterEventListener) event -> {
+            boolean entered = event.isEntered();
+            Vector4f newColor = ColorConstants.red();
+            if (entered) {
+                createColorAnimationOnHover(event.getTargetComponent(), newColor, checkBox1).startAnimation();
+            }
+        });
+        return checkBox2;
+    }
+
+    private ToggleButton createToggleButtonWithLongTooltip() {
         ToggleButton toggleButton = new ToggleButton("", 100, 170, 40, 20);
-        this.add(toggleButton);
         Icon bgImageNormal = new ImageIcon(new BufferedImage("org/liquidengine/legui/demo/toggle.png"));
 
         toggleButton.getListenerMap().addListener(CursorEnterEvent.class, (CursorEnterEventListener) System.out::println);
@@ -585,24 +606,21 @@ public class ExampleGui extends Panel {
         bgImageNormal.setSize(new Vector2f(100 * 40 / 60, 20));
         bgImageNormal.setPosition(new Vector2f(40 - 100 * 40 / 60, 0));
         toggleButton.getStyle().getBackground().setIcon(bgImageNormal);
-//        bgImageToggled.setSize(new Vector2f(36, 36));
-//        toggleButton.setTogglededBackgroundIcon(bgImageToggled);
-        //@formatter:on
+        return toggleButton;
+    }
 
-        radioButton1.setRadioButtonGroup(radioButtonGroup);
-        radioButton2.setRadioButtonGroup(radioButtonGroup);
-
+    private Button createSwitchThemeButton() {
         final Theme[] current = {Themes.getDefaultTheme()};
         final Theme[] list = { Themes.FLAT_DARK, Themes.FLAT_PETERRIVER,Themes.FLAT_PETERRIVER_DARK, Themes.FLAT_WHITE };
         final int[] themeIndex = {0};
 
         String text = "Switch theme ";
         Button switchTheme = new Button(text, 600, 400, 120, 30);
-        switchTheme.getListenerMap().addListener(MouseClickEvent.class,
-                switchThemeClickListener(current, list, themeIndex, switchTheme));
-        this.add(switchTheme);
+        switchTheme.getListenerMap().addListener(MouseClickEvent.class, switchThemeClickListener(current, list, themeIndex, switchTheme));
+        return switchTheme;
+    }
 
-
+    private Widget createShadowWidget() {
         Widget shadowWidget = new Widget(20, 310, 200, 120);
 
         shadowWidget.getTitleTextState().setText("Shadow test widget");
@@ -612,31 +630,47 @@ public class ExampleGui extends Panel {
         shadowWidget.getStyle().setShadow(new Shadow());
         shadowWidget.getStyle().getShadow().setColor(ColorConstants.red());
 
-
-        Slider hOffsetSlider = new Slider(110, 5 + 20 * 0, 80, 10); shadowWidget.getContainer().add(hOffsetSlider); hOffsetSlider.setValue(50f);
+        Slider hOffsetSlider = new Slider(110, 5 + 20 * 0, 80, 10);
+        shadowWidget.getContainer().add(hOffsetSlider);
+        hOffsetSlider.setValue(50f);
         hOffsetSlider.addSliderChangeValueEventListener((e)-> {shadowWidget.getStyle().getShadow().sethOffset(hOffsetSlider.getValue() - 50f);});
-        Label hOffsetLabel = new Label(10, 5 + 20 * 0, 90, 10); hOffsetLabel.getTextState().setText("HOffset: "); shadowWidget.getContainer().add(hOffsetLabel);
+        Label hOffsetLabel = new Label(10, 5 + 20 * 0, 90, 10);
+        hOffsetLabel.getTextState().setText("HOffset: ");
+        shadowWidget.getContainer().add(hOffsetLabel);
 
-        Slider vOffsetSlider = new Slider(110, 5 + 20 * 1, 80, 10); shadowWidget.getContainer().add(vOffsetSlider); vOffsetSlider.setValue(50f);
+        Slider vOffsetSlider = new Slider(110, 5 + 20 * 1, 80, 10);
+        shadowWidget.getContainer().add(vOffsetSlider);
+        vOffsetSlider.setValue(50f);
         vOffsetSlider.addSliderChangeValueEventListener((e)-> {shadowWidget.getStyle().getShadow().setvOffset(vOffsetSlider.getValue() - 50f);});
-        Label vOffsetLabel = new Label(10, 5 + 20 * 1, 90, 10); vOffsetLabel.getTextState().setText("VOffset: "); shadowWidget.getContainer().add(vOffsetLabel);
+        Label vOffsetLabel = new Label(10, 5 + 20 * 1, 90, 10);
+        vOffsetLabel.getTextState().setText("VOffset: ");
+        shadowWidget.getContainer().add(vOffsetLabel);
 
-        Slider blurSlider = new Slider(110, 5 + 20 * 2, 80, 10); shadowWidget.getContainer().add(blurSlider);
+        Slider blurSlider = new Slider(110, 5 + 20 * 2, 80, 10);
+        shadowWidget.getContainer().add(blurSlider);
         blurSlider.addSliderChangeValueEventListener((e)-> {shadowWidget.getStyle().getShadow().setBlur(blurSlider.getValue());});
-        Label blurLabel = new Label(10, 5 + 20 * 2, 90, 10); blurLabel.getTextState().setText("Blur: "); shadowWidget.getContainer().add(blurLabel);
+        Label blurLabel = new Label(10, 5 + 20 * 2, 90, 10);
+        blurLabel.getTextState().setText("Blur: ");
+        shadowWidget.getContainer().add(blurLabel);
 
-        Slider spreadSlider = new Slider(110, 5 + 20 * 3, 80, 10); shadowWidget.getContainer().add(spreadSlider); spreadSlider.setValue(50f);
+        Slider spreadSlider = new Slider(110, 5 + 20 * 3, 80, 10);
+        shadowWidget.getContainer().add(spreadSlider);
+        spreadSlider.setValue(50f);
         spreadSlider.addSliderChangeValueEventListener((e)-> {shadowWidget.getStyle().getShadow().setSpread(spreadSlider.getValue() - 50f);});
-        Label spreadLabel = new Label(10, 5 + 20 * 3, 90, 10); spreadLabel.getTextState().setText("Spread: "); shadowWidget.getContainer().add(spreadLabel);
+        Label spreadLabel = new Label(10, 5 + 20 * 3, 90, 10);
+        spreadLabel.getTextState().setText("Spread: ");
+        shadowWidget.getContainer().add(spreadLabel);
 
-        Slider transparencySlider = new Slider(110, 5 + 20 * 4, 80, 10); shadowWidget.getContainer().add(transparencySlider);
+        Slider transparencySlider = new Slider(110, 5 + 20 * 4, 80, 10);
+        shadowWidget.getContainer().add(transparencySlider);
         transparencySlider.addSliderChangeValueEventListener((e)-> {
             shadowWidget.getStyle().getBackground().getColor().w = 1- transparencySlider.getValue() / 100f;
             shadowWidget.getContainer().getStyle().getBackground().getColor().w =1- transparencySlider.getValue() / 100f;
         });
-        Label transparencyLabel = new Label(10, 5 + 20 * 4, 90, 10); transparencyLabel.getTextState().setText("W Transparency: "); shadowWidget.getContainer().add(transparencyLabel);
-
-        this.add(shadowWidget);
+        Label transparencyLabel = new Label(10, 5 + 20 * 4, 90, 10);
+        transparencyLabel.getTextState().setText("W Transparency: ");
+        shadowWidget.getContainer().add(transparencyLabel);
+        return shadowWidget;
     }
 
     private Animation createColorAnimationOnHover(Component component, Vector4f newColor, Component targetComponent) {

@@ -20,8 +20,10 @@ public class TextInputMouseClickEventListener implements MouseClickEventListener
         int mouseCaretPosition = gui.getMouseCaretPosition();
         if (event.getAction() == MouseClickEvent.MouseClickAction.PRESS) {
             gui.setCaretPosition(mouseCaretPosition);
-            gui.setStartSelectionIndex(mouseCaretPosition);
             gui.setEndSelectionIndex(mouseCaretPosition);
+            if (!event.isModShift()) {
+                gui.setStartSelectionIndex(mouseCaretPosition);
+            }
         }
     }
 

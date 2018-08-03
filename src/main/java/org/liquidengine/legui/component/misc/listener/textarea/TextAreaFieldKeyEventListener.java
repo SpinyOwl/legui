@@ -87,7 +87,10 @@ public class TextAreaFieldKeyEventListener implements KeyEventListener {
     private void addTab(TextAreaField textAreaField) {
         if (textAreaField.isEditable()) {
             int oldCPos = textAreaField.getCaretPosition();
-            textAreaField.getTextState().insert(oldCPos, "\t");
+            TextState textState = textAreaField.getTextState();
+            StringBuilder t = new StringBuilder(textState.getText());
+            t.insert(oldCPos, "\t");
+            textState.setText(t.toString());
             int caretPosition = oldCPos + 1;
             textAreaField.setCaretPosition(caretPosition);
             textAreaField.setStartSelectionIndex(caretPosition);
@@ -124,7 +127,9 @@ public class TextAreaFieldKeyEventListener implements KeyEventListener {
                     start = end;
                     end = swap;
                 }
-                textState.delete(start, end);
+                StringBuilder builder = new StringBuilder(textState.getText());
+                builder.delete(start, end);
+                textState.setText(builder.toString());
                 gui.setCaretPosition(start);
                 gui.setStartSelectionIndex(start);
                 gui.setEndSelectionIndex(start);
@@ -156,7 +161,26 @@ public class TextAreaFieldKeyEventListener implements KeyEventListener {
             int caretPosition = gui.getCaretPosition();
             String s = Clipboard.getInstance().getClipboardString();
             if (s != null) {
-                textState.insert(caretPosition, s);
+
+                int start = gui.getStartSelectionIndex();
+                int end = gui.getEndSelectionIndex();
+                if (start > end) {
+                    start = gui.getEndSelectionIndex();
+                    end = gui.getStartSelectionIndex();
+                }
+                if (start != end) {
+                    StringBuilder t = new StringBuilder(textState.getText());
+                    t.delete(start, end);
+                    textState.setText(t.toString());
+                    gui.setCaretPosition(start);
+                    gui.setStartSelectionIndex(start);
+                    gui.setEndSelectionIndex(start);
+                    caretPosition = start;
+                }
+
+                StringBuilder builder = new StringBuilder(textState.getText());
+                builder.insert(caretPosition, s);
+                textState.setText(builder.toString());
                 gui.setCaretPosition(caretPosition + s.length());
             }
         }
@@ -181,17 +205,23 @@ public class TextAreaFieldKeyEventListener implements KeyEventListener {
             if (start == end && caretPosition != textState.length()) {
                 if ((mods & GLFW_MOD_CONTROL) != 0) {
                     end = findNextWord(textState.getText(), caretPosition);
-                    textState.delete(start, end);
+                    StringBuilder builder = new StringBuilder(textState.getText());
+                    builder.delete(start, end);
+                    textState.setText(builder.toString());
                     gui.setCaretPosition(start);
                     gui.setStartSelectionIndex(start);
                     gui.setEndSelectionIndex(start);
                 } else {
-                    textState.deleteCharAt(caretPosition);
+                    StringBuilder builder = new StringBuilder(textState.getText());
+                    builder.deleteCharAt(caretPosition);
+                    textState.setText(builder.toString());
                     gui.setStartSelectionIndex(caretPosition);
                     gui.setEndSelectionIndex(caretPosition);
                 }
             } else {
-                textState.delete(start, end);
+                StringBuilder builder = new StringBuilder(textState.getText());
+                builder.delete(start, end);
+                textState.setText(builder.toString());
                 gui.setCaretPosition(start);
                 gui.setStartSelectionIndex(start);
                 gui.setEndSelectionIndex(start);
@@ -218,19 +248,25 @@ public class TextAreaFieldKeyEventListener implements KeyEventListener {
             if (start == end && caretPosition != 0) {
                 if ((mods & GLFW_MOD_CONTROL) != 0) {
                     start = findPrevWord(textState.getText(), caretPosition);
-                    textState.delete(start, end);
+                    StringBuilder builder = new StringBuilder(textState.getText());
+                    builder.delete(start, end);
+                    textState.setText(builder.toString());
                     gui.setCaretPosition(start);
                     gui.setStartSelectionIndex(start);
                     gui.setEndSelectionIndex(start);
                 } else {
                     int newCaretPosition = caretPosition - 1;
-                    textState.deleteCharAt(newCaretPosition);
+                    StringBuilder builder = new StringBuilder(textState.getText());
+                    builder.deleteCharAt(newCaretPosition);
+                    textState.setText(builder.toString());
                     gui.setCaretPosition(newCaretPosition);
                     gui.setStartSelectionIndex(newCaretPosition);
                     gui.setEndSelectionIndex(newCaretPosition);
                 }
             } else {
-                textState.delete(start, end);
+                StringBuilder builder = new StringBuilder(textState.getText());
+                builder.delete(start, end);
+                textState.setText(builder.toString());
                 gui.setCaretPosition(start);
                 gui.setStartSelectionIndex(start);
                 gui.setEndSelectionIndex(start);
@@ -247,19 +283,25 @@ public class TextAreaFieldKeyEventListener implements KeyEventListener {
         if (gui.isEditable()) {
             int start = gui.getStartSelectionIndex();
             int end = gui.getEndSelectionIndex();
+            TextState textState = gui.getTextState();
             if (start != end) {
                 if (start > end) {
                     start = gui.getEndSelectionIndex();
                     end = gui.getStartSelectionIndex();
                 }
-                gui.getTextState().delete(start, end);
+
+                StringBuilder builder = new StringBuilder(textState.getText());
+                builder.delete(start, end);
+                textState.setText(builder.toString());
                 gui.setCaretPosition(start);
                 gui.setStartSelectionIndex(start);
                 gui.setEndSelectionIndex(start);
             }
 
             int caretPosition = gui.getCaretPosition();
-            gui.getTextState().insert(caretPosition, "\n");
+            StringBuilder builder = new StringBuilder(textState.getText());
+            builder.insert(caretPosition, "\n");
+            textState.setText(builder.toString());
             int newCaretPosition = caretPosition + 1;
             gui.setStartSelectionIndex(newCaretPosition);
             gui.setEndSelectionIndex(newCaretPosition);

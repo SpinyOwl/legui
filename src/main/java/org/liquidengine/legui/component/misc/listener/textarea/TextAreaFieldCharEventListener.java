@@ -33,13 +33,17 @@ public class TextAreaFieldCharEventListener implements CharEventListener {
                 end = textAreaField.getStartSelectionIndex();
             }
             if (start != end) {
-                textState.delete(start, end);
+                StringBuilder builder = new StringBuilder(textState.getText());
+                builder.delete(start, end);
+                textState.setText(builder.toString());
                 textAreaField.setCaretPosition(start);
                 textAreaField.setStartSelectionIndex(start);
                 textAreaField.setEndSelectionIndex(start);
             }
             int caretPosition = textAreaField.getCaretPosition();
-            textState.insert(caretPosition, str);
+            StringBuilder builder = new StringBuilder(textState.getText());
+            builder.insert(caretPosition, str);
+            textState.setText(builder.toString());
             int newCaretPosition = caretPosition + str.length();
             textAreaField.setCaretPosition(newCaretPosition);
             textAreaField.setEndSelectionIndex(newCaretPosition);
