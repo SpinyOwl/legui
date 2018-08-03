@@ -33,6 +33,18 @@ public class Window {
         return LeguiSystem.getWindowSize(pointer);
     }
 
+    public void setSize(int width, int height) {
+        LeguiSystem.setWindowSize(pointer, width, height);
+    }
+
+    public void setPosition(int x, int y) {
+        LeguiSystem.setWindowPosition(pointer, x, y);
+    }
+
+    public Vector2i getPosition() {
+        return LeguiSystem.getWindowPosition(pointer);
+    }
+
     protected long getPointer() {
         return pointer;
     }

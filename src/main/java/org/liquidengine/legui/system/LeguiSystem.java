@@ -64,6 +64,10 @@ public final class LeguiSystem {
 
             // render cycle
             for (Window window : values) {
+                glfwMakeContextCurrent(window.getPointer());
+                GL.getCapabilities();
+                glfwSwapInterval(0);
+
                 window.getContext().updateGlfwWindow();
                 Vector2i windowSize = window.getContext().getFramebufferSize();
 
@@ -154,6 +158,18 @@ public final class LeguiSystem {
         return instance.getWindowSizeP(pointer);
     }
 
+    protected static Vector2i getWindowPosition(long pointer) {
+        return instance.getWindowPosP(pointer);
+    }
+
+    protected static void setWindowSize(long pointer, int width, int height) {
+        instance.setWindowSizeP(pointer, width, height);
+    }
+
+    protected static void setWindowPosition(long pointer, int x, int y) {
+        instance.setWindowPosP(pointer, x, y);
+    }
+
     // ------------------------------------------------------------------
     // --------    PRIVATE API     --------------------------------------
     // ------------------------------------------------------------------
@@ -165,6 +181,23 @@ public final class LeguiSystem {
             GLFW.glfwGetWindowSize(pointer, width, height);
             return new Vector2i(width[0], height[0]);
         });
+    }
+
+    private void setWindowSizeP(long pointer, int width, int height) {
+        createTaskNoWait(() -> GLFW.glfwSetWindowSize(pointer, width, height));
+    }
+
+    private Vector2i getWindowPosP(long pointer) {
+        return createTaskAndGet(() -> {
+            int x[] = {0};
+            int y[] = {0};
+            GLFW.glfwGetWindowPos(pointer, x, y);
+            return new Vector2i(x[0], y[0]);
+        });
+    }
+
+    private void setWindowPosP(long pointer, int x, int y) {
+        createTaskNoWait(() -> GLFW.glfwSetWindowPos(pointer, x, y));
     }
 
     private Window createWindowP(int width, int height, String title, boolean fullscreen) {
@@ -179,21 +212,26 @@ public final class LeguiSystem {
                 pointer = GLFW.glfwCreateWindow(width, height, title, monitor, 0);
             }
 
+            glfwMakeContextCurrent(pointer);
+            GL.createCapabilities();
+            glfwSwapInterval(0);
+
             if (pointer != 0) {
                 Window window = new Window(pointer);
 
-                window.setFrame(new Frame(width, height));
+                window.setRenderer(new NvgRenderer());
+                window.getRenderer().initialize();
+
                 window.setContext(new Context(pointer));
+
                 window.setCallbackKeeper(new DefaultCallbackKeeper());
                 CallbackKeeper.registerCallbacks(pointer, window.getCallbackKeeper());
-                window.setRenderer(new NvgRenderer());
+
                 window.setSystemEventProcessor(new SystemEventProcessor());
                 window.getSystemEventProcessor().addDefaultCallbacks(window.getCallbackKeeper());
 
-                glfwMakeContextCurrent(pointer);
-                GL.createCapabilities();
-                glfwSwapInterval(0);
-                window.getRenderer().initialize();
+                window.setFrame(new Frame(width, height));
+
 
                 windowMap.put(pointer, window);
                 return window;
@@ -206,11 +244,11 @@ public final class LeguiSystem {
     private void destroyWindowP(Window window) {
         if (windowMap.containsValue(window)) {
             createTaskNoWait(() -> {
+                long pointer = window.getPointer();
                 windowMap.removeValue(window);
                 window.getRenderer().destroy();
                 window.setPointer(0);
-                GLFW.glfwDestroyWindow(window.getPointer());
-                return null;
+                GLFW.glfwDestroyWindow(pointer);
             });
         }
     }
@@ -236,7 +274,10 @@ public final class LeguiSystem {
         }
     }
 
-    private void createTaskNoWait(Callable<?> callable) {
-        wstTasks.add(new FutureTask<>(callable));
+    private void createTaskNoWait(Runnable runnable) {
+        wstTasks.add(new FutureTask<>(() -> {
+            runnable.run();
+            return null;
+        }));
     }
 }

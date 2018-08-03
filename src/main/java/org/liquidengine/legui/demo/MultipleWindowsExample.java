@@ -70,7 +70,6 @@ public class MultipleWindowsExample {
         Renderer[] renderers = new NvgRenderer[N];
         Context[] contexts = new Context[N];
         Frame[] frames = new Frame[N];
-        EventProcessor[] leguiEventProcessors = new EventProcessor[N];
         CallbackKeeper[] keepers = new DefaultCallbackKeeper[N];
         SystemEventProcessor[] systemEventProcessors = new SystemEventProcessor[N];
 
@@ -85,7 +84,6 @@ public class MultipleWindowsExample {
             GL.createCapabilities();
             glfwSwapInterval(0);
             glfwSetWindowPos(windows[i], 50, 50 + (HEIGHT + 50) * i);
-            windows[i] = windows[i];
             // Renderer which will render our ui components.
             renderers[i] = new NvgRenderer();
             renderers[i].initialize();
