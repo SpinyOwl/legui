@@ -30,14 +30,17 @@ import static org.lwjgl.opengl.GL11.glClear;
 import static org.lwjgl.opengl.GL11.glClearColor;
 import static org.lwjgl.opengl.GL11.glDisable;
 import static org.lwjgl.opengl.GL11.glEnable;
+import static org.lwjgl.opengl.GL11.glGetInteger;
 import static org.lwjgl.opengl.GL11.glViewport;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
 import java.io.IOException;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.nanovg.NVGColor;
+import org.lwjgl.nanovg.NanoVGGL2;
 import org.lwjgl.nanovg.NanoVGGL3;
 import org.lwjgl.opengl.GL;
+import org.lwjgl.opengl.GL30;
 
 /**
  * Created by Alexander on 17.12.2016.
@@ -60,6 +63,9 @@ public class MultipleWindowsNanoVG {
         long windows[] = new long[N];
         long nvgContexts[] = new long[N];
 
+        boolean isGlGreaterThan3_2 =
+            (glGetInteger(GL30.GL_MAJOR_VERSION) > 3) || (glGetInteger(GL30.GL_MAJOR_VERSION) == 3 && glGetInteger(GL30.GL_MINOR_VERSION) >= 2);
+
         for (int i = 0; i < N; i++) {
             windows[i] = glfwCreateWindow(WIDTH, HEIGHT, "Example " + i, NULL, NULL);
             glfwSetWindowPos(windows[i], 50 + WIDTH * i, 50);
@@ -71,7 +77,13 @@ public class MultipleWindowsNanoVG {
             glfwSetKeyCallback(windows[i],
                                (window, key, scancode, action, mods) -> running = !(key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE));
 
-            nvgContexts[i] = NanoVGGL3.nvgCreate(NanoVGGL3.NVG_ANTIALIAS | NanoVGGL3.NVG_STENCIL_STROKES | NanoVGGL3.NVG_DEBUG);
+            if (isGlGreaterThan3_2) {
+                int flags = NanoVGGL3.NVG_STENCIL_STROKES | NanoVGGL3.NVG_ANTIALIAS | NanoVGGL3.NVG_DEBUG;
+                nvgContexts[i] = NanoVGGL3.nvgCreate(flags);
+            } else {
+                int flags = NanoVGGL2.NVG_STENCIL_STROKES | NanoVGGL2.NVG_ANTIALIAS | NanoVGGL2.NVG_DEBUG;
+                nvgContexts[i] = NanoVGGL2.nvgCreate(flags);
+            }
         }
 
         running = true;
@@ -119,6 +131,11 @@ public class MultipleWindowsNanoVG {
             }
         }
         for (int i = 0; i < N; i++) {
+            if (isGlGreaterThan3_2) {
+                NanoVGGL3.nvgDelete(nvgContexts[i]);
+            } else {
+                NanoVGGL2.nvgDelete(nvgContexts[i]);
+            }
             glfwDestroyWindow(windows[i]);
         }
         glfwTerminate();
