@@ -236,7 +236,7 @@ public class MultipleWindowsMultipleThreadsExample {
         Frame frame = new Frame(WIDTH, HEIGHT);
 
         for (int i = 0; i < WINDOW_COUNT; i++) {
-            windows[i] = glfwCreateWindow(WIDTH, HEIGHT, "Example " + i, NULL, NULL);
+            windows[i] = glfwCreateWindow(WIDTH, HEIGHT, "Multiple Windows Multiple Threads Example " + i, NULL, NULL);
             glfwSetWindowPos(windows[i], 50, 50 + (HEIGHT + 50) * i);
             glfwShowWindow(windows[i]);
 

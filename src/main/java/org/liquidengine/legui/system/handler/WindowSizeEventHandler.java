@@ -20,12 +20,10 @@ public class WindowSizeEventHandler implements SystemEventHandler<SystemWindowSi
         List<Layer> layers = frame.getAllLayers();
         Collections.reverse(layers);
         for (Layer layer : layers) {
-            if (layer.isEventReceivable()) {
-                if (!layer.getContainer().isVisible() || !layer.getContainer().isEnabled()) {
-                    continue;
-                }
-                pushEvent(layer.getContainer(), event, context, frame);
+            if (!layer.getContainer().isVisible() || !layer.getContainer().isEnabled()) {
+                continue;
             }
+            pushEvent(layer.getContainer(), event, context, frame);
         }
     }
 
