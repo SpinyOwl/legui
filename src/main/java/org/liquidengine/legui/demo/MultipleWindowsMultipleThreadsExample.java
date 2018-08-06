@@ -73,7 +73,6 @@ public class MultipleWindowsMultipleThreadsExample {
     private static Renderer[] renderers = new NvgRenderer[WINDOW_COUNT];
     private static Context[] contexts = new Context[WINDOW_COUNT];
     private static Frame[] frames = new Frame[WINDOW_COUNT];
-    private static EventProcessor[] leguiEventProcessors = new EventProcessor[WINDOW_COUNT];
     private static CallbackKeeper[] keepers = new DefaultCallbackKeeper[WINDOW_COUNT];
     private static SystemEventProcessor[] systemEventProcessors = new SystemEventProcessor[WINDOW_COUNT];
     private static GLCapabilities[] glCapabilities = new GLCapabilities[WINDOW_COUNT];

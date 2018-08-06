@@ -19,7 +19,6 @@ import static org.lwjgl.opengl.GL11.glClearColor;
 import static org.lwjgl.opengl.GL11.glViewport;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import org.joml.Vector2i;
@@ -58,7 +57,7 @@ public class MultipleWindowsExample {
     public static final int HEIGHT = 200;
     private static volatile boolean running = false;
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         System.setProperty("joml.nounsafe", Boolean.TRUE.toString());
         System.setProperty("java.awt.headless", Boolean.TRUE.toString());
         if (!GLFW.glfwInit()) {
