@@ -63,8 +63,9 @@ public class MultipleWindowsNanoVG {
         long windows[] = new long[N];
         long nvgContexts[] = new long[N];
 
-        boolean isGlGreaterThan3_2 =
-            (glGetInteger(GL30.GL_MAJOR_VERSION) > 3) || (glGetInteger(GL30.GL_MAJOR_VERSION) == 3 && glGetInteger(GL30.GL_MINOR_VERSION) >= 2);
+        int majorVersion = glGetInteger(GL30.GL_MAJOR_VERSION);
+        int minorVersion = glGetInteger(GL30.GL_MINOR_VERSION);
+        boolean isGlGreaterThan3_2 = (majorVersion > 3) || (majorVersion == 3 && minorVersion >= 2);
 
         for (int i = 0; i < N; i++) {
             windows[i] = glfwCreateWindow(WIDTH, HEIGHT, "Example " + i, NULL, NULL);
