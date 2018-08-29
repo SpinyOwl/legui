@@ -1,5 +1,6 @@
 ![REPO SIZE](https://img.shields.io/github/repo-size/LiquidEngine/legui.svg?style=flat-square) 
 ![CODE SIZE](https://img.shields.io/github/languages/code-size/LiquidEngine/legui.svg?style=flat-square) 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/e3a864cc6d6a4f08938a7b368bdb35da)](https://app.codacy.com/app/LiquidEngine/legui?utm_source=github.com&utm_medium=referral&utm_content=LiquidEngine/legui&utm_campaign=Badge_Grade_Dashboard)
 [![CODACY](https://img.shields.io/codacy/grade/e3a864cc6d6a4f08938a7b368bdb35da.svg?style=flat-square)](https://www.codacy.com/app/LiquidEngine/legui) 
 ![License](https://img.shields.io/github/license/LiquidEngine/legui.svg?style=flat-square)  
 [![DEVELOP BUILD](https://img.shields.io/jenkins/s/http/jenkins.liquidengine.tk/job/LEGUI_DEVELOP.svg?label=develop&style=flat-square)](http://jenkins.liquidengine.tk/job/LEGUI_DEVELOP/)
