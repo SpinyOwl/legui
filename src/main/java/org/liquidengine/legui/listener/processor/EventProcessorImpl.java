@@ -5,7 +5,10 @@ import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.event.Event;
+import org.liquidengine.legui.event.WindowCloseEvent;
 import org.liquidengine.legui.listener.EventListener;
+import org.liquidengine.legui.system.LeguiSystem;
+import org.liquidengine.legui.system.Window;
 
 /**
  * Default implementation of event processor.
@@ -30,6 +33,14 @@ public class EventProcessorImpl extends EventProcessor {
             List<? extends EventListener> listeners = targetComponent.getListenerMap().getListeners(event.getClass());
             for (EventListener listener : listeners) {
                 listener.process(event);
+            }
+
+            if (event instanceof WindowCloseEvent) {
+                long glfwWindow = event.getContext().getGlfwWindow();
+                Window window = LeguiSystem.getWindow(glfwWindow);
+                for (EventListener<WindowCloseEvent> listener : window.getWindowCloseEventListeners()) {
+                    listener.process((WindowCloseEvent) event);
+                }
             }
         }
     }

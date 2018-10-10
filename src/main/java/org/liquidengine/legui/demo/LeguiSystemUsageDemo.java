@@ -45,7 +45,11 @@ public class LeguiSystemUsageDemo {
             windows.remove(w2);
         });
 
-        while (!windows.isEmpty()) {
+        Button b = new Button(10, 110, 100, 30);
+        b.getListenerMap().addListener(MouseClickEvent.class, e -> w1.setFrame(w2.getFrame()));
+        w2.getFrame().getContainer().add(b);
+
+        while (!LeguiSystem.getWindows().isEmpty()) {
         }
         LeguiSystem.destroy();
     }

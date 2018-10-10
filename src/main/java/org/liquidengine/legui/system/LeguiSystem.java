@@ -11,6 +11,8 @@ import static org.lwjgl.opengl.GL11.glClear;
 import static org.lwjgl.opengl.GL11.glClearColor;
 import static org.lwjgl.opengl.GL11.glViewport;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Queue;
 import java.util.Set;
 import java.util.concurrent.Callable;
@@ -84,7 +86,7 @@ public final class LeguiSystem {
             glfwPollEvents();
 
             // process system events per window
-            for (Window window : values) {
+            for (Window window : windowMap.values()) {
                 window.getSystemEventProcessor().processEvents(window.getFrame(), window.getContext());
             }
 
@@ -92,7 +94,7 @@ public final class LeguiSystem {
             EventProcessor.getInstance().processEvents();
 
             // When everything done we need to relayout components.
-            for (Window window : values) {
+            for (Window window : windowMap.values()) {
                 LayoutManager.getInstance().layout(window.getFrame());
             }
 
@@ -146,6 +148,13 @@ public final class LeguiSystem {
         instance.destroyWindowP(window);
     }
 
+    public static List<Window> getWindows() {
+        return new ArrayList<>(instance.windowMap.values());
+    }
+
+    public static Window getWindow(long pointer) {
+        return instance.windowMap.get(pointer);
+    }
     // ------------------------------------------------------------------
     // --------    PROTECTED API     ------------------------------------
     // ------------------------------------------------------------------

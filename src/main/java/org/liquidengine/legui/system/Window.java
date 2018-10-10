@@ -1,6 +1,8 @@
 package org.liquidengine.legui.system;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 import org.joml.Vector2i;
 import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.event.WindowCloseEvent;
@@ -20,6 +22,8 @@ public class Window {
     private CallbackKeeper callbackKeeper;
     private SystemEventProcessor systemEventProcessor;
     private Renderer renderer;
+
+    private List<WindowCloseEventListener> windowCloseEventListeners = new CopyOnWriteArrayList<>();
 
     protected Window(long pointer) {
         this.pointer = pointer;
@@ -96,19 +100,19 @@ public class Window {
     }
 
     public void addCloseEventListener(WindowCloseEventListener closeEvent) {
-        frame.getContainer().getListenerMap().addListener(WindowCloseEvent.class, closeEvent);
+        windowCloseEventListeners.add(closeEvent);
     }
 
     public List<EventListener<WindowCloseEvent>> getWindowCloseEventListeners() {
-        return frame.getContainer().getListenerMap().getListeners(WindowCloseEvent.class);
+        return new ArrayList<>(windowCloseEventListeners);
     }
 
     public void removeWindowCloseEventListener(EventListener<WindowCloseEvent> listener) {
-        frame.getContainer().getListenerMap().removeListener(WindowCloseEvent.class, listener);
+        windowCloseEventListeners.remove(listener);
     }
 
     public void removeAllWindowCloseEventListeners() {
-        frame.getContainer().getListenerMap().removeAllListeners(WindowCloseEvent.class);
+        windowCloseEventListeners.clear();
     }
 
 }
