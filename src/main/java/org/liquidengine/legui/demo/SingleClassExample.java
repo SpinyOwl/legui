@@ -62,7 +62,7 @@ public class SingleClassExample {
         if (!GLFW.glfwInit()) {
             throw new RuntimeException("Can't initialize GLFW");
         }
-        long window = glfwCreateWindow(WIDTH, HEIGHT, "Example", NULL, NULL);
+        long window = glfwCreateWindow(WIDTH, HEIGHT, "Single Class Example", NULL, NULL);
         glfwShowWindow(window);
 
         glfwMakeContextCurrent(window);

@@ -1,7 +1,10 @@
 package org.liquidengine.legui.demo;
 
+import static org.lwjgl.glfw.GLFW.GLFW_FALSE;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_ESCAPE;
 import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
+import static org.lwjgl.glfw.GLFW.GLFW_TRUE;
+import static org.lwjgl.glfw.GLFW.GLFW_VISIBLE;
 import static org.lwjgl.glfw.GLFW.glfwCreateWindow;
 import static org.lwjgl.glfw.GLFW.glfwDestroyWindow;
 import static org.lwjgl.glfw.GLFW.glfwMakeContextCurrent;
@@ -12,6 +15,7 @@ import static org.lwjgl.glfw.GLFW.glfwShowWindow;
 import static org.lwjgl.glfw.GLFW.glfwSwapBuffers;
 import static org.lwjgl.glfw.GLFW.glfwSwapInterval;
 import static org.lwjgl.glfw.GLFW.glfwTerminate;
+import static org.lwjgl.glfw.GLFW.glfwWindowHint;
 import static org.lwjgl.nanovg.NanoVG.nvgBeginFrame;
 import static org.lwjgl.nanovg.NanoVG.nvgBeginPath;
 import static org.lwjgl.nanovg.NanoVG.nvgEndFrame;
@@ -62,20 +66,31 @@ public class MultipleWindowsNanoVG {
         int N = 3;
         long windows[] = new long[N];
         long nvgContexts[] = new long[N];
+        boolean isGlGreaterThan3_2;
 
-        boolean isGlGreaterThan3_2 =
-            (glGetInteger(GL30.GL_MAJOR_VERSION) > 3) || (glGetInteger(GL30.GL_MAJOR_VERSION) == 3 && glGetInteger(GL30.GL_MINOR_VERSION) >= 2);
+        // need to get gl version to initialize nanovg
+        {
+            glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
+            long stubContext = glfwCreateWindow(1, 1, "", 0, 0);
+            glfwMakeContextCurrent(stubContext);
+            GL.createCapabilities();
+            int majorVersion = glGetInteger(GL30.GL_MAJOR_VERSION);
+            int minorVersion = glGetInteger(GL30.GL_MINOR_VERSION);
+            isGlGreaterThan3_2 = (majorVersion > 3) || (majorVersion == 3 && minorVersion >= 2);
+            glfwDestroyWindow(stubContext);
+
+            glfwWindowHint(GLFW_VISIBLE, GLFW_TRUE);
+        }
+
 
         for (int i = 0; i < N; i++) {
-            windows[i] = glfwCreateWindow(WIDTH, HEIGHT, "Example " + i, NULL, NULL);
+            windows[i] = glfwCreateWindow(WIDTH, HEIGHT, "Multiple Windows NanoVG " + i, NULL, NULL);
             glfwSetWindowPos(windows[i], 50 + WIDTH * i, 50);
             glfwShowWindow(windows[i]);
             glfwMakeContextCurrent(windows[i]);
             GL.createCapabilities();
             glfwSwapInterval(0);
-
-            glfwSetKeyCallback(windows[i],
-                               (window, key, scancode, action, mods) -> running = !(key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE));
+            glfwSetKeyCallback(windows[i], (window, key, scancode, action, mods) -> running = !(key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE));
 
             if (isGlGreaterThan3_2) {
                 int flags = NanoVGGL3.NVG_STENCIL_STROKES | NanoVGGL3.NVG_ANTIALIAS | NanoVGGL3.NVG_DEBUG;

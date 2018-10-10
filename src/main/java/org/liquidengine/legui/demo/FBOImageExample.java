@@ -108,7 +108,7 @@ public class FBOImageExample {
         if (!GLFW.glfwInit()) {
             throw new RuntimeException("Can't initialize GLFW");
         }
-        long window = glfwCreateWindow(WIDTH, HEIGHT, "Example", NULL, NULL);
+        long window = glfwCreateWindow(WIDTH, HEIGHT, "FBO Image example", NULL, NULL);
         glfwShowWindow(window);
 
         glfwMakeContextCurrent(window);
