@@ -76,7 +76,7 @@ public class MultipleWindowsExample {
         GLFWWindowCloseCallbackI glfwWindowCloseCallbackI = w -> running = false;
 
         for (int i = 0; i < N; i++) {
-            windows[i] = glfwCreateWindow(WIDTH, HEIGHT, "Example", NULL, NULL);
+            windows[i] = glfwCreateWindow(WIDTH, HEIGHT, "Multiple Windows Example " + (i+1), NULL, NULL);
             glfwShowWindow(windows[i]);
 
             glfwMakeContextCurrent(windows[i]);

@@ -84,7 +84,7 @@ public class MultipleWindowsNanoVG {
 
 
         for (int i = 0; i < N; i++) {
-            windows[i] = glfwCreateWindow(WIDTH, HEIGHT, "Example " + i, NULL, NULL);
+            windows[i] = glfwCreateWindow(WIDTH, HEIGHT, "Multiple Windows NanoVG " + i, NULL, NULL);
             glfwSetWindowPos(windows[i], 50 + WIDTH * i, 50);
             glfwShowWindow(windows[i]);
             glfwMakeContextCurrent(windows[i]);
