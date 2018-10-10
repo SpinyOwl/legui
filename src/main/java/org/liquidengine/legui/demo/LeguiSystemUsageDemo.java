@@ -1,12 +1,11 @@
 package org.liquidengine.legui.demo;
 
-import java.util.ArrayList;
-import java.util.List;
 import org.liquidengine.legui.component.Button;
 import org.liquidengine.legui.component.Label;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.listener.impl.AbstractMouseClickEventListener;
+import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.system.LeguiSystem;
 import org.liquidengine.legui.system.Window;
 
@@ -21,33 +20,28 @@ public class LeguiSystemUsageDemo {
 
         LeguiSystem.initialize();
 
-        List<Window> windows = new ArrayList<>();
-
         Window w1 = LeguiSystem.createWindow(200, 200, "HELLO");
         w1.setPosition(50, 50);
         w1.setVisible(true);
-        windows.add(w1);
         createGUI(w1);
         w1.addCloseEventListener(event -> {
             System.out.println("CLOSE EVENT");
             LeguiSystem.destroyWindow(w1);
-            windows.remove(w1);
         });
 
         Window w2 = LeguiSystem.createWindow(200, 200, "HELLO 2");
         w2.setPosition(260, 50);
         createGUI(w2);
         w2.setVisible(true);
-        windows.add(w2);
         w2.addCloseEventListener(event -> {
             System.out.println("CLOSE EVENT");
             LeguiSystem.destroyWindow(w2);
-            windows.remove(w2);
         });
 
-        Button b = new Button(10, 110, 100, 30);
+        Button b = new Button("Clone context to first window", 10, 110, 180, 30);
         b.getListenerMap().addListener(MouseClickEvent.class, e -> w1.setFrame(w2.getFrame()));
         w2.getFrame().getContainer().add(b);
+        w2.getFrame().getContainer().getStyle().getBackground().setColor(ColorConstants.lightBlue());
 
         while (!LeguiSystem.getWindows().isEmpty()) {
         }
