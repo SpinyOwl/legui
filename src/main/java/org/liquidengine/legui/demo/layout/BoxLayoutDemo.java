@@ -27,12 +27,33 @@ public class BoxLayoutDemo extends Demo {
     }
 
     public static void main(String[] args) {
-        Demo demo = new BoxLayoutDemo(600, 400, "Border layout demo");
+        Demo demo = new BoxLayoutDemo(600, 400, "Box Layout Demo");
         demo.run();
     }
 
     @Override
     protected void update() {
+    }
+
+    @Override
+    protected void createGuiElements(Frame frame, int width, int height) {
+        this.frame = frame;
+        Component frameContainer = frame.getContainer();
+        frameContainer.getStyle().setDisplay(DisplayType.FLEX);
+        frameContainer.getStyle().getBackground().setColor(ColorConstants.lightGray());
+
+        c1 = new Panel();
+        frameContainer.add(c1);
+
+        c2 = new Panel(0, 0, 100, 100);
+        frameContainer.add(c2);
+
+        c11 = new Panel();
+        c1.add(c11);
+        c12 = new Panel();
+        c1.add(c12);
+
+
         c1.getStyle().getBackground().setColor(ColorConstants.lightGreen());
         c1.getStyle().setHeight(50f);
         c1.getStyle().setLeft(0f);
@@ -58,26 +79,5 @@ public class BoxLayoutDemo extends Demo {
         c12.getStyle().setRight(50f);
         c12.getStyle().setWidth(50f);
         c12.getStyle().setHeight(50f);
-//        c2.getStyle().setPosition(PositionType.ABSOLUTE);
-
-    }
-
-    @Override
-    protected void createGuiElements(Frame frame, int width, int height) {
-        this.frame = frame;
-        Component frameContainer = frame.getContainer();
-        frameContainer.getStyle().setDisplay(DisplayType.FLEX);
-        frameContainer.getStyle().getBackground().setColor(ColorConstants.lightGray());
-
-        c1 = new Panel();
-        frameContainer.add(c1);
-
-        c2 = new Panel(0, 0, 100, 100);
-        frameContainer.add(c2);
-
-        c11 = new Panel();
-        c1.add(c11);
-        c12 = new Panel();
-        c1.add(c12);
     }
 }
