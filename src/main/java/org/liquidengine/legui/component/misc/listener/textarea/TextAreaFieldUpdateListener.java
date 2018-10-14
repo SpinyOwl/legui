@@ -28,13 +28,13 @@ public class TextAreaFieldUpdateListener implements TextAreaFieldUpdateEventList
         if (parent instanceof TextAreaViewport) {
             TextAreaViewport textAreaViewport = (TextAreaViewport) parent;
             float maxTextWidth = Math.max(textAreaField.getMaxTextWidth() +
-                                              textAreaField.getStyle().getPaddingLeftF() +
-                                              textAreaField.getStyle().getPaddingRightF(),
-                                          textAreaViewport.getSize().x);
+                            textAreaField.getStyle().getPaddingLeftF() +
+                            textAreaField.getStyle().getPaddingRightF(),
+                    textAreaViewport.getSize().x);
             float maxTextHeight = Math.max(textAreaField.getMaxTextHeight() +
-                                               textAreaField.getStyle().getPaddingTopF() +
-                                               textAreaField.getStyle().getPaddingBottomF(),
-                                           textAreaViewport.getSize().y);
+                            textAreaField.getStyle().getPaddingTopF() +
+                            textAreaField.getStyle().getPaddingBottomF(),
+                    textAreaViewport.getSize().y);
             textAreaField.setSize(maxTextWidth, maxTextHeight);
         }
 
@@ -51,17 +51,19 @@ public class TextAreaFieldUpdateListener implements TextAreaFieldUpdateEventList
         float maxTextWidth = textAreaField.getMaxTextWidth();
 
         float newVal = 0;
-        float maxValue = horizontalScrollBar.getMaxValue();
-        float minValue = horizontalScrollBar.getMinValue();
-        float valueRange = horizontalScrollBar.getMaxValue() - horizontalScrollBar.getMinValue();
+        if (!(maxTextWidth == 0)) {
+            float maxValue = horizontalScrollBar.getMaxValue();
+            float minValue = horizontalScrollBar.getMinValue();
+            float valueRange = horizontalScrollBar.getMaxValue() - horizontalScrollBar.getMinValue();
 
-        newVal = valueRange * caretX / maxTextWidth;
+            newVal = valueRange * caretX / maxTextWidth;
 
-        if (newVal > maxValue) {
-            newVal = maxValue;
-        }
-        if (newVal < minValue) {
-            newVal = minValue;
+            if (newVal > maxValue) {
+                newVal = maxValue;
+            }
+            if (newVal < minValue) {
+                newVal = minValue;
+            }
         }
         horizontalScrollBar.setCurValue(newVal);
     }
@@ -72,11 +74,14 @@ public class TextAreaFieldUpdateListener implements TextAreaFieldUpdateEventList
         float maxTextHeight = textAreaField.getMaxTextHeight();
 
         float newVal = 0;
+
         float maxValue = verticalScrollbar.getMaxValue();
         float minValue = verticalScrollbar.getMinValue();
         float valueRange = verticalScrollbar.getMaxValue() - verticalScrollbar.getMinValue();
 
-        newVal = valueRange * caretY / (maxTextHeight - textAreaField.getTextState().getFontSize());
+        if (maxTextHeight != textAreaField.getTextState().getFontSize()) {
+            newVal = valueRange * caretY / (maxTextHeight - textAreaField.getTextState().getFontSize());
+        }
 
         if (newVal > maxValue) {
             newVal = maxValue;
