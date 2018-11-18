@@ -1,7 +1,7 @@
 ![REPO SIZE](https://img.shields.io/github/repo-size/LiquidEngine/legui.svg) 
 ![CODE SIZE](https://img.shields.io/github/languages/code-size/LiquidEngine/legui.svg) 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/e3a864cc6d6a4f08938a7b368bdb35da)](https://app.codacy.com/app/LiquidEngine/legui?utm_source=github.com&utm_medium=referral&utm_content=LiquidEngine/legui&utm_campaign=Badge_Grade_Dashboard) 
-![License](https://img.shields.io/github/license/LiquidEngine/legui.svg)  
+![License](https://img.shields.io/github/license/SpinyOwl/legui.svg)  
 [![DEVELOP BUILD](https://img.shields.io/jenkins/s/http/jenkins.spinyowl.com/job/LEGUI_DEVELOP.svg?label=develop)](http://jenkins.spinyowl.com/job/LEGUI_DEVELOP/)
 [![SNAPSHOT BUILD](https://img.shields.io/jenkins/s/https/jenkins.spinyowl.com/job/LEGUI_SNAPSHOTS.svg?label=snapshot)](https://jenkins.spinyowl.com/job/LEGUI_SNAPSHOTS/)
 [![RELEASE BUILD](https://img.shields.io/jenkins/s/https/jenkins.spinyowl.com/job/LEGUI_RELEASES.svg?label=release)](https://jenkins.spinyowl.com/job/LEGUI_RELEASES/)  
