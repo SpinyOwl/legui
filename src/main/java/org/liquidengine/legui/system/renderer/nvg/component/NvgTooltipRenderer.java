@@ -1,24 +1,5 @@
 package org.liquidengine.legui.system.renderer.nvg.component;
 
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgColorUtil.rgba;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.alignTextInBox;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.createBounds;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.createScissor;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.intersectScissor;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.resetScissor;
-import static org.lwjgl.nanovg.NanoVG.nnvgText;
-import static org.lwjgl.nanovg.NanoVG.nnvgTextBreakLines;
-import static org.lwjgl.nanovg.NanoVG.nvgBeginPath;
-import static org.lwjgl.nanovg.NanoVG.nvgFillColor;
-import static org.lwjgl.nanovg.NanoVG.nvgFontFace;
-import static org.lwjgl.nanovg.NanoVG.nvgFontSize;
-import static org.lwjgl.system.MemoryUtil.memAddress;
-import static org.lwjgl.system.MemoryUtil.memFree;
-import static org.lwjgl.system.MemoryUtil.memUTF8;
-
-import java.nio.ByteBuffer;
-import java.util.ArrayList;
-import java.util.List;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.Tooltip;
@@ -26,8 +7,18 @@ import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
 import org.liquidengine.legui.system.context.Context;
+import org.liquidengine.legui.system.renderer.nvg.util.NvgColorUtil;
 import org.lwjgl.nanovg.NVGColor;
 import org.lwjgl.nanovg.NVGTextRow;
+
+import java.nio.ByteBuffer;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgColorUtil.fillNvgColorWithRGBA;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.*;
+import static org.lwjgl.nanovg.NanoVG.*;
+import static org.lwjgl.system.MemoryUtil.*;
 
 /**
  * Created by ShchAlexander on 13.02.2017.
@@ -73,38 +64,42 @@ public class NvgTooltipRenderer extends NvgDefaultComponentRenderer<Tooltip> {
                 List<float[]> boundList = new ArrayList<>();
                 List<long[]> indicesList = new ArrayList<>();
 
-                NVGColor colorA = NVGColor.calloc();
-                alignTextInBox(nanovg, HorizontalAlign.LEFT, VerticalAlign.MIDDLE);
-                nvgFontSize(nanovg, fontSize);
-                nvgFontFace(nanovg, font);
-                nvgFillColor(nanovg, rgba(textColor, colorA));
+                try (
+                        NVGColor colorA = NVGColor.calloc();
+                        NVGTextRow.Buffer buffer = NVGTextRow.calloc(1)
+                ) {
+                    NvgColorUtil.fillNvgColorWithRGBA(textColor, colorA);
+                    alignTextInBox(nanovg, HorizontalAlign.LEFT, VerticalAlign.MIDDLE);
+                    nvgFontSize(nanovg, fontSize);
+                    nvgFontFace(nanovg, font);
+                    nvgFillColor(nanovg, colorA);
 
-                // calculate text bounds for every line and start/end indices
-                NVGTextRow.Buffer buffer = NVGTextRow.calloc(1);
-                int rows = 0;
-                while (nnvgTextBreakLines(nanovg, start, end, size.x, memAddress(buffer), 1) != 0) {
-                    NVGTextRow row = buffer.get(0);
-                    float[] bounds = createBounds(x, y + rows * fontSize, w, h, horizontalAlign, verticalAlign, row.width(), fontSize);
-                    boundList.add(bounds);
-                    indicesList.add(new long[]{row.start(), row.end()});
-                    start = row.next();
-                    rows++;
+                    // calculate text bounds for every line and start/end indices
+
+                    int rows = 0;
+                    while (nnvgTextBreakLines(nanovg, start, end, size.x, memAddress(buffer), 1) != 0) {
+                        NVGTextRow row = buffer.get(0);
+                        float[] bounds = createBounds(x, y + rows * fontSize, w, h, horizontalAlign, verticalAlign, row.width(), fontSize);
+                        boundList.add(bounds);
+                        indicesList.add(new long[]{row.start(), row.end()});
+                        start = row.next();
+                        rows++;
+                    }
+
+                    // calculate offset for all lines
+                    float offsetY = 0.5f * fontSize * ((rows - 1) * verticalAlign.index - 1);
+
+                    // render text lines
+                    NvgColorUtil.fillNvgColorWithRGBA(textColor, colorA);
+                    nvgFillColor(nanovg, colorA);
+                    for (int i = 0; i < rows; i++) {
+                        float[] bounds = boundList.get(i);
+                        long[] indices = indicesList.get(i);
+
+                        nvgBeginPath(nanovg);
+                        nnvgText(nanovg, bounds[4], bounds[5] - offsetY, indices[0], indices[1]);
+                    }
                 }
-
-                // calculate offset for all lines
-                float offsetY = 0.5f * fontSize * ((rows - 1) * verticalAlign.index - 1);
-
-                // render text lines
-                nvgFillColor(nanovg, rgba(textColor, colorA));
-                for (int i = 0; i < rows; i++) {
-                    float[] bounds = boundList.get(i);
-                    long[] indices = indicesList.get(i);
-
-                    nvgBeginPath(nanovg);
-                    nnvgText(nanovg, bounds[4], bounds[5] - offsetY, indices[0], indices[1]);
-                }
-                buffer.free();
-                colorA.free();
             } finally {
                 memFree(byteText);
             }

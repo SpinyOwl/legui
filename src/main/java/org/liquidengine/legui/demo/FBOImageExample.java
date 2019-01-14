@@ -1,67 +1,5 @@
 package org.liquidengine.legui.demo;
 
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_ESCAPE;
-import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
-import static org.lwjgl.glfw.GLFW.glfwCreateWindow;
-import static org.lwjgl.glfw.GLFW.glfwDestroyWindow;
-import static org.lwjgl.glfw.GLFW.glfwMakeContextCurrent;
-import static org.lwjgl.glfw.GLFW.glfwPollEvents;
-import static org.lwjgl.glfw.GLFW.glfwShowWindow;
-import static org.lwjgl.glfw.GLFW.glfwSwapBuffers;
-import static org.lwjgl.glfw.GLFW.glfwSwapInterval;
-import static org.lwjgl.glfw.GLFW.glfwTerminate;
-import static org.lwjgl.nanovg.NanoVG.nvgBeginFrame;
-import static org.lwjgl.nanovg.NanoVG.nvgBeginPath;
-import static org.lwjgl.nanovg.NanoVG.nvgEndFrame;
-import static org.lwjgl.nanovg.NanoVG.nvgFill;
-import static org.lwjgl.nanovg.NanoVG.nvgFillColor;
-import static org.lwjgl.nanovg.NanoVG.nvgRect;
-import static org.lwjgl.nanovg.NanoVG.nvgRotate;
-import static org.lwjgl.nanovg.NanoVG.nvgStroke;
-import static org.lwjgl.nanovg.NanoVG.nvgStrokeColor;
-import static org.lwjgl.nanovg.NanoVG.nvgTranslate;
-import static org.lwjgl.opengl.GL11.GL_BLEND;
-import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
-import static org.lwjgl.opengl.GL11.GL_DEPTH_COMPONENT;
-import static org.lwjgl.opengl.GL11.GL_NEAREST;
-import static org.lwjgl.opengl.GL11.GL_ONE_MINUS_SRC_ALPHA;
-import static org.lwjgl.opengl.GL11.GL_RGBA;
-import static org.lwjgl.opengl.GL11.GL_SRC_ALPHA;
-import static org.lwjgl.opengl.GL11.GL_STENCIL_BUFFER_BIT;
-import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
-import static org.lwjgl.opengl.GL11.GL_TEXTURE_MAG_FILTER;
-import static org.lwjgl.opengl.GL11.GL_TEXTURE_MIN_FILTER;
-import static org.lwjgl.opengl.GL11.GL_UNSIGNED_BYTE;
-import static org.lwjgl.opengl.GL11.glBindTexture;
-import static org.lwjgl.opengl.GL11.glBlendFunc;
-import static org.lwjgl.opengl.GL11.glClear;
-import static org.lwjgl.opengl.GL11.glClearColor;
-import static org.lwjgl.opengl.GL11.glDeleteTextures;
-import static org.lwjgl.opengl.GL11.glDisable;
-import static org.lwjgl.opengl.GL11.glDrawBuffer;
-import static org.lwjgl.opengl.GL11.glEnable;
-import static org.lwjgl.opengl.GL11.glGenTextures;
-import static org.lwjgl.opengl.GL11.glGetInteger;
-import static org.lwjgl.opengl.GL11.glTexImage2D;
-import static org.lwjgl.opengl.GL11.glTexParameteri;
-import static org.lwjgl.opengl.GL11.glViewport;
-import static org.lwjgl.opengl.GL30.GL_COLOR_ATTACHMENT0;
-import static org.lwjgl.opengl.GL30.GL_DEPTH_ATTACHMENT;
-import static org.lwjgl.opengl.GL30.GL_FRAMEBUFFER;
-import static org.lwjgl.opengl.GL30.GL_MAJOR_VERSION;
-import static org.lwjgl.opengl.GL30.GL_MINOR_VERSION;
-import static org.lwjgl.opengl.GL30.GL_RENDERBUFFER;
-import static org.lwjgl.opengl.GL30.glBindFramebuffer;
-import static org.lwjgl.opengl.GL30.glBindRenderbuffer;
-import static org.lwjgl.opengl.GL30.glDeleteFramebuffers;
-import static org.lwjgl.opengl.GL30.glDeleteRenderbuffers;
-import static org.lwjgl.opengl.GL30.glFramebufferRenderbuffer;
-import static org.lwjgl.opengl.GL30.glGenRenderbuffers;
-import static org.lwjgl.opengl.GL30.glRenderbufferStorage;
-import static org.lwjgl.opengl.GL32.glFramebufferTexture;
-import static org.lwjgl.system.MemoryUtil.NULL;
-
-import java.io.IOException;
 import org.joml.Vector2i;
 import org.liquidengine.legui.animation.Animator;
 import org.liquidengine.legui.component.Frame;
@@ -86,6 +24,15 @@ import org.lwjgl.nanovg.NanoVGGL2;
 import org.lwjgl.nanovg.NanoVGGL3;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL30;
+
+import java.io.IOException;
+
+import static org.lwjgl.glfw.GLFW.*;
+import static org.lwjgl.nanovg.NanoVG.*;
+import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL30.*;
+import static org.lwjgl.opengl.GL32.glFramebufferTexture;
+import static org.lwjgl.system.MemoryUtil.NULL;
 
 /**
  * Created by Alexander on 17.12.2016.
@@ -318,34 +265,33 @@ public class FBOImageExample {
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         nvgBeginFrame(nvgContext, textureWidth, textureHeight, 1);
 
-        NVGColor nvgColorOne = NVGColor.calloc();
-        NVGColor nvgColorTwo = NVGColor.calloc();
+        try (
+                NVGColor nvgColorOne = NVGColor.calloc();
+                NVGColor nvgColorTwo = NVGColor.calloc()
+        ) {
+            nvgColorOne.r(0);
+            nvgColorOne.g(1);
+            nvgColorOne.b(0);
+            nvgColorOne.a(1);
 
-        nvgColorOne.r(0);
-        nvgColorOne.g(1);
-        nvgColorOne.b(0);
-        nvgColorOne.a(1);
+            nvgColorTwo.r(0);
+            nvgColorTwo.g(0);
+            nvgColorTwo.b(0);
+            nvgColorTwo.a(1);
 
-        nvgColorTwo.r(0);
-        nvgColorTwo.g(0);
-        nvgColorTwo.b(0);
-        nvgColorTwo.a(1);
+            nvgTranslate(nvgContext, textureWidth / 2f, textureHeight / 2f);
+            nvgRotate(nvgContext, angle);
 
-        nvgTranslate(nvgContext, textureWidth /2f, textureHeight/2f);
-        nvgRotate(nvgContext, angle);
+            nvgBeginPath(nvgContext);
+            nvgRect(nvgContext, -textureWidth / 4f, -textureHeight / 4f, textureWidth / 2f, textureHeight / 2f);
+            nvgStrokeColor(nvgContext, nvgColorTwo);
+            nvgStroke(nvgContext);
 
-        nvgBeginPath(nvgContext);
-        nvgRect(nvgContext, - textureWidth / 4f, - textureHeight / 4f, textureWidth / 2f, textureHeight / 2f);
-        nvgStrokeColor(nvgContext, nvgColorTwo);
-        nvgStroke(nvgContext);
-
-        nvgBeginPath(nvgContext);
-        nvgRect(nvgContext, -textureWidth / 4f, -textureHeight / 4f, textureWidth / 2f, textureHeight / 2f);
-        nvgFillColor(nvgContext, nvgColorOne);
-        nvgFill(nvgContext);
-
-        nvgColorOne.free();
-        nvgColorTwo.free();
+            nvgBeginPath(nvgContext);
+            nvgRect(nvgContext, -textureWidth / 4f, -textureHeight / 4f, textureWidth / 2f, textureHeight / 2f);
+            nvgFillColor(nvgContext, nvgColorOne);
+            nvgFill(nvgContext);
+        }
 
         nvgEndFrame(nvgContext);
         glDisable(GL_BLEND);

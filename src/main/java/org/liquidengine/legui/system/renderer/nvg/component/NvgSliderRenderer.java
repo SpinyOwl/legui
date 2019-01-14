@@ -1,26 +1,18 @@
 package org.liquidengine.legui.system.renderer.nvg.component;
 
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgColorUtil.rgba;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.createScissor;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.resetScissor;
-import static org.lwjgl.nanovg.NanoVG.NVG_ROUND;
-import static org.lwjgl.nanovg.NanoVG.nvgBeginPath;
-import static org.lwjgl.nanovg.NanoVG.nvgLineCap;
-import static org.lwjgl.nanovg.NanoVG.nvgLineJoin;
-import static org.lwjgl.nanovg.NanoVG.nvgLineTo;
-import static org.lwjgl.nanovg.NanoVG.nvgMoveTo;
-import static org.lwjgl.nanovg.NanoVG.nvgSave;
-import static org.lwjgl.nanovg.NanoVG.nvgStroke;
-import static org.lwjgl.nanovg.NanoVG.nvgStrokeColor;
-import static org.lwjgl.nanovg.NanoVG.nvgStrokeWidth;
-
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.Slider;
 import org.liquidengine.legui.component.optional.Orientation;
 import org.liquidengine.legui.system.context.Context;
+import org.liquidengine.legui.system.renderer.nvg.util.NvgColorUtil;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgShapes;
 import org.lwjgl.nanovg.NVGColor;
+
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgColorUtil.fillNvgColorWithRGBA;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.createScissor;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.resetScissor;
+import static org.lwjgl.nanovg.NanoVG.*;
 
 /**
  * Renderer for Slider components.
@@ -107,16 +99,19 @@ public class NvgSliderRenderer<T extends Slider> extends NvgDefaultComponentRend
      * @param width line width
      */
     private void drawLine(long context, Vector4f color, float x1, float y1, float x2, float y2, float width) {
-        NVGColor colorA = rgba(color, NVGColor.calloc());
-        nvgLineCap(context, NVG_ROUND);
-        nvgLineJoin(context, NVG_ROUND);
-        nvgStrokeWidth(context, width);
-        nvgStrokeColor(context, colorA);
-        nvgBeginPath(context);
-        nvgMoveTo(context, x1, y1);
-        nvgLineTo(context, x2, y2);
-        nvgStroke(context);
-        colorA.free();
+        try (
+                NVGColor colorA = NVGColor.calloc()
+        ) {
+            NvgColorUtil.fillNvgColorWithRGBA(color, colorA);
+            nvgLineCap(context, NVG_ROUND);
+            nvgLineJoin(context, NVG_ROUND);
+            nvgStrokeWidth(context, width);
+            nvgStrokeColor(context, colorA);
+            nvgBeginPath(context);
+            nvgMoveTo(context, x1, y1);
+            nvgLineTo(context, x2, y2);
+            nvgStroke(context);
+        }
     }
 
 }
