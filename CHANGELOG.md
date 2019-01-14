@@ -1,3 +1,7 @@
+## [1.4.6]
+### Fixed
+- Huge memory leak during rendering shadows.
+
 ## [1.4.5]
 ### Added
 - CSS-like styles
