@@ -41,8 +41,8 @@ repositories {
     jcenter()
     mavenCentral()
     maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
-    maven { url "https://raw.githubusercontent.com/LiquidEngine/repo/snapshots" }
-    maven { url "https://raw.githubusercontent.com/LiquidEngine/repo/releases" }
+    maven { url "https://raw.githubusercontent.com/SpinyOwl/repo/snapshots" }
+    maven { url "https://raw.githubusercontent.com/SpinyOwl/repo/releases" }
 }
 
 dependencies {
