@@ -1,10 +1,11 @@
 package org.liquidengine.legui.component.misc.animation.selectbox;
 
-import java.lang.ref.WeakReference;
 import org.joml.Vector2f;
 import org.liquidengine.legui.animation.Animation;
 import org.liquidengine.legui.component.SelectBox;
 import org.liquidengine.legui.component.SelectBox.SelectBoxScrollablePanel;
+
+import java.lang.ref.WeakReference;
 
 /**
  * @author Aliaksandr_Shcherbin.
@@ -46,7 +47,7 @@ public class SelectBoxAnimation extends Animation {
         selectionListPanel.getVerticalScrollBar().getStyle().setMaxWidth(buttonWidth);
         selectionListPanel.getVerticalScrollBar().getStyle().setMaxWidth(buttonWidth);
 
-        int visibleCount = selectBox.getVisibleCount();
+        int visibleCount = Math.min(selectBox.getVisibleCount(), selectBox.getElements().size());
         float elementHeight = selectBox.getElementHeight();
 
         Vector2f size = selectBox.getSize();
