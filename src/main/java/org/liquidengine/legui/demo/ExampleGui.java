@@ -35,6 +35,7 @@ import org.liquidengine.legui.component.TextInput;
 import org.liquidengine.legui.component.ToggleButton;
 import org.liquidengine.legui.component.Tooltip;
 import org.liquidengine.legui.component.Widget;
+import org.liquidengine.legui.component.event.selectbox.SelectBoxChangeSelectionEventListener;
 import org.liquidengine.legui.component.event.slider.SliderChangeValueEvent;
 import org.liquidengine.legui.component.event.slider.SliderChangeValueEventListener;
 import org.liquidengine.legui.component.optional.Orientation;
@@ -420,31 +421,28 @@ public class ExampleGui extends Panel {
         inpur.getStyle().getBackground().setColor(ColorConstants.white());
         this.add(inpur);
 
-        SelectBox selectBox = new SelectBox(20, 260, 100, 20);
-        selectBox.addElement("Just");
-        selectBox.addElement("Hello");
-        selectBox.addElement("World");
-        final int[] i = {1};
-        selectBox.addElement("World" + i[0]++);
-        selectBox.addElement("World" + i[0]++);
-        selectBox.addElement("World" + i[0]++);
-        selectBox.addElement("World" + i[0]++);
-        selectBox.addElement("World" + i[0]++);
-        selectBox.addElement("World" + i[0]++);
-        selectBox.addElement("World" + i[0]++);
-        selectBox.addElement("World" + i[0]++);
-        selectBox.addElement("World" + i[0]++);
-        selectBox.addElement("World" + i[0]++);
-        selectBox.addElement("World" + i[0]++);
-        selectBox.addElement("World" + i[0]++);
-        selectBox.setVisibleCount(5);
+        SelectBox<Object> selectBox = new SelectBox<>(20, 260, 100, 20);
+        selectBox.addElement(0.25f);
+        selectBox.addElement(0.5d);
+        selectBox.addElement(1);
+        selectBox.addElement("MyText");
+        selectBox.addElement(new Long(2L));
+        selectBox.setVisibleCount(7);
         selectBox.setElementHeight(20);
+        selectBox.addSelectBoxChangeSelectionEventListener((SelectBoxChangeSelectionEventListener<Object>) event -> {
+            Dialog dialog = new Dialog("SelectBox clicked", 300, 100);
+            Label valueLabel = new Label("Value: " + event.getNewValue().toString(), 10, 10, 300, 20);
+            dialog.getContainer().add(valueLabel);
+            Label classLabel = new Label("Class: " + event.getNewValue().getClass().getName(), 10, 30, 300, 20);
+            dialog.getContainer().add(classLabel);
+            dialog.show(event.getFrame());
+        });
         this.add(selectBox);
 
         Button sbb = new Button("Add element", 130, 260, 70, 20);
         sbb.getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
             if (event.getAction() == CLICK) {
-                selectBox.addElement("WorlD " + i[0]++);
+                selectBox.addElement("Dynamic#" + selectBox.getElements().size());
             }
         });
         this.add(sbb);
