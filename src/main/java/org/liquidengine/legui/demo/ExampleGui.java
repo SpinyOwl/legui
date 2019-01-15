@@ -374,12 +374,12 @@ public class ExampleGui extends Panel {
         scrollablePanel.getContainer().add(scp);
         this.add(scrollablePanel);
 
-        slider2.getListenerMap().addListener(SliderChangeValueEvent.class, (SliderChangeValueEventListener) event -> {
-            scrollablePanel.setHorizontalScrollBarHeight(event.getNewValue() / 2f + 10);
-        });
-        slider1.getListenerMap().addListener(SliderChangeValueEvent.class, (SliderChangeValueEventListener) event -> {
-            scrollablePanel.getHorizontalScrollBar().setArrowSize(event.getNewValue() / 4f + 10);
-        });
+        slider2.getListenerMap().addListener(SliderChangeValueEvent.class,
+                (SliderChangeValueEventListener) event -> scrollablePanel.setHorizontalScrollBarHeight(event.getNewValue() / 2f + 10)
+        );
+        slider1.getListenerMap().addListener(SliderChangeValueEvent.class,
+                (SliderChangeValueEventListener) event -> scrollablePanel.getHorizontalScrollBar().setArrowSize(event.getNewValue() / 4f + 10)
+        );
 
         textArea = new TextArea(420, 280, 150, 100);
         textArea.getTextState().setText("ABC DEF GH\r\nI JKL MNO PQR\nSTU VWXYZ");
@@ -633,7 +633,9 @@ public class ExampleGui extends Panel {
         Slider hOffsetSlider = new Slider(110, 5 + 20 * 0, 80, 10);
         shadowWidget.getContainer().add(hOffsetSlider);
         hOffsetSlider.setValue(50f);
-        hOffsetSlider.addSliderChangeValueEventListener((e)-> {shadowWidget.getStyle().getShadow().sethOffset(hOffsetSlider.getValue() - 50f);});
+        hOffsetSlider.addSliderChangeValueEventListener((e)->
+                shadowWidget.getStyle().getShadow().sethOffset(hOffsetSlider.getValue() - 50f)
+        );
         Label hOffsetLabel = new Label(10, 5 + 20 * 0, 90, 10);
         hOffsetLabel.getTextState().setText("HOffset: ");
         shadowWidget.getContainer().add(hOffsetLabel);
@@ -641,14 +643,18 @@ public class ExampleGui extends Panel {
         Slider vOffsetSlider = new Slider(110, 5 + 20 * 1, 80, 10);
         shadowWidget.getContainer().add(vOffsetSlider);
         vOffsetSlider.setValue(50f);
-        vOffsetSlider.addSliderChangeValueEventListener((e)-> {shadowWidget.getStyle().getShadow().setvOffset(vOffsetSlider.getValue() - 50f);});
+        vOffsetSlider.addSliderChangeValueEventListener((e)->
+                shadowWidget.getStyle().getShadow().setvOffset(vOffsetSlider.getValue() - 50f)
+        );
         Label vOffsetLabel = new Label(10, 5 + 20 * 1, 90, 10);
         vOffsetLabel.getTextState().setText("VOffset: ");
         shadowWidget.getContainer().add(vOffsetLabel);
 
         Slider blurSlider = new Slider(110, 5 + 20 * 2, 80, 10);
         shadowWidget.getContainer().add(blurSlider);
-        blurSlider.addSliderChangeValueEventListener((e)-> {shadowWidget.getStyle().getShadow().setBlur(blurSlider.getValue());});
+        blurSlider.addSliderChangeValueEventListener((e)->
+                shadowWidget.getStyle().getShadow().setBlur(blurSlider.getValue())
+        );
         Label blurLabel = new Label(10, 5 + 20 * 2, 90, 10);
         blurLabel.getTextState().setText("Blur: ");
         shadowWidget.getContainer().add(blurLabel);
@@ -656,7 +662,9 @@ public class ExampleGui extends Panel {
         Slider spreadSlider = new Slider(110, 5 + 20 * 3, 80, 10);
         shadowWidget.getContainer().add(spreadSlider);
         spreadSlider.setValue(50f);
-        spreadSlider.addSliderChangeValueEventListener((e)-> {shadowWidget.getStyle().getShadow().setSpread(spreadSlider.getValue() - 50f);});
+        spreadSlider.addSliderChangeValueEventListener((e)->
+                shadowWidget.getStyle().getShadow().setSpread(spreadSlider.getValue() - 50f)
+        );
         Label spreadLabel = new Label(10, 5 + 20 * 3, 90, 10);
         spreadLabel.getTextState().setText("Spread: ");
         shadowWidget.getContainer().add(spreadLabel);

@@ -188,11 +188,10 @@ public class NvgTextAreaFieldRenderer extends NvgDefaultComponentRenderer<TextAr
                         if (line.length() == 0) {
                             mouseCaretX = caretx;
                         } else {
-                            float mx = mouseX;
-                            if (mx <= glyphs.get(0).x()) {
+                            if (mouseX <= glyphs.get(0).x()) {
                                 mouseCaretPositionInLine = 0;
                                 mouseCaretX = glyphs.get(0).x();
-                            } else if (mx >= glyphs.get(ng - 1).maxx() + spaceWidth * (gui.getTabSize() - 1) * tabIndices.size()) {
+                            } else if (mouseX >= glyphs.get(ng - 1).maxx() + spaceWidth * (gui.getTabSize() - 1) * tabIndices.size()) {
                                 mouseCaretPositionInLine = ng;
                                 mouseCaretX = glyphs.get(ng - 1).maxx() + spaceWidth * (gui.getTabSize() - 1) * tabIndices.size();
                                 // if window not minimized
@@ -204,8 +203,8 @@ public class NvgTextAreaFieldRenderer extends NvgDefaultComponentRenderer<TextAr
                                 do {
                                     int index = (upper + lower) / 2;
                                     float tabAddition = 0;
-                                    for (int t = 0; t < tabIndices.size(); t++) {
-                                        if (index > tabIndices.get(t)) {
+                                    for (Integer tabIndex : tabIndices) {
+                                        if (index > tabIndex) {
                                             tabAddition += spaceWidth * (gui.getTabSize() - 1);
                                         }
                                     }
@@ -218,16 +217,16 @@ public class NvgTextAreaFieldRenderer extends NvgDefaultComponentRenderer<TextAr
                                     }
 
                                     float mid = (left + right) / 2f;
-                                    if (mx >= left && mx < right) {
+                                    if (mouseX >= left && mouseX < right) {
                                         found = true;
-                                        if (mx > mid) {
+                                        if (mouseX > mid) {
                                             mouseCaretPositionInLine = index + 1;
                                             mouseCaretX = right;
                                         } else {
                                             mouseCaretPositionInLine = index;
                                             mouseCaretX = left;
                                         }
-                                    } else if (mx >= right) {
+                                    } else if (mouseX >= right) {
                                         if (index != ng) {
                                             lower = index + 1;
                                         } else {
@@ -235,7 +234,7 @@ public class NvgTextAreaFieldRenderer extends NvgDefaultComponentRenderer<TextAr
                                             mouseCaretPositionInLine = ng;
                                             mouseCaretX = right;
                                         }
-                                    } else if (mx < left) {
+                                    } else if (mouseX < left) {
                                         if (index != 0) {
                                             upper = index;
                                         } else {

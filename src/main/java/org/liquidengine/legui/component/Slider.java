@@ -148,7 +148,7 @@ public class Slider extends Component {
      */
     @Override
     public void setIntersector(Intersector intersector) {
-        if (intersector == null || !(intersector instanceof RectangleIntersector)) {
+        if (!(intersector instanceof RectangleIntersector)) {
             return;
         }
         super.setIntersector(intersector);

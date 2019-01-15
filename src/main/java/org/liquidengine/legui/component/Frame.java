@@ -136,7 +136,7 @@ public class Frame {
             return;
         }
         Frame frame = layer.getFrame();
-        if (frame != null && frame == this && containsLayer(layer)) {
+        if (frame == this && containsLayer(layer)) {
             boolean removed = layers.remove(layer);
             if (removed) {
                 layer.setParent(null);

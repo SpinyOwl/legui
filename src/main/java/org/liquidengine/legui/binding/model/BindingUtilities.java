@@ -112,9 +112,10 @@ public class BindingUtilities {
     private static Class getFieldClass(Class objectClass, String fieldName) {
         Class fieldType = null;
         // search getter or field in this object (not searchig in inherited fields and methods)
-        String getterName = "get" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
-        String boolGetterName = "is" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
-        String setterName = "set" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
+        String methodSuffix = fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
+        String getterName = "get" + methodSuffix;
+        String boolGetterName = "is" + methodSuffix;
+        String setterName = "set" + methodSuffix;
         Set<Method> getters = ReflectionUtils.getMethods(objectClass, ReflectionUtils.withName(getterName));
         Set<Method> bGetters = ReflectionUtils.getMethods(objectClass, ReflectionUtils.withName(boolGetterName));
         Set<Method> setters = ReflectionUtils.getMethods(objectClass, ReflectionUtils.withName(setterName));
@@ -133,8 +134,7 @@ public class BindingUtilities {
         }
 
         // search boolean getter
-        getterName = "is" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
-        getters = ReflectionUtils.getMethods(objectClass, ReflectionUtils.withName(getterName));
+        getters = ReflectionUtils.getMethods(objectClass, ReflectionUtils.withName(boolGetterName));
         if (!getters.isEmpty()) {
             Method getter = getters.iterator().next();
             fieldType = getter.getReturnType();
@@ -165,9 +165,10 @@ public class BindingUtilities {
     private static Type getFieldType(Class objectClass, String fieldName) {
         Type fieldType = null;
         // search getter or field in this object (not searchig in inherited fields and methods)
-        String getterName = "get" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
-        String boolGetterName = "is" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
-        String setterName = "set" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
+        String methodSuffix = fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
+        String getterName = "get" + methodSuffix;
+        String boolGetterName = "is" + methodSuffix;
+        String setterName = "set" + methodSuffix;
         Set<Method> getters = ReflectionUtils.getMethods(objectClass, ReflectionUtils.withName(getterName));
         Set<Method> bGetters = ReflectionUtils.getMethods(objectClass, ReflectionUtils.withName(boolGetterName));
         Set<Method> setters = ReflectionUtils.getMethods(objectClass, ReflectionUtils.withName(setterName));
@@ -186,8 +187,7 @@ public class BindingUtilities {
         }
 
         // search boolean getter
-        getterName = "is" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
-        getters = ReflectionUtils.getMethods(objectClass, ReflectionUtils.withName(getterName));
+        getters = ReflectionUtils.getMethods(objectClass, ReflectionUtils.withName(boolGetterName));
         if (!getters.isEmpty()) {
             Method getter = getters.iterator().next();
             fieldType = getter.getGenericReturnType();

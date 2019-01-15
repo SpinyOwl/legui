@@ -83,7 +83,7 @@ public final class BindingRegistry {
     }
 
     /**
-     * Used to set specified binding for specified class. If binding is not set as default ({@link ClassBinding#byDefault}) it will not be added.
+     * Used to set specified binding for specified class. If binding is not set as default ({@link ClassBinding#isByDefault()} it will not be added.
      *
      * @param c class to bind.
      * @param b binding for class.
@@ -99,7 +99,7 @@ public final class BindingRegistry {
     }
 
     /**
-     * Used to add specified binding for specified class (without type check). If binding is not set as default ({@link ClassBinding#byDefault}) it will not be
+     * Used to add specified binding for specified class (without type check). If binding is not set as default ({@link ClassBinding#isByDefault()}) it will not be
      * added.
      *
      * @param c class to bind.

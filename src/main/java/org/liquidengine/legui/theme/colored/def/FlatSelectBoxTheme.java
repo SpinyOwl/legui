@@ -48,14 +48,14 @@ public class FlatSelectBoxTheme<T extends SelectBox> extends FlatComponentTheme<
         component.getSelectionButton().getTextState().setTextColor(ColorUtil.oppositeBlackOrWhite(settings.backgroundColor()));
 
         Icon collapseIcon = component.getCollapseIcon();
-        if (collapseIcon != null && collapseIcon instanceof CharIcon) {
+        if (collapseIcon instanceof CharIcon) {
             CharIcon bgIcon = (CharIcon) collapseIcon;
             bgIcon.setColor(ColorUtil.oppositeBlackOrWhite(settings.backgroundColor()));
             bgIcon.setHorizontalAlign(HorizontalAlign.CENTER);
             bgIcon.setVerticalAlign(VerticalAlign.MIDDLE);
         }
         Icon expandIcon = component.getExpandIcon();
-        if (expandIcon != null && expandIcon instanceof CharIcon) {
+        if (expandIcon instanceof CharIcon) {
             CharIcon bgIcon = (CharIcon) expandIcon;
             bgIcon.setColor(ColorUtil.oppositeBlackOrWhite(settings.backgroundColor()));
             bgIcon.setHorizontalAlign(HorizontalAlign.CENTER);

@@ -638,7 +638,7 @@ public abstract class Component implements Serializable {
     public boolean remove(Component component) {
         if (component != null) {
             Component parent = component.getParent();
-            if (parent != null && parent == this && isContains(component)) {
+            if (parent == this && isContains(component)) {
                 boolean removed = childComponents.remove(component);
                 if (removed) {
                     component.setParent(null);

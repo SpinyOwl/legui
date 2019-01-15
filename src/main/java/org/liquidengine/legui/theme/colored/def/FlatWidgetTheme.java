@@ -75,7 +75,7 @@ public class FlatWidgetTheme<T extends Widget> extends FlatComponentTheme<T> {
         component.getTitle().getStyle().setPadding(3f, 5f);
         titleTextState.setTextColor(ColorUtil.oppositeBlackOrWhite(settings.backgroundColor()));
         Icon closeIcon = component.getCloseIcon();
-        if (closeIcon != null && closeIcon instanceof CharIcon) {
+        if (closeIcon instanceof CharIcon) {
             CharIcon bgIcon = (CharIcon) closeIcon;
             bgIcon.setColor(ColorUtil.oppositeBlackOrWhite(settings.backgroundColor()));
             bgIcon.setHorizontalAlign(HorizontalAlign.CENTER);
@@ -83,7 +83,7 @@ public class FlatWidgetTheme<T extends Widget> extends FlatComponentTheme<T> {
         }
 
         Icon minimizeIcon = component.getMinimizeIcon();
-        if (minimizeIcon != null && minimizeIcon instanceof CharIcon) {
+        if (minimizeIcon instanceof CharIcon) {
             CharIcon bgIcon = (CharIcon) minimizeIcon;
             bgIcon.setColor(ColorUtil.oppositeBlackOrWhite(settings.backgroundColor()));
             bgIcon.setHorizontalAlign(HorizontalAlign.CENTER);
@@ -91,7 +91,7 @@ public class FlatWidgetTheme<T extends Widget> extends FlatComponentTheme<T> {
         }
 
         Icon maximizeIcon = component.getMaximizeIcon();
-        if (maximizeIcon != null && maximizeIcon instanceof CharIcon) {
+        if (maximizeIcon instanceof CharIcon) {
             CharIcon bgIcon = (CharIcon) maximizeIcon;
             bgIcon.setColor(ColorUtil.oppositeBlackOrWhite(settings.backgroundColor()));
             bgIcon.setHorizontalAlign(HorizontalAlign.CENTER);

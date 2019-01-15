@@ -131,17 +131,12 @@ public class BindingParser extends DefaultHandler {
         for (int i = 0; i < attributes.getLength(); i++) {
             String name = attributes.getLocalName(i);
             String value = attributes.getValue(i);
-            switch (name) {
-                case "class": {
-                    try {
-                        classConverter = (AbstractClassConverter) Class.forName(value).newInstance();
-                    } catch (ClassNotFoundException | IllegalAccessException | InstantiationException e) {
-                        e.printStackTrace();
-                    }
+            if ("class".equals(name)) {
+                try {
+                    classConverter = (AbstractClassConverter) Class.forName(value).newInstance();
+                } catch (ClassNotFoundException | IllegalAccessException | InstantiationException e) {
+                    e.printStackTrace();
                 }
-                break;
-                default:
-                    break;
             }
         }
     }
@@ -155,17 +150,12 @@ public class BindingParser extends DefaultHandler {
         for (int i = 0; i < attributes.getLength(); i++) {
             String name = attributes.getLocalName(i);
             String value = attributes.getValue(i);
-            switch (name) {
-                case "class": {
-                    try {
-                        fieldAccessor = (AbstractFieldAccessor) Class.forName(value).newInstance();
-                    } catch (ClassNotFoundException | IllegalAccessException | InstantiationException e) {
-                        e.printStackTrace();
-                    }
+            if ("class".equals(name)) {
+                try {
+                    fieldAccessor = (AbstractFieldAccessor) Class.forName(value).newInstance();
+                } catch (ClassNotFoundException | IllegalAccessException | InstantiationException e) {
+                    e.printStackTrace();
                 }
-                break;
-                default:
-                    break;
             }
         }
     }
@@ -309,12 +299,8 @@ public class BindingParser extends DefaultHandler {
         for (int i = 0; i < attributes.getLength(); i++) {
             String name = attributes.getLocalName(i);
             String value = attributes.getValue(i);
-            switch (name) {
-                case "path":
-                    linkedBindingPath = value;
-                    break;
-                default:
-                    break;
+            if ("path".equals(name)) {
+                linkedBindingPath = value;
             }
         }
         linked = null;
@@ -336,12 +322,8 @@ public class BindingParser extends DefaultHandler {
         for (int i = 0; i < attributes.getLength(); i++) {
             String name = attributes.getLocalName(i);
             String value = attributes.getValue(i);
-            switch (name) {
-                case "field":
-                    builder.unbind(value);
-                    break;
-                default:
-                    break;
+            if ("field".equals(name)) {
+                builder.unbind(value);
             }
         }
     }

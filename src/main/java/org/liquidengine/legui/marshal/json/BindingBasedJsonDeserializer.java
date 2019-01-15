@@ -55,7 +55,7 @@ public class BindingBasedJsonDeserializer<T> implements JsonDeserializer<T> {
     private static <T> AbstractClassBinding<T> getClassBinding(Class<T> targetClass, AbstractClassBinding current, ClassTypeHolder classTypeHolder) {
         AbstractClassBinding newBinding = null;
         if (classTypeHolder.alias != null) {
-            newBinding = BindingRegistry.getInstance().<T>getBindingByTypeAlias(classTypeHolder.alias);
+            newBinding = BindingRegistry.getInstance().getBindingByTypeAlias(classTypeHolder.alias);
         } else {
             newBinding = BindingRegistry.getInstance().getBinding(targetClass);
         }
@@ -83,7 +83,7 @@ public class BindingBasedJsonDeserializer<T> implements JsonDeserializer<T> {
         JsonElement typeProp = json.remove(TYPE_PROPERTY);
         if (typeProp != null && !typeProp.isJsonNull()) {
             holder.alias = typeProp.getAsString();
-            AbstractClassBinding<T> binding = BindingRegistry.getInstance().<T>getBindingByTypeAlias(holder.alias);
+            AbstractClassBinding<T> binding = BindingRegistry.getInstance().getBindingByTypeAlias(holder.alias);
             if (binding != null) {
                 holder.clazz = binding.getBindingForType();
             }

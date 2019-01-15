@@ -259,8 +259,7 @@ public class SelectBox extends Component {
      */
     private void resize() {
         updateIcons();
-        for (int i = 0; i < selectBoxElements.size(); i++) {
-            SelectBoxElement selectBoxElement = selectBoxElements.get(i);
+        for (SelectBoxElement selectBoxElement : selectBoxElements) {
             selectBoxElement.getStyle().setMinimumSize(0, elementHeight);
         }
     }

@@ -1,31 +1,5 @@
 package org.liquidengine.legui.system.renderer.nvg.component;
 
-import static org.liquidengine.legui.style.color.ColorUtil.oppositeBlackOrWhite;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgColorUtil.fillNvgColorWithRGBA;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.alignTextInBox;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.calculateTextBoundsRect;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.createScissor;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.intersectScissor;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.resetScissor;
-import static org.lwjgl.nanovg.NanoVG.NVG_ROUND;
-import static org.lwjgl.nanovg.NanoVG.nnvgTextGlyphPositions;
-import static org.lwjgl.nanovg.NanoVG.nvgBeginPath;
-import static org.lwjgl.nanovg.NanoVG.nvgFillColor;
-import static org.lwjgl.nanovg.NanoVG.nvgFontFace;
-import static org.lwjgl.nanovg.NanoVG.nvgFontSize;
-import static org.lwjgl.nanovg.NanoVG.nvgLineCap;
-import static org.lwjgl.nanovg.NanoVG.nvgLineJoin;
-import static org.lwjgl.nanovg.NanoVG.nvgLineTo;
-import static org.lwjgl.nanovg.NanoVG.nvgMoveTo;
-import static org.lwjgl.nanovg.NanoVG.nvgStroke;
-import static org.lwjgl.nanovg.NanoVG.nvgStrokeColor;
-import static org.lwjgl.nanovg.NanoVG.nvgStrokeWidth;
-import static org.lwjgl.system.MemoryUtil.memAddress;
-import static org.lwjgl.system.MemoryUtil.memFree;
-import static org.lwjgl.system.MemoryUtil.memUTF8;
-
-import java.nio.ByteBuffer;
-import java.util.Map;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.PasswordInput;
@@ -40,6 +14,14 @@ import org.liquidengine.legui.system.renderer.nvg.util.NvgText;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.nanovg.NVGColor;
 import org.lwjgl.nanovg.NVGGlyphPosition;
+
+import java.nio.ByteBuffer;
+import java.util.Map;
+
+import static org.liquidengine.legui.style.color.ColorUtil.oppositeBlackOrWhite;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.*;
+import static org.lwjgl.nanovg.NanoVG.*;
+import static org.lwjgl.system.MemoryUtil.*;
 
 /**
  * Password input renderer.
@@ -268,7 +250,7 @@ public class NvgPasswordInputRenderer extends NvgDefaultComponentRenderer<Passwo
 
     private String createMaskedText(PasswordInput gui, String text) {
         if (gui.isMasked()) {
-            StringBuffer b = new StringBuffer();
+            StringBuilder b = new StringBuilder();
             int length = text.length();
             int maskCharacter = gui.getMaskCharacter();
             char[] mask = Character.toChars(maskCharacter);

@@ -297,13 +297,10 @@ public class MenuLayerDemo extends Demo {
 
             this.getStyle().getBackground().setColor(ColorConstants.lightGray());
 
-            this.getListenerMap().addListener(MouseClickEvent.class, new MouseClickEventListener() {
-                @Override
-                public void process(MouseClickEvent event) {
-                    if (RELEASE.equals(event.getAction())) {
-                        event.getFrame().removeLayer(layer);
-                        menuBarItem.setToggled(false);
-                    }
+            this.getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
+                if (RELEASE.equals(event.getAction())) {
+                    event.getFrame().removeLayer(layer);
+                    menuBarItem.setToggled(false);
                 }
             });
         }
