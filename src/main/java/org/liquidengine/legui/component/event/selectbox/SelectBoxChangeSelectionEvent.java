@@ -8,12 +8,12 @@ import org.liquidengine.legui.system.context.Context;
 /**
  * @author ShchAlexander.
  */
-public class SelectBoxChangeSelectionEvent<T extends SelectBox> extends Event<T> {
+public class SelectBoxChangeSelectionEvent<T> extends Event<SelectBox<T>> {
 
-    private final String oldValue;
-    private final String newValue;
+    private final T oldValue;
+    private final T newValue;
 
-    public SelectBoxChangeSelectionEvent(T component, Context context, Frame frame, String oldValue, String newValue) {
+    public SelectBoxChangeSelectionEvent(SelectBox<T> component, Context context, Frame frame, T oldValue, T newValue) {
         super(component, context, frame);
         this.oldValue = oldValue;
         this.newValue = newValue;
@@ -24,7 +24,7 @@ public class SelectBoxChangeSelectionEvent<T extends SelectBox> extends Event<T>
      *
      * @return old value.
      */
-    public String getOldValue() {
+    public T getOldValue() {
         return oldValue;
     }
 
@@ -33,7 +33,7 @@ public class SelectBoxChangeSelectionEvent<T extends SelectBox> extends Event<T>
      *
      * @return new value.
      */
-    public String getNewValue() {
+    public T getNewValue() {
         return newValue;
     }
 }
