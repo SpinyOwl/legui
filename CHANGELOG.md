@@ -1,3 +1,7 @@
+## [1.4.8]
+### Added
+- Added generic type support for SelectBox. 
+
 ## [1.4.7]
 ### Updated
 - Updated selectbox animation logic - so if number of elements is less than visible count - selectbox popup will be smaller.
