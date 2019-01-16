@@ -11,7 +11,7 @@ import org.liquidengine.legui.component.SelectBox;
  *
  * @author Aliaksandr_Shcherbin.
  */
-public class SelectBoxElementsAccessor extends AbstractFieldAccessor<SelectBox, List<String>> {
+public class SelectBoxElementsAccessor extends AbstractFieldAccessor<SelectBox, List> {
 
     /**
      * Used to get field value from object.
@@ -21,7 +21,7 @@ public class SelectBoxElementsAccessor extends AbstractFieldAccessor<SelectBox, 
      * @return field value of object.
      */
     @Override
-    public List<String> getFieldValue(SelectBox object) {
+    public List getFieldValue(SelectBox object) {
         return object.getElements();
     }
 
@@ -32,8 +32,8 @@ public class SelectBoxElementsAccessor extends AbstractFieldAccessor<SelectBox, 
      * @param value value to set.
      */
     @Override
-    public void setFieldValue(SelectBox object, List<String> value) {
-        for (String s : value) {
+    public void setFieldValue(SelectBox object, List value) {
+        for (Object s : value) {
             object.addElement(s);
         }
     }
@@ -45,7 +45,7 @@ public class SelectBoxElementsAccessor extends AbstractFieldAccessor<SelectBox, 
      */
     @Override
     public Type getFieldType() {
-        return new TypeToken<List<String>>() {
+        return new TypeToken<List<Object>>() {
         }.getType();
     }
 }
