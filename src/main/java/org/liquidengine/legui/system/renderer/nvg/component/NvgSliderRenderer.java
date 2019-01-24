@@ -41,45 +41,51 @@ public class NvgSliderRenderer<T extends Slider> extends NvgDefaultComponentRend
             Vector2f size = slider.getSize();
             float x = pos.x;
             float y = pos.y;
-            float w = size.x;
-            float h = size.y;
+            float width = size.x;
+            float height = size.y;
 
-            float value = slider.getValue();
-            boolean vertical = Orientation.VERTICAL.equals(slider.getOrientation());
-            Vector4f sliderInactiveColor = slider.getSliderColor();
-            Vector4f sliderColor = slider.getSliderActiveColor();
             Vector4f cornerRadius = slider.getStyle().getBorderRadius();
-            float sliderSize = slider.getSliderSize();
-
             renderBackground(slider, context, nanovg);
 
-            float lx,
-                rx,
-                ty,
-                by,
-                px,
-                py;
+            final float minValue = slider.getMinValue();
+            final float maxValue = slider.getMaxValue();
+            final float difference = maxValue - minValue;
+            final float value = slider.getValue() - minValue;
+            final boolean vertical = Orientation.VERTICAL.equals(slider.getOrientation());
+            final Vector4f sliderInactiveColor = slider.getSliderColor();
+            final Vector4f sliderColor = slider.getSliderActiveColor();
+            final float sliderSize = slider.getSliderSize();
+
+            final float lineStartX, lineEndX;
+            final float lineStartY, lineEndY;
+            final float sliderX;
+            final float sliderY;
+            final float sliderHalfSize = sliderSize / 2f;
+            final float percentage = value / difference;
             if (vertical) {
-                px = lx = rx = x + (w) / 2f;
-                ty = y + sliderSize / 2f;
-                by = y + h - sliderSize / 2f;
-                py = by - (by - ty) * value / 100f;
+                lineStartY = y + sliderHalfSize;
+                lineEndY = y + height - sliderHalfSize;
+                final float sizeY = lineEndY - lineStartY;
+                lineStartX = x + (width) / 2f;
+                lineEndX = lineStartX;
+                sliderX = lineStartX;
+                sliderY = lineStartY + sizeY * percentage;
             } else {
-                py = ty = by = y + (h) / 2f;
-                lx = x + sliderSize / 2f;
-                rx = x + w - sliderSize / 2f;
-                px = lx + (rx - lx) * value / 100f;
+                lineStartX = x + sliderHalfSize;
+                lineEndX = x + width - sliderHalfSize;
+                final float sizeX = lineEndX - lineStartX;
+                lineStartY = y + (height) / 2f;
+                lineEndY = lineStartY;
+                sliderY = lineStartY;
+                sliderX = lineStartX + sizeX * percentage;
             }
 
             // draw inactive color
-            drawLine(nanovg, sliderInactiveColor, lx, by, rx, ty, SLIDER_WIDTH);
-
-            // draw active part
-            drawLine(nanovg, sliderColor, lx, by, px, py, SLIDER_WIDTH);
+            drawLine(nanovg, sliderInactiveColor, lineStartX, lineStartY, lineEndX, lineEndY, SLIDER_WIDTH);
 
             // draw slider button
             Vector2f sliderButtonSize = new Vector2f(sliderSize);
-            Vector2f sliderPos = new Vector2f(px - sliderSize / 2f, py - sliderSize / 2f);
+            Vector2f sliderPos = new Vector2f(sliderX - sliderHalfSize, sliderY - sliderHalfSize);
             NvgShapes.drawRect(nanovg, sliderPos, sliderButtonSize, sliderColor, cornerRadius);
             NvgShapes.drawRectStroke(nanovg, sliderPos, sliderButtonSize, sliderInactiveColor, 1, cornerRadius);
         }

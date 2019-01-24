@@ -151,7 +151,20 @@ public class ExampleGui extends Panel {
             this.add(radioButton2);
         }
 
-        Slider slider1 = new Slider(250, 90, 100, 20, 30);
+        Slider slider1 = new Slider(250, 90, 100, 20);
+        slider1.setMinValue(-1);
+        slider1.setMaxValue(+1);
+        slider1.setStepSize(0.1);
+        slider1.setValue(0);
+        final Tooltip slider1Tooltip = new Tooltip();
+        slider1Tooltip.setSize(100, 20);
+        slider1Tooltip.setPosition(slider1.getSize().x + 2, 0);
+        slider1Tooltip.getTextState().setText("Value: " + String.format("%.2f", slider1.getValue()));
+        slider1.addSliderChangeValueEventListener((SliderChangeValueEventListener) event -> {
+            slider1Tooltip.getTextState().setText("Value: " + event.getNewValue());
+            slider1Tooltip.setSize(100, 20);
+        });
+        slider1.setTooltip(slider1Tooltip);
         this.add(slider1);
 
         Slider slider2 = new Slider(220, 90, 20, 100, 50);
