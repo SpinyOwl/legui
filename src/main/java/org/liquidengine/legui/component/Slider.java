@@ -40,9 +40,9 @@ public class Slider extends Component {
     public static final float DEFAULT_MIN_VALUE = 0f;
 
     /**
-     * Slider value ({@link BigDecimal} is used for high precision).
+     * Slider value.
      */
-    private BigDecimal value = new BigDecimal(0);
+    private float value;
 
     /**
      * Slider orientation.
@@ -77,7 +77,7 @@ public class Slider extends Component {
     /**
      * The step size of the slider.
      */
-    private BigDecimal stepSize;
+    private float stepSize;
 
     /**
      * Used to create slider with predefined value.
@@ -150,7 +150,7 @@ public class Slider extends Component {
      * @param value value to set.
      */
     private void initialize(float value) {
-        this.value = new BigDecimal(value);
+        this.value = value;
         getStyle().getBackground().setColor(ColorConstants.transparent());
         getStyle().setBorder(null);
         getListenerMap().addListener(ScrollEvent.class, new SliderScrollEventListener());
@@ -218,7 +218,7 @@ public class Slider extends Component {
      * @return the step size.
      */
     public float getStepSize() {
-        return stepSize == null ? 0 : stepSize.floatValue();
+        return stepSize;
     }
 
 
@@ -226,7 +226,7 @@ public class Slider extends Component {
      * Resets the step size (means that no step size is defined)
      */
     public void resetStepSize() {
-        this.stepSize = null;
+        this.stepSize = 0;
     }
 
 
@@ -235,11 +235,11 @@ public class Slider extends Component {
      *
      * @param stepSize the step size.
      */
-    public void setStepSize(final double stepSize) {
+    public void setStepSize(final float stepSize) {
         if (stepSize <= 0) {
             resetStepSize();
         } else {
-            this.stepSize = new BigDecimal(Math.min(getMaxValue() - getMinValue(), stepSize));
+            this.stepSize = Math.min(getMaxValue() - getMinValue(), stepSize);
         }
         setValue(getValue());
     }
@@ -264,7 +264,7 @@ public class Slider extends Component {
      * @return slider value as a float.
      */
     public float getValue() {
-        return value.floatValue();
+        return value;
     }
 
     /**
@@ -273,49 +273,24 @@ public class Slider extends Component {
      * @param value new slider value.
      */
     public void setValue(float value) {
-        setValuePrecise(new BigDecimal(value));
-    }
-
-    /**
-     * Returns the {@link BigDecimal precise} slider value.
-     *
-     * @return slider value.
-     */
-    public BigDecimal getValuePrecise() {
-        return value;
-    }
-
-    /**
-     * Used to set slider value to a {@link BigDecimal precise value}.
-     *
-     * @param value new slider value as a {@link BigDecimal}.
-     */
-    public void setValuePrecise(BigDecimal value) {
-        if (value == null) {
-            this.value = new BigDecimal(0);
-            return;
-        }
         this.value = value;
 
         // respect step size
-        if (this.stepSize != null) {
+        if (this.stepSize > 0) {
             // add half-step size to get the center of the step
-            BigDecimal halfStepSize = this.stepSize.divide(new BigDecimal(2.0), RoundingMode.HALF_EVEN);
-            if (this.value.doubleValue() < 0) {
-                halfStepSize = halfStepSize.multiply(new BigDecimal(-1.0));
+            float halfStepSize = this.stepSize / 2f;
+            if (this.value < 0) {
+                halfStepSize = -halfStepSize;
             }
 
-            final int count = (int) (this.value.add(halfStepSize).divide(this.stepSize, RoundingMode.HALF_EVEN).floatValue());
-            this.value = this.stepSize.multiply(new BigDecimal(count));
+            final int count = (int) ((this.value + halfStepSize) / this.stepSize);
+            this.value = this.stepSize * count;
         }
 
         // check for min/max values
-        if(this.value.floatValue() > getMaxValue()) {
-            this.value = new BigDecimal(getMaxValue());
-        } else if(this.value.floatValue() < getMinValue()) {
-            this.value = new BigDecimal(getMinValue());
-        }
+        this.value = Math.max(getMinValue(), Math.min(getMaxValue(), this.value));
     }
+
 
     /**
      * Returns slider color. (Inactive slider color).

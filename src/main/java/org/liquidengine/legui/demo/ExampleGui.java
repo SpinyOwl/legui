@@ -154,7 +154,7 @@ public class ExampleGui extends Panel {
         Slider slider1 = new Slider(250, 90, 100, 20);
         slider1.setMinValue(-1);
         slider1.setMaxValue(+1);
-        slider1.setStepSize(0.1);
+        slider1.setStepSize(0.1f);
         slider1.setValue(0);
         final Tooltip slider1Tooltip = new Tooltip();
         slider1Tooltip.setSize(100, 20);

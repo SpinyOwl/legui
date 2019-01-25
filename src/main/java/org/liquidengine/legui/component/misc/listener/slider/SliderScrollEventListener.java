@@ -6,8 +6,6 @@ import org.liquidengine.legui.event.ScrollEvent;
 import org.liquidengine.legui.listener.ScrollEventListener;
 import org.liquidengine.legui.listener.processor.EventProcessor;
 
-import java.math.BigDecimal;
-
 /**
  * Slider mouse scroll event listener.
  */
@@ -16,24 +14,19 @@ public class SliderScrollEventListener implements ScrollEventListener {
     @Override
     public void process(ScrollEvent event) {
         Slider slider = (Slider) event.getTargetComponent();
-        BigDecimal oldValue =  slider.getValuePrecise();
-        BigDecimal newValue = new BigDecimal(oldValue.doubleValue());
+        float oldValue =  slider.getValue();
+        float newValue = oldValue;
         // respect step size
         if (slider.getStepSize() > 0) {
-            newValue = newValue.add(new BigDecimal(event.getYoffset() * slider.getStepSize()));
+            newValue += event.getYoffset() * slider.getStepSize();
         } else {
-            newValue = newValue.add(new BigDecimal(event.getYoffset()));
+            newValue += event.getYoffset();
         }
         // check for min/max values
-        if (newValue.floatValue() > slider.getMaxValue()) {
-            newValue = new BigDecimal(slider.getMaxValue());
-        }
-        if (newValue.floatValue() < slider.getMinValue()) {
-            newValue = new BigDecimal(slider.getMinValue());
-        }
+        newValue = Math.max(slider.getMinValue(), Math.min(slider.getMaxValue(), newValue));
         // set value & push event
-        slider.setValuePrecise(newValue);
-        EventProcessor.getInstance().pushEvent(new SliderChangeValueEvent(slider, event.getContext(), event.getFrame(), oldValue.floatValue(), newValue.floatValue()));
+        slider.setValue(newValue);
+        EventProcessor.getInstance().pushEvent(new SliderChangeValueEvent(slider, event.getContext(), event.getFrame(), oldValue, slider.getValue()));
     }
 
     @Override

@@ -21,10 +21,10 @@ public class SliderMouseDragEventListener implements MouseDragEventListener {
             return;
         }
         // calculate new value
-        BigDecimal value = SliderHelper.determineSliderValue(slider, Mouse.getCursorPosition());
+        float newValue = SliderHelper.determineSliderValue(slider, Mouse.getCursorPosition());
         // set value & push event
         float oldValue = slider.getValue();
-        slider.setValuePrecise(value);
+        slider.setValue(newValue);
         EventProcessor.getInstance().pushEvent(new SliderChangeValueEvent(slider, event.getContext(), event.getFrame(), oldValue, slider.getValue()));
     }
 
