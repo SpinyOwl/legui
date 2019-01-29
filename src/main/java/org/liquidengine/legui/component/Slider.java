@@ -20,8 +20,6 @@ import org.liquidengine.legui.listener.EventListener;
 import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.theme.Themes;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.List;
 
 /**
@@ -33,16 +31,15 @@ public class Slider extends Component {
      * Default maximum value for a slider.
      */
     public static final float DEFAULT_MAX_VALUE = 100f;
-
     /**
      * Default minimum value for a slider.
      */
     public static final float DEFAULT_MIN_VALUE = 0f;
 
     /**
-     * Slider value ({@link BigDecimal} is used for high precision).
+     * Slider value ({@link float} is used for high precision).
      */
-    private BigDecimal value = new BigDecimal(0);
+    private float value = 0f;
 
     /**
      * Slider orientation.
@@ -77,7 +74,7 @@ public class Slider extends Component {
     /**
      * The step size of the slider.
      */
-    private BigDecimal stepSize;
+    private float stepSize;
 
     /**
      * Used to create slider with predefined value.
@@ -92,8 +89,8 @@ public class Slider extends Component {
      * Constructor with position and size parameters and predefined value.
      *
      * @param position position position in parent component.
-     * @param size size of component.
-     * @param value value to set.
+     * @param size     size of component.
+     * @param value    value to set.
      */
     public Slider(Vector2f position, Vector2f size, float value) {
         super(position, size);
@@ -103,11 +100,11 @@ public class Slider extends Component {
     /**
      * Constructor with position and size parameters and predefined value.
      *
-     * @param x x position position in parent component.
-     * @param y y position position in parent component.
-     * @param width width of component.
+     * @param x      x position position in parent component.
+     * @param y      y position position in parent component.
+     * @param width  width of component.
      * @param height height of component.
-     * @param value value to set.
+     * @param value  value to set.
      */
     public Slider(float x, float y, float width, float height, float value) {
         super(x, y, width, height);
@@ -125,9 +122,9 @@ public class Slider extends Component {
     /**
      * Constructor with position and size parameters.
      *
-     * @param x x position position in parent component.
-     * @param y y position position in parent component.
-     * @param width width of component.
+     * @param x      x position position in parent component.
+     * @param y      y position position in parent component.
+     * @param width  width of component.
      * @param height height of component.
      */
     public Slider(float x, float y, float width, float height) {
@@ -138,10 +135,10 @@ public class Slider extends Component {
      * Constructor with position and size parameters.
      *
      * @param position position position in parent component.
-     * @param size size of component.
+     * @param size     size of component.
      */
     public Slider(Vector2f position, Vector2f size) {
-        this(position, size, 0);
+        this(position, size, 0f);
     }
 
     /**
@@ -150,7 +147,7 @@ public class Slider extends Component {
      * @param value value to set.
      */
     private void initialize(float value) {
-        this.value = new BigDecimal(value);
+        this.value = value;
         getStyle().getBackground().setColor(ColorConstants.transparent());
         getStyle().setBorder(null);
         getListenerMap().addListener(ScrollEvent.class, new SliderScrollEventListener());
@@ -175,8 +172,8 @@ public class Slider extends Component {
      * @param minValue the minimum value.
      */
     public void setMinValue(final float minValue) {
-        if (minValue > getMaxValue()) {
-            setMaxValue(minValue);
+        if (minValue > this.maxValue) {
+            this.maxValue = minValue;
             return;
         }
         this.minValue = minValue;
@@ -201,8 +198,8 @@ public class Slider extends Component {
      * @param maxValue the maximum value.
      */
     public void setMaxValue(final float maxValue) {
-        if (maxValue < getMinValue()) {
-            setMinValue(maxValue);
+        if (maxValue < this.minValue) {
+            this.minValue = maxValue;
             return;
         }
         this.maxValue = maxValue;
@@ -211,22 +208,13 @@ public class Slider extends Component {
     }
 
 
-
     /**
      * Returns the step size.
      *
      * @return the step size.
      */
     public float getStepSize() {
-        return stepSize == null ? 0 : stepSize.floatValue();
-    }
-
-
-    /**
-     * Resets the step size (means that no step size is defined)
-     */
-    public void resetStepSize() {
-        this.stepSize = null;
+        return stepSize < 0 ? 0f : stepSize;
     }
 
 
@@ -235,11 +223,11 @@ public class Slider extends Component {
      *
      * @param stepSize the step size.
      */
-    public void setStepSize(final double stepSize) {
-        if (stepSize <= 0) {
-            resetStepSize();
-        } else {
-            this.stepSize = new BigDecimal(Math.min(getMaxValue() - getMinValue(), stepSize));
+    public void setStepSize(final float stepSize) {
+        this.stepSize = stepSize;
+        if (stepSize > 0) {
+            float difference = this.maxValue - this.minValue;
+            this.stepSize = difference < stepSize ? difference : stepSize;
         }
         setValue(getValue());
     }
@@ -264,7 +252,7 @@ public class Slider extends Component {
      * @return slider value as a float.
      */
     public float getValue() {
-        return value.floatValue();
+        return value;
     }
 
     /**
@@ -273,47 +261,26 @@ public class Slider extends Component {
      * @param value new slider value.
      */
     public void setValue(float value) {
-        setValuePrecise(new BigDecimal(value));
-    }
-
-    /**
-     * Returns the {@link BigDecimal precise} slider value.
-     *
-     * @return slider value.
-     */
-    public BigDecimal getValuePrecise() {
-        return value;
-    }
-
-    /**
-     * Used to set slider value to a {@link BigDecimal precise value}.
-     *
-     * @param value new slider value as a {@link BigDecimal}.
-     */
-    public void setValuePrecise(BigDecimal value) {
-        if (value == null) {
-            this.value = new BigDecimal(0);
-            return;
-        }
         this.value = value;
 
         // respect step size
-        if (this.stepSize != null) {
+        if (this.stepSize > 0) {
             // add half-step size to get the center of the step
-            BigDecimal halfStepSize = this.stepSize.divide(new BigDecimal(2.0), RoundingMode.HALF_EVEN);
-            if (this.value.doubleValue() < 0) {
-                halfStepSize = halfStepSize.multiply(new BigDecimal(-1.0));
+            float halfStepSize = this.stepSize / 2f;
+            if (this.value < 0f) {
+                halfStepSize *= -1;
             }
 
-            final int count = (int) (this.value.add(halfStepSize).divide(this.stepSize, RoundingMode.HALF_EVEN).floatValue());
-            this.value = this.stepSize.multiply(new BigDecimal(count));
+            float v = (this.value + halfStepSize) / this.stepSize;
+            final int count = (int) v;
+            this.value = this.stepSize * count;
         }
 
         // check for min/max values
-        if(this.value.floatValue() > getMaxValue()) {
-            this.value = new BigDecimal(getMaxValue());
-        } else if(this.value.floatValue() < getMinValue()) {
-            this.value = new BigDecimal(getMinValue());
+        if (this.value > this.maxValue) {
+            this.value = this.maxValue;
+        } else if (this.value < this.minValue) {
+            this.value = this.minValue;
         }
     }
 
@@ -429,36 +396,36 @@ public class Slider extends Component {
         Slider slider = (Slider) o;
 
         return new EqualsBuilder()
-            .appendSuper(super.equals(o))
-            .append(value, slider.value)
-            .append(sliderSize, slider.sliderSize)
-            .append(orientation, slider.orientation)
-            .append(sliderActiveColor, slider.sliderActiveColor)
-            .append(sliderColor, slider.sliderColor)
-            .isEquals();
+                .appendSuper(super.equals(o))
+                .append(value, slider.value)
+                .append(sliderSize, slider.sliderSize)
+                .append(orientation, slider.orientation)
+                .append(sliderActiveColor, slider.sliderActiveColor)
+                .append(sliderColor, slider.sliderColor)
+                .isEquals();
     }
 
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
-            .appendSuper(super.hashCode())
-            .append(value)
-            .append(orientation)
-            .append(sliderActiveColor)
-            .append(sliderColor)
-            .append(sliderSize)
-            .toHashCode();
+                .appendSuper(super.hashCode())
+                .append(value)
+                .append(orientation)
+                .append(sliderActiveColor)
+                .append(sliderColor)
+                .append(sliderSize)
+                .toHashCode();
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-            .append("value", value)
-            .append("orientation", orientation)
-            .append("sliderActiveColor", sliderActiveColor)
-            .append("sliderColor", sliderColor)
-            .append("sliderSize", sliderSize)
-            .toString();
+                .append("value", value)
+                .append("orientation", orientation)
+                .append("sliderActiveColor", sliderActiveColor)
+                .append("sliderColor", sliderColor)
+                .append("sliderSize", sliderSize)
+                .toString();
     }
 
 }

@@ -21,11 +21,13 @@ public class SliderMouseDragEventListener implements MouseDragEventListener {
             return;
         }
         // calculate new value
-        BigDecimal value = SliderHelper.determineSliderValue(slider, Mouse.getCursorPosition());
+        float value = SliderHelper.determineSliderValue(slider, Mouse.getCursorPosition());
         // set value & push event
         float oldValue = slider.getValue();
-        slider.setValuePrecise(value);
-        EventProcessor.getInstance().pushEvent(new SliderChangeValueEvent(slider, event.getContext(), event.getFrame(), oldValue, slider.getValue()));
+        slider.setValue(value);
+        EventProcessor.getInstance().pushEvent(
+                new SliderChangeValueEvent(slider, event.getContext(), event.getFrame(), oldValue, slider.getValue())
+        );
     }
 
     @Override

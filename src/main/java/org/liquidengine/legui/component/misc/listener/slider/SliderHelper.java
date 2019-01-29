@@ -3,9 +3,6 @@ package org.liquidengine.legui.component.misc.listener.slider;
 import org.joml.Vector2f;
 import org.liquidengine.legui.component.Slider;
 import org.liquidengine.legui.component.optional.Orientation;
-import org.liquidengine.legui.input.Mouse;
-
-import java.math.BigDecimal;
 
 class SliderHelper {
 
@@ -15,7 +12,7 @@ class SliderHelper {
 	 * @param mousePosition the position of the mouse cursor
 	 * @return the sliders new value
 	 */
-	static BigDecimal determineSliderValue(Slider slider, Vector2f mousePosition) {
+	static float determineSliderValue(Slider slider, Vector2f mousePosition) {
 		Vector2f pos = slider.getAbsolutePosition();
 		float sliderSize = slider.getSliderSize();
 		float minValue = slider.getMinValue();
@@ -27,13 +24,13 @@ class SliderHelper {
 		} else {
 			percentage = (mousePosition.x - pos.x - sliderSize / 2f) / (slider.getSize().x - sliderSize);
 		}
-		BigDecimal value = new BigDecimal(difference * percentage + minValue);
+        float value = difference * percentage + minValue;
 		// check for min/max values
-		if (value.floatValue() > slider.getMaxValue()) {
-			value = new BigDecimal(slider.getMaxValue());
+		if (value > slider.getMaxValue()) {
+			value = slider.getMaxValue();
 		}
-		if (value.floatValue() < slider.getMinValue()) {
-			value = new BigDecimal(slider.getMinValue());
+		if (value < slider.getMinValue()) {
+			value = slider.getMinValue();
 		}
 		return value;
 	}

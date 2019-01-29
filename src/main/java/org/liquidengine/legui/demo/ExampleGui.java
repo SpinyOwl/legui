@@ -1,40 +1,9 @@
 package org.liquidengine.legui.demo;
 
-import static org.liquidengine.legui.component.optional.align.HorizontalAlign.CENTER;
-import static org.liquidengine.legui.component.optional.align.HorizontalAlign.LEFT;
-import static org.liquidengine.legui.component.optional.align.HorizontalAlign.RIGHT;
-import static org.liquidengine.legui.component.optional.align.VerticalAlign.BASELINE;
-import static org.liquidengine.legui.component.optional.align.VerticalAlign.BOTTOM;
-import static org.liquidengine.legui.component.optional.align.VerticalAlign.MIDDLE;
-import static org.liquidengine.legui.component.optional.align.VerticalAlign.TOP;
-import static org.liquidengine.legui.event.MouseClickEvent.MouseClickAction.CLICK;
-import static org.liquidengine.legui.event.MouseClickEvent.MouseClickAction.PRESS;
-import static org.liquidengine.legui.event.MouseClickEvent.MouseClickAction.RELEASE;
-import static org.liquidengine.legui.input.Mouse.MouseButton.MOUSE_BUTTON_LEFT;
-
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.animation.Animation;
-import org.liquidengine.legui.component.Button;
-import org.liquidengine.legui.component.CheckBox;
-import org.liquidengine.legui.component.Component;
-import org.liquidengine.legui.component.Dialog;
-import org.liquidengine.legui.component.ImageView;
-import org.liquidengine.legui.component.Label;
-import org.liquidengine.legui.component.Panel;
-import org.liquidengine.legui.component.PasswordInput;
-import org.liquidengine.legui.component.ProgressBar;
-import org.liquidengine.legui.component.RadioButton;
-import org.liquidengine.legui.component.RadioButtonGroup;
-import org.liquidengine.legui.component.ScrollBar;
-import org.liquidengine.legui.component.ScrollablePanel;
-import org.liquidengine.legui.component.SelectBox;
-import org.liquidengine.legui.component.Slider;
-import org.liquidengine.legui.component.TextArea;
-import org.liquidengine.legui.component.TextInput;
-import org.liquidengine.legui.component.ToggleButton;
-import org.liquidengine.legui.component.Tooltip;
-import org.liquidengine.legui.component.Widget;
+import org.liquidengine.legui.component.*;
 import org.liquidengine.legui.component.event.selectbox.SelectBoxChangeSelectionEventListener;
 import org.liquidengine.legui.component.event.slider.SliderChangeValueEvent;
 import org.liquidengine.legui.component.event.slider.SliderChangeValueEventListener;
@@ -63,6 +32,11 @@ import org.liquidengine.legui.theme.Theme;
 import org.liquidengine.legui.theme.Themes;
 import org.liquidengine.legui.util.TextUtil;
 import org.lwjgl.glfw.GLFW;
+
+import static org.liquidengine.legui.component.optional.align.HorizontalAlign.*;
+import static org.liquidengine.legui.component.optional.align.VerticalAlign.*;
+import static org.liquidengine.legui.event.MouseClickEvent.MouseClickAction.*;
+import static org.liquidengine.legui.input.Mouse.MouseButton.MOUSE_BUTTON_LEFT;
 
 
 /**
@@ -152,22 +126,22 @@ public class ExampleGui extends Panel {
         }
 
         Slider slider1 = new Slider(250, 90, 100, 20);
-        slider1.setMinValue(-1);
-        slider1.setMaxValue(+1);
-        slider1.setStepSize(0.1);
-        slider1.setValue(0);
+        slider1.setMinValue(-1f);
+        slider1.setMaxValue(1f);
+        slider1.setStepSize(.1f);
+        slider1.setValue(0f);
         final Tooltip slider1Tooltip = new Tooltip();
         slider1Tooltip.setSize(100, 20);
         slider1Tooltip.setPosition(slider1.getSize().x + 2, 0);
         slider1Tooltip.getTextState().setText("Value: " + String.format("%.2f", slider1.getValue()));
         slider1.addSliderChangeValueEventListener((SliderChangeValueEventListener) event -> {
-            slider1Tooltip.getTextState().setText("Value: " + event.getNewValue());
+            slider1Tooltip.getTextState().setText(String.format("Value: %.2f", event.getNewValue()));
             slider1Tooltip.setSize(100, 20);
         });
         slider1.setTooltip(slider1Tooltip);
         this.add(slider1);
 
-        Slider slider2 = new Slider(220, 90, 20, 100, 50);
+        Slider slider2 = new Slider(220, 90, 20, 100, 50f);
         slider2.setOrientation(Orientation.VERTICAL);
         this.add(slider2);
 
@@ -233,7 +207,7 @@ public class ExampleGui extends Panel {
                 Dialog dialog = new Dialog("Question:", 300, 100);
 
                 Label questionLabel = new Label("Are you sure want to turn " + (widget2.isDraggable() ? "off" : "on") + "this widget draggable?", 10, 10, 200,
-                                                20);
+                        20);
                 Button yesButton = new Button("Yes", 10, 50, 50, 20);
                 Button noButton = new Button("No", 70, 50, 50, 20);
                 yesButton.getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) e -> {
@@ -533,7 +507,7 @@ public class ExampleGui extends Panel {
     private CheckBox createCheckboxWithAnimation(CheckBox checkBox1) {
         CheckBox checkBox2 = new CheckBox(20, 230, 100, 20);
         checkBox2.getStyle().getBackground().setColor(new Vector4f(1, 0, 0, 1));
-        checkBox2.getStyle().setPadding(5f,10f,5f,20f);
+        checkBox2.getStyle().setPadding(5f, 10f, 5f, 20f);
         checkBox2.setChecked(true);
 
         checkBox2.getListenerMap().addListener(CursorEnterEvent.class, (CursorEnterEventListener) event -> {
@@ -569,7 +543,7 @@ public class ExampleGui extends Panel {
             }
         });
         toggleButton.getListenerMap().addListener(MouseClickEvent.class,
-                                                  (MouseClickEventListener) event -> getSlideImageOnClick(toggleButton, bgImageNormal).startAnimation());
+                (MouseClickEventListener) event -> getSlideImageOnClick(toggleButton, bgImageNormal).startAnimation());
 
         toggleButton.getTooltip().setPosition(45, 0);
         toggleButton.getTooltip().getSize().set(140, 40);
@@ -622,7 +596,7 @@ public class ExampleGui extends Panel {
 
     private Button createSwitchThemeButton() {
         final Theme[] current = {Themes.getDefaultTheme()};
-        final Theme[] list = { Themes.FLAT_DARK, Themes.FLAT_PETERRIVER,Themes.FLAT_PETERRIVER_DARK, Themes.FLAT_WHITE };
+        final Theme[] list = {Themes.FLAT_DARK, Themes.FLAT_PETERRIVER, Themes.FLAT_PETERRIVER_DARK, Themes.FLAT_WHITE};
         final int[] themeIndex = {0};
 
         String text = "Switch theme ";
@@ -644,7 +618,7 @@ public class ExampleGui extends Panel {
         Slider hOffsetSlider = new Slider(110, 5 + 20 * 0, 80, 10);
         shadowWidget.getContainer().add(hOffsetSlider);
         hOffsetSlider.setValue(50f);
-        hOffsetSlider.addSliderChangeValueEventListener((e)->
+        hOffsetSlider.addSliderChangeValueEventListener((e) ->
                 shadowWidget.getStyle().getShadow().sethOffset(hOffsetSlider.getValue() - 50f)
         );
         Label hOffsetLabel = new Label(10, 5 + 20 * 0, 90, 10);
@@ -654,7 +628,7 @@ public class ExampleGui extends Panel {
         Slider vOffsetSlider = new Slider(110, 5 + 20 * 1, 80, 10);
         shadowWidget.getContainer().add(vOffsetSlider);
         vOffsetSlider.setValue(50f);
-        vOffsetSlider.addSliderChangeValueEventListener((e)->
+        vOffsetSlider.addSliderChangeValueEventListener((e) ->
                 shadowWidget.getStyle().getShadow().setvOffset(vOffsetSlider.getValue() - 50f)
         );
         Label vOffsetLabel = new Label(10, 5 + 20 * 1, 90, 10);
@@ -663,7 +637,7 @@ public class ExampleGui extends Panel {
 
         Slider blurSlider = new Slider(110, 5 + 20 * 2, 80, 10);
         shadowWidget.getContainer().add(blurSlider);
-        blurSlider.addSliderChangeValueEventListener((e)->
+        blurSlider.addSliderChangeValueEventListener((e) ->
                 shadowWidget.getStyle().getShadow().setBlur(blurSlider.getValue())
         );
         Label blurLabel = new Label(10, 5 + 20 * 2, 90, 10);
@@ -673,7 +647,7 @@ public class ExampleGui extends Panel {
         Slider spreadSlider = new Slider(110, 5 + 20 * 3, 80, 10);
         shadowWidget.getContainer().add(spreadSlider);
         spreadSlider.setValue(50f);
-        spreadSlider.addSliderChangeValueEventListener((e)->
+        spreadSlider.addSliderChangeValueEventListener((e) ->
                 shadowWidget.getStyle().getShadow().setSpread(spreadSlider.getValue() - 50f)
         );
         Label spreadLabel = new Label(10, 5 + 20 * 3, 90, 10);
@@ -682,9 +656,9 @@ public class ExampleGui extends Panel {
 
         Slider transparencySlider = new Slider(110, 5 + 20 * 4, 80, 10);
         shadowWidget.getContainer().add(transparencySlider);
-        transparencySlider.addSliderChangeValueEventListener((e)-> {
-            shadowWidget.getStyle().getBackground().getColor().w = 1- transparencySlider.getValue() / 100f;
-            shadowWidget.getContainer().getStyle().getBackground().getColor().w =1- transparencySlider.getValue() / 100f;
+        transparencySlider.addSliderChangeValueEventListener((e) -> {
+            shadowWidget.getStyle().getBackground().getColor().w = 1 - transparencySlider.getValue() / 100f;
+            shadowWidget.getContainer().getStyle().getBackground().getColor().w = 1 - transparencySlider.getValue() / 100f;
         });
         Label transparencyLabel = new Label(10, 5 + 20 * 4, 90, 10);
         transparencyLabel.getTextState().setText("W Transparency: ");
@@ -724,7 +698,7 @@ public class ExampleGui extends Panel {
         return event -> {
             if (event.getAction().equals(CLICK) && event.getButton().equals(MOUSE_BUTTON_LEFT)) {
                 Theme curr = current[0];
-                if(index[0] < list.length && index[0]>-1) {
+                if (index[0] < list.length && index[0] > -1) {
                     curr = list[index[0]];
                     index[0] = (index[0] + 1) % list.length;
                 } else {

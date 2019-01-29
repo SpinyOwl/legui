@@ -16,24 +16,26 @@ public class SliderScrollEventListener implements ScrollEventListener {
     @Override
     public void process(ScrollEvent event) {
         Slider slider = (Slider) event.getTargetComponent();
-        BigDecimal oldValue =  slider.getValuePrecise();
-        BigDecimal newValue = new BigDecimal(oldValue.doubleValue());
+        float oldValue = slider.getValue();
+        float newValue = oldValue;
         // respect step size
-        if (slider.getStepSize() > 0) {
-            newValue = newValue.add(new BigDecimal(event.getYoffset() * slider.getStepSize()));
+        if (slider.getStepSize() > 0f) {
+            newValue = newValue + slider.getStepSize() * (float) event.getYoffset();
         } else {
-            newValue = newValue.add(new BigDecimal(event.getYoffset()));
+            newValue = newValue + (float) event.getYoffset();
         }
         // check for min/max values
-        if (newValue.floatValue() > slider.getMaxValue()) {
-            newValue = new BigDecimal(slider.getMaxValue());
+        if (newValue > slider.getMaxValue()) {
+            newValue = slider.getMaxValue();
         }
-        if (newValue.floatValue() < slider.getMinValue()) {
-            newValue = new BigDecimal(slider.getMinValue());
+        if (newValue < slider.getMinValue()) {
+            newValue = slider.getMinValue();
         }
         // set value & push event
-        slider.setValuePrecise(newValue);
-        EventProcessor.getInstance().pushEvent(new SliderChangeValueEvent(slider, event.getContext(), event.getFrame(), oldValue.floatValue(), newValue.floatValue()));
+        slider.setValue(newValue);
+        EventProcessor.getInstance().pushEvent(
+                new SliderChangeValueEvent(slider, event.getContext(), event.getFrame(), oldValue, newValue)
+        );
     }
 
     @Override
