@@ -7,8 +7,6 @@ import org.liquidengine.legui.input.Mouse;
 import org.liquidengine.legui.listener.MouseClickEventListener;
 import org.liquidengine.legui.listener.processor.EventProcessor;
 
-import java.math.BigDecimal;
-
 /**
  * Slider mouse click event listener. Used to change slider value. Generates slider value change event.
  */

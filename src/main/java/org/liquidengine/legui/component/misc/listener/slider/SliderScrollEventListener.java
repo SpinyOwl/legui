@@ -6,8 +6,6 @@ import org.liquidengine.legui.event.ScrollEvent;
 import org.liquidengine.legui.listener.ScrollEventListener;
 import org.liquidengine.legui.listener.processor.EventProcessor;
 
-import java.math.BigDecimal;
-
 /**
  * Slider mouse scroll event listener.
  */

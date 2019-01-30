@@ -56,8 +56,10 @@ public class NvgSliderRenderer<T extends Slider> extends NvgDefaultComponentRend
             final Vector4f sliderColor = slider.getSliderActiveColor();
             final float sliderSize = slider.getSliderSize();
 
-            final float lineStartX, lineEndX;
-            final float lineStartY, lineEndY;
+            final float lineStartX;
+            final float lineEndX;
+            final float lineStartY;
+            final float lineEndY;
             final float sliderX;
             final float sliderY;
             final float sliderHalfSize = sliderSize / 2f;
