@@ -37,7 +37,7 @@ public class Slider extends Component {
     public static final float DEFAULT_MIN_VALUE = 0f;
 
     /**
-     * Slider value ({@link float} is used for high precision).
+     * Slider value.
      */
     private float value = 0f;
 
@@ -209,7 +209,7 @@ public class Slider extends Component {
 
 
     /**
-     * Returns the step size.
+     * Returns the step size. Step size equal to 0 means that there is no step size.
      *
      * @return the step size.
      */
@@ -219,7 +219,7 @@ public class Slider extends Component {
 
 
     /**
-     * Sets the step size.
+     * Sets the step size. Step size equal to 0 means that there is no step size.
      *
      * @param stepSize the step size.
      */
@@ -271,8 +271,7 @@ public class Slider extends Component {
                 halfStepSize *= -1;
             }
 
-            float v = (this.value + halfStepSize) / this.stepSize;
-            final int count = (int) v;
+            final int count = (int) ((this.value + halfStepSize) / this.stepSize);
             this.value = this.stepSize * count;
         }
 

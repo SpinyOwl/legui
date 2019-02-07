@@ -14,19 +14,22 @@ public class SliderMouseClickEventListener implements MouseClickEventListener {
 
     @Override
     public void process(MouseClickEvent event) {
-        if (event.getButton().equals(Mouse.MouseButton.MOUSE_BUTTON_LEFT) && event.getAction() == MouseClickEvent.MouseClickAction.PRESS) {
-            Slider slider = (Slider) event.getTargetComponent();
-            // calculate new value
-            float value = SliderHelper.determineSliderValue(slider, Mouse.getCursorPosition());
-            // set value & push event
-            float oldValue = slider.getValue();
-            slider.setValue(value);
-            EventProcessor.getInstance().pushEvent(new SliderChangeValueEvent(slider, event.getContext(), event.getFrame(), oldValue, slider.getValue()));
+        if (!event.getButton().equals(Mouse.MouseButton.MOUSE_BUTTON_LEFT) || event.getAction() != MouseClickEvent.MouseClickAction.PRESS) {
+            return;
         }
+        Slider slider = (Slider) event.getTargetComponent();
+        // calculate new value
+        float value = SliderHelper.determineSliderValue(slider, Mouse.getCursorPosition());
+        // set value & push event
+        float oldValue = slider.getValue();
+        slider.setValue(value);
+        EventProcessor.getInstance().pushEvent(
+                new SliderChangeValueEvent(slider, event.getContext(), event.getFrame(), oldValue, slider.getValue())
+        );
     }
 
     @Override
     public boolean equals(Object obj) {
-        return (obj != null) && ((obj == this) || ((obj != this) && (obj.getClass() == this.getClass())));
+        return obj != null && (obj == this || obj.getClass() == this.getClass());
     }
 }
