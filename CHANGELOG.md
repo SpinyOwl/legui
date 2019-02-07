@@ -1,3 +1,5 @@
+## [1.5.0]
+
 ## [1.4.8]
 ### Added
 - Added generic type support for SelectBox. 

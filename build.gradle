@@ -104,23 +104,16 @@ dependencies {
     deployerJar 'ar.com.synergian:wagon-git:0.2.5'
 }
 
-task publishArchives {
-    doLast {
-        def publishUrl = System.getProperty("publishUrl") ?: System.getenv("publishUrl") ?: publishUrl
-        def publishUsername = System.getProperty("publishUsername") ?: System.getenv("publishUsername") ?: publishUsername
-        def publishPassword = System.getProperty("publishPassword") ?: System.getenv("publishPassword") ?: publishPassword
+def publishUrl = System.getProperty("publishUrl") ?: System.getenv("publishUrl") ?: null
+def publishUsername = System.getProperty("publishUsername") ?: System.getenv("publishUsername") ?: null
+def publishPassword = System.getProperty("publishPassword") ?: System.getenv("publishPassword") ?: null
 
-        println("PUBLISHING TO $publishUrl")
-        uploadArchives {
-            repositories.mavenDeployer {
-                configuration = configurations.deployerJar
-                repository(url: publishUrl) {
-                    authentication(userName: publishUsername, password: publishPassword)
-                }
-            }
+uploadArchives {
+    repositories.mavenDeployer {
+        configuration = configurations.deployerJar
+        repository(url: publishUrl) {
+            authentication(userName: publishUsername, password: publishPassword)
         }
-        uploadArchives.execute()
-        println("PUBLISHED TO  $publishUrl")
     }
 }
 
@@ -143,9 +136,9 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
 }
 
 javadocJar.dependsOn javadoc
-publishArchives.dependsOn jar
-publishArchives.dependsOn sourcesJar
-publishArchives.dependsOn javadocJar
+uploadArchives.dependsOn jar
+uploadArchives.dependsOn sourcesJar
+uploadArchives.dependsOn javadocJar
 
 artifacts {
     archives sourcesJar
