@@ -1,3 +1,12 @@
+plugins {
+    id "java"
+    id "idea"
+    id "eclipse"
+    id "maven"
+    id "maven-publish"
+    id "org.sonarqube" version "2.6"
+}
+
 group 'org.liquidengine'
 
 import groovy.json.JsonSlurper
@@ -13,12 +22,6 @@ println("VERSION : " + project.version)
 configurations.all {
     resolutionStrategy.cacheChangingModulesFor(0, 'seconds')
 }
-
-apply plugin: 'java'
-apply plugin: 'idea'
-apply plugin: 'eclipse'
-apply plugin: 'maven'
-apply plugin: 'maven-publish'
 idea { module { downloadJavadoc = true; downloadSources = true } }
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -143,4 +146,18 @@ uploadArchives.dependsOn javadocJar
 artifacts {
     archives sourcesJar
     archives javadocJar
+}
+
+
+// SONARQUBE CONFIGURATION
+
+
+def sonarLogin = System.getProperty("sonar.login") ?: System.getenv("sonar.login") ?: null
+sonarqube {
+    properties {
+        property "sonar.projectKey", "SpinyOwl_legui"
+        property "sonar.organization", "spinyowl"
+        property "sonar.host.url", "https://sonarcloud.io"
+        property "sonar.login", sonarLogin
+    }
 }
