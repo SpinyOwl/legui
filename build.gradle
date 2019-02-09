@@ -1,9 +1,4 @@
 plugins {
-    id "java"
-    id "idea"
-    id "eclipse"
-    id "maven"
-    id "maven-publish"
     id "org.sonarqube" version "2.6"
 }
 
@@ -22,6 +17,13 @@ println("VERSION : " + project.version)
 configurations.all {
     resolutionStrategy.cacheChangingModulesFor(0, 'seconds')
 }
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'eclipse'
+apply plugin: 'maven'
+apply plugin: 'maven-publish'
+
 idea { module { downloadJavadoc = true; downloadSources = true } }
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -104,7 +106,7 @@ repositories {
     maven { url 'https://raw.githubusercontent.com/synergian/wagon-git/releases' }
 }
 dependencies {
-    deployerJar 'ar.com.synergian:wagon-git:0.2.5'
+    deployerJar 'ar.com.synergian:wagon-git:0.3.0'
 }
 
 def publishUrl = System.getProperty("publishUrl") ?: System.getenv("publishUrl") ?: null
@@ -152,7 +154,7 @@ artifacts {
 // SONARQUBE CONFIGURATION
 
 
-def sonarLogin = System.getProperty("sonar.login") ?: System.getenv("sonar.login") ?: null
+def sonarLogin = System.getProperty("sonarLogin") ?: System.getenv("sonarLogin") ?: null
 sonarqube {
     properties {
         property "sonar.projectKey", "SpinyOwl_legui"
