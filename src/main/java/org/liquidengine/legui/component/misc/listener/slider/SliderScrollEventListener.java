@@ -14,18 +14,26 @@ public class SliderScrollEventListener implements ScrollEventListener {
     @Override
     public void process(ScrollEvent event) {
         Slider slider = (Slider) event.getTargetComponent();
-        float curValue = slider.getValue();
-        float value = (float) (curValue + event.getYoffset());
-
-        if (value > Slider.MAX_VALUE) {
-            value = Slider.MAX_VALUE;
+        float oldValue = slider.getValue();
+        float newValue = oldValue;
+        // respect step size
+        if (slider.getStepSize() > 0f) {
+            newValue = newValue + slider.getStepSize() * (float) event.getYoffset();
+        } else {
+            newValue = newValue + (float) event.getYoffset();
         }
-        if (value < Slider.MIN_VALUE) {
-            value = Slider.MIN_VALUE;
+        // check for min/max values
+        if (newValue > slider.getMaxValue()) {
+            newValue = slider.getMaxValue();
         }
-
-        EventProcessor.getInstance().pushEvent(new SliderChangeValueEvent(slider, event.getContext(), event.getFrame(), slider.getValue(), value));
-        slider.setValue(value);
+        if (newValue < slider.getMinValue()) {
+            newValue = slider.getMinValue();
+        }
+        // set value & push event
+        slider.setValue(newValue);
+        EventProcessor.getInstance().pushEvent(
+                new SliderChangeValueEvent(slider, event.getContext(), event.getFrame(), oldValue, newValue)
+        );
     }
 
     @Override
