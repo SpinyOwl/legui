@@ -44,7 +44,7 @@ This gui library made for using with OpenGL port (LWJGL) to allow programmers fa
 API is close to Swing API.  
 
 ## Contribution to LEGUI
-See the [contribution guide](CONTRIBUTING.md) for more information.
+See the [contribution guide](docs/CONTRIBUTING.md) for more information.
 
 ## System requirements
 LEGUI requires Java 8+ cause it uses lambda expressions.
