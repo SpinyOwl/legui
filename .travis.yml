@@ -2,17 +2,42 @@ language: java
 sudo: false
 install: true
 
+if: branch IN (develop, snapshots, releases)
+
+env:
+  global:
+    secure: DsqkVoW3qoxmaTA/XZQKLRezTe/iCNnxsjqvYRWsmsnqhj8rMsAsbXCh/lnch2pCcQEoJ7hI8O0RjSeaiJEWLPx1nEHAVEuDsh4pOw2orklvtr9eVat2kaUqKz6OZ99TbWvILFewPO6KhWbkVN8f72/oXLOb9ouDg6SgpM1TnMq9cbMkkqY5JUupiEZpnzTr44E9BfdUTjsLJA/0njm8ngfMxd3Pn8YaDCXJSkZhrO8GMvWMDUsmSwugrLsfEZJe9t32fK/M9LPdsI2sLMJleMjbI9IqlFS9rXmeuB9LQ0DhIisubU129R41okr/vEUPeotNWWo4HRCSnSg0LwwtW7tIXZawCCZa3iYkwCQ5Qdgtnr/8bD8O8wjQOzRayzs5+U2m6z6QWZl80w6d/BqhGMr+4yeaCJ5Y1jG15+6Xrmt5q6h0OVjFGEWF6UIPh79PYvL8t79jT5XYYYhhVNjdlHVc115OXHqVEpHv3ZMg/TtrNPIZIqf6sB0ItvJQlosy2IgfiFcdSN6H3NUz2h8SaIEXxIi3uMVGHEUSHjX/SI+HQbRL30a+EtpOtKinbPMpOzW7gw5S0FSWMaw9EMhutBt64R2ccTaio1PcXbZ3N4IcRPQtSc6fZ8ndfALYNx8hRxcBp6WTA7LZ/xqDmClr/QtaeCr6qN57aa7JOCn8lLE=
+
 jdk:
   - oraclejdk8
 
 addons:
-  sonarqube: true
+  sonarcloud: true
 
-script:
-  - ./gradlew clean build
-  - ./gradlew sonarqube -Dsonar.login=$SONAR_LOGIN
+stages:
+  - build
+  - name: artifacts
+    if: type = push
 
 
+jobs:
+  include:
+    - stage: build
+      name: "Build library"
+      script: ./gradlew clean build 
+      name: "Unit tests"
+      script: ./gradlew tests
+      name: "Code quality checks"
+      script: ./gradlew sonarqube -Dsonar.login=$SONAR_LOGIN
+    - stage: artifacts
+      name: "Publish artifacts to GitHub repository"
+      before_script:
+        - echo $deploy_rsa_password | gpg --passphrase-fd 0 deploy_rsa.gpg
+        - eval "$(ssh-agent)"
+        - chmod 600 ./deploy_rsa
+        - ssh-add ./deploy_rsa
+      script: ./gradlew uploadArchives -DpublishUsername=SpinyOwlCI -DpublishPassword=$CI_USER_PASSWORD -DpublishUrl=git:$TRAVIS_BRANCH://git@github.com:SpinyOwl/repo.git
+  
 cache:
   directories:
     - '$HOME/.m2/repository'
