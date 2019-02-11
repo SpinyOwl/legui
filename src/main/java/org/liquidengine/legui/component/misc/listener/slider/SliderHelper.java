@@ -4,7 +4,12 @@ import org.joml.Vector2f;
 import org.liquidengine.legui.component.Slider;
 import org.liquidengine.legui.component.optional.Orientation;
 
-class SliderHelper {
+final class SliderHelper {
+
+	/**
+	 * Private constructor for final class.
+	 */
+	private SliderHelper(){}
 
 	/**
 	 * Calculates the sliders new value for the given mouse position.
