@@ -18,32 +18,21 @@ stages:
   - name: build_and_publish_artifacts
     if: type = push
   - name: build_pull_request
-    if: type = pull_request AND branch = develop
+    if: (type = pull_request) AND (branch = develop)
 
 
 jobs:
   include:
     - stage: build_and_publish_artifacts
-      name: "Build library"
-      script: ./gradlew clean build
-      name: "Unit tests"
-      script: ./gradlew tests
-      name: "Code quality checks"
-      script: ./gradlew sonarqube -Dsonar.login=$SONAR_LOGIN
-      name: "Publish artifacts to GitHub repository"
       before_script:
         - echo $deploy_rsa_password | gpg --passphrase-fd 0 deploy_rsa.gpg
         - eval "$(ssh-agent)"
         - chmod 600 ./deploy_rsa
         - ssh-add ./deploy_rsa
-      script: ./gradlew uploadArchives -DpublishUsername=SpinyOwlCI -DpublishPassword=$CI_USER_PASSWORD -DpublishUrl=git:$TRAVIS_BRANCH://git@github.com:SpinyOwl/repo.git
+      script: ./gradlew clean build tests sonarqube uploadArchives -Dsonar.login=$SONAR_LOGIN -DpublishUsername=SpinyOwlCI -DpublishPassword=$CI_USER_PASSWORD -DpublishUrl=git:$TRAVIS_BRANCH://git@github.com:SpinyOwl/repo.git
     - stage: build_pull_request
-      name: "Build library"
-      script: ./gradlew clean build
-      name: "Unit tests"
-      script: ./gradlew tests
-      name: "Code quality checks"
-      script: ./gradlew sonarqube -Dsonar.login=$SONAR_LOGIN -Dsonar.pullrequest.base=$TRAVIS_BRANCH -Dsonar.pullrequest.branch=$TRAVIS_PULL_REQUEST_BRANCH -Dsonar.pullrequest.key=$TRAVIS_PULL_REQUEST -Dsonar.pullrequest.provider=GitHub -Dsonar.pullrequest.github.repository=SpinyOwl/legui
+      script: ./gradlew clean build tests sonarqube -Dsonar.login=$SONAR_LOGIN -Dsonar.pullrequest.base=$TRAVIS_BRANCH -Dsonar.pullrequest.branch=$TRAVIS_PULL_REQUEST_BRANCH -Dsonar.pullrequest.key=$TRAVIS_PULL_REQUEST -Dsonar.pullrequest.provider=GitHub -Dsonar.pullrequest.github.repository=SpinyOwl/legui
+
 cache:
   directories:
     - '$HOME/.m2/repository'
