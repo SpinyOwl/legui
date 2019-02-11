@@ -1,6 +1,6 @@
 ![REPO SIZE](https://img.shields.io/github/repo-size/SpinyOwl/legui.svg) 
 ![CODE SIZE](https://img.shields.io/github/languages/code-size/SpinyOwl/legui.svg) 
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/1f7097ac22fb4d26be45806cb60476b1)](https://www.codacy.com/app/SpinyOwl/legui?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=SpinyOwl/legui&amp;utm_campaign=Badge_Grade)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=SpinyOwl_legui&metric=alert_status)](https://sonarcloud.io/dashboard?id=SpinyOwl_legui)
 ![License](https://img.shields.io/github/license/SpinyOwl/legui.svg)  
 [![DEVELOP BUILD](https://img.shields.io/jenkins/s/https/jenkins.spinyowl.com/job/LEGUI/job/LEGUI_DEVELOP.svg?label=develop)](http://jenkins.spinyowl.com/job/LEGUI/job/LEGUI_DEVELOP/)
 [![SNAPSHOT BUILD](https://img.shields.io/jenkins/s/https/jenkins.spinyowl.com/job/LEGUI/job/LEGUI_SNAPSHOTS.svg?label=snapshot)](https://jenkins.spinyowl.com/job/LEGUI/job/LEGUI_SNAPSHOTS/)
@@ -44,7 +44,7 @@ This gui library made for using with OpenGL port (LWJGL) to allow programmers fa
 API is close to Swing API.  
 
 ## Contribution to LEGUI
-See the [contribution guide](CONTRIBUTING.md) for more information.
+See the [contribution guide](docs/CONTRIBUTING.md) for more information.
 
 ## System requirements
 LEGUI requires Java 8+ cause it uses lambda expressions.
