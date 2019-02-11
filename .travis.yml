@@ -15,7 +15,7 @@ addons:
   sonarcloud: true
 
 stages:
-  - name: build_develop
+  - name: build_and_publish_artifacts
     if: type = push
   - name: build_pull_request
     if: type = pull_request AND branch = develop
