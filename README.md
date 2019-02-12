@@ -2,16 +2,15 @@
 ![CODE SIZE](https://img.shields.io/github/languages/code-size/SpinyOwl/legui.svg) 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=SpinyOwl_legui&metric=alert_status)](https://sonarcloud.io/dashboard?id=SpinyOwl_legui)
 ![License](https://img.shields.io/github/license/SpinyOwl/legui.svg)  
-[![DEVELOP BUILD](https://img.shields.io/jenkins/s/https/jenkins.spinyowl.com/job/LEGUI/job/LEGUI_DEVELOP.svg?label=develop)](http://jenkins.spinyowl.com/job/LEGUI/job/LEGUI_DEVELOP/)
-[![SNAPSHOT BUILD](https://img.shields.io/jenkins/s/https/jenkins.spinyowl.com/job/LEGUI/job/LEGUI_SNAPSHOTS.svg?label=snapshot)](https://jenkins.spinyowl.com/job/LEGUI/job/LEGUI_SNAPSHOTS/)
-[![RELEASE BUILD](https://img.shields.io/jenkins/s/https/jenkins.spinyowl.com/job/LEGUI/job/LEGUI_RELEASES.svg?label=release)](https://jenkins.spinyowl.com/job/LEGUI/job/LEGUI_RELEASES/)  
-![STABLE DEVELOP VERSION](https://img.shields.io/badge/dynamic/json.svg?label=develop&uri=http%3A%2F%2Fjenkins.spinyowl.com%2Fjob%2FLEGUI%2F%2Fjob%2FLEGUI_DEVELOP%2FlastSuccessfulBuild%2Fartifact%2FfullVersion.json&query=%24.version&colorB=00796b)
-![STABLE SNAPSHOT VERSION](https://img.shields.io/badge/dynamic/json.svg?label=snapshot&uri=http%3A%2F%2Fjenkins.spinyowl.com%2Fjob%2FLEGUI%2F%2Fjob%2FLEGUI_SNAPSHOTS%2FlastSuccessfulBuild%2Fartifact%2FfullVersion.json&query=%24.version&colorB=00796b)
-![STABLE RELEASE VERSION](https://img.shields.io/badge/dynamic/json.svg?label=release&uri=http%3A%2F%2Fjenkins.spinyowl.com%2Fjob%2FLEGUI%2F%2Fjob%2FLEGUI_RELEASES%2FlastSuccessfulBuild%2Fartifact%2FfullVersion.json&query=%24.version&colorB=00796b)  
-![LAST FEATURE VERSION](https://img.shields.io/badge/dynamic/json.svg?label=feature&uri=http%3A%2F%2Fjenkins.spinyowl.com%2Fjob%2FLEGUI%2F%2Fjob%2FLEGUI_FEATURE%2FlastSuccessfulBuild%2Fartifact%2FfullVersion.json&query=%24.version&colorB=00796b)
+[![DEVELOP BUILD](https://img.shields.io/travis/SpinyOwl/legui/develop.svg?label=develop&logo=travis)](https://travis-ci.org/SpinyOwl/legui)
+[![SNAPSHOT BUILD](https://img.shields.io/travis/SpinyOwl/legui/snapshots.svg?label=snapshots&logo=travis)](https://travis-ci.org/SpinyOwl/legui)
+[![RELEASE BUILD](https://img.shields.io/travis/SpinyOwl/legui/releases.svg?label=releases&logo=travis)](https://travis-ci.org/SpinyOwl/legui)  
+![STABLE DEVELOP VERSION](https://img.shields.io/badge/dynamic/xml.svg?label=develop&url=https%3A%2F%2Fraw.github.com%2FSpinyOwl%2Frepo%2Fdevelop%2Forg%2Fliquidengine%2Flegui%2Fmaven-metadata.xml&query=%2F%2Fmetadata%2Fversioning%2Frelease&colorB=blue)
+![STABLE SNAPSHOT VERSION](https://img.shields.io/badge/dynamic/xml.svg?label=snapshot&url=https%3A%2F%2Fraw.github.com%2FSpinyOwl%2Frepo%2Fsnapshots%2Forg%2Fliquidengine%2Flegui%2Fmaven-metadata.xml&query=%2F%2Fmetadata%2Fversioning%2Frelease&colorB=blue)
+![STABLE RELEASE VERSION](https://img.shields.io/badge/dynamic/xml.svg?label=release&url=https%3A%2F%2Fraw.github.com%2FSpinyOwl%2Frepo%2Freleases%2Forg%2Fliquidengine%2Flegui%2Fmaven-metadata.xml&query=%2F%2Fmetadata%2Fversioning%2Frelease&colorB=blue)    
+![LAST FEATURE VERSION](https://img.shields.io/badge/dynamic/xml.svg?label=feature&url=https%3A%2F%2Fraw.github.com%2FSpinyOwl%2Frepo%2Ffeature%2Forg%2Fliquidengine%2Flegui%2Fmaven-metadata.xml&query=%2F%2Fmetadata%2Fversioning%2Frelease&colorB=blue)
 
 [![Discord](https://img.shields.io/discord/245558983123927040.svg?slongCache=true&label=Discord&logo=discord)](https://discord.gg/6wfqXpJ)
-[![Twitter Follow](https://img.shields.io/twitter/follow/ShchAlexander.svg?longCache=true&label=Twitter&logo=twitter)](https://twitter.com/ShchAlexander)
 
 ___
 # LEGUI
