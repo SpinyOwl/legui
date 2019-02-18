@@ -16,8 +16,6 @@ public class TextAreaScrollAnimation extends Animation {
     private double updateTime;
     private double deltaSum;
 
-    private float targetX;
-    private float targetY;
     private double deltaT;
     private Vector2f initialPosition = new Vector2f();
 
@@ -59,6 +57,7 @@ public class TextAreaScrollAnimation extends Animation {
         ScrollBar horizontalScrollBar = scrollablePanel.getHorizontalScrollBar();
         float vh = viewport.getSize().y;
         float ch = textAreaField.getSize().y;
+        float targetY;
         if (vh > ch) {
             targetY = 0;
         } else {
@@ -70,6 +69,7 @@ public class TextAreaScrollAnimation extends Animation {
 
         float vw = viewport.getSize().x;
         float cw = textAreaField.getSize().x;
+        float targetX;
         if (vw > cw) {
             targetX = 0;
         } else {

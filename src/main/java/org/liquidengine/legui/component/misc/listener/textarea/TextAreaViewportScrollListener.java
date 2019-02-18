@@ -1,6 +1,7 @@
 package org.liquidengine.legui.component.misc.listener.textarea;
 
 import java.util.ArrayList;
+
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.ScrollBar;
 import org.liquidengine.legui.component.ScrollablePanel;
@@ -37,13 +38,13 @@ public class TextAreaViewportScrollListener implements EventListener<ScrollEvent
 
         TextAreaField textAreaField = textArea.getTextAreaField();
         float maxTextWidth = Math.max(textAreaField.getMaxTextWidth() +
-                                          textAreaField.getStyle().getPaddingLeftF() +
-                                          textAreaField.getStyle().getPaddingRightF(),
-                                      textArea.getViewportSize().x);
+                        textAreaField.getStyle().getPaddingLeftF() +
+                        textAreaField.getStyle().getPaddingRightF(),
+                textArea.getViewportSize().x);
         float maxTextHeight = Math.max(textAreaField.getMaxTextHeight() +
-                                           textAreaField.getStyle().getPaddingTopF() +
-                                           textAreaField.getStyle().getPaddingBottomF(),
-                                       textArea.getViewportSize().y);
+                        textAreaField.getStyle().getPaddingTopF() +
+                        textAreaField.getStyle().getPaddingBottomF(),
+                textArea.getViewportSize().y);
         textAreaField.setSize(maxTextWidth, maxTextHeight);
 
         ScrollBar scrollBar = textArea.getVerticalScrollBar();
@@ -67,6 +68,6 @@ public class TextAreaViewportScrollListener implements EventListener<ScrollEvent
 
     @Override
     public boolean equals(Object obj) {
-        return (obj != null) && ((obj == this) || ((obj != this) && (obj.getClass() == this.getClass())));
+        return obj != null && (obj == this || obj.getClass() == this.getClass());
     }
 }
