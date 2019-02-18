@@ -64,14 +64,14 @@ public class TextInputKeyEventListener implements KeyEventListener {
             keyBackSpaceAction(gui, event.getContext(), event.getFrame(), mods);
         } else if (key == GLFW_KEY_DELETE) {
             keyDeleteAction(gui, event.getContext(), event.getFrame(), mods);
-        } else if (key == GLFW_KEY_V && isModControl(mods)) {
-            pasteAction(gui, event.getContext(), event.getFrame());
+        } else if (key == GLFW_KEY_V) {
+            pasteAction(gui, event.getContext(), event.getFrame(), mods);
         } else if (key == GLFW_KEY_C && isModControl(mods)) {
-            copyAction(gui);
+            copyAction(gui, mods);
         } else if (key == GLFW_KEY_X && isModControl(mods)) {
-            cutAction(gui, event.getContext(), event.getFrame());
+            cutAction(gui, event.getContext(), event.getFrame(), mods);
         } else if (key == GLFW_KEY_A && isModControl(mods)) {
-            selectAllAction(gui);
+            selectAllAction(gui, mods);
         }
     }
 
@@ -82,9 +82,13 @@ public class TextInputKeyEventListener implements KeyEventListener {
     /**
      * Selects all text.
      *
-     * @param gui text input to work with.
+     * @param gui  text input to work with.
+     * @param mods key mods.
      */
-    private void selectAllAction(TextInput gui) {
+    private void selectAllAction(TextInput gui, int mods) {
+        if (!isModControl(mods)) {
+            return;
+        }
         TextState textState = gui.getTextState();
         gui.setStartSelectionIndex(0);
         gui.setEndSelectionIndex(textState.length());
@@ -97,8 +101,12 @@ public class TextInputKeyEventListener implements KeyEventListener {
      * @param gui          gui to work with.
      * @param leguiContext context.
      * @param frame        frame
+     * @param mods         key mods.
      */
-    private void cutAction(TextInput gui, Context leguiContext, Frame frame) {
+    private void cutAction(TextInput gui, Context leguiContext, Frame frame, int mods) {
+        if (!isModControl(mods)) {
+            return;
+        }
         if (gui.isEditable()) {
             String s = gui.getSelection();
             if (s != null) {
@@ -122,16 +130,20 @@ public class TextInputKeyEventListener implements KeyEventListener {
                 Clipboard.getInstance().setClipboardString(s);
             }
         } else {
-            copyAction(gui);
+            copyAction(gui, mods);
         }
     }
 
     /**
      * Used to copy selected text to clipboard.
      *
-     * @param gui gui.
+     * @param gui  gui.
+     * @param mods key mods.
      */
-    private void copyAction(TextInput gui) {
+    private void copyAction(TextInput gui, int mods) {
+        if (!isModControl(mods)) {
+            return;
+        }
         String s = gui.getSelection();
         if (s != null) {
             Clipboard.getInstance().setClipboardString(s);
@@ -144,8 +156,12 @@ public class TextInputKeyEventListener implements KeyEventListener {
      * @param gui          gui to paste
      * @param leguiContext context.
      * @param frame        frame
+     * @param mods         key mods.
      */
-    private void pasteAction(TextInput gui, Context leguiContext, Frame frame) {
+    private void pasteAction(TextInput gui, Context leguiContext, Frame frame, int mods) {
+        if (!isModControl(mods)) {
+            return;
+        }
         if (gui.isEditable()) {
             TextState textState = gui.getTextState();
             int caretPosition = gui.getCaretPosition();
