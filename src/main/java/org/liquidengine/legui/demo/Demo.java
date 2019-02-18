@@ -2,7 +2,7 @@ package org.liquidengine.legui.demo;
 
 import org.joml.Vector2i;
 import org.liquidengine.cbchain.impl.ChainErrorCallback;
-import org.liquidengine.legui.animation.Animator;
+import org.liquidengine.legui.animation.AnimatorProvider;
 import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.listener.processor.EventProcessor;
 import org.liquidengine.legui.system.context.CallbackKeeper;
@@ -150,7 +150,7 @@ public abstract class Demo {
                 LayoutManager.getInstance().layout(frame);
 
                 // also we need to run animations
-                Animator.getInstance().runAnimations();
+                AnimatorProvider.getAnimator().runAnimations();
             } catch (Throwable e) {
                 e.printStackTrace();
             }

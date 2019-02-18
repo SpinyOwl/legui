@@ -1,7 +1,7 @@
 package org.liquidengine.legui.demo;
 
 import org.joml.Vector2i;
-import org.liquidengine.legui.animation.Animator;
+import org.liquidengine.legui.animation.AnimatorProvider;
 import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.component.ImageView;
 import org.liquidengine.legui.component.Widget;
@@ -190,7 +190,7 @@ public class FBOImageExample {
             LayoutManager.getInstance().layout(frame);
 
             // Run animations. Should be also called cause some components use animations for updating state.
-            Animator.getInstance().runAnimations();
+            AnimatorProvider.getAnimator().runAnimations();
         }
 
         if (nvgContext != 0) {

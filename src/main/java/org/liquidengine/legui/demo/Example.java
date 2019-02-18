@@ -26,6 +26,7 @@ import static org.lwjgl.system.MemoryUtil.NULL;
 import org.joml.Vector2i;
 import org.liquidengine.legui.DefaultInitializer;
 import org.liquidengine.legui.animation.Animator;
+import org.liquidengine.legui.animation.AnimatorProvider;
 import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.event.WindowSizeEvent;
 import org.liquidengine.legui.listener.WindowSizeEventListener;
@@ -107,7 +108,7 @@ public class Example {
 
         // before render loop we need to initialize renderer
         Renderer renderer = initializer.getRenderer();
-        Animator animator = Animator.getInstance();
+        Animator animator = AnimatorProvider.getAnimator();
         renderer.initialize();
 
         long time = System.currentTimeMillis();

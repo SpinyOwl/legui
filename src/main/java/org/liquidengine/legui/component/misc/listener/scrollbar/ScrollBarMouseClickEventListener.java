@@ -74,22 +74,18 @@ public class ScrollBarMouseClickEventListener implements MouseClickEventListener
             }
             scrollBar.setScrolling(false);
         } else {
-            if (released) {
-                scrollBar.setScrolling(false);
-            } else {
-                scrollBar.setScrolling(true);
-            }
+            scrollBar.setScrolling(!released);
         }
     }
 
     /**
      * Used to update viewport.
      *
-     * @param event event.
+     * @param event     event.
      * @param scrollBar scrollbar.
-     * @param maxValue maximum scrollbar value.
-     * @param minValue minimum scrollbar value.
-     * @param newValue new scrollbar value.
+     * @param maxValue  maximum scrollbar value.
+     * @param minValue  minimum scrollbar value.
+     * @param newValue  new scrollbar value.
      */
     private void updateViewport(Event event, ScrollBar scrollBar, float maxValue, float minValue, float newValue) {
         float valueToUse = newValue;
@@ -107,6 +103,6 @@ public class ScrollBarMouseClickEventListener implements MouseClickEventListener
 
     @Override
     public boolean equals(Object obj) {
-        return (obj != null) && ((obj == this) || ((obj != this) && (obj.getClass() == this.getClass())));
+        return obj != null && (obj == this || obj.getClass() == this.getClass());
     }
 }

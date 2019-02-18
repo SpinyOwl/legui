@@ -3,6 +3,7 @@ package org.liquidengine.legui.component;
 import static org.liquidengine.legui.style.font.FontRegistry.MATERIAL_ICONS_REGULAR;
 
 import java.util.List;
+
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -24,6 +25,10 @@ import org.liquidengine.legui.theme.Themes;
  */
 public class CheckBox extends Component implements TextComponent {
 
+    /**
+     * Default text for checkbox.
+     */
+    public static final String DEFAULT_CHECK_BOX_TEXT = "CheckBox";
     /**
      * Check box text state.
      */
@@ -47,29 +52,29 @@ public class CheckBox extends Component implements TextComponent {
      * Default constructor which initialize checkbox with "CheckBox" text.
      */
     public CheckBox() {
-        this("CheckBox");
+        this(DEFAULT_CHECK_BOX_TEXT);
     }
 
     /**
      * Constructor with position and size parameters. Initialize checkbox with "CheckBox" text.
      *
-     * @param x x position position in parent component.
-     * @param y y position position in parent component.
-     * @param width width of component.
+     * @param x      x position position in parent component.
+     * @param y      y position position in parent component.
+     * @param width  width of component.
      * @param height height of component.
      */
     public CheckBox(float x, float y, float width, float height) {
-        this("CheckBox", x, y, width, height);
+        this(DEFAULT_CHECK_BOX_TEXT, x, y, width, height);
     }
 
     /**
      * Constructor with position and size parameters. Initialize checkbox with "CheckBox" text.
      *
      * @param position position position in parent component.
-     * @param size size of component.
+     * @param size     size of component.
      */
     public CheckBox(Vector2f position, Vector2f size) {
-        this("CheckBox", position, size);
+        this(DEFAULT_CHECK_BOX_TEXT, position, size);
     }
 
     /**
@@ -84,10 +89,10 @@ public class CheckBox extends Component implements TextComponent {
     /**
      * Constructor with position and size parameters. Initialize checkbox with "CheckBox" text.
      *
-     * @param text specified text for checkbox.
-     * @param x x position position in parent component.
-     * @param y y position position in parent component.
-     * @param width width of component.
+     * @param text   specified text for checkbox.
+     * @param x      x position position in parent component.
+     * @param y      y position position in parent component.
+     * @param width  width of component.
      * @param height height of component.
      */
     public CheckBox(String text, float x, float y, float width, float height) {
@@ -98,9 +103,9 @@ public class CheckBox extends Component implements TextComponent {
     /**
      * Constructor with position and size parameters. Initialize checkbox with "CheckBox" text.
      *
-     * @param text specified text for checkbox.
+     * @param text     specified text for checkbox.
      * @param position position position in parent component.
-     * @param size size of component.
+     * @param size     size of component.
      */
     public CheckBox(String text, Vector2f position, Vector2f size) {
         super(position, size);
@@ -228,27 +233,27 @@ public class CheckBox extends Component implements TextComponent {
         CheckBox checkBox = (CheckBox) o;
 
         return new EqualsBuilder()
-            .appendSuper(super.equals(o))
-            .append(checked, checkBox.checked)
-            .append(textState, checkBox.textState)
-            .isEquals();
+                .appendSuper(super.equals(o))
+                .append(checked, checkBox.checked)
+                .append(textState, checkBox.textState)
+                .isEquals();
     }
 
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
-            .appendSuper(super.hashCode())
-            .append(textState)
-            .append(checked)
-            .toHashCode();
+                .appendSuper(super.hashCode())
+                .append(textState)
+                .append(checked)
+                .toHashCode();
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-            .append("textState", textState)
-            .append("checked", checked)
-            .toString();
+                .append("textState", textState)
+                .append("checked", checked)
+                .toString();
     }
 
 }

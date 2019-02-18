@@ -43,8 +43,8 @@ public class ScrollBarMouseDragEventListener implements MouseDragEventListener {
             barSize = ScrollBar.MIN_SCROLL_SIZE;
         }
 
-        float curPos,
-            dpos;
+        float curPos;
+        float dpos;
         if (vertical) {
             dpos = pos.y;
             curPos = cursorPosition.y;
@@ -65,6 +65,6 @@ public class ScrollBarMouseDragEventListener implements MouseDragEventListener {
 
     @Override
     public boolean equals(Object obj) {
-        return (obj != null) && ((obj == this) || ((obj != this) && (obj.getClass() == this.getClass())));
+        return obj != null && (obj == this || obj.getClass() == this.getClass());
     }
 }

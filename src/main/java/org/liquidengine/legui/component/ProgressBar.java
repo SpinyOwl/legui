@@ -45,9 +45,9 @@ public class ProgressBar extends Component {
     /**
      * Constructor with position and size parameters.
      *
-     * @param x x position position in parent component.
-     * @param y y position position in parent component.
-     * @param width width of component.
+     * @param x      x position position in parent component.
+     * @param y      y position position in parent component.
+     * @param width  width of component.
      * @param height height of component.
      */
     public ProgressBar(float x, float y, float width, float height) {
@@ -59,7 +59,7 @@ public class ProgressBar extends Component {
      * Constructor with position and size parameters.
      *
      * @param position position position in parent component.
-     * @param size size of component.
+     * @param size     size of component.
      */
     public ProgressBar(Vector2f position, Vector2f size) {
         super(position, size);
@@ -85,7 +85,13 @@ public class ProgressBar extends Component {
      * @param value current progress status.
      */
     public void setValue(float value) {
-        this.value = value < MIN_VALUE ? MIN_VALUE : value > MAX_VALUE ? MAX_VALUE : value;
+        if (value < MIN_VALUE) {
+            this.value = MIN_VALUE;
+        } else if (value > MAX_VALUE) {
+            this.value = MAX_VALUE;
+        } else {
+            this.value = value;
+        }
     }
 
     /**
@@ -119,26 +125,26 @@ public class ProgressBar extends Component {
         ProgressBar that = (ProgressBar) o;
 
         return new EqualsBuilder()
-            .appendSuper(super.equals(o))
-            .append(value, that.value)
-            .append(progressColor, that.progressColor)
-            .isEquals();
+                .appendSuper(super.equals(o))
+                .append(value, that.value)
+                .append(progressColor, that.progressColor)
+                .isEquals();
     }
 
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
-            .appendSuper(super.hashCode())
-            .append(value)
-            .append(progressColor)
-            .toHashCode();
+                .appendSuper(super.hashCode())
+                .append(value)
+                .append(progressColor)
+                .toHashCode();
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-            .append("value", value)
-            .append("progressColor", progressColor)
-            .toString();
+                .append("value", value)
+                .append("progressColor", progressColor)
+                .toString();
     }
 }

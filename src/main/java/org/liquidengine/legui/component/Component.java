@@ -321,8 +321,8 @@ public abstract class Component implements Serializable {
      */
     public Vector2f getAbsolutePosition() {
         Vector2f screenPos = new Vector2f(this.position);
-        for (Component parent = this.getParent(); parent != null; parent = parent.getParent()) {
-            screenPos.add(parent.getPosition());
+        for (Component p = this.getParent(); p != null; p = p.getParent()) {
+            screenPos.add(p.getPosition());
         }
         return screenPos;
     }
@@ -616,12 +616,12 @@ public abstract class Component implements Serializable {
      * @param component component to change.
      */
     private void changeParent(Component component) {
-        Component parent = component.getParent();
-        if (parent == this) {
+        Component p = component.getParent();
+        if (p == this) {
             return;
         }
-        if (parent != null) {
-            parent.remove(component);
+        if (p != null) {
+            p.remove(component);
         }
         component.setParent(this);
     }
@@ -637,8 +637,8 @@ public abstract class Component implements Serializable {
      */
     public boolean remove(Component component) {
         if (component != null) {
-            Component parent = component.getParent();
-            if (parent == this && isContains(component)) {
+            Component p = component.getParent();
+            if (p == this && isContains(component)) {
                 boolean removed = childComponents.remove(component);
                 if (removed) {
                     component.setParent(null);

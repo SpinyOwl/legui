@@ -206,7 +206,8 @@ public class TextArea extends Component implements TextComponent, Viewport {
         if (enabled) {
             Float height = this.horizontalScrollBar.getStyle().getHeight();
             if (height == null) {
-                this.horizontalScrollBar.getStyle().setHeight(height = this.horizontalScrollBar.getSize().y);
+                height = this.horizontalScrollBar.getSize().y;
+                this.horizontalScrollBar.getStyle().setHeight(height);
             }
             this.viewport.getStyle().setBottom(height);
             this.verticalScrollBar.getStyle().setBottom(height);
@@ -221,7 +222,8 @@ public class TextArea extends Component implements TextComponent, Viewport {
         if (enabled) {
             Float width = this.verticalScrollBar.getStyle().getWidth();
             if (width == null) {
-                this.verticalScrollBar.getStyle().setWidth(width = this.verticalScrollBar.getSize().x);
+                width = this.verticalScrollBar.getSize().x;
+                this.verticalScrollBar.getStyle().setWidth(width);
             }
             this.viewport.getStyle().setRight(width);
             this.horizontalScrollBar.getStyle().setRight(width);
