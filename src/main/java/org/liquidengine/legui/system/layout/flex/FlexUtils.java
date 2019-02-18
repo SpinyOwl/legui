@@ -20,112 +20,88 @@ final class FlexUtils {
 
     public static void setJustifyContent(long node, JustifyContent justifyContent, Component component) {
         JustifyContent toUse = justifyContent;
-        for (Component lp = component; toUse == JustifyContent.INHERIT; lp = component.getParent()) {
+        for (Component lp = component; toUse == JustifyContent.INHERIT; lp = lp.getParent()) {
             if (lp != null) {
                 toUse = lp.getStyle().getFlexStyle().getJustifyContent();
             } else {
                 toUse = JustifyContent.FLEX_START;
+                break;
             }
         }
-        switch (toUse) {
-            case INITIAL:
-            case FLEX_START:
-                Yoga.YGNodeStyleSetJustifyContent(node, Yoga.YGJustifyFlexStart);
-                break;
-            case CENTER:
-                Yoga.YGNodeStyleSetJustifyContent(node, Yoga.YGJustifyCenter);
-                break;
-            case FLEX_END:
-                Yoga.YGNodeStyleSetJustifyContent(node, Yoga.YGJustifyFlexEnd);
-                break;
-            case SPACE_AROUND:
-                Yoga.YGNodeStyleSetJustifyContent(node, Yoga.YGJustifySpaceAround);
-                break;
-            case SPACE_BETWEEN:
-                Yoga.YGNodeStyleSetJustifyContent(node, Yoga.YGJustifySpaceBetween);
-                break;
-            case SPACE_EVENLY:
-                Yoga.YGNodeStyleSetJustifyContent(node, Yoga.YGJustifySpaceEvenly);
-                break;
+        if (toUse == JustifyContent.INITIAL || toUse == JustifyContent.FLEX_START) {
+            Yoga.YGNodeStyleSetJustifyContent(node, Yoga.YGJustifyFlexStart);
+        } else if (toUse == JustifyContent.CENTER) {
+            Yoga.YGNodeStyleSetJustifyContent(node, Yoga.YGJustifyCenter);
+        } else if (toUse == JustifyContent.FLEX_END) {
+            Yoga.YGNodeStyleSetJustifyContent(node, Yoga.YGJustifyFlexEnd);
+        } else if (toUse == JustifyContent.SPACE_AROUND) {
+            Yoga.YGNodeStyleSetJustifyContent(node, Yoga.YGJustifySpaceAround);
+        } else if (toUse == JustifyContent.SPACE_BETWEEN) {
+            Yoga.YGNodeStyleSetJustifyContent(node, Yoga.YGJustifySpaceBetween);
+        } else if (toUse == JustifyContent.SPACE_EVENLY) {
+            Yoga.YGNodeStyleSetJustifyContent(node, Yoga.YGJustifySpaceEvenly);
         }
     }
 
     public static void setFlexDirection(long rootNode, FlexDirection flexDirection) {
-        switch (flexDirection) {
-            case ROW:
-                Yoga.YGNodeStyleSetFlexDirection(rootNode, Yoga.YGFlexDirectionRow);
-                break;
-            case COLUMN:
-                Yoga.YGNodeStyleSetFlexDirection(rootNode, Yoga.YGFlexDirectionColumn);
-                break;
-            case ROW_REVERSE:
-                Yoga.YGNodeStyleSetFlexDirection(rootNode, Yoga.YGFlexDirectionRowReverse);
-                break;
-            case COLUMN_REVERSE:
-                Yoga.YGNodeStyleSetFlexDirection(rootNode, Yoga.YGFlexDirectionColumnReverse);
-                break;
+        if (flexDirection == FlexDirection.ROW) {
+            Yoga.YGNodeStyleSetFlexDirection(rootNode, Yoga.YGFlexDirectionRow);
+        } else if (flexDirection == FlexDirection.COLUMN) {
+            Yoga.YGNodeStyleSetFlexDirection(rootNode, Yoga.YGFlexDirectionColumn);
+        } else if (flexDirection == FlexDirection.ROW_REVERSE) {
+            Yoga.YGNodeStyleSetFlexDirection(rootNode, Yoga.YGFlexDirectionRowReverse);
+        } else if (flexDirection == FlexDirection.COLUMN_REVERSE) {
+            Yoga.YGNodeStyleSetFlexDirection(rootNode, Yoga.YGFlexDirectionColumnReverse);
         }
     }
 
     public static void setAlignItems(long node, AlignItems alignItems, Component component) {
         AlignItems toUse = alignItems;
-        for (Component lp = component; toUse == AlignItems.INHERIT; lp = component.getParent()) {
+        for (Component lp = component; toUse == AlignItems.INHERIT; lp = lp.getParent()) {
             if (lp != null) {
                 toUse = lp.getStyle().getFlexStyle().getAlignItems();
             } else {
                 toUse = AlignItems.STRETCH;
+                break;
             }
         }
-        switch (toUse) {
-            case FLEX_END:
-                Yoga.YGNodeStyleSetAlignItems(node, Yoga.YGAlignFlexEnd);
-                break;
-            case CENTER:
-                Yoga.YGNodeStyleSetAlignItems(node, Yoga.YGAlignCenter);
-                break;
-            case FLEX_START:
-                Yoga.YGNodeStyleSetAlignItems(node, Yoga.YGAlignFlexStart);
-                break;
-            case STRETCH:
-                Yoga.YGNodeStyleSetAlignItems(node, Yoga.YGAlignStretch);
-                break;
-            case BASELINE:
-                Yoga.YGNodeStyleSetAlignItems(node, Yoga.YGAlignBaseline);
-                break;
-            case AUTO:
-                Yoga.YGNodeStyleSetAlignItems(node, Yoga.YGAlignAuto);
-                break;
+        if (toUse == AlignItems.FLEX_END) {
+            Yoga.YGNodeStyleSetAlignItems(node, Yoga.YGAlignFlexEnd);
+        } else if (toUse == AlignItems.CENTER) {
+            Yoga.YGNodeStyleSetAlignItems(node, Yoga.YGAlignCenter);
+        } else if (toUse == AlignItems.FLEX_START) {
+            Yoga.YGNodeStyleSetAlignItems(node, Yoga.YGAlignFlexStart);
+        } else if (toUse == AlignItems.STRETCH) {
+            Yoga.YGNodeStyleSetAlignItems(node, Yoga.YGAlignStretch);
+        } else if (toUse == AlignItems.BASELINE) {
+            Yoga.YGNodeStyleSetAlignItems(node, Yoga.YGAlignBaseline);
+        } else if (toUse == AlignItems.AUTO) {
+            Yoga.YGNodeStyleSetAlignItems(node, Yoga.YGAlignAuto);
         }
     }
 
     public static void setAlignSelf(long node, AlignSelf alignItems, Component component) {
         AlignSelf toUse = alignItems;
-        for (Component lp = component; toUse == AlignSelf.INHERIT; lp = component.getParent()) {
+        for (Component lp = component; toUse == AlignSelf.INHERIT; lp = lp.getParent()) {
             if (lp != null) {
                 toUse = lp.getStyle().getFlexStyle().getAlignSelf();
             } else {
                 toUse = AlignSelf.STRETCH;
+                break;
             }
         }
-        switch (toUse) {
-            case FLEX_END:
-                Yoga.YGNodeStyleSetAlignSelf(node, Yoga.YGAlignFlexEnd);
-                break;
-            case CENTER:
-                Yoga.YGNodeStyleSetAlignSelf(node, Yoga.YGAlignCenter);
-                break;
-            case FLEX_START:
-                Yoga.YGNodeStyleSetAlignSelf(node, Yoga.YGAlignFlexStart);
-                break;
-            case STRETCH:
-                Yoga.YGNodeStyleSetAlignSelf(node, Yoga.YGAlignStretch);
-                break;
-            case BASELINE:
-                Yoga.YGNodeStyleSetAlignSelf(node, Yoga.YGAlignBaseline);
-                break;
-            case AUTO:
-                Yoga.YGNodeStyleSetAlignSelf(node, Yoga.YGAlignAuto);
-                break;
+        if (toUse == AlignSelf.FLEX_END) {
+            Yoga.YGNodeStyleSetAlignSelf(node, Yoga.YGAlignFlexEnd);
+        } else if (toUse == AlignSelf.CENTER) {
+            Yoga.YGNodeStyleSetAlignSelf(node, Yoga.YGAlignCenter);
+        } else if (toUse == AlignSelf.FLEX_START) {
+            Yoga.YGNodeStyleSetAlignSelf(node, Yoga.YGAlignFlexStart);
+        } else if (toUse == AlignSelf.STRETCH) {
+            Yoga.YGNodeStyleSetAlignSelf(node, Yoga.YGAlignStretch);
+        } else if (toUse == AlignSelf.BASELINE) {
+            Yoga.YGNodeStyleSetAlignSelf(node, Yoga.YGAlignBaseline);
+        } else if (toUse == AlignSelf.AUTO) {
+            Yoga.YGNodeStyleSetAlignSelf(node, Yoga.YGAlignAuto);
         }
     }
 
