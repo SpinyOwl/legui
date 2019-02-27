@@ -55,7 +55,7 @@ public class TabKeyEventListener implements EventListener<KeyEvent> {
         }
 
         Component prev = null;
-        if (component.isTabFocusable()) {
+        if (isFF(component)) {
             prev = component;
         }
         prev = findPrevInParent(component, component.getParent(), prev);
@@ -87,17 +87,17 @@ public class TabKeyEventListener implements EventListener<KeyEvent> {
                 if (!child.isVisible()) {
                     continue;
                 }
-                if (child.isTabFocusable()) {
-                    return getPreviousByTab(child);
-                } else if (!child.isEmpty()) {
+                if (!child.isEmpty()) {
                     Component cprev = findPrevInChildComponents(child.getChildComponents(), prev);
                     if (prev != cprev) {
                         return cprev;
                     }
+                } else if (isFF(child)) {
+                    return child;
                 }
             }
             prev = findPrevInParent(parent, parent.getParent(), prev);
-        } else if (parent.isTabFocusable()) {
+        } else if (isFF(parent)) {
             return parent;
         } else {
             prev = findPrevInParent(parent, parent.getParent(), prev);
@@ -105,12 +105,8 @@ public class TabKeyEventListener implements EventListener<KeyEvent> {
         return prev;
     }
 
-    private Component getPreviousByTab(Component child) {
-        Component prev = child;
-        if (!child.isEmpty()) {
-            prev = findPrevInChildComponents(child.getChildComponents(), prev);
-        }
-        return prev;
+    private boolean isFF(Component component) {
+        return component.isTabFocusable() && component.isFocusable();
     }
 
     /**
@@ -128,13 +124,13 @@ public class TabKeyEventListener implements EventListener<KeyEvent> {
             if (!child.isVisible()) {
                 continue;
             }
-            if (child.isTabFocusable()) {
-                return getPreviousByTab(child);
-            } else if (!child.isEmpty()) {
+            if (!child.isEmpty()) {
                 Component cprev = findPrevInChildComponents(child.getChildComponents(), previousComponent);
                 if (previousComponent != cprev) {
                     return cprev;
                 }
+            } else if (isFF(child)) {
+                return child;
             }
         }
 
@@ -153,7 +149,7 @@ public class TabKeyEventListener implements EventListener<KeyEvent> {
         }
 
         Component next = null;
-        if (component.isTabFocusable()) {
+        if (isFF(component)) {
             next = component;
         }
         if (component.isEmpty()) {
@@ -179,24 +175,23 @@ public class TabKeyEventListener implements EventListener<KeyEvent> {
             return next;
         }
 
-        Component nextComponent = next;
         childComponents.sort(comparator);
 
         for (Component child : childComponents) {
             if (!child.isVisible()) {
                 continue;
             }
-            if (child.isTabFocusable()) {
+            if (isFF(child)) {
                 return child;
             } else if (!child.isEmpty()) {
-                Component cnext = findNextInChildComponents(child.getChildComponents(), nextComponent);
-                if (nextComponent != cnext) {
+                Component cnext = findNextInChildComponents(child.getChildComponents(), next);
+                if (next != cnext) {
                     return cnext;
                 }
             }
         }
 
-        return nextComponent;
+        return next;
     }
 
     /**
@@ -220,7 +215,7 @@ public class TabKeyEventListener implements EventListener<KeyEvent> {
             for (int i = index + 1; i < childComponents.size(); i++) {
                 Component child = childComponents.get(i);
                 if (child.isVisible()) {
-                    if (child.isTabFocusable()) {
+                    if (isFF(child)) {
                         return child;
                     } else if (!child.isEmpty()) {
                         Component cnext = findNextInChildComponents(child.getChildComponents(), next);

@@ -27,6 +27,7 @@ import org.joml.Vector2i;
 import org.liquidengine.legui.DefaultInitializer;
 import org.liquidengine.legui.animation.Animator;
 import org.liquidengine.legui.animation.AnimatorProvider;
+import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.event.WindowSizeEvent;
 import org.liquidengine.legui.listener.WindowSizeEventListener;
@@ -193,14 +194,17 @@ public class Example {
     }
 
     private static void update() {
-        if (context != null && context.getMouseTargetGui() != null) {
-            gui.getMouseTargetLabel().getTextState().setText("-> " + context.getMouseTargetGui().getClass().getSimpleName());
+        if (context != null) {
+            Component mouseTargetGui = context.getMouseTargetGui();
+            gui.getMouseTargetLabel().getTextState().setText("-> " + (mouseTargetGui == null ? null : mouseTargetGui.getClass().getSimpleName()));
         }
     }
 
     private static void createGuiElements(Frame frame, int w, int h) {
         gui = new ExampleGui(w, h);
+        gui.setFocusable(false);
         gui.getListenerMap().addListener(WindowSizeEvent.class, (WindowSizeEventListener) event -> gui.setSize(event.getWidth(), event.getHeight()));
         frame.getContainer().add(gui);
+        frame.getContainer().setFocusable(false);
     }
 }

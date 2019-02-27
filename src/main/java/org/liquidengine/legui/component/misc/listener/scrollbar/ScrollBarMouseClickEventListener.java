@@ -45,10 +45,16 @@ public class ScrollBarMouseClickEventListener implements MouseClickEventListener
         float maxValue = scrollBar.getMaxValue();
         float minValue = scrollBar.getMinValue();
         float valueRange = maxValue - minValue;
+
+        if (valueRange - visibleAmount < 0.001f) {
+            return;
+        }
+
         float barSize = scrollBarSize * visibleAmount / valueRange;
         if (barSize < ScrollBar.MIN_SCROLL_SIZE) {
             barSize = ScrollBar.MIN_SCROLL_SIZE;
         }
+
         float scrollPosAccordingToScrollBounds = (scrollBarSize - barSize) * curValue / valueRange;
 
         float left;

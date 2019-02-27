@@ -11,6 +11,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
+
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -91,6 +92,13 @@ public abstract class Component implements Serializable {
      */
     private boolean tabFocusable = true;
 
+    /**
+     * Show if component can be focused.
+     * <br><b>Note! You should take in consideration that component that marked as non-focusable will not receive any events.
+     * In fact this could be used to organize elements using containers.</b>
+     */
+    private boolean focusable = true;
+
     ////////////////////////////////
     //// CONTAINER BASE DATA
     ////////////////////////////////
@@ -128,9 +136,9 @@ public abstract class Component implements Serializable {
     /**
      * Constructor with position and size parameters.
      *
-     * @param x x position position in parent component.
-     * @param y y position position in parent component.
-     * @param width width of component.
+     * @param x      x position position in parent component.
+     * @param y      y position position in parent component.
+     * @param width  width of component.
      * @param height height of component.
      */
     public Component(float x, float y, float width, float height) {
@@ -141,7 +149,7 @@ public abstract class Component implements Serializable {
      * Constructor with position and size parameters.
      *
      * @param position position position in parent component.
-     * @param size size of component.
+     * @param size     size of component.
      */
     public Component(Vector2f position, Vector2f size) {
         this.position = position;
@@ -307,7 +315,7 @@ public abstract class Component implements Serializable {
     /**
      * Used to set size vector.
      *
-     * @param width width to set.
+     * @param width  width to set.
      * @param height height to set.
      */
     public void setSize(float width, float height) {
@@ -358,7 +366,6 @@ public abstract class Component implements Serializable {
      * Used to determine if point intersects component (in screen space). This method uses component intersector.
      *
      * @param point point to check.
-     *
      * @return true if component intersected by point.
      */
     public boolean intersects(Vector2f point) {
@@ -518,6 +525,26 @@ public abstract class Component implements Serializable {
         this.tabFocusable = tabFocusable;
     }
 
+    /**
+     * Returns true if component focused.
+     *
+     * @return true if component focused.
+     */
+    public boolean isFocusable() {
+        return focusable;
+    }
+
+    /**
+     * Used to set component focusable.
+     * <br><b>Note! You should take in consideration that component that marked as non-focusable will not receive any events.
+     * In fact this could be used to organize elements using containers.</b>
+     *
+     * @param focusable new focusable state.
+     */
+    public void setFocusable(boolean focusable) {
+        this.focusable = focusable;
+    }
+
     /////////////////////////////////
     //// CONTAINER METHODS
     /////////////////////////////////
@@ -526,7 +553,6 @@ public abstract class Component implements Serializable {
      * Returns count of child components.
      *
      * @return count of child components.
-     *
      * @see List#size()
      */
     public int count() {
@@ -537,7 +563,6 @@ public abstract class Component implements Serializable {
      * Returns true if component contains no elements.
      *
      * @return true if component contains no elements.
-     *
      * @see List#isEmpty()
      */
     public boolean isEmpty() {
@@ -548,9 +573,7 @@ public abstract class Component implements Serializable {
      * Returns true if component contains specified component.
      *
      * @param component component to check.
-     *
      * @return true if component contains specified component.
-     *
      * @see List#contains(Object)
      */
     public boolean contains(Component component) {
@@ -561,7 +584,6 @@ public abstract class Component implements Serializable {
      * Returns an iterator over the elements in this component. The elements are returned in no particular order.
      *
      * @return an iterator over the elements in this component.
-     *
      * @see List#iterator()
      */
     public Iterator<Component> containerIterator() {
@@ -572,9 +594,7 @@ public abstract class Component implements Serializable {
      * Used to add component to component.
      *
      * @param component component to add.
-     *
      * @return true if component is added.
-     *
      * @see List#add(Object)
      */
     public boolean add(Component component) {
@@ -592,7 +612,6 @@ public abstract class Component implements Serializable {
      * Used to check if component collection contains component or not. Checked by reference.
      *
      * @param component component to check.
-     *
      * @return true if collection contains provided component.
      */
     private boolean isContains(Component component) {
@@ -630,9 +649,7 @@ public abstract class Component implements Serializable {
      * Used to remove component.
      *
      * @param component component to remove.
-     *
      * @return true if removed.
-     *
      * @see List#remove(Object)
      */
     public boolean remove(Component component) {
@@ -653,7 +670,6 @@ public abstract class Component implements Serializable {
      * Used to remove components.
      *
      * @param components components to remove.
-     *
      * @see List#removeAll(Collection)
      */
     public void removeAll(Collection<? extends Component> components) {
@@ -667,7 +683,6 @@ public abstract class Component implements Serializable {
      * are relayed to the caller.
      *
      * @param filter a predicate which returns true for elements to be removed.
-     *
      * @see List#removeIf(Predicate)
      */
     public void removeIf(Predicate<? super Component> filter) {
@@ -688,9 +703,7 @@ public abstract class Component implements Serializable {
      * Returns true if this Container contains all of the elements of the specified collection.
      *
      * @param components components collection to check.
-     *
      * @return true if this Container contains all of the elements of the specified collection.
-     *
      * @see List#containsAll(Collection)
      */
     public boolean containsAll(Collection<Component> components) {
@@ -701,7 +714,6 @@ public abstract class Component implements Serializable {
      * Returns a sequential Stream with this collection as its source.
      *
      * @return a sequential Stream with this collection as its source.
-     *
      * @see List#stream()
      */
     public Stream<Component> stream() {
@@ -712,7 +724,6 @@ public abstract class Component implements Serializable {
      * Returns a possibly parallel Stream with this collection as its source. It is allowable for this method to return a sequential stream.
      *
      * @return possibly parallel Stream with this collection as its source.
-     *
      * @see List#parallelStream()
      */
     public Stream<Component> parallelStream() {
@@ -752,52 +763,55 @@ public abstract class Component implements Serializable {
         Component component = (Component) o;
 
         return new EqualsBuilder()
-            .append(this.isEnabled(), component.isEnabled())
-            .append(this.isVisible(), component.isVisible())
-            .append(this.isHovered(), component.isHovered())
-            .append(this.isFocused(), component.isFocused())
-            .append(this.isPressed(), component.isPressed())
-            .append(this.getListenerMap(), component.getListenerMap())
-            .append(this.getPosition(), component.getPosition())
-            .append(this.getSize(), component.getSize())
-            .append(this.getIntersector(), component.getIntersector())
-            .append(this.getTabIndex(), component.getTabIndex())
-            .append(this.isTabFocusable(), component.isTabFocusable())
-            .append(childComponents, component.childComponents)
-            .isEquals();
+                .append(this.isEnabled(), component.isEnabled())
+                .append(this.isVisible(), component.isVisible())
+                .append(this.isHovered(), component.isHovered())
+                .append(this.isFocused(), component.isFocused())
+                .append(this.isPressed(), component.isPressed())
+                .append(this.getListenerMap(), component.getListenerMap())
+                .append(this.getPosition(), component.getPosition())
+                .append(this.getSize(), component.getSize())
+                .append(this.getIntersector(), component.getIntersector())
+                .append(this.getTabIndex(), component.getTabIndex())
+                .append(this.isTabFocusable(), component.isTabFocusable())
+                .append(this.isFocusable(), component.isFocusable())
+                .append(childComponents, component.childComponents)
+                .isEquals();
     }
 
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
-            .append(listenerMap)
-            .append(position)
-            .append(size)
-            .append(enabled)
-            .append(intersector)
-            .append(hovered)
-            .append(focused)
-            .append(pressed)
-            .append(tabIndex)
-            .append(tabFocusable)
-            .append(childComponents)
-            .toHashCode();
+                .append(listenerMap)
+                .append(position)
+                .append(size)
+                .append(enabled)
+                .append(intersector)
+                .append(hovered)
+                .append(focused)
+                .append(pressed)
+                .append(tabIndex)
+                .append(tabFocusable)
+                .append(focusable)
+                .append(childComponents)
+                .toHashCode();
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-            .append("listenerMap", listenerMap)
-            .append("position", position)
-            .append("size", size)
-            .append("enabled", enabled)
-            .append("intersector", intersector)
-            .append("hovered", hovered)
-            .append("focused", focused)
-            .append("tabIndex", tabIndex)
-            .append("tabFocusable", tabFocusable)
-            .append("pressed", pressed)
-            .toString();
+                .append("listenerMap", listenerMap)
+                .append("position", position)
+                .append("size", size)
+                .append("enabled", enabled)
+                .append("intersector", intersector)
+                .append("hovered", hovered)
+                .append("focused", focused)
+                .append("tabIndex", tabIndex)
+                .append("tabFocusable", tabFocusable)
+                .append("focusable", focusable)
+                .append("pressed", pressed)
+                .toString();
     }
 
 }

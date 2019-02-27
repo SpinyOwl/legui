@@ -160,6 +160,7 @@ public class SingleClassExample {
     private static void createGuiElements(Frame frame) {
         // Set background color for frame
         frame.getContainer().getStyle().getBackground().setColor(ColorConstants.lightBlue());
+        frame.getContainer().setFocusable(false);
 
         Button button = new Button("Add components", 20, 20, 160, 30);
         SimpleLineBorder border = new SimpleLineBorder(ColorConstants.black(), 1);
