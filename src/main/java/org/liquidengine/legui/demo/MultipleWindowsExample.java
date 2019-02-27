@@ -83,7 +83,6 @@ public class MultipleWindowsExample {
             GL.createCapabilities();
             glfwSwapInterval(0);
             glfwSetWindowPos(windows[i], 50, 50 + (HEIGHT + 50) * i);
-            windows[i] = windows[i];
             // Renderer which will render our ui components.
             renderers[i] = new NvgRenderer();
             renderers[i].initialize();

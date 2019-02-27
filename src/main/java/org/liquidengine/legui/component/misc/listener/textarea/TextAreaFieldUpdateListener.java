@@ -39,19 +39,18 @@ public class TextAreaFieldUpdateListener implements TextAreaFieldUpdateEventList
         }
 
         Vector2f absolutePosition = textAreaField.getAbsolutePosition();
-        Vector2f size = textAreaField.getSize();
 
-        updateHorizontalOffset(textAreaField, absolutePosition, size);
-        updateVerticalOffset(textAreaField, absolutePosition, size);
+        updateHorizontalOffset(textAreaField, absolutePosition);
+        updateVerticalOffset(textAreaField, absolutePosition);
     }
 
-    private void updateHorizontalOffset(TextAreaField textAreaField, Vector2f absolutePosition, Vector2f size) {
+    private void updateHorizontalOffset(TextAreaField textAreaField, Vector2f absolutePosition) {
         ScrollBar horizontalScrollBar = textArea.getHorizontalScrollBar();
         float caretX = textAreaField.getCaretX() - absolutePosition.x - textAreaField.getStyle().getPaddingLeftF();
         float maxTextWidth = textAreaField.getMaxTextWidth();
 
         float newVal = 0;
-        if (!(maxTextWidth == 0)) {
+        if (maxTextWidth != 0) {
             float maxValue = horizontalScrollBar.getMaxValue();
             float minValue = horizontalScrollBar.getMinValue();
             float valueRange = horizontalScrollBar.getMaxValue() - horizontalScrollBar.getMinValue();
@@ -68,7 +67,7 @@ public class TextAreaFieldUpdateListener implements TextAreaFieldUpdateEventList
         horizontalScrollBar.setCurValue(newVal);
     }
 
-    private void updateVerticalOffset(TextAreaField textAreaField, Vector2f absolutePosition, Vector2f size) {
+    private void updateVerticalOffset(TextAreaField textAreaField, Vector2f absolutePosition) {
         ScrollBar verticalScrollbar = textArea.getVerticalScrollBar();
         float caretY = textAreaField.getCaretY() - absolutePosition.y - textAreaField.getStyle().getPaddingTopF();
         float maxTextHeight = textAreaField.getMaxTextHeight();
@@ -94,7 +93,7 @@ public class TextAreaFieldUpdateListener implements TextAreaFieldUpdateEventList
 
     @Override
     public boolean equals(Object obj) {
-        return (obj != null) && ((obj == this) || ((obj != this) && (obj.getClass() == this.getClass())));
+        return obj != null && (obj == this || obj.getClass() == this.getClass());
     }
 
 }

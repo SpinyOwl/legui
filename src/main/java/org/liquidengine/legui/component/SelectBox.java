@@ -333,7 +333,7 @@ public class SelectBox<T> extends Component {
     public void removeElement(int index) {
         lock.lock();
         try {
-            if (elements.size() != 0) {
+            if (!elements.isEmpty()) {
                 T s = elements.get(index);
                 elements.remove(index);
                 SelectBoxElement<T> element = selectBoxElements.get(index);

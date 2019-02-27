@@ -15,6 +15,10 @@ import org.liquidengine.legui.theme.Themes;
 public class Button extends Component implements TextComponent {
 
     /**
+     * Default text for button component.
+     */
+    public static final String DEFAULT_BUTTON_TEXT = "Button";
+    /**
      * Button text state.
      */
     private TextState textState;
@@ -23,29 +27,29 @@ public class Button extends Component implements TextComponent {
      * Creates a button with default text.
      */
     public Button() {
-        this("Button");
+        this(DEFAULT_BUTTON_TEXT);
     }
 
     /**
      * Creates a button with default text and specified position and size.
      *
-     * @param x x position in parent.
-     * @param y y position in parent.
-     * @param width width of component.
+     * @param x      x position in parent.
+     * @param y      y position in parent.
+     * @param width  width of component.
      * @param height height of component.
      */
     public Button(float x, float y, float width, float height) {
-        this("Button", x, y, width, height);
+        this(DEFAULT_BUTTON_TEXT, x, y, width, height);
     }
 
     /**
      * Creates a button with default text and specified position and size.
      *
      * @param position position in parent.
-     * @param size size of component.
+     * @param size     size of component.
      */
     public Button(Vector2f position, Vector2f size) {
-        this("Button", position, size);
+        this(DEFAULT_BUTTON_TEXT, position, size);
     }
 
     /**
@@ -60,10 +64,10 @@ public class Button extends Component implements TextComponent {
     /**
      * Creates a button with specified text and specified position and size.
      *
-     * @param text button text.
-     * @param x x position in parent.
-     * @param y y position in parent.
-     * @param width width of component.
+     * @param text   button text.
+     * @param x      x position in parent.
+     * @param y      y position in parent.
+     * @param width  width of component.
      * @param height height of component.
      */
     public Button(String text, float x, float y, float width, float height) {
@@ -74,9 +78,9 @@ public class Button extends Component implements TextComponent {
     /**
      * Creates a button with specified text and specified position and size.
      *
-     * @param text button text.
+     * @param text     button text.
      * @param position position in parent.
-     * @param size size of component.
+     * @param size     size of component.
      */
     public Button(String text, Vector2f position, Vector2f size) {
         super(position, size);
@@ -103,78 +107,6 @@ public class Button extends Component implements TextComponent {
         return textState;
     }
 
-//    /**
-//     * Returns background image.
-//     *
-//     * @return background image.
-//     */
-//    public Icon getStyle().getBackground().getIcon() {
-//        return backgroundIcon;
-//    }
-
-//    /**
-//     * Used to change background image.
-//     *
-//     * @param backgroundIcon background image.
-//     */
-//    public void getStyle().getBackground().setIcon(Icon backgroundIcon) {
-//        this.backgroundIcon = backgroundIcon;
-//    }
-
-//    /**
-//     * Returns focused background image.
-//     *
-//     * @return focused background image.
-//     */
-//    public Icon getFocusedBackgroundIcon() {
-//        return focusedBackgroundIcon;
-//    }
-
-//    /**
-//     * Used to change focused background image.
-//     *
-//     * @param focusedBackgroundIcon focused background image.
-//     */
-//    public void setFocusedBackgroundIcon(Icon focusedBackgroundIcon) {
-//        this.focusedBackgroundIcon = focusedBackgroundIcon;
-//    }
-
-    //    /**
-//     * Returns pressed background image.
-//     *
-//     * @return pressed background image.
-//     */
-//    public Icon getPressedBackgroundIcon() {
-//        return pressedBackgroundIcon;
-//    }
-//
-//    /**
-//     * Used to change pressed background image.
-//     *
-//     * @param pressedBackgroundIcon pressed background image.
-//     */
-//    public void setPressedBackgroundIcon(Icon pressedBackgroundIcon) {
-//        this.pressedBackgroundIcon = pressedBackgroundIcon;
-//    }
-//
-//    /**
-//     * Returns hovered background image.
-//     *
-//     * @return hovered background image.
-//     */
-//    public Icon getHoveredBackgroundIcon() {
-//        return hoveredBackgroundIcon;
-//    }
-//
-//    /**
-//     * Used to change hovered background image.
-//     *
-//     * @param hoveredBackgroundIcon hovered background image.
-//     */
-//    public void setHoveredBackgroundIcon(Icon hoveredBackgroundIcon) {
-//        this.hoveredBackgroundIcon = hoveredBackgroundIcon;
-//    }
-//
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -188,27 +120,23 @@ public class Button extends Component implements TextComponent {
         Button button = (Button) o;
 
         return new EqualsBuilder()
-            .appendSuper(super.equals(o))
-            .append(getTextState(), button.getTextState())
-//            .append(getStyle().getBackground().getIcon(), button.getStyle().getBackground().getIcon())
-//            .append(getFocusedBackgroundIcon(), button.getFocusedBackgroundIcon())
-//            .append(getPressedBackgroundIcon(), button.getPressedBackgroundIcon())
-//            .append(getHoveredBackgroundIcon(), button.getHoveredBackgroundIcon())
-            .isEquals();
+                .appendSuper(super.equals(o))
+                .append(getTextState(), button.getTextState())
+                .isEquals();
     }
 
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
-            .appendSuper(super.hashCode())
-            .append(textState)
-            .toHashCode();
+                .appendSuper(super.hashCode())
+                .append(textState)
+                .toHashCode();
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-            .append("textState", textState)
-            .toString();
+                .append("textState", textState)
+                .toString();
     }
 }

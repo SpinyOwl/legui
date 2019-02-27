@@ -29,6 +29,10 @@ import org.liquidengine.legui.theme.Themes;
 public class RadioButton extends Component implements TextComponent {
 
     /**
+     * Default text for radiobutton.
+     */
+    public static final String DEFAULT_RADIO_BUTTON_TEXT = "RadioButton";
+    /**
      * Used to represent text state of radio button.
      */
     protected TextState textState;
@@ -57,29 +61,29 @@ public class RadioButton extends Component implements TextComponent {
      * marshaller/unmarshaller component should contain empty constructor.
      */
     public RadioButton() {
-        this("RadioButton");
+        this(DEFAULT_RADIO_BUTTON_TEXT);
     }
 
     /**
      * Constructor with position and size parameters.
      *
-     * @param x x position position in parent component.
-     * @param y y position position in parent component.
-     * @param width width of component.
+     * @param x      x position position in parent component.
+     * @param y      y position position in parent component.
+     * @param width  width of component.
      * @param height height of component.
      */
     public RadioButton(float x, float y, float width, float height) {
-        this("RadioButton", x, y, width, height);
+        this(DEFAULT_RADIO_BUTTON_TEXT, x, y, width, height);
     }
 
     /**
      * Constructor with position and size parameters.
      *
      * @param position position position in parent component.
-     * @param size size of component.
+     * @param size     size of component.
      */
     public RadioButton(Vector2f position, Vector2f size) {
-        this("RadioButton", position, size);
+        this(DEFAULT_RADIO_BUTTON_TEXT, position, size);
     }
 
     /**
@@ -95,10 +99,10 @@ public class RadioButton extends Component implements TextComponent {
     /**
      * Constructor with position and size parameters.
      *
-     * @param text text to set.
-     * @param x x position position in parent component.
-     * @param y y position position in parent component.
-     * @param width width of component.
+     * @param text   text to set.
+     * @param x      x position position in parent component.
+     * @param y      y position position in parent component.
+     * @param width  width of component.
      * @param height height of component.
      */
     public RadioButton(String text, float x, float y, float width, float height) {
@@ -109,9 +113,9 @@ public class RadioButton extends Component implements TextComponent {
     /**
      * Constructor with position and size parameters.
      *
-     * @param text text to set.
+     * @param text     text to set.
      * @param position position position in parent component.
-     * @param size size of component.
+     * @param size     size of component.
      */
     public RadioButton(String text, Vector2f position, Vector2f size) {
         super(position, size);
@@ -240,30 +244,30 @@ public class RadioButton extends Component implements TextComponent {
         RadioButton that = (RadioButton) o;
 
         return new EqualsBuilder()
-            .appendSuper(super.equals(o))
-            .append(checked, that.checked)
-            .append(textState, that.textState)
-            .append(radioButtonGroup, that.radioButtonGroup)
-            .isEquals();
+                .appendSuper(super.equals(o))
+                .append(checked, that.checked)
+                .append(textState, that.textState)
+                .append(radioButtonGroup, that.radioButtonGroup)
+                .isEquals();
     }
 
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
-            .appendSuper(super.hashCode())
-            .append(textState)
-            .append(checked)
-            .append(radioButtonGroup)
-            .toHashCode();
+                .appendSuper(super.hashCode())
+                .append(textState)
+                .append(checked)
+                .append(radioButtonGroup)
+                .toHashCode();
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-            .append("textState", textState)
-            .append("checked", checked)
-            .append("radioButtonGroup", radioButtonGroup)
-            .toString();
+                .append("textState", textState)
+                .append("checked", checked)
+                .append("radioButtonGroup", radioButtonGroup)
+                .toString();
     }
 
 }

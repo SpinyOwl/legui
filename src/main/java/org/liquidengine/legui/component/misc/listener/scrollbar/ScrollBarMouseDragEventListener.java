@@ -38,13 +38,17 @@ public class ScrollBarMouseDragEventListener implements MouseDragEventListener {
         float maxValue = scrollBar.getMaxValue();
         float minValue = scrollBar.getMinValue();
         float valueRange = maxValue - minValue;
+
+        if (valueRange - visibleAmount < 0.001f) {
+            return;
+        }
+
         float barSize = scrollBarSize * visibleAmount / valueRange;
         if (barSize < ScrollBar.MIN_SCROLL_SIZE) {
             barSize = ScrollBar.MIN_SCROLL_SIZE;
         }
-
-        float curPos,
-            dpos;
+        float curPos;
+        float dpos;
         if (vertical) {
             dpos = pos.y;
             curPos = cursorPosition.y;
@@ -59,12 +63,12 @@ public class ScrollBarMouseDragEventListener implements MouseDragEventListener {
             newVal = minValue;
         }
         EventProcessor.getInstance()
-            .pushEvent(new ScrollBarChangeValueEvent<>(scrollBar, event.getContext(), event.getFrame(), scrollBar.getCurValue(), newVal));
+                .pushEvent(new ScrollBarChangeValueEvent<>(scrollBar, event.getContext(), event.getFrame(), scrollBar.getCurValue(), newVal));
         scrollBar.setCurValue(newVal);
     }
 
     @Override
     public boolean equals(Object obj) {
-        return (obj != null) && ((obj == this) || ((obj != this) && (obj.getClass() == this.getClass())));
+        return obj != null && (obj == this || obj.getClass() == this.getClass());
     }
 }

@@ -2,6 +2,7 @@ package org.liquidengine.legui.system.handler;
 
 import java.util.Collections;
 import java.util.List;
+
 import org.joml.Vector2f;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.Frame;
@@ -22,8 +23,8 @@ public class CursorPosEventHandler extends AbstractSystemEventHandler<SystemCurs
     /**
      * Pre-handles {@link SystemCursorPosEvent} event.
      *
-     * @param event event which should be pre-processed.
-     * @param frame target frame for event.
+     * @param event   event which should be pre-processed.
+     * @param frame   target frame for event.
      * @param context context
      */
     protected void preHandle(SystemCursorPosEvent event, Frame frame, Context context) {
@@ -43,20 +44,20 @@ public class CursorPosEventHandler extends AbstractSystemEventHandler<SystemCurs
                 break;
             }
         }
-        if (targetComponent != null) {
-            Component prevTarget = context.getMouseTargetGui();
-            if (targetComponent != prevTarget) {
-                context.setMouseTargetGui(targetComponent);
+        Component prevTarget = context.getMouseTargetGui();
+        context.setMouseTargetGui(targetComponent);
+        if (targetComponent != prevTarget) {
+            if (targetComponent != null) {
                 targetComponent.setHovered(true);
                 Vector2f curPosInComponent = targetComponent.getAbsolutePosition().sub(cursorPosition).negate();
                 CursorEnterEvent enterEvent = new CursorEnterEvent(targetComponent, context, frame, true, curPosInComponent, cursorPosition);
                 EventProcessor.getInstance().pushEvent(enterEvent);
-                if (prevTarget != null) {
-                    Vector2f curPosInPrevTarget = prevTarget.getAbsolutePosition().sub(cursorPosition).negate();
-                    CursorEnterEvent exitEvent = new CursorEnterEvent(prevTarget, context, frame, false, curPosInPrevTarget, cursorPosition);
-                    EventProcessor.getInstance().pushEvent(exitEvent);
-                    prevTarget.setHovered(false);
-                }
+            }
+            if (prevTarget != null) {
+                Vector2f curPosInPrevTarget = prevTarget.getAbsolutePosition().sub(cursorPosition).negate();
+                CursorEnterEvent exitEvent = new CursorEnterEvent(prevTarget, context, frame, false, curPosInPrevTarget, cursorPosition);
+                EventProcessor.getInstance().pushEvent(exitEvent);
+                prevTarget.setHovered(false);
             }
         }
     }
@@ -64,11 +65,10 @@ public class CursorPosEventHandler extends AbstractSystemEventHandler<SystemCurs
     /**
      * Used to handle {@link SystemCursorPosEvent} and produce (or not) {@link Event} instances (which are UI events).
      *
-     * @param event event to be processed.
-     * @param layer target event layer.
+     * @param event   event to be processed.
+     * @param layer   target event layer.
      * @param context context.
-     * @param frame frame.
-     *
+     * @param frame   frame.
      * @return true if event processed and it shouldn't be processed for other underlying layers.
      */
     @Override
@@ -84,8 +84,8 @@ public class CursorPosEventHandler extends AbstractSystemEventHandler<SystemCurs
      * Used to handle event for specific component.
      *
      * @param component component.
-     * @param context context.
-     * @param frame frame.
+     * @param context   context.
+     * @param frame     frame.
      */
     private void handle(Component component, Context context, Frame frame) {
         if (component.isEmpty()) {

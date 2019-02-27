@@ -18,6 +18,11 @@ public class ScrollBarScrollListener implements ScrollEventListener {
         float curValue = scrollBar.getCurValue();
         float visibleAmount = scrollBar.getVisibleAmount();
         float valueRange = scrollBar.getMaxValue() - scrollBar.getMinValue();
+
+        if (valueRange - visibleAmount < 0.001f) {
+            return;
+        }
+
         float newVal = (float) (curValue - scrollBar.getScrollStep() * event.getYoffset() * visibleAmount * valueRange / (valueRange - visibleAmount));
 
         if (newVal > maxValue) {
@@ -33,6 +38,6 @@ public class ScrollBarScrollListener implements ScrollEventListener {
 
     @Override
     public boolean equals(Object obj) {
-        return (obj != null) && ((obj == this) || ((obj != this) && (obj.getClass() == this.getClass())));
+        return obj != null && (obj == this || obj.getClass() == this.getClass());
     }
 }
