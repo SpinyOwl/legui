@@ -15,7 +15,7 @@ public class ScrollablePanelAnimation extends ViewportAnimation<ScrollablePanel>
     }
 
     public ScrollablePanelAnimation(ScrollablePanel scrollablePanel) {
-        this(scrollablePanel, 0.2d);
+        this(scrollablePanel, 0.1d);
     }
 
 

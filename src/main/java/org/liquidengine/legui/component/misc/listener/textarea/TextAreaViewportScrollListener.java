@@ -14,10 +14,13 @@ import org.liquidengine.legui.listener.EventListener;
 import org.liquidengine.legui.listener.processor.EventProcessor;
 import org.liquidengine.legui.system.handler.SehUtil;
 
+import static org.liquidengine.legui.component.misc.listener.scrollbar.ScrollBarHelper.updateScrollBarValue;
+
 /**
  * Created by ShchAlexander on 23.07.2017.
  */
 public class TextAreaViewportScrollListener implements EventListener<ScrollEvent> {
+
 
     /**
      * Used to handle specific event.
@@ -47,23 +50,7 @@ public class TextAreaViewportScrollListener implements EventListener<ScrollEvent
                 textArea.getViewportSize().y);
         textAreaField.setSize(maxTextWidth, maxTextHeight);
 
-        ScrollBar scrollBar = textArea.getVerticalScrollBar();
-        float maxValue = scrollBar.getMaxValue();
-        float minValue = scrollBar.getMinValue();
-        float curValue = scrollBar.getCurValue();
-        float visibleAmount = scrollBar.getVisibleAmount();
-        float valueRange = scrollBar.getMaxValue() - scrollBar.getMinValue();
-        float newVal = (float) (curValue - scrollBar.getScrollStep() * event.getYoffset() * visibleAmount * valueRange / (valueRange - visibleAmount));
-
-        if (newVal > maxValue) {
-            newVal = maxValue;
-        }
-        if (newVal < minValue) {
-            newVal = minValue;
-        }
-
-        EventProcessor.getInstance().pushEvent(new ScrollBarChangeValueEvent<>(scrollBar, event.getContext(), event.getFrame(), curValue, newVal));
-        scrollBar.setCurValue(newVal);
+        updateScrollBarValue(event, textArea.getVerticalScrollBar());
     }
 
     @Override
