@@ -181,6 +181,7 @@ public class MenuLayerDemo extends Demo {
 
             layer.add(panel);
             layer.getContainer().getStyle().getBackground().setColor(ColorConstants.red().div(4f));
+            layer.getContainer().setFocusable(true);
             layer.getContainer().getListenerMap().addListener(MouseClickEvent.class, event -> {
                 event.getFrame().removeLayer(layer);
                 this.setToggled(false);
