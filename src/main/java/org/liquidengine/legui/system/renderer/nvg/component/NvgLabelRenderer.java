@@ -7,6 +7,7 @@ import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgText;
 
+import static org.liquidengine.legui.style.util.StyleUtilities.getInnerContentRectangle;
 import static org.liquidengine.legui.style.util.StyleUtilities.getPaddingV4;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.createScissor;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.resetScissor;
@@ -28,8 +29,8 @@ public class NvgLabelRenderer extends NvgDefaultComponentRenderer<Label> {
 
             // draw text into box
             TextState textState = label.getTextState();
-            Vector4f p = getPaddingV4(label, label.getStyle());
-            Vector4f rect = new Vector4f(pos.x + p.w, pos.y + p.x, size.x - p.w - p.y, size.y - p.x - p.z);
+            Vector4f padding = getPaddingV4(label, label.getStyle());
+            Vector4f rect = getInnerContentRectangle(pos, size, padding);
             NvgText.drawTextLineToRect(nanovg, textState, rect, false);
         }
         resetScissor(nanovg);

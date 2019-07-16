@@ -22,6 +22,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.liquidengine.legui.style.color.ColorUtil.oppositeBlackOrWhite;
+import static org.liquidengine.legui.style.util.StyleUtilities.getInnerContentRectangle;
 import static org.liquidengine.legui.style.util.StyleUtilities.getPaddingV4;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.*;
 import static org.lwjgl.nanovg.NanoVG.*;
@@ -50,8 +51,8 @@ public class NvgTextAreaFieldRenderer extends NvgDefaultComponentRenderer<TextAr
 
             renderBackground(component, context, nanovg);
 
-            Vector4f p = getPaddingV4(component, style);
-            Vector4f intersectRect = new Vector4f(pos.x + p.x, pos.y + p.y, size.x - p.x - p.z, size.y - p.y - p.w);
+            Vector4f padding = getPaddingV4(component, style);
+            Vector4f intersectRect = getInnerContentRectangle(pos, size, padding);
 
             intersectScissor(nanovg, new Vector4f(intersectRect));
             if (component.getTextState().getText() != null) {

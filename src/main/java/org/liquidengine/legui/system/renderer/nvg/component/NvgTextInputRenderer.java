@@ -20,6 +20,7 @@ import java.nio.ByteBuffer;
 import java.util.Map;
 
 import static org.liquidengine.legui.style.color.ColorUtil.oppositeBlackOrWhite;
+import static org.liquidengine.legui.style.util.StyleUtilities.getInnerContentRectangle;
 import static org.liquidengine.legui.style.util.StyleUtilities.getPaddingV4;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.*;
 import static org.lwjgl.nanovg.NanoVG.*;
@@ -64,9 +65,8 @@ public class NvgTextInputRenderer extends NvgDefaultComponentRenderer<TextInput>
             }
             renderBackground(component, context, nanovg);
 
-            Vector4f p = getPaddingV4(component, style);
-
-            Vector4f intersectRect = new Vector4f(pos.x + p.x, pos.y + p.y, size.x - p.x - p.z, size.y - p.y - p.w);
+            Vector4f padding = getPaddingV4(component, style);
+            Vector4f intersectRect = getInnerContentRectangle(pos, size, padding);
             intersectScissor(nanovg, new Vector4f(intersectRect).sub(1, 1, -2, -2));
             renderText(context, nanovg, component, size, intersectRect, bc);
         }

@@ -29,17 +29,17 @@ public class TextAreaFieldUpdateListener implements TextAreaFieldUpdateEventList
         TextAreaField textAreaField = event.getTargetComponent();
         Component parent = textAreaField.getParent();
 
-        Vector4f p = getPaddingV4(textAreaField, textAreaField.getStyle());
+        Vector4f padding = getPaddingV4(textAreaField, textAreaField.getStyle());
         if (parent instanceof TextAreaViewport) {
             TextAreaViewport textAreaViewport = (TextAreaViewport) parent;
 
 
             float maxTextWidth = Math.max(
-                textAreaField.getMaxTextWidth() + p.x + p.z,
+                textAreaField.getMaxTextWidth() + padding.x + padding.z,
                 textAreaViewport.getSize().x
             );
             float maxTextHeight = Math.max(
-                textAreaField.getMaxTextHeight() + p.y + p.w,
+                textAreaField.getMaxTextHeight() + padding.y + padding.w,
                 textAreaViewport.getSize().y
             );
             textAreaField.setSize(maxTextWidth, maxTextHeight);
@@ -47,8 +47,8 @@ public class TextAreaFieldUpdateListener implements TextAreaFieldUpdateEventList
 
         Vector2f absolutePosition = textAreaField.getAbsolutePosition();
 
-        updateHorizontalOffset(textAreaField, absolutePosition, p.x);
-        updateVerticalOffset(textAreaField, absolutePosition, p.y);
+        updateHorizontalOffset(textAreaField, absolutePosition, padding.x);
+        updateVerticalOffset(textAreaField, absolutePosition, padding.y);
     }
 
     private void updateHorizontalOffset(TextAreaField textAreaField, Vector2f absolutePosition, float paddingLeft) {

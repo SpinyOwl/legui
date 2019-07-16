@@ -39,13 +39,13 @@ public class TextAreaViewportScrollListener implements EventListener<ScrollEvent
         TextArea textArea = (TextArea) event.getTargetComponent().getParent();
 
         TextAreaField textAreaField = textArea.getTextAreaField();
-        Vector4f p = getPaddingV4(textAreaField, textAreaField.getStyle());
+        Vector4f padding = getPaddingV4(textAreaField, textAreaField.getStyle());
         float maxTextWidth = Math.max(
-            textAreaField.getMaxTextWidth() + p.x + p.z,
+            textAreaField.getMaxTextWidth() + padding.x + padding.z,
             textArea.getViewportSize().x
         );
         float maxTextHeight = Math.max(
-            textAreaField.getMaxTextHeight() + p.y + p.w,
+            textAreaField.getMaxTextHeight() + padding.y + padding.w,
             textArea.getViewportSize().y
         );
         textAreaField.setSize(maxTextWidth, maxTextHeight);
