@@ -1,9 +1,5 @@
 package org.liquidengine.legui.system.renderer.nvg.component;
 
-import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderIcon;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.createScissor;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.resetScissor;
-
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.CheckBox;
@@ -11,6 +7,9 @@ import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.icon.Icon;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgText;
+
+import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderIcon;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.*;
 
 /**
  * Created by ShchAlexander on 11.02.2017.
@@ -28,6 +27,7 @@ public class NvgCheckBoxRenderer extends NvgDefaultComponentRenderer<CheckBox> {
             float py = pos.y;
             float sw = size.x;
             float sh = size.y;
+
             /*Draw background rectangle*/
             renderBackground(checkBox, context, nanovg);
 
@@ -35,11 +35,7 @@ public class NvgCheckBoxRenderer extends NvgDefaultComponentRenderer<CheckBox> {
             Icon icon = checkBox.isChecked() ? checkBox.getIconChecked() : checkBox.getIconUnchecked();
             float iconWid = icon.getSize().x;
 
-            Vector4f padding = checkBox.getStyle().getPadding();
-            Vector4f p = new Vector4f(padding.w,
-                                      padding.x,
-                                      padding.y,
-                                      padding.z);
+            Vector4f p = getPaddingV4(checkBox, checkBox.getStyle());
 
             float iconWidthForUse = (icon.getHorizontalAlign().index == 0 ? 1 : 0) * iconWid;
 

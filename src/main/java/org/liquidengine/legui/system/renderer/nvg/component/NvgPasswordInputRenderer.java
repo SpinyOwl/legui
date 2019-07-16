@@ -53,10 +53,7 @@ public class NvgPasswordInputRenderer extends NvgDefaultComponentRenderer<Passwo
             }
             renderBackground(component, leguiContext, nanovg);
 
-            Vector4f p = new Vector4f(component.getStyle().getPadding().w,
-                                      component.getStyle().getPadding().x,
-                                      component.getStyle().getPadding().y,
-                                      component.getStyle().getPadding().z);
+            Vector4f p = getPaddingV4(component, component.getStyle());
 
             Vector4f intersectRect = new Vector4f(pos.x + p.x, pos.y + p.y, size.x - p.x - p.z, size.y - p.y - p.w);
             intersectScissor(nanovg, new Vector4f(intersectRect).sub(1, 1, -2, -2));

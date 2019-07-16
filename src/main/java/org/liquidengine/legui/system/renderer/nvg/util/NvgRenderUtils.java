@@ -6,6 +6,7 @@ import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
 import org.liquidengine.legui.style.Style;
+import org.liquidengine.legui.style.length.Length;
 import org.liquidengine.legui.style.shadow.Shadow;
 import org.lwjgl.nanovg.NVGColor;
 import org.lwjgl.nanovg.NVGPaint;
@@ -14,6 +15,8 @@ import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.liquidengine.legui.style.length.LengthType.PERCENT;
+import static org.liquidengine.legui.style.length.LengthType.PIXEL;
 import static org.lwjgl.nanovg.NanoVG.*;
 import static org.lwjgl.system.MemoryUtil.memFree;
 import static org.lwjgl.system.MemoryUtil.memUTF8;
@@ -226,6 +229,36 @@ public final class NvgRenderUtils {
         }
     }
 
+    public static Vector4f getPaddingV4(Component component, Style style) {
+
+        Length paddingLeft = style.getPaddingLeft();
+        Length paddingRight = style.getPaddingRight();
+        Length paddingTop = style.getPaddingTop();
+        Length paddingBottom = style.getPaddingBottom();
+
+        float parentWidth = 0;
+        if (component.getParent() != null) {
+            parentWidth = component.getParent().getSize().x;
+        }
+
+        return new Vector4f(
+            getPadding(paddingLeft, parentWidth),
+            getPadding(paddingTop, parentWidth),
+            getPadding(paddingRight, parentWidth),
+            getPadding(paddingBottom, parentWidth)
+        );
+    }
+
+
+    private static float getPadding(Length padding, float parentWidth) {
+        if (padding == null) return 0;
+        else if (PIXEL.equals(padding.type())) {
+            return PIXEL.type().cast(padding.get());
+        } else if (PERCENT.equals(padding.type())) {
+            return PERCENT.type().cast(padding.get()) * parentWidth;
+        }
+        return 0;
+    }
     public static void renderShadow(long context, Component component) {
         Shadow shadow = component.getStyle().getShadow();
         if (shadow != null && shadow.getColor() != null && shadow.getColor().w > 0.01f) {

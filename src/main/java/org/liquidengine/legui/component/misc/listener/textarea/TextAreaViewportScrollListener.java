@@ -2,6 +2,7 @@ package org.liquidengine.legui.component.misc.listener.textarea;
 
 import java.util.ArrayList;
 
+import org.joml.Vector4f;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.ScrollBar;
 import org.liquidengine.legui.component.ScrollablePanel;
@@ -15,6 +16,7 @@ import org.liquidengine.legui.listener.processor.EventProcessor;
 import org.liquidengine.legui.system.handler.SehUtil;
 
 import static org.liquidengine.legui.component.misc.listener.scrollbar.ScrollBarHelper.updateScrollBarValue;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.getPaddingV4;
 
 /**
  * Created by ShchAlexander on 23.07.2017.
@@ -40,14 +42,15 @@ public class TextAreaViewportScrollListener implements EventListener<ScrollEvent
         TextArea textArea = (TextArea) event.getTargetComponent().getParent();
 
         TextAreaField textAreaField = textArea.getTextAreaField();
-        float maxTextWidth = Math.max(textAreaField.getMaxTextWidth() +
-                        textAreaField.getStyle().getPaddingLeftF() +
-                        textAreaField.getStyle().getPaddingRightF(),
-                textArea.getViewportSize().x);
-        float maxTextHeight = Math.max(textAreaField.getMaxTextHeight() +
-                        textAreaField.getStyle().getPaddingTopF() +
-                        textAreaField.getStyle().getPaddingBottomF(),
-                textArea.getViewportSize().y);
+        Vector4f p = getPaddingV4(textAreaField, textAreaField.getStyle());
+        float maxTextWidth = Math.max(
+            textAreaField.getMaxTextWidth() + p.x + p.z,
+            textArea.getViewportSize().x
+        );
+        float maxTextHeight = Math.max(
+            textAreaField.getMaxTextHeight() + p.y + p.w,
+            textArea.getViewportSize().y
+        );
         textAreaField.setSize(maxTextWidth, maxTextHeight);
 
         updateScrollBarValue(event, textArea.getVerticalScrollBar());

@@ -6,7 +6,11 @@ import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.style.flex.FlexStyle;
 import org.liquidengine.legui.style.font.Font;
 import org.liquidengine.legui.style.font.FontRegistry;
+import org.liquidengine.legui.style.length.Length;
+import org.liquidengine.legui.style.length.Unit;
 import org.liquidengine.legui.style.shadow.Shadow;
+
+import static org.liquidengine.legui.style.length.LengthType.PIXEL;
 
 /**
  * The type Style.
@@ -37,15 +41,15 @@ public class Style {
     private Float maxWidth;
     private Float maxHeight;
 
-    private Float paddingTop;
-    private Float paddingBottom;
-    private Float paddingRight;
-    private Float paddingLeft;
+    private Length paddingTop;
+    private Length paddingBottom;
+    private Length paddingRight;
+    private Length paddingLeft;
 
-    private Float marginTop;
-    private Float marginBottom;
-    private Float marginRight;
-    private Float marginLeft;
+    private Unit marginTop;
+    private Unit marginBottom;
+    private Unit marginRight;
+    private Unit marginLeft;
 
     private Float top;
     private Float bottom;
@@ -73,8 +77,8 @@ public class Style {
     /**
      * Used to set border radius.
      *
-     * @param topLeft top left radius.
-     * @param bottomRight bottom right radius.
+     * @param topLeft            top left radius.
+     * @param bottomRight        bottom right radius.
      * @param topRightBottomLeft top right and bottom left radius.
      */
     public void setBorderRadius(Float topLeft, Float topRightBottomLeft, Float bottomRight) {
@@ -86,10 +90,10 @@ public class Style {
     /**
      * Used to set border radius.
      *
-     * @param topLeft top left radius.
-     * @param topRight top right radius.
+     * @param topLeft     top left radius.
+     * @param topRight    top right radius.
      * @param bottomRight bottom right radius.
-     * @param bottomLeft bottom left radius.
+     * @param bottomLeft  bottom left radius.
      */
     public void setBorderRadius(Float topLeft, Float topRight, Float bottomRight, Float bottomLeft) {
         borderTopLeftRadius = topLeft;
@@ -105,9 +109,9 @@ public class Style {
      */
     public Vector4f getBorderRadius() {
         return new Vector4f(borderTopLeftRadius == null ? 0 : borderTopLeftRadius,
-                            borderTopRightRadius == null ? 0 : borderTopRightRadius,
-                            borderBottomRightRadius == null ? 0 : borderBottomRightRadius,
-                            borderBottomLeftRadius == null ? 0 : borderBottomLeftRadius);
+            borderTopRightRadius == null ? 0 : borderTopRightRadius,
+            borderBottomRightRadius == null ? 0 : borderBottomRightRadius,
+            borderBottomLeftRadius == null ? 0 : borderBottomLeftRadius);
     }
 
     /**
@@ -258,111 +262,127 @@ public class Style {
         this.maxHeight = maxHeight;
     }
 
+    public void setPadding(Float padding) {
+        this.setPadding(PIXEL.length(padding));
+    }
+
+    public void setPadding(Length padding) {
+        paddingLeft = paddingRight =
+            paddingTop = paddingBottom = padding;
+    }
+
     public void setPadding(Float topBottom, Float leftRight) {
+        this.setPadding(PIXEL.length(topBottom), PIXEL.length(leftRight));
+    }
+
+    public void setPadding(Length topBottom, Length leftRight) {
         paddingLeft = paddingRight = leftRight;
         paddingTop = paddingBottom = topBottom;
     }
 
     public void setPadding(Float top, Float right, Float bottom, Float left) {
+        this.setPadding(PIXEL.length(top), PIXEL.length(right), PIXEL.length(bottom), PIXEL.length(left));
+    }
+
+    public void setPadding(Length top, Length right, Length bottom, Length left) {
         paddingTop = top;
         paddingRight = right;
         paddingBottom = bottom;
         paddingLeft = left;
     }
 
-    public Float getPaddingTop() {
+    public Length getPaddingTop() {
         return paddingTop;
     }
 
-    public void setPaddingTop(Float paddingTop) {
+    public void setPaddingTop(Length paddingTop) {
         this.paddingTop = paddingTop;
     }
 
-    public float getPaddingTopF() {
-        return paddingTop == null ? 0f : paddingTop;
-    }
 
-    public Float getPaddingBottom() {
+    public Length getPaddingBottom() {
         return paddingBottom;
     }
 
-    public void setPaddingBottom(Float paddingBottom) {
+    public void setPaddingBottom(Length paddingBottom) {
         this.paddingBottom = paddingBottom;
     }
 
-    public float getPaddingBottomF() {
-        return paddingBottom == null ? 0f : paddingBottom;
-    }
 
-    public Float getPaddingRight() {
+    public Length getPaddingRight() {
         return paddingRight;
     }
 
-    public void setPaddingRight(Float paddingRight) {
+    public void setPaddingRight(Length paddingRight) {
         this.paddingRight = paddingRight;
     }
 
-    public float getPaddingRightF() {
-        return paddingRight == null ? 0f : paddingRight;
-    }
 
-    public Float getPaddingLeft() {
+    public Length getPaddingLeft() {
         return paddingLeft;
     }
 
-    public void setPaddingLeft(Float paddingLeft) {
+    public void setPaddingLeft(Length paddingLeft) {
         this.paddingLeft = paddingLeft;
     }
 
-    public float getPaddingLeftF() {
-        return paddingLeft == null ? 0f : paddingLeft;
+    public void setMargin(Float margin) {
+        setMargin(PIXEL.length(margin));
+    }
+
+    public void setMargin(Unit margin) {
+        marginLeft = marginRight = marginTop = marginBottom = margin;
     }
 
     public void setMargin(Float topBottom, Float leftRight) {
+        setMargin(PIXEL.length(topBottom), PIXEL.length(leftRight));
+    }
+
+    public void setMargin(Unit topBottom, Unit leftRight) {
         marginLeft = marginRight = leftRight;
         marginTop = marginBottom = topBottom;
     }
 
-    public void setMargin(Float margin) {
-        marginLeft = marginRight = marginTop = marginBottom = margin;
+    public void setMargin(Float top, Float right, Float bottom, Float left) {
+        setMargin(PIXEL.length(top), PIXEL.length(right), PIXEL.length(bottom), PIXEL.length(left));
     }
 
-    public void setMargin(Float top, Float right, Float bottom, Float left) {
+    public void setMargin(Unit top, Unit right, Unit bottom, Unit left) {
         marginTop = top;
         marginRight = right;
         marginBottom = bottom;
         marginLeft = left;
     }
 
-    public Float getMarginTop() {
+    public Unit getMarginTop() {
         return marginTop;
     }
 
-    public void setMarginTop(Float marginTop) {
+    public void setMarginTop(Unit marginTop) {
         this.marginTop = marginTop;
     }
 
-    public Float getMarginBottom() {
+    public Unit getMarginBottom() {
         return marginBottom;
     }
 
-    public void setMarginBottom(Float marginBottom) {
+    public void setMarginBottom(Unit marginBottom) {
         this.marginBottom = marginBottom;
     }
 
-    public Float getMarginRight() {
+    public Unit getMarginRight() {
         return marginRight;
     }
 
-    public void setMarginRight(Float marginRight) {
+    public void setMarginRight(Unit marginRight) {
         this.marginRight = marginRight;
     }
 
-    public Float getMarginLeft() {
+    public Unit getMarginLeft() {
         return marginLeft;
     }
 
-    public void setMarginLeft(Float marginLeft) {
+    public void setMarginLeft(Unit marginLeft) {
         this.marginLeft = marginLeft;
     }
 
@@ -581,7 +601,7 @@ public class Style {
     /**
      * Used to set minimum width and height
      *
-     * @param width minimum width to set.
+     * @param width  minimum width to set.
      * @param height minimum height to set.
      */
     public void setMinimumSize(float width, float height) {
@@ -592,7 +612,7 @@ public class Style {
     /**
      * sed to set max width and height.
      *
-     * @param width max width to set.
+     * @param width  max width to set.
      * @param height max height to set.
      */
     public void setMaximumSize(float width, float height) {
@@ -606,18 +626,6 @@ public class Style {
 
     public void setShadow(Shadow shadow) {
         this.shadow = shadow;
-    }
-
-    public Vector4f getPadding() {
-        return new Vector4f(paddingTop == null ? 0 : paddingTop,
-                            paddingRight == null ? 0 : paddingRight,
-                            paddingBottom == null ? 0 : paddingBottom,
-                            paddingLeft == null ? 0 : paddingLeft);
-    }
-
-    public void setPadding(Float padding) {
-        paddingLeft = paddingRight =
-            paddingTop = paddingBottom = padding;
     }
 
     /**
