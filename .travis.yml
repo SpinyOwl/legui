@@ -18,7 +18,7 @@ before_install:
     fi
 
 jdk:
-  - oraclejdk8
+  - openjdk8
 
 addons:
   sonarcloud: true
