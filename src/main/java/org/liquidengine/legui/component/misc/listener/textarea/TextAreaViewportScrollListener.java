@@ -1,22 +1,19 @@
 package org.liquidengine.legui.component.misc.listener.textarea;
 
-import java.util.ArrayList;
-
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.Component;
-import org.liquidengine.legui.component.ScrollBar;
 import org.liquidengine.legui.component.ScrollablePanel;
 import org.liquidengine.legui.component.TextArea;
 import org.liquidengine.legui.component.TextAreaField;
-import org.liquidengine.legui.component.event.scrollbar.ScrollBarChangeValueEvent;
 import org.liquidengine.legui.event.ScrollEvent;
 import org.liquidengine.legui.input.Mouse;
 import org.liquidengine.legui.listener.EventListener;
-import org.liquidengine.legui.listener.processor.EventProcessor;
 import org.liquidengine.legui.system.handler.SehUtil;
 
+import java.util.ArrayList;
+
 import static org.liquidengine.legui.component.misc.listener.scrollbar.ScrollBarHelper.updateScrollBarValue;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.getPaddingV4;
+import static org.liquidengine.legui.style.util.StyleUtilities.getPaddingV4;
 
 /**
  * Created by ShchAlexander on 23.07.2017.

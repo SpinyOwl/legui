@@ -1,14 +1,14 @@
 package org.liquidengine.legui.component.misc.listener.scrollablepanel;
 
-import java.util.ArrayList;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.ScrollablePanel;
 import org.liquidengine.legui.component.TextArea;
-import org.liquidengine.legui.component.misc.listener.textarea.TextAreaViewportScrollListener;
 import org.liquidengine.legui.event.ScrollEvent;
 import org.liquidengine.legui.input.Mouse;
 import org.liquidengine.legui.listener.EventListener;
 import org.liquidengine.legui.system.handler.SehUtil;
+
+import java.util.ArrayList;
 
 import static org.liquidengine.legui.component.misc.listener.scrollbar.ScrollBarHelper.updateScrollBarValue;
 

@@ -10,7 +10,8 @@ import org.liquidengine.legui.component.TextAreaField;
 import org.liquidengine.legui.component.event.textarea.TextAreaFieldUpdateEvent;
 import org.liquidengine.legui.component.event.textarea.TextAreaFieldUpdateEventListener;
 
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.getPaddingV4;
+import static org.liquidengine.legui.style.util.StyleUtilities.getPaddingV4;
+
 
 /**
  * Created by ShchAlexander on 17.07.2018.

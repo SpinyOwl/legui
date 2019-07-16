@@ -4,11 +4,12 @@ import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.Label;
 import org.liquidengine.legui.component.optional.TextState;
-import org.liquidengine.legui.style.Style;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgText;
 
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.*;
+import static org.liquidengine.legui.style.util.StyleUtilities.getPaddingV4;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.createScissor;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.resetScissor;
 
 /**
  * Created by ShchAlexander on 11.02.2017.
