@@ -217,13 +217,13 @@ public final class NvgRenderUtils {
             r.x = StyleUtilities.getFloatLength(curr.getBorderTopLeftRadius(), component.getSize().x);
         }
         if (curr.getBorderTopRightRadius() != null) {
-            r.x = StyleUtilities.getFloatLength(curr.getBorderTopRightRadius(), component.getSize().x);;
+            r.x = StyleUtilities.getFloatLength(curr.getBorderTopRightRadius(), component.getSize().x);
         }
         if (curr.getBorderBottomRightRadius() != null) {
-            r.x = StyleUtilities.getFloatLength(curr.getBorderBottomRightRadius(), component.getSize().x);;
+            r.x = StyleUtilities.getFloatLength(curr.getBorderBottomRightRadius(), component.getSize().x);
         }
         if (curr.getBorderBottomLeftRadius() != null) {
-            r.x = StyleUtilities.getFloatLength(curr.getBorderBottomLeftRadius(), component.getSize().x);;
+            r.x = StyleUtilities.getFloatLength(curr.getBorderBottomLeftRadius(), component.getSize().x);
         }
     }
 
