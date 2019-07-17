@@ -214,16 +214,16 @@ public final class NvgRenderUtils {
 
     private static void applyCurrentRadius(Vector4f r, Component component, Style curr) {
         if (curr.getBorderTopLeftRadius() != null) {
-            r.x = StyleUtilities.getFloatLength(curr.getBorderTopLeftRadius(), component.getSize().x);
+            r.x = StyleUtilities.getFloatLengthNullSafe(curr.getBorderTopLeftRadius(), component.getSize().x);
         }
         if (curr.getBorderTopRightRadius() != null) {
-            r.x = StyleUtilities.getFloatLength(curr.getBorderTopRightRadius(), component.getSize().x);
+            r.x = StyleUtilities.getFloatLengthNullSafe(curr.getBorderTopRightRadius(), component.getSize().x);
         }
         if (curr.getBorderBottomRightRadius() != null) {
-            r.x = StyleUtilities.getFloatLength(curr.getBorderBottomRightRadius(), component.getSize().x);
+            r.x = StyleUtilities.getFloatLengthNullSafe(curr.getBorderBottomRightRadius(), component.getSize().x);
         }
         if (curr.getBorderBottomLeftRadius() != null) {
-            r.x = StyleUtilities.getFloatLength(curr.getBorderBottomLeftRadius(), component.getSize().x);
+            r.x = StyleUtilities.getFloatLengthNullSafe(curr.getBorderBottomLeftRadius(), component.getSize().x);
         }
     }
 

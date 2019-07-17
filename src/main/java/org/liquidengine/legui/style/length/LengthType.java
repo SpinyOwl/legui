@@ -11,7 +11,6 @@ public final class LengthType<T> {
         this.name = name;
         this.type = type;
     }
-
     public String name() {
         return name;
     }
@@ -24,4 +23,13 @@ public final class LengthType<T> {
         if (value == null) return null;
         return new Length<>(value, this);
     }
+
+    public static Length<Float> pixel(float value) {
+        return new Length<>(value, PIXEL);
+    }
+
+    public static Length<Float> percent(float value) {
+        return new Length<>(value, PERCENT);
+    }
+
 }

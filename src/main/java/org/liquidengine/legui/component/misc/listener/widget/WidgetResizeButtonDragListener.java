@@ -6,6 +6,10 @@ import org.liquidengine.legui.component.Widget;
 import org.liquidengine.legui.event.MouseDragEvent;
 import org.liquidengine.legui.input.Mouse;
 import org.liquidengine.legui.listener.MouseDragEventListener;
+import org.liquidengine.legui.style.length.Length;
+import org.liquidengine.legui.style.util.StyleUtilities;
+
+import static org.liquidengine.legui.style.length.LengthType.pixel;
 
 /**
  * Created by ShchAlexander on 11.03.2018.
@@ -37,17 +41,22 @@ public class WidgetResizeButtonDragListener implements MouseDragEventListener {
 
         Vector2f deltaSize = new Vector2f();
 
-        Float minWidth = widget.getStyle().getMinWidth();
-        if (minWidth == null) {
-            minWidth = 1f;
+        Length minWidthU = widget.getStyle().getMinWidth();
+        if (minWidthU == null) {
+            minWidthU = pixel(1f);
         }
-        Float minHeight = widget.getStyle().getMinHeight();
-        if (minHeight == null) {
-            minHeight = widget.getTitleContainer().getSize().y;
+        Length minHeightU = widget.getStyle().getMinHeight();
+        if (minHeightU == null) {
+            minHeightU = pixel(widget.getTitleContainer().getSize().y);
         }
 
-        Float maxWidth = widget.getStyle().getMaxWidth();
-        Float maxHeight = widget.getStyle().getMaxHeight();
+        Length maxWidthU = widget.getStyle().getMaxWidth();
+        Length maxHeightU = widget.getStyle().getMaxHeight();
+
+        Float minWidth = StyleUtilities.getFloatLength(minWidthU, widget.getParent().getSize().x);
+        Float minHeight = StyleUtilities.getFloatLength(minHeightU, widget.getParent().getSize().y);
+        Float maxWidth = StyleUtilities.getFloatLength(maxWidthU, widget.getParent().getSize().x);
+        Float maxHeight = StyleUtilities.getFloatLength(maxHeightU, widget.getParent().getSize().y);
 
         if (
             (
@@ -56,7 +65,7 @@ public class WidgetResizeButtonDragListener implements MouseDragEventListener {
                 || (
                 (delta.x > 0 && (cursorPositionPrev.x >= resizeButton.getAbsolutePosition().x
                     || cursorPosition.x >= resizeButton.getAbsolutePosition().x)))
-            ) {
+        ) {
             if (xx >= minWidth && (maxWidth == null || xx <= maxWidth)) {
                 deltaSize.x = delta.x;
             }
@@ -68,7 +77,7 @@ public class WidgetResizeButtonDragListener implements MouseDragEventListener {
                 || (
                 (delta.y > 0 && (cursorPositionPrev.y >= resizeButton.getAbsolutePosition().y
                     || cursorPosition.y >= resizeButton.getAbsolutePosition().y)))
-            ) {
+        ) {
             if (yy >= minHeight && (maxHeight == null || yy <= maxHeight)) {
                 deltaSize.y = delta.y;
             }

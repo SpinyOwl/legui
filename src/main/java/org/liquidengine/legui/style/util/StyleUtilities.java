@@ -5,6 +5,7 @@ import org.joml.Vector4f;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.style.Style;
 import org.liquidengine.legui.style.length.Length;
+import org.liquidengine.legui.style.length.Unit;
 
 import static org.liquidengine.legui.style.length.LengthType.PERCENT;
 import static org.liquidengine.legui.style.length.LengthType.PIXEL;
@@ -35,28 +36,44 @@ public final class StyleUtilities {
         }
 
         return new Vector4f(
-            getFloatLength(paddingLeft, baseWidth),
-            getFloatLength(paddingTop, baseWidth),
-            getFloatLength(paddingRight, baseWidth),
-            getFloatLength(paddingBottom, baseWidth)
+            getFloatLengthNullSafe(paddingLeft, baseWidth),
+            getFloatLengthNullSafe(paddingTop, baseWidth),
+            getFloatLengthNullSafe(paddingRight, baseWidth),
+            getFloatLengthNullSafe(paddingBottom, baseWidth)
         );
     }
 
     /**
      * Used to extract float value of length from {@link Length} value.
      *
-     * @param length     length
+     * @param length    length
      * @param baseWidth base width to calculate length using percentage.
      * @return float(pixels) representation of length.
      */
-    public static float getFloatLength(Length length, float baseWidth) {
-        if (length == null) return 0;
-        else if (PIXEL.equals(length.type())) {
-            return PIXEL.type().cast(length.get());
-        } else if (PERCENT.equals(length.type())) {
-            return PERCENT.type().cast(length.get()) * baseWidth;
+    public static float getFloatLengthNullSafe(Unit length, float baseWidth) {
+        Float floatLength = getFloatLength(length, baseWidth);
+        return floatLength == null ? 0 : floatLength;
+    }
+
+    /**
+     * Used to extract float value of length from {@link Length} value.
+     *
+     * @param length    length
+     * @param baseWidth base width to calculate length using percentage.
+     * @return float(pixels) representation of length.
+     */
+    public static Float getFloatLength(Unit length, float baseWidth) {
+        if (length == null) return null;
+        else if (length.isAuto()) return baseWidth;
+        else if (length.isLength()) {
+            Length l = length.asLength();
+            if (PIXEL.equals(l.type())) {
+                return PIXEL.type().cast(l.get());
+            } else if (PERCENT.equals(l.type())) {
+                return PERCENT.type().cast(l.get()) * baseWidth;
+            }
         }
-        return 0;
+        return null;
     }
 
 
@@ -94,10 +111,10 @@ public final class StyleUtilities {
         Length borderBottomLeftRadius = style.getBorderBottomLeftRadius();
 
         return new Vector4f(
-            getFloatLength(borderTopLeftRadius, component.getSize().x),
-            getFloatLength(borderTopRightRadius, component.getSize().x),
-            getFloatLength(borderBottomRightRadius, component.getSize().x),
-            getFloatLength(borderBottomLeftRadius, component.getSize().x)
+            getFloatLengthNullSafe(borderTopLeftRadius, component.getSize().x),
+            getFloatLengthNullSafe(borderTopRightRadius, component.getSize().x),
+            getFloatLengthNullSafe(borderBottomRightRadius, component.getSize().x),
+            getFloatLengthNullSafe(borderBottomLeftRadius, component.getSize().x)
         );
     }
 
