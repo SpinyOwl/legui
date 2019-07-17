@@ -1,6 +1,7 @@
 package org.liquidengine.legui.system.renderer.nvg.icon;
 
 import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderImage;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.getBorderRadius;
 
 import java.util.HashMap;
 import org.joml.Vector2f;
@@ -36,7 +37,7 @@ public class NvgImageIconRenderer<I extends ImageIcon> extends NvgIconRenderer<I
         }
 
         HashMap<String, Object> p = new HashMap<>();
-        p.put(ImageRenderer.C_RADIUS, component.getStyle().getBorderRadius());
+        p.put(ImageRenderer.C_RADIUS, getBorderRadius(component));
         renderImage(icon.getImage(), new Vector2f(x, y), iconSize, p, context);
     }
 }

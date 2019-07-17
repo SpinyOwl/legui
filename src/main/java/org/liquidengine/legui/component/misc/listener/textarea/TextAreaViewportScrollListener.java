@@ -13,7 +13,7 @@ import org.liquidengine.legui.system.handler.SehUtil;
 import java.util.ArrayList;
 
 import static org.liquidengine.legui.component.misc.listener.scrollbar.ScrollBarHelper.updateScrollBarValue;
-import static org.liquidengine.legui.style.util.StyleUtilities.getPaddingV4;
+import static org.liquidengine.legui.style.util.StyleUtilities.getPadding;
 
 /**
  * Created by ShchAlexander on 23.07.2017.
@@ -39,7 +39,7 @@ public class TextAreaViewportScrollListener implements EventListener<ScrollEvent
         TextArea textArea = (TextArea) event.getTargetComponent().getParent();
 
         TextAreaField textAreaField = textArea.getTextAreaField();
-        Vector4f padding = getPaddingV4(textAreaField, textAreaField.getStyle());
+        Vector4f padding = getPadding(textAreaField, textAreaField.getStyle());
         float maxTextWidth = Math.max(
             textAreaField.getMaxTextWidth() + padding.x + padding.z,
             textArea.getViewportSize().x

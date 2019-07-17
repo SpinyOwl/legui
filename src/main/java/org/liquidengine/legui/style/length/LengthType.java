@@ -21,6 +21,7 @@ public final class LengthType<T> {
     }
 
     public Length<T> length(T value) {
+        if (value == null) return null;
         return new Length<>(value, this);
     }
 }

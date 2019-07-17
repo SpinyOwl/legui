@@ -8,7 +8,7 @@ import org.liquidengine.legui.icon.Icon;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgText;
 
-import static org.liquidengine.legui.style.util.StyleUtilities.getPaddingV4;
+import static org.liquidengine.legui.style.util.StyleUtilities.getPadding;
 import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderIcon;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.createScissor;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.resetScissor;
@@ -31,7 +31,7 @@ public class NvgRadioButtonRenderer extends NvgDefaultComponentRenderer<RadioBut
 
             TextState textState = radioButton.getTextState();
             Icon icon = radioButton.isChecked() ? radioButton.getIconChecked() : radioButton.getIconUnchecked();
-            Vector4f padding = getPaddingV4(radioButton, radioButton.getStyle());
+            Vector4f padding = getPadding(radioButton, radioButton.getStyle());
             Vector4f pad = new Vector4f(padding.w, padding.x, padding.y, padding.z);
 
             // renderNvg text

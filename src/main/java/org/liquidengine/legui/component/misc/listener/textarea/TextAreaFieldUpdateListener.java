@@ -10,7 +10,7 @@ import org.liquidengine.legui.component.TextAreaField;
 import org.liquidengine.legui.component.event.textarea.TextAreaFieldUpdateEvent;
 import org.liquidengine.legui.component.event.textarea.TextAreaFieldUpdateEventListener;
 
-import static org.liquidengine.legui.style.util.StyleUtilities.getPaddingV4;
+import static org.liquidengine.legui.style.util.StyleUtilities.getPadding;
 
 
 /**
@@ -29,7 +29,7 @@ public class TextAreaFieldUpdateListener implements TextAreaFieldUpdateEventList
         TextAreaField textAreaField = event.getTargetComponent();
         Component parent = textAreaField.getParent();
 
-        Vector4f padding = getPaddingV4(textAreaField, textAreaField.getStyle());
+        Vector4f padding = getPadding(textAreaField, textAreaField.getStyle());
         if (parent instanceof TextAreaViewport) {
             TextAreaViewport textAreaViewport = (TextAreaViewport) parent;
 

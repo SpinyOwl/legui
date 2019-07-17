@@ -20,7 +20,7 @@ import java.util.Map;
 
 import static org.liquidengine.legui.style.color.ColorUtil.oppositeBlackOrWhite;
 import static org.liquidengine.legui.style.util.StyleUtilities.getInnerContentRectangle;
-import static org.liquidengine.legui.style.util.StyleUtilities.getPaddingV4;
+import static org.liquidengine.legui.style.util.StyleUtilities.getPadding;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.*;
 import static org.lwjgl.nanovg.NanoVG.*;
 import static org.lwjgl.system.MemoryUtil.*;
@@ -55,7 +55,7 @@ public class NvgPasswordInputRenderer extends NvgDefaultComponentRenderer<Passwo
             }
             renderBackground(component, leguiContext, nanovg);
 
-            Vector4f padding = getPaddingV4(component, component.getStyle());
+            Vector4f padding = getPadding(component, component.getStyle());
             Vector4f intersectRect = getInnerContentRectangle(pos, size, padding);
             intersectScissor(nanovg, new Vector4f(intersectRect).sub(1, 1, -2, -2));
             renderText(leguiContext, nanovg, component, size, intersectRect, bc);

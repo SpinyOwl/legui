@@ -7,6 +7,7 @@ import org.liquidengine.legui.style.Style;
 import org.liquidengine.legui.style.border.SimpleLineBorder;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.nvg.NvgBorderRenderer;
+import org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgShapes;
 
 /**
@@ -31,11 +32,14 @@ public class NvgSimpleLineBorderRenderer extends NvgBorderRenderer<SimpleLineBor
             Vector2f bSize = new Vector2f(size);
             bSize.add(thickness, thickness);
             Vector2f bPos = new Vector2f(absolutePosition).sub(thickness / 2f, thickness / 2f);
+
+            Vector4f borderRadius = NvgRenderUtils.getBorderRadius(component);
+
             if (component.isFocused() && style.getFocusedStrokeColor() != null) {
                 Vector4f strokeColor = style.getFocusedStrokeColor();
-                NvgShapes.drawRectStroke(nanovg, new Vector2f(bPos).add(-0.5f, +0.5f), new Vector2f(bSize).add(1f,1f), strokeColor, 1f, style.getBorderRadius());
+                NvgShapes.drawRectStroke(nanovg, new Vector2f(bPos).add(-0.5f, +0.5f), new Vector2f(bSize).add(1f,1f), strokeColor, 1f, borderRadius);
             }
-            NvgShapes.drawRectStroke(nanovg, bPos, bSize, borderColor, thickness, style.getBorderRadius());
+            NvgShapes.drawRectStroke(nanovg, bPos, bSize, borderColor, thickness, borderRadius);
 
         }
     }

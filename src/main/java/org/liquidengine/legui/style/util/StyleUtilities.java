@@ -20,39 +20,41 @@ public final class StyleUtilities {
      * @param style     style with paddings.
      * @return padding represented with {@link Vector4f} where x - left, y - top, z - right, w - bottom.
      */
-    public static Vector4f getPaddingV4(Component component, Style style) {
+    public static Vector4f getPadding(Component component, Style style) {
 
         Length paddingLeft = style.getPaddingLeft();
         Length paddingRight = style.getPaddingRight();
         Length paddingTop = style.getPaddingTop();
         Length paddingBottom = style.getPaddingBottom();
 
-        float parentWidth = 0;
+        float baseWidth = 0;
         if (component.getParent() != null) {
-            parentWidth = component.getParent().getSize().x;
+            baseWidth = component.getParent().getSize().x;
+        } else {
+            baseWidth = component.getSize().x;
         }
 
         return new Vector4f(
-            getPadding(paddingLeft, parentWidth),
-            getPadding(paddingTop, parentWidth),
-            getPadding(paddingRight, parentWidth),
-            getPadding(paddingBottom, parentWidth)
+            getFloatLength(paddingLeft, baseWidth),
+            getFloatLength(paddingTop, baseWidth),
+            getFloatLength(paddingRight, baseWidth),
+            getFloatLength(paddingBottom, baseWidth)
         );
     }
 
     /**
-     * Used to extract float value of padding from {@link Length} value.
+     * Used to extract float value of length from {@link Length} value.
      *
-     * @param padding     padding
-     * @param parentWidth parent width to calculate padding using percentage.
-     * @return float(pixels) representation of padding.
+     * @param length     length
+     * @param baseWidth base width to calculate length using percentage.
+     * @return float(pixels) representation of length.
      */
-    private static float getPadding(Length padding, float parentWidth) {
-        if (padding == null) return 0;
-        else if (PIXEL.equals(padding.type())) {
-            return PIXEL.type().cast(padding.get());
-        } else if (PERCENT.equals(padding.type())) {
-            return PERCENT.type().cast(padding.get()) * parentWidth;
+    public static float getFloatLength(Length length, float baseWidth) {
+        if (length == null) return 0;
+        else if (PIXEL.equals(length.type())) {
+            return PIXEL.type().cast(length.get());
+        } else if (PERCENT.equals(length.type())) {
+            return PERCENT.type().cast(length.get()) * baseWidth;
         }
         return 0;
     }
@@ -76,4 +78,27 @@ public final class StyleUtilities {
             componentSize.y - componentPadding.y - componentPadding.w
         );
     }
+
+    /**
+     * Returns vector of four border radius elements where: x = top left, y = top right, z = bottom right, w = bottom left.
+     * <p>
+     * NOTE. IF radius specified in percents - radius will be calculated using only width of component - will be represented with segment of circle (not ellipse).
+     * </p>
+     *
+     * @return vector of four border radius.
+     */
+    public static Vector4f getBorderRadius(Component component, Style style) {
+        Length borderTopLeftRadius = style.getBorderTopLeftRadius();
+        Length borderTopRightRadius = style.getBorderTopRightRadius();
+        Length borderBottomRightRadius = style.getBorderBottomRightRadius();
+        Length borderBottomLeftRadius = style.getBorderBottomLeftRadius();
+
+        return new Vector4f(
+            getFloatLength(borderTopLeftRadius, component.getSize().x),
+            getFloatLength(borderTopRightRadius, component.getSize().x),
+            getFloatLength(borderBottomRightRadius, component.getSize().x),
+            getFloatLength(borderBottomLeftRadius, component.getSize().x)
+        );
+    }
+
 }

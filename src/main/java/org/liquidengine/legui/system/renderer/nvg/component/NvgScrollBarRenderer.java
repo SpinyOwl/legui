@@ -2,8 +2,7 @@ package org.liquidengine.legui.system.renderer.nvg.component;
 
 import static org.liquidengine.legui.component.optional.Orientation.VERTICAL;
 import static org.liquidengine.legui.style.color.ColorUtil.oppositeBlackOrWhite;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.createScissor;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.resetScissor;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.*;
 import static org.liquidengine.legui.util.TextUtil.cpToStr;
 import static org.lwjgl.nanovg.NanoVG.nvgSave;
 
@@ -61,7 +60,7 @@ public class NvgScrollBarRenderer extends NvgDefaultComponentRenderer<ScrollBar>
                     scrollBarSize.set(size.x - 2 * diff, size.y);
                 }
                 NvgShapes.drawRect(nanovg, scrollBarPos, scrollBarSize, scrollBar.getStyle().getBackground().getColor(),
-                                   arrowsEnabled ? new Vector4f(0) : scrollBar.getStyle().getBorderRadius());
+                                   arrowsEnabled ? new Vector4f(0) : getBorderRadius(scrollBar));
             }
             // draw arrows
             drawArrows(nanovg, scrollBar, pos, size);
@@ -89,7 +88,7 @@ public class NvgScrollBarRenderer extends NvgDefaultComponentRenderer<ScrollBar>
             Vector2f arrowBgSize = new Vector2f();
             Vector2f arrow2pos = new Vector2f();
             float arrowSize = scrollBar.getArrowSize();
-            Vector4f cornerRadius = scrollBar.getStyle().getBorderRadius();
+            Vector4f cornerRadius = getBorderRadius(scrollBar);
             boolean vertical = VERTICAL.equals(scrollBar.getOrientation());
             if (vertical) {
                 firstArrowIcon = T;
@@ -158,6 +157,6 @@ public class NvgScrollBarRenderer extends NvgDefaultComponentRenderer<ScrollBar>
             scrollSize.set(barSize - 2 * offset, size.y - 2 * offset);
         }
 
-        NvgShapes.drawRect(nanovg, scrollPos, scrollSize, scrollBar.getScrollColor(), scrollBar.getStyle().getBorderRadius());
+        NvgShapes.drawRect(nanovg, scrollPos, scrollSize, scrollBar.getScrollColor(), getBorderRadius(scrollBar));
     }
 }
