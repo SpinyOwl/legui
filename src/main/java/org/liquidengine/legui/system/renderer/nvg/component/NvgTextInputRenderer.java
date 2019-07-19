@@ -7,6 +7,7 @@ import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
 import org.liquidengine.legui.input.Mouse;
+import org.liquidengine.legui.style.Style;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgColorUtil;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgShapes;
@@ -19,6 +20,8 @@ import java.nio.ByteBuffer;
 import java.util.Map;
 
 import static org.liquidengine.legui.style.color.ColorUtil.oppositeBlackOrWhite;
+import static org.liquidengine.legui.style.util.StyleUtilities.getInnerContentRectangle;
+import static org.liquidengine.legui.style.util.StyleUtilities.getPadding;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.*;
 import static org.lwjgl.nanovg.NanoVG.*;
 import static org.lwjgl.system.MemoryUtil.*;
@@ -49,7 +52,8 @@ public class NvgTextInputRenderer extends NvgDefaultComponentRenderer<TextInput>
             Vector2f pos = component.getAbsolutePosition();
             Vector2f size = component.getSize();
             boolean enabled = component.isEnabled();
-            Vector4f bc = new Vector4f(component.getStyle().getBackground().getColor());
+            Style style = component.getStyle();
+            Vector4f bc = new Vector4f(style.getBackground().getColor());
 
             if (enabled && component.isFocused()) {
                 bc.w *= 1.1f;
@@ -61,12 +65,8 @@ public class NvgTextInputRenderer extends NvgDefaultComponentRenderer<TextInput>
             }
             renderBackground(component, context, nanovg);
 
-            Vector4f p = new Vector4f(component.getStyle().getPadding().w,
-                                      component.getStyle().getPadding().x,
-                                      component.getStyle().getPadding().y,
-                                      component.getStyle().getPadding().z);
-
-            Vector4f intersectRect = new Vector4f(pos.x + p.x, pos.y + p.y, size.x - p.x - p.z, size.y - p.y - p.w);
+            Vector4f padding = getPadding(component, style);
+            Vector4f intersectRect = getInnerContentRectangle(pos, size, padding);
             intersectScissor(nanovg, new Vector4f(intersectRect).sub(1, 1, -2, -2));
             renderText(context, nanovg, component, size, intersectRect, bc);
         }

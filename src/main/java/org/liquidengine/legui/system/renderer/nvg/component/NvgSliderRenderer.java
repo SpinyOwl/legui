@@ -9,8 +9,7 @@ import org.liquidengine.legui.system.renderer.nvg.util.NvgColorUtil;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgShapes;
 import org.lwjgl.nanovg.NVGColor;
 
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.createScissor;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.resetScissor;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.*;
 import static org.lwjgl.nanovg.NanoVG.*;
 
 /**
@@ -44,7 +43,7 @@ public class NvgSliderRenderer<T extends Slider> extends NvgDefaultComponentRend
             float width = size.x;
             float height = size.y;
 
-            Vector4f cornerRadius = slider.getStyle().getBorderRadius();
+            Vector4f cornerRadius = getBorderRadius(slider);
             renderBackground(slider, context, nanovg);
 
             final float minValue = slider.getMinValue();

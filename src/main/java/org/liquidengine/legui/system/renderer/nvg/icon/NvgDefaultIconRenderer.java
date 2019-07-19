@@ -9,6 +9,8 @@ import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.nvg.NvgIconRenderer;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgShapes;
 
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.getBorderRadius;
+
 /**
  * Created by ShchAlexander on 11.02.2017.
  */
@@ -36,7 +38,7 @@ public class NvgDefaultIconRenderer extends NvgIconRenderer {
         float w = iconSize.x;
         float h = iconSize.y;
 
-        NvgShapes.drawRect(nanovg, new Vector4f(x, y, w, h), ColorConstants.red, component.getStyle().getBorderRadius());
-        NvgShapes.drawRectStroke(nanovg, new Vector4f(x, y, w, h), ColorConstants.black, 1, component.getStyle().getBorderRadius());
+        NvgShapes.drawRect(nanovg, new Vector4f(x, y, w, h), ColorConstants.red, getBorderRadius(component));
+        NvgShapes.drawRectStroke(nanovg, new Vector4f(x, y, w, h), ColorConstants.black, 1, getBorderRadius(component));
     }
 }

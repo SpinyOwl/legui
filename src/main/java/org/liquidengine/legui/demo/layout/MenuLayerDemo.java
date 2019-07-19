@@ -10,6 +10,7 @@ import org.liquidengine.legui.style.Style.DisplayType;
 import org.liquidengine.legui.style.Style.PositionType;
 import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.style.flex.FlexStyle.*;
+import org.liquidengine.legui.style.util.StyleUtilities;
 import org.liquidengine.legui.theme.Themes;
 
 import java.util.List;
@@ -256,7 +257,8 @@ public class MenuLayerDemo extends Demo {
 
         public void addMenuBarItemOption(MenuBarItemOption menuBarItemOption) {
             if (this.add(menuBarItemOption)) {
-                this.getSize().x = Math.max(this.getSize().x, menuBarItemOption.getStyle().getWidth());
+                this.getSize().x = Math.max(this.getSize().x,
+                    StyleUtilities.getFloatLengthNullSafe(menuBarItemOption.getStyle().getWidth(), menuBarItemOption.getParent().getSize().x));
                 this.getSize().y = this.getSize().y + MENU_HEIGHT;
                 menuBarItemOptions.add(menuBarItemOption);
                 menuBarItemOption.setLayer(layer);

@@ -7,6 +7,7 @@ import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
 import org.liquidengine.legui.style.Style;
 import org.liquidengine.legui.style.shadow.Shadow;
+import org.liquidengine.legui.style.util.StyleUtilities;
 import org.lwjgl.nanovg.NVGColor;
 import org.lwjgl.nanovg.NVGPaint;
 
@@ -196,33 +197,33 @@ public final class NvgRenderUtils {
 
     public static Vector4f getBorderRadius(Component component) {
         Style style = component.getStyle();
-        Vector4f r = style.getBorderRadius();
+        Vector4f r = StyleUtilities.getBorderRadius(component, style);
 
         if (component.isFocused()) {
-            applyCurrentRadius(r, component.getFocusedStyle());
+            applyCurrentRadius(r, component, component.getFocusedStyle());
         }
         if (component.isHovered()) {
-            applyCurrentRadius(r, component.getHoveredStyle());
+            applyCurrentRadius(r, component, component.getHoveredStyle());
         }
         if (component.isPressed()) {
-            applyCurrentRadius(r, component.getPressedStyle());
+            applyCurrentRadius(r, component, component.getPressedStyle());
         }
 
         return r;
     }
 
-    private static void applyCurrentRadius(Vector4f r, Style curr) {
+    private static void applyCurrentRadius(Vector4f r, Component component, Style curr) {
         if (curr.getBorderTopLeftRadius() != null) {
-            r.x = curr.getBorderTopLeftRadius();
+            r.x = StyleUtilities.getFloatLengthNullSafe(curr.getBorderTopLeftRadius(), component.getSize().x);
         }
         if (curr.getBorderTopRightRadius() != null) {
-            r.x = curr.getBorderTopRightRadius();
+            r.x = StyleUtilities.getFloatLengthNullSafe(curr.getBorderTopRightRadius(), component.getSize().x);
         }
         if (curr.getBorderBottomRightRadius() != null) {
-            r.x = curr.getBorderBottomRightRadius();
+            r.x = StyleUtilities.getFloatLengthNullSafe(curr.getBorderBottomRightRadius(), component.getSize().x);
         }
         if (curr.getBorderBottomLeftRadius() != null) {
-            r.x = curr.getBorderBottomLeftRadius();
+            r.x = StyleUtilities.getFloatLengthNullSafe(curr.getBorderBottomLeftRadius(), component.getSize().x);
         }
     }
 
@@ -240,7 +241,7 @@ public final class NvgRenderUtils {
             float y = absolutePosition.y;
             float w = size.x;
             float h = size.y;
-            Vector4f borderRadius = component.getStyle().getBorderRadius();
+            Vector4f borderRadius = getBorderRadius(component);
             float cornerRadius = (borderRadius.x + borderRadius.y + borderRadius.z + borderRadius.w) / 4;
 
             try (

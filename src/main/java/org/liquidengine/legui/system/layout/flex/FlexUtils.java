@@ -6,7 +6,12 @@ import org.liquidengine.legui.style.flex.FlexStyle.AlignItems;
 import org.liquidengine.legui.style.flex.FlexStyle.AlignSelf;
 import org.liquidengine.legui.style.flex.FlexStyle.FlexDirection;
 import org.liquidengine.legui.style.flex.FlexStyle.JustifyContent;
+import org.liquidengine.legui.style.length.Length;
+import org.liquidengine.legui.style.length.Unit;
 import org.lwjgl.util.yoga.Yoga;
+
+import static org.liquidengine.legui.style.length.LengthType.PERCENT;
+import static org.liquidengine.legui.style.length.LengthType.PIXEL;
 
 /**
  * @author Aliaksandr_Shcherbin.
@@ -106,40 +111,62 @@ final class FlexUtils {
     }
 
     public static void setPadding(long node, Style style) {
-        Float paddingLeft = style.getPaddingLeft();
+        Length paddingLeft = style.getPaddingLeft();
         if (paddingLeft != null) {
-            Yoga.YGNodeStyleSetPadding(node, Yoga.YGEdgeLeft, paddingLeft);
+            applyPadding(node, Yoga.YGEdgeLeft, paddingLeft);
         }
-        Float paddingTop = style.getPaddingTop();
+        Length paddingTop = style.getPaddingTop();
         if (paddingTop != null) {
-            Yoga.YGNodeStyleSetPadding(node, Yoga.YGEdgeTop, paddingTop);
+            applyPadding(node, Yoga.YGEdgeTop, paddingTop);
         }
-        Float paddingRight = style.getPaddingRight();
+        Length paddingRight = style.getPaddingRight();
         if (paddingRight != null) {
-            Yoga.YGNodeStyleSetPadding(node, Yoga.YGEdgeRight, paddingRight);
+            applyPadding(node, Yoga.YGEdgeRight, paddingRight);
         }
-        Float paddingBottom = style.getPaddingBottom();
+        Length paddingBottom = style.getPaddingBottom();
         if (paddingBottom != null) {
-            Yoga.YGNodeStyleSetPadding(node, Yoga.YGEdgeBottom, paddingBottom);
+            applyPadding(node, Yoga.YGEdgeBottom, paddingBottom);
         }
     }
 
     public static void setMargin(long node, Style style) {
-        Float marginLeft = style.getMarginLeft();
+        Unit marginLeft = style.getMarginLeft();
         if (marginLeft != null) {
-            Yoga.YGNodeStyleSetMargin(node, Yoga.YGEdgeLeft, marginLeft);
+            applyMargin(node, Yoga.YGEdgeLeft, marginLeft);
         }
-        Float marginTop = style.getMarginTop();
+        Unit marginTop = style.getMarginTop();
         if (marginTop != null) {
-            Yoga.YGNodeStyleSetMargin(node, Yoga.YGEdgeTop, marginTop);
+            applyMargin(node, Yoga.YGEdgeTop, marginTop);
         }
-        Float marginRight = style.getMarginRight();
+        Unit marginRight = style.getMarginRight();
         if (marginRight != null) {
-            Yoga.YGNodeStyleSetMargin(node, Yoga.YGEdgeRight, marginRight);
+            applyMargin(node, Yoga.YGEdgeRight, marginRight);
         }
-        Float marginBottom = style.getMarginBottom();
+        Unit marginBottom = style.getMarginBottom();
         if (marginBottom != null) {
-            Yoga.YGNodeStyleSetMargin(node, Yoga.YGEdgeBottom, marginBottom);
+            applyMargin(node, Yoga.YGEdgeBottom, marginBottom);
+        }
+    }
+
+    private static void applyMargin(long node, int edge, Unit margin) {
+        if (margin.isAuto()) {
+            Yoga.YGNodeStyleSetMarginAuto(node, edge);
+
+        } else if (margin.isLength()) {
+            Length m = margin.asLength();
+            if (PERCENT.equals(m.type())) {
+                Yoga.YGNodeStyleSetMarginPercent(node, edge, PERCENT.type().cast(m.get()));
+            } else if (PIXEL.equals(m.type())) {
+                Yoga.YGNodeStyleSetMargin(node, edge, PIXEL.type().cast(m.get()));
+            }
+        }
+    }
+
+    private static void applyPadding(long node, int edge, Length padding) {
+        if (PIXEL.equals(padding.type())) {
+            Yoga.YGNodeStyleSetPadding(node, edge, PIXEL.type().cast(padding.get()));
+        } else if (PERCENT.equals(padding.type())) {
+            Yoga.YGNodeStyleSetPaddingPercent(node, edge, PERCENT.type().cast(padding.get()));
         }
     }
 

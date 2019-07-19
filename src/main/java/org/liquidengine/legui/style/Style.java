@@ -6,7 +6,11 @@ import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.style.flex.FlexStyle;
 import org.liquidengine.legui.style.font.Font;
 import org.liquidengine.legui.style.font.FontRegistry;
+import org.liquidengine.legui.style.length.Length;
+import org.liquidengine.legui.style.length.Unit;
 import org.liquidengine.legui.style.shadow.Shadow;
+
+import static org.liquidengine.legui.style.length.LengthType.pixel;
 
 /**
  * The type Style.
@@ -23,34 +27,34 @@ public class Style {
     private Border border = new SimpleLineBorder(ColorConstants.gray(), 1);
     private Font font = FontRegistry.getFont(FontRegistry.DEFAULT);
 
-    private Float borderTopLeftRadius;
-    private Float borderTopRightRadius;
-    private Float borderBottomRightRadius;
-    private Float borderBottomLeftRadius;
+    private Length borderTopLeftRadius;
+    private Length borderTopRightRadius;
+    private Length borderBottomRightRadius;
+    private Length borderBottomLeftRadius;
 
-    private Float width;
-    private Float height;
+    private Length width;
+    private Length height;
 
-    private Float minWidth;
-    private Float minHeight;
+    private Length minWidth;
+    private Length minHeight;
 
-    private Float maxWidth;
-    private Float maxHeight;
+    private Length maxWidth;
+    private Length maxHeight;
 
-    private Float paddingTop;
-    private Float paddingBottom;
-    private Float paddingRight;
-    private Float paddingLeft;
+    private Length paddingTop;
+    private Length paddingBottom;
+    private Length paddingRight;
+    private Length paddingLeft;
 
-    private Float marginTop;
-    private Float marginBottom;
-    private Float marginRight;
-    private Float marginLeft;
+    private Unit marginTop;
+    private Unit marginBottom;
+    private Unit marginRight;
+    private Unit marginLeft;
 
-    private Float top;
-    private Float bottom;
-    private Float right;
-    private Float left;
+    private Length top;
+    private Length bottom;
+    private Length right;
+    private Length left;
 
     private Shadow shadow;
 
@@ -59,39 +63,93 @@ public class Style {
      */
     private Vector4f focusedStrokeColor = ColorConstants.lightBlue();
 
+
+    /**
+     * Used to set border radius for all four corners. (PIXEL VERSION)
+     *
+     * @param radius radius to set. Sets border radius to all corners.
+     */
+    public void setBorderRadius(float radius) {
+        setBorderRadius(pixel(radius));
+    }
+
+
+    /**
+     * Used to set border radius for all four corners.
+     *
+     * @param radius radius to set. Sets border radius to all corners.
+     */
+    public void setBorderRadius(Length radius) {
+        borderTopLeftRadius = borderTopRightRadius =
+            borderBottomRightRadius = borderBottomLeftRadius = radius;
+    }
+
+    /**
+     * Used to set border radius. (PIXEL VERSION)
+     *
+     * @param topLeftBottomRight top left and bottom right radius.
+     * @param topRightBottomLeft top right and bottom left radius.
+     */
+    public void setBorderRadius(float topLeftBottomRight, float topRightBottomLeft) {
+        setBorderRadius(pixel(topLeftBottomRight), pixel(topRightBottomLeft));
+    }
+
     /**
      * Used to set border radius.
      *
      * @param topLeftBottomRight top left and bottom right radius.
      * @param topRightBottomLeft top right and bottom left radius.
      */
-    public void setBorderRadius(Float topLeftBottomRight, Float topRightBottomLeft) {
+    public void setBorderRadius(Length topLeftBottomRight, Length topRightBottomLeft) {
         borderTopLeftRadius = borderBottomRightRadius = topLeftBottomRight;
         borderTopRightRadius = borderBottomLeftRadius = topRightBottomLeft;
     }
 
     /**
-     * Used to set border radius.
+     * Used to set border radius. (PIXEL VERSION)
      *
-     * @param topLeft top left radius.
-     * @param bottomRight bottom right radius.
+     * @param topLeft            top left radius.
+     * @param bottomRight        bottom right radius.
      * @param topRightBottomLeft top right and bottom left radius.
      */
-    public void setBorderRadius(Float topLeft, Float topRightBottomLeft, Float bottomRight) {
+    public void setBorderRadius(float topLeft, float topRightBottomLeft, float bottomRight) {
+        setBorderRadius(pixel(topLeft), pixel(topRightBottomLeft), pixel(bottomRight));
+    }
+
+    /**
+     * Used to set border radius.
+     *
+     * @param topLeft            top left radius.
+     * @param bottomRight        bottom right radius.
+     * @param topRightBottomLeft top right and bottom left radius.
+     */
+    public void setBorderRadius(Length topLeft, Length topRightBottomLeft, Length bottomRight) {
         borderTopLeftRadius = topLeft;
         borderTopRightRadius = borderBottomLeftRadius = topRightBottomLeft;
         borderBottomRightRadius = bottomRight;
     }
 
     /**
+     * Used to set border radius. (PIXEL VERSION)
+     *
+     * @param topLeft     top left radius.
+     * @param topRight    top right radius.
+     * @param bottomRight bottom right radius.
+     * @param bottomLeft  bottom left radius.
+     */
+    public void setBorderRadius(float topLeft, float topRight, float bottomRight, float bottomLeft) {
+        setBorderRadius(pixel(topLeft), pixel(topRight), pixel(bottomRight), pixel(bottomLeft));
+    }
+
+    /**
      * Used to set border radius.
      *
-     * @param topLeft top left radius.
-     * @param topRight top right radius.
+     * @param topLeft     top left radius.
+     * @param topRight    top right radius.
      * @param bottomRight bottom right radius.
-     * @param bottomLeft bottom left radius.
+     * @param bottomLeft  bottom left radius.
      */
-    public void setBorderRadius(Float topLeft, Float topRight, Float bottomRight, Float bottomLeft) {
+    public void setBorderRadius(Length topLeft, Length topRight, Length bottomRight, Length bottomLeft) {
         borderTopLeftRadius = topLeft;
         borderTopRightRadius = topRight;
         borderBottomRightRadius = bottomRight;
@@ -99,34 +157,12 @@ public class Style {
     }
 
     /**
-     * Returns vector of four border radius elements where: x = top left, y = top right, z = bottom right, w = bottom left
+     * Used to set top left border radius. (PIXEL VERSION)
      *
-     * @return vector of four border radius.
+     * @param borderTopLeftRadius top left border radius.
      */
-    public Vector4f getBorderRadius() {
-        return new Vector4f(borderTopLeftRadius == null ? 0 : borderTopLeftRadius,
-                            borderTopRightRadius == null ? 0 : borderTopRightRadius,
-                            borderBottomRightRadius == null ? 0 : borderBottomRightRadius,
-                            borderBottomLeftRadius == null ? 0 : borderBottomLeftRadius);
-    }
-
-    /**
-     * Used to set border radius for all four corners.
-     *
-     * @param radius radius to set. Sets border radius to all corners.
-     */
-    public void setBorderRadius(Float radius) {
-        borderTopLeftRadius = borderTopRightRadius =
-            borderBottomRightRadius = borderBottomLeftRadius = radius;
-    }
-
-    /**
-     * Returns top left border radius.
-     *
-     * @return top left border radius.
-     */
-    public Float getBorderTopLeftRadius() {
-        return borderTopLeftRadius;
+    public void setBorderTopLeftRadius(float borderTopLeftRadius) {
+        setBorderTopLeftRadius(pixel(borderTopLeftRadius));
     }
 
     /**
@@ -134,17 +170,18 @@ public class Style {
      *
      * @param borderTopLeftRadius top left border radius.
      */
-    public void setBorderTopLeftRadius(Float borderTopLeftRadius) {
+    public void setBorderTopLeftRadius(Length borderTopLeftRadius) {
         this.borderTopLeftRadius = borderTopLeftRadius;
     }
 
+
     /**
-     * Returns top right border radius.
+     * Used to set top right border radius. (PIXEL VERSION)
      *
-     * @return top right border radius.
+     * @param borderTopRightRadius top right border radius.
      */
-    public Float getBorderTopRightRadius() {
-        return borderTopRightRadius;
+    public void setBorderTopRightRadius(float borderTopRightRadius) {
+        setBorderTopRightRadius(pixel(borderTopRightRadius));
     }
 
 
@@ -153,8 +190,62 @@ public class Style {
      *
      * @param borderTopRightRadius top right border radius.
      */
-    public void setBorderTopRightRadius(Float borderTopRightRadius) {
+    public void setBorderTopRightRadius(Length borderTopRightRadius) {
         this.borderTopRightRadius = borderTopRightRadius;
+    }
+
+    /**
+     * Used to set bottom right border radius. (PIXEL VERSION)
+     *
+     * @param borderBottomRightRadius bottom right border radius.
+     */
+    public void setBorderBottomRightRadius(float borderBottomRightRadius) {
+        setBorderBottomRightRadius(pixel(borderBottomRightRadius));
+    }
+
+    /**
+     * Used to set bottom right border radius.
+     *
+     * @param borderBottomRightRadius bottom right border radius.
+     */
+    public void setBorderBottomRightRadius(Length borderBottomRightRadius) {
+        this.borderBottomRightRadius = borderBottomRightRadius;
+    }
+
+    /**
+     * Used to set bottom left border radius. (PIXEL VERSION)
+     *
+     * @param borderBottomLeftRadius bottom left border radius.
+     */
+    public void setBorderBottomLeftRadius(float borderBottomLeftRadius) {
+        setBorderBottomLeftRadius(pixel(borderBottomLeftRadius));
+    }
+
+    /**
+     * Used to set bottom left border radius.
+     *
+     * @param borderBottomLeftRadius bottom left border radius.
+     */
+    public void setBorderBottomLeftRadius(Length borderBottomLeftRadius) {
+        this.borderBottomLeftRadius = borderBottomLeftRadius;
+    }
+
+    /**
+     * Returns top left border radius.
+     *
+     * @return top left border radius.
+     */
+    public Length getBorderTopLeftRadius() {
+        return borderTopLeftRadius;
+    }
+
+    /**
+     * Returns top right border radius.
+     *
+     * @return top right border radius.
+     */
+    public Length getBorderTopRightRadius() {
+        return borderTopRightRadius;
     }
 
     /**
@@ -162,37 +253,18 @@ public class Style {
      *
      * @return bottom right border radius.
      */
-    public Float getBorderBottomRightRadius() {
+    public Length getBorderBottomRightRadius() {
         return borderBottomRightRadius;
     }
 
-
-    /**
-     * Used to set bottom right border radius.
-     *
-     * @param borderBottomRightRadius bottom right border radius.
-     */
-    public void setBorderBottomRightRadius(Float borderBottomRightRadius) {
-        this.borderBottomRightRadius = borderBottomRightRadius;
-    }
 
     /**
      * Returns bottom left border radius.
      *
      * @return bottom left border radius.
      */
-    public Float getBorderBottomLeftRadius() {
+    public Length getBorderBottomLeftRadius() {
         return borderBottomLeftRadius;
-    }
-
-
-    /**
-     * Used to set bottom left border radius.
-     *
-     * @param borderBottomLeftRadius bottom left border radius.
-     */
-    public void setBorderBottomLeftRadius(Float borderBottomLeftRadius) {
-        this.borderBottomLeftRadius = borderBottomLeftRadius;
     }
 
     /**
@@ -200,8 +272,17 @@ public class Style {
      *
      * @return width.
      */
-    public Float getWidth() {
+    public Length getWidth() {
         return width;
+    }
+
+    /**
+     * Used to set width. (PIXEL VERSION)
+     *
+     * @param width width to set.
+     */
+    public void setWidth(float width) {
+        setWidth(pixel(width));
     }
 
     /**
@@ -209,7 +290,7 @@ public class Style {
      *
      * @param width width to set.
      */
-    public void setWidth(Float width) {
+    public void setWidth(Length width) {
         this.width = width;
     }
 
@@ -218,151 +299,187 @@ public class Style {
      *
      * @return height to set.
      */
-    public Float getHeight() {
+    public Length getHeight() {
         return height;
     }
 
-    public void setHeight(Float height) {
+    public void setHeight(float height) {
+        setHeight(pixel(height));
+    }
+
+    public void setHeight(Length height) {
         this.height = height;
     }
 
-    public Float getMinWidth() {
+    public Length getMinWidth() {
         return minWidth;
     }
 
-    public void setMinWidth(Float minWidth) {
+    public void setMinWidth(float minWidth) {
+        setMinWidth(pixel(minWidth));
+    }
+
+    public void setMinWidth(Length minWidth) {
         this.minWidth = minWidth;
     }
 
-    public Float getMinHeight() {
+    public Length getMinHeight() {
         return minHeight;
     }
 
-    public void setMinHeight(Float minHeight) {
+    public void setMinHeight(float minHeight) {
+        setMinHeight(pixel(minHeight));
+    }
+
+    public void setMinHeight(Length minHeight) {
         this.minHeight = minHeight;
     }
 
-    public Float getMaxWidth() {
+    public Length getMaxWidth() {
         return maxWidth;
     }
 
-    public void setMaxWidth(Float maxWidth) {
+    public void setMaxWidth(float maxWidth) {
+        setMaxWidth(pixel(maxWidth));
+    }
+
+    public void setMaxWidth(Length maxWidth) {
         this.maxWidth = maxWidth;
     }
 
-    public Float getMaxHeight() {
+    public Length getMaxHeight() {
         return maxHeight;
     }
 
-    public void setMaxHeight(Float maxHeight) {
+    public void setMaxHeight(float maxHeight) {
+        setMaxHeight(pixel(maxHeight));
+    }
+
+    public void setMaxHeight(Length maxHeight) {
         this.maxHeight = maxHeight;
     }
 
-    public void setPadding(Float topBottom, Float leftRight) {
+    public void setPadding(float padding) {
+        this.setPadding(pixel(padding));
+    }
+
+    public void setPadding(Length padding) {
+        paddingLeft = paddingRight =
+            paddingTop = paddingBottom = padding;
+    }
+
+    public void setPadding(float topBottom, float leftRight) {
+        this.setPadding(pixel(topBottom), pixel(leftRight));
+    }
+
+    public void setPadding(Length topBottom, Length leftRight) {
         paddingLeft = paddingRight = leftRight;
         paddingTop = paddingBottom = topBottom;
     }
 
-    public void setPadding(Float top, Float right, Float bottom, Float left) {
+    public void setPadding(float top, float right, float bottom, float left) {
+        this.setPadding(pixel(top), pixel(right), pixel(bottom), pixel(left));
+    }
+
+    public void setPadding(Length top, Length right, Length bottom, Length left) {
         paddingTop = top;
         paddingRight = right;
         paddingBottom = bottom;
         paddingLeft = left;
     }
 
-    public Float getPaddingTop() {
+    public Length getPaddingTop() {
         return paddingTop;
     }
 
-    public void setPaddingTop(Float paddingTop) {
+    public void setPaddingTop(Length paddingTop) {
         this.paddingTop = paddingTop;
     }
 
-    public float getPaddingTopF() {
-        return paddingTop == null ? 0f : paddingTop;
-    }
 
-    public Float getPaddingBottom() {
+    public Length getPaddingBottom() {
         return paddingBottom;
     }
 
-    public void setPaddingBottom(Float paddingBottom) {
+    public void setPaddingBottom(Length paddingBottom) {
         this.paddingBottom = paddingBottom;
     }
 
-    public float getPaddingBottomF() {
-        return paddingBottom == null ? 0f : paddingBottom;
-    }
 
-    public Float getPaddingRight() {
+    public Length getPaddingRight() {
         return paddingRight;
     }
 
-    public void setPaddingRight(Float paddingRight) {
+    public void setPaddingRight(Length paddingRight) {
         this.paddingRight = paddingRight;
     }
 
-    public float getPaddingRightF() {
-        return paddingRight == null ? 0f : paddingRight;
-    }
 
-    public Float getPaddingLeft() {
+    public Length getPaddingLeft() {
         return paddingLeft;
     }
 
-    public void setPaddingLeft(Float paddingLeft) {
+    public void setPaddingLeft(Length paddingLeft) {
         this.paddingLeft = paddingLeft;
     }
 
-    public float getPaddingLeftF() {
-        return paddingLeft == null ? 0f : paddingLeft;
+    public void setMargin(float margin) {
+        setMargin(pixel(margin));
     }
 
-    public void setMargin(Float topBottom, Float leftRight) {
+    public void setMargin(Unit margin) {
+        marginLeft = marginRight = marginTop = marginBottom = margin;
+    }
+
+    public void setMargin(float topBottom, float leftRight) {
+        setMargin(pixel(topBottom), pixel(leftRight));
+    }
+
+    public void setMargin(Unit topBottom, Unit leftRight) {
         marginLeft = marginRight = leftRight;
         marginTop = marginBottom = topBottom;
     }
 
-    public void setMargin(Float margin) {
-        marginLeft = marginRight = marginTop = marginBottom = margin;
+    public void setMargin(float top, float right, float bottom, float left) {
+        setMargin(pixel(top), pixel(right), pixel(bottom), pixel(left));
     }
 
-    public void setMargin(Float top, Float right, Float bottom, Float left) {
+    public void setMargin(Unit top, Unit right, Unit bottom, Unit left) {
         marginTop = top;
         marginRight = right;
         marginBottom = bottom;
         marginLeft = left;
     }
 
-    public Float getMarginTop() {
+    public Unit getMarginTop() {
         return marginTop;
     }
 
-    public void setMarginTop(Float marginTop) {
+    public void setMarginTop(Unit marginTop) {
         this.marginTop = marginTop;
     }
 
-    public Float getMarginBottom() {
+    public Unit getMarginBottom() {
         return marginBottom;
     }
 
-    public void setMarginBottom(Float marginBottom) {
+    public void setMarginBottom(Unit marginBottom) {
         this.marginBottom = marginBottom;
     }
 
-    public Float getMarginRight() {
+    public Unit getMarginRight() {
         return marginRight;
     }
 
-    public void setMarginRight(Float marginRight) {
+    public void setMarginRight(Unit marginRight) {
         this.marginRight = marginRight;
     }
 
-    public Float getMarginLeft() {
+    public Unit getMarginLeft() {
         return marginLeft;
     }
 
-    public void setMarginLeft(Float marginLeft) {
+    public void setMarginLeft(Unit marginLeft) {
         this.marginLeft = marginLeft;
     }
 
@@ -371,8 +488,17 @@ public class Style {
      *
      * @return top style.
      */
-    public Float getTop() {
+    public Length getTop() {
         return top;
+    }
+
+    /**
+     * Used tp set top style. (PIXEL VERSION)
+     *
+     * @param top top style.
+     */
+    public void setTop(float top) {
+        setTop(pixel(top));
     }
 
     /**
@@ -380,7 +506,7 @@ public class Style {
      *
      * @param top top style.
      */
-    public void setTop(Float top) {
+    public void setTop(Length top) {
         this.top = top;
     }
 
@@ -389,8 +515,17 @@ public class Style {
      *
      * @return bottom style.
      */
-    public Float getBottom() {
+    public Length getBottom() {
         return bottom;
+    }
+
+    /**
+     * Used tp set bottom style. (PIXEL VERSION)
+     *
+     * @param bottom bottom style.
+     */
+    public void setBottom(float bottom) {
+        setBottom(pixel(bottom));
     }
 
     /**
@@ -398,7 +533,7 @@ public class Style {
      *
      * @param bottom bottom style.
      */
-    public void setBottom(Float bottom) {
+    public void setBottom(Length bottom) {
         this.bottom = bottom;
     }
 
@@ -407,8 +542,17 @@ public class Style {
      *
      * @return right style.
      */
-    public Float getRight() {
+    public Length getRight() {
         return right;
+    }
+
+    /**
+     * Used tp set right style. (PIXEL VERSION)
+     *
+     * @param right right style.
+     */
+    public void setRight(float right) {
+        setRight(pixel(right));
     }
 
     /**
@@ -416,7 +560,7 @@ public class Style {
      *
      * @param right right style.
      */
-    public void setRight(Float right) {
+    public void setRight(Length right) {
         this.right = right;
     }
 
@@ -425,8 +569,17 @@ public class Style {
      *
      * @return left style.
      */
-    public Float getLeft() {
+    public Length getLeft() {
         return left;
+    }
+
+    /**
+     * Used tp set left style. (PIXEL VERSION)
+     *
+     * @param left left style.
+     */
+    public void setLeft(float left) {
+        setLeft(pixel(left));
     }
 
     /**
@@ -434,7 +587,7 @@ public class Style {
      *
      * @param left left style.
      */
-    public void setLeft(Float left) {
+    public void setLeft(Length left) {
         this.left = left;
     }
 
@@ -581,7 +734,7 @@ public class Style {
     /**
      * Used to set minimum width and height
      *
-     * @param width minimum width to set.
+     * @param width  minimum width to set.
      * @param height minimum height to set.
      */
     public void setMinimumSize(float width, float height) {
@@ -590,9 +743,9 @@ public class Style {
     }
 
     /**
-     * sed to set max width and height.
+     * Used to set max width and height.
      *
-     * @param width max width to set.
+     * @param width  max width to set.
      * @param height max height to set.
      */
     public void setMaximumSize(float width, float height) {
@@ -606,18 +759,6 @@ public class Style {
 
     public void setShadow(Shadow shadow) {
         this.shadow = shadow;
-    }
-
-    public Vector4f getPadding() {
-        return new Vector4f(paddingTop == null ? 0 : paddingTop,
-                            paddingRight == null ? 0 : paddingRight,
-                            paddingBottom == null ? 0 : paddingBottom,
-                            paddingLeft == null ? 0 : paddingLeft);
-    }
-
-    public void setPadding(Float padding) {
-        paddingLeft = paddingRight =
-            paddingTop = paddingBottom = padding;
     }
 
     /**

@@ -1,7 +1,5 @@
 package org.liquidengine.legui.component;
 
-import java.util.List;
-
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -27,7 +25,10 @@ import org.liquidengine.legui.style.Style.PositionType;
 import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.style.flex.FlexStyle.FlexDirection;
 import org.liquidengine.legui.style.font.FontRegistry;
+import org.liquidengine.legui.style.length.Length;
 import org.liquidengine.legui.theme.Themes;
+
+import java.util.List;
 
 /**
  * Widget component is container which have predefined components such as container, title label, close and minimize buttons and predefined event listeners.
@@ -70,12 +71,12 @@ public class Widget extends Component {
     private Button minimizeButton;
     private Button resizeButton;
 
-    private Float maximizedMinWidth;
-    private Float maximizedMinHeight;
-    private Float maximizedMaxWidth;
-    private Float maximizedMaxHeight;
-    private Float maximizedWidth;
-    private Float maximizedHeight;
+    private Length maximizedMinWidth;
+    private Length maximizedMinHeight;
+    private Length maximizedMaxWidth;
+    private Length maximizedMaxHeight;
+    private Length maximizedWidth;
+    private Length maximizedHeight;
 
     /**
      * Creates a widget with default title text.
@@ -188,7 +189,7 @@ public class Widget extends Component {
 
         int iconSize = INITIAL_TITLE_HEIGHT * 2 / 3;
         closeIcon = new CharIcon(new Vector2f(iconSize), FontRegistry.MATERIAL_DESIGN_ICONS, (char) CLOSE_ICON_CHAR,
-                ColorConstants.black());
+            ColorConstants.black());
         closeIcon.setHorizontalAlign(HorizontalAlign.CENTER);
         closeIcon.setVerticalAlign(VerticalAlign.MIDDLE);
 
@@ -214,16 +215,16 @@ public class Widget extends Component {
         minimizeButton.setTabFocusable(false);
 
         minimizeIcon = new CharIcon(new Vector2f(iconSize),
-                FontRegistry.MATERIAL_DESIGN_ICONS,
-                (char) MINIMIZE_ICON_CHAR,
-                ColorConstants.black());
+            FontRegistry.MATERIAL_DESIGN_ICONS,
+            (char) MINIMIZE_ICON_CHAR,
+            ColorConstants.black());
         minimizeIcon.setHorizontalAlign(HorizontalAlign.CENTER);
         minimizeIcon.setVerticalAlign(VerticalAlign.MIDDLE);
 
         maximizeIcon = new CharIcon(new Vector2f(iconSize),
-                FontRegistry.MATERIAL_DESIGN_ICONS,
-                (char) MAXIMIZE_ICON_CHAR,
-                ColorConstants.black());
+            FontRegistry.MATERIAL_DESIGN_ICONS,
+            (char) MAXIMIZE_ICON_CHAR,
+            ColorConstants.black());
         maximizeIcon.setHorizontalAlign(HorizontalAlign.CENTER);
         maximizeIcon.setVerticalAlign(VerticalAlign.MIDDLE);
 
@@ -647,42 +648,42 @@ public class Widget extends Component {
         Widget widget = (Widget) o;
 
         return new EqualsBuilder()
-                .appendSuper(super.equals(o))
-                .append(draggable, widget.draggable)
-                .append(minimized, widget.minimized)
-                .append(maximizedSize, widget.maximizedSize)
-                .append(container, widget.container)
-                .append(title, widget.title)
-                .append(closeButton, widget.closeButton)
-                .append(minimizeButton, widget.minimizeButton)
-                .isEquals();
+            .appendSuper(super.equals(o))
+            .append(draggable, widget.draggable)
+            .append(minimized, widget.minimized)
+            .append(maximizedSize, widget.maximizedSize)
+            .append(container, widget.container)
+            .append(title, widget.title)
+            .append(closeButton, widget.closeButton)
+            .append(minimizeButton, widget.minimizeButton)
+            .isEquals();
     }
 
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
-                .appendSuper(super.hashCode())
-                .append(draggable)
-                .append(minimized)
-                .append(maximizedSize)
-                .append(container)
-                .append(title)
-                .append(closeButton)
-                .append(minimizeButton)
-                .toHashCode();
+            .appendSuper(super.hashCode())
+            .append(draggable)
+            .append(minimized)
+            .append(maximizedSize)
+            .append(container)
+            .append(title)
+            .append(closeButton)
+            .append(minimizeButton)
+            .toHashCode();
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("draggable", draggable)
-                .append("minimized", minimized)
-                .append("maximizedSize", maximizedSize)
-                .append("container", container)
-                .append("title", title)
-                .append("closeButton", closeButton)
-                .append("minimizeButton", minimizeButton)
-                .toString();
+            .append("draggable", draggable)
+            .append("minimized", minimized)
+            .append("maximizedSize", maximizedSize)
+            .append("container", container)
+            .append("title", title)
+            .append("closeButton", closeButton)
+            .append("minimizeButton", minimizeButton)
+            .toString();
     }
 
     public boolean isResizable() {

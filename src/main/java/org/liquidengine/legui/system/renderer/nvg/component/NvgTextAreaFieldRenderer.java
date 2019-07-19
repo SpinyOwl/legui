@@ -7,6 +7,7 @@ import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
 import org.liquidengine.legui.input.Mouse;
+import org.liquidengine.legui.style.Style;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgColorUtil;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgShapes;
@@ -21,6 +22,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.liquidengine.legui.style.color.ColorUtil.oppositeBlackOrWhite;
+import static org.liquidengine.legui.style.util.StyleUtilities.getInnerContentRectangle;
+import static org.liquidengine.legui.style.util.StyleUtilities.getPadding;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.*;
 import static org.lwjgl.nanovg.NanoVG.*;
 import static org.lwjgl.system.MemoryUtil.*;
@@ -43,15 +46,13 @@ public class NvgTextAreaFieldRenderer extends NvgDefaultComponentRenderer<TextAr
         {
             Vector2f pos = component.getAbsolutePosition();
             Vector2f size = component.getSize();
-            Vector4f bc = new Vector4f(component.getStyle().getBackground().getColor());
+            Style style = component.getStyle();
+            Vector4f bc = new Vector4f(style.getBackground().getColor());
 
             renderBackground(component, context, nanovg);
 
-            Vector4f p = new Vector4f(component.getStyle().getPadding().w,
-                                      component.getStyle().getPadding().x,
-                                      component.getStyle().getPadding().y,
-                                      component.getStyle().getPadding().z);
-            Vector4f intersectRect = new Vector4f(pos.x + p.x, pos.y + p.y, size.x - p.x - p.z, size.y - p.y - p.w);
+            Vector4f padding = getPadding(component, style);
+            Vector4f intersectRect = getInnerContentRectangle(pos, size, padding);
 
             intersectScissor(nanovg, new Vector4f(intersectRect));
             if (component.getTextState().getText() != null) {
@@ -101,7 +102,7 @@ public class NvgTextAreaFieldRenderer extends NvgDefaultComponentRenderer<TextAr
             if (!focused) {
                 caretLine = (valign == VerticalAlign.TOP ? 0 : (valign == VerticalAlign.BOTTOM ? lineCount - 1 : lineCount / 2));
                 lineCaretPosition = (halign == HorizontalAlign.LEFT ? 0
-                        : (halign == HorizontalAlign.RIGHT ? lines[caretLine].length() : lines[caretLine].length() / 2));
+                    : (halign == HorizontalAlign.RIGHT ? lines[caretLine].length() : lines[caretLine].length() / 2));
             }
 
             int vp = valign == VerticalAlign.TOP ? 0 : valign == VerticalAlign.MIDDLE ? 1 : valign == VerticalAlign.BOTTOM ? 2 : 1;
@@ -160,7 +161,7 @@ public class NvgTextAreaFieldRenderer extends NvgDefaultComponentRenderer<TextAr
 
             // render selection background
             renderSelectionBackground(context, gui, fontSize, focused, highlightColor, lines, lineCount, lineStartIndeces, voffset,
-                    bounds, glyphs, spaceWidth);
+                bounds, glyphs, spaceWidth);
 
             // render every line of text
             for (int i = 0; i < lineCount; i++) {
@@ -263,8 +264,8 @@ public class NvgTextAreaFieldRenderer extends NvgDefaultComponentRenderer<TextAr
                     char[] spaces = new char[gui.getTabSize()];
                     Arrays.fill(spaces, SPACEC);
                     NvgText.drawTextLineToRect(context, new Vector4f(lineX, lineY, bounds[i][6], bounds[i][7]),
-                            false, HorizontalAlign.LEFT, VerticalAlign.MIDDLE,
-                            fontSize, font, line.replace(TABS, new String(spaces)), textColor);
+                        false, HorizontalAlign.LEFT, VerticalAlign.MIDDLE,
+                        fontSize, font, line.replace(TABS, new String(spaces)), textColor);
                     if (i == caretLine && focused) {
                         // render caret
                         NvgShapes.drawRectStroke(context, new Vector4f(caretx - 1, lineY, 1, bounds[i][7]), caretColor, 1);
@@ -285,7 +286,6 @@ public class NvgTextAreaFieldRenderer extends NvgDefaultComponentRenderer<TextAr
      * Used to get space width.
      *
      * @param context nanovg context.
-     *
      * @return space width.
      */
     private float getSpaceWidth(long context) {
@@ -373,13 +373,12 @@ public class NvgTextAreaFieldRenderer extends NvgDefaultComponentRenderer<TextAr
     /**
      * Used to obtain caret (x) position (on screen) by text line and caret position in text(index).
      *
-     * @param context context
-     * @param caretPosInText position of caret in text.
-     * @param text text.
+     * @param context         context
+     * @param caretPosInText  position of caret in text.
+     * @param text            text.
      * @param caretLineBounds text bounds on screen.
-     * @param glyphs glyphs.
-     * @param spaceWidth space width.
-     *
+     * @param glyphs          glyphs.
+     * @param spaceWidth      space width.
      * @return caret x position on screen.
      */
     private float getCaretx(long context, int caretPosInText, String text, float[] caretLineBounds, NVGGlyphPosition.Buffer glyphs, float spaceWidth,
@@ -408,7 +407,7 @@ public class NvgTextAreaFieldRenderer extends NvgDefaultComponentRenderer<TextAr
 
     private void preinitializeTextRendering(long context, String font, float fontSize, HorizontalAlign halign, VerticalAlign valign, Vector4f textColor) {
         try (
-                NVGColor colorA = NVGColor.calloc()
+            NVGColor colorA = NVGColor.calloc()
         ) {
             NvgColorUtil.fillNvgColorWithRGBA(textColor, colorA);
             alignTextInBox(context, halign, valign);
