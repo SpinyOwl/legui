@@ -14,7 +14,10 @@ public class ScrollBarScrollListener implements ScrollEventListener {
 
     public void process(ScrollEvent event) {
         ScrollBar scrollBar = (ScrollBar) event.getTargetComponent();
-        updateScrollBarValue(event.getYoffset(), event.getContext(), event.getFrame(), scrollBar);
+        if (Math.abs(event.getYoffset()) > 0)
+            updateScrollBarValue(event.getYoffset(), event.getContext(), event.getFrame(), scrollBar);
+        else if (Math.abs(event.getXoffset()) > 0)
+            updateScrollBarValue(event.getXoffset(), event.getContext(), event.getFrame(), scrollBar);
     }
 
     @Override
