@@ -1,11 +1,14 @@
 package org.liquidengine.legui.listener.processor;
 
-import java.util.List;
-import java.util.Queue;
-import java.util.concurrent.ConcurrentLinkedQueue;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.event.Event;
 import org.liquidengine.legui.listener.EventListener;
+
+import java.util.List;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  * Default implementation of event processor.
@@ -14,6 +17,7 @@ import org.liquidengine.legui.listener.EventListener;
  */
 public class EventProcessorImpl extends EventProcessor {
 
+    private static final Logger LOGGER = LogManager.getLogger();
     private Queue<Event> eventQueue = new ConcurrentLinkedQueue<>();
 
 
@@ -41,6 +45,9 @@ public class EventProcessorImpl extends EventProcessor {
      */
     @Override
     public void pushEvent(Event event) {
+        if (event.getContext() != null && event.getContext().isDebugEnabled()) {
+            LOGGER.debug(event);
+        }
         eventQueue.add(event);
     }
 }
