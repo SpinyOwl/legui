@@ -1,5 +1,7 @@
 package org.liquidengine.legui.event;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.system.context.Context;
@@ -24,5 +26,14 @@ public class WindowSizeEvent<T extends Component> extends Event<T> {
 
     public int getWidth() {
         return width;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
+            .append("targetComponent", getTargetComponent().getClass().getSimpleName())
+            .append("width", width)
+            .append("height", height)
+            .toString();
     }
 }

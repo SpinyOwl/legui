@@ -37,7 +37,8 @@ public class CursorEnterEvent<T extends Component> extends Event<T> {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+        return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
+            .append("targetComponent", getTargetComponent().getClass().getSimpleName())
             .append("entered", entered)
             .append("delta", delta)
             .append("cursorPosition", cursorPosition)

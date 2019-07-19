@@ -1,5 +1,7 @@
 package org.liquidengine.legui.event;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.Frame;
@@ -19,5 +21,13 @@ public class MouseDragEvent<T extends Component> extends Event<T> {
 
     public Vector2f getDelta() {
         return delta;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
+            .append("targetComponent", getTargetComponent().getClass().getSimpleName())
+            .append("delta", delta)
+            .toString();
     }
 }

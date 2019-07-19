@@ -37,16 +37,6 @@ public class MouseClickEvent<T extends Component> extends Event<T> {
         this.mods = mods;
     }
 
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-            .append("action", action)
-            .append("button", button)
-            .append("position", position)
-            .append("absolutePosition", absolutePosition)
-            .toString();
-    }
-
     public MouseClickAction getAction() {
         return action;
     }
@@ -95,5 +85,17 @@ public class MouseClickEvent<T extends Component> extends Event<T> {
         PRESS,
         CLICK,
         RELEASE,;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
+            .append("targetComponent", getTargetComponent().getClass().getSimpleName())
+            .append("action", action)
+            .append("button", button)
+            .append("position", position)
+            .append("absolutePosition", absolutePosition)
+            .append("mods", mods)
+            .toString();
     }
 }
