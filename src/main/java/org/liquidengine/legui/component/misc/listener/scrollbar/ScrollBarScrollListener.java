@@ -4,7 +4,6 @@ import org.liquidengine.legui.component.ScrollBar;
 import org.liquidengine.legui.component.event.scrollbar.ScrollBarChangeValueEvent;
 import org.liquidengine.legui.event.ScrollEvent;
 import org.liquidengine.legui.listener.ScrollEventListener;
-import org.liquidengine.legui.listener.processor.EventProcessor;
 
 import static org.liquidengine.legui.component.misc.listener.scrollbar.ScrollBarHelper.updateScrollBarValue;
 
@@ -15,7 +14,7 @@ public class ScrollBarScrollListener implements ScrollEventListener {
 
     public void process(ScrollEvent event) {
         ScrollBar scrollBar = (ScrollBar) event.getTargetComponent();
-        updateScrollBarValue(event, scrollBar);
+        updateScrollBarValue(event.getYoffset(), event.getContext(), event.getFrame(), scrollBar);
     }
 
     @Override

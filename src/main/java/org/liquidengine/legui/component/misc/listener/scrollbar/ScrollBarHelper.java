@@ -1,15 +1,17 @@
 package org.liquidengine.legui.component.misc.listener.scrollbar;
 
+import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.component.ScrollBar;
 import org.liquidengine.legui.component.event.scrollbar.ScrollBarChangeValueEvent;
 import org.liquidengine.legui.event.ScrollEvent;
 import org.liquidengine.legui.listener.processor.EventProcessor;
+import org.liquidengine.legui.system.context.Context;
 
 public final class ScrollBarHelper {
     private ScrollBarHelper() {
     }
 
-    public static void updateScrollBarValue(ScrollEvent event, ScrollBar scrollBar) {
+    public static void updateScrollBarValue(double offset, Context context, Frame frame, ScrollBar scrollBar) {
         float maxValue = scrollBar.getMaxValue();
         float minValue = scrollBar.getMinValue();
         float curValue = scrollBar.getCurValue();
@@ -18,7 +20,7 @@ public final class ScrollBarHelper {
         if (valueRange - visibleAmount < 0.001f) {
             return;
         }
-        float newVal = (float) (curValue - scrollBar.getScrollStep() * event.getYoffset() * visibleAmount * valueRange / (valueRange - visibleAmount));
+        float newVal = (float) (curValue - scrollBar.getScrollStep() * offset * visibleAmount * valueRange / (valueRange - visibleAmount));
 
         if (newVal > maxValue) {
             newVal = maxValue;
@@ -27,7 +29,7 @@ public final class ScrollBarHelper {
             newVal = minValue;
         }
 
-        EventProcessor.getInstance().pushEvent(new ScrollBarChangeValueEvent<>(scrollBar, event.getContext(), event.getFrame(), curValue, newVal));
+        EventProcessor.getInstance().pushEvent(new ScrollBarChangeValueEvent<>(scrollBar, context, frame, curValue, newVal));
         scrollBar.setCurValue(newVal);
     }
 
