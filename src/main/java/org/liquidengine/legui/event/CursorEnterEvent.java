@@ -1,5 +1,7 @@
 package org.liquidengine.legui.event;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
@@ -43,5 +45,31 @@ public class CursorEnterEvent<T extends Component> extends Event<T> {
             .append("delta", delta)
             .append("cursorPosition", cursorPosition)
             .toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (o == null || getClass() != o.getClass()) return false;
+
+        CursorEnterEvent<?> that = (CursorEnterEvent<?>) o;
+
+        return new EqualsBuilder()
+            .appendSuper(super.equals(o))
+            .append(entered, that.entered)
+            .append(delta, that.delta)
+            .append(cursorPosition, that.cursorPosition)
+            .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37)
+            .appendSuper(super.hashCode())
+            .append(entered)
+            .append(delta)
+            .append(cursorPosition)
+            .toHashCode();
     }
 }

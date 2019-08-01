@@ -1,5 +1,7 @@
 package org.liquidengine.legui.event;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.liquidengine.legui.component.Component;
@@ -54,5 +56,29 @@ public class FocusEvent<T extends Component> extends Event<T> {
             .append("focused", focused)
             .append("nextFocus", nextFocus)
             .toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (o == null || getClass() != o.getClass()) return false;
+
+        FocusEvent<?> that = (FocusEvent<?>) o;
+
+        return new EqualsBuilder()
+            .appendSuper(super.equals(o))
+            .append(focused, that.focused)
+            .append(nextFocus, that.nextFocus)
+            .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37)
+            .appendSuper(super.hashCode())
+            .append(focused)
+            .append(nextFocus)
+            .toHashCode();
     }
 }

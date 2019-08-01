@@ -7,6 +7,8 @@ import static org.lwjgl.glfw.GLFW.GLFW_MOD_NUM_LOCK;
 import static org.lwjgl.glfw.GLFW.GLFW_MOD_SHIFT;
 import static org.lwjgl.glfw.GLFW.GLFW_MOD_SUPER;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
@@ -97,5 +99,35 @@ public class MouseClickEvent<T extends Component> extends Event<T> {
             .append("absolutePosition", absolutePosition)
             .append("mods", mods)
             .toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (o == null || getClass() != o.getClass()) return false;
+
+        MouseClickEvent<?> that = (MouseClickEvent<?>) o;
+
+        return new EqualsBuilder()
+            .appendSuper(super.equals(o))
+            .append(mods, that.mods)
+            .append(action, that.action)
+            .append(button, that.button)
+            .append(position, that.position)
+            .append(absolutePosition, that.absolutePosition)
+            .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37)
+            .appendSuper(super.hashCode())
+            .append(action)
+            .append(button)
+            .append(position)
+            .append(absolutePosition)
+            .append(mods)
+            .toHashCode();
     }
 }

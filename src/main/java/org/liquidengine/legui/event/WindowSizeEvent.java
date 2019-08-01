@@ -1,5 +1,7 @@
 package org.liquidengine.legui.event;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.liquidengine.legui.component.Component;
@@ -35,5 +37,29 @@ public class WindowSizeEvent<T extends Component> extends Event<T> {
             .append("width", width)
             .append("height", height)
             .toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (o == null || getClass() != o.getClass()) return false;
+
+        WindowSizeEvent<?> that = (WindowSizeEvent<?>) o;
+
+        return new EqualsBuilder()
+            .appendSuper(super.equals(o))
+            .append(width, that.width)
+            .append(height, that.height)
+            .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37)
+            .appendSuper(super.hashCode())
+            .append(width)
+            .append(height)
+            .toHashCode();
     }
 }
