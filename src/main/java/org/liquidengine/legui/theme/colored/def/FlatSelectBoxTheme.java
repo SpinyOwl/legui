@@ -1,5 +1,6 @@
 package org.liquidengine.legui.theme.colored.def;
 
+import org.liquidengine.legui.component.Button;
 import org.liquidengine.legui.component.SelectBox;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
@@ -33,19 +34,15 @@ public class FlatSelectBoxTheme<T extends SelectBox> extends FlatComponentTheme<
     @Override
     public void apply(T component) {
         super.apply(component);
-        component.getStyle().getBackground().setColor(settings.backgroundColor());
-        if (settings.shadowColor()== null || settings.shadowColor().length() > 0.00001f) {
-            component.getStyle().setShadow(new Shadow(-4, 4, 17, -7, settings.shadowColor()));
-        } else {
-            component.getStyle().setShadow(null);
-        }
 
-        component.getExpandButton().getStyle().setBorder(null);
-        component.getExpandButton().getStyle().getBackground().setColor(ColorConstants.transparent());
+        Button expandButton = component.getExpandButton();
+        expandButton.getStyle().setShadow(null);
+        expandButton.getStyle().getBackground().setColor(ColorConstants.transparent());
 
-        component.getSelectionButton().getStyle().setBorder(null);
-        component.getSelectionButton().getStyle().getBackground().setColor(ColorConstants.transparent());
-        component.getSelectionButton().getTextState().setTextColor(ColorUtil.oppositeBlackOrWhite(settings.backgroundColor()));
+        Button selectionButton = component.getSelectionButton();
+        selectionButton.getStyle().setShadow(null);
+        selectionButton.getStyle().getBackground().setColor(ColorConstants.transparent());
+        selectionButton.getTextState().setTextColor(ColorUtil.oppositeBlackOrWhite(settings.backgroundColor()));
 
         Icon collapseIcon = component.getCollapseIcon();
         if (collapseIcon instanceof CharIcon) {
@@ -70,7 +67,7 @@ public class FlatSelectBoxTheme<T extends SelectBox> extends FlatComponentTheme<
      */
     @Override
     public void applyAll(T component) {
-        super.applyAll(component);
+        apply(component);
 
         Themes.getDefaultTheme().applyAll(component.getSelectionListPanel());
     }

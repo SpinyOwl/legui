@@ -28,11 +28,8 @@ public class FlatTextAreaFieldTheme<T extends TextAreaField> extends FlatCompone
     @Override
     public void apply(T component) {
         super.apply(component);
-        if (settings.shadowColor()== null || settings.shadowColor().length() > 0.00001f) {
-            component.getStyle().setShadow(new Shadow(-4, 4, 17, -7, settings.shadowColor()));
-        } else {
-            component.getStyle().setShadow(null);
-        }
+
+        component.getStyle().setShadow(null);
         component.getFocusedStyle().getBackground()
             .setColor(settings.backgroundColor().mul(3).add(ColorUtil.oppositeBlackOrWhite(settings.backgroundColor())).div(4));
         component.getTextState().setTextColor(ColorUtil.oppositeBlackOrWhite(settings.backgroundColor()));

@@ -4,6 +4,7 @@ import java.util.List;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.Tooltip;
 import org.liquidengine.legui.style.border.SimpleLineBorder;
+import org.liquidengine.legui.style.shadow.Shadow;
 import org.liquidengine.legui.theme.AbstractTheme;
 import org.liquidengine.legui.theme.Themes;
 import org.liquidengine.legui.theme.colored.FlatColoredTheme.FlatColoredThemeSettings;
@@ -29,10 +30,16 @@ public class FlatComponentTheme<T extends Component> extends AbstractTheme<T> {
     @Override
     public void apply(T component) {
         super.apply(component);
-        component.getStyle().setBorder(new SimpleLineBorder(settings.borderColor(), 1));
+        component.getStyle().setBorder(null);
         component.getStyle().setBorderRadius(2f);
         component.getStyle().getBackground().setColor(settings.backgroundColor());
         component.getStyle().setFocusedStrokeColor(settings.strokeColor());
+
+        if (settings.shadowColor()== null || settings.shadowColor().length() > 0.00001f) {
+            component.getStyle().setShadow(new Shadow(1, 1, 16, -4, settings.shadowColor()));
+        } else {
+            component.getStyle().setShadow(null);
+        }
 
         Tooltip tooltip = component.getTooltip();
         if (tooltip != null) {

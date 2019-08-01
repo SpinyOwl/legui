@@ -36,20 +36,14 @@ public class FlatTextAreaTheme<T extends TextArea> extends FlatComponentTheme<T>
 
         Vector4f bgc = ColorUtil.oppositeBlackOrWhite(settings.backgroundColor().mul(3)).add(settings.backgroundColor().mul(3)).div(4);
         component.getStyle().getBackground().setColor(bgc);
-        if (settings.shadowColor()== null || settings.shadowColor().length() > 0.00001f) {
-            component.getStyle().setShadow(new Shadow(-4, 4, 17, -7, settings.shadowColor()));
-        } else {
-            component.getStyle().setShadow(null);
-        }
+
 
         Component viewport = component.getViewport();
         Themes.getDefaultTheme().apply(viewport);
         Themes.getDefaultTheme().applyAll(component.getVerticalScrollBar());
         Themes.getDefaultTheme().applyAll(component.getHorizontalScrollBar());
         viewport.getStyle().getBackground().setColor(ColorConstants.transparent());
-
-        component.getStyle().setBorder(new SimpleLineBorder(settings.borderColor(), 1));
-        component.getViewport().getStyle().setBorder(new SimpleLineBorder(settings.borderColor(), 1));
+        component.getViewport().getStyle().setShadow(null);
     }
 
 }

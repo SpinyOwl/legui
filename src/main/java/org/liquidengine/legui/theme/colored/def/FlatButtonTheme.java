@@ -28,11 +28,7 @@ public class FlatButtonTheme<T extends Button> extends FlatComponentTheme<T> {
     public void apply(T component) {
         super.apply(component);
         component.getStyle().getBackground().setColor(settings.backgroundColor());
-        if (settings.shadowColor()== null || settings.shadowColor().length() > 0.00001f) {
-            component.getStyle().setShadow(new Shadow(-4, 4, 17, -7, settings.shadowColor()));
-        } else {
-            component.getStyle().setShadow(null);
-        }
+
 
         component.getHoveredStyle().getBackground()
             .setColor(settings.backgroundColor().mul(3).add(ColorUtil.oppositeBlackOrWhite(settings.backgroundColor())).div(4));

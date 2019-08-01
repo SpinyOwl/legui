@@ -27,7 +27,6 @@ public class FlatProgressBarTheme<T extends ProgressBar> extends FlatComponentTh
     @Override
     public void apply(T component) {
         super.apply(component);
-        component.getStyle().setBorder(new SimpleLineBorder(settings.borderColor(), 1));
         component.setProgressColor(settings.allowColor());
     }
 }

@@ -28,7 +28,7 @@ public class FlatLabelTheme<T extends Label> extends FlatComponentTheme<T> {
     @Override
     public void apply(T component) {
         super.apply(component);
-        component.getStyle().setBorder(null);
+        component.getStyle().setShadow(null);
         component.getStyle().getBackground().setColor(ColorConstants.transparent());
         component.getTextState().setTextColor(ColorUtil.oppositeBlackOrWhite(settings.backgroundColor()));
         component.getTextState().setHorizontalAlign(HorizontalAlign.LEFT);

@@ -26,9 +26,9 @@ public class FlatSliderTheme<T extends Slider> extends FlatComponentTheme<T> {
     @Override
     public void apply(T component) {
         super.apply(component);
+        component.getStyle().setShadow(null);
         component.getStyle().getBackground().setColor(ColorConstants.transparent());
         component.setSliderColor(settings.borderColor());
         component.setSliderActiveColor(settings.allowColor());
-        component.getStyle().setBorder(null);
     }
 }

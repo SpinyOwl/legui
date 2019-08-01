@@ -23,7 +23,7 @@ public class FlatLayerContainerTheme<T extends LayerContainer> extends FlatCompo
     @Override
     public void apply(T component) {
         super.apply(component);
-        component.getStyle().setBorder(null);
+        component.getStyle().setShadow(null);
         component.getStyle().getBackground().setColor(ColorConstants.transparent());
     }
 }

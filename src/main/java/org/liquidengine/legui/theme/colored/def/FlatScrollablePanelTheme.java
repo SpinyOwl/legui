@@ -35,11 +35,7 @@ public class FlatScrollablePanelTheme<T extends ScrollablePanel> extends FlatCom
 
         Vector4f bgc = ColorUtil.oppositeBlackOrWhite(settings.backgroundColor().mul(3)).add(settings.backgroundColor().mul(3)).div(4);
         component.getStyle().getBackground().setColor(bgc);
-        if (settings.shadowColor()== null || settings.shadowColor().length() > 0.00001f) {
-            component.getStyle().setShadow(new Shadow(-4, 4, 17, -7, settings.shadowColor()));
-        } else {
-            component.getStyle().setShadow(null);
-        }
+
 
         Component viewport = component.getViewport();
         Themes.getDefaultTheme().apply(viewport);
@@ -47,9 +43,8 @@ public class FlatScrollablePanelTheme<T extends ScrollablePanel> extends FlatCom
         Themes.getDefaultTheme().applyAll(component.getHorizontalScrollBar());
         viewport.getStyle().getBackground().setColor(ColorConstants.transparent());
         component.getContainer().getStyle().getBackground().setColor(new Vector4f(bgc));
-
-        component.getStyle().setBorder(new SimpleLineBorder(settings.borderColor(), 1));
-        component.getViewport().getStyle().setBorder(new SimpleLineBorder(settings.borderColor(), 1));
+        component.getViewport().getStyle().setBorder(null);
+        component.getViewport().getStyle().setShadow(null);
     }
 
 }
