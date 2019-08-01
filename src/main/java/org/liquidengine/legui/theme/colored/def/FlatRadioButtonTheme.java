@@ -1,7 +1,5 @@
 package org.liquidengine.legui.theme.colored.def;
 
-import static org.liquidengine.legui.style.font.FontRegistry.MATERIAL_ICONS_REGULAR;
-
 import org.joml.Vector2f;
 import org.liquidengine.legui.component.RadioButton;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
@@ -9,6 +7,8 @@ import org.liquidengine.legui.icon.CharIcon;
 import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.style.color.ColorUtil;
 import org.liquidengine.legui.theme.colored.FlatColoredTheme.FlatColoredThemeSettings;
+
+import static org.liquidengine.legui.style.font.FontRegistry.MATERIAL_ICONS_REGULAR;
 
 /**
  * Dark RadioButton Theme for all radio buttons. Used to make radio button dark.

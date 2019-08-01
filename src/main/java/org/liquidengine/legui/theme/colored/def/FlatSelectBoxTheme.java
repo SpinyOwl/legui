@@ -8,7 +8,6 @@ import org.liquidengine.legui.icon.CharIcon;
 import org.liquidengine.legui.icon.Icon;
 import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.style.color.ColorUtil;
-import org.liquidengine.legui.style.shadow.Shadow;
 import org.liquidengine.legui.theme.Themes;
 import org.liquidengine.legui.theme.colored.FlatColoredTheme.FlatColoredThemeSettings;
 

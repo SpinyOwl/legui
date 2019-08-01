@@ -1,7 +1,6 @@
 package org.liquidengine.legui.theme.colored.def;
 
 import org.liquidengine.legui.component.ProgressBar;
-import org.liquidengine.legui.style.border.SimpleLineBorder;
 import org.liquidengine.legui.theme.colored.FlatColoredTheme.FlatColoredThemeSettings;
 
 /**

@@ -1,7 +1,6 @@
 package org.liquidengine.legui.theme.colored.def;
 
 import org.liquidengine.legui.component.ToggleButton;
-import org.liquidengine.legui.style.shadow.Shadow;
 import org.liquidengine.legui.theme.colored.FlatColoredTheme.FlatColoredThemeSettings;
 
 /**

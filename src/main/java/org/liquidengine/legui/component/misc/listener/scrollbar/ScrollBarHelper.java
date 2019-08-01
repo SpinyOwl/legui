@@ -3,7 +3,6 @@ package org.liquidengine.legui.component.misc.listener.scrollbar;
 import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.component.ScrollBar;
 import org.liquidengine.legui.component.event.scrollbar.ScrollBarChangeValueEvent;
-import org.liquidengine.legui.event.ScrollEvent;
 import org.liquidengine.legui.listener.processor.EventProcessor;
 import org.liquidengine.legui.system.context.Context;
 

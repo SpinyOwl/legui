@@ -2,7 +2,6 @@ package org.liquidengine.legui.theme.colored.def;
 
 import org.liquidengine.legui.component.Button;
 import org.liquidengine.legui.style.color.ColorUtil;
-import org.liquidengine.legui.style.shadow.Shadow;
 import org.liquidengine.legui.theme.colored.FlatColoredTheme.FlatColoredThemeSettings;
 
 /**
