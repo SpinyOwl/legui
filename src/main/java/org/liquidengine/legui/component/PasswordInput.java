@@ -120,27 +120,27 @@ public class PasswordInput extends TextInput {
         this.masked = masked;
     }
 
+
     @Override
     public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+        return new ToStringBuilder(this)
+            .append("maskCharacter", maskCharacter)
+            .append("masked", masked)
             .toString();
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
+        if (this == o) return true;
 
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
+        if (o == null || getClass() != o.getClass()) return false;
 
-        TextInput input = (TextInput) o;
+        PasswordInput that = (PasswordInput) o;
 
         return new EqualsBuilder()
             .appendSuper(super.equals(o))
-            .append(textState, input.textState)
+            .append(maskCharacter, that.maskCharacter)
+            .append(masked, that.masked)
             .isEquals();
     }
 
@@ -148,8 +148,8 @@ public class PasswordInput extends TextInput {
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
             .appendSuper(super.hashCode())
-            .append(textState)
+            .append(maskCharacter)
+            .append(masked)
             .toHashCode();
     }
-
 }
