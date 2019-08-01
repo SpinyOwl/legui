@@ -15,7 +15,7 @@
 ___
 # LEGUI
 
-<img src="https://image.ibb.co/nh1GbJ/Dc63_KSPX4_AIEIc7.png" />
+<img src="https://i.ibb.co/4mk6v70/image.png" />
 
 ___
 # TOC
@@ -131,8 +131,8 @@ All examples located under `demo` package.
 > This tool is written in Kotlin, using LWJGL3 for rendering and Legui to build user interfaces  
 <table>
   <tr>
-    <td><img src="https://camo.githubusercontent.com/8dcd56ad9a0d51ae82e34dc5bf4c3c18fd9c47e1/68747470733a2f2f696d6167652e70726e747363722e636f6d2f696d6167652f7a4e424133325a6b54515f6b624a6359704c73616f412e706e67"/></td>
-    <td><img src="https://camo.githubusercontent.com/21cc57d2dc635e2f6adf8b8f6eb06c1b48da5596/68747470733a2f2f696d6167652e70726e747363722e636f6d2f696d6167652f776336654538695f534669314b732d694e4447614a412e706e67"/></td>
+    <td><img src="https://camo.githubusercontent.com/f21283491b2bdc4cff48206af8a87a41760319fd/68747470733a2f2f692e696d6775722e636f6d2f4257576f7470702e706e67"/></td>
+    <td><img src="https://camo.githubusercontent.com/da89620c34a885bbbd739f4448937b040f8a788d/68747470733a2f2f692e696d6775722e636f6d2f63314b5446614f2e706e67"/></td>
   </tr>
 </table>
 
