@@ -22,23 +22,12 @@ public class NvgDefaultIconRenderer extends NvgIconRenderer {
             return;
         }
         // render simple rectangle border
-        Vector2f position = component.getAbsolutePosition();
-        Vector2f size = component.getSize();
         Vector2f iconSize = icon.getSize();
+        Vector2f p        = calculateIconPosition(icon, component, iconSize);
+        float    w        = iconSize.x;
+        float    h        = iconSize.y;
 
-        float x = position.x;
-        float y = position.y;
-        if (icon.getPosition() == null) {
-            x += icon.getHorizontalAlign().index * (size.x - iconSize.x) / 2f;
-            y += icon.getVerticalAlign().index * (size.y - iconSize.y) / 2f;
-        } else {
-            x += icon.getPosition().x;
-            y += icon.getPosition().y;
-        }
-        float w = iconSize.x;
-        float h = iconSize.y;
-
-        NvgShapes.drawRect(nanovg, new Vector4f(x, y, w, h), ColorConstants.red, getBorderRadius(component));
-        NvgShapes.drawRectStroke(nanovg, new Vector4f(x, y, w, h), ColorConstants.black, 1, getBorderRadius(component));
+        NvgShapes.drawRect(nanovg, new Vector4f(p.x, p.y, w, h), ColorConstants.red, getBorderRadius(component));
+        NvgShapes.drawRectStroke(nanovg, new Vector4f(p.x, p.y, w, h), ColorConstants.black, 1, getBorderRadius(component));
     }
 }

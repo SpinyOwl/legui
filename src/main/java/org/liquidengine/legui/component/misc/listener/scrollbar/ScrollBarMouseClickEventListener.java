@@ -36,7 +36,6 @@ public class ScrollBarMouseClickEventListener implements MouseClickEventListener
         Vector2f cursorPosition = Mouse.getCursorPosition();
 
         float visibleAmount = scrollBar.getVisibleAmount();
-        float curValue = scrollBar.getCurValue();
         boolean vertical = Orientation.VERTICAL.equals(scrollBar.getOrientation());
 
         Vector2f guiSize = scrollBar.getSize();
@@ -55,6 +54,7 @@ public class ScrollBarMouseClickEventListener implements MouseClickEventListener
             barSize = ScrollBar.MIN_SCROLL_SIZE;
         }
 
+        float curValue = scrollBar.getCurValue();
         float scrollPosAccordingToScrollBounds = (scrollBarSize - barSize) * curValue / valueRange;
 
         float left;

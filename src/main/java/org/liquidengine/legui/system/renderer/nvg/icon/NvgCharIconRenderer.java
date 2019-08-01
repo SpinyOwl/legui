@@ -20,23 +20,12 @@ public class NvgCharIconRenderer<I extends CharIcon> extends NvgIconRenderer<I> 
             return;
         }
         // render simple rectangle border
-        Vector2f position = component.getAbsolutePosition();
-        Vector2f size = component.getSize();
         Vector2f iconSize = icon.getSize();
+        Vector2f p        = calculateIconPosition(icon, component, iconSize);
+        float    w        = iconSize.x;
+        float    h        = iconSize.y;
 
-        float x = position.x;
-        float y = position.y;
-        if (icon.getPosition() == null) {
-            x += icon.getHorizontalAlign().index * (size.x - iconSize.x) / 2f;
-            y += icon.getVerticalAlign().index * (size.y - iconSize.y) / 2f;
-        } else {
-            x += icon.getPosition().x;
-            y += icon.getPosition().y;
-        }
-        float w = iconSize.x;
-        float h = iconSize.y;
-
-        drawIcon(nanovg, x, y, w, h, icon, component);
+        drawIcon(nanovg, p.x, p.y, w, h, icon, component);
     }
 
 

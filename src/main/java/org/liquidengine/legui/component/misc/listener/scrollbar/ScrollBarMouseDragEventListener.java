@@ -47,6 +47,7 @@ public class ScrollBarMouseDragEventListener implements MouseDragEventListener {
         if (barSize < ScrollBar.MIN_SCROLL_SIZE) {
             barSize = ScrollBar.MIN_SCROLL_SIZE;
         }
+
         float curPos;
         float dpos;
         if (vertical) {
