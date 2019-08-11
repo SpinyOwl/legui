@@ -459,6 +459,10 @@ public class Style {
         this.marginTop = marginTop;
     }
 
+    public void setMarginTop(Float marginTop) {
+	    setMarginTop(pixel(marginTop));
+    }
+
     public Unit getMarginBottom() {
         return marginBottom;
     }
@@ -466,6 +470,10 @@ public class Style {
     public void setMarginBottom(Unit marginBottom) {
         this.marginBottom = marginBottom;
     }
+
+	public void setMarginBottom(Float marginBottom) {
+		setMarginBottom(pixel(marginBottom));
+	}
 
     public Unit getMarginRight() {
         return marginRight;
@@ -475,6 +483,10 @@ public class Style {
         this.marginRight = marginRight;
     }
 
+	public void setMarginRight(Float marginRight) {
+		setMarginRight(pixel(marginRight));
+	}
+
     public Unit getMarginLeft() {
         return marginLeft;
     }
@@ -482,6 +494,10 @@ public class Style {
     public void setMarginLeft(Unit marginLeft) {
         this.marginLeft = marginLeft;
     }
+
+	public void setMarginLeft(Float marginLeft) {
+		setMarginLeft(pixel(marginLeft));
+	}
 
     /**
      * Returns top style.
