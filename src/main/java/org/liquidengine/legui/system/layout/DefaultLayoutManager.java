@@ -54,7 +54,7 @@ public class DefaultLayoutManager extends LayoutManager {
      */
     public void layout(Component component) {
         if (component != null && component.isVisible() && Utilites.visibleInParents(component)) {
-            Layout layout = layoutMap.get(component.getStyle().getDisplay());
+            Layout layout = layoutMap.get(component.getStyle().getDisplayType());
             if (layout != null) {
                 layout.layout(component);
             }

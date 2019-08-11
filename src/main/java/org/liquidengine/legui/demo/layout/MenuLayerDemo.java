@@ -91,14 +91,14 @@ public class MenuLayerDemo extends Demo {
             container.getStyle().getFlexStyle().setFlexGrow(1);
             container.getStyle().getFlexStyle().setFlexShrink(1);
 
-            container.getStyle().setPosition(PositionType.RELATIVE);
+            container.getStyle().setPositionType(PositionType.RELATIVE);
 
             container.getStyle().getBackground().setColor(ColorConstants.lightRed());
 
             this.add(menuBar);
             this.add(container);
 
-            this.getStyle().setDisplay(DisplayType.FLEX);
+            this.getStyle().setDisplayType(DisplayType.FLEX);
             this.getStyle().setPadding(0f);
             this.getStyle().getFlexStyle().setFlexDirection(FlexDirection.COLUMN);
 
@@ -137,9 +137,9 @@ public class MenuLayerDemo extends Demo {
             this.getStyle().setLeft(0f);
             this.getStyle().setTop(0f);
             this.getStyle().setRight(0f);
-            this.getStyle().setPosition(PositionType.RELATIVE);
+            this.getStyle().setPositionType(PositionType.RELATIVE);
 
-            this.getStyle().setDisplay(DisplayType.FLEX);
+            this.getStyle().setDisplayType(DisplayType.FLEX);
             this.getStyle().getFlexStyle().setFlexDirection(FlexDirection.ROW);
 
             this.getStyle().getFlexStyle().setAlignSelf(AlignSelf.STRETCH);
@@ -194,7 +194,7 @@ public class MenuLayerDemo extends Demo {
             this.getStyle().setMinHeight(MENU_HEIGHT);
             this.getStyle().setMaxHeight(MENU_HEIGHT);
 
-            this.getStyle().setPosition(PositionType.RELATIVE);
+            this.getStyle().setPositionType(PositionType.RELATIVE);
 
             this.getStyle().getFlexStyle().setFlexGrow(0);
             this.getStyle().getFlexStyle().setFlexShrink(0);
@@ -245,7 +245,7 @@ public class MenuLayerDemo extends Demo {
             setSize(0, 0);
             menuBarItemOptions = new CopyOnWriteArrayList<>();
 
-            this.getStyle().setDisplay(DisplayType.FLEX);
+            this.getStyle().setDisplayType(DisplayType.FLEX);
             this.getStyle().setPadding(0f);
             this.getStyle().getFlexStyle().setFlexDirection(FlexDirection.COLUMN);
 
@@ -288,7 +288,7 @@ public class MenuLayerDemo extends Demo {
             this.getStyle().setMinHeight(MENU_HEIGHT);
             this.getStyle().setMaxHeight(MENU_HEIGHT);
 
-            this.getStyle().setPosition(PositionType.RELATIVE);
+            this.getStyle().setPositionType(PositionType.RELATIVE);
 
             this.getStyle().getFlexStyle().setFlexGrow(0);
             this.getStyle().getFlexStyle().setFlexShrink(0);

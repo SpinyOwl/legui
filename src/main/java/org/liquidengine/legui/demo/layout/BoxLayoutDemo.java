@@ -39,7 +39,7 @@ public class BoxLayoutDemo extends Demo {
     protected void createGuiElements(Frame frame, int width, int height) {
         this.frame = frame;
         Component frameContainer = frame.getContainer();
-        frameContainer.getStyle().setDisplay(DisplayType.FLEX);
+        frameContainer.getStyle().setDisplayType(DisplayType.FLEX);
         frameContainer.getStyle().getBackground().setColor(ColorConstants.lightGray());
 
         c1 = new Panel();
@@ -66,15 +66,15 @@ public class BoxLayoutDemo extends Demo {
         c2.getStyle().setRight(0f);
         c2.getStyle().setBottom(0f);
 
-        c1.getStyle().setDisplay(DisplayType.FLEX);
+        c1.getStyle().setDisplayType(DisplayType.FLEX);
         c1.getStyle().getFlexStyle().setFlexDirection(FlexDirection.ROW);
 
-        c11.getStyle().setPosition(PositionType.ABSOLUTE);
+        c11.getStyle().setPositionType(PositionType.ABSOLUTE);
         c11.getStyle().setTop(10f);
         c11.getStyle().setRight(0f);
         c11.getStyle().setWidth(50f);
         c11.getStyle().setHeight(50f);
-        c12.getStyle().setPosition(PositionType.ABSOLUTE);
+        c12.getStyle().setPositionType(PositionType.ABSOLUTE);
         c12.getStyle().setTop(10f);
         c12.getStyle().setRight(50f);
         c12.getStyle().setWidth(50f);

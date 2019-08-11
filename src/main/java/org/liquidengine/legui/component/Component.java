@@ -359,7 +359,7 @@ public abstract class Component implements Serializable {
      * @return true if component visible. default value is {@link Boolean#TRUE}.
      */
     public boolean isVisible() {
-        return this.style.getDisplay() != Style.DisplayType.NONE;
+        return this.style.getDisplayType() != Style.DisplayType.NONE;
     }
 
     /**

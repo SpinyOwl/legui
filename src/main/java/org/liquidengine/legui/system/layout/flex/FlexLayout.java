@@ -101,7 +101,7 @@ public class FlexLayout implements Layout {
         setPadding(node, style);
         setMargin(node, style);
 
-        Yoga.YGNodeStyleSetPositionType(node, style.getPosition() == PositionType.RELATIVE ? Yoga.YGPositionTypeRelative : Yoga.YGPositionTypeAbsolute);
+        Yoga.YGNodeStyleSetPositionType(node, style.getPositionType() == PositionType.RELATIVE ? Yoga.YGPositionTypeRelative : Yoga.YGPositionTypeAbsolute);
 
         Yoga.YGNodeStyleSetFlexGrow(node, flexStyle.getFlexGrow());
         Yoga.YGNodeStyleSetFlexShrink(node, flexStyle.getFlexShrink());

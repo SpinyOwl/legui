@@ -165,11 +165,11 @@ public class ExampleGui extends Panel {
 
         Widget inner = new Widget();
         inner.setResizable(false);
-        inner.getStyle().setPosition(PositionType.RELATIVE);
+        inner.getStyle().setPositionType(PositionType.RELATIVE);
         inner.getStyle().getFlexStyle().setFlexGrow(1);
         inner.getStyle().setMargin(10f);
         inner.getContainer().getStyle().getBackground().setColor(ColorConstants.lightGreen());
-        widget.getContainer().getStyle().setDisplay(DisplayType.FLEX);
+        widget.getContainer().getStyle().setDisplayType(DisplayType.FLEX);
         widget.getContainer().add(inner);
 
         this.add(widget);
@@ -340,7 +340,7 @@ public class ExampleGui extends Panel {
         createButtonWithTooltip().getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
             MouseClickEvent.MouseClickAction action = event.getAction();
             if (CLICK == action) {
-                mouseTargetLabel.getStyle().setDisplay(mouseTargetLabel.isVisible() ? Style.DisplayType.NONE : Style.DisplayType.MANUAL);
+                mouseTargetLabel.getStyle().setDisplayType(mouseTargetLabel.isVisible() ? Style.DisplayType.NONE : Style.DisplayType.MANUAL);
             }
             if (RELEASE == action) {
                 System.out.println("RELEASE");
