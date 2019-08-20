@@ -41,7 +41,19 @@ jobs:
         - git config --global user.email ci@spinyowl.com
       script: ./gradlew clean build test sonarqube uploadArchives -Dsonar.login=$SONAR_LOGIN -DpublishUsername=SpinyOwlCI -DpublishPassword=$CI_USER_PASSWORD -DpublishUrl=git:$TRAVIS_BRANCH://git@github.com:SpinyOwl/repo.git
     - stage: build_pull_request
-      script: ./gradlew clean build test sonarqube -Dsonar.login=$SONAR_LOGIN -Dsonar.pullrequest.base=$TRAVIS_BRANCH -Dsonar.pullrequest.branch=$TRAVIS_PULL_REQUEST_BRANCH -Dsonar.pullrequest.key=$TRAVIS_PULL_REQUEST -Dsonar.pullrequest.provider=GitHub -Dsonar.pullrequest.github.repository=SpinyOwl/legui
+      script: 
+        - echo "$TRAVIS_PULL_REQUEST_SLUG"
+        - echo "$TRAVIS_REPO_SLUG"
+        - |
+          if [ "$TRAVIS_PULL_REQUEST_SLUG" == "$TRAVIS_REPO_SLUG" ]; then
+            echo one &&
+             ./gradlew clean build test sonarqube -Dsonar.login=$SONAR_LOGIN -Dsonar.pullrequest.base=$TRAVIS_BRANCH -Dsonar.pullrequest.branch=$TRAVIS_PULL_REQUEST_BRANCH -Dsonar.pullrequest.key=$TRAVIS_PULL_REQUEST -Dsonar.pullrequest.provider=GitHub -Dsonar.pullrequest.github.repository=SpinyOwl/legui; 
+          fi
+        - |
+          if [ "$TRAVIS_PULL_REQUEST_SLUG" != "$TRAVIS_REPO_SLUG" ]; then
+            echo two &&
+             ./gradlew clean build test; 
+          fi
 
 cache:
   directories:
