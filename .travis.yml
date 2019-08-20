@@ -44,10 +44,11 @@ jobs:
       script: 
         - echo "$TRAVIS_PULL_REQUEST_SLUG"
         - echo "$TRAVIS_REPO_SLUG"
-        - if ["$TRAVIS_PULL_REQUEST_SLUG" == "$TRAVIS_REPO_SLUG"]; then
+        - if [ "$TRAVIS_PULL_REQUEST_SLUG" == "$TRAVIS_REPO_SLUG" ]; then
             echo one &&
              ./gradlew clean build test sonarqube -Dsonar.login=$SONAR_LOGIN -Dsonar.pullrequest.base=$TRAVIS_BRANCH -Dsonar.pullrequest.branch=$TRAVIS_PULL_REQUEST_BRANCH -Dsonar.pullrequest.key=$TRAVIS_PULL_REQUEST -Dsonar.pullrequest.provider=GitHub -Dsonar.pullrequest.github.repository=SpinyOwl/legui;
-         else 
+         fi
+         - if [ "$TRAVIS_PULL_REQUEST_SLUG" != "$TRAVIS_REPO_SLUG" ]; then
             echo two &&
              ./gradlew clean build test;
          fi
