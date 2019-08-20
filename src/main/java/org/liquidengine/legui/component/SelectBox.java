@@ -140,11 +140,11 @@ public class SelectBox<T> extends Component {
     private void initialize() {
         selectionListPanel.setHorizontalScrollBarVisible(false);
 
-        selectionListPanel.getContainer().getStyle().setDisplayType(DisplayType.FLEX);
+        selectionListPanel.getContainer().getStyle().setDisplay(DisplayType.FLEX);
         selectionListPanel.getContainer().getStyle().getFlexStyle().setFlexDirection(FlexDirection.COLUMN);
         selectionListPanel.getContainer().getStyle().getBackground().setColor(ColorConstants.lightBlue());
 
-        this.getStyle().setDisplayType(DisplayType.FLEX);
+        this.getStyle().setDisplay(DisplayType.FLEX);
 
         expandIcon = new CharIcon(new Vector2f(expandButton.getSize()), DEFAULT_ICON_FONT, (char) EXPAND_ICON_CHAR, ColorConstants.black());
         collapseIcon = new CharIcon(new Vector2f(expandButton.getSize()), DEFAULT_ICON_FONT, (char) COLLAPSE_ICON_CHAR, ColorConstants.black());
@@ -301,7 +301,7 @@ public class SelectBox<T> extends Component {
         SelectBoxElement<T> boxElement = new SelectBoxElement<>(element, false);
         boxElement.getStyle().setHeight(elementHeight);
         boxElement.getStyle().setMinHeight(elementHeight);
-        boxElement.getStyle().setPositionType(PositionType.RELATIVE);
+        boxElement.getStyle().setPosition(PositionType.RELATIVE);
         boxElement.getListenerMap().getListeners(MouseClickEvent.class).add(new SelectBoxElementClickListener<>(this));
         return boxElement;
     }

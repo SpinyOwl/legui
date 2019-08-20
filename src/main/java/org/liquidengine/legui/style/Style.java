@@ -19,8 +19,8 @@ import static org.liquidengine.legui.style.length.LengthType.pixel;
  */
 public class Style {
 
-    private DisplayType displayType = DisplayType.MANUAL;
-    private PositionType positionType = PositionType.ABSOLUTE;
+    private DisplayType display = DisplayType.MANUAL;
+    private PositionType position = PositionType.ABSOLUTE;
 
     private FlexStyle flexStyle = new FlexStyle();
     private Background background = new Background();
@@ -612,20 +612,20 @@ public class Style {
      *
      * @return display style.
      */
-    public DisplayType getDisplayType() {
-        return displayType;
+    public DisplayType getDisplay() {
+        return display;
     }
 
     /**
      * Used to set display type.
      *
-     * @param displayType display to set.
+     * @param display display to set.
      */
-    public void setDisplayType(DisplayType displayType) {
-        if (displayType == null) {
-            this.displayType = DisplayType.MANUAL;
+    public void setDisplay(DisplayType display) {
+        if (display == null) {
+            this.display = DisplayType.MANUAL;
         }
-        this.displayType = displayType;
+        this.display = display;
     }
 
     /**
@@ -732,18 +732,18 @@ public class Style {
      *
      * @return position type or null.
      */
-    public PositionType getPositionType() {
-        return positionType;
+    public PositionType getPosition() {
+        return position;
     }
 
     /**
      * Used to set position style.
      *
-     * @param positionType position type to set.
+     * @param position position type to set.
      */
-    public void setPositionType(PositionType positionType) {
-        if (positionType != null) {
-            this.positionType = positionType;
+    public void setPosition(PositionType position) {
+        if (position != null) {
+            this.position = position;
         }
     }
 

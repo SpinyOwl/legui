@@ -124,11 +124,11 @@ public class FBOImageExample {
             widget.setCloseable(false);
             widget.setMinimizable(false);
             widget.setResizable(true);
-            widget.getContainer().getStyle().setDisplayType(DisplayType.FLEX);
+            widget.getContainer().getStyle().setDisplay(DisplayType.FLEX);
 
             ImageView imageView = new ImageView(fboTexture);
             imageView.setPosition(10, 10);
-            imageView.getStyle().setPositionType(PositionType.RELATIVE);
+            imageView.getStyle().setPosition(PositionType.RELATIVE);
             imageView.getStyle().getFlexStyle().setFlexGrow(1);
             imageView.getStyle().setMargin(10f);
             imageView.getStyle().setMinimumSize(50, 50);

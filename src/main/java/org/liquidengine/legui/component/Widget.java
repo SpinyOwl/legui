@@ -150,7 +150,7 @@ public class Widget extends Component {
      * @param title title to set.
      */
     private void initialize(String title) {
-        this.getStyle().setDisplayType(DisplayType.FLEX);
+        this.getStyle().setDisplay(DisplayType.FLEX);
         this.getStyle().getFlexStyle().setFlexDirection(FlexDirection.COLUMN);
         this.getStyle().setMinWidth(50f);
         this.getStyle().setMinHeight(50f);
@@ -160,8 +160,8 @@ public class Widget extends Component {
         titleContainer.setTabFocusable(false);
 
         titleContainer.getStyle().getBackground().setColor(ColorConstants.white());
-        titleContainer.getStyle().setDisplayType(DisplayType.FLEX);
-        titleContainer.getStyle().setPositionType(PositionType.RELATIVE);
+        titleContainer.getStyle().setDisplay(DisplayType.FLEX);
+        titleContainer.getStyle().setPosition(PositionType.RELATIVE);
         titleContainer.getStyle().setHeight((float) INITIAL_TITLE_HEIGHT);
         titleContainer.getStyle().setMinHeight((float) INITIAL_TITLE_HEIGHT);
         titleContainer.getStyle().setMaxHeight((float) INITIAL_TITLE_HEIGHT);
@@ -170,7 +170,7 @@ public class Widget extends Component {
         titleContainer.getStyle().getFlexStyle().setFlexDirection(FlexDirection.ROW);
 
         this.title = new Label(title);
-        this.title.getStyle().setPositionType(PositionType.RELATIVE);
+        this.title.getStyle().setPosition(PositionType.RELATIVE);
         this.title.getStyle().setMaxWidth(Float.MAX_VALUE);
         this.title.getStyle().setMaxHeight((float) INITIAL_TITLE_HEIGHT);
         this.title.getStyle().setHeight((float) INITIAL_TITLE_HEIGHT);
@@ -193,7 +193,7 @@ public class Widget extends Component {
         closeIcon.setHorizontalAlign(HorizontalAlign.CENTER);
         closeIcon.setVerticalAlign(VerticalAlign.MIDDLE);
 
-        closeButton.getStyle().setPositionType(PositionType.RELATIVE);
+        closeButton.getStyle().setPosition(PositionType.RELATIVE);
         closeButton.getStyle().getBackground().setIcon(closeIcon);
         closeButton.getStyle().getBackground().setColor(ColorConstants.transparent());
         closeButton.getStyle().setMaxWidth((float) INITIAL_TITLE_HEIGHT);
@@ -230,7 +230,7 @@ public class Widget extends Component {
 
         minimizeButton.getStyle().getBackground().setColor(ColorConstants.transparent());
         minimizeButton.getStyle().getBackground().setIcon(minimizeIcon);
-        minimizeButton.getStyle().setPositionType(PositionType.RELATIVE);
+        minimizeButton.getStyle().setPosition(PositionType.RELATIVE);
         minimizeButton.getStyle().setMaxWidth((float) INITIAL_TITLE_HEIGHT);
         minimizeButton.getStyle().setMaxHeight((float) INITIAL_TITLE_HEIGHT);
         minimizeButton.getStyle().setMinWidth((float) INITIAL_TITLE_HEIGHT);
@@ -250,7 +250,7 @@ public class Widget extends Component {
         // flex
         container.getStyle().getFlexStyle().setFlexShrink(1);
         container.getStyle().getFlexStyle().setFlexGrow(1);
-        container.getStyle().setPositionType(PositionType.RELATIVE);
+        container.getStyle().setPosition(PositionType.RELATIVE);
 
         titleContainer.add(this.title);
         titleContainer.add(minimizeButton);
@@ -318,7 +318,7 @@ public class Widget extends Component {
         if (minimized) {
             return;
         }
-        this.titleContainer.getStyle().setDisplayType(titleEnabled ? DisplayType.FLEX : DisplayType.NONE);
+        this.titleContainer.getStyle().setDisplay(titleEnabled ? DisplayType.FLEX : DisplayType.NONE);
     }
 
     /**
@@ -336,7 +336,7 @@ public class Widget extends Component {
      * @param closeable widget state (closeable or not) to set.
      */
     public void setCloseable(boolean closeable) {
-        this.closeButton.getStyle().setDisplayType(closeable ? DisplayType.MANUAL : DisplayType.NONE);
+        this.closeButton.getStyle().setDisplay(closeable ? DisplayType.MANUAL : DisplayType.NONE);
     }
 
     /**
@@ -457,7 +457,7 @@ public class Widget extends Component {
      * @param minimizable new minimizable state of widget.
      */
     public void setMinimizable(boolean minimizable) {
-        this.minimizeButton.getStyle().setDisplayType(minimizable ? DisplayType.MANUAL : DisplayType.NONE);
+        this.minimizeButton.getStyle().setDisplay(minimizable ? DisplayType.MANUAL : DisplayType.NONE);
     }
 
     /**
@@ -487,11 +487,11 @@ public class Widget extends Component {
     }
 
     public void hide() {
-        getStyle().setDisplayType(DisplayType.NONE);
+        getStyle().setDisplay(DisplayType.NONE);
     }
 
     public void show() {
-        getStyle().setDisplayType(DisplayType.FLEX);
+        getStyle().setDisplay(DisplayType.FLEX);
     }
 
     /**
@@ -517,7 +517,7 @@ public class Widget extends Component {
             this.getStyle().setMinHeight(titleHeight);
 
             if (resizable) {
-                resizeButton.getStyle().setDisplayType(DisplayType.NONE);
+                resizeButton.getStyle().setDisplay(DisplayType.NONE);
             }
         }
     }
@@ -538,7 +538,7 @@ public class Widget extends Component {
             this.getStyle().setHeight(maximizedHeight);
 
             if (resizable) {
-                resizeButton.getStyle().setDisplayType(DisplayType.MANUAL);
+                resizeButton.getStyle().setDisplay(DisplayType.MANUAL);
             }
         }
     }
@@ -692,7 +692,7 @@ public class Widget extends Component {
 
     public void setResizable(boolean resizable) {
         this.resizable = resizable;
-        this.resizeButton.getStyle().setDisplayType(resizable ? DisplayType.MANUAL : DisplayType.NONE);
+        this.resizeButton.getStyle().setDisplay(resizable ? DisplayType.MANUAL : DisplayType.NONE);
     }
 
     public Button getResizeButton() {
