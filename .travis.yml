@@ -27,7 +27,7 @@ stages:
   - name: build_and_publish_artifacts
     if: type = push
   - name: build_pull_request
-    if: (type = pull_request) AND (branch = develop) AND ($TRAVIS_PULL_REQUEST_SLUG = $TRAVIS_REPO_SLUG)
+    if: (type = pull_request) AND (branch = develop) AND ("$TRAVIS_PULL_REQUEST_SLUG" = "$TRAVIS_REPO_SLUG")
 
 jobs:
   include:
