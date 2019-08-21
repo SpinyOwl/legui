@@ -2,6 +2,7 @@ package org.liquidengine.legui.theme.colored.def;
 
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.Tooltip;
+import org.liquidengine.legui.style.border.SimpleLineBorder;
 import org.liquidengine.legui.style.shadow.Shadow;
 import org.liquidengine.legui.theme.AbstractTheme;
 import org.liquidengine.legui.theme.Themes;
@@ -16,9 +17,23 @@ import java.util.List;
  */
 public class FlatComponentTheme<T extends Component> extends AbstractTheme<T> {
 
-    private final FlatColoredThemeSettings settings;
+    protected FlatColoredThemeSettings settings;
+
+    /**
+     * Default constructor. Settings should be specified before using this theme.
+     */
+    public FlatComponentTheme() {
+    }
 
     public FlatComponentTheme(FlatColoredThemeSettings settings) {
+        this.settings = settings;
+    }
+
+    public FlatColoredThemeSettings getSettings() {
+        return settings;
+    }
+
+    public void setSettings(FlatColoredThemeSettings settings) {
         this.settings = settings;
     }
 
@@ -30,7 +45,11 @@ public class FlatComponentTheme<T extends Component> extends AbstractTheme<T> {
     @Override
     public void apply(T component) {
         super.apply(component);
-        component.getStyle().setBorder(null);
+        if(settings.borderColor().z==0) {
+            component.getStyle().setBorder(null);
+        } else {
+            component.getStyle().setBorder(new SimpleLineBorder(settings.borderColor(), 1));
+        }
         component.getStyle().setBorderRadius(2f);
         component.getStyle().getBackground().setColor(settings.backgroundColor());
         component.getStyle().setFocusedStrokeColor(settings.strokeColor());

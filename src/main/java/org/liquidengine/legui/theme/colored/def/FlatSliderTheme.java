@@ -9,13 +9,16 @@ import org.liquidengine.legui.theme.colored.FlatColoredTheme.FlatColoredThemeSet
  *
  * @param <T> {@link Slider} subclasses.
  */
-public class FlatSliderTheme<T extends Slider> extends FlatComponentTheme<T> {
+public class FlatSliderTheme<T extends Slider> extends FlatBorderlessTheme<T> {
 
-    private FlatColoredThemeSettings settings;
+    /**
+     * Default constructor. Settings should be specified before using this theme.
+     */
+    public FlatSliderTheme() {
+    }
 
     public FlatSliderTheme(FlatColoredThemeSettings settings) {
         super(settings);
-        this.settings = settings;
     }
 
     /**
@@ -26,8 +29,6 @@ public class FlatSliderTheme<T extends Slider> extends FlatComponentTheme<T> {
     @Override
     public void apply(T component) {
         super.apply(component);
-        component.getStyle().setShadow(null);
-        component.getStyle().getBackground().setColor(ColorConstants.transparent());
         component.setSliderColor(settings.borderColor());
         component.setSliderActiveColor(settings.allowColor());
     }

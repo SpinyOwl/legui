@@ -15,13 +15,16 @@ import static org.liquidengine.legui.style.font.FontRegistry.MATERIAL_ICONS_REGU
  *
  * @param <T> {@link RadioButton} subclasses.
  */
-public class FlatRadioButtonTheme<T extends RadioButton> extends FlatComponentTheme<T> {
+public class FlatRadioButtonTheme<T extends RadioButton> extends FlatBorderlessTheme<T> {
 
-    private FlatColoredThemeSettings settings;
+    /**
+     * Default constructor. Settings should be specified before using this theme.
+     */
+    public FlatRadioButtonTheme() {
+    }
 
     public FlatRadioButtonTheme(FlatColoredThemeSettings settings) {
         super(settings);
-        this.settings = settings;
     }
 
     /**
@@ -32,8 +35,6 @@ public class FlatRadioButtonTheme<T extends RadioButton> extends FlatComponentTh
     @Override
     public void apply(T component) {
         super.apply(component);
-        component.getStyle().setShadow(null);
-        component.getStyle().getBackground().setColor(ColorConstants.transparent());
         component.getTextState().setTextColor(ColorUtil.oppositeBlackOrWhite(settings.backgroundColor()));
         component.setIconUnchecked(
             new CharIcon(new Vector2f(14), MATERIAL_ICONS_REGULAR, (char) 0xE836, ColorUtil.oppositeBlackOrWhite(settings.backgroundColor())));

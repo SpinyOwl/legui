@@ -1,24 +1,26 @@
 package org.liquidengine.legui.theme.colored.def;
 
-import org.liquidengine.legui.component.SelectBox;
+import org.liquidengine.legui.component.Component;
+import org.liquidengine.legui.component.Label;
+import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.style.color.ColorUtil;
 import org.liquidengine.legui.theme.colored.FlatColoredTheme.FlatColoredThemeSettings;
 
 /**
- * Dark SelectBox Theme for all select boxes. Used to make select box dark.
+ * Dark Label Theme for all labels. Used to make label dark.
  *
- * @param <T> {@link SelectBox.SelectBoxElement} subclasses.
+ * @param <T> {@link Label} subclasses.
  */
-public class FlatSelectBoxElementTheme<T extends SelectBox.SelectBoxElement> extends FlatBorderlessTheme<T> {
+public class FlatBorderlessTheme<T extends Component> extends FlatComponentTheme<T> {
 
     /**
      * Default constructor. Settings should be specified before using this theme.
      */
-    public FlatSelectBoxElementTheme() {
+    public FlatBorderlessTheme() {
     }
 
-    public FlatSelectBoxElementTheme(FlatColoredThemeSettings settings) {
+    public FlatBorderlessTheme(FlatColoredThemeSettings settings) {
         super(settings);
     }
 
@@ -30,6 +32,8 @@ public class FlatSelectBoxElementTheme<T extends SelectBox.SelectBoxElement> ext
     @Override
     public void apply(T component) {
         super.apply(component);
-        component.getTextState().setTextColor(ColorUtil.oppositeBlackOrWhite(settings.backgroundColor()));
+        component.getStyle().setBorder(null);
+        component.getStyle().setShadow(null);
+        component.getStyle().getBackground().setColor(ColorConstants.transparent());
     }
 }

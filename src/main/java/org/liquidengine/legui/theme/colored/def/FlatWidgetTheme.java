@@ -22,11 +22,14 @@ import org.liquidengine.legui.theme.colored.FlatColoredTheme.FlatColoredThemeSet
  */
 public class FlatWidgetTheme<T extends Widget> extends FlatComponentTheme<T> {
 
-    private final FlatColoredThemeSettings settings;
+    /**
+     * Default constructor. Settings should be specified before using this theme.
+     */
+    public FlatWidgetTheme() {
+    }
 
     public FlatWidgetTheme(FlatColoredThemeSettings settings) {
         super(settings);
-        this.settings = settings;
     }
 
     /**

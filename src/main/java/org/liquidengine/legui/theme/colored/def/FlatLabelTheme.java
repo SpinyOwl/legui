@@ -11,13 +11,16 @@ import org.liquidengine.legui.theme.colored.FlatColoredTheme.FlatColoredThemeSet
  *
  * @param <T> {@link Label} subclasses.
  */
-public class FlatLabelTheme<T extends Label> extends FlatComponentTheme<T> {
+public class FlatLabelTheme<T extends Label> extends FlatBorderlessTheme<T> {
 
-    private FlatColoredThemeSettings settings;
+    /**
+     * Default constructor. Settings should be specified before using this theme.
+     */
+    public FlatLabelTheme() {
+    }
 
     public FlatLabelTheme(FlatColoredThemeSettings settings) {
         super(settings);
-        this.settings = settings;
     }
 
     /**
@@ -28,8 +31,6 @@ public class FlatLabelTheme<T extends Label> extends FlatComponentTheme<T> {
     @Override
     public void apply(T component) {
         super.apply(component);
-        component.getStyle().setShadow(null);
-        component.getStyle().getBackground().setColor(ColorConstants.transparent());
         component.getTextState().setTextColor(ColorUtil.oppositeBlackOrWhite(settings.backgroundColor()));
         component.getTextState().setHorizontalAlign(HorizontalAlign.LEFT);
     }

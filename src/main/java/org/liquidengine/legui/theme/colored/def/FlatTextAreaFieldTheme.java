@@ -10,13 +10,16 @@ import org.liquidengine.legui.theme.colored.FlatColoredTheme.FlatColoredThemeSet
  *
  * @param <T> {@link TextAreaField} subclasses.
  */
-public class FlatTextAreaFieldTheme<T extends TextAreaField> extends FlatComponentTheme<T> {
+public class FlatTextAreaFieldTheme<T extends TextAreaField> extends FlatBorderlessTheme<T> {
 
-    private FlatColoredThemeSettings settings;
+    /**
+     * Default constructor. Settings should be specified before using this theme.
+     */
+    public FlatTextAreaFieldTheme() {
+    }
 
     public FlatTextAreaFieldTheme(FlatColoredThemeSettings settings) {
         super(settings);
-        this.settings = settings;
     }
 
     /**
@@ -27,8 +30,6 @@ public class FlatTextAreaFieldTheme<T extends TextAreaField> extends FlatCompone
     @Override
     public void apply(T component) {
         super.apply(component);
-
-        component.getStyle().setShadow(null);
         component.getFocusedStyle().getBackground()
             .setColor(settings.backgroundColor().mul(3).add(ColorUtil.oppositeBlackOrWhite(settings.backgroundColor())).div(4));
         component.getTextState().setTextColor(ColorUtil.oppositeBlackOrWhite(settings.backgroundColor()));

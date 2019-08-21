@@ -31,9 +31,12 @@ import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.event.WindowSizeEvent;
 import org.liquidengine.legui.listener.WindowSizeEventListener;
+import org.liquidengine.legui.style.border.SimpleLineBorder;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.layout.LayoutManager;
 import org.liquidengine.legui.system.renderer.Renderer;
+import org.liquidengine.legui.theme.Themes;
+import org.liquidengine.legui.theme.colored.def.FlatComponentTheme;
 import org.lwjgl.PointerBuffer;
 import org.lwjgl.glfw.GLFWKeyCallbackI;
 import org.lwjgl.glfw.GLFWVidMode;
@@ -75,6 +78,15 @@ public class Example {
         for (int i = 0; i < remaining; i++) {
             monitors[i] = pointerBuffer.get(i);
         }
+
+        FlatComponentTheme<Component> flatComponentTheme = new FlatComponentTheme<Component>(){
+            @Override
+            public void apply(Component component) {
+                super.apply(component);
+                component.getStyle().setBorder(new SimpleLineBorder(settings.borderColor(), 1f));
+            }
+        };
+        Themes.getDefaultTheme().getThemeManager().setComponentTheme(Component.class, flatComponentTheme);
 
         // Firstly we need to create frame component for window.
         Frame frame = new Frame(WIDTH, HEIGHT);// new Frame(WIDTH, HEIGHT);
