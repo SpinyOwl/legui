@@ -29,7 +29,7 @@ public class FlatSliderTheme<T extends Slider> extends FlatBorderlessTheme<T> {
     @Override
     public void apply(T component) {
         super.apply(component);
-        component.setSliderColor(settings.borderColor());
+        component.setSliderColor(settings.sliderColor());
         component.setSliderActiveColor(settings.allowColor());
     }
 }

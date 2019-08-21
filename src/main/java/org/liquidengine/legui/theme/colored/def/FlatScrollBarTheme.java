@@ -30,7 +30,7 @@ public class FlatScrollBarTheme<T extends ScrollBar> extends FlatComponentTheme<
     public void apply(T component) {
         super.apply(component);
         component.getStyle().setShadow(null);
-        component.getStyle().getBackground().setColor(settings.borderColor());
+        component.getStyle().getBackground().setColor(settings.sliderColor());
         component.setArrowColor(ColorUtil.oppositeBlackOrWhite(settings.borderColor()));
         component.setScrollColor(settings.backgroundColor());
         component.setArrowsEnabled(false);
