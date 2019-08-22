@@ -3,6 +3,7 @@ package org.liquidengine.legui.system.layout;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.style.Style.DisplayType;
+import org.liquidengine.legui.system.context.Context;
 
 /**
  * Layout manager. Used to layout component and it's child components.
@@ -47,12 +48,33 @@ public abstract class LayoutManager {
      *
      * @param frame frame to lay out.
      */
-    public abstract void layout(Frame frame);
+    public void layout(Frame frame) {
+        layout(frame, null);
+    }
+
+    /**
+     * Used to layout frame layers and all of their child components.
+     *
+     * @param frame frame to lay out.
+     * @param context context (used for event generation).
+     */
+    public abstract void layout(Frame frame, Context context);
 
     /**
      * Used to layout component and all of his child components.
      *
      * @param component component to lay out.
      */
-    public abstract void layout(Component component);
+    public void layout(Component component) {
+        layout(component, null, null);
+    }
+
+    /**
+     * Used to layout component and all of his child components.
+     *
+     * @param component component to lay out.
+     * @param frame component frame (for event generation if needed).
+     * @param context context (used for event generation).
+     */
+    public abstract void layout(Component component, Frame frame, Context context);
 }

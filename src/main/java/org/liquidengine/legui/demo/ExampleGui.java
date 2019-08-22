@@ -1,9 +1,11 @@
 package org.liquidengine.legui.demo;
 
+import java.util.concurrent.atomic.AtomicInteger;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.animation.Animation;
 import org.liquidengine.legui.component.*;
+import org.liquidengine.legui.component.event.component.ChangeSizeEvent;
 import org.liquidengine.legui.component.event.selectbox.SelectBoxChangeSelectionEventListener;
 import org.liquidengine.legui.component.event.slider.SliderChangeValueEvent;
 import org.liquidengine.legui.component.event.slider.SliderChangeValueEventListener;
@@ -52,6 +54,7 @@ public class ExampleGui extends Panel {
     private final TextInput textInput;
     private final Label debugLabel;
     private ImageView imageView;
+    private CheckBox generateEventsByLayoutManager;
 
     public ExampleGui() {
         this(800, 600);
@@ -101,9 +104,9 @@ public class ExampleGui extends Panel {
         this.add(createImageWrapperWidgetWithImage());
         this.add(createButtonWithTooltip());
 
-        CheckBox checkBox1 = new CheckBox(20, 200, 50, 20);
-        this.add(checkBox1);
-        this.add(createCheckboxWithAnimation(checkBox1));
+        generateEventsByLayoutManager = new CheckBox("Generate events by layout manager", 20, 200, 200, 20);
+        this.add(generateEventsByLayoutManager);
+        this.add(createCheckboxWithAnimation(generateEventsByLayoutManager));
 
         ProgressBar progressBar = new ProgressBar(250, 10, 100, 10);
         progressBar.setValue(50);
@@ -163,7 +166,8 @@ public class ExampleGui extends Panel {
         widget.getTitleContainer().getStyle().getBackground().setColor(ColorConstants.lightGreen());
         widget.getTitleTextState().setTextColor(ColorConstants.black());
 
-        Widget inner = new Widget();
+        String innerText = "Inner Widget; Resize events: ";
+        Widget inner = new Widget(innerText + 0);
         inner.setResizable(false);
         inner.getStyle().setPosition(PositionType.RELATIVE);
         inner.getStyle().getFlexStyle().setFlexGrow(1);
@@ -171,6 +175,12 @@ public class ExampleGui extends Panel {
         inner.getContainer().getStyle().getBackground().setColor(ColorConstants.lightGreen());
         widget.getContainer().getStyle().setDisplay(DisplayType.FLEX);
         widget.getContainer().add(inner);
+
+        AtomicInteger counter = new AtomicInteger();
+        inner.getListenerMap().addListener(ChangeSizeEvent.class, e -> {
+            counter.getAndIncrement();
+            inner.getTitle().getTextState().setText(innerText + "; Resize events: " + counter.get());
+        });
 
         this.add(widget);
 
@@ -207,7 +217,7 @@ public class ExampleGui extends Panel {
                 Dialog dialog = new Dialog("Question:", 300, 100);
 
                 Label questionLabel = new Label("Are you sure want to turn " + (widget2.isDraggable() ? "off" : "on") + "this widget draggable?", 10, 10, 200,
-                        20);
+                                                20);
                 Button yesButton = new Button("Yes", 10, 50, 50, 20);
                 Button noButton = new Button("No", 70, 50, 50, 20);
                 yesButton.getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) e -> {
@@ -363,11 +373,13 @@ public class ExampleGui extends Panel {
         this.add(scrollablePanel);
 
         slider2.getListenerMap().addListener(SliderChangeValueEvent.class,
-                (SliderChangeValueEventListener) event -> scrollablePanel.setHorizontalScrollBarHeight(event.getNewValue() / 2f + 10)
-        );
+                                             (SliderChangeValueEventListener) event -> scrollablePanel
+                                                 .setHorizontalScrollBarHeight(event.getNewValue() / 2f + 10)
+                                            );
         slider1.getListenerMap().addListener(SliderChangeValueEvent.class,
-                (SliderChangeValueEventListener) event -> scrollablePanel.getHorizontalScrollBar().setArrowSize(event.getNewValue() / 4f + 10)
-        );
+                                             (SliderChangeValueEventListener) event -> scrollablePanel.getHorizontalScrollBar()
+                                                 .setArrowSize(event.getNewValue() / 4f + 10)
+                                            );
 
         textArea = new TextArea(420, 280, 150, 100);
         textArea.getTextState().setText("ABC DEF GH\r\nI JKL MNO PQR\nSTU VWXYZ");
@@ -442,6 +454,10 @@ public class ExampleGui extends Panel {
         this.add(createShadowWidget());
     }
 
+    public CheckBox getGenerateEventsByLayoutManager() {
+        return generateEventsByLayoutManager;
+    }
+
     private Widget createImageWrapperWidgetWithImage() {
         Widget imageWrapper = new Widget(20, 30, 100, 100);
         imageWrapper.setTitleEnabled(true);
@@ -464,7 +480,7 @@ public class ExampleGui extends Panel {
         button.getTooltip().getSize().set(50, 60);
         button.getTooltip().getStyle().setPadding(4f);
 
-        int idv[] = {0};
+        int[] idv = {0};
         button.getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) (MouseClickEvent event) -> {
             if (event.getAction().equals(CLICK)) {
                 idv[0]++;
@@ -543,7 +559,7 @@ public class ExampleGui extends Panel {
             }
         });
         toggleButton.getListenerMap().addListener(MouseClickEvent.class,
-                (MouseClickEventListener) event -> getSlideImageOnClick(toggleButton, bgImageNormal).startAnimation());
+                                                  (MouseClickEventListener) event -> getSlideImageOnClick(toggleButton, bgImageNormal).startAnimation());
 
         toggleButton.getTooltip().setPosition(45, 0);
         toggleButton.getTooltip().getSize().set(140, 40);
@@ -551,7 +567,7 @@ public class ExampleGui extends Panel {
         toggleButton.getTooltip().getTextState().setTextColor(ColorConstants.white());
         toggleButton.getTooltip().getStyle().setPadding(4f);
 
-        int id[] = {0};
+        int[] id = {0};
         toggleButton.getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
             if (event.getAction().equals(CLICK)) {
                 id[0]++;
@@ -619,8 +635,8 @@ public class ExampleGui extends Panel {
         shadowWidget.getContainer().add(hOffsetSlider);
         hOffsetSlider.setValue(50f);
         hOffsetSlider.addSliderChangeValueEventListener((e) ->
-                shadowWidget.getStyle().getShadow().sethOffset(hOffsetSlider.getValue() - 50f)
-        );
+                                                            shadowWidget.getStyle().getShadow().sethOffset(hOffsetSlider.getValue() - 50f)
+                                                       );
         Label hOffsetLabel = new Label(10, 5 + 20 * 0, 90, 10);
         hOffsetLabel.getTextState().setText("HOffset: ");
         shadowWidget.getContainer().add(hOffsetLabel);
@@ -629,8 +645,8 @@ public class ExampleGui extends Panel {
         shadowWidget.getContainer().add(vOffsetSlider);
         vOffsetSlider.setValue(50f);
         vOffsetSlider.addSliderChangeValueEventListener((e) ->
-                shadowWidget.getStyle().getShadow().setvOffset(vOffsetSlider.getValue() - 50f)
-        );
+                                                            shadowWidget.getStyle().getShadow().setvOffset(vOffsetSlider.getValue() - 50f)
+                                                       );
         Label vOffsetLabel = new Label(10, 5 + 20 * 1, 90, 10);
         vOffsetLabel.getTextState().setText("VOffset: ");
         shadowWidget.getContainer().add(vOffsetLabel);
@@ -638,8 +654,8 @@ public class ExampleGui extends Panel {
         Slider blurSlider = new Slider(110, 5 + 20 * 2, 80, 10);
         shadowWidget.getContainer().add(blurSlider);
         blurSlider.addSliderChangeValueEventListener((e) ->
-                shadowWidget.getStyle().getShadow().setBlur(blurSlider.getValue())
-        );
+                                                         shadowWidget.getStyle().getShadow().setBlur(blurSlider.getValue())
+                                                    );
         Label blurLabel = new Label(10, 5 + 20 * 2, 90, 10);
         blurLabel.getTextState().setText("Blur: ");
         shadowWidget.getContainer().add(blurLabel);
@@ -648,8 +664,8 @@ public class ExampleGui extends Panel {
         shadowWidget.getContainer().add(spreadSlider);
         spreadSlider.setValue(50f);
         spreadSlider.addSliderChangeValueEventListener((e) ->
-                shadowWidget.getStyle().getShadow().setSpread(spreadSlider.getValue() - 50f)
-        );
+                                                           shadowWidget.getStyle().getShadow().setSpread(spreadSlider.getValue() - 50f)
+                                                      );
         Label spreadLabel = new Label(10, 5 + 20 * 3, 90, 10);
         spreadLabel.getTextState().setText("Spread: ");
         shadowWidget.getContainer().add(spreadLabel);
@@ -682,8 +698,8 @@ public class ExampleGui extends Panel {
             protected boolean animate(double delta) {
                 time += delta;
                 targetComponent.getStyle().getBackground().getColor().set(new Vector4f(initialColor)
-                        .add(new Vector4f(colorRange)
-                                .mul((float) Math.abs(Math.sin(time * 2)))));
+                                                                              .add(new Vector4f(colorRange)
+                                                                                       .mul((float) Math.abs(Math.sin(time * 2)))));
                 return !component.isHovered();
             }
 
