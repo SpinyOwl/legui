@@ -2,9 +2,12 @@ package org.liquidengine.legui.component.misc.listener.widget;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+import org.joml.Vector2f;
 import org.liquidengine.legui.component.Widget;
+import org.liquidengine.legui.component.event.component.ChangePositionEvent;
 import org.liquidengine.legui.event.MouseDragEvent;
 import org.liquidengine.legui.listener.MouseDragEventListener;
+import org.liquidengine.legui.listener.processor.EventProcessor;
 
 /**
  * @author ShchAlexander.
@@ -19,7 +22,12 @@ public class WidgetDragListener implements MouseDragEventListener {
 
     @Override
     public void process(MouseDragEvent event) {
+        Vector2f oldPos = new Vector2f(widget.getPosition());
         widget.getPosition().add(event.getDelta());
+        Vector2f newPos = widget.getPosition();
+        if(oldPos.sub(newPos, new Vector2f()).lengthSquared() > 0.000001f) {
+            EventProcessor.getInstance().pushEvent(new ChangePositionEvent(widget, event.getContext(), event.getFrame(), oldPos, newPos));
+        }
     }
 
     @Override

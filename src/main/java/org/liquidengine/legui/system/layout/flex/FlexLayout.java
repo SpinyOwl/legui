@@ -79,10 +79,10 @@ public class FlexLayout implements Layout {
 
 
             if (frame != null && context != null) {
-                if (oldPos.sub(newPos).lengthSquared() > 0.00001f) {
+                if (oldPos.sub(newPos, new Vector2f()).lengthSquared() > 0.000001f) {
                     EventProcessor.getInstance().pushEvent(new ChangePositionEvent(childComponent, context, frame, oldPos, newPos));
                 }
-                if (oldSize.sub(newSize).lengthSquared() > 0.00001f) {
+                if (oldSize.sub(newSize, new Vector2f()).lengthSquared() > 0.000001f) {
                     EventProcessor.getInstance().pushEvent(new ChangeSizeEvent(childComponent, context, frame, oldSize, newSize));
                 }
             }
