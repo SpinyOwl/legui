@@ -84,12 +84,12 @@ public class Example {
 
         Themes.setDefaultTheme(new FlatColoredTheme(
             fromInt(245, 245, 245, 1), // backgroundColor
-            ColorConstants.transparent(), // borderColor
             fromInt(176, 190, 197, 1), // borderColor
+            fromInt(176, 190, 197, 1), // sliderColor
             fromInt(100, 181, 246, 1), // strokeColor
             fromInt(165, 214, 167, 1), // allowColor
             fromInt(239, 154, 154, 1), // denyColor
-            ColorConstants.black() // shadowColor
+            ColorConstants.transparent() // shadowColor
         ));
 
         // Firstly we need to create frame component for window.

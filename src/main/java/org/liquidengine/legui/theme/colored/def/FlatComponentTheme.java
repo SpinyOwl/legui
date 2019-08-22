@@ -54,7 +54,7 @@ public class FlatComponentTheme<T extends Component> extends AbstractTheme<T> {
         component.getStyle().getBackground().setColor(settings.backgroundColor());
         component.getStyle().setFocusedStrokeColor(settings.strokeColor());
 
-        if (settings.shadowColor()== null || settings.shadowColor().length() > 0.00001f) {
+        if (settings.shadowColor() != null && settings.shadowColor().length() > 0.00001f) {
             component.getStyle().setShadow(new Shadow(1, 1, 16, -4, settings.shadowColor()));
         } else {
             component.getStyle().setShadow(null);
