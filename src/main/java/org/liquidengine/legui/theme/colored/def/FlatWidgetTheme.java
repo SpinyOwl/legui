@@ -56,6 +56,7 @@ public class FlatWidgetTheme<T extends Widget> extends FlatComponentTheme<T> {
         titleContainer.getStyle().getBackground().setColor(settings.borderColor());
 
         Button resizeButton = component.getResizeButton();
+        resizeButton.getStyle().setBorder(null);
         resizeButton.getStyle().getBackground().setColor(ColorConstants.transparent());
         resizeButton.getHoveredStyle().getBackground().setColor(ColorConstants.transparent());
         resizeButton.getPressedStyle().getBackground().setColor(ColorConstants.transparent());
