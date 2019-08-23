@@ -8,7 +8,7 @@ import org.liquidengine.legui.theme.colored.FlatColoredTheme.FlatColoredThemeSet
  *
  * @param <T> {@link ProgressBar} subclasses.
  */
-public class FlatProgressBarTheme<T extends ProgressBar> extends FlatBorderlessTheme<T> {
+public class FlatProgressBarTheme<T extends ProgressBar> extends FlatComponentTheme<T> {
 
     /**
      * Default constructor. Settings should be specified before using this theme.
