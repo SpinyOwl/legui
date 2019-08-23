@@ -76,7 +76,7 @@ after_success:
     if [ "$TRAVIS_BRANCH" == "develop" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
       ./send.sh success $WEBHOOK_URL $version-$VEXT https://github.com/SpinyOwl/repo/tree/$TRAVIS_BRANCH/org/liquidengine/legui/$version-$VEXT
     else
-      ./send.sh success $WEBHOOK_URL '$version-$VEXT'
+      ./send.sh success $WEBHOOK_URL $version-$VEXT
     fi
 after_failure:
   - wget https://raw.githubusercontent.com/SpinyOwl/travis-ci-discord-webhook/master/send.sh
