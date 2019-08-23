@@ -21,7 +21,8 @@ before_install:
     
 install:
   - |
-    version=$(cat version.json | jq '.version')
+    eval export version=$(cat version.json | jq '.version')
+    echo $version
 
 jdk:
   - openjdk8
