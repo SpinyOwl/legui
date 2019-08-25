@@ -39,7 +39,7 @@ public class FlatWidgetTheme<T extends Widget> extends FlatComponentTheme<T> {
      */
     @Override
     public void applyAll(T component) {
-        super.applyAll(component);
+        super.apply(component);
         component.getStyle().getBackground().setColor(settings.backgroundColor());
 
         Button minimizeButton = component.getMinimizeButton();
