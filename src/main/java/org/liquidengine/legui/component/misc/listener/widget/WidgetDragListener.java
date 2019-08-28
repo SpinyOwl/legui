@@ -14,7 +14,7 @@ import org.liquidengine.legui.listener.processor.EventProcessor;
  */
 public class WidgetDragListener implements MouseDragEventListener {
 
-    public static final float TRESHOLD = 0.0001f;
+    public static final float THRESHOLD = 0.0001f;
     private Widget widget;
 
     public WidgetDragListener(Widget widget) {
@@ -26,7 +26,7 @@ public class WidgetDragListener implements MouseDragEventListener {
         Vector2f oldPos = new Vector2f(widget.getPosition());
         widget.getPosition().add(event.getDelta());
         Vector2f newPos = widget.getPosition();
-        if (!oldPos.equals(newPos, TRESHOLD)) {
+        if (!oldPos.equals(newPos, THRESHOLD)) {
             EventProcessor.getInstance().pushEvent(new ChangePositionEvent(widget, event.getContext(), event.getFrame(), oldPos, newPos));
         }
     }

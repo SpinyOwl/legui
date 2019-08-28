@@ -28,7 +28,7 @@ import static org.liquidengine.legui.system.layout.flex.FlexUtils.*;
 public class FlexLayout implements Layout {
 
 
-    public static final float TRESHOLD = 0.0001f;
+    public static final float THRESHOLD = 0.0001f;
 
     /**
      * Used to lay out child components for parent component.
@@ -80,10 +80,10 @@ public class FlexLayout implements Layout {
             childComponent.setSize(newSize);
 
             if (frame != null && context != null) {
-                if (!oldPos.equals(newPos, TRESHOLD)) {
+                if (!oldPos.equals(newPos, THRESHOLD)) {
                     EventProcessor.getInstance().pushEvent(new ChangePositionEvent(childComponent, context, frame, oldPos, newPos));
                 }
-                if (!oldSize.equals(newSize, TRESHOLD)) {
+                if (!oldSize.equals(newSize, THRESHOLD)) {
                     EventProcessor.getInstance().pushEvent(new ChangeSizeEvent(childComponent, context, frame, oldSize, newSize));
                 }
             }

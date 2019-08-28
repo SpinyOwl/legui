@@ -19,7 +19,7 @@ import static org.liquidengine.legui.style.length.LengthType.pixel;
  */
 public class WidgetResizeButtonDragListener implements MouseDragEventListener {
 
-    public static final float TRESHOLD = 0.0001f;
+    public static final float THRESHOLD = 0.0001f;
     private Button resizeButton;
     private Widget widget;
 
@@ -90,7 +90,7 @@ public class WidgetResizeButtonDragListener implements MouseDragEventListener {
         Vector2f oldSize = new Vector2f(widget.getSize());
         widget.getSize().add(deltaSize);
         Vector2f newSize = widget.getSize();
-        if (!oldSize.equals(newSize, TRESHOLD)) {
+        if (!oldSize.equals(newSize, THRESHOLD)) {
             EventProcessor.getInstance().pushEvent(new ChangeSizeEvent(widget, event.getContext(), event.getFrame(), oldSize, newSize));
         }
     }
