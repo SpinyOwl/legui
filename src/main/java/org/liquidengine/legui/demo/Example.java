@@ -190,8 +190,12 @@ public class Example {
                 toggleFullscreen = false;
             }
 
-            // When everything done we need to relayout components.
-            LayoutManager.getInstance().layout(frame);
+            if(gui.getGenerateEventsByLayoutManager().isChecked()) {
+                // When everything done we need to relayout components.
+                LayoutManager.getInstance().layout(frame, context);
+            } else {
+                LayoutManager.getInstance().layout(frame);
+            }
 
             update();
             updCntr++;

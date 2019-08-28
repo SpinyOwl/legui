@@ -36,8 +36,8 @@ def commons_collections  = '4.1'
 def guava_version        = '19.0'
 def gson_version         = '2.7'
 
-def joml_version         = "1.9.9-SNAPSHOT"
-def lwjgl_version        = '3.2.2-SNAPSHOT'
+def joml_version         = "1.9.18-SNAPSHOT"
+def lwjgl_version        = '3.2.3-SNAPSHOT'
 def le_cbchain           = '1.0.0'
 def le_util              = '1.0.0'
 //@formatter:on

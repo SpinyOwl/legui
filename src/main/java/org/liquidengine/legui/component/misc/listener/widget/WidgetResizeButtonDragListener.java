@@ -3,9 +3,12 @@ package org.liquidengine.legui.component.misc.listener.widget;
 import org.joml.Vector2f;
 import org.liquidengine.legui.component.Button;
 import org.liquidengine.legui.component.Widget;
+import org.liquidengine.legui.component.event.component.ChangePositionEvent;
+import org.liquidengine.legui.component.event.component.ChangeSizeEvent;
 import org.liquidengine.legui.event.MouseDragEvent;
 import org.liquidengine.legui.input.Mouse;
 import org.liquidengine.legui.listener.MouseDragEventListener;
+import org.liquidengine.legui.listener.processor.EventProcessor;
 import org.liquidengine.legui.style.length.Length;
 import org.liquidengine.legui.style.util.StyleUtilities;
 
@@ -16,6 +19,7 @@ import static org.liquidengine.legui.style.length.LengthType.pixel;
  */
 public class WidgetResizeButtonDragListener implements MouseDragEventListener {
 
+    public static final float THRESHOLD = 0.0001f;
     private Button resizeButton;
     private Widget widget;
 
@@ -83,7 +87,11 @@ public class WidgetResizeButtonDragListener implements MouseDragEventListener {
             }
         }
 
+        Vector2f oldSize = new Vector2f(widget.getSize());
         widget.getSize().add(deltaSize);
-
+        Vector2f newSize = widget.getSize();
+        if (!oldSize.equals(newSize, THRESHOLD)) {
+            EventProcessor.getInstance().pushEvent(new ChangeSizeEvent(widget, event.getContext(), event.getFrame(), oldSize, newSize));
+        }
     }
 }

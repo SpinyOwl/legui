@@ -1,12 +1,18 @@
 package org.liquidengine.legui.system.layout.flex;
 
+import org.joml.Vector2f;
 import org.liquidengine.legui.component.Component;
+import org.liquidengine.legui.component.Frame;
+import org.liquidengine.legui.component.event.component.ChangePositionEvent;
+import org.liquidengine.legui.component.event.component.ChangeSizeEvent;
+import org.liquidengine.legui.listener.processor.EventProcessor;
 import org.liquidengine.legui.style.Style;
 import org.liquidengine.legui.style.Style.PositionType;
 import org.liquidengine.legui.style.flex.FlexStyle;
 import org.liquidengine.legui.style.length.Length;
 import org.liquidengine.legui.style.length.LengthType;
 import org.liquidengine.legui.style.length.Unit;
+import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.layout.Layout;
 import org.lwjgl.util.yoga.Yoga;
 
@@ -21,6 +27,9 @@ import static org.liquidengine.legui.system.layout.flex.FlexUtils.*;
  */
 public class FlexLayout implements Layout {
 
+
+    public static final float THRESHOLD = 0.0001f;
+
     /**
      * Used to lay out child components for parent component.
      *
@@ -28,6 +37,18 @@ public class FlexLayout implements Layout {
      */
     @Override
     public void layout(Component parent) {
+        layout(parent, null, null);
+    }
+
+    /**
+     * Used to lay out child components for parent component.
+     *
+     * @param parent component to lay out.
+     * @param frame component frame (for event generation).
+     * @param context context (used for event generation).
+     */
+    @Override
+    public void layout(Component parent, Frame frame, Context context) {
         // initialize
         long rootNode = Yoga.YGNodeNew();
         prepareParentNode(parent, rootNode);
@@ -50,8 +71,22 @@ public class FlexLayout implements Layout {
             Component childComponent = components.get(i);
             Long yogaNode = childNodes.get(i);
 
-            childComponent.setPosition(Yoga.YGNodeLayoutGetLeft(yogaNode), Yoga.YGNodeLayoutGetTop(yogaNode));
-            childComponent.setSize(Yoga.YGNodeLayoutGetWidth(yogaNode), Yoga.YGNodeLayoutGetHeight(yogaNode));
+            Vector2f newPos = new Vector2f(Yoga.YGNodeLayoutGetLeft(yogaNode), Yoga.YGNodeLayoutGetTop(yogaNode));
+            Vector2f oldPos = childComponent.getPosition();
+            childComponent.setPosition(newPos);
+
+            Vector2f newSize = new Vector2f(Yoga.YGNodeLayoutGetWidth(yogaNode), Yoga.YGNodeLayoutGetHeight(yogaNode));
+            Vector2f oldSize = childComponent.getSize();
+            childComponent.setSize(newSize);
+
+            if (frame != null && context != null) {
+                if (!oldPos.equals(newPos, THRESHOLD)) {
+                    EventProcessor.getInstance().pushEvent(new ChangePositionEvent(childComponent, context, frame, oldPos, newPos));
+                }
+                if (!oldSize.equals(newSize, THRESHOLD)) {
+                    EventProcessor.getInstance().pushEvent(new ChangeSizeEvent(childComponent, context, frame, oldSize, newSize));
+                }
+            }
         }
 
         // free mem

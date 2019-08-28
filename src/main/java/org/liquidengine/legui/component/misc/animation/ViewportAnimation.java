@@ -8,7 +8,7 @@ import org.liquidengine.legui.component.ScrollBar;
 import java.lang.ref.WeakReference;
 
 public abstract class ViewportAnimation<T extends Component> extends Animation {
-    private static final double DOUBLE_TRESHOLD = 0.001;
+    private static final double DOUBLE_THRESHOLD = 0.001;
 
     private double updateTime;
     private double deltaSum;
@@ -65,7 +65,7 @@ public abstract class ViewportAnimation<T extends Component> extends Animation {
         float cw = container.getSize().x;
         float targetX = calculateTargetPosition(horizontalScrollBar, vw, cw);
 
-        if (Math.abs(targetX - initialPosition.x) < DOUBLE_TRESHOLD && Math.abs(targetY - initialPosition.y) < DOUBLE_TRESHOLD) {
+        if (Math.abs(targetX - initialPosition.x) < DOUBLE_THRESHOLD && Math.abs(targetY - initialPosition.y) < DOUBLE_THRESHOLD) {
             deltaT = 0;
             initialPosition.set(container.getPosition());
             return;
