@@ -42,6 +42,30 @@ GUI implementation for using with LWJGL3.
 This gui library made for using with OpenGL port (LWJGL) to allow programmers fast and easy integrate user interface to their OpenGL apps written in Java or Kotlin.  
 API is close to Swing API.  
 
+### Examples
+<table>
+    <tr>
+        <td>Radio button and text input</td>
+        <td>Widgets</td>
+        <td>TextArea</td>
+    </tr>
+    <tr>
+        <td align="center"><img src="https://i.imgur.com/NMP2jll.gif" /></td>
+        <td align="center"><img src="https://i.imgur.com/8iL2xPd.gif" /></td>
+        <td align="center"><img src="https://i.imgur.com/WQxSN6n.gif" /></td>
+    </tr>
+    <tr>
+        <td>Button, togglebutton, checkbox, selectbox</td>
+        <td>Sliders</td>
+        <td>ScrollPanel</td>
+    </tr>
+    <tr>
+        <td align="center"><img src="https://i.imgur.com/kuTOdAk.gif" /></td>
+        <td align="center"><img src="https://i.imgur.com/Te70Ek9.gif" /></td>
+        <td align="center"><img src="https://i.imgur.com/RGuIpZ0.gif" /></td>
+    </tr>
+</table>
+
 ## Contribution to LEGUI
 See the [contribution guide](docs/CONTRIBUTING.md) for more information.
 
