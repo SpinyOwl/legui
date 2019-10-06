@@ -10,6 +10,7 @@ import org.liquidengine.legui.system.context.CallbackKeeper;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.context.DefaultCallbackKeeper;
 import org.liquidengine.legui.system.handler.processor.SystemEventProcessor;
+import org.liquidengine.legui.system.handler.processor.SystemEventProcessorImpl;
 import org.liquidengine.legui.system.layout.LayoutManager;
 import org.liquidengine.legui.system.renderer.Renderer;
 import org.liquidengine.legui.system.renderer.nvg.NvgRenderer;
@@ -188,8 +189,8 @@ public abstract class Demo {
         keeper.getChainKeyCallback().add(glfwKeyCallbackI);
         keeper.getChainWindowCloseCallback().add(glfwWindowCloseCallbackI);
 
-        systemEventProcessor = new SystemEventProcessor();
-        systemEventProcessor.addDefaultCallbacks(keeper);
+        systemEventProcessor = new SystemEventProcessorImpl();
+        SystemEventProcessor.addDefaultCallbacks(keeper, systemEventProcessor);
 
         running = true;
     }

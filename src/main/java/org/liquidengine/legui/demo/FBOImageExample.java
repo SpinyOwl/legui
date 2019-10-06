@@ -13,6 +13,7 @@ import org.liquidengine.legui.system.context.CallbackKeeper;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.context.DefaultCallbackKeeper;
 import org.liquidengine.legui.system.handler.processor.SystemEventProcessor;
+import org.liquidengine.legui.system.handler.processor.SystemEventProcessorImpl;
 import org.liquidengine.legui.system.layout.LayoutManager;
 import org.liquidengine.legui.system.renderer.Renderer;
 import org.liquidengine.legui.system.renderer.nvg.NvgRenderer;
@@ -90,8 +91,8 @@ public class FBOImageExample {
         keeper.getChainWindowCloseCallback().add(glfwWindowCloseCallbackI);
 
         // Event processor for system events. System events should be processed and translated to gui events.
-        SystemEventProcessor systemEventProcessor = new SystemEventProcessor();
-        systemEventProcessor.addDefaultCallbacks(keeper);
+        SystemEventProcessor systemEventProcessor = new SystemEventProcessorImpl();
+        SystemEventProcessor.addDefaultCallbacks(keeper, systemEventProcessor);
 
         // Also we need to create renderer provider
         // and create renderer which will render our ui components.
