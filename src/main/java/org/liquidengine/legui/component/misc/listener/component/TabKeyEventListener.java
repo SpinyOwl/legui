@@ -1,17 +1,17 @@
 package org.liquidengine.legui.component.misc.listener.component;
 
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.event.FocusEvent;
 import org.liquidengine.legui.event.KeyEvent;
 import org.liquidengine.legui.listener.EventListener;
-import org.liquidengine.legui.listener.processor.EventProcessor;
+import org.liquidengine.legui.listener.processor.EventProcessorProvider;
 import org.liquidengine.legui.system.context.Context;
 import org.lwjgl.glfw.GLFW;
+
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 /**
  * Created by ShchAlexander on 11.11.2017.
@@ -244,16 +244,16 @@ public class TabKeyEventListener implements EventListener<KeyEvent> {
     private void moveToNextTabFocusableComponent(Context context, Component component, Component next, Frame frame) {
         if (component != null) {
             component.setFocused(false);
-            EventProcessor.getInstance().pushEvent(new FocusEvent<>(component, context, frame, next, false));
+            EventProcessorProvider.getInstance().pushEvent(new FocusEvent<>(component, context, frame, next, false));
         }
         if (next != null) {
             Component focusedGui = context.getFocusedGui();
             if (focusedGui != null && focusedGui != component) {
-                EventProcessor.getInstance().pushEvent(new FocusEvent<>(focusedGui, context, frame, next, false));
+                EventProcessorProvider.getInstance().pushEvent(new FocusEvent<>(focusedGui, context, frame, next, false));
                 focusedGui.setFocused(false);
             }
             next.setFocused(true);
-            EventProcessor.getInstance().pushEvent(new FocusEvent<>(next, context, frame, next, true));
+            EventProcessorProvider.getInstance().pushEvent(new FocusEvent<>(next, context, frame, next, true));
             context.setFocusedGui(next);
         }
     }

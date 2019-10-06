@@ -3,7 +3,7 @@ package org.liquidengine.legui.component.misc.listener.scrollbar;
 import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.component.ScrollBar;
 import org.liquidengine.legui.component.event.scrollbar.ScrollBarChangeValueEvent;
-import org.liquidengine.legui.listener.processor.EventProcessor;
+import org.liquidengine.legui.listener.processor.EventProcessorProvider;
 import org.liquidengine.legui.system.context.Context;
 
 public final class ScrollBarHelper {
@@ -28,7 +28,7 @@ public final class ScrollBarHelper {
             newVal = minValue;
         }
 
-        EventProcessor.getInstance().pushEvent(new ScrollBarChangeValueEvent<>(scrollBar, context, frame, curValue, newVal));
+        EventProcessorProvider.getInstance().pushEvent(new ScrollBarChangeValueEvent<>(scrollBar, context, frame, curValue, newVal));
         scrollBar.setCurValue(newVal);
     }
 

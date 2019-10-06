@@ -5,7 +5,7 @@ import org.liquidengine.legui.component.event.textarea.TextAreaFieldUpdateEvent;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.event.KeyEvent;
 import org.liquidengine.legui.listener.KeyEventListener;
-import org.liquidengine.legui.listener.processor.EventProcessor;
+import org.liquidengine.legui.listener.processor.EventProcessorProvider;
 import org.liquidengine.legui.system.Clipboard;
 
 import static org.liquidengine.legui.util.TextUtil.findNextWord;
@@ -38,12 +38,12 @@ public class TextAreaFieldKeyEventListener implements KeyEventListener {
         boolean pressed = event.getAction() != GLFW_RELEASE;
 
         if (!pressed) {
-            EventProcessor.getInstance().pushEvent(new TextAreaFieldUpdateEvent(textAreaField, event.getContext(), event.getFrame()));
+            EventProcessorProvider.getInstance().pushEvent(new TextAreaFieldUpdateEvent(textAreaField, event.getContext(), event.getFrame()));
             return;
         }
 
         processKey(textAreaField, event);
-        EventProcessor.getInstance().pushEvent(new TextAreaFieldUpdateEvent(textAreaField, event.getContext(), event.getFrame()));
+        EventProcessorProvider.getInstance().pushEvent(new TextAreaFieldUpdateEvent(textAreaField, event.getContext(), event.getFrame()));
     }
 
     private void processKey(TextAreaField textAreaField, KeyEvent event) {

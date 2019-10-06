@@ -11,7 +11,7 @@ import org.liquidengine.legui.event.Event;
 import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.input.Mouse;
 import org.liquidengine.legui.listener.MouseClickEventListener;
-import org.liquidengine.legui.listener.processor.EventProcessor;
+import org.liquidengine.legui.listener.processor.EventProcessorProvider;
 import org.liquidengine.legui.system.context.Context;
 
 /**
@@ -103,7 +103,7 @@ public class ScrollBarMouseClickEventListener implements MouseClickEventListener
         Context context = event.getContext();
         Frame frame = event.getFrame();
         float curValue = scrollBar.getCurValue();
-        EventProcessor.getInstance().pushEvent(new ScrollBarChangeValueEvent<>(scrollBar, context, frame, curValue, valueToUse));
+        EventProcessorProvider.getInstance().pushEvent(new ScrollBarChangeValueEvent<>(scrollBar, context, frame, curValue, valueToUse));
         scrollBar.setCurValue(valueToUse);
     }
 

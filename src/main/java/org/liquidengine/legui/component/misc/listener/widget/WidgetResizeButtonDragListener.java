@@ -8,7 +8,7 @@ import org.liquidengine.legui.component.event.component.ChangeSizeEvent;
 import org.liquidengine.legui.event.MouseDragEvent;
 import org.liquidengine.legui.input.Mouse;
 import org.liquidengine.legui.listener.MouseDragEventListener;
-import org.liquidengine.legui.listener.processor.EventProcessor;
+import org.liquidengine.legui.listener.processor.EventProcessorProvider;
 import org.liquidengine.legui.style.length.Length;
 import org.liquidengine.legui.style.util.StyleUtilities;
 
@@ -91,7 +91,7 @@ public class WidgetResizeButtonDragListener implements MouseDragEventListener {
         widget.getSize().add(deltaSize);
         Vector2f newSize = widget.getSize();
         if (!oldSize.equals(newSize, THRESHOLD)) {
-            EventProcessor.getInstance().pushEvent(new ChangeSizeEvent(widget, event.getContext(), event.getFrame(), oldSize, newSize));
+            EventProcessorProvider.getInstance().pushEvent(new ChangeSizeEvent(widget, event.getContext(), event.getFrame(), oldSize, newSize));
         }
     }
 }
