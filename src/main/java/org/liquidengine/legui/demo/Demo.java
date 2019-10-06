@@ -5,6 +5,7 @@ import org.liquidengine.cbchain.impl.ChainErrorCallback;
 import org.liquidengine.legui.animation.AnimatorProvider;
 import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.listener.processor.EventProcessor;
+import org.liquidengine.legui.listener.processor.EventProcessorProvider;
 import org.liquidengine.legui.system.context.CallbackKeeper;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.context.DefaultCallbackKeeper;
@@ -112,7 +113,7 @@ public abstract class Demo {
     private void startLeguiEventProcessor() {
         leguiEventProcessorThread = new Thread(() -> {
             while (running) {
-                EventProcessor.getInstance().processEvents();
+                EventProcessorProvider.getInstance().processEvents();
             }
         }, "GUI_EVENT_PROCESSOR");
         leguiEventProcessorThread.start();

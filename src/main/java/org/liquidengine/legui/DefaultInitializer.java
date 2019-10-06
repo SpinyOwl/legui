@@ -2,6 +2,7 @@ package org.liquidengine.legui;
 
 import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.listener.processor.EventProcessor;
+import org.liquidengine.legui.listener.processor.EventProcessorProvider;
 import org.liquidengine.legui.system.context.CallbackKeeper;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.context.DefaultCallbackKeeper;
@@ -40,7 +41,7 @@ public class DefaultInitializer {
         // Event processor for system events. System events should be processed and translated to gui events.
         systemEventProcessor = new SystemEventProcessor();
         systemEventProcessor.addDefaultCallbacks(callbackKeeper);
-        eventProcessor = EventProcessor.getInstance();
+        eventProcessor = EventProcessorProvider.getInstance();
 
         // Also we need to create initialize renderer provider
         // and create renderer which will render our ui components.

@@ -7,7 +7,7 @@ import org.liquidengine.legui.event.CursorEnterEvent;
 import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.listener.CursorEnterEventListener;
 import org.liquidengine.legui.listener.MouseClickEventListener;
-import org.liquidengine.legui.listener.processor.EventProcessor;
+import org.liquidengine.legui.listener.processor.EventProcessorProvider;
 import org.liquidengine.legui.style.border.SimpleLineBorder;
 import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.system.context.CallbackKeeper;
@@ -114,7 +114,7 @@ public class MultipleWindowsMultipleThreadsExample {
     private static void startLeguiEventProcessor() {
         leguiEventProcessorThread = new Thread(() -> {
             while (running) {
-                EventProcessor.getInstance().processEvents();
+                EventProcessorProvider.getInstance().processEvents();
             }
         }, "GUI_EVENT_PROCESSOR");
         leguiEventProcessorThread.start();

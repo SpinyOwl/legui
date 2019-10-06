@@ -32,7 +32,7 @@ import org.liquidengine.legui.event.CursorEnterEvent;
 import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.listener.CursorEnterEventListener;
 import org.liquidengine.legui.listener.MouseClickEventListener;
-import org.liquidengine.legui.listener.processor.EventProcessor;
+import org.liquidengine.legui.listener.processor.EventProcessorProvider;
 import org.liquidengine.legui.style.border.SimpleLineBorder;
 import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.system.context.CallbackKeeper;
@@ -121,7 +121,7 @@ public class MultipleWindowsExample {
                 glfwSwapBuffers(windows[i]);
 
                 systemEventProcessors[i].processEvents(frames[i], contexts[i]);
-                EventProcessor.getInstance().processEvents();
+                EventProcessorProvider.getInstance().processEvents();
 
                 // When everything done we need to relayout components.
                 LayoutManager.getInstance().layout(frames[i]);

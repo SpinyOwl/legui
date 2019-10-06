@@ -6,7 +6,7 @@ import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.component.ImageView;
 import org.liquidengine.legui.component.Widget;
 import org.liquidengine.legui.image.FBOImage;
-import org.liquidengine.legui.listener.processor.EventProcessor;
+import org.liquidengine.legui.listener.processor.EventProcessorProvider;
 import org.liquidengine.legui.style.Style.DisplayType;
 import org.liquidengine.legui.style.Style.PositionType;
 import org.liquidengine.legui.system.context.CallbackKeeper;
@@ -184,7 +184,7 @@ public class FBOImageExample {
 
             // When system events are translated to GUI events we need to process them.
             // This event processor calls listeners added to ui components
-            EventProcessor.getInstance().processEvents();
+            EventProcessorProvider.getInstance().processEvents();
 
             // When everything done we need to relayout components.
             LayoutManager.getInstance().layout(frame);

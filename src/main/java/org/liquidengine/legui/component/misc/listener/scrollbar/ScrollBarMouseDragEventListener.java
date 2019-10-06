@@ -9,7 +9,7 @@ import org.liquidengine.legui.component.optional.Orientation;
 import org.liquidengine.legui.event.MouseDragEvent;
 import org.liquidengine.legui.input.Mouse;
 import org.liquidengine.legui.listener.MouseDragEventListener;
-import org.liquidengine.legui.listener.processor.EventProcessor;
+import org.liquidengine.legui.listener.processor.EventProcessorProvider;
 
 /**
  * Default mouse drag event listener for scrollbar. Generates {@link ScrollBarChangeValueEvent} event.
@@ -63,7 +63,7 @@ public class ScrollBarMouseDragEventListener implements MouseDragEventListener {
         } else if (newVal < minValue) {
             newVal = minValue;
         }
-        EventProcessor.getInstance()
+        EventProcessorProvider.getInstance()
                 .pushEvent(new ScrollBarChangeValueEvent<>(scrollBar, event.getContext(), event.getFrame(), scrollBar.getCurValue(), newVal));
         scrollBar.setCurValue(newVal);
     }
