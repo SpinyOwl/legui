@@ -70,7 +70,7 @@ public final class StyleUtilities {
             if (PIXEL.equals(l.type())) {
                 return PIXEL.type().cast(l.get());
             } else if (PERCENT.equals(l.type())) {
-                return PERCENT.type().cast(l.get()) * baseWidth;
+                return PERCENT.type().cast(l.get()) * baseWidth / 100f;
             }
         }
         return null;
