@@ -5,7 +5,7 @@ import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.component.event.component.ChangePositionEvent;
 import org.liquidengine.legui.component.event.component.ChangeSizeEvent;
-import org.liquidengine.legui.listener.processor.EventProcessor;
+import org.liquidengine.legui.listener.processor.EventProcessorProvider;
 import org.liquidengine.legui.style.Style;
 import org.liquidengine.legui.style.Style.PositionType;
 import org.liquidengine.legui.style.flex.FlexStyle;
@@ -81,10 +81,10 @@ public class FlexLayout implements Layout {
 
             if (frame != null && context != null) {
                 if (!oldPos.equals(newPos, THRESHOLD)) {
-                    EventProcessor.getInstance().pushEvent(new ChangePositionEvent(childComponent, context, frame, oldPos, newPos));
+                    EventProcessorProvider.getInstance().pushEvent(new ChangePositionEvent(childComponent, context, frame, oldPos, newPos));
                 }
                 if (!oldSize.equals(newSize, THRESHOLD)) {
-                    EventProcessor.getInstance().pushEvent(new ChangeSizeEvent(childComponent, context, frame, oldSize, newSize));
+                    EventProcessorProvider.getInstance().pushEvent(new ChangeSizeEvent(childComponent, context, frame, oldSize, newSize));
                 }
             }
         }

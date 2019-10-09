@@ -7,7 +7,7 @@ import org.liquidengine.legui.component.event.selectbox.SelectBoxChangeSelection
 import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.input.Mouse;
 import org.liquidengine.legui.listener.MouseClickEventListener;
-import org.liquidengine.legui.listener.processor.EventProcessor;
+import org.liquidengine.legui.listener.processor.EventProcessorProvider;
 
 /**
  * @author ShchAlexander.
@@ -27,7 +27,7 @@ public class SelectBoxElementClickListener<T> implements MouseClickEventListener
             T selection = selectBox.getSelection();
             T newValue = component.getObject();
             selectBox.setSelected(newValue, true);
-            EventProcessor.getInstance().pushEvent(new SelectBoxChangeSelectionEvent<>(selectBox, event.getContext(), event.getFrame(), selection, newValue));
+            EventProcessorProvider.getInstance().pushEvent(new SelectBoxChangeSelectionEvent<>(selectBox, event.getContext(), event.getFrame(), selection, newValue));
             selectBox.setCollapsed(true);
             event.getFrame().removeLayer(selectBox.getSelectBoxLayer());
         }

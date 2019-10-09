@@ -15,9 +15,10 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  * <p>
  * Created by ShchAlexander on 1/25/2017.
  */
-public class EventProcessorImpl extends EventProcessor {
+public class EventProcessorImpl implements EventProcessor {
 
     private static final Logger LOGGER = LogManager.getLogger();
+
     private Queue<Event> eventQueue = new ConcurrentLinkedQueue<>();
 
 
@@ -49,5 +50,15 @@ public class EventProcessorImpl extends EventProcessor {
             LOGGER.debug(event);
         }
         eventQueue.add(event);
+    }
+
+    /**
+     * Returns true if there are events that should be processed.
+     *
+     * @return true if there are events that should be processed.
+     */
+    @Override
+    public boolean hasEvents() {
+        return !eventQueue.isEmpty();
     }
 }

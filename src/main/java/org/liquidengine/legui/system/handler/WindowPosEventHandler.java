@@ -5,7 +5,7 @@ import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.component.Layer;
 import org.liquidengine.legui.event.WindowPosEvent;
-import org.liquidengine.legui.listener.processor.EventProcessor;
+import org.liquidengine.legui.listener.processor.EventProcessorProvider;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.event.SystemWindowPosEvent;
 
@@ -30,7 +30,8 @@ public class WindowPosEventHandler extends AbstractSystemEventHandler<SystemWind
     }
 
     /**
-     * Used to push {@link WindowPosEvent} instance of {@link org.liquidengine.legui.event.Event} to {@link EventProcessor}.
+     * Used to push {@link WindowPosEvent} instance of {@link org.liquidengine.legui.event.Event}
+     * to {@link org.liquidengine.legui.listener.processor.EventProcessor}.
      *
      * @param component component for which should be created {@link WindowPosEvent}
      * @param event event to push.
@@ -40,7 +41,7 @@ public class WindowPosEventHandler extends AbstractSystemEventHandler<SystemWind
         if (!(component.isVisible())) {
             return;
         }
-        EventProcessor.getInstance().pushEvent(new WindowPosEvent(component, context, frame, event.xpos, event.ypos));
+        EventProcessorProvider.getInstance().pushEvent(new WindowPosEvent(component, context, frame, event.xpos, event.ypos));
         List<Component> childComponents = component.getChildComponents();
         for (Component child : childComponents) {
             pushEvent(child, event, context, frame);

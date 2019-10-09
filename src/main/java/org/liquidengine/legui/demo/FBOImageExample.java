@@ -6,13 +6,14 @@ import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.component.ImageView;
 import org.liquidengine.legui.component.Widget;
 import org.liquidengine.legui.image.FBOImage;
-import org.liquidengine.legui.listener.processor.EventProcessor;
+import org.liquidengine.legui.listener.processor.EventProcessorProvider;
 import org.liquidengine.legui.style.Style.DisplayType;
 import org.liquidengine.legui.style.Style.PositionType;
 import org.liquidengine.legui.system.context.CallbackKeeper;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.context.DefaultCallbackKeeper;
 import org.liquidengine.legui.system.handler.processor.SystemEventProcessor;
+import org.liquidengine.legui.system.handler.processor.SystemEventProcessorImpl;
 import org.liquidengine.legui.system.layout.LayoutManager;
 import org.liquidengine.legui.system.renderer.Renderer;
 import org.liquidengine.legui.system.renderer.nvg.NvgRenderer;
@@ -90,8 +91,8 @@ public class FBOImageExample {
         keeper.getChainWindowCloseCallback().add(glfwWindowCloseCallbackI);
 
         // Event processor for system events. System events should be processed and translated to gui events.
-        SystemEventProcessor systemEventProcessor = new SystemEventProcessor();
-        systemEventProcessor.addDefaultCallbacks(keeper);
+        SystemEventProcessor systemEventProcessor = new SystemEventProcessorImpl();
+        SystemEventProcessor.addDefaultCallbacks(keeper, systemEventProcessor);
 
         // Also we need to create renderer provider
         // and create renderer which will render our ui components.
@@ -184,7 +185,7 @@ public class FBOImageExample {
 
             // When system events are translated to GUI events we need to process them.
             // This event processor calls listeners added to ui components
-            EventProcessor.getInstance().processEvents();
+            EventProcessorProvider.getInstance().processEvents();
 
             // When everything done we need to relayout components.
             LayoutManager.getInstance().layout(frame);

@@ -8,7 +8,7 @@ import org.liquidengine.legui.component.event.textinput.TextInputContentChangeEv
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.event.CharEvent;
 import org.liquidengine.legui.listener.CharEventListener;
-import org.liquidengine.legui.listener.processor.EventProcessor;
+import org.liquidengine.legui.listener.processor.EventProcessorProvider;
 
 /**
  * Char event listener for text input. Used to fill text area with symbols entered via keyboard.
@@ -50,7 +50,7 @@ public class TextInputCharEventListener implements CharEventListener {
             textInput.setEndSelectionIndex(newCaretPosition);
             textInput.setStartSelectionIndex(newCaretPosition);
             String newText = textState.getText();
-            EventProcessor.getInstance().pushEvent(new TextInputContentChangeEvent(textInput, event.getContext(), event.getFrame(), oldText, newText));
+            EventProcessorProvider.getInstance().pushEvent(new TextInputContentChangeEvent(textInput, event.getContext(), event.getFrame(), oldText, newText));
         }
     }
 

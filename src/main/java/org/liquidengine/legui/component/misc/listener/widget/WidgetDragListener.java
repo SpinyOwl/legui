@@ -7,7 +7,7 @@ import org.liquidengine.legui.component.Widget;
 import org.liquidengine.legui.component.event.component.ChangePositionEvent;
 import org.liquidengine.legui.event.MouseDragEvent;
 import org.liquidengine.legui.listener.MouseDragEventListener;
-import org.liquidengine.legui.listener.processor.EventProcessor;
+import org.liquidengine.legui.listener.processor.EventProcessorProvider;
 
 /**
  * @author ShchAlexander.
@@ -27,7 +27,7 @@ public class WidgetDragListener implements MouseDragEventListener {
         widget.getPosition().add(event.getDelta());
         Vector2f newPos = widget.getPosition();
         if (!oldPos.equals(newPos, THRESHOLD)) {
-            EventProcessor.getInstance().pushEvent(new ChangePositionEvent(widget, event.getContext(), event.getFrame(), oldPos, newPos));
+            EventProcessorProvider.getInstance().pushEvent(new ChangePositionEvent(widget, event.getContext(), event.getFrame(), oldPos, newPos));
         }
     }
 

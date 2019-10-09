@@ -11,7 +11,7 @@ import org.liquidengine.legui.event.CursorEnterEvent;
 import org.liquidengine.legui.event.Event;
 import org.liquidengine.legui.event.MouseDragEvent;
 import org.liquidengine.legui.input.Mouse;
-import org.liquidengine.legui.listener.processor.EventProcessor;
+import org.liquidengine.legui.listener.processor.EventProcessorProvider;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.event.SystemCursorPosEvent;
 
@@ -51,12 +51,12 @@ public class CursorPosEventHandler extends AbstractSystemEventHandler<SystemCurs
                 targetComponent.setHovered(true);
                 Vector2f curPosInComponent = targetComponent.getAbsolutePosition().sub(cursorPosition).negate();
                 CursorEnterEvent enterEvent = new CursorEnterEvent(targetComponent, context, frame, true, curPosInComponent, cursorPosition);
-                EventProcessor.getInstance().pushEvent(enterEvent);
+                EventProcessorProvider.getInstance().pushEvent(enterEvent);
             }
             if (prevTarget != null) {
                 Vector2f curPosInPrevTarget = prevTarget.getAbsolutePosition().sub(cursorPosition).negate();
                 CursorEnterEvent exitEvent = new CursorEnterEvent(prevTarget, context, frame, false, curPosInPrevTarget, cursorPosition);
-                EventProcessor.getInstance().pushEvent(exitEvent);
+                EventProcessorProvider.getInstance().pushEvent(exitEvent);
                 prevTarget.setHovered(false);
             }
         }
@@ -92,7 +92,7 @@ public class CursorPosEventHandler extends AbstractSystemEventHandler<SystemCurs
             if ((Mouse.MouseButton.MOUSE_BUTTON_LEFT.isPressed() || Mouse.MouseButton.MOUSE_BUTTON_RIGHT.isPressed()) &&
 	            component == context.getFocusedGui()) {
                 Vector2f delta = Mouse.getCursorPosition().sub(Mouse.getCursorPositionPrev());
-                EventProcessor.getInstance().pushEvent(new MouseDragEvent(component, context, frame, delta));
+                EventProcessorProvider.getInstance().pushEvent(new MouseDragEvent(component, context, frame, delta));
             }
         } else {
             List<Component> childComponents = component.getChildComponents();

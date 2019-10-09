@@ -7,13 +7,14 @@ import org.liquidengine.legui.event.CursorEnterEvent;
 import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.listener.CursorEnterEventListener;
 import org.liquidengine.legui.listener.MouseClickEventListener;
-import org.liquidengine.legui.listener.processor.EventProcessor;
+import org.liquidengine.legui.listener.processor.EventProcessorProvider;
 import org.liquidengine.legui.style.border.SimpleLineBorder;
 import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.system.context.CallbackKeeper;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.context.DefaultCallbackKeeper;
 import org.liquidengine.legui.system.handler.processor.SystemEventProcessor;
+import org.liquidengine.legui.system.handler.processor.SystemEventProcessorImpl;
 import org.liquidengine.legui.system.layout.LayoutManager;
 import org.liquidengine.legui.system.renderer.Renderer;
 import org.liquidengine.legui.system.renderer.nvg.NvgRenderer;
@@ -114,7 +115,7 @@ public class MultipleWindowsMultipleThreadsExample {
     private static void startLeguiEventProcessor() {
         leguiEventProcessorThread = new Thread(() -> {
             while (running) {
-                EventProcessor.getInstance().processEvents();
+                EventProcessorProvider.getInstance().processEvents();
             }
         }, "GUI_EVENT_PROCESSOR");
         leguiEventProcessorThread.start();
@@ -231,8 +232,8 @@ public class MultipleWindowsMultipleThreadsExample {
             keepers[i].getChainKeyCallback().add(glfwKeyCallbackI);
             keepers[i].getChainWindowCloseCallback().add(glfwWindowCloseCallbackI);
 
-            systemEventProcessors[i] = new SystemEventProcessor();
-            systemEventProcessors[i].addDefaultCallbacks(keepers[i]);
+            systemEventProcessors[i] = new SystemEventProcessorImpl();
+            SystemEventProcessor.addDefaultCallbacks(keepers[i], systemEventProcessors[i]);
         }
 
         running = true;

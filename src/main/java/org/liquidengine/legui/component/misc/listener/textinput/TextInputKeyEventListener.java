@@ -24,7 +24,7 @@ import org.liquidengine.legui.component.event.textinput.TextInputContentChangeEv
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.event.KeyEvent;
 import org.liquidengine.legui.listener.KeyEventListener;
-import org.liquidengine.legui.listener.processor.EventProcessor;
+import org.liquidengine.legui.listener.processor.EventProcessorProvider;
 import org.liquidengine.legui.system.Clipboard;
 import org.liquidengine.legui.system.context.Context;
 
@@ -126,7 +126,7 @@ public class TextInputKeyEventListener implements KeyEventListener {
                 gui.setStartSelectionIndex(start);
                 gui.setEndSelectionIndex(start);
                 String newText = textState.getText();
-                EventProcessor.getInstance().pushEvent(new TextInputContentChangeEvent(gui, leguiContext, frame, oldText, newText));
+                EventProcessorProvider.getInstance().pushEvent(new TextInputContentChangeEvent(gui, leguiContext, frame, oldText, newText));
                 Clipboard.getInstance().setClipboardString(s);
             }
         } else {
@@ -190,7 +190,7 @@ public class TextInputKeyEventListener implements KeyEventListener {
                 textState.setText(builder.toString());
                 gui.setCaretPosition(caretPosition + s.length());
                 String newText = textState.getText();
-                EventProcessor.getInstance().pushEvent(new TextInputContentChangeEvent(gui, leguiContext, frame, oldText, newText));
+                EventProcessorProvider.getInstance().pushEvent(new TextInputContentChangeEvent(gui, leguiContext, frame, oldText, newText));
             }
         }
     }
@@ -238,7 +238,7 @@ public class TextInputKeyEventListener implements KeyEventListener {
                 gui.setEndSelectionIndex(start);
             }
             String newText = textState.getText();
-            EventProcessor.getInstance().pushEvent(new TextInputContentChangeEvent(gui, leguiContext, frame, oldText, newText));
+            EventProcessorProvider.getInstance().pushEvent(new TextInputContentChangeEvent(gui, leguiContext, frame, oldText, newText));
         }
     }
 
@@ -286,7 +286,7 @@ public class TextInputKeyEventListener implements KeyEventListener {
                 gui.setEndSelectionIndex(start);
             }
             String newText = textState.getText();
-            EventProcessor.getInstance().pushEvent(new TextInputContentChangeEvent(gui, leguiContext, frame, oldText, newText));
+            EventProcessorProvider.getInstance().pushEvent(new TextInputContentChangeEvent(gui, leguiContext, frame, oldText, newText));
         }
     }
 

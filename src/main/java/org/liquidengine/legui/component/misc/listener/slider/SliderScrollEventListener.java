@@ -4,7 +4,7 @@ import org.liquidengine.legui.component.Slider;
 import org.liquidengine.legui.component.event.slider.SliderChangeValueEvent;
 import org.liquidengine.legui.event.ScrollEvent;
 import org.liquidengine.legui.listener.ScrollEventListener;
-import org.liquidengine.legui.listener.processor.EventProcessor;
+import org.liquidengine.legui.listener.processor.EventProcessorProvider;
 
 /**
  * Slider mouse scroll event listener.
@@ -31,7 +31,7 @@ public class SliderScrollEventListener implements ScrollEventListener {
         }
         // set value & push event
         slider.setValue(newValue);
-        EventProcessor.getInstance().pushEvent(
+        EventProcessorProvider.getInstance().pushEvent(
                 new SliderChangeValueEvent(slider, event.getContext(), event.getFrame(), oldValue, newValue)
         );
     }

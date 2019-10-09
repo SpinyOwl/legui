@@ -5,7 +5,7 @@ import org.liquidengine.legui.component.event.slider.SliderChangeValueEvent;
 import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.input.Mouse;
 import org.liquidengine.legui.listener.MouseClickEventListener;
-import org.liquidengine.legui.listener.processor.EventProcessor;
+import org.liquidengine.legui.listener.processor.EventProcessorProvider;
 
 /**
  * Slider mouse click event listener. Used to change slider value. Generates slider value change event.
@@ -23,7 +23,7 @@ public class SliderMouseClickEventListener implements MouseClickEventListener {
         // set value & push event
         float oldValue = slider.getValue();
         slider.setValue(value);
-        EventProcessor.getInstance().pushEvent(
+        EventProcessorProvider.getInstance().pushEvent(
                 new SliderChangeValueEvent(slider, event.getContext(), event.getFrame(), oldValue, slider.getValue())
         );
     }
