@@ -1,15 +1,20 @@
 package org.liquidengine.legui.system;
 
-import static org.lwjgl.glfw.GLFW.glfwDestroyWindow;
-import static org.lwjgl.glfw.GLFW.glfwMakeContextCurrent;
-import static org.lwjgl.glfw.GLFW.glfwPollEvents;
-import static org.lwjgl.glfw.GLFW.glfwSwapBuffers;
-import static org.lwjgl.glfw.GLFW.glfwSwapInterval;
-import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
-import static org.lwjgl.opengl.GL11.GL_STENCIL_BUFFER_BIT;
-import static org.lwjgl.opengl.GL11.glClear;
-import static org.lwjgl.opengl.GL11.glClearColor;
-import static org.lwjgl.opengl.GL11.glViewport;
+import org.apache.commons.collections4.BidiMap;
+import org.apache.commons.collections4.bidimap.DualHashBidiMap;
+import org.joml.Vector2i;
+import org.liquidengine.legui.animation.AnimatorProvider;
+import org.liquidengine.legui.component.Frame;
+import org.liquidengine.legui.listener.processor.EventProcessorProvider;
+import org.liquidengine.legui.system.context.CallbackKeeper;
+import org.liquidengine.legui.system.context.Context;
+import org.liquidengine.legui.system.context.DefaultCallbackKeeper;
+import org.liquidengine.legui.system.handler.processor.SystemEventProcessor;
+import org.liquidengine.legui.system.handler.processor.SystemEventProcessorImpl;
+import org.liquidengine.legui.system.layout.LayoutManager;
+import org.liquidengine.legui.system.renderer.nvg.NvgRenderer;
+import org.lwjgl.glfw.GLFW;
+import org.lwjgl.opengl.GL;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,20 +25,9 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.atomic.AtomicBoolean;
-import org.apache.commons.collections4.BidiMap;
-import org.apache.commons.collections4.bidimap.DualHashBidiMap;
-import org.joml.Vector2i;
-import org.liquidengine.legui.animation.Animator;
-import org.liquidengine.legui.component.Frame;
-import org.liquidengine.legui.listener.processor.EventProcessor;
-import org.liquidengine.legui.system.context.CallbackKeeper;
-import org.liquidengine.legui.system.context.Context;
-import org.liquidengine.legui.system.context.DefaultCallbackKeeper;
-import org.liquidengine.legui.system.handler.processor.SystemEventProcessor;
-import org.liquidengine.legui.system.layout.LayoutManager;
-import org.liquidengine.legui.system.renderer.nvg.NvgRenderer;
-import org.lwjgl.glfw.GLFW;
-import org.lwjgl.opengl.GL;
+
+import static org.lwjgl.glfw.GLFW.*;
+import static org.lwjgl.opengl.GL11.*;
 
 /**
  * Class that provides easy way to create windows, abstract from creating contexts and initializing subsystems and concentrate only on developing application
@@ -91,7 +85,7 @@ public final class LeguiSystem {
             }
 
             // process legui events
-            EventProcessor.getInstance().processEvents();
+            EventProcessorProvider.getInstance().processEvents();
 
             // When everything done we need to relayout components.
             for (Window window : windowMap.values()) {
@@ -99,7 +93,7 @@ public final class LeguiSystem {
             }
 
             // Run animations. Should be also called cause some components use animations for updating state.
-            Animator.getInstance().runAnimations();
+            AnimatorProvider.getAnimator().runAnimations();
 
             // after all we can process other tasks.
             FutureTask task = wstTasks.poll();
@@ -127,6 +121,10 @@ public final class LeguiSystem {
             instance.windowServiceThread = new Thread(instance::wst, "WST");
             instance.windowServiceThread.start();
         }
+    }
+
+    public static boolean isInitialized() {
+        return instance.initialized.get();
     }
 
     public static void destroy() {
@@ -185,8 +183,8 @@ public final class LeguiSystem {
 
     private Vector2i getWindowSizeP(long pointer) {
         return createTaskAndGet(() -> {
-            int width[] = {0};
-            int height[] = {0};
+            int[] width = {0};
+            int[] height = {0};
             GLFW.glfwGetWindowSize(pointer, width, height);
             return new Vector2i(width[0], height[0]);
         });
@@ -198,8 +196,8 @@ public final class LeguiSystem {
 
     private Vector2i getWindowPosP(long pointer) {
         return createTaskAndGet(() -> {
-            int x[] = {0};
-            int y[] = {0};
+            int[] x = {0};
+            int[] y = {0};
             GLFW.glfwGetWindowPos(pointer, x, y);
             return new Vector2i(x[0], y[0]);
         });
@@ -236,8 +234,8 @@ public final class LeguiSystem {
                 window.setCallbackKeeper(new DefaultCallbackKeeper());
                 CallbackKeeper.registerCallbacks(pointer, window.getCallbackKeeper());
 
-                window.setSystemEventProcessor(new SystemEventProcessor());
-                window.getSystemEventProcessor().addDefaultCallbacks(window.getCallbackKeeper());
+                window.setSystemEventProcessor(new SystemEventProcessorImpl());
+                SystemEventProcessor.addDefaultCallbacks(window.getCallbackKeeper(), window.getSystemEventProcessor());
 
                 window.setFrame(new Frame(width, height));
 

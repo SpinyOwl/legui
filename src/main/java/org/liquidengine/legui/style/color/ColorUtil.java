@@ -127,6 +127,10 @@ public final class ColorUtil {
         return targetColor;
     }
 
+    public static Vector4f fromInt(int r, int g, int b, float a) {
+        return new Vector4f(r/255f, g/255f, b/255f, a);
+    }
+
     /**
      * Used to generate random color.
      *

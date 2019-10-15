@@ -8,7 +8,7 @@ import org.liquidengine.legui.component.event.textarea.TextAreaFieldUpdateEvent;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.event.CharEvent;
 import org.liquidengine.legui.listener.CharEventListener;
-import org.liquidengine.legui.listener.processor.EventProcessor;
+import org.liquidengine.legui.listener.processor.EventProcessorProvider;
 
 /**
  * Char event listener for text area. Used to fill text area with symbols entered via keyboard.
@@ -49,12 +49,12 @@ public class TextAreaFieldCharEventListener implements CharEventListener {
             textAreaField.setEndSelectionIndex(newCaretPosition);
             textAreaField.setStartSelectionIndex(newCaretPosition);
 
-            EventProcessor.getInstance().pushEvent(new TextAreaFieldUpdateEvent(textAreaField, event.getContext(), event.getFrame()));
+            EventProcessorProvider.getInstance().pushEvent(new TextAreaFieldUpdateEvent(textAreaField, event.getContext(), event.getFrame()));
         }
     }
 
     @Override
     public boolean equals(Object obj) {
-        return (obj != null) && ((obj == this) || ((obj != this) && (obj.getClass() == this.getClass())));
+        return obj != null && (obj == this || obj.getClass() == this.getClass());
     }
 }

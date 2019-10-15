@@ -1,39 +1,16 @@
 package org.liquidengine.legui.demo;
 
-import static org.lwjgl.glfw.GLFW.GLFW_DOUBLEBUFFER;
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_ESCAPE;
-import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
-import static org.lwjgl.glfw.GLFW.GLFW_TRUE;
-import static org.lwjgl.glfw.GLFW.glfwCreateWindow;
-import static org.lwjgl.glfw.GLFW.glfwDestroyWindow;
-import static org.lwjgl.glfw.GLFW.glfwMakeContextCurrent;
-import static org.lwjgl.glfw.GLFW.glfwSetErrorCallback;
-import static org.lwjgl.glfw.GLFW.glfwSetWindowPos;
-import static org.lwjgl.glfw.GLFW.glfwShowWindow;
-import static org.lwjgl.glfw.GLFW.glfwSwapBuffers;
-import static org.lwjgl.glfw.GLFW.glfwSwapInterval;
-import static org.lwjgl.glfw.GLFW.glfwTerminate;
-import static org.lwjgl.glfw.GLFW.glfwWaitEvents;
-import static org.lwjgl.glfw.GLFW.glfwWindowHint;
-import static org.lwjgl.opengl.GL.createCapabilities;
-import static org.lwjgl.opengl.GL.setCapabilities;
-import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
-import static org.lwjgl.opengl.GL11.GL_STENCIL_BUFFER_BIT;
-import static org.lwjgl.opengl.GL11.glClear;
-import static org.lwjgl.opengl.GL11.glClearColor;
-import static org.lwjgl.opengl.GL11.glViewport;
-import static org.lwjgl.system.MemoryUtil.NULL;
-
-import java.util.concurrent.TimeUnit;
 import org.joml.Vector2i;
 import org.liquidengine.cbchain.impl.ChainErrorCallback;
-import org.liquidengine.legui.animation.Animator;
+import org.liquidengine.legui.animation.AnimatorProvider;
 import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.listener.processor.EventProcessor;
+import org.liquidengine.legui.listener.processor.EventProcessorProvider;
 import org.liquidengine.legui.system.context.CallbackKeeper;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.context.DefaultCallbackKeeper;
 import org.liquidengine.legui.system.handler.processor.SystemEventProcessor;
+import org.liquidengine.legui.system.handler.processor.SystemEventProcessorImpl;
 import org.liquidengine.legui.system.layout.LayoutManager;
 import org.liquidengine.legui.system.renderer.Renderer;
 import org.liquidengine.legui.system.renderer.nvg.NvgRenderer;
@@ -42,6 +19,14 @@ import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWKeyCallbackI;
 import org.lwjgl.glfw.GLFWWindowCloseCallbackI;
 import org.lwjgl.opengl.GLCapabilities;
+
+import java.util.concurrent.TimeUnit;
+
+import static org.lwjgl.glfw.GLFW.*;
+import static org.lwjgl.opengl.GL.createCapabilities;
+import static org.lwjgl.opengl.GL.setCapabilities;
+import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.system.MemoryUtil.NULL;
 
 /**
  * @author Aliaksandr_Shcherbin.
@@ -129,7 +114,7 @@ public abstract class Demo {
     private void startLeguiEventProcessor() {
         leguiEventProcessorThread = new Thread(() -> {
             while (running) {
-                EventProcessor.getInstance().processEvents();
+                EventProcessorProvider.getInstance().processEvents();
             }
         }, "GUI_EVENT_PROCESSOR");
         leguiEventProcessorThread.start();
@@ -167,7 +152,7 @@ public abstract class Demo {
                 LayoutManager.getInstance().layout(frame);
 
                 // also we need to run animations
-                Animator.getInstance().runAnimations();
+                AnimatorProvider.getAnimator().runAnimations();
             } catch (Throwable e) {
                 e.printStackTrace();
             }
@@ -204,8 +189,8 @@ public abstract class Demo {
         keeper.getChainKeyCallback().add(glfwKeyCallbackI);
         keeper.getChainWindowCloseCallback().add(glfwWindowCloseCallbackI);
 
-        systemEventProcessor = new SystemEventProcessor();
-        systemEventProcessor.addDefaultCallbacks(keeper);
+        systemEventProcessor = new SystemEventProcessorImpl();
+        SystemEventProcessor.addDefaultCallbacks(keeper, systemEventProcessor);
 
         running = true;
     }
@@ -213,6 +198,10 @@ public abstract class Demo {
     private void startRenderer() {
         rendererThread = new Thread(this::render, "GUI_RENDERER");
         rendererThread.start();
+    }
+
+    public void stop() {
+        running = false;
     }
 
     protected abstract void update();

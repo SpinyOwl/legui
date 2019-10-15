@@ -9,7 +9,7 @@ import org.liquidengine.legui.component.optional.Orientation;
 import org.liquidengine.legui.event.MouseDragEvent;
 import org.liquidengine.legui.input.Mouse;
 import org.liquidengine.legui.listener.MouseDragEventListener;
-import org.liquidengine.legui.listener.processor.EventProcessor;
+import org.liquidengine.legui.listener.processor.EventProcessorProvider;
 
 /**
  * Default mouse drag event listener for scrollbar. Generates {@link ScrollBarChangeValueEvent} event.
@@ -38,13 +38,18 @@ public class ScrollBarMouseDragEventListener implements MouseDragEventListener {
         float maxValue = scrollBar.getMaxValue();
         float minValue = scrollBar.getMinValue();
         float valueRange = maxValue - minValue;
+
+        if (valueRange - visibleAmount < 0.001f) {
+            return;
+        }
+
         float barSize = scrollBarSize * visibleAmount / valueRange;
         if (barSize < ScrollBar.MIN_SCROLL_SIZE) {
             barSize = ScrollBar.MIN_SCROLL_SIZE;
         }
 
-        float curPos,
-            dpos;
+        float curPos;
+        float dpos;
         if (vertical) {
             dpos = pos.y;
             curPos = cursorPosition.y;
@@ -58,13 +63,13 @@ public class ScrollBarMouseDragEventListener implements MouseDragEventListener {
         } else if (newVal < minValue) {
             newVal = minValue;
         }
-        EventProcessor.getInstance()
-            .pushEvent(new ScrollBarChangeValueEvent<>(scrollBar, event.getContext(), event.getFrame(), scrollBar.getCurValue(), newVal));
+        EventProcessorProvider.getInstance()
+                .pushEvent(new ScrollBarChangeValueEvent<>(scrollBar, event.getContext(), event.getFrame(), scrollBar.getCurValue(), newVal));
         scrollBar.setCurValue(newVal);
     }
 
     @Override
     public boolean equals(Object obj) {
-        return (obj != null) && ((obj == this) || ((obj != this) && (obj.getClass() == this.getClass())));
+        return obj != null && (obj == this || obj.getClass() == this.getClass());
     }
 }

@@ -12,7 +12,10 @@ import org.liquidengine.legui.component.optional.Orientation;
 import org.liquidengine.legui.event.ScrollEvent;
 import org.liquidengine.legui.style.Style.DisplayType;
 import org.liquidengine.legui.style.color.ColorConstants;
+import org.liquidengine.legui.style.length.Length;
 import org.liquidengine.legui.theme.Themes;
+
+import static org.liquidengine.legui.style.length.LengthType.pixel;
 
 /**
  * Panel with scroll bars. Default container layout is null.
@@ -59,9 +62,9 @@ public class ScrollablePanel extends Component implements Viewport {
     /**
      * Constructor with position and size parameters.
      *
-     * @param x x position position in parent component.
-     * @param y y position position in parent component.
-     * @param width width of component.
+     * @param x      x position position in parent component.
+     * @param y      y position position in parent component.
+     * @param width  width of component.
      * @param height height of component.
      */
     public ScrollablePanel(float x, float y, float width, float height) {
@@ -73,7 +76,7 @@ public class ScrollablePanel extends Component implements Viewport {
      * Constructor with position and size parameters.
      *
      * @param position position position in parent component.
-     * @param size size of component.
+     * @param size     size of component.
      */
     public ScrollablePanel(Vector2f position, Vector2f size) {
         super(position, size);
@@ -202,9 +205,10 @@ public class ScrollablePanel extends Component implements Viewport {
 
     public void setHorizontalScrollBarVisible(boolean enabled) {
         if (enabled) {
-            Float height = this.horizontalScrollBar.getStyle().getHeight();
+            Length height = this.horizontalScrollBar.getStyle().getHeight();
             if (height == null) {
-                this.horizontalScrollBar.getStyle().setHeight(height = this.horizontalScrollBar.getSize().y);
+                height = pixel(this.horizontalScrollBar.getSize().y);
+                this.horizontalScrollBar.getStyle().setHeight(height);
             }
             this.viewport.getStyle().setBottom(height);
             this.verticalScrollBar.getStyle().setBottom(height);
@@ -217,9 +221,10 @@ public class ScrollablePanel extends Component implements Viewport {
 
     public void setVerticalScrollBarVisible(boolean enabled) {
         if (enabled) {
-            Float width = this.verticalScrollBar.getStyle().getWidth();
+            Length width = this.verticalScrollBar.getStyle().getWidth();
             if (width == null) {
-                this.verticalScrollBar.getStyle().setWidth(width = this.verticalScrollBar.getSize().x);
+                width = pixel(this.verticalScrollBar.getSize().x);
+                this.verticalScrollBar.getStyle().setWidth(width);
             }
             this.viewport.getStyle().setRight(width);
             this.horizontalScrollBar.getStyle().setRight(width);
@@ -320,13 +325,28 @@ public class ScrollablePanel extends Component implements Viewport {
     }
 
     public static class ScrollablePanelViewport extends Panel {
-        public ScrollablePanelViewport() {}
-        public ScrollablePanelViewport(float x, float y, float width, float height) {super(x, y, width, height);}
-        public ScrollablePanelViewport(Vector2f position, Vector2f size) {super(position, size);}
+        public ScrollablePanelViewport() {
+        }
+
+        public ScrollablePanelViewport(float x, float y, float width, float height) {
+            super(x, y, width, height);
+        }
+
+        public ScrollablePanelViewport(Vector2f position, Vector2f size) {
+            super(position, size);
+        }
     }
+
     public static class ScrollablePanelContainer extends Panel {
-        public ScrollablePanelContainer() {}
-        public ScrollablePanelContainer(float x, float y, float width, float height) {super(x, y, width, height);}
-        public ScrollablePanelContainer(Vector2f position, Vector2f size) {super(position, size);}
+        public ScrollablePanelContainer() {
+        }
+
+        public ScrollablePanelContainer(float x, float y, float width, float height) {
+            super(x, y, width, height);
+        }
+
+        public ScrollablePanelContainer(Vector2f position, Vector2f size) {
+            super(position, size);
+        }
     }
 }

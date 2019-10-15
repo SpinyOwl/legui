@@ -14,17 +14,17 @@ import org.liquidengine.legui.listener.MouseClickEventListener;
  * <p>
  * Used to expand/collapse selectbox if clicked on it.
  */
-public class SelectBoxClickListener implements MouseClickEventListener {
+public class SelectBoxClickListener<T> implements MouseClickEventListener {
 
-    private SelectBox selectBox;
+    private SelectBox<T> selectBox;
 
-    public SelectBoxClickListener(SelectBox selectBox) {
+    public SelectBoxClickListener(SelectBox<T> selectBox) {
         this.selectBox = selectBox;
     }
 
     @Override
     public void process(MouseClickEvent event) {
-        SelectBox box = selectBox;
+        SelectBox<T> box = selectBox;
         if (event.getAction() == CLICK) {
             Frame frame = event.getFrame();
             SelectBoxLayer selectBoxLayer = box.getSelectBoxLayer();
@@ -43,6 +43,6 @@ public class SelectBoxClickListener implements MouseClickEventListener {
 
     @Override
     public boolean equals(Object obj) {
-        return (obj != null) && ((obj == this) || ((obj != this) && (obj.getClass() == this.getClass())));
+        return obj != null && (obj == this || obj.getClass() == this.getClass());
     }
 }

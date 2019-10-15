@@ -29,15 +29,6 @@ public class Frame {
      */
     private List<Layer> layers = new CopyOnWriteArrayList<>();
 
-//    /**
-//     * Holds related to this frame data shared between renderer and event processors: <br>
-//     * <ul>
-//     *     <li>system event handlers - {@link SystemEventHandler} childComponents.</li>
-//     *     <li>legui event listeners - {@link org.liquidengine.legui.listener.EventListener} childComponents.</li>
-//     * </ul>
-//     */
-//    private Context context = new Context();
-
     /**
      * Used to create frame and initialize layers with specified size.
      *
@@ -136,7 +127,7 @@ public class Frame {
             return;
         }
         Frame frame = layer.getFrame();
-        if (frame != null && frame == this && containsLayer(layer)) {
+        if (frame == this && containsLayer(layer)) {
             boolean removed = layers.remove(layer);
             if (removed) {
                 layer.setParent(null);
@@ -190,11 +181,11 @@ public class Frame {
      * @return all layers.
      */
     public List<Layer> getAllLayers() {
-        ArrayList<Layer> layers = new ArrayList<>();
-        layers.add(componentLayer);
-        layers.addAll(this.layers);
-        layers.add(tooltipLayer);
-        return layers;
+        ArrayList<Layer> layerList = new ArrayList<>();
+        layerList.add(componentLayer);
+        layerList.addAll(this.layers);
+        layerList.add(tooltipLayer);
+        return layerList;
     }
 
     /**

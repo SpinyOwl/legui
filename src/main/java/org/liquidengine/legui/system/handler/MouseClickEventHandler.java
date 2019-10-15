@@ -5,7 +5,9 @@ import static org.liquidengine.legui.event.MouseClickEvent.MouseClickAction.PRES
 import static org.liquidengine.legui.event.MouseClickEvent.MouseClickAction.RELEASE;
 import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
 
+import java.util.Collections;
 import java.util.List;
+
 import org.joml.Vector2f;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.Frame;
@@ -14,7 +16,7 @@ import org.liquidengine.legui.component.Widget;
 import org.liquidengine.legui.event.FocusEvent;
 import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.input.Mouse;
-import org.liquidengine.legui.listener.processor.EventProcessor;
+import org.liquidengine.legui.listener.processor.EventProcessorProvider;
 import org.liquidengine.legui.style.Style.DisplayType;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.event.SystemMouseClickEvent;
@@ -32,11 +34,11 @@ public class MouseClickEventHandler implements SystemEventHandler<SystemMouseCli
         Vector2f cursorPos = Mouse.getCursorPosition();
         btn.setPressPosition(cursorPos);
 
-        List<Layer> layers = frame.getLayers();
-        layers.add(frame.getComponentLayer());
+        List<Layer> layers = frame.getAllLayers();
+        Collections.reverse(layers);
 
         Component focusedGui = ctx.getFocusedGui();
-        Component target = null;
+        Component target     = null;
         for (Layer layer : layers) {
             if (layer.isEventReceivable()) {
                 if (!layer.getContainer().isVisible() || !layer.getContainer().isEnabled()) {
@@ -70,19 +72,19 @@ public class MouseClickEventHandler implements SystemEventHandler<SystemMouseCli
                 }
 
                 Vector2f position = target.getAbsolutePosition().sub(cursorPos).negate();
-                EventProcessor.getInstance().pushEvent(new MouseClickEvent<>(target, ctx, frame, PRESS, btn, position, cursorPos, mods));
+                EventProcessorProvider.getInstance().pushEvent(new MouseClickEvent<>(target, ctx, frame, PRESS, btn, position, cursorPos, mods));
 
                 if (focusedGui != target) {
-                    EventProcessor.getInstance().pushEvent(new FocusEvent<>(target, ctx, frame, target, true));
+                    EventProcessorProvider.getInstance().pushEvent(new FocusEvent<>(target, ctx, frame, target, true));
                 }
             } else {
                 updateReleasePosAndFocusedGui(btn, cursorPos, focusedGui);
 
                 Vector2f pos = target.getAbsolutePosition().sub(cursorPos).negate();
                 if (focusedGui != null && focusedGui == target) {
-                    EventProcessor.getInstance().pushEvent(new MouseClickEvent<>(target, ctx, frame, CLICK, btn, pos, cursorPos, mods));
+                    EventProcessorProvider.getInstance().pushEvent(new MouseClickEvent<>(target, ctx, frame, CLICK, btn, pos, cursorPos, mods));
                 }
-                EventProcessor.getInstance().pushEvent(new MouseClickEvent<>(target, ctx, frame, RELEASE, btn, pos, cursorPos, mods));
+                EventProcessorProvider.getInstance().pushEvent(new MouseClickEvent<>(target, ctx, frame, RELEASE, btn, pos, cursorPos, mods));
             }
             pushWidgetsUp(target);
         }
@@ -109,7 +111,7 @@ public class MouseClickEventHandler implements SystemEventHandler<SystemMouseCli
         if (component != focused && component.isVisible() && component.isFocused()) {
             component.setFocused(false);
             component.setPressed(false);
-            EventProcessor.getInstance().pushEvent(new FocusEvent<>(component, context, frame, focused, false));
+            EventProcessorProvider.getInstance().pushEvent(new FocusEvent<>(component, context, frame, focused, false));
         }
         List<? extends Component> childComponents = component.getChildComponents();
         for (Component child : childComponents) {
@@ -118,14 +120,14 @@ public class MouseClickEventHandler implements SystemEventHandler<SystemMouseCli
     }
 
     private void pushWidgetsUp(Component gui) {
-        Component parent = gui.getParent();
+        Component parent  = gui.getParent();
         Component current = gui;
         if (parent != null) {
             boolean push = false;
             while (parent != null) {
-                push = (parent instanceof Widget) && (parent.getParent() != null) && (parent.getParent().getStyle().getDisplay() == DisplayType.MANUAL);
+                push    = (parent instanceof Widget) && (parent.getParent() != null) && (parent.getParent().getStyle().getDisplay() == DisplayType.MANUAL);
                 current = parent;
-                parent = parent.getParent();
+                parent  = parent.getParent();
                 if (push) {
                     break;
                 }

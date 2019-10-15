@@ -1,8 +1,7 @@
 package org.liquidengine.legui.listener.processor;
 
-import java.util.List;
-import java.util.Queue;
-import java.util.concurrent.ConcurrentLinkedQueue;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.event.Event;
 import org.liquidengine.legui.event.WindowCloseEvent;
@@ -10,12 +9,18 @@ import org.liquidengine.legui.listener.EventListener;
 import org.liquidengine.legui.system.LeguiSystem;
 import org.liquidengine.legui.system.Window;
 
+import java.util.List;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
+
 /**
  * Default implementation of event processor.
  * <p>
  * Created by ShchAlexander on 1/25/2017.
  */
-public class EventProcessorImpl extends EventProcessor {
+public class EventProcessorImpl implements EventProcessor {
+
+    private static final Logger LOGGER = LogManager.getLogger();
 
     private Queue<Event> eventQueue = new ConcurrentLinkedQueue<>();
 
@@ -35,11 +40,13 @@ public class EventProcessorImpl extends EventProcessor {
                 listener.process(event);
             }
 
-            if (event instanceof WindowCloseEvent) {
-                long glfwWindow = event.getContext().getGlfwWindow();
+            long glfwWindow = event.getContext().getGlfwWindow();
+            if (event instanceof WindowCloseEvent && LeguiSystem.isInitialized()) {
                 Window window = LeguiSystem.getWindow(glfwWindow);
-                for (EventListener<WindowCloseEvent> listener : window.getWindowCloseEventListeners()) {
-                    listener.process((WindowCloseEvent) event);
+                if (window != null) {
+                    for (EventListener<WindowCloseEvent> listener : window.getWindowCloseEventListeners()) {
+                        listener.process((WindowCloseEvent) event);
+                    }
                 }
             }
         }
@@ -52,6 +59,19 @@ public class EventProcessorImpl extends EventProcessor {
      */
     @Override
     public void pushEvent(Event event) {
+        if (event.getContext() != null && event.getContext().isDebugEnabled()) {
+            LOGGER.debug(event);
+        }
         eventQueue.add(event);
+    }
+
+    /**
+     * Returns true if there are events that should be processed.
+     *
+     * @return true if there are events that should be processed.
+     */
+    @Override
+    public boolean hasEvents() {
+        return !eventQueue.isEmpty();
     }
 }

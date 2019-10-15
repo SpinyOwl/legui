@@ -1,23 +1,5 @@
 package org.liquidengine.legui.system.renderer.nvg.util;
 
-import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_BASELINE;
-import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_BOTTOM;
-import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_CENTER;
-import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_LEFT;
-import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_MIDDLE;
-import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_RIGHT;
-import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_TOP;
-import static org.lwjgl.nanovg.NanoVG.nnvgText;
-import static org.lwjgl.nanovg.NanoVG.nnvgTextBreakLines;
-import static org.lwjgl.nanovg.NanoVG.nvgBeginPath;
-import static org.lwjgl.nanovg.NanoVG.nvgFillColor;
-import static org.lwjgl.nanovg.NanoVG.nvgFontFace;
-import static org.lwjgl.nanovg.NanoVG.nvgFontSize;
-import static org.lwjgl.nanovg.NanoVG.nvgTextAlign;
-import static org.lwjgl.system.MemoryUtil.memAddress;
-import static org.lwjgl.system.MemoryUtil.memUTF8;
-
-import java.nio.ByteBuffer;
 import org.joml.Vector2f;
 import org.joml.Vector2fc;
 import org.joml.Vector4f;
@@ -28,6 +10,12 @@ import org.liquidengine.legui.component.optional.align.VerticalAlign;
 import org.lwjgl.nanovg.NVGColor;
 import org.lwjgl.nanovg.NVGTextRow;
 import org.lwjgl.system.MemoryUtil;
+
+import java.nio.ByteBuffer;
+
+import static org.lwjgl.nanovg.NanoVG.*;
+import static org.lwjgl.system.MemoryUtil.memAddress;
+import static org.lwjgl.system.MemoryUtil.memUTF8;
 
 /**
  * Created by ShchAlexander on 19.09.2017.
@@ -65,14 +53,14 @@ public class NvgText {
             long rowStart = startPointer;
             long rowEnd = endPointer;
             if (hideOverflow) {
-                NVGTextRow.Buffer buffer = NVGTextRow.calloc(1);
-                int rows = nnvgTextBreakLines(nvg, startPointer, endPointer, rect.z(), memAddress(buffer), 1);
-                if (rows != 0) {
-                    NVGTextRow row = buffer.get(0);
-                    rowStart = row.start();
-                    rowEnd = row.end();
+                try (NVGTextRow.Buffer buffer = NVGTextRow.calloc(1)) {
+                    int rows = nnvgTextBreakLines(nvg, startPointer, endPointer, rect.z(), memAddress(buffer), 1);
+                    if (rows != 0) {
+                        NVGTextRow row = buffer.get(0);
+                        rowStart = row.start();
+                        rowEnd = row.end();
+                    }
                 }
-                buffer.free();
             }
 
             Vector2f textPosition = new Vector2f(
@@ -81,11 +69,12 @@ public class NvgText {
             );
 
             if (rowStart != 0 || rowEnd != 0) {
-                NVGColor textColor = NvgColorUtil.rgba(fontColor, NVGColor.calloc());
-                nvgBeginPath(nvg);
-                nvgFillColor(nvg, textColor);
-                nnvgText(nvg, textPosition.x, textPosition.y, rowStart, rowEnd);
-                textColor.free();
+                try (NVGColor textColor = NVGColor.calloc()) {
+                    NvgColorUtil.fillNvgColorWithRGBA(fontColor, textColor);
+                    nvgBeginPath(nvg);
+                    nvgFillColor(nvg, textColor);
+                    nnvgText(nvg, textPosition.x, textPosition.y, rowStart, rowEnd);
+                }
             }
         } finally {
             if (byteText != null) {

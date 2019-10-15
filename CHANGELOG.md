@@ -1,3 +1,19 @@
+## [1.5.0]
+
+## [1.4.8]
+### Added
+- Added generic type support for SelectBox. 
+
+## [1.4.7]
+### Updated
+- Updated selectbox animation logic - so if number of elements is less than visible count - selectbox popup will be smaller.
+### Fixed
+- Fixed code inspection issues. 
+
+## [1.4.6]
+### Fixed
+- Huge memory leak during rendering shadows.
+
 ## [1.4.5]
 ### Added
 - CSS-like styles

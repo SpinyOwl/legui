@@ -1,7 +1,6 @@
 package org.liquidengine.legui.theme.colored.def;
 
 import org.liquidengine.legui.component.ProgressBar;
-import org.liquidengine.legui.style.border.SimpleLineBorder;
 import org.liquidengine.legui.theme.colored.FlatColoredTheme.FlatColoredThemeSettings;
 
 /**
@@ -11,12 +10,14 @@ import org.liquidengine.legui.theme.colored.FlatColoredTheme.FlatColoredThemeSet
  */
 public class FlatProgressBarTheme<T extends ProgressBar> extends FlatComponentTheme<T> {
 
-    private FlatColoredThemeSettings settings;
+    /**
+     * Default constructor. Settings should be specified before using this theme.
+     */
+    public FlatProgressBarTheme() {
+    }
 
     public FlatProgressBarTheme(FlatColoredThemeSettings settings) {
         super(settings);
-
-        this.settings = settings;
     }
 
     /**
@@ -27,7 +28,6 @@ public class FlatProgressBarTheme<T extends ProgressBar> extends FlatComponentTh
     @Override
     public void apply(T component) {
         super.apply(component);
-        component.getStyle().setBorder(new SimpleLineBorder(settings.borderColor(), 1));
         component.setProgressColor(settings.allowColor());
     }
 }

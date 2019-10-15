@@ -292,7 +292,7 @@ public class TextState implements Serializable {
         return new EqualsBuilder()
             .append(fontSize, textState.fontSize)
             .append(font, textState.font)
-            .append(text.toString(), textState.text.toString())
+            .append(text, textState.text)
             .append(horizontalAlign, textState.horizontalAlign)
             .append(verticalAlign, textState.verticalAlign)
             .append(textColor, textState.textColor)
@@ -335,7 +335,7 @@ public class TextState implements Serializable {
         this.setText(state.getText());
         this.font = state.font;
         this.fontSize = state.fontSize;
-        this.setText(state.text.toString());
+        this.setText(state.text);
         this.horizontalAlign = state.horizontalAlign;
         this.verticalAlign = state.verticalAlign;
         this.textColor.set(state.textColor);

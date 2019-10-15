@@ -1,26 +1,16 @@
 package org.liquidengine.legui.system.renderer.nvg.component;
 
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgColorUtil.rgba;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.createScissor;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.resetScissor;
-import static org.lwjgl.nanovg.NanoVG.NVG_ROUND;
-import static org.lwjgl.nanovg.NanoVG.nvgBeginPath;
-import static org.lwjgl.nanovg.NanoVG.nvgLineCap;
-import static org.lwjgl.nanovg.NanoVG.nvgLineJoin;
-import static org.lwjgl.nanovg.NanoVG.nvgLineTo;
-import static org.lwjgl.nanovg.NanoVG.nvgMoveTo;
-import static org.lwjgl.nanovg.NanoVG.nvgSave;
-import static org.lwjgl.nanovg.NanoVG.nvgStroke;
-import static org.lwjgl.nanovg.NanoVG.nvgStrokeColor;
-import static org.lwjgl.nanovg.NanoVG.nvgStrokeWidth;
-
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.Slider;
 import org.liquidengine.legui.component.optional.Orientation;
 import org.liquidengine.legui.system.context.Context;
+import org.liquidengine.legui.system.renderer.nvg.util.NvgColorUtil;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgShapes;
 import org.lwjgl.nanovg.NVGColor;
+
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.*;
+import static org.lwjgl.nanovg.NanoVG.*;
 
 /**
  * Renderer for Slider components.
@@ -50,45 +40,53 @@ public class NvgSliderRenderer<T extends Slider> extends NvgDefaultComponentRend
             Vector2f size = slider.getSize();
             float x = pos.x;
             float y = pos.y;
-            float w = size.x;
-            float h = size.y;
+            float width = size.x;
+            float height = size.y;
 
-            float value = slider.getValue();
-            boolean vertical = Orientation.VERTICAL.equals(slider.getOrientation());
-            Vector4f sliderInactiveColor = slider.getSliderColor();
-            Vector4f sliderColor = slider.getSliderActiveColor();
-            Vector4f cornerRadius = slider.getStyle().getBorderRadius();
-            float sliderSize = slider.getSliderSize();
-
+            Vector4f cornerRadius = getBorderRadius(slider);
             renderBackground(slider, context, nanovg);
 
-            float lx,
-                rx,
-                ty,
-                by,
-                px,
-                py;
+            final float minValue = slider.getMinValue();
+            final float maxValue = slider.getMaxValue();
+            final float difference = maxValue - minValue;
+            final float value = slider.getValue() - minValue;
+            final boolean vertical = Orientation.VERTICAL.equals(slider.getOrientation());
+            final Vector4f sliderInactiveColor = slider.getSliderColor();
+            final Vector4f sliderColor = slider.getSliderActiveColor();
+            final float sliderSize = slider.getSliderSize();
+
+            final float lineStartX;
+            final float lineEndX;
+            final float lineStartY;
+            final float lineEndY;
+            final float sliderX;
+            final float sliderY;
+            final float sliderHalfSize = sliderSize / 2f;
+            final float percentage = value / difference;
             if (vertical) {
-                px = lx = rx = x + (w) / 2f;
-                ty = y + sliderSize / 2f;
-                by = y + h - sliderSize / 2f;
-                py = by - (by - ty) * value / 100f;
+                lineStartY = y + sliderHalfSize;
+                lineEndY = y + height - sliderHalfSize;
+                final float sizeY = lineEndY - lineStartY;
+                lineStartX = x + (width) / 2f;
+                lineEndX = lineStartX;
+                sliderX = lineStartX;
+                sliderY = lineStartY + sizeY * percentage;
             } else {
-                py = ty = by = y + (h) / 2f;
-                lx = x + sliderSize / 2f;
-                rx = x + w - sliderSize / 2f;
-                px = lx + (rx - lx) * value / 100f;
+                lineStartX = x + sliderHalfSize;
+                lineEndX = x + width - sliderHalfSize;
+                final float sizeX = lineEndX - lineStartX;
+                lineStartY = y + (height) / 2f;
+                lineEndY = lineStartY;
+                sliderY = lineStartY;
+                sliderX = lineStartX + sizeX * percentage;
             }
 
             // draw inactive color
-            drawLine(nanovg, sliderInactiveColor, lx, by, rx, ty, SLIDER_WIDTH);
-
-            // draw active part
-            drawLine(nanovg, sliderColor, lx, by, px, py, SLIDER_WIDTH);
+            drawLine(nanovg, sliderInactiveColor, lineStartX, lineStartY, lineEndX, lineEndY, SLIDER_WIDTH);
 
             // draw slider button
             Vector2f sliderButtonSize = new Vector2f(sliderSize);
-            Vector2f sliderPos = new Vector2f(px - sliderSize / 2f, py - sliderSize / 2f);
+            Vector2f sliderPos = new Vector2f(sliderX - sliderHalfSize, sliderY - sliderHalfSize);
             NvgShapes.drawRect(nanovg, sliderPos, sliderButtonSize, sliderColor, cornerRadius);
             NvgShapes.drawRectStroke(nanovg, sliderPos, sliderButtonSize, sliderInactiveColor, 1, cornerRadius);
         }
@@ -107,16 +105,19 @@ public class NvgSliderRenderer<T extends Slider> extends NvgDefaultComponentRend
      * @param width line width
      */
     private void drawLine(long context, Vector4f color, float x1, float y1, float x2, float y2, float width) {
-        NVGColor colorA = rgba(color, NVGColor.calloc());
-        nvgLineCap(context, NVG_ROUND);
-        nvgLineJoin(context, NVG_ROUND);
-        nvgStrokeWidth(context, width);
-        nvgStrokeColor(context, colorA);
-        nvgBeginPath(context);
-        nvgMoveTo(context, x1, y1);
-        nvgLineTo(context, x2, y2);
-        nvgStroke(context);
-        colorA.free();
+        try (
+                NVGColor colorA = NVGColor.calloc()
+        ) {
+            NvgColorUtil.fillNvgColorWithRGBA(color, colorA);
+            nvgLineCap(context, NVG_ROUND);
+            nvgLineJoin(context, NVG_ROUND);
+            nvgStrokeWidth(context, width);
+            nvgStrokeColor(context, colorA);
+            nvgBeginPath(context);
+            nvgMoveTo(context, x1, y1);
+            nvgLineTo(context, x2, y2);
+            nvgStroke(context);
+        }
     }
 
 }

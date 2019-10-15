@@ -6,7 +6,7 @@ import org.liquidengine.legui.component.TextAreaField;
 import org.liquidengine.legui.component.event.textarea.TextAreaFieldUpdateEvent;
 import org.liquidengine.legui.event.MouseDragEvent;
 import org.liquidengine.legui.listener.MouseDragEventListener;
-import org.liquidengine.legui.listener.processor.EventProcessor;
+import org.liquidengine.legui.listener.processor.EventProcessorProvider;
 
 /**
  * Mouse drag event listener for text area. Used to update selection indices.
@@ -26,12 +26,12 @@ public class TextAreaFieldDragEventListener implements MouseDragEventListener {
             textAreaField.setCaretPosition(mouseCaretPosition);
             textAreaField.setEndSelectionIndex(mouseCaretPosition);
 
-            EventProcessor.getInstance().pushEvent(new TextAreaFieldUpdateEvent(textAreaField, event.getContext(), event.getFrame()));
+            EventProcessorProvider.getInstance().pushEvent(new TextAreaFieldUpdateEvent(textAreaField, event.getContext(), event.getFrame()));
         }
     }
 
     @Override
     public boolean equals(Object obj) {
-        return (obj != null) && ((obj == this) || ((obj != this) && (obj.getClass() == this.getClass())));
+        return obj != null && (obj == this || obj.getClass() == this.getClass());
     }
 }

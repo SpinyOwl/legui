@@ -1,12 +1,14 @@
 package org.liquidengine.legui.theme.colored.def;
 
-import java.util.List;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.Tooltip;
 import org.liquidengine.legui.style.border.SimpleLineBorder;
+import org.liquidengine.legui.style.shadow.Shadow;
 import org.liquidengine.legui.theme.AbstractTheme;
 import org.liquidengine.legui.theme.Themes;
 import org.liquidengine.legui.theme.colored.FlatColoredTheme.FlatColoredThemeSettings;
+
+import java.util.List;
 
 /**
  * Dark Component Theme for all components. Used to make component dark.
@@ -15,9 +17,23 @@ import org.liquidengine.legui.theme.colored.FlatColoredTheme.FlatColoredThemeSet
  */
 public class FlatComponentTheme<T extends Component> extends AbstractTheme<T> {
 
-    private final FlatColoredThemeSettings settings;
+    protected FlatColoredThemeSettings settings;
+
+    /**
+     * Default constructor. Settings should be specified before using this theme.
+     */
+    public FlatComponentTheme() {
+    }
 
     public FlatComponentTheme(FlatColoredThemeSettings settings) {
+        this.settings = settings;
+    }
+
+    public FlatColoredThemeSettings getSettings() {
+        return settings;
+    }
+
+    public void setSettings(FlatColoredThemeSettings settings) {
         this.settings = settings;
     }
 
@@ -29,10 +45,20 @@ public class FlatComponentTheme<T extends Component> extends AbstractTheme<T> {
     @Override
     public void apply(T component) {
         super.apply(component);
-        component.getStyle().setBorder(new SimpleLineBorder(settings.borderColor(), 1));
+        if(settings.borderColor().z==0) {
+            component.getStyle().setBorder(null);
+        } else {
+            component.getStyle().setBorder(new SimpleLineBorder(settings.borderColor(), 1));
+        }
         component.getStyle().setBorderRadius(2f);
         component.getStyle().getBackground().setColor(settings.backgroundColor());
         component.getStyle().setFocusedStrokeColor(settings.strokeColor());
+
+        if (settings.shadowColor() != null && settings.shadowColor().length() > 0.00001f) {
+            component.getStyle().setShadow(new Shadow(1, 1, 16, -4, settings.shadowColor()));
+        } else {
+            component.getStyle().setShadow(null);
+        }
 
         Tooltip tooltip = component.getTooltip();
         if (tooltip != null) {

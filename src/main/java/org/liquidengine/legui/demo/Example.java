@@ -1,5 +1,6 @@
 package org.liquidengine.legui.demo;
 
+import static org.liquidengine.legui.style.color.ColorUtil.fromInt;
 import static org.lwjgl.glfw.GLFW.GLFW_DONT_CARE;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_ESCAPE;
 import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
@@ -23,18 +24,22 @@ import static org.lwjgl.opengl.GL11.glClearColor;
 import static org.lwjgl.opengl.GL11.glViewport;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
-import java.util.concurrent.TimeUnit;
 import org.joml.Vector2i;
 import org.liquidengine.legui.DefaultInitializer;
 import org.liquidengine.legui.animation.Animator;
+import org.liquidengine.legui.animation.AnimatorProvider;
+import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.event.WindowSizeEvent;
 import org.liquidengine.legui.listener.WindowSizeEventListener;
-import org.liquidengine.legui.system.LeguiSystem;
-import org.liquidengine.legui.system.Window;
+import org.liquidengine.legui.style.border.SimpleLineBorder;
+import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.layout.LayoutManager;
 import org.liquidengine.legui.system.renderer.Renderer;
+import org.liquidengine.legui.theme.Themes;
+import org.liquidengine.legui.theme.colored.FlatColoredTheme;
+import org.liquidengine.legui.theme.colored.def.FlatComponentTheme;
 import org.lwjgl.PointerBuffer;
 import org.lwjgl.glfw.GLFWKeyCallbackI;
 import org.lwjgl.glfw.GLFWVidMode;
@@ -57,7 +62,7 @@ public class Example {
 
 //    private static String json = IOUtil.loadResourceAsString("org/liquidengine/legui/demo/json.json", 1024);
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) {
         System.setProperty("joml.nounsafe", Boolean.TRUE.toString());
         System.setProperty("java.awt.headless", Boolean.TRUE.toString());
         if (!glfwInit()) {
@@ -76,6 +81,16 @@ public class Example {
         for (int i = 0; i < remaining; i++) {
             monitors[i] = pointerBuffer.get(i);
         }
+
+        Themes.setDefaultTheme(new FlatColoredTheme(
+            fromInt(245, 245, 245, 1), // backgroundColor
+            fromInt(176, 190, 197, 1), // borderColor
+            fromInt(176, 190, 197, 1), // sliderColor
+            fromInt(100, 181, 246, 1), // strokeColor
+            fromInt(165, 214, 167, 1), // allowColor
+            fromInt(239, 154, 154, 1), // denyColor
+            ColorConstants.transparent() // shadowColor
+        ));
 
         // Firstly we need to create frame component for window.
         Frame frame = new Frame(WIDTH, HEIGHT);// new Frame(WIDTH, HEIGHT);
@@ -110,7 +125,7 @@ public class Example {
 
         // before render loop we need to initialize renderer
         Renderer renderer = initializer.getRenderer();
-        Animator animator = Animator.getInstance();
+        Animator animator = AnimatorProvider.getAnimator();
         renderer.initialize();
 
         long time = System.currentTimeMillis();
@@ -175,8 +190,12 @@ public class Example {
                 toggleFullscreen = false;
             }
 
-            // When everything done we need to relayout components.
-            LayoutManager.getInstance().layout(frame);
+            if(gui.getGenerateEventsByLayoutManager().isChecked()) {
+                // When everything done we need to relayout components.
+                LayoutManager.getInstance().layout(frame, context);
+            } else {
+                LayoutManager.getInstance().layout(frame);
+            }
 
             update();
             updCntr++;
@@ -195,14 +214,17 @@ public class Example {
     }
 
     private static void update() {
-        if (context != null && context.getMouseTargetGui() != null) {
-            gui.getMouseTargetLabel().getTextState().setText("-> " + context.getMouseTargetGui().getClass().getSimpleName());
+        if (context != null) {
+            Component mouseTargetGui = context.getMouseTargetGui();
+            gui.getMouseTargetLabel().getTextState().setText("-> " + (mouseTargetGui == null ? null : mouseTargetGui.getClass().getSimpleName()));
         }
     }
 
     private static void createGuiElements(Frame frame, int w, int h) {
         gui = new ExampleGui(w, h);
+        gui.setFocusable(false);
         gui.getListenerMap().addListener(WindowSizeEvent.class, (WindowSizeEventListener) event -> gui.setSize(event.getWidth(), event.getHeight()));
         frame.getContainer().add(gui);
+        frame.getContainer().setFocusable(false);
     }
 }

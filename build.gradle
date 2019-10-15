@@ -1,3 +1,7 @@
+plugins {
+    id "org.sonarqube" version "2.7"
+}
+
 group 'org.liquidengine'
 
 import groovy.json.JsonSlurper
@@ -19,6 +23,7 @@ apply plugin: 'idea'
 apply plugin: 'eclipse'
 apply plugin: 'maven'
 apply plugin: 'maven-publish'
+
 idea { module { downloadJavadoc = true; downloadSources = true } }
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -31,8 +36,8 @@ def commons_collections  = '4.1'
 def guava_version        = '19.0'
 def gson_version         = '2.7'
 
-def joml_version         = "1.9.9-SNAPSHOT"
-def lwjgl_version        = '3.2.1-SNAPSHOT'
+def joml_version         = "1.9.18-SNAPSHOT"
+def lwjgl_version        = '3.2.3-SNAPSHOT'
 def le_cbchain           = '1.0.0'
 def le_util              = '1.0.0'
 //@formatter:on
@@ -41,8 +46,8 @@ repositories {
     jcenter()
     mavenCentral()
     maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
-    maven { url "https://raw.githubusercontent.com/LiquidEngine/repo/snapshots" }
-    maven { url "https://raw.githubusercontent.com/LiquidEngine/repo/releases" }
+    maven { url "https://raw.githubusercontent.com/SpinyOwl/repo/snapshots" }
+    maven { url "https://raw.githubusercontent.com/SpinyOwl/repo/releases" }
 }
 
 dependencies {
@@ -101,26 +106,19 @@ repositories {
     maven { url 'https://raw.githubusercontent.com/synergian/wagon-git/releases' }
 }
 dependencies {
-    deployerJar 'ar.com.synergian:wagon-git:0.2.5'
+    deployerJar 'ar.com.synergian:wagon-git:0.3.0'
 }
 
-task publishArchives {
-    doLast {
-        def publishUrl = System.getProperty("publishUrl") ?: System.getenv("publishUrl") ?: publishUrl
-        def publishUsername = System.getProperty("publishUsername") ?: System.getenv("publishUsername") ?: publishUsername
-        def publishPassword = System.getProperty("publishPassword") ?: System.getenv("publishPassword") ?: publishPassword
+def publishUrl = System.getProperty("publishUrl") ?: System.getenv("publishUrl") ?: null
+def publishUsername = System.getProperty("publishUsername") ?: System.getenv("publishUsername") ?: null
+def publishPassword = System.getProperty("publishPassword") ?: System.getenv("publishPassword") ?: null
 
-        println("PUBLISHING TO $publishUrl")
-        uploadArchives {
-            repositories.mavenDeployer {
-                configuration = configurations.deployerJar
-                repository(url: publishUrl) {
-                    authentication(userName: publishUsername, password: publishPassword)
-                }
-            }
+uploadArchives {
+    repositories.mavenDeployer {
+        configuration = configurations.deployerJar
+        repository(url: publishUrl) {
+            authentication(userName: publishUsername, password: publishPassword)
         }
-        uploadArchives.execute()
-        println("PUBLISHED TO  $publishUrl")
     }
 }
 
@@ -143,11 +141,25 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
 }
 
 javadocJar.dependsOn javadoc
-publishArchives.dependsOn jar
-publishArchives.dependsOn sourcesJar
-publishArchives.dependsOn javadocJar
+uploadArchives.dependsOn jar
+uploadArchives.dependsOn sourcesJar
+uploadArchives.dependsOn javadocJar
 
 artifacts {
     archives sourcesJar
     archives javadocJar
+}
+
+
+// SONARQUBE CONFIGURATION
+
+
+def sonarLogin = System.getProperty("sonarLogin") ?: System.getenv("sonarLogin") ?: null
+sonarqube {
+    properties {
+        property "sonar.projectKey", "SpinyOwl_legui"
+        property "sonar.organization", "spinyowl"
+        property "sonar.host.url", "https://sonarcloud.io"
+        property "sonar.login", sonarLogin
+    }
 }

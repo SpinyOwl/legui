@@ -1,19 +1,11 @@
 package org.liquidengine.legui.system.renderer.nvg.util;
 
-import static org.lwjgl.nanovg.NanoVG.nvgBeginPath;
-import static org.lwjgl.nanovg.NanoVG.nvgFill;
-import static org.lwjgl.nanovg.NanoVG.nvgFillColor;
-import static org.lwjgl.nanovg.NanoVG.nvgRect;
-import static org.lwjgl.nanovg.NanoVG.nvgRoundedRect;
-import static org.lwjgl.nanovg.NanoVG.nvgRoundedRectVarying;
-import static org.lwjgl.nanovg.NanoVG.nvgStroke;
-import static org.lwjgl.nanovg.NanoVG.nvgStrokeColor;
-import static org.lwjgl.nanovg.NanoVG.nvgStrokeWidth;
-
 import org.joml.Vector2fc;
 import org.joml.Vector4f;
 import org.joml.Vector4fc;
 import org.lwjgl.nanovg.NVGColor;
+
+import static org.lwjgl.nanovg.NanoVG.*;
 
 /**
  * NanoVG Shape utility. Used to draw shapes with NanoVG.
@@ -43,13 +35,13 @@ public class NvgShapes {
         if (bgColor.w() <= MIN_ALPHA) {
             return;
         }
-        NVGColor fillColor = NVGColor.calloc();
-        NvgColorUtil.rgba(bgColor, fillColor);
-        nvgBeginPath(nvg);
-        nvgFillColor(nvg, fillColor);
-        nvgRect(nvg, position.x(), position.y(), size.x(), size.y());
-        nvgFill(nvg);
-        fillColor.free();
+        try (NVGColor fillColor = NVGColor.calloc()) {
+            NvgColorUtil.fillNvgColorWithRGBA(bgColor, fillColor);
+            nvgBeginPath(nvg);
+            nvgFillColor(nvg, fillColor);
+            nvgRect(nvg, position.x(), position.y(), size.x(), size.y());
+            nvgFill(nvg);
+        }
     }
 
     /**
@@ -63,13 +55,13 @@ public class NvgShapes {
         if (bgColor.w() <= MIN_ALPHA) {
             return;
         }
-        NVGColor fillColor = NVGColor.calloc();
-        NvgColorUtil.rgba(bgColor, fillColor);
-        nvgBeginPath(nvg);
-        nvgFillColor(nvg, fillColor);
-        nvgRect(nvg, rectangle.x(), rectangle.y(), rectangle.z(), rectangle.w());
-        nvgFill(nvg);
-        fillColor.free();
+        try (NVGColor fillColor = NVGColor.calloc()) {
+            NvgColorUtil.fillNvgColorWithRGBA(bgColor, fillColor);
+            nvgBeginPath(nvg);
+            nvgFillColor(nvg, fillColor);
+            nvgRect(nvg, rectangle.x(), rectangle.y(), rectangle.z(), rectangle.w());
+            nvgFill(nvg);
+        }
     }
 
     /**
@@ -85,13 +77,13 @@ public class NvgShapes {
         if (bgColor.w() <= MIN_ALPHA) {
             return;
         }
-        NVGColor fillColor = NVGColor.calloc();
-        NvgColorUtil.rgba(bgColor, fillColor);
-        nvgBeginPath(nvg);
-        nvgFillColor(nvg, fillColor);
-        nvgRoundedRect(nvg, position.x(), position.y(), size.x(), size.y(), radius);
-        nvgFill(nvg);
-        fillColor.free();
+        try (NVGColor fillColor = NVGColor.calloc()) {
+            NvgColorUtil.fillNvgColorWithRGBA(bgColor, fillColor);
+            nvgBeginPath(nvg);
+            nvgFillColor(nvg, fillColor);
+            nvgRoundedRect(nvg, position.x(), position.y(), size.x(), size.y(), radius);
+            nvgFill(nvg);
+        }
     }
 
 
@@ -106,17 +98,17 @@ public class NvgShapes {
      */
     public static void drawRect(long nvg, Vector2fc position, Vector2fc size, Vector4fc bgColor, Vector4f radius) {
         if (radius != null && !radius.equals(ZERO_CORNDERS)) {
-            NVGColor fillColor = NVGColor.calloc();
-            NvgColorUtil.rgba(bgColor, fillColor);
-            nvgBeginPath(nvg);
-            nvgFillColor(nvg, fillColor);
-            if (radius.x == radius.y && radius.x == radius.z && radius.x == radius.w) {
-                nvgRoundedRect(nvg, position.x(), position.y(), size.x(), size.y(), radius.x);
-            } else {
-                nvgRoundedRectVarying(nvg, position.x(), position.y(), size.x(), size.y(), radius.x, radius.y, radius.z, radius.w);
+            try (NVGColor fillColor = NVGColor.calloc()) {
+                NvgColorUtil.fillNvgColorWithRGBA(bgColor, fillColor);
+                nvgBeginPath(nvg);
+                nvgFillColor(nvg, fillColor);
+                if (radius.x == radius.y && radius.x == radius.z && radius.x == radius.w) {
+                    nvgRoundedRect(nvg, position.x(), position.y(), size.x(), size.y(), radius.x);
+                } else {
+                    nvgRoundedRectVarying(nvg, position.x(), position.y(), size.x(), size.y(), radius.x, radius.y, radius.z, radius.w);
+                }
+                nvgFill(nvg);
             }
-            nvgFill(nvg);
-            fillColor.free();
         } else {
             drawRect(nvg, position, size, bgColor);
         }
@@ -134,13 +126,13 @@ public class NvgShapes {
         if (bgColor.w() <= MIN_ALPHA) {
             return;
         }
-        NVGColor fillColor = NVGColor.calloc();
-        NvgColorUtil.rgba(bgColor, fillColor);
-        nvgBeginPath(nvg);
-        nvgFillColor(nvg, fillColor);
-        nvgRoundedRect(nvg, rectangle.x(), rectangle.y(), rectangle.z(), rectangle.w(), radius);
-        nvgFill(nvg);
-        fillColor.free();
+        try (NVGColor fillColor = NVGColor.calloc()) {
+            NvgColorUtil.fillNvgColorWithRGBA(bgColor, fillColor);
+            nvgBeginPath(nvg);
+            nvgFillColor(nvg, fillColor);
+            nvgRoundedRect(nvg, rectangle.x(), rectangle.y(), rectangle.z(), rectangle.w(), radius);
+            nvgFill(nvg);
+        }
     }
 
 
@@ -154,13 +146,13 @@ public class NvgShapes {
      */
     public static void drawRect(long nvg, Vector4fc rectangle, Vector4fc bgColor, Vector4f radius) {
         if (radius != null && !radius.equals(ZERO_CORNDERS)) {
-            NVGColor fillColor = NVGColor.calloc();
-            NvgColorUtil.rgba(bgColor, fillColor);
-            nvgBeginPath(nvg);
-            nvgFillColor(nvg, fillColor);
-            nvgRoundedRectVarying(nvg, rectangle.x(), rectangle.y(), rectangle.z(), rectangle.w(), radius.x, radius.y, radius.z, radius.w);
-            nvgFill(nvg);
-            fillColor.free();
+            try (NVGColor fillColor = NVGColor.calloc()) {
+                NvgColorUtil.fillNvgColorWithRGBA(bgColor, fillColor);
+                nvgBeginPath(nvg);
+                nvgFillColor(nvg, fillColor);
+                nvgRoundedRectVarying(nvg, rectangle.x(), rectangle.y(), rectangle.z(), rectangle.w(), radius.x, radius.y, radius.z, radius.w);
+                nvgFill(nvg);
+            }
         } else {
             drawRect(nvg, rectangle, bgColor, radius);
         }
@@ -179,14 +171,14 @@ public class NvgShapes {
         if (rectStrokeColor.w() <= MIN_ALPHA) {
             return;
         }
-        NVGColor strokeColor = NVGColor.calloc();
-        NvgColorUtil.rgba(rectStrokeColor, strokeColor);
-        nvgBeginPath(nvg);
-        nvgStrokeColor(nvg, strokeColor);
-        nvgStrokeWidth(nvg, strokeWidth);
-        nvgRect(nvg, position.x(), position.y(), size.x(), size.y());
-        nvgStroke(nvg);
-        strokeColor.free();
+        try (NVGColor strokeColor = NVGColor.calloc()) {
+            NvgColorUtil.fillNvgColorWithRGBA(rectStrokeColor, strokeColor);
+            nvgBeginPath(nvg);
+            nvgStrokeColor(nvg, strokeColor);
+            nvgStrokeWidth(nvg, strokeWidth);
+            nvgRect(nvg, position.x(), position.y(), size.x(), size.y());
+            nvgStroke(nvg);
+        }
     }
 
     /**
@@ -201,14 +193,14 @@ public class NvgShapes {
         if (rectStrokeColor.w() <= MIN_ALPHA) {
             return;
         }
-        NVGColor strokeColor = NVGColor.calloc();
-        NvgColorUtil.rgba(rectStrokeColor, strokeColor);
-        nvgBeginPath(nvg);
-        nvgStrokeColor(nvg, strokeColor);
-        nvgStrokeWidth(nvg, strokeWidth);
-        nvgRect(nvg, rectangle.x(), rectangle.y(), rectangle.z(), rectangle.w());
-        nvgStroke(nvg);
-        strokeColor.free();
+        try (NVGColor strokeColor = NVGColor.calloc()) {
+            NvgColorUtil.fillNvgColorWithRGBA(rectStrokeColor, strokeColor);
+            nvgBeginPath(nvg);
+            nvgStrokeColor(nvg, strokeColor);
+            nvgStrokeWidth(nvg, strokeWidth);
+            nvgRect(nvg, rectangle.x(), rectangle.y(), rectangle.z(), rectangle.w());
+            nvgStroke(nvg);
+        }
     }
 
     /**
@@ -222,14 +214,14 @@ public class NvgShapes {
      */
     public static void drawRectStroke(long nvg, Vector4fc rectangle, Vector4fc rectStrokeColor, float strokeWidth, Vector4f radius) {
         if (radius != null && !radius.equals(ZERO_CORNDERS)) {
-            NVGColor strokeColor = NVGColor.calloc();
-            NvgColorUtil.rgba(rectStrokeColor, strokeColor);
-            nvgBeginPath(nvg);
-            nvgStrokeColor(nvg, strokeColor);
-            nvgStrokeWidth(nvg, strokeWidth);
-            nvgRoundedRectVarying(nvg, rectangle.x(), rectangle.y(), rectangle.z(), rectangle.w(), radius.x, radius.y, radius.z, radius.w);
-            nvgStroke(nvg);
-            strokeColor.free();
+            try (NVGColor strokeColor = NVGColor.calloc()) {
+                NvgColorUtil.fillNvgColorWithRGBA(rectStrokeColor, strokeColor);
+                nvgBeginPath(nvg);
+                nvgStrokeColor(nvg, strokeColor);
+                nvgStrokeWidth(nvg, strokeWidth);
+                nvgRoundedRectVarying(nvg, rectangle.x(), rectangle.y(), rectangle.z(), rectangle.w(), radius.x, radius.y, radius.z, radius.w);
+                nvgStroke(nvg);
+            }
         } else {
             drawRectStroke(nvg, rectangle, rectStrokeColor, strokeWidth);
         }
@@ -249,14 +241,14 @@ public class NvgShapes {
         if (rectStrokeColor.w() <= MIN_ALPHA) {
             return;
         }
-        NVGColor strokeColor = NVGColor.calloc();
-        NvgColorUtil.rgba(rectStrokeColor, strokeColor);
-        nvgBeginPath(nvg);
-        nvgStrokeColor(nvg, strokeColor);
-        nvgStrokeWidth(nvg, strokeWidth);
-        nvgRoundedRect(nvg, position.x(), position.y(), size.x(), size.y(), radius);
-        nvgStroke(nvg);
-        strokeColor.free();
+        try (NVGColor strokeColor = NVGColor.calloc()) {
+            NvgColorUtil.fillNvgColorWithRGBA(rectStrokeColor, strokeColor);
+            nvgBeginPath(nvg);
+            nvgStrokeColor(nvg, strokeColor);
+            nvgStrokeWidth(nvg, strokeWidth);
+            nvgRoundedRect(nvg, position.x(), position.y(), size.x(), size.y(), radius);
+            nvgStroke(nvg);
+        }
     }
 
     /**
@@ -271,14 +263,14 @@ public class NvgShapes {
      */
     public static void drawRectStroke(long nvg, Vector2fc position, Vector2fc size, Vector4fc rectStrokeColor, float strokeWidth, Vector4f radius) {
         if (radius != null && !radius.equals(ZERO_CORNDERS)) {
-            NVGColor strokeColor = NVGColor.calloc();
-            NvgColorUtil.rgba(rectStrokeColor, strokeColor);
-            nvgBeginPath(nvg);
-            nvgStrokeColor(nvg, strokeColor);
-            nvgStrokeWidth(nvg, strokeWidth);
-            nvgRoundedRectVarying(nvg, position.x(), position.y(), size.x(), size.y(), radius.x, radius.y, radius.z, radius.w);
-            nvgStroke(nvg);
-            strokeColor.free();
+            try (NVGColor strokeColor = NVGColor.calloc()) {
+                NvgColorUtil.fillNvgColorWithRGBA(rectStrokeColor, strokeColor);
+                nvgBeginPath(nvg);
+                nvgStrokeColor(nvg, strokeColor);
+                nvgStrokeWidth(nvg, strokeWidth);
+                nvgRoundedRectVarying(nvg, position.x(), position.y(), size.x(), size.y(), radius.x, radius.y, radius.z, radius.w);
+                nvgStroke(nvg);
+            }
         } else {
             drawRectStroke(nvg, position, size, rectStrokeColor, strokeWidth);
         }
@@ -297,14 +289,14 @@ public class NvgShapes {
         if (rectStrokeColor.w() <= MIN_ALPHA) {
             return;
         }
-        NVGColor strokeColor = NVGColor.calloc();
-        NvgColorUtil.rgba(rectStrokeColor, strokeColor);
-        nvgBeginPath(nvg);
-        nvgStrokeColor(nvg, strokeColor);
-        nvgStrokeWidth(nvg, strokeWidth);
-        nvgRoundedRect(nvg, rectangle.x(), rectangle.y(), rectangle.z(), rectangle.w(), radius);
-        nvgStroke(nvg);
-        strokeColor.free();
+        try (NVGColor strokeColor = NVGColor.calloc()) {
+            NvgColorUtil.fillNvgColorWithRGBA(rectStrokeColor, strokeColor);
+            nvgBeginPath(nvg);
+            nvgStrokeColor(nvg, strokeColor);
+            nvgStrokeWidth(nvg, strokeWidth);
+            nvgRoundedRect(nvg, rectangle.x(), rectangle.y(), rectangle.z(), rectangle.w(), radius);
+            nvgStroke(nvg);
+        }
     }
 
 }

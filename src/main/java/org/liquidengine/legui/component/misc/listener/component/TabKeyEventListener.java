@@ -1,16 +1,17 @@
 package org.liquidengine.legui.component.misc.listener.component;
 
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.event.FocusEvent;
 import org.liquidengine.legui.event.KeyEvent;
 import org.liquidengine.legui.listener.EventListener;
-import org.liquidengine.legui.listener.processor.EventProcessor;
+import org.liquidengine.legui.listener.processor.EventProcessorProvider;
 import org.liquidengine.legui.system.context.Context;
 import org.lwjgl.glfw.GLFW;
+
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 /**
  * Created by ShchAlexander on 11.11.2017.
@@ -34,9 +35,8 @@ public class TabKeyEventListener implements EventListener<KeyEvent> {
             boolean shiftPressed = (event.getMods() & GLFW.GLFW_MOD_SHIFT) != 0;
             if (controlPressed && !shiftPressed) {
                 Component next = findNext(event.getTargetComponent());
-                // if ((next == null || next == component) && cycled) next = event.getContext().getFrame().getContainer();
                 moveToNextTabFocusableComponent(event.getContext(), event.getTargetComponent(), next, event.getFrame());
-            } else if (controlPressed && shiftPressed) {
+            } else if (controlPressed) {
                 Component prev = findPrev(event.getTargetComponent());
                 moveToNextTabFocusableComponent(event.getContext(), event.getTargetComponent(), prev, event.getFrame());
             }
@@ -47,7 +47,6 @@ public class TabKeyEventListener implements EventListener<KeyEvent> {
      * Used to find previous component (components sorted by tab index).
      *
      * @param component current component.
-     *
      * @return previous component.
      */
     private Component findPrev(Component component) {
@@ -56,7 +55,7 @@ public class TabKeyEventListener implements EventListener<KeyEvent> {
         }
 
         Component prev = null;
-        if (component.isTabFocusable()) {
+        if (isFF(component)) {
             prev = component;
         }
         prev = findPrevInParent(component, component.getParent(), prev);
@@ -68,9 +67,8 @@ public class TabKeyEventListener implements EventListener<KeyEvent> {
      * Used to find previous component in parent (in neighbors).
      *
      * @param component current component.
-     * @param parent parent component.
-     * @param prev current previous component.
-     *
+     * @param parent    parent component.
+     * @param prev      current previous component.
      * @return previous component.
      */
     private Component findPrevInParent(Component component, Component parent, Component prev) {
@@ -86,41 +84,36 @@ public class TabKeyEventListener implements EventListener<KeyEvent> {
         if (index != childComponents.size() - 1) {
             for (int i = index + 1; i < childComponents.size(); i++) {
                 Component child = childComponents.get(i);
-                if (child.isVisible()) {
-                    if (child.isTabFocusable()) {
-                        prev = child;
-                        if (!child.isEmpty()) {
-                            prev = findPrevInChildComponents(child.getChildComponents(), prev);
-                        }
-                        return prev;
-                    } else {
-                        if (!child.isEmpty()) {
-                            Component cprev = findPrevInChildComponents(child.getChildComponents(), prev);
-                            if (prev != cprev) {
-                                return cprev;
-                            }
-                        }
+                if (!child.isVisible()) {
+                    continue;
+                }
+                if (!child.isEmpty()) {
+                    Component cprev = findPrevInChildComponents(child.getChildComponents(), prev);
+                    if (prev != cprev) {
+                        return cprev;
                     }
+                } else if (isFF(child)) {
+                    return child;
                 }
             }
             prev = findPrevInParent(parent, parent.getParent(), prev);
+        } else if (isFF(parent)) {
+            return parent;
         } else {
-            if (parent.isTabFocusable()) {
-                prev = parent;
-                return prev;
-            } else {
-                prev = findPrevInParent(parent, parent.getParent(), prev);
-            }
+            prev = findPrevInParent(parent, parent.getParent(), prev);
         }
         return prev;
+    }
+
+    private boolean isFF(Component component) {
+        return component.isTabFocusable() && component.isFocusable();
     }
 
     /**
      * Used to find previous component in child components.
      *
      * @param childComponents child components.
-     * @param previous current previous component.
-     *
+     * @param previous        current previous component.
      * @return previous component.
      */
     private Component findPrevInChildComponents(List<Component> childComponents, Component previous) {
@@ -128,21 +121,16 @@ public class TabKeyEventListener implements EventListener<KeyEvent> {
         childComponents.sort(comparator);
         Collections.reverse(childComponents);
         for (Component child : childComponents) {
-            if (child.isVisible()) {
-                if (child.isTabFocusable()) {
-                    previousComponent = child;
-                    if (!child.isEmpty()) {
-                        previousComponent = findPrevInChildComponents(child.getChildComponents(), previousComponent);
-                    }
-                    return previousComponent;
-                } else {
-                    if (!child.isEmpty()) {
-                        Component cprev = findPrevInChildComponents(child.getChildComponents(), previousComponent);
-                        if (previousComponent != cprev) {
-                            return cprev;
-                        }
-                    }
+            if (!child.isVisible()) {
+                continue;
+            }
+            if (!child.isEmpty()) {
+                Component cprev = findPrevInChildComponents(child.getChildComponents(), previousComponent);
+                if (previousComponent != cprev) {
+                    return cprev;
                 }
+            } else if (isFF(child)) {
+                return child;
             }
         }
 
@@ -153,7 +141,6 @@ public class TabKeyEventListener implements EventListener<KeyEvent> {
      * Used to find next component (components sorted by tab index).
      *
      * @param component current component.
-     *
      * @return next component.
      */
     private Component findNext(Component component) {
@@ -162,7 +149,7 @@ public class TabKeyEventListener implements EventListener<KeyEvent> {
         }
 
         Component next = null;
-        if (component.isTabFocusable()) {
+        if (isFF(component)) {
             next = component;
         }
         if (component.isEmpty()) {
@@ -180,8 +167,7 @@ public class TabKeyEventListener implements EventListener<KeyEvent> {
      * Used to find next component in child components.
      *
      * @param childComponents child components.
-     * @param next current next component.
-     *
+     * @param next            current next component.
      * @return next component.
      */
     private Component findNextInChildComponents(List<Component> childComponents, Component next) {
@@ -189,35 +175,31 @@ public class TabKeyEventListener implements EventListener<KeyEvent> {
             return next;
         }
 
-        Component nextComponent = next;
         childComponents.sort(comparator);
 
         for (Component child : childComponents) {
-            if (child.isVisible()) {
-                if (child.isTabFocusable()) {
-                    nextComponent = child;
-                    return nextComponent;
-                } else {
-                    if (!child.isEmpty()) {
-                        Component cnext = findNextInChildComponents(child.getChildComponents(), nextComponent);
-                        if (nextComponent != cnext) {
-                            return cnext;
-                        }
-                    }
+            if (!child.isVisible()) {
+                continue;
+            }
+            if (isFF(child)) {
+                return child;
+            } else if (!child.isEmpty()) {
+                Component cnext = findNextInChildComponents(child.getChildComponents(), next);
+                if (next != cnext) {
+                    return cnext;
                 }
             }
         }
 
-        return nextComponent;
+        return next;
     }
 
     /**
      * Used to find next component in parent (in neighbors).
      *
      * @param component current component.
-     * @param parent parent component.
-     * @param next current next component.
-     *
+     * @param parent    parent component.
+     * @param next      current next component.
      * @return next component.
      */
     private Component findNextInParent(Component component, Component parent, Component next) {
@@ -233,15 +215,12 @@ public class TabKeyEventListener implements EventListener<KeyEvent> {
             for (int i = index + 1; i < childComponents.size(); i++) {
                 Component child = childComponents.get(i);
                 if (child.isVisible()) {
-                    if (child.isTabFocusable()) {
-                        next = child;
-                        return next;
-                    } else {
-                        if (!child.isEmpty()) {
-                            Component cnext = findNextInChildComponents(child.getChildComponents(), next);
-                            if (next != cnext) {
-                                return cnext;
-                            }
+                    if (isFF(child)) {
+                        return child;
+                    } else if (!child.isEmpty()) {
+                        Component cnext = findNextInChildComponents(child.getChildComponents(), next);
+                        if (next != cnext) {
+                            return cnext;
                         }
                     }
                 }
@@ -257,24 +236,24 @@ public class TabKeyEventListener implements EventListener<KeyEvent> {
     /**
      * Used to move to found focusable component.
      *
-     * @param context context (used in {@link FocusEvent} generation).
+     * @param context   context (used in {@link FocusEvent} generation).
      * @param component current component.
-     * @param next next component.
-     * @param frame frame (used in {@link FocusEvent} generation).
+     * @param next      next component.
+     * @param frame     frame (used in {@link FocusEvent} generation).
      */
     private void moveToNextTabFocusableComponent(Context context, Component component, Component next, Frame frame) {
         if (component != null) {
             component.setFocused(false);
-            EventProcessor.getInstance().pushEvent(new FocusEvent<>(component, context, frame, next, false));
+            EventProcessorProvider.getInstance().pushEvent(new FocusEvent<>(component, context, frame, next, false));
         }
         if (next != null) {
             Component focusedGui = context.getFocusedGui();
             if (focusedGui != null && focusedGui != component) {
-                EventProcessor.getInstance().pushEvent(new FocusEvent<>(focusedGui, context, frame, next, false));
+                EventProcessorProvider.getInstance().pushEvent(new FocusEvent<>(focusedGui, context, frame, next, false));
                 focusedGui.setFocused(false);
             }
             next.setFocused(true);
-            EventProcessor.getInstance().pushEvent(new FocusEvent<>(next, context, frame, next, true));
+            EventProcessorProvider.getInstance().pushEvent(new FocusEvent<>(next, context, frame, next, true));
             context.setFocusedGui(next);
         }
     }
@@ -283,7 +262,6 @@ public class TabKeyEventListener implements EventListener<KeyEvent> {
      * Used to compare instances of this event listener.
      *
      * @param obj object to compare.
-     *
      * @return true if equals.
      */
     @Override

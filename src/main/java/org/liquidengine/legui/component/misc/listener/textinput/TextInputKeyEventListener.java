@@ -24,7 +24,7 @@ import org.liquidengine.legui.component.event.textinput.TextInputContentChangeEv
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.event.KeyEvent;
 import org.liquidengine.legui.listener.KeyEventListener;
-import org.liquidengine.legui.listener.processor.EventProcessor;
+import org.liquidengine.legui.listener.processor.EventProcessorProvider;
 import org.liquidengine.legui.system.Clipboard;
 import org.liquidengine.legui.system.context.Context;
 
@@ -41,37 +41,54 @@ public class TextInputKeyEventListener implements KeyEventListener {
     @Override
     public void process(KeyEvent event) {
         TextInput gui = (TextInput) event.getTargetComponent();
-        int key = event.getKey();
         boolean pressed = event.getAction() != GLFW_RELEASE;
-        if (key == GLFW_KEY_LEFT && pressed) {
-            keyLeftAction(gui, event.getMods());
-        } else if (key == GLFW_KEY_RIGHT && pressed) {
-            keyRightAction(gui, event.getMods());
-        } else if ((key == GLFW_KEY_UP || key == GLFW_KEY_HOME) && pressed) {
-            keyUpAndHomeAction(gui, event.getMods());
-        } else if ((key == GLFW_KEY_DOWN || key == GLFW_KEY_END) && pressed) {
-            keyDownAndEndAction(gui, event.getMods());
-        } else if (key == GLFW_KEY_BACKSPACE && pressed) {
-            keyBackSpaceAction(gui, event.getContext(), event.getFrame(), event.getMods());
-        } else if (key == GLFW_KEY_DELETE && pressed) {
-            keyDeleteAction(gui, event.getContext(), event.getFrame(), event.getMods());
-        } else if (key == GLFW_KEY_V && pressed && (event.getMods() & GLFW_MOD_CONTROL) != 0) {
-            pasteAction(gui, event.getContext(), event.getFrame());
-        } else if (key == GLFW_KEY_C && pressed && (event.getMods() & GLFW_MOD_CONTROL) != 0) {
-            copyAction(gui);
-        } else if (key == GLFW_KEY_X && pressed && (event.getMods() & GLFW_MOD_CONTROL) != 0) {
-            cutAction(gui, event.getContext(), event.getFrame());
-        } else if (key == GLFW_KEY_A && pressed && (event.getMods() & GLFW_MOD_CONTROL) != 0) {
-            selectAllAction(gui);
+        if (!pressed) {
+            return;
         }
+
+        processKeys(event, gui);
+    }
+
+    private void processKeys(KeyEvent event, TextInput gui) {
+        int mods = event.getMods();
+        int key = event.getKey();
+        if (key == GLFW_KEY_LEFT) {
+            keyLeftAction(gui, mods);
+        } else if (key == GLFW_KEY_RIGHT) {
+            keyRightAction(gui, mods);
+        } else if (key == GLFW_KEY_UP || key == GLFW_KEY_HOME) {
+            keyUpAndHomeAction(gui, mods);
+        } else if ((key == GLFW_KEY_DOWN || key == GLFW_KEY_END)) {
+            keyDownAndEndAction(gui, mods);
+        } else if (key == GLFW_KEY_BACKSPACE) {
+            keyBackSpaceAction(gui, event.getContext(), event.getFrame(), mods);
+        } else if (key == GLFW_KEY_DELETE) {
+            keyDeleteAction(gui, event.getContext(), event.getFrame(), mods);
+        } else if (key == GLFW_KEY_V) {
+            pasteAction(gui, event.getContext(), event.getFrame(), mods);
+        } else if (key == GLFW_KEY_C && isModControl(mods)) {
+            copyAction(gui, mods);
+        } else if (key == GLFW_KEY_X && isModControl(mods)) {
+            cutAction(gui, event.getContext(), event.getFrame(), mods);
+        } else if (key == GLFW_KEY_A && isModControl(mods)) {
+            selectAllAction(gui, mods);
+        }
+    }
+
+    private boolean isModControl(int mods) {
+        return (mods & GLFW_MOD_CONTROL) != 0;
     }
 
     /**
      * Selects all text.
      *
-     * @param gui text input to work with.
+     * @param gui  text input to work with.
+     * @param mods key mods.
      */
-    private void selectAllAction(TextInput gui) {
+    private void selectAllAction(TextInput gui, int mods) {
+        if (!isModControl(mods)) {
+            return;
+        }
         TextState textState = gui.getTextState();
         gui.setStartSelectionIndex(0);
         gui.setEndSelectionIndex(textState.length());
@@ -81,11 +98,15 @@ public class TextInputKeyEventListener implements KeyEventListener {
     /**
      * Used to cut some string from text input and put it to clipboard.
      *
-     * @param gui gui to work with.
+     * @param gui          gui to work with.
      * @param leguiContext context.
-     * @param frame frame
+     * @param frame        frame
+     * @param mods         key mods.
      */
-    private void cutAction(TextInput gui, Context leguiContext, Frame frame) {
+    private void cutAction(TextInput gui, Context leguiContext, Frame frame, int mods) {
+        if (!isModControl(mods)) {
+            return;
+        }
         if (gui.isEditable()) {
             String s = gui.getSelection();
             if (s != null) {
@@ -105,20 +126,24 @@ public class TextInputKeyEventListener implements KeyEventListener {
                 gui.setStartSelectionIndex(start);
                 gui.setEndSelectionIndex(start);
                 String newText = textState.getText();
-                EventProcessor.getInstance().pushEvent(new TextInputContentChangeEvent(gui, leguiContext, frame, oldText, newText));
+                EventProcessorProvider.getInstance().pushEvent(new TextInputContentChangeEvent(gui, leguiContext, frame, oldText, newText));
                 Clipboard.getInstance().setClipboardString(s);
             }
         } else {
-            copyAction(gui);
+            copyAction(gui, mods);
         }
     }
 
     /**
      * Used to copy selected text to clipboard.
      *
-     * @param gui gui.
+     * @param gui  gui.
+     * @param mods key mods.
      */
-    private void copyAction(TextInput gui) {
+    private void copyAction(TextInput gui, int mods) {
+        if (!isModControl(mods)) {
+            return;
+        }
         String s = gui.getSelection();
         if (s != null) {
             Clipboard.getInstance().setClipboardString(s);
@@ -128,11 +153,15 @@ public class TextInputKeyEventListener implements KeyEventListener {
     /**
      * Used to paste clipboard data to gui element.
      *
-     * @param gui gui to paste
+     * @param gui          gui to paste
      * @param leguiContext context.
-     * @param frame frame
+     * @param frame        frame
+     * @param mods         key mods.
      */
-    private void pasteAction(TextInput gui, Context leguiContext, Frame frame) {
+    private void pasteAction(TextInput gui, Context leguiContext, Frame frame, int mods) {
+        if (!isModControl(mods)) {
+            return;
+        }
         if (gui.isEditable()) {
             TextState textState = gui.getTextState();
             int caretPosition = gui.getCaretPosition();
@@ -161,7 +190,7 @@ public class TextInputKeyEventListener implements KeyEventListener {
                 textState.setText(builder.toString());
                 gui.setCaretPosition(caretPosition + s.length());
                 String newText = textState.getText();
-                EventProcessor.getInstance().pushEvent(new TextInputContentChangeEvent(gui, leguiContext, frame, oldText, newText));
+                EventProcessorProvider.getInstance().pushEvent(new TextInputContentChangeEvent(gui, leguiContext, frame, oldText, newText));
             }
         }
     }
@@ -169,7 +198,7 @@ public class TextInputKeyEventListener implements KeyEventListener {
     /**
      * Delete action. Used to delete selected text or symbol after caret or word after caret.
      *
-     * @param gui gui to remove data from text state.
+     * @param gui  gui to remove data from text state.
      * @param mods key mods.
      */
     private void keyDeleteAction(TextInput gui, Context leguiContext, Frame frame, int mods) {
@@ -184,7 +213,7 @@ public class TextInputKeyEventListener implements KeyEventListener {
             }
             String oldText = textState.getText();
             if (start == end && caretPosition != textState.length()) {
-                if ((mods & GLFW_MOD_CONTROL) != 0) {
+                if (isModControl(mods)) {
                     end = findNextWord(textState.getText(), caretPosition);
                     StringBuilder builder = new StringBuilder(textState.getText());
                     builder.delete(start, end);
@@ -196,6 +225,7 @@ public class TextInputKeyEventListener implements KeyEventListener {
                     StringBuilder builder = new StringBuilder(textState.getText());
                     builder.deleteCharAt(caretPosition);
                     textState.setText(builder.toString());
+                    gui.setCaretPosition(caretPosition);
                     gui.setStartSelectionIndex(caretPosition);
                     gui.setEndSelectionIndex(caretPosition);
                 }
@@ -208,14 +238,14 @@ public class TextInputKeyEventListener implements KeyEventListener {
                 gui.setEndSelectionIndex(start);
             }
             String newText = textState.getText();
-            EventProcessor.getInstance().pushEvent(new TextInputContentChangeEvent(gui, leguiContext, frame, oldText, newText));
+            EventProcessorProvider.getInstance().pushEvent(new TextInputContentChangeEvent(gui, leguiContext, frame, oldText, newText));
         }
     }
 
     /**
      * Backspace action. Deletes selected text or symbol before caret or words before caret.
      *
-     * @param gui gui to remove text data.
+     * @param gui  gui to remove text data.
      * @param mods key mods.
      */
     private void keyBackSpaceAction(TextInput gui, Context leguiContext, Frame frame, int mods) {
@@ -230,7 +260,7 @@ public class TextInputKeyEventListener implements KeyEventListener {
             }
             String oldText = textState.getText();
             if (start == end && caretPosition != 0) {
-                if ((mods & GLFW_MOD_CONTROL) != 0) {
+                if (isModControl(mods)) {
                     start = findPrevWord(textState.getText(), caretPosition);
                     StringBuilder builder = new StringBuilder(textState.getText());
                     builder.delete(start, end);
@@ -256,14 +286,14 @@ public class TextInputKeyEventListener implements KeyEventListener {
                 gui.setEndSelectionIndex(start);
             }
             String newText = textState.getText();
-            EventProcessor.getInstance().pushEvent(new TextInputContentChangeEvent(gui, leguiContext, frame, oldText, newText));
+            EventProcessorProvider.getInstance().pushEvent(new TextInputContentChangeEvent(gui, leguiContext, frame, oldText, newText));
         }
     }
 
     private void keyDownAndEndAction(TextInput gui, int mods) {
         int newCaretPosition = gui.getTextState().length();
         gui.setEndSelectionIndex(newCaretPosition);
-        if ((mods & GLFW_MOD_SHIFT) == 0) {
+        if (!isModShift(mods)) {
             gui.setStartSelectionIndex(newCaretPosition);
         }
         gui.setCaretPosition(newCaretPosition);
@@ -273,7 +303,7 @@ public class TextInputKeyEventListener implements KeyEventListener {
     private void keyUpAndHomeAction(TextInput gui, int mods) {
         int newCaretPosition = 0;
         gui.setEndSelectionIndex(newCaretPosition);
-        if ((mods & GLFW_MOD_SHIFT) == 0) {
+        if (!isModShift(mods)) {
             gui.setStartSelectionIndex(newCaretPosition);
         }
         gui.setCaretPosition(newCaretPosition);
@@ -287,17 +317,21 @@ public class TextInputKeyEventListener implements KeyEventListener {
         if (newCaretPosition >= textState.length()) {
             newCaretPosition = textState.length();
         }
-        if ((mods & GLFW_MOD_CONTROL) != 0) {
+        if (isModControl(mods)) {
             newCaretPosition = findNextWord(gui.getTextState().getText(), caretPosition);
         }
 
         gui.setEndSelectionIndex(newCaretPosition);
 
-        if ((mods & GLFW_MOD_SHIFT) == 0) {
+        if (!isModShift(mods)) {
             gui.setStartSelectionIndex(newCaretPosition);
         }
 
         gui.setCaretPosition(newCaretPosition);
+    }
+
+    private boolean isModShift(int mods) {
+        return (mods & GLFW_MOD_SHIFT) != 0;
     }
 
     private void keyLeftAction(TextInput gui, int mods) {
@@ -307,11 +341,11 @@ public class TextInputKeyEventListener implements KeyEventListener {
         if (newCaretPosition <= 0) {
             newCaretPosition = 0;
         }
-        if ((mods & GLFW_MOD_CONTROL) != 0) {
+        if (isModControl(mods)) {
             newCaretPosition = findPrevWord(gui.getTextState().getText(), caretPosition);
         }
         gui.setEndSelectionIndex(newCaretPosition);
-        if ((mods & GLFW_MOD_SHIFT) == 0) {
+        if (!isModShift(mods)) {
             gui.setStartSelectionIndex(newCaretPosition);
         }
         gui.setCaretPosition(newCaretPosition);

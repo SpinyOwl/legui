@@ -15,7 +15,10 @@ import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.event.ScrollEvent;
 import org.liquidengine.legui.style.Style.DisplayType;
 import org.liquidengine.legui.style.color.ColorConstants;
+import org.liquidengine.legui.style.length.Length;
 import org.liquidengine.legui.theme.Themes;
+
+import static org.liquidengine.legui.style.length.LengthType.pixel;
 
 /**
  * Panel with scroll bars. Default container layout is null.
@@ -204,9 +207,10 @@ public class TextArea extends Component implements TextComponent, Viewport {
 
     public void setHorizontalScrollBarVisible(boolean enabled) {
         if (enabled) {
-            Float height = this.horizontalScrollBar.getStyle().getHeight();
+            Length height = this.horizontalScrollBar.getStyle().getHeight();
             if (height == null) {
-                this.horizontalScrollBar.getStyle().setHeight(height = this.horizontalScrollBar.getSize().y);
+                height = pixel(this.horizontalScrollBar.getSize().y);
+                this.horizontalScrollBar.getStyle().setHeight(height);
             }
             this.viewport.getStyle().setBottom(height);
             this.verticalScrollBar.getStyle().setBottom(height);
@@ -219,9 +223,10 @@ public class TextArea extends Component implements TextComponent, Viewport {
 
     public void setVerticalScrollBarVisible(boolean enabled) {
         if (enabled) {
-            Float width = this.verticalScrollBar.getStyle().getWidth();
+            Length width = this.verticalScrollBar.getStyle().getWidth();
             if (width == null) {
-                this.verticalScrollBar.getStyle().setWidth(width = this.verticalScrollBar.getSize().x);
+                width = pixel(this.verticalScrollBar.getSize().x);
+                this.verticalScrollBar.getStyle().setWidth(width);
             }
             this.viewport.getStyle().setRight(width);
             this.horizontalScrollBar.getStyle().setRight(width);

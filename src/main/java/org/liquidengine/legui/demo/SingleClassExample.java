@@ -1,44 +1,20 @@
 package org.liquidengine.legui.demo;
 
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_ESCAPE;
-import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
-import static org.lwjgl.glfw.GLFW.glfwCreateWindow;
-import static org.lwjgl.glfw.GLFW.glfwDestroyWindow;
-import static org.lwjgl.glfw.GLFW.glfwMakeContextCurrent;
-import static org.lwjgl.glfw.GLFW.glfwPollEvents;
-import static org.lwjgl.glfw.GLFW.glfwShowWindow;
-import static org.lwjgl.glfw.GLFW.glfwSwapBuffers;
-import static org.lwjgl.glfw.GLFW.glfwSwapInterval;
-import static org.lwjgl.glfw.GLFW.glfwTerminate;
-import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
-import static org.lwjgl.opengl.GL11.GL_STENCIL_BUFFER_BIT;
-import static org.lwjgl.opengl.GL11.glClear;
-import static org.lwjgl.opengl.GL11.glClearColor;
-import static org.lwjgl.opengl.GL11.glViewport;
-import static org.lwjgl.system.MemoryUtil.NULL;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import org.joml.Vector2i;
-import org.liquidengine.legui.animation.Animator;
-import org.liquidengine.legui.component.Button;
-import org.liquidengine.legui.component.Component;
-import org.liquidengine.legui.component.Frame;
-import org.liquidengine.legui.component.Label;
-import org.liquidengine.legui.component.RadioButton;
-import org.liquidengine.legui.component.RadioButtonGroup;
+import org.liquidengine.legui.animation.AnimatorProvider;
+import org.liquidengine.legui.component.*;
 import org.liquidengine.legui.event.CursorEnterEvent;
 import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.listener.CursorEnterEventListener;
 import org.liquidengine.legui.listener.MouseClickEventListener;
-import org.liquidengine.legui.listener.processor.EventProcessor;
+import org.liquidengine.legui.listener.processor.EventProcessorProvider;
 import org.liquidengine.legui.style.border.SimpleLineBorder;
 import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.system.context.CallbackKeeper;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.context.DefaultCallbackKeeper;
 import org.liquidengine.legui.system.handler.processor.SystemEventProcessor;
+import org.liquidengine.legui.system.handler.processor.SystemEventProcessorImpl;
 import org.liquidengine.legui.system.layout.LayoutManager;
 import org.liquidengine.legui.system.renderer.Renderer;
 import org.liquidengine.legui.system.renderer.nvg.NvgRenderer;
@@ -46,6 +22,14 @@ import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWKeyCallbackI;
 import org.lwjgl.glfw.GLFWWindowCloseCallbackI;
 import org.lwjgl.opengl.GL;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.lwjgl.glfw.GLFW.*;
+import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.system.MemoryUtil.NULL;
 
 /**
  * Created by Alexander on 17.12.2016.
@@ -100,8 +84,8 @@ public class SingleClassExample {
         keeper.getChainWindowCloseCallback().add(glfwWindowCloseCallbackI);
 
         // Event processor for system events. System events should be processed and translated to gui events.
-        SystemEventProcessor systemEventProcessor = new SystemEventProcessor();
-        systemEventProcessor.addDefaultCallbacks(keeper);
+        SystemEventProcessor systemEventProcessor = new SystemEventProcessorImpl();
+        SystemEventProcessor.addDefaultCallbacks(keeper, systemEventProcessor);
 
         // Also we need to create renderer provider
         // and create renderer which will render our ui components.
@@ -158,13 +142,13 @@ public class SingleClassExample {
 
             // When system events are translated to GUI events we need to process them.
             // This event processor calls listeners added to ui components
-            EventProcessor.getInstance().processEvents();
+            EventProcessorProvider.getInstance().processEvents();
 
             // When everything done we need to relayout components.
             LayoutManager.getInstance().layout(frame);
 
             // Run animations. Should be also called cause some components use animations for updating state.
-            Animator.getInstance().runAnimations();
+            AnimatorProvider.getAnimator().runAnimations();
         }
 
         // And when rendering is ended we need to destroy renderer
@@ -177,6 +161,7 @@ public class SingleClassExample {
     private static void createGuiElements(Frame frame) {
         // Set background color for frame
         frame.getContainer().getStyle().getBackground().setColor(ColorConstants.lightBlue());
+        frame.getContainer().setFocusable(false);
 
         Button button = new Button("Add components", 20, 20, 160, 30);
         SimpleLineBorder border = new SimpleLineBorder(ColorConstants.black(), 1);

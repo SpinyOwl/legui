@@ -13,6 +13,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 import org.liquidengine.legui.component.event.selectbox.SelectBoxChangeSelectionEvent;
+import org.liquidengine.legui.component.event.selectbox.SelectBoxChangeSelectionEventListener;
 import org.liquidengine.legui.component.misc.animation.selectbox.SelectBoxAnimation;
 import org.liquidengine.legui.component.misc.listener.selectbox.SelectBoxClickListener;
 import org.liquidengine.legui.component.misc.listener.selectbox.SelectBoxElementClickListener;
@@ -34,7 +35,7 @@ import org.liquidengine.legui.theme.Themes;
 /**
  * Creates drop-down list with select options. <p> TODO: REIMPLEMENT THIS COMPONENT ACCORDING TO NEW LAYOUT SYSTEM
  */
-public class SelectBox extends Component {
+public class SelectBox<T> extends Component {
 
     public static final int EXPAND_ICON_CHAR = 0xE5C5;
     public static final int COLLAPSE_ICON_CHAR = 0xE5C7;
@@ -49,13 +50,13 @@ public class SelectBox extends Component {
     private Icon expandIcon;
     private Icon collapseIcon;
 
-    private List<SelectBoxElement> selectBoxElements = new CopyOnWriteArrayList<>();
-    private List<String> elements = new CopyOnWriteArrayList<>();
+    private List<SelectBoxElement<T>> selectBoxElements = new CopyOnWriteArrayList<>();
+    private List<T> elements = new CopyOnWriteArrayList<>();
 
     private SelectBoxScrollablePanel selectionListPanel = new SelectBoxScrollablePanel();
     private final SelectBoxScrollListener selectBoxScrollListener = new SelectBoxScrollListener(selectionListPanel.getVerticalScrollBar());
     private Button selectionButton = new Button(NULL);
-    private String selectedElement = null;
+    private T selectedElement = null;
     private float elementHeight = 16;
     private float buttonWidth = 15f;
     private int visibleCount = 3;
@@ -102,7 +103,7 @@ public class SelectBox extends Component {
      *
      * @return all elements of list.
      */
-    public List<String> getElements() {
+    public List<T> getElements() {
         return elements;
     }
 
@@ -129,7 +130,7 @@ public class SelectBox extends Component {
      *
      * @return selected element.
      */
-    public String getSelection() {
+    public T getSelection() {
         return selectedElement;
     }
 
@@ -163,12 +164,12 @@ public class SelectBox extends Component {
         this.add(expandButton);
         this.add(selectionButton);
 
-        MouseClickEventListener mouseClickEventListener = new SelectBoxClickListener(this);
+        MouseClickEventListener mouseClickEventListener = new SelectBoxClickListener<>(this);
         selectionButton.getListenerMap().addListener(MouseClickEvent.class, mouseClickEventListener);
         expandButton.getListenerMap().addListener(MouseClickEvent.class, mouseClickEventListener);
         selectBoxLayer.getContainer().getListenerMap().addListener(MouseClickEvent.class, mouseClickEventListener);
 
-        FocusEventListener focusEventListener = new SelectBoxFocusListener(this);
+        FocusEventListener focusEventListener = new SelectBoxFocusListener<>(this);
         selectionListPanel.getVerticalScrollBar().getListenerMap().getListeners(FocusEvent.class).add(focusEventListener);
         selectionButton.getListenerMap().getListeners(FocusEvent.class).add(focusEventListener);
         expandButton.getListenerMap().getListeners(FocusEvent.class).add(focusEventListener);
@@ -259,8 +260,7 @@ public class SelectBox extends Component {
      */
     private void resize() {
         updateIcons();
-        for (int i = 0; i < selectBoxElements.size(); i++) {
-            SelectBoxElement selectBoxElement = selectBoxElements.get(i);
+        for (SelectBoxElement<T> selectBoxElement : selectBoxElements) {
             selectBoxElement.getStyle().setMinimumSize(0, elementHeight);
         }
     }
@@ -271,15 +271,15 @@ public class SelectBox extends Component {
      *
      * @param element element to add.
      */
-    public void addElement(String element) {
+    public void addElement(T element) {
         lock.lock();
         try {
             if (!elements.contains(element)) {
 
-                SelectBoxElement boxElement = createSelectBoxElement(element);
+                SelectBoxElement<T> boxElement = createSelectBoxElement(element);
                 if (elements.isEmpty()) {
                     selectedElement = element;
-                    selectionButton.getTextState().setText(element);
+                    selectionButton.getTextState().setText(element == null ? NULL : element.toString());
                 }
                 elements.add(element);
                 selectBoxElements.add(boxElement);
@@ -297,12 +297,12 @@ public class SelectBox extends Component {
      * @param element element.
      * @return {@link SelectBoxElement} created on base of element.
      */
-    private SelectBoxElement createSelectBoxElement(String element) {
-        SelectBoxElement boxElement = new SelectBoxElement(element, false);
+    private SelectBoxElement<T> createSelectBoxElement(T element) {
+        SelectBoxElement<T> boxElement = new SelectBoxElement<>(element, false);
         boxElement.getStyle().setHeight(elementHeight);
         boxElement.getStyle().setMinHeight(elementHeight);
         boxElement.getStyle().setPosition(PositionType.RELATIVE);
-        boxElement.getListenerMap().getListeners(MouseClickEvent.class).add(new SelectBoxElementClickListener(this));
+        boxElement.getListenerMap().getListeners(MouseClickEvent.class).add(new SelectBoxElementClickListener<>(this));
         return boxElement;
     }
 
@@ -312,7 +312,7 @@ public class SelectBox extends Component {
      * @param element element to find index.
      * @return index of element or -1 if no such element in selectbox.
      */
-    public int getElementIndex(String element) {
+    public int getElementIndex(T element) {
         return elements.indexOf(element);
     }
 
@@ -321,7 +321,7 @@ public class SelectBox extends Component {
      *
      * @param element element to remove from selectbox.
      */
-    public void removeElement(String element) {
+    public void removeElement(T element) {
         removeElement(elements.indexOf(element));
     }
 
@@ -333,10 +333,10 @@ public class SelectBox extends Component {
     public void removeElement(int index) {
         lock.lock();
         try {
-            if (elements.size() != 0) {
-                String s = elements.get(index);
+            if (!elements.isEmpty()) {
+                T s = elements.get(index);
                 elements.remove(index);
-                SelectBoxElement element = selectBoxElements.get(index);
+                SelectBoxElement<T> element = selectBoxElements.get(index);
                 selectBoxElements.remove(index);
                 selectionListPanel.getContainer().remove(element);
                 for (int i = index; i < selectBoxElements.size(); i++) {
@@ -357,7 +357,7 @@ public class SelectBox extends Component {
      * @param element element to set state.
      * @param selected state of element to set.
      */
-    public void setSelected(String element, boolean selected) {
+    public void setSelected(T element, boolean selected) {
         int index = elements.indexOf(element);
         setSelected(element, selected, index);
     }
@@ -370,7 +370,7 @@ public class SelectBox extends Component {
      */
     public void setSelected(int index, boolean selected) {
         if (elements.size() > 0) {
-            String element = elements.get(index);
+            T element = elements.get(index);
             setSelected(element, selected, index);
         } else {
             selectedElement = null;
@@ -378,17 +378,17 @@ public class SelectBox extends Component {
         }
     }
 
-    private void setSelected(String element, boolean selected, int index) {
+    private void setSelected(T element, boolean selected, int index) {
         if (selected) {
             if (index != -1) {
-                SelectBoxElement tSelectBoxElement = selectBoxElements.get(index);
+                SelectBoxElement<T> tSelectBoxElement = selectBoxElements.get(index);
                 tSelectBoxElement.selected = true;
                 int selectedIndex = elements.indexOf(selectedElement);
                 if (selectedIndex != -1) {
                     selectBoxElements.get(index).selected = false;
                 }
                 selectedElement = element;
-                selectionButton.getTextState().setText(element);
+                selectionButton.getTextState().setText(element == null ? NULL : element.toString());
             } else {
                 addElement(element);
                 setSelected(element, true);
@@ -429,8 +429,8 @@ public class SelectBox extends Component {
      *
      * @param eventListener event listener to add.
      */
-    public void addSelectBoxChangeSelectionEventListener(EventListener<SelectBoxChangeSelectionEvent> eventListener) {
-        this.getListenerMap().addListener(SelectBoxChangeSelectionEvent.class, eventListener);
+    public void addSelectBoxChangeSelectionEventListener(EventListener<SelectBoxChangeSelectionEvent<T>> eventListener) {
+        this.getListenerMap().addListener(SelectBoxChangeSelectionEvent.class, (EventListener) eventListener);
     }
 
     /**
@@ -438,8 +438,8 @@ public class SelectBox extends Component {
      *
      * @return all event listeners for select box change selection event.
      */
-    public List<EventListener<SelectBoxChangeSelectionEvent>> getSelectBoxChangeSelectionEvents() {
-        return this.getListenerMap().getListeners(SelectBoxChangeSelectionEvent.class);
+    public List<EventListener<SelectBoxChangeSelectionEvent<T>>> getSelectBoxChangeSelectionEvents() {
+        return List.class.cast(this.getListenerMap().getListeners(SelectBoxChangeSelectionEvent.class));
     }
 
     /**
@@ -447,8 +447,8 @@ public class SelectBox extends Component {
      *
      * @param eventListener event listener to remove.
      */
-    public void removeSelectBoxChangeSelectionEventListener(EventListener<SelectBoxChangeSelectionEvent> eventListener) {
-        this.getListenerMap().removeListener(SelectBoxChangeSelectionEvent.class, eventListener);
+    public void removeSelectBoxChangeSelectionEventListener(SelectBoxChangeSelectionEventListener<T> eventListener) {
+        this.getListenerMap().removeListener(SelectBoxChangeSelectionEvent.class, (EventListener) eventListener);
     }
 
     @Override
@@ -496,7 +496,7 @@ public class SelectBox extends Component {
      *
      * @return the select box elements
      */
-    public List<SelectBoxElement> getSelectBoxElements() {
+    public List<SelectBoxElement<T>> getSelectBoxElements() {
         return selectBoxElements;
     }
 
@@ -525,22 +525,22 @@ public class SelectBox extends Component {
     /**
      * Selectbox element which is subclass of button.
      */
-    public class SelectBoxElement extends Button {
+    public class SelectBoxElement<T> extends Button {
 
         private boolean selected;
-        private String text;
+        private T object;
 
-        private SelectBoxElement(String text, boolean selected) {
-            super(text == null ? "null" : text);
+        private SelectBoxElement(T object, boolean selected) {
+            super(object == null ? "null" : object.toString());
             this.selected = selected;
-            this.text = text;
+            this.object = object;
             this.getStyle().setBorder(null);
 
             Themes.getDefaultTheme().apply(this);
         }
 
-        public String getText() {
-            return text;
+        public T getObject() {
+            return object;
         }
 
         /**
@@ -583,7 +583,7 @@ public class SelectBox extends Component {
             return new EqualsBuilder()
                 .appendSuper(super.equals(o))
                 .append(selected, that.selected)
-                .append(text, that.text)
+                .append(object, that.object)
                 .isEquals();
         }
 

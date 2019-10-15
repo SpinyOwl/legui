@@ -50,6 +50,8 @@ public class LayerContainer extends Component {
         getListenerMap().addListener(WindowSizeEvent.class, new LayerContainerWindowSizeEventListener());
         getStyle().getBackground().setColor(ColorConstants.transparent());
         getStyle().setBorder(null);
+        setFocusable(false);
+        setTabFocusable(false);
         Themes.getDefaultTheme().getThemeManager().getComponentTheme(LayerContainer.class).applyAll(this);
     }
 

@@ -11,7 +11,7 @@ import org.liquidengine.legui.event.Event;
 import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.input.Mouse;
 import org.liquidengine.legui.listener.MouseClickEventListener;
-import org.liquidengine.legui.listener.processor.EventProcessor;
+import org.liquidengine.legui.listener.processor.EventProcessorProvider;
 import org.liquidengine.legui.system.context.Context;
 
 /**
@@ -36,7 +36,6 @@ public class ScrollBarMouseClickEventListener implements MouseClickEventListener
         Vector2f cursorPosition = Mouse.getCursorPosition();
 
         float visibleAmount = scrollBar.getVisibleAmount();
-        float curValue = scrollBar.getCurValue();
         boolean vertical = Orientation.VERTICAL.equals(scrollBar.getOrientation());
 
         Vector2f guiSize = scrollBar.getSize();
@@ -45,10 +44,17 @@ public class ScrollBarMouseClickEventListener implements MouseClickEventListener
         float maxValue = scrollBar.getMaxValue();
         float minValue = scrollBar.getMinValue();
         float valueRange = maxValue - minValue;
+
+        if (valueRange - visibleAmount < 0.001f) {
+            return;
+        }
+
         float barSize = scrollBarSize * visibleAmount / valueRange;
         if (barSize < ScrollBar.MIN_SCROLL_SIZE) {
             barSize = ScrollBar.MIN_SCROLL_SIZE;
         }
+
+        float curValue = scrollBar.getCurValue();
         float scrollPosAccordingToScrollBounds = (scrollBarSize - barSize) * curValue / valueRange;
 
         float left;
@@ -74,22 +80,18 @@ public class ScrollBarMouseClickEventListener implements MouseClickEventListener
             }
             scrollBar.setScrolling(false);
         } else {
-            if (released) {
-                scrollBar.setScrolling(false);
-            } else {
-                scrollBar.setScrolling(true);
-            }
+            scrollBar.setScrolling(!released);
         }
     }
 
     /**
      * Used to update viewport.
      *
-     * @param event event.
+     * @param event     event.
      * @param scrollBar scrollbar.
-     * @param maxValue maximum scrollbar value.
-     * @param minValue minimum scrollbar value.
-     * @param newValue new scrollbar value.
+     * @param maxValue  maximum scrollbar value.
+     * @param minValue  minimum scrollbar value.
+     * @param newValue  new scrollbar value.
      */
     private void updateViewport(Event event, ScrollBar scrollBar, float maxValue, float minValue, float newValue) {
         float valueToUse = newValue;
@@ -101,12 +103,12 @@ public class ScrollBarMouseClickEventListener implements MouseClickEventListener
         Context context = event.getContext();
         Frame frame = event.getFrame();
         float curValue = scrollBar.getCurValue();
-        EventProcessor.getInstance().pushEvent(new ScrollBarChangeValueEvent<>(scrollBar, context, frame, curValue, valueToUse));
+        EventProcessorProvider.getInstance().pushEvent(new ScrollBarChangeValueEvent<>(scrollBar, context, frame, curValue, valueToUse));
         scrollBar.setCurValue(valueToUse);
     }
 
     @Override
     public boolean equals(Object obj) {
-        return (obj != null) && ((obj == this) || ((obj != this) && (obj.getClass() == this.getClass())));
+        return obj != null && (obj == this || obj.getClass() == this.getClass());
     }
 }

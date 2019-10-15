@@ -1,7 +1,5 @@
 package org.liquidengine.legui.theme.colored.def;
 
-import static org.liquidengine.legui.style.font.FontRegistry.MATERIAL_ICONS_REGULAR;
-
 import org.joml.Vector2f;
 import org.liquidengine.legui.component.CheckBox;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
@@ -10,18 +8,23 @@ import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.style.color.ColorUtil;
 import org.liquidengine.legui.theme.colored.FlatColoredTheme.FlatColoredThemeSettings;
 
+import static org.liquidengine.legui.style.font.FontRegistry.MATERIAL_ICONS_REGULAR;
+
 /**
  * Dark CheckBox Theme for all check boxes. Used to make check box dark.
  *
  * @param <T> {@link CheckBox} subclasses.
  */
-public class FlatCheckBoxTheme<T extends CheckBox> extends FlatComponentTheme<T> {
+public class FlatCheckBoxTheme<T extends CheckBox> extends FlatBorderlessTheme<T> {
 
-    private FlatColoredThemeSettings settings;
+    /**
+     * Default constructor. Settings should be specified before using this theme.
+     */
+    public FlatCheckBoxTheme() {
+    }
 
     public FlatCheckBoxTheme(FlatColoredThemeSettings settings) {
         super(settings);
-        this.settings = settings;
     }
 
     /**
@@ -32,8 +35,6 @@ public class FlatCheckBoxTheme<T extends CheckBox> extends FlatComponentTheme<T>
     @Override
     public void apply(T component) {
         super.apply(component);
-        component.getStyle().setBorder(null);
-        component.getStyle().getBackground().setColor(ColorConstants.transparent());
         component.getTextState().setTextColor(ColorUtil.oppositeBlackOrWhite(settings.backgroundColor()));
         component.getTextState().setHorizontalAlign(HorizontalAlign.LEFT);
         component.setIconUnchecked(

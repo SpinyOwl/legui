@@ -10,13 +10,16 @@ import org.liquidengine.legui.theme.colored.FlatColoredTheme.FlatColoredThemeSet
  *
  * @param <T> {@link SelectBox.SelectBoxElement} subclasses.
  */
-public class FlatSelectBoxElementTheme<T extends SelectBox.SelectBoxElement> extends FlatButtonTheme<T> {
+public class FlatSelectBoxElementTheme<T extends SelectBox.SelectBoxElement> extends FlatBorderlessTheme<T> {
 
-    private FlatColoredThemeSettings settings;
+    /**
+     * Default constructor. Settings should be specified before using this theme.
+     */
+    public FlatSelectBoxElementTheme() {
+    }
 
     public FlatSelectBoxElementTheme(FlatColoredThemeSettings settings) {
         super(settings);
-        this.settings = settings;
     }
 
     /**
@@ -27,9 +30,6 @@ public class FlatSelectBoxElementTheme<T extends SelectBox.SelectBoxElement> ext
     @Override
     public void apply(T component) {
         super.apply(component);
-        component.getStyle().setBorder(null);
-        component.getStyle().setShadow(null);
-        component.getStyle().getBackground().setColor(ColorConstants.transparent());
         component.getTextState().setTextColor(ColorUtil.oppositeBlackOrWhite(settings.backgroundColor()));
     }
 }

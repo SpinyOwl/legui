@@ -21,6 +21,7 @@ import org.liquidengine.legui.component.TextInput;
 import org.liquidengine.legui.component.ToggleButton;
 import org.liquidengine.legui.component.Tooltip;
 import org.liquidengine.legui.component.Widget;
+import org.liquidengine.legui.theme.AbstractTheme;
 import org.liquidengine.legui.theme.DefaultThemeManager;
 import org.liquidengine.legui.theme.Theme;
 import org.liquidengine.legui.theme.ThemeManager;
@@ -63,8 +64,26 @@ public class FlatColoredTheme extends Theme {
     public FlatColoredTheme(
         Vector4f backgroundColor, Vector4f borderColor, Vector4f strokeColor,
         Vector4f allowColor, Vector4f denyColor, Vector4f shadowColor
-    ) {
+                           ) {
         super(createThemeManager(new FlatColoredThemeSettings(backgroundColor, borderColor, strokeColor, allowColor, denyColor, shadowColor)));
+    }
+
+    /**
+     * Used to create theme instance.
+     *
+     * @param backgroundColor background color.
+     * @param borderColor border color.
+     * @param sliderColor slider color.
+     * @param strokeColor stroke color.
+     * @param allowColor allow color.
+     * @param denyColor deny color.
+     * @param shadowColor shadow color.
+     */
+    public FlatColoredTheme(
+        Vector4f backgroundColor, Vector4f borderColor, Vector4f sliderColor, Vector4f strokeColor,
+        Vector4f allowColor, Vector4f denyColor, Vector4f shadowColor
+                           ) {
+        super(createThemeManager(new FlatColoredThemeSettings(backgroundColor, borderColor,sliderColor, strokeColor, allowColor, denyColor, shadowColor)));
     }
 
     /**
@@ -74,28 +93,39 @@ public class FlatColoredTheme extends Theme {
      * @return initialized theme manager.
      */
     private static ThemeManager createThemeManager(FlatColoredThemeSettings settings) {
-        ThemeManager m = new DefaultThemeManager();
+        ThemeManager m = new DefaultThemeManager() {
+            @Override
+            public <T extends Component> void setComponentTheme(Class<T> clazz, AbstractTheme<T> theme) {
+                if (theme instanceof FlatComponentTheme) {
+                    FlatComponentTheme flatComponentTheme = (FlatComponentTheme) theme;
+                    if (flatComponentTheme.getSettings() == null) {
+                        flatComponentTheme.setSettings(settings);
+                    }
+                }
+                super.setComponentTheme(clazz, theme);
+            }
+        };
         //@formatter:off
-        m.setComponentTheme(Button.class,                   new FlatButtonTheme<>                   (settings));
-        m.setComponentTheme(Panel.class,                    new FlatPanelTheme<>                    (settings));
-        m.setComponentTheme(CheckBox.class,                 new FlatCheckBoxTheme<>                 (settings));
-        m.setComponentTheme(Component.class,                new FlatComponentTheme<>                (settings));
-        m.setComponentTheme(Label.class,                    new FlatLabelTheme<>                    (settings));
-        m.setComponentTheme(LayerContainer.class,           new FlatLayerContainerTheme<>           (settings));
-        m.setComponentTheme(ProgressBar.class,              new FlatProgressBarTheme<>              (settings));
-        m.setComponentTheme(ScrollablePanel.class,          new FlatScrollablePanelTheme<>          (settings));
-        m.setComponentTheme(RadioButton.class,              new FlatRadioButtonTheme<>              (settings));
-        m.setComponentTheme(ScrollBar.class,                new FlatScrollBarTheme<>                (settings));
-        m.setComponentTheme(SelectBox.class,                new FlatSelectBoxTheme<>                (settings));
-        m.setComponentTheme(SelectBoxScrollablePanel.class, new FlatSelectBoxScrollablePanelTheme<> (settings));
-        m.setComponentTheme(SelectBoxElement.class,         new FlatSelectBoxElementTheme<>         (settings));
-        m.setComponentTheme(Slider.class,                   new FlatSliderTheme<>                   (settings));
-        m.setComponentTheme(TextArea.class,                 new FlatTextAreaTheme<>                 (settings));
-        m.setComponentTheme(TextAreaField.class,            new FlatTextAreaFieldTheme<>            (settings));
-        m.setComponentTheme(TextInput.class,                new FlatTextInputTheme<>                (settings));
-        m.setComponentTheme(ToggleButton.class,             new FlatToggleButtonTheme<>             (settings));
-        m.setComponentTheme(Tooltip.class,                  new FlatTooltipTheme<>                  (settings));
-        m.setComponentTheme(Widget.class,                   new FlatWidgetTheme<>                   (settings));
+        m.setComponentTheme(Button.class, new FlatButtonTheme<>());
+        m.setComponentTheme(Panel.class, new FlatPanelTheme<>());
+        m.setComponentTheme(CheckBox.class, new FlatCheckBoxTheme<>());
+        m.setComponentTheme(Component.class, new FlatComponentTheme<>());
+        m.setComponentTheme(Label.class, new FlatLabelTheme<>());
+        m.setComponentTheme(LayerContainer.class, new FlatLayerContainerTheme<>());
+        m.setComponentTheme(ProgressBar.class, new FlatProgressBarTheme<>());
+        m.setComponentTheme(ScrollablePanel.class, new FlatScrollablePanelTheme<>());
+        m.setComponentTheme(RadioButton.class, new FlatRadioButtonTheme<>());
+        m.setComponentTheme(ScrollBar.class, new FlatScrollBarTheme<>());
+        m.setComponentTheme(SelectBox.class, new FlatSelectBoxTheme<>());
+        m.setComponentTheme(SelectBoxScrollablePanel.class, new FlatSelectBoxScrollablePanelTheme<>());
+        m.setComponentTheme(SelectBoxElement.class, new FlatSelectBoxElementTheme<>());
+        m.setComponentTheme(Slider.class, new FlatSliderTheme<>());
+        m.setComponentTheme(TextArea.class, new FlatTextAreaTheme<>());
+        m.setComponentTheme(TextAreaField.class, new FlatTextAreaFieldTheme<>());
+        m.setComponentTheme(TextInput.class, new FlatTextInputTheme<>());
+        m.setComponentTheme(ToggleButton.class, new FlatToggleButtonTheme<>());
+        m.setComponentTheme(Tooltip.class, new FlatTooltipTheme<>());
+        m.setComponentTheme(Widget.class, new FlatWidgetTheme<>());
         //@formatter:on
         return m;
     }
@@ -113,6 +143,10 @@ public class FlatColoredTheme extends Theme {
          * Border color.
          */
         private final Vector4f borderColor;
+        /**
+         * Slider color.
+         */
+        private final Vector4f sliderColor;
         /**
          * Stroke color.
          */
@@ -135,6 +169,30 @@ public class FlatColoredTheme extends Theme {
          *
          * @param backgroundColor background color.
          * @param borderColor border color.
+         * @param sliderColor slider color.
+         * @param strokeColor stroke color.
+         * @param allowColor allow color.
+         * @param denyColor deny color.
+         * @param shadowColor shadow color.
+         */
+        public FlatColoredThemeSettings(
+            Vector4f backgroundColor, Vector4f borderColor, Vector4f sliderColor, Vector4f strokeColor,
+            Vector4f allowColor, Vector4f denyColor, Vector4f shadowColor
+                                       ) {
+            this.backgroundColor = backgroundColor;
+            this.borderColor = borderColor;
+            this.sliderColor = sliderColor;
+            this.allowColor = allowColor;
+            this.strokeColor = strokeColor;
+            this.denyColor = denyColor;
+            this.shadowColor = shadowColor;
+        }
+
+        /**
+         * Used to create theme settings instance.
+         *
+         * @param backgroundColor background color.
+         * @param borderColor border color (also used as slider color).
          * @param strokeColor stroke color.
          * @param allowColor allow color.
          * @param denyColor deny color.
@@ -143,13 +201,8 @@ public class FlatColoredTheme extends Theme {
         public FlatColoredThemeSettings(
             Vector4f backgroundColor, Vector4f borderColor, Vector4f strokeColor,
             Vector4f allowColor, Vector4f denyColor, Vector4f shadowColor
-        ) {
-            this.backgroundColor = backgroundColor;
-            this.borderColor = borderColor;
-            this.allowColor = allowColor;
-            this.strokeColor = strokeColor;
-            this.denyColor = denyColor;
-            this.shadowColor = shadowColor;
+                                       ) {
+            this(backgroundColor, borderColor, borderColor, strokeColor, allowColor, denyColor, shadowColor);
         }
 
         /**
@@ -168,6 +221,16 @@ public class FlatColoredTheme extends Theme {
          */
         public Vector4f borderColor() {
             return borderColor == null ? null : new Vector4f(borderColor);
+        }
+
+
+        /**
+         * Returns slider color.
+         *
+         * @return slider color.
+         */
+        public Vector4f sliderColor() {
+            return sliderColor == null ? null : new Vector4f(sliderColor);
         }
 
         /**

@@ -19,7 +19,7 @@ public abstract class Animation {
      */
     public void startAnimation() {
         if (!animationStarted) {
-            Animator.getInstance().pushAnimation(this);
+            AnimatorProvider.getAnimator().pushAnimation(this);
             animationStarted = true;
         }
     }
@@ -51,7 +51,7 @@ public abstract class Animation {
      * Used to stop animation. Removes animation from animator.
      */
     public void stopAnimation() {
-        Animator.getInstance().removeAnimation(this);
+        AnimatorProvider.getAnimator().removeAnimation(this);
     }
 
     /**

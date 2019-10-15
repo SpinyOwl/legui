@@ -1,49 +1,20 @@
 package org.liquidengine.legui.demo;
 
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_ESCAPE;
-import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
-import static org.lwjgl.glfw.GLFW.glfwCreateWindow;
-import static org.lwjgl.glfw.GLFW.glfwDestroyWindow;
-import static org.lwjgl.glfw.GLFW.glfwMakeContextCurrent;
-import static org.lwjgl.glfw.GLFW.glfwSetErrorCallback;
-import static org.lwjgl.glfw.GLFW.glfwSetWindowPos;
-import static org.lwjgl.glfw.GLFW.glfwShowWindow;
-import static org.lwjgl.glfw.GLFW.glfwSwapBuffers;
-import static org.lwjgl.glfw.GLFW.glfwSwapInterval;
-import static org.lwjgl.glfw.GLFW.glfwTerminate;
-import static org.lwjgl.glfw.GLFW.glfwWaitEvents;
-import static org.lwjgl.opengl.GL.createCapabilities;
-import static org.lwjgl.opengl.GL.setCapabilities;
-import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
-import static org.lwjgl.opengl.GL11.GL_STENCIL_BUFFER_BIT;
-import static org.lwjgl.opengl.GL11.glClear;
-import static org.lwjgl.opengl.GL11.glClearColor;
-import static org.lwjgl.opengl.GL11.glViewport;
-import static org.lwjgl.system.MemoryUtil.NULL;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
 import org.joml.Vector2i;
-import org.liquidengine.legui.animation.Animator;
-import org.liquidengine.legui.component.Button;
-import org.liquidengine.legui.component.Component;
-import org.liquidengine.legui.component.Frame;
-import org.liquidengine.legui.component.Label;
-import org.liquidengine.legui.component.RadioButton;
-import org.liquidengine.legui.component.RadioButtonGroup;
+import org.liquidengine.legui.animation.AnimatorProvider;
+import org.liquidengine.legui.component.*;
 import org.liquidengine.legui.event.CursorEnterEvent;
 import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.listener.CursorEnterEventListener;
 import org.liquidengine.legui.listener.MouseClickEventListener;
-import org.liquidengine.legui.listener.processor.EventProcessor;
+import org.liquidengine.legui.listener.processor.EventProcessorProvider;
 import org.liquidengine.legui.style.border.SimpleLineBorder;
 import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.system.context.CallbackKeeper;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.context.DefaultCallbackKeeper;
 import org.liquidengine.legui.system.handler.processor.SystemEventProcessor;
+import org.liquidengine.legui.system.handler.processor.SystemEventProcessorImpl;
 import org.liquidengine.legui.system.layout.LayoutManager;
 import org.liquidengine.legui.system.renderer.Renderer;
 import org.liquidengine.legui.system.renderer.nvg.NvgRenderer;
@@ -52,6 +23,17 @@ import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWKeyCallbackI;
 import org.lwjgl.glfw.GLFWWindowCloseCallbackI;
 import org.lwjgl.opengl.GLCapabilities;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import static org.lwjgl.glfw.GLFW.*;
+import static org.lwjgl.opengl.GL.createCapabilities;
+import static org.lwjgl.opengl.GL.setCapabilities;
+import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.system.MemoryUtil.NULL;
 
 /**
  * Created by Alexander on 17.12.2016.
@@ -133,7 +115,7 @@ public class MultipleWindowsMultipleThreadsExample {
     private static void startLeguiEventProcessor() {
         leguiEventProcessorThread = new Thread(() -> {
             while (running) {
-                EventProcessor.getInstance().processEvents();
+                EventProcessorProvider.getInstance().processEvents();
             }
         }, "GUI_EVENT_PROCESSOR");
         leguiEventProcessorThread.start();
@@ -171,7 +153,7 @@ public class MultipleWindowsMultipleThreadsExample {
                 LayoutManager.getInstance().layout(frames[i]);
 
                 // Run animations. Should be also called cause some components use animations for updating state.
-                Animator.getInstance().runAnimations();
+                AnimatorProvider.getAnimator().runAnimations();
             }
         }
 
@@ -250,8 +232,8 @@ public class MultipleWindowsMultipleThreadsExample {
             keepers[i].getChainKeyCallback().add(glfwKeyCallbackI);
             keepers[i].getChainWindowCloseCallback().add(glfwWindowCloseCallbackI);
 
-            systemEventProcessors[i] = new SystemEventProcessor();
-            systemEventProcessors[i].addDefaultCallbacks(keepers[i]);
+            systemEventProcessors[i] = new SystemEventProcessorImpl();
+            SystemEventProcessor.addDefaultCallbacks(keepers[i], systemEventProcessors[i]);
         }
 
         running = true;

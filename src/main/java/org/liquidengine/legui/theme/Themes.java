@@ -15,7 +15,7 @@ public final class Themes {
         rgba(144, 164, 174, 1), // strokeColor
         rgba(46, 204, 113, 1), // allowColor
         rgba(231, 76, 60, 1), // denyColor
-        null // shadowColor
+        rgba(0, 0, 0, 1f)  // shadowColor
     );
     public static final Theme FLAT_PETERRIVER_DARK = new FlatColoredTheme(
         rgba(44, 62, 80, 1), // backgroundColor
@@ -23,7 +23,7 @@ public final class Themes {
         rgba(2, 119, 189, 1), // strokeColor
         rgba(39, 174, 96, 1), // allowColor
         rgba(192, 57, 43, 1), // denyColor
-        null // shadowColor
+        rgba(0, 0, 0, 1f)  // shadowColor
     );
     public static final Theme FLAT_WHITE = new FlatColoredTheme(
         rgba(245, 245, 245, 1), // backgroundColor
@@ -31,7 +31,7 @@ public final class Themes {
         rgba(100, 181, 246, 1), // strokeColor
         rgba(165, 214, 167, 1), // allowColor
         rgba(239, 154, 154, 1), // denyColor
-        ColorConstants.black().mul(0, 0, 0, 1f) // shadowColor
+        ColorConstants.black() // shadowColor
     );
     public static final Theme FLAT_DARK = new FlatColoredTheme(
         rgba(33, 33, 33, 1), // backgroundColor
@@ -39,7 +39,7 @@ public final class Themes {
         rgba(2, 119, 189, 1), // strokeColor
         rgba(27, 94, 32, 1), // allowColor
         rgba(183, 28, 28, 1), // denyColor
-        null // shadowColor
+        rgba(250, 250, 250, 0.5f) // shadowColor
     );
     private static Theme DEFAULT_THEME = FLAT_WHITE;
 

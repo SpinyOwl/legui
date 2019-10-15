@@ -1,5 +1,9 @@
 package org.liquidengine.legui.component.event.checkbox;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.liquidengine.legui.component.CheckBox;
 import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.event.Event;
@@ -21,6 +25,7 @@ public class CheckBoxChangeValueEvent<T extends CheckBox> extends Event<T> {
 
     /**
      * Returns old value.
+     * @deprecated since 2.0.0 - use {@link #getOldValue()}
      *
      * @return old value.
      */
@@ -30,10 +35,65 @@ public class CheckBoxChangeValueEvent<T extends CheckBox> extends Event<T> {
 
     /**
      * Returns new value.
+     * @deprecated since 2.0.0 - use {@link #getNewValue()}
      *
      * @return new value.
      */
     public boolean isNewValue() {
         return newValue;
+    }
+
+    /**
+     * Returns old value.
+     *
+     * @return old value.
+     */
+    public boolean getOldValue() {
+        return oldValue;
+    }
+
+    /**
+     * Returns new value.
+     *
+     * @return new value.
+     */
+    public boolean getNewValue() {
+        return newValue;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+            .append("oldValue", oldValue)
+            .append("newValue", newValue)
+            .toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        CheckBoxChangeValueEvent<?> that = (CheckBoxChangeValueEvent<?>) o;
+
+        return new EqualsBuilder()
+            .appendSuper(super.equals(o))
+            .append(oldValue, that.oldValue)
+            .append(newValue, that.newValue)
+            .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37)
+            .appendSuper(super.hashCode())
+            .append(oldValue)
+            .append(newValue)
+            .toHashCode();
     }
 }

@@ -13,11 +13,14 @@ import org.liquidengine.legui.theme.colored.FlatColoredTheme.FlatColoredThemeSet
  */
 public class FlatTooltipTheme<T extends Tooltip> extends FlatComponentTheme<T> {
 
-    private FlatColoredThemeSettings settings;
+    /**
+     * Default constructor. Settings should be specified before using this theme.
+     */
+    public FlatTooltipTheme() {
+    }
 
     public FlatTooltipTheme(FlatColoredThemeSettings settings) {
         super(settings);
-        this.settings = settings;
     }
 
     /**
@@ -28,10 +31,9 @@ public class FlatTooltipTheme<T extends Tooltip> extends FlatComponentTheme<T> {
     @Override
     public void apply(T component) {
         super.apply(component);
-        component.getStyle().setBorder(null);
         Vector4f bgc = ColorUtil.negativeColorRGB(settings.backgroundColor());
         component.getStyle().getBackground().setColor(bgc);
-        component.getStyle().setShadow(new Shadow(-4, 4, 17, -7, ColorUtil.oppositeBlackOrWhite(bgc).mul(0.8f)));
+        component.getStyle().setShadow(new Shadow(1, 1, 16, -4, ColorUtil.oppositeBlackOrWhite(bgc).mul(0.8f)));
 
         component.getTextState().setTextColor(ColorUtil.oppositeBlackOrWhite(bgc));
     }

@@ -5,7 +5,7 @@ import org.liquidengine.legui.component.event.textarea.TextAreaFieldUpdateEvent;
 import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.event.MouseClickEvent.MouseClickAction;
 import org.liquidengine.legui.listener.MouseClickEventListener;
-import org.liquidengine.legui.listener.processor.EventProcessor;
+import org.liquidengine.legui.listener.processor.EventProcessorProvider;
 
 /**
  * Mouse click event listener for text area. Used to update caret position.
@@ -29,12 +29,12 @@ public class TextAreaFieldMouseClickEventListener implements MouseClickEventList
             }
         }
         if (event.getAction() == MouseClickAction.RELEASE) {
-            EventProcessor.getInstance().pushEvent(new TextAreaFieldUpdateEvent(textAreaField, event.getContext(), event.getFrame()));
+            EventProcessorProvider.getInstance().pushEvent(new TextAreaFieldUpdateEvent(textAreaField, event.getContext(), event.getFrame()));
         }
     }
 
     @Override
     public boolean equals(Object obj) {
-        return (obj != null) && ((obj == this) || ((obj != this) && (obj.getClass() == this.getClass())));
+        return obj != null && (obj == this || obj.getClass() == this.getClass());
     }
 }

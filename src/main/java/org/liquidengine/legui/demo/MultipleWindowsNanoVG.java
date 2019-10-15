@@ -1,50 +1,18 @@
 package org.liquidengine.legui.demo;
 
-import static org.lwjgl.glfw.GLFW.GLFW_FALSE;
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_ESCAPE;
-import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
-import static org.lwjgl.glfw.GLFW.GLFW_TRUE;
-import static org.lwjgl.glfw.GLFW.GLFW_VISIBLE;
-import static org.lwjgl.glfw.GLFW.glfwCreateWindow;
-import static org.lwjgl.glfw.GLFW.glfwDestroyWindow;
-import static org.lwjgl.glfw.GLFW.glfwMakeContextCurrent;
-import static org.lwjgl.glfw.GLFW.glfwPollEvents;
-import static org.lwjgl.glfw.GLFW.glfwSetKeyCallback;
-import static org.lwjgl.glfw.GLFW.glfwSetWindowPos;
-import static org.lwjgl.glfw.GLFW.glfwShowWindow;
-import static org.lwjgl.glfw.GLFW.glfwSwapBuffers;
-import static org.lwjgl.glfw.GLFW.glfwSwapInterval;
-import static org.lwjgl.glfw.GLFW.glfwTerminate;
-import static org.lwjgl.glfw.GLFW.glfwWindowHint;
-import static org.lwjgl.nanovg.NanoVG.nvgBeginFrame;
-import static org.lwjgl.nanovg.NanoVG.nvgBeginPath;
-import static org.lwjgl.nanovg.NanoVG.nvgEndFrame;
-import static org.lwjgl.nanovg.NanoVG.nvgFill;
-import static org.lwjgl.nanovg.NanoVG.nvgFillColor;
-import static org.lwjgl.nanovg.NanoVG.nvgRect;
-import static org.lwjgl.nanovg.NanoVG.nvgResetScissor;
-import static org.lwjgl.nanovg.NanoVG.nvgScissor;
-import static org.lwjgl.opengl.GL11.GL_BLEND;
-import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
-import static org.lwjgl.opengl.GL11.GL_ONE_MINUS_SRC_ALPHA;
-import static org.lwjgl.opengl.GL11.GL_SRC_ALPHA;
-import static org.lwjgl.opengl.GL11.GL_STENCIL_BUFFER_BIT;
-import static org.lwjgl.opengl.GL11.glBlendFunc;
-import static org.lwjgl.opengl.GL11.glClear;
-import static org.lwjgl.opengl.GL11.glClearColor;
-import static org.lwjgl.opengl.GL11.glDisable;
-import static org.lwjgl.opengl.GL11.glEnable;
-import static org.lwjgl.opengl.GL11.glGetInteger;
-import static org.lwjgl.opengl.GL11.glViewport;
-import static org.lwjgl.system.MemoryUtil.NULL;
-
-import java.io.IOException;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.nanovg.NVGColor;
 import org.lwjgl.nanovg.NanoVGGL2;
 import org.lwjgl.nanovg.NanoVGGL3;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL30;
+
+import java.io.IOException;
+
+import static org.lwjgl.glfw.GLFW.*;
+import static org.lwjgl.nanovg.NanoVG.*;
+import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.system.MemoryUtil.NULL;
 
 /**
  * Created by Alexander on 17.12.2016.
@@ -159,16 +127,16 @@ public class MultipleWindowsNanoVG {
     private static void renderNVG(long nvgContext) {
         nvgScissor(nvgContext, 10, 10, WIDTH - 20, HEIGHT - 20);
         {
-            NVGColor nvgColor = NVGColor.calloc();
-            nvgColor.r(1);
-            nvgColor.g(0);
-            nvgColor.b(0);
-            nvgColor.a(1);
-            nvgBeginPath(nvgContext);
-            nvgFillColor(nvgContext, nvgColor);
-            nvgRect(nvgContext, 0, 0, WIDTH, HEIGHT);
-            nvgFill(nvgContext);
-            nvgColor.free();
+            try (NVGColor nvgColor = NVGColor.calloc()) {
+                nvgColor.r(1);
+                nvgColor.g(0);
+                nvgColor.b(0);
+                nvgColor.a(1);
+                nvgBeginPath(nvgContext);
+                nvgFillColor(nvgContext, nvgColor);
+                nvgRect(nvgContext, 0, 0, WIDTH, HEIGHT);
+                nvgFill(nvgContext);
+            }
         }
         nvgResetScissor(nvgContext);
     }

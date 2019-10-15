@@ -9,7 +9,13 @@ import org.liquidengine.legui.theme.colored.FlatColoredTheme.FlatColoredThemeSet
  *
  * @param <T> {@link LayerContainer} subclasses.
  */
-public class FlatLayerContainerTheme<T extends LayerContainer> extends FlatComponentTheme<T> {
+public class FlatLayerContainerTheme<T extends LayerContainer> extends FlatBorderlessTheme<T> {
+
+    /**
+     * Default constructor. Settings should be specified before using this theme.
+     */
+    public FlatLayerContainerTheme() {
+    }
 
     public FlatLayerContainerTheme(FlatColoredThemeSettings settings) {
         super(settings);
@@ -23,7 +29,5 @@ public class FlatLayerContainerTheme<T extends LayerContainer> extends FlatCompo
     @Override
     public void apply(T component) {
         super.apply(component);
-        component.getStyle().setBorder(null);
-        component.getStyle().getBackground().setColor(ColorConstants.transparent());
     }
 }

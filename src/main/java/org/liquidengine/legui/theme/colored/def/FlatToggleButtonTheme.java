@@ -1,7 +1,6 @@
 package org.liquidengine.legui.theme.colored.def;
 
 import org.liquidengine.legui.component.ToggleButton;
-import org.liquidengine.legui.style.shadow.Shadow;
 import org.liquidengine.legui.theme.colored.FlatColoredTheme.FlatColoredThemeSettings;
 
 /**
@@ -11,11 +10,14 @@ import org.liquidengine.legui.theme.colored.FlatColoredTheme.FlatColoredThemeSet
  */
 public class FlatToggleButtonTheme<T extends ToggleButton> extends FlatComponentTheme<T> {
 
-    private FlatColoredThemeSettings settings;
+    /**
+     * Default constructor. Settings should be specified before using this theme.
+     */
+    public FlatToggleButtonTheme() {
+    }
 
     public FlatToggleButtonTheme(FlatColoredThemeSettings settings) {
         super(settings);
-        this.settings = settings;
     }
 
     /**
@@ -27,11 +29,7 @@ public class FlatToggleButtonTheme<T extends ToggleButton> extends FlatComponent
     public void apply(T component) {
         super.apply(component);
         component.getStyle().getBackground().setColor(settings.denyColor());
-        if (settings.shadowColor()== null || settings.shadowColor().length() > 0.00001f) {
-            component.getStyle().setShadow(new Shadow(-4, 4, 17, -7, settings.shadowColor()));
-        } else {
-            component.getStyle().setShadow(null);
-        }
+
         component.getHoveredStyle().getBackground().setColor(settings.denyColor().mul(1.3f, 1.3f, 1.3f, 1f));
         component.getPressedStyle().getBackground().setColor(settings.denyColor().mul(1.6f, 1.6f, 1.6f, 1f));
         component.setToggledBackgroundColor(settings.allowColor());

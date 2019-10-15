@@ -1,6 +1,7 @@
 package org.liquidengine.legui.component.misc.listener.textarea;
 
 import org.joml.Vector2f;
+import org.joml.Vector4f;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.ScrollBar;
 import org.liquidengine.legui.component.TextArea;
@@ -8,6 +9,9 @@ import org.liquidengine.legui.component.TextArea.TextAreaViewport;
 import org.liquidengine.legui.component.TextAreaField;
 import org.liquidengine.legui.component.event.textarea.TextAreaFieldUpdateEvent;
 import org.liquidengine.legui.component.event.textarea.TextAreaFieldUpdateEventListener;
+
+import static org.liquidengine.legui.style.util.StyleUtilities.getPadding;
+
 
 /**
  * Created by ShchAlexander on 17.07.2018.
@@ -25,58 +29,65 @@ public class TextAreaFieldUpdateListener implements TextAreaFieldUpdateEventList
         TextAreaField textAreaField = event.getTargetComponent();
         Component parent = textAreaField.getParent();
 
+        Vector4f padding = getPadding(textAreaField, textAreaField.getStyle());
         if (parent instanceof TextAreaViewport) {
             TextAreaViewport textAreaViewport = (TextAreaViewport) parent;
-            float maxTextWidth = Math.max(textAreaField.getMaxTextWidth() +
-                                              textAreaField.getStyle().getPaddingLeftF() +
-                                              textAreaField.getStyle().getPaddingRightF(),
-                                          textAreaViewport.getSize().x);
-            float maxTextHeight = Math.max(textAreaField.getMaxTextHeight() +
-                                               textAreaField.getStyle().getPaddingTopF() +
-                                               textAreaField.getStyle().getPaddingBottomF(),
-                                           textAreaViewport.getSize().y);
+
+
+            float maxTextWidth = Math.max(
+                textAreaField.getMaxTextWidth() + padding.x + padding.z,
+                textAreaViewport.getSize().x
+            );
+            float maxTextHeight = Math.max(
+                textAreaField.getMaxTextHeight() + padding.y + padding.w,
+                textAreaViewport.getSize().y
+            );
             textAreaField.setSize(maxTextWidth, maxTextHeight);
         }
 
         Vector2f absolutePosition = textAreaField.getAbsolutePosition();
-        Vector2f size = textAreaField.getSize();
 
-        updateHorizontalOffset(textAreaField, absolutePosition, size);
-        updateVerticalOffset(textAreaField, absolutePosition, size);
+        updateHorizontalOffset(textAreaField, absolutePosition, padding.x);
+        updateVerticalOffset(textAreaField, absolutePosition, padding.y);
     }
 
-    private void updateHorizontalOffset(TextAreaField textAreaField, Vector2f absolutePosition, Vector2f size) {
+    private void updateHorizontalOffset(TextAreaField textAreaField, Vector2f absolutePosition, float paddingLeft) {
         ScrollBar horizontalScrollBar = textArea.getHorizontalScrollBar();
-        float caretX = textAreaField.getCaretX() - absolutePosition.x - textAreaField.getStyle().getPaddingLeftF();
+        float caretX = textAreaField.getCaretX() - absolutePosition.x - paddingLeft;
         float maxTextWidth = textAreaField.getMaxTextWidth();
 
         float newVal = 0;
-        float maxValue = horizontalScrollBar.getMaxValue();
-        float minValue = horizontalScrollBar.getMinValue();
-        float valueRange = horizontalScrollBar.getMaxValue() - horizontalScrollBar.getMinValue();
+        if (maxTextWidth != 0) {
+            float maxValue = horizontalScrollBar.getMaxValue();
+            float minValue = horizontalScrollBar.getMinValue();
+            float valueRange = horizontalScrollBar.getMaxValue() - horizontalScrollBar.getMinValue();
 
-        newVal = valueRange * caretX / maxTextWidth;
+            newVal = valueRange * caretX / maxTextWidth;
 
-        if (newVal > maxValue) {
-            newVal = maxValue;
-        }
-        if (newVal < minValue) {
-            newVal = minValue;
+            if (newVal > maxValue) {
+                newVal = maxValue;
+            }
+            if (newVal < minValue) {
+                newVal = minValue;
+            }
         }
         horizontalScrollBar.setCurValue(newVal);
     }
 
-    private void updateVerticalOffset(TextAreaField textAreaField, Vector2f absolutePosition, Vector2f size) {
+    private void updateVerticalOffset(TextAreaField textAreaField, Vector2f absolutePosition, float paddingTop) {
         ScrollBar verticalScrollbar = textArea.getVerticalScrollBar();
-        float caretY = textAreaField.getCaretY() - absolutePosition.y - textAreaField.getStyle().getPaddingTopF();
+        float caretY = textAreaField.getCaretY() - absolutePosition.y - paddingTop;
         float maxTextHeight = textAreaField.getMaxTextHeight();
 
         float newVal = 0;
+
         float maxValue = verticalScrollbar.getMaxValue();
         float minValue = verticalScrollbar.getMinValue();
         float valueRange = verticalScrollbar.getMaxValue() - verticalScrollbar.getMinValue();
 
-        newVal = valueRange * caretY / (maxTextHeight - textAreaField.getTextState().getFontSize());
+        if (maxTextHeight != textAreaField.getTextState().getFontSize()) {
+            newVal = valueRange * caretY / (maxTextHeight - textAreaField.getTextState().getFontSize());
+        }
 
         if (newVal > maxValue) {
             newVal = maxValue;
@@ -89,7 +100,7 @@ public class TextAreaFieldUpdateListener implements TextAreaFieldUpdateEventList
 
     @Override
     public boolean equals(Object obj) {
-        return (obj != null) && ((obj == this) || ((obj != this) && (obj.getClass() == this.getClass())));
+        return obj != null && (obj == this || obj.getClass() == this.getClass());
     }
 
 }

@@ -1,6 +1,5 @@
 package org.liquidengine.legui.component;
 
-import java.util.List;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -21,25 +20,26 @@ import org.liquidengine.legui.listener.EventListener;
 import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.theme.Themes;
 
+import java.util.List;
+
 /**
  * Implementation of slider controller.
  */
 public class Slider extends Component {
 
     /**
-     * Maximum value of slider.
+     * Default maximum value for a slider.
      */
-    public static final float MAX_VALUE = 100f;
-
+    public static final float DEFAULT_MAX_VALUE = 100f;
     /**
-     * Minimum value of slider.
+     * Default minimum value for a slider.
      */
-    public static final float MIN_VALUE = 0f;
+    public static final float DEFAULT_MIN_VALUE = 0f;
 
     /**
      * Slider value.
      */
-    private float value;
+    private float value = 0f;
 
     /**
      * Slider orientation.
@@ -62,6 +62,21 @@ public class Slider extends Component {
     private float sliderSize = 10f;
 
     /**
+     * Maximum value of the slider.
+     */
+    private float minValue = DEFAULT_MIN_VALUE;
+
+    /**
+     * Maximum value of the slider.
+     */
+    private float maxValue = DEFAULT_MAX_VALUE;
+
+    /**
+     * The step size of the slider.
+     */
+    private float stepSize;
+
+    /**
      * Used to create slider with predefined value.
      *
      * @param value value to set.
@@ -74,8 +89,8 @@ public class Slider extends Component {
      * Constructor with position and size parameters and predefined value.
      *
      * @param position position position in parent component.
-     * @param size size of component.
-     * @param value value to set.
+     * @param size     size of component.
+     * @param value    value to set.
      */
     public Slider(Vector2f position, Vector2f size, float value) {
         super(position, size);
@@ -85,11 +100,11 @@ public class Slider extends Component {
     /**
      * Constructor with position and size parameters and predefined value.
      *
-     * @param x x position position in parent component.
-     * @param y y position position in parent component.
-     * @param width width of component.
+     * @param x      x position position in parent component.
+     * @param y      y position position in parent component.
+     * @param width  width of component.
      * @param height height of component.
-     * @param value value to set.
+     * @param value  value to set.
      */
     public Slider(float x, float y, float width, float height, float value) {
         super(x, y, width, height);
@@ -107,9 +122,9 @@ public class Slider extends Component {
     /**
      * Constructor with position and size parameters.
      *
-     * @param x x position position in parent component.
-     * @param y y position position in parent component.
-     * @param width width of component.
+     * @param x      x position position in parent component.
+     * @param y      y position position in parent component.
+     * @param width  width of component.
      * @param height height of component.
      */
     public Slider(float x, float y, float width, float height) {
@@ -120,10 +135,10 @@ public class Slider extends Component {
      * Constructor with position and size parameters.
      *
      * @param position position position in parent component.
-     * @param size size of component.
+     * @param size     size of component.
      */
     public Slider(Vector2f position, Vector2f size) {
-        this(position, size, 0);
+        this(position, size, 0f);
     }
 
     /**
@@ -142,34 +157,130 @@ public class Slider extends Component {
     }
 
     /**
+     * Returns the minimum value.
+     *
+     * @return the minimum value.
+     */
+    public float getMinValue() {
+        return minValue;
+    }
+
+
+    /**
+     * Sets the minimum value.
+     *
+     * @param minValue the minimum value.
+     */
+    public void setMinValue(final float minValue) {
+        if (minValue > this.maxValue) {
+            this.maxValue = minValue;
+            return;
+        }
+        this.minValue = minValue;
+        setStepSize(getStepSize());
+        setValue(getValue());
+    }
+
+
+    /**
+     * Returns the maximum value.
+     *
+     * @return the maximum value.
+     */
+    public float getMaxValue() {
+        return maxValue;
+    }
+
+
+    /**
+     * Sets the maximum value.
+     *
+     * @param maxValue the maximum value.
+     */
+    public void setMaxValue(final float maxValue) {
+        if (maxValue < this.minValue) {
+            this.minValue = maxValue;
+            return;
+        }
+        this.maxValue = maxValue;
+        setStepSize(getStepSize());
+        setValue(getValue());
+    }
+
+
+    /**
+     * Returns the step size. Step size equal to 0 means that there is no step size.
+     *
+     * @return the step size.
+     */
+    public float getStepSize() {
+        return stepSize < 0 ? 0f : stepSize;
+    }
+
+
+    /**
+     * Sets the step size. Step size equal to 0 means that there is no step size.
+     *
+     * @param stepSize the step size.
+     */
+    public void setStepSize(final float stepSize) {
+        this.stepSize = stepSize;
+        if (stepSize > 0) {
+            float difference = this.maxValue - this.minValue;
+            this.stepSize = difference < stepSize ? difference : stepSize;
+        }
+        setValue(getValue());
+    }
+
+
+    /**
      * Used to set slider intersector.
      *
      * @param intersector intersector.
      */
     @Override
     public void setIntersector(Intersector intersector) {
-        if (intersector == null || !(intersector instanceof RectangleIntersector)) {
+        if (!(intersector instanceof RectangleIntersector)) {
             return;
         }
         super.setIntersector(intersector);
     }
 
     /**
-     * Returns slider value.
+     * Returns slider value as a float.
      *
-     * @return slider value.
+     * @return slider value as a float.
      */
     public float getValue() {
         return value;
     }
 
     /**
-     * Used to set slider value.
+     * Used to set slider value from a float value.
      *
      * @param value new slider value.
      */
     public void setValue(float value) {
-        this.value = value < MIN_VALUE ? MIN_VALUE : value > MAX_VALUE ? MAX_VALUE : value;
+        this.value = value;
+
+        // respect step size
+        if (this.stepSize > 0) {
+            // add half-step size to get the center of the step
+            float halfStepSize = this.stepSize / 2f;
+            if (this.value < 0f) {
+                halfStepSize *= -1;
+            }
+
+            final int count = (int) ((this.value + halfStepSize) / this.stepSize);
+            this.value = this.stepSize * count;
+        }
+
+        // check for min/max values
+        if (this.value > this.maxValue) {
+            this.value = this.maxValue;
+        } else if (this.value < this.minValue) {
+            this.value = this.minValue;
+        }
     }
 
     /**
@@ -284,36 +395,36 @@ public class Slider extends Component {
         Slider slider = (Slider) o;
 
         return new EqualsBuilder()
-            .appendSuper(super.equals(o))
-            .append(value, slider.value)
-            .append(sliderSize, slider.sliderSize)
-            .append(orientation, slider.orientation)
-            .append(sliderActiveColor, slider.sliderActiveColor)
-            .append(sliderColor, slider.sliderColor)
-            .isEquals();
+                .appendSuper(super.equals(o))
+                .append(value, slider.value)
+                .append(sliderSize, slider.sliderSize)
+                .append(orientation, slider.orientation)
+                .append(sliderActiveColor, slider.sliderActiveColor)
+                .append(sliderColor, slider.sliderColor)
+                .isEquals();
     }
 
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
-            .appendSuper(super.hashCode())
-            .append(value)
-            .append(orientation)
-            .append(sliderActiveColor)
-            .append(sliderColor)
-            .append(sliderSize)
-            .toHashCode();
+                .appendSuper(super.hashCode())
+                .append(value)
+                .append(orientation)
+                .append(sliderActiveColor)
+                .append(sliderColor)
+                .append(sliderSize)
+                .toHashCode();
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-            .append("value", value)
-            .append("orientation", orientation)
-            .append("sliderActiveColor", sliderActiveColor)
-            .append("sliderColor", sliderColor)
-            .append("sliderSize", sliderSize)
-            .toString();
+                .append("value", value)
+                .append("orientation", orientation)
+                .append("sliderActiveColor", sliderActiveColor)
+                .append("sliderColor", sliderColor)
+                .append("sliderSize", sliderSize)
+                .toString();
     }
 
 }
