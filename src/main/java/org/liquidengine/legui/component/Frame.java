@@ -23,20 +23,11 @@ public class Frame {
     /**
      * Used to hold components.
      */
-    private ComponentLayer componentLayer;
+    private Layer<Component> componentLayer;
     /**
      * All other layers added to this list.
      */
     private List<Layer> layers = new CopyOnWriteArrayList<>();
-
-//    /**
-//     * Holds related to this frame data shared between renderer and event processors: <br>
-//     * <ul>
-//     *     <li>system event handlers - {@link SystemEventHandler} childs.</li>
-//     *     <li>legui event listeners - {@link org.liquidengine.legui.listener.EventListener} childs.</li>
-//     * </ul>
-//     */
-//    private Context context = new Context();
 
     /**
      * Used to create frame and initialize layers with specified size.
@@ -107,15 +98,22 @@ public class Frame {
     public void addLayer(Layer layer) {
         if (layer == null ||
             layer == tooltipLayer ||
-            layer == componentLayer ||
-            layer.getFrame() == this) {
+            layer == componentLayer) {
             return;
         }
-
-        if (layer.getFrame() != null) {
-            layer.getFrame().removeLayer(layer);
+        if (!containsLayer(layer) && layers.add(layer)) {
+            changeFrame(layer);
         }
-        layers.add(layer);
+    }
+
+    private void changeFrame(Layer layer) {
+        Frame frame = layer.getFrame();
+        if (frame == this) {
+            return;
+        }
+        if (frame != null) {
+            frame.removeLayer(layer);
+        }
         layer.setFrame(this);
     }
 
@@ -128,9 +126,12 @@ public class Frame {
         if (layer == null || layer == tooltipLayer || layer == componentLayer) {
             return;
         }
-        layer.setFrame(this);
-        if (containsLayer(layer)) {
-            layers.remove(layer);
+        Frame frame = layer.getFrame();
+        if (frame == this && containsLayer(layer)) {
+            boolean removed = layers.remove(layer);
+            if (removed) {
+                layer.setParent(null);
+            }
         }
     }
 
@@ -150,7 +151,7 @@ public class Frame {
      *
      * @return default component layer.
      */
-    public ComponentLayer getComponentLayer() {
+    public Layer<Component> getComponentLayer() {
         return componentLayer;
     }
 
@@ -180,11 +181,11 @@ public class Frame {
      * @return all layers.
      */
     public List<Layer> getAllLayers() {
-        ArrayList<Layer> layers = new ArrayList<>();
-        layers.add(componentLayer);
-        layers.addAll(this.layers);
-        layers.add(tooltipLayer);
-        return layers;
+        ArrayList<Layer> layerList = new ArrayList<>();
+        layerList.add(componentLayer);
+        layerList.addAll(this.layers);
+        layerList.add(tooltipLayer);
+        return layerList;
     }
 
     /**

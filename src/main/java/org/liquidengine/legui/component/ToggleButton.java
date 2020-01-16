@@ -6,11 +6,11 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
-import org.liquidengine.legui.color.ColorConstants;
 import org.liquidengine.legui.component.misc.listener.togglebutton.ToggleButtonMouseClickListener;
 import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.icon.Icon;
 import org.liquidengine.legui.listener.MouseClickEventListener;
+import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.theme.Themes;
 
 /**
@@ -81,7 +81,7 @@ public class ToggleButton extends Button {
      * Initialize toggle button with default states.
      */
     private void initialize() {
-        setBackgroundColor(ColorConstants.red());
+        getStyle().getBackground().setColor(ColorConstants.red());
         toggledBackgroundColor = ColorConstants.green();
         MouseClickEventListener toggleButtonClickListener = new ToggleButtonMouseClickListener();
         getListenerMap().addListener(MouseClickEvent.class, toggleButtonClickListener);

@@ -6,7 +6,7 @@ import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.component.Layer;
 import org.liquidengine.legui.event.WindowSizeEvent;
-import org.liquidengine.legui.listener.processor.EventProcessor;
+import org.liquidengine.legui.listener.processor.EventProcessorProvider;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.event.SystemWindowSizeEvent;
 
@@ -20,12 +20,10 @@ public class WindowSizeEventHandler implements SystemEventHandler<SystemWindowSi
         List<Layer> layers = frame.getAllLayers();
         Collections.reverse(layers);
         for (Layer layer : layers) {
-            if (layer.isEventReceivable()) {
-                if (!layer.getContainer().isVisible() || !layer.getContainer().isEnabled()) {
-                    continue;
-                }
-                pushEvent(layer.getContainer(), event, context, frame);
+            if (!layer.getContainer().isVisible() || !layer.getContainer().isEnabled()) {
+                continue;
             }
+            pushEvent(layer.getContainer(), event, context, frame);
         }
     }
 
@@ -33,9 +31,9 @@ public class WindowSizeEventHandler implements SystemEventHandler<SystemWindowSi
         if (!component.isVisible() || !component.isEnabled()) {
             return;
         }
-        EventProcessor.getInstance().pushEvent(new WindowSizeEvent(component, context, frame, event.width, event.height));
-        List<Component> childs = component.getChilds();
-        for (Component child : childs) {
+        EventProcessorProvider.getInstance().pushEvent(new WindowSizeEvent(component, context, frame, event.width, event.height));
+        List<Component> childComponents = component.getChildComponents();
+        for (Component child : childComponents) {
             pushEvent(child, event, context, frame);
         }
     }

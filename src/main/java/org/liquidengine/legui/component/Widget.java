@@ -1,35 +1,46 @@
 package org.liquidengine.legui.component;
 
-import java.util.List;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
-import org.liquidengine.legui.color.ColorConstants;
 import org.liquidengine.legui.component.event.widget.WidgetCloseEvent;
 import org.liquidengine.legui.component.misc.listener.widget.WidgetCloseButMouseClickEventListener;
 import org.liquidengine.legui.component.misc.listener.widget.WidgetDragListener;
 import org.liquidengine.legui.component.misc.listener.widget.WidgetMinimizeButMouseClickEventListener;
+import org.liquidengine.legui.component.misc.listener.widget.WidgetResizeButtonDragListener;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
 import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.event.MouseDragEvent;
-import org.liquidengine.legui.font.FontRegistry;
 import org.liquidengine.legui.icon.CharIcon;
 import org.liquidengine.legui.icon.Icon;
 import org.liquidengine.legui.listener.EventListener;
 import org.liquidengine.legui.listener.MouseDragEventListener;
+import org.liquidengine.legui.style.Style.DisplayType;
+import org.liquidengine.legui.style.Style.PositionType;
+import org.liquidengine.legui.style.color.ColorConstants;
+import org.liquidengine.legui.style.flex.FlexStyle.FlexDirection;
+import org.liquidengine.legui.style.font.FontRegistry;
+import org.liquidengine.legui.style.length.Length;
 import org.liquidengine.legui.theme.Themes;
+
+import java.util.List;
 
 /**
  * Widget component is container which have predefined components such as container, title label, close and minimize buttons and predefined event listeners.
- * This component can be moved, minimized and restored, closed. Also now you can enable or disable title.
+ * This component can be moved, minimized and restored, closed. Also now you can enable or disable title. <p> TODO: REIMPLEMENT THIS COMPONENT ACCORDING TO NEW
+ * LAYOUT SYSTEM
  */
 public class Widget extends Component {
 
+    /**
+     * Default widget title.
+     */
+    public static final String DEFAULT_WIDGET_TITLE = "Widget";
     /**
      * Initial height of title. Used to initialize title components.
      */
@@ -45,45 +56,57 @@ public class Widget extends Component {
 
     private boolean draggable = true;
     private boolean minimized = false;
+    private boolean resizable = true;
     /**
      * Used to store widget size in maximized state when minimizing widget.
      */
     private Vector2f maximizedSize = new Vector2f();
+
     private Component container;
     private Component titleContainer;
+
     private Label title;
+
     private Button closeButton;
     private Button minimizeButton;
+    private Button resizeButton;
+
+    private Length maximizedMinWidth;
+    private Length maximizedMinHeight;
+    private Length maximizedMaxWidth;
+    private Length maximizedMaxHeight;
+    private Length maximizedWidth;
+    private Length maximizedHeight;
 
     /**
      * Creates a widget with default title text.
      */
     public Widget() {
-        initialize("Widget");
+        initialize(DEFAULT_WIDGET_TITLE);
     }
 
     /**
      * Creates a widget with default title text and specified position and size.
      *
-     * @param x x position in parent.
-     * @param y y position in parent.
-     * @param width width of component.
+     * @param x      x position in parent.
+     * @param y      y position in parent.
+     * @param width  width of component.
      * @param height height of component.
      */
     public Widget(float x, float y, float width, float height) {
         super(x, y, width, height);
-        initialize("Widget");
+        initialize(DEFAULT_WIDGET_TITLE);
     }
 
     /**
      * Creates a widget with default title text and specified position and size.
      *
      * @param position position in parent.
-     * @param size size of component.
+     * @param size     size of component.
      */
     public Widget(Vector2f position, Vector2f size) {
         super(position, size);
-        initialize("Widget");
+        initialize(DEFAULT_WIDGET_TITLE);
     }
 
     /**
@@ -98,10 +121,10 @@ public class Widget extends Component {
     /**
      * Creates a widget with specified title text and specified position and size.
      *
-     * @param title widget text.
-     * @param x x position in parent.
-     * @param y y position in parent.
-     * @param width width of component.
+     * @param title  widget text.
+     * @param x      x position in parent.
+     * @param y      y position in parent.
+     * @param width  width of component.
      * @param height height of component.
      */
     public Widget(String title, float x, float y, float width, float height) {
@@ -112,9 +135,9 @@ public class Widget extends Component {
     /**
      * Creates a widget with specified title text and specified position and size.
      *
-     * @param title widget text.
+     * @param title    widget text.
      * @param position position in parent.
-     * @param size size of component.
+     * @param size     size of component.
      */
     public Widget(String title, Vector2f position, Vector2f size) {
         super(position, size);
@@ -127,134 +150,131 @@ public class Widget extends Component {
      * @param title title to set.
      */
     private void initialize(String title) {
+        this.getStyle().setDisplay(DisplayType.FLEX);
+        this.getStyle().getFlexStyle().setFlexDirection(FlexDirection.COLUMN);
+        this.getStyle().setMinWidth(50f);
+        this.getStyle().setMinHeight(50f);
+        this.getStyle().setPadding(0f);
+
         titleContainer = new Panel();
-        titleContainer.getSize().y = INITIAL_TITLE_HEIGHT;
-        titleContainer.setBackgroundColor(ColorConstants.white());
         titleContainer.setTabFocusable(false);
 
+        titleContainer.getStyle().getBackground().setColor(ColorConstants.white());
+        titleContainer.getStyle().setDisplay(DisplayType.FLEX);
+        titleContainer.getStyle().setPosition(PositionType.RELATIVE);
+        titleContainer.getStyle().setHeight((float) INITIAL_TITLE_HEIGHT);
+        titleContainer.getStyle().setMinHeight((float) INITIAL_TITLE_HEIGHT);
+        titleContainer.getStyle().setMaxHeight((float) INITIAL_TITLE_HEIGHT);
+        titleContainer.getStyle().getFlexStyle().setFlexGrow(1);
+        titleContainer.getStyle().getFlexStyle().setFlexShrink(1);
+        titleContainer.getStyle().getFlexStyle().setFlexDirection(FlexDirection.ROW);
+
         this.title = new Label(title);
-        this.title.setPosition(0, 0);
-        this.title.getSize().y = INITIAL_TITLE_HEIGHT;
-        this.title.getTextState().getPadding().set(10, 5, 10, 5);
-        this.title.setBackgroundColor(ColorConstants.transparent());
-        this.title.setBorder(null);
+        this.title.getStyle().setPosition(PositionType.RELATIVE);
+        this.title.getStyle().setMaxWidth(Float.MAX_VALUE);
+        this.title.getStyle().setMaxHeight((float) INITIAL_TITLE_HEIGHT);
+        this.title.getStyle().setHeight((float) INITIAL_TITLE_HEIGHT);
+        this.title.getStyle().setMinWidth(0f);
+        this.title.getStyle().setMinHeight((float) INITIAL_TITLE_HEIGHT);
+        this.title.getStyle().getBackground().setColor(ColorConstants.transparent());
+        this.title.getStyle().setBorder(null);
+        this.title.getStyle().getFlexStyle().setFlexGrow(1);
+        this.title.getStyle().getFlexStyle().setFlexShrink(1);
         this.title.setTabFocusable(false);
 
         mouseDragEventLeguiEventListener = new WidgetDragListener(this);
         this.title.getListenerMap().addListener(MouseDragEvent.class, mouseDragEventLeguiEventListener);
 
         closeButton = new Button("");
-        closeButton.setBackgroundColor(ColorConstants.transparent());
-        closeIcon = new CharIcon(new Vector2f(INITIAL_TITLE_HEIGHT * 2 / 3), FontRegistry.MATERIAL_DESIGN_ICONS, (char) CLOSE_ICON_CHAR,
+
+        int iconSize = INITIAL_TITLE_HEIGHT * 2 / 3;
+        closeIcon = new CharIcon(new Vector2f(iconSize), FontRegistry.MATERIAL_DESIGN_ICONS, (char) CLOSE_ICON_CHAR,
             ColorConstants.black());
         closeIcon.setHorizontalAlign(HorizontalAlign.CENTER);
         closeIcon.setVerticalAlign(VerticalAlign.MIDDLE);
-        closeButton.setBackgroundIcon(closeIcon);
+
+        closeButton.getStyle().setPosition(PositionType.RELATIVE);
+        closeButton.getStyle().getBackground().setIcon(closeIcon);
+        closeButton.getStyle().getBackground().setColor(ColorConstants.transparent());
+        closeButton.getStyle().setMaxWidth((float) INITIAL_TITLE_HEIGHT);
+        closeButton.getStyle().setMaxHeight((float) INITIAL_TITLE_HEIGHT);
+        closeButton.getStyle().setMinWidth((float) INITIAL_TITLE_HEIGHT);
+        closeButton.getStyle().setMinHeight((float) INITIAL_TITLE_HEIGHT);
+        closeButton.getStyle().setWidth((float) INITIAL_TITLE_HEIGHT);
+        closeButton.getStyle().setHeight((float) INITIAL_TITLE_HEIGHT);
+        closeButton.getStyle().setBorder(null);
+        closeButton.getStyle().getFlexStyle().setFlexGrow(1);
+        closeButton.getStyle().getFlexStyle().setFlexShrink(1);
 
         closeButton.getListenerMap().addListener(MouseClickEvent.class, new WidgetCloseButMouseClickEventListener(this));
-        closeButton.setBorder(null);
         closeButton.getTextState().setVerticalAlign(VerticalAlign.MIDDLE);
         closeButton.getTextState().setHorizontalAlign(HorizontalAlign.CENTER);
         closeButton.setTabFocusable(false);
 
         minimizeButton = new Button("");
-        minimizeButton.setBackgroundColor(ColorConstants.transparent());
         minimizeButton.setTabFocusable(false);
 
-        minimizeIcon = new CharIcon(new Vector2f(INITIAL_TITLE_HEIGHT * 2 / 3), FontRegistry.MATERIAL_DESIGN_ICONS, (char) MINIMIZE_ICON_CHAR,
+        minimizeIcon = new CharIcon(new Vector2f(iconSize),
+            FontRegistry.MATERIAL_DESIGN_ICONS,
+            (char) MINIMIZE_ICON_CHAR,
             ColorConstants.black());
         minimizeIcon.setHorizontalAlign(HorizontalAlign.CENTER);
         minimizeIcon.setVerticalAlign(VerticalAlign.MIDDLE);
 
-        maximizeIcon = new CharIcon(new Vector2f(INITIAL_TITLE_HEIGHT * 2 / 3), FontRegistry.MATERIAL_DESIGN_ICONS, (char) MAXIMIZE_ICON_CHAR,
+        maximizeIcon = new CharIcon(new Vector2f(iconSize),
+            FontRegistry.MATERIAL_DESIGN_ICONS,
+            (char) MAXIMIZE_ICON_CHAR,
             ColorConstants.black());
         maximizeIcon.setHorizontalAlign(HorizontalAlign.CENTER);
         maximizeIcon.setVerticalAlign(VerticalAlign.MIDDLE);
 
-        minimizeButton.setBackgroundIcon(minimizeIcon);
+        minimizeButton.getStyle().getBackground().setColor(ColorConstants.transparent());
+        minimizeButton.getStyle().getBackground().setIcon(minimizeIcon);
+        minimizeButton.getStyle().setPosition(PositionType.RELATIVE);
+        minimizeButton.getStyle().setMaxWidth((float) INITIAL_TITLE_HEIGHT);
+        minimizeButton.getStyle().setMaxHeight((float) INITIAL_TITLE_HEIGHT);
+        minimizeButton.getStyle().setMinWidth((float) INITIAL_TITLE_HEIGHT);
+        minimizeButton.getStyle().setMinHeight((float) INITIAL_TITLE_HEIGHT);
+        minimizeButton.getStyle().setWidth((float) INITIAL_TITLE_HEIGHT);
+        minimizeButton.getStyle().setHeight((float) INITIAL_TITLE_HEIGHT);
+        minimizeButton.getStyle().getFlexStyle().setFlexGrow(1);
+        minimizeButton.getStyle().getFlexStyle().setFlexShrink(1);
+        minimizeButton.getStyle().setBorder(null);
 
         minimizeButton.getListenerMap().addListener(MouseClickEvent.class, new WidgetMinimizeButMouseClickEventListener(this));
-        minimizeButton.setBorder(null);
         minimizeButton.getTextState().setVerticalAlign(VerticalAlign.MIDDLE);
         minimizeButton.getTextState().setHorizontalAlign(HorizontalAlign.CENTER);
 
         container = new Panel();
         container.setTabFocusable(false);
+        // flex
+        container.getStyle().getFlexStyle().setFlexShrink(1);
+        container.getStyle().getFlexStyle().setFlexGrow(1);
+        container.getStyle().setPosition(PositionType.RELATIVE);
 
         titleContainer.add(this.title);
-        titleContainer.add(closeButton);
         titleContainer.add(minimizeButton);
+        titleContainer.add(closeButton);
 
-        add(titleContainer);
-        add(container);
+        resizeButton = new Button("");
+        CharIcon icon = new CharIcon(FontRegistry.MATERIAL_DESIGN_ICONS, '\uF45D');
+        icon.setSize(new Vector2f(20, 20));
+        icon.setPosition(new Vector2f(-10, -10));
+        resizeButton.getStyle().getBackground().setIcon(icon);
+        resizeButton.getStyle().setWidth(10f);
+        resizeButton.getStyle().setHeight(10f);
+        resizeButton.getStyle().setBottom(0f);
+        resizeButton.getStyle().setRight(0f);
+        resizeButton.getStyle().setBorder(null);
+        resizeButton.getStyle().getBackground().setColor(ColorConstants.transparent());
+        resizeButton.setTabFocusable(false);
+        resizeButton.getListenerMap().addListener(MouseDragEvent.class, new WidgetResizeButtonDragListener(resizeButton, this));
+
+        this.add(titleContainer);
+        this.add(container);
+        this.add(resizeButton);
 
         Themes.getDefaultTheme().getThemeManager().getComponentTheme(Widget.class).applyAll(this);
-
-        resize();
-    }
-
-    /**
-     * Used to resize widget container and title elements.
-     */
-    public void resize() {
-        float titHei = titleContainer.getSize().y;
-        if (titleContainer.isVisible()) {
-            titleContainer.getPosition().set(0);
-
-            float widgetWidth = getSize().x;
-            float titleWidth = widgetWidth;
-
-            titleContainer.getSize().set(titleWidth, titHei);
-            if (closeButton.isVisible()) {
-                titleWidth -= titHei;
-            }
-            if (minimizeButton.isVisible()) {
-                titleWidth -= titHei;
-            }
-
-            title.getSize().x = titleWidth;
-            container.getPosition().set(0, titHei);
-            container.getSize().set(widgetWidth, getSize().y - titHei);
-
-            closeButton.getSize().set(titHei);
-            closeButton.getPosition().set(widgetWidth - titHei, 0);
-
-            minimizeButton.getSize().set(titHei);
-            minimizeButton.getPosition().set(titleWidth, 0);
-
-        } else {
-            container.getPosition().set(0, 0);
-            container.getSize().set(getSize());
-            closeButton.getSize().set(0);
-            minimizeButton.getSize().set(0);
-        }
-    }
-
-    /**
-     * Used to set size of widget.
-     *
-     * @param size size vector.
-     */
-    @Override
-    public void setSize(Vector2f size) {
-        if (!minimized) {
-            super.setSize(size);
-            resize();
-        }
-    }
-
-    /**
-     * Used to set size of widget.
-     *
-     * @param width width to set.
-     * @param height height to set.
-     */
-    @Override
-    public void setSize(float width, float height) {
-        if (!minimized) {
-            super.setSize(width, height);
-            resize();
-        }
     }
 
     /**
@@ -272,9 +292,12 @@ public class Widget extends Component {
      * @param titleHeight title height to set.
      */
     public void setTitleHeight(float titleHeight) {
-        this.titleContainer.getSize().y = titleHeight;
-        this.title.getSize().y = titleHeight;
-        resize();
+        this.titleContainer.getStyle().setMinHeight(titleHeight);
+        this.titleContainer.getStyle().setHeight(titleHeight);
+        this.titleContainer.getStyle().setMaxHeight(titleHeight);
+        this.title.getStyle().setMinHeight(titleHeight);
+        this.title.getStyle().setHeight(titleHeight);
+        this.title.getStyle().setMaxHeight(titleHeight);
     }
 
     /**
@@ -295,8 +318,7 @@ public class Widget extends Component {
         if (minimized) {
             return;
         }
-        this.titleContainer.setVisible(titleEnabled);
-        resize();
+        this.titleContainer.getStyle().setDisplay(titleEnabled ? DisplayType.FLEX : DisplayType.NONE);
     }
 
     /**
@@ -314,8 +336,7 @@ public class Widget extends Component {
      * @param closeable widget state (closeable or not) to set.
      */
     public void setCloseable(boolean closeable) {
-        this.closeButton.setVisible(closeable);
-        resize();
+        this.closeButton.getStyle().setDisplay(closeable ? DisplayType.MANUAL : DisplayType.NONE);
     }
 
     /**
@@ -346,30 +367,16 @@ public class Widget extends Component {
     }
 
     /**
-     * Returns background color of title container.
-     *
-     * @return background color of title container.
-     */
-    public Vector4f getTitleBackgroundColor() {
-        return titleContainer.getBackgroundColor();
-    }
-
-    /**
-     * Used to set title background color.
-     *
-     * @param titleBackgroundColor title background color to set.
-     */
-    public void setTitleBackgroundColor(Vector4f titleBackgroundColor) {
-        this.titleContainer.setBackgroundColor(titleBackgroundColor);
-    }
-
-    /**
      * Returns title text state.
      *
      * @return title text state.
      */
     public TextState getTitleTextState() {
         return title.getTextState();
+    }
+
+    public Label getTitle() {
+        return title;
     }
 
     /**
@@ -391,24 +398,6 @@ public class Widget extends Component {
     }
 
     /**
-     * Returns close button background color.
-     *
-     * @return close button background color.
-     */
-    public Vector4f getCloseButtonBackgroundColor() {
-        return this.closeButton.getBackgroundColor();
-    }
-
-    /**
-     * Used to set close button background color.
-     *
-     * @param closeButtonBackgroundColor close button background color to set.
-     */
-    public void setCloseButtonBackgroundColor(Vector4f closeButtonBackgroundColor) {
-        this.closeButton.setBackgroundColor(closeButtonBackgroundColor);
-    }
-
-    /**
      * Returns widget container that hold all other elements. Should be used to add components.
      *
      * @return widget container.
@@ -424,7 +413,8 @@ public class Widget extends Component {
      */
     public void setContainer(Component container) {
         this.remove(this.container);
-        this.add(this.container = container);
+        this.container = container;
+        this.add(this.container);
     }
 
     /**
@@ -467,8 +457,7 @@ public class Widget extends Component {
      * @param minimizable new minimizable state of widget.
      */
     public void setMinimizable(boolean minimizable) {
-        this.minimizeButton.setVisible(minimizable);
-        resize();
+        this.minimizeButton.getStyle().setDisplay(minimizable ? DisplayType.MANUAL : DisplayType.NONE);
     }
 
     /**
@@ -497,6 +486,14 @@ public class Widget extends Component {
         }
     }
 
+    public void hide() {
+        getStyle().setDisplay(DisplayType.NONE);
+    }
+
+    public void show() {
+        getStyle().setDisplay(DisplayType.FLEX);
+    }
+
     /**
      * Used to minimize widget.
      */
@@ -504,8 +501,24 @@ public class Widget extends Component {
         if (isTitleEnabled()) {
             Vector2f size = getSize();
             maximizedSize.set(size);
-            size.set(size.x, getTitleHeight());
-            resize();
+
+            maximizedMinWidth = getStyle().getMinWidth();
+            maximizedMinHeight = getStyle().getMinHeight();
+            maximizedMaxWidth = getStyle().getMaxWidth();
+            maximizedMaxHeight = getStyle().getMaxHeight();
+            maximizedWidth = getStyle().getWidth();
+            maximizedHeight = getStyle().getHeight();
+
+            float titleHeight = getTitleHeight();
+            size.set(size.x, titleHeight);
+
+            this.getStyle().setMaxHeight(titleHeight);
+            this.getStyle().setHeight(titleHeight);
+            this.getStyle().setMinHeight(titleHeight);
+
+            if (resizable) {
+                resizeButton.getStyle().setDisplay(DisplayType.NONE);
+            }
         }
     }
 
@@ -514,8 +527,19 @@ public class Widget extends Component {
      */
     private void maximize() {
         if (isTitleEnabled()) {
-            getSize().set(maximizedSize);
-            resize();
+
+            this.getSize().set(maximizedSize);
+
+            this.getStyle().setMaxWidth(maximizedMaxWidth);
+            this.getStyle().setMaxHeight(maximizedMaxHeight);
+            this.getStyle().setMinWidth(maximizedMinWidth);
+            this.getStyle().setMinHeight(maximizedMinHeight);
+            this.getStyle().setWidth(maximizedWidth);
+            this.getStyle().setHeight(maximizedHeight);
+
+            if (resizable) {
+                resizeButton.getStyle().setDisplay(DisplayType.MANUAL);
+            }
         }
     }
 
@@ -580,8 +604,8 @@ public class Widget extends Component {
      * Used to update icons of close and minimize buttons.
      */
     private void updateIcons() {
-        closeButton.setBackgroundIcon(closeIcon);
-        minimizeButton.setBackgroundIcon(minimized ? maximizeIcon : minimizeIcon);
+        closeButton.getStyle().getBackground().setIcon(closeIcon);
+        minimizeButton.getStyle().getBackground().setIcon(minimized ? maximizeIcon : minimizeIcon);
     }
 
     /**
@@ -662,4 +686,16 @@ public class Widget extends Component {
             .toString();
     }
 
+    public boolean isResizable() {
+        return resizable;
+    }
+
+    public void setResizable(boolean resizable) {
+        this.resizable = resizable;
+        this.resizeButton.getStyle().setDisplay(resizable ? DisplayType.MANUAL : DisplayType.NONE);
+    }
+
+    public Button getResizeButton() {
+        return resizeButton;
+    }
 }

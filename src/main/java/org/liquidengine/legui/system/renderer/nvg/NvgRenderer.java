@@ -10,24 +10,27 @@ import static org.lwjgl.opengl.GL11.GL_SRC_ALPHA;
 import static org.lwjgl.opengl.GL11.glBlendFunc;
 import static org.lwjgl.opengl.GL11.glDisable;
 import static org.lwjgl.opengl.GL11.glEnable;
+import static org.lwjgl.opengl.GL11.glGetInteger;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import org.joml.Vector2fc;
 import org.joml.Vector2i;
-import org.liquidengine.legui.border.Border;
 import org.liquidengine.legui.component.Component;
-import org.liquidengine.legui.font.Font;
-import org.liquidengine.legui.font.FontRegistry;
 import org.liquidengine.legui.icon.Icon;
 import org.liquidengine.legui.image.Image;
+import org.liquidengine.legui.style.Border;
+import org.liquidengine.legui.style.font.Font;
+import org.liquidengine.legui.style.font.FontRegistry;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.AbstractRenderer;
 import org.liquidengine.legui.system.renderer.BorderRenderer;
 import org.liquidengine.legui.system.renderer.ComponentRenderer;
 import org.liquidengine.legui.system.renderer.RendererProvider;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils;
+import org.lwjgl.nanovg.NanoVGGL2;
 import org.lwjgl.nanovg.NanoVGGL3;
+import org.lwjgl.opengl.GL30;
 
 /**
  * Created by ShchAlexander on 1/26/2017.
@@ -39,6 +42,7 @@ public class NvgRenderer extends AbstractRenderer {
     protected Map<String, Font> loadedFonts = new ConcurrentHashMap<>();
     private long nvgContext;
     private NvgLoadableImageReferenceManager imageReferenceManager;
+    private boolean isVersionNew;
 
     /**
      * Used to render border.
@@ -47,7 +51,7 @@ public class NvgRenderer extends AbstractRenderer {
      * @param context context.
      */
     public static void renderBorder(Component component, Context context) {
-        Border border = component.getBorder();
+        Border border = component.getStyle().getBorder();
         if (border != null && border.isEnabled()) {
             // Render border
             BorderRenderer borderRenderer = RendererProvider.getInstance().getBorderRenderer(border.getClass());
@@ -99,8 +103,15 @@ public class NvgRenderer extends AbstractRenderer {
 
     @Override
     public void initialize() {
-        int flags = NanoVGGL3.NVG_STENCIL_STROKES | NanoVGGL3.NVG_ANTIALIAS;
-        nvgContext = NanoVGGL3.nvgCreate(flags);
+        isVersionNew = (glGetInteger(GL30.GL_MAJOR_VERSION) > 3) || (glGetInteger(GL30.GL_MAJOR_VERSION) == 3 && glGetInteger(GL30.GL_MINOR_VERSION) >= 2);
+
+        if (isVersionNew) {
+            int flags = NanoVGGL3.NVG_STENCIL_STROKES | NanoVGGL3.NVG_ANTIALIAS;
+            nvgContext = NanoVGGL3.nvgCreate(flags);
+        } else {
+            int flags = NanoVGGL2.NVG_STENCIL_STROKES | NanoVGGL2.NVG_ANTIALIAS;
+            nvgContext = NanoVGGL2.nvgCreate(flags);
+        }
         imageReferenceManager = new NvgLoadableImageReferenceManager();
         RendererProvider.getInstance().getComponentRenderers().forEach(ComponentRenderer::initialize);
     }
@@ -145,7 +156,11 @@ public class NvgRenderer extends AbstractRenderer {
 
     @Override
     public void destroy() {
-        NanoVGGL3.nnvgDeleteGL3(nvgContext);
+        if (isVersionNew) {
+            NanoVGGL3.nnvgDelete(nvgContext);
+        } else {
+            NanoVGGL2.nnvgDelete(nvgContext);
+        }
         RendererProvider.getInstance().getComponentRenderers().forEach(ComponentRenderer::destroy);
         imageReferenceManager.destroy();
     }

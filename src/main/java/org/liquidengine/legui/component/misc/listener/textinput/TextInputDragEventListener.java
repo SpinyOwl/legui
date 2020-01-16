@@ -13,7 +13,7 @@ public class TextInputDragEventListener implements MouseDragEventListener {
 
     @Override
     public void process(MouseDragEvent event) {
-        TextInput textInput = (TextInput) event.getComponent();
+        TextInput textInput = (TextInput) event.getTargetComponent();
         if (MOUSE_BUTTON_LEFT.isPressed()) {
             int mouseCaretPosition = textInput.getMouseCaretPosition();
             textInput.setCaretPosition(mouseCaretPosition);
@@ -23,6 +23,6 @@ public class TextInputDragEventListener implements MouseDragEventListener {
 
     @Override
     public boolean equals(Object obj) {
-        return (obj != null) && ((obj == this) || ((obj != this) && (obj.getClass() == this.getClass())));
+        return obj != null && (obj == this || obj.getClass() == this.getClass());
     }
 }

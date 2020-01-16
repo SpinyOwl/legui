@@ -104,7 +104,7 @@ public class TextInput extends Component implements TextComponent {
      */
     private void initialize(String text) {
         textState = new TextState(text);
-        textState.getPadding().set(5, 1, 5, 1);
+        getStyle().setPadding(1f, 5f);
 
         getListenerMap().addListener(KeyEvent.class, new TextInputKeyEventListener());
         getListenerMap().addListener(MouseClickEvent.class, new TextInputMouseClickEventListener());

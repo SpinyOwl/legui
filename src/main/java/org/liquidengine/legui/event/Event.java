@@ -13,12 +13,12 @@ import org.liquidengine.legui.system.context.Context;
  */
 public abstract class Event<T extends Component> {
 
-    private final T component;
+    private final T targetComponent;
     private final Context context;
     private final Frame frame;
 
-    public Event(T component, Context context, Frame frame) {
-        this.component = component;
+    public Event(T targetComponent, Context context, Frame frame) {
+        this.targetComponent = targetComponent;
         this.context = context;
         this.frame = frame;
     }
@@ -27,8 +27,8 @@ public abstract class Event<T extends Component> {
         return frame;
     }
 
-    public T getComponent() {
-        return component;
+    public T getTargetComponent() {
+        return targetComponent;
     }
 
     public Context getContext() {
@@ -48,21 +48,21 @@ public abstract class Event<T extends Component> {
         Event that = (Event) o;
 
         return new EqualsBuilder()
-            .append(getComponent(), that.getComponent())
+            .append(getTargetComponent(), that.getTargetComponent())
             .isEquals();
     }
 
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
-            .append(getComponent())
+            .append(getTargetComponent())
             .toHashCode();
     }
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-            .append("component", component)
+        return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
+            .append("targetComponent", targetComponent.getClass().getSimpleName())
             .toString();
     }
 }

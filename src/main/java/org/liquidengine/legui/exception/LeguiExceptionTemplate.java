@@ -17,7 +17,7 @@ public enum LeguiExceptionTemplate {
      */
     UNMARSHAL_EXCEPTION("Can't unmarshal your component"),
     /**
-     * Used by {@link org.liquidengine.legui.font.Font}.
+     * Used by {@link org.liquidengine.legui.style.font.Font}.
      */
     FAILED_TO_LOAD_FONT("Failed to initialize font. (%s)"),
     /**
@@ -65,6 +65,7 @@ public enum LeguiExceptionTemplate {
      * Used to create LeguiException with specified message, {@link Throwable} cause and provided variables.
      *
      * @param args error message variables.
+     * @param e throwable instance.
      *
      * @return exception constructed with message template.
      */

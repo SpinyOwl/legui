@@ -1,16 +1,25 @@
-![REPO SIZE](https://img.shields.io/github/repo-size/LiquidEngine/legui.svg?style=flat-square) 
-![CODE SIZE](https://img.shields.io/github/languages/code-size/LiquidEngine/legui.svg?style=flat-square) 
-[![CODACY](https://img.shields.io/codacy/grade/e3a864cc6d6a4f08938a7b368bdb35da.svg?style=flat-square)](https://www.codacy.com/app/LiquidEngine/legui) 
-![License](https://img.shields.io/github/license/LiquidEngine/legui.svg?style=flat-square)  
-[![DEVELOP BUILD](https://img.shields.io/jenkins/s/http/jenkins.liquidengine.tk/job/LEGUI_DEVELOP.svg?label=develop&style=flat-square)](http://jenkins.liquidengine.tk/job/LEGUI_DEVELOP/)
-[![](https://img.shields.io/jenkins/s/http/jenkins.liquidengine.tk/job/LEGUI_SNAPSHOTS.svg?label=snapshot&style=flat-square)](http://jenkins.liquidengine.tk/job/LEGUI_SNAPSHOTS/)
-[![](https://img.shields.io/jenkins/s/http/jenkins.liquidengine.tk/job/LEGUI_RELEASES.svg?label=release&style=flat-square)](http://jenkins.liquidengine.tk/job/LEGUI_RELEASES/)  
-![](https://img.shields.io/badge/dynamic/json.svg?label=develop&colorB=00796b&prefix=&suffix=&query=$.version&uri=http%3A%2F%2Fjenkins.liquidengine.tk%2Fjob%2FLEGUI_DEVELOP%2FlastSuccessfulBuild%2Fartifact%2FfullVersion.json&style=flat-square)
-![](https://img.shields.io/badge/dynamic/json.svg?label=snapshot&colorB=00796b&prefix=&suffix=&query=$.version&uri=http%3A%2F%2Fjenkins.liquidengine.tk%2Fjob%2FLEGUI_SNAPSHOTS%2FlastSuccessfulBuild%2Fartifact%2FfullVersion.json&style=flat-square)
-![](https://img.shields.io/badge/dynamic/json.svg?label=release&colorB=00796b&prefix=&suffix=&query=$.version&uri=http%3A%2F%2Fjenkins.liquidengine.tk%2Fjob%2FLEGUI_RELEASES%2FlastSuccessfulBuild%2Fartifact%2FfullVersion.json&style=flat-square)
+![REPO SIZE](https://img.shields.io/github/repo-size/SpinyOwl/legui.svg) 
+![CODE SIZE](https://img.shields.io/github/languages/code-size/SpinyOwl/legui.svg) 
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=SpinyOwl_legui&metric=alert_status)](https://sonarcloud.io/dashboard?id=SpinyOwl_legui)
+![License](https://img.shields.io/github/license/SpinyOwl/legui.svg)  
+[![DEVELOP BUILD](https://img.shields.io/travis/SpinyOwl/legui/develop.svg?label=develop&logo=travis)](https://travis-ci.org/SpinyOwl/legui)
+[![SNAPSHOT BUILD](https://img.shields.io/travis/SpinyOwl/legui/snapshots.svg?label=snapshots&logo=travis)](https://travis-ci.org/SpinyOwl/legui)
+[![RELEASE BUILD](https://img.shields.io/travis/SpinyOwl/legui/releases.svg?label=releases&logo=travis)](https://travis-ci.org/SpinyOwl/legui)  
+[![STABLE DEVELOP VERSION](https://img.shields.io/badge/dynamic/xml.svg?label=develop&url=https%3A%2F%2Fraw.github.com%2FSpinyOwl%2Frepo%2Fdevelop%2Forg%2Fliquidengine%2Flegui%2Fmaven-metadata.xml&query=%2F%2Fmetadata%2Fversioning%2Fversions%2Fversion%5Blast()%5D&colorB=blue)](https://github.com/SpinyOwl/repo/tree/develop/org/liquidengine/legui)
+[![STABLE SNAPSHOT VERSION](https://img.shields.io/badge/dynamic/xml.svg?label=snapshot&url=https%3A%2F%2Fraw.github.com%2FSpinyOwl%2Frepo%2Fsnapshots%2Forg%2Fliquidengine%2Flegui%2Fmaven-metadata.xml&query=%2F%2Fmetadata%2Fversioning%2Fversions%2Fversion%5Blast()%5D&colorB=blue)](https://github.com/SpinyOwl/repo/tree/snapshots/org/liquidengine/legui)
+[![STABLE RELEASE VERSION](https://img.shields.io/badge/dynamic/xml.svg?label=release&url=https%3A%2F%2Fraw.github.com%2FSpinyOwl%2Frepo%2Freleases%2Forg%2Fliquidengine%2Flegui%2Fmaven-metadata.xml&query=%2F%2Fmetadata%2Fversioning%2Fversions%2Fversion%5Blast()%5D&colorB=blue)](https://github.com/SpinyOwl/repo/tree/releases/org/liquidengine/legui)    
+[![LAST FEATURE VERSION](https://img.shields.io/badge/dynamic/xml.svg?label=feature&url=https%3A%2F%2Fraw.github.com%2FSpinyOwl%2Frepo%2Ffeature%2Forg%2Fliquidengine%2Flegui%2Fmaven-metadata.xml&query=%2F%2Fmetadata%2Fversioning%2Fversions%2Fversion%5Blast()%5D&colorB=blue)](https://github.com/SpinyOwl/repo/tree/feature/org/liquidengine/legui)
+
+[![Discord](https://img.shields.io/discord/245558983123927040.svg?slongCache=true&label=Discord&logo=discord)](https://discord.gg/6wfqXpJ)
+
+___
+# LEGUI
+
+<img src="https://i.ibb.co/4mk6v70/image.png" />
 
 ___
 # TOC
+* [LEGUI](#legui)
 * [LEGUI - What is it?](#legui---what-is-it)
 * [Contribution to LEGUI](#contribution-to-legui)
 * [System requirements](#system-requirements)
@@ -27,24 +36,38 @@ ___
 
 
 
-## LEGUI - [What is it?](https://liquidengine.github.io/legui/)  
+## LEGUI - [What is it?](https://spinyowl.github.io/legui/)  
 GUI implementation for using with LWJGL3.  
 
 This gui library made for using with OpenGL port (LWJGL) to allow programmers fast and easy integrate user interface to their OpenGL apps written in Java or Kotlin.  
 API is close to Swing API.  
 
+### Examples
 <table>
-  <tr>
-    <td><img src="https://liquidengine.github.io/legui/images/demo/0.bmp" height="100px"/></td>
-    <td><img src="https://liquidengine.github.io/legui/images/demo/55.bmp" height="100px"/></td>
-    <td><img src="https://liquidengine.github.io/legui/images/demo/209.bmp" height="100px"/></td>
-    <td><img src="https://liquidengine.github.io/legui/images/demo/646.bmp" height="100px"/></td>
-    <td><img src="https://liquidengine.github.io/legui/images/demo/813.bmp" height="100px"/></td>
-  </tr>
+    <tr>
+        <td>Radio button and text input</td>
+        <td>Widgets</td>
+        <td>TextArea</td>
+    </tr>
+    <tr>
+        <td align="center"><img src="https://i.imgur.com/NMP2jll.gif" /></td>
+        <td align="center"><img src="https://i.imgur.com/8iL2xPd.gif" /></td>
+        <td align="center"><img src="https://i.imgur.com/WQxSN6n.gif" /></td>
+    </tr>
+    <tr>
+        <td>Button, togglebutton, checkbox, selectbox</td>
+        <td>Sliders</td>
+        <td>ScrollPanel</td>
+    </tr>
+    <tr>
+        <td align="center"><img src="https://i.imgur.com/kuTOdAk.gif" /></td>
+        <td align="center"><img src="https://i.imgur.com/Te70Ek9.gif" /></td>
+        <td align="center"><img src="https://i.imgur.com/RGuIpZ0.gif" /></td>
+    </tr>
 </table>
 
 ## Contribution to LEGUI
-See the [contribution guide](CONTRIBUTING.md) for more information.
+See the [contribution guide](docs/CONTRIBUTING.md) for more information.
 
 ## System requirements
 LEGUI requires Java 8+ cause it uses lambda expressions.
@@ -85,14 +108,20 @@ For **[LWJGL](https://github.com/LWJGL/lwjgl3)** and **[JOML](https://github.com
 `https://oss.sonatype.org/content/repositories/snapshots/`  
 Also you can add your own versions of these libraries using [LWJGL form](https://www.lwjgl.org/download).
 
-For **LEGUI** and **[CBCHAIN](https://github.com/LiquidEngine/cbchain)** dependency  
-`https://raw.github.com/LiquidEngine/repo/releases` or  
-`https://raw.github.com/LiquidEngine/repo/snapshots` 
+For **LEGUI** and **[CBCHAIN](https://github.com/SpinyOwl/cbchain)** dependency  
+`https://raw.github.com/SpinyOwl/repo/releases`  
+`https://raw.github.com/SpinyOwl/repo/snapshots` 
+
+For latest develop build you can use next repository:
+`https://raw.github.com/SpinyOwl/repo/develop`
+ 
+And for feature you can use feature repository:
+`https://raw.github.com/SpinyOwl/repo/feature`
 
 And add this dependency to your build script:  
 #### Add dependency (Maven):
  ```xml
-<!-- LEGUI - SNAPSHOT - https://github.com/LiquidEngine/legui -->
+<!-- LEGUI - SNAPSHOT - https://github.com/SpinyOwl/legui -->
 <dependency>
     <groupId>org.liquidengine</groupId>
     <artifactId>legui</artifactId>
@@ -101,7 +130,7 @@ And add this dependency to your build script:
  ```
 **OR** 
  ```xml
-<!-- LEGUI - RELEASE - https://github.com/LiquidEngine/legui -->
+<!-- LEGUI - RELEASE/DEVELOP/FEATURE - https://github.com/SpinyOwl/legui -->
 <dependency>
     <groupId>org.liquidengine</groupId>
     <artifactId>legui</artifactId>
@@ -110,16 +139,15 @@ And add this dependency to your build script:
  ```
 #### Add dependency (Gradle):
   ```groovy
-// LEGUI - SNAPSHOT - https://github.com/LiquidEngine/legui
+// LEGUI - SNAPSHOT - https://github.com/SpinyOwl/legui
 compile group: 'org.liquidengine', name: 'legui', version: legui_version + '-SNAPSHOT', changing: true;
 // OR
-// LEGUI - RELEASE - https://github.com/LiquidEngine/legui
+// LEGUI - RELEASE/DEVELOP/FEATURE - https://github.com/SpinyOwl/legui
 compile group: 'org.liquidengine', name: 'legui', version: legui_version, changing: true;
   ```
 
 ### Demos:
-All examples located here: 
-[LEGUI.DEMO](https://github.com/LiquidEngine/legui.demo)
+All examples located under `demo` package.
 
 ## Projects using LEGUI:
 ### Modeler by Cout970
@@ -127,13 +155,13 @@ All examples located here:
 > This tool is written in Kotlin, using LWJGL3 for rendering and Legui to build user interfaces  
 <table>
   <tr>
-    <td><img src="https://camo.githubusercontent.com/8dcd56ad9a0d51ae82e34dc5bf4c3c18fd9c47e1/68747470733a2f2f696d6167652e70726e747363722e636f6d2f696d6167652f7a4e424133325a6b54515f6b624a6359704c73616f412e706e67"/></td>
-    <td><img src="https://camo.githubusercontent.com/21cc57d2dc635e2f6adf8b8f6eb06c1b48da5596/68747470733a2f2f696d6167652e70726e747363722e636f6d2f696d6167652f776336654538695f534669314b732d694e4447614a412e706e67"/></td>
+    <td><img src="https://camo.githubusercontent.com/f21283491b2bdc4cff48206af8a87a41760319fd/68747470733a2f2f692e696d6775722e636f6d2f4257576f7470702e706e67"/></td>
+    <td><img src="https://camo.githubusercontent.com/da89620c34a885bbbd739f4448937b040f8a788d/68747470733a2f2f692e696d6775722e636f6d2f63314b5446614f2e706e67"/></td>
   </tr>
 </table>
 
 ## Links
 [LWJGL - Lightweight Java Game Library 3](https://github.com/LWJGL/lwjgl3)  
 [JOML – Java OpenGL Math Library](https://github.com/JOML-CI/JOML)  
-[CBCHAIN - Callback Chain for LWJGL3](https://github.com/LiquidEngine/cbchain)  
+[CBCHAIN - Callback Chain for LWJGL3](https://github.com/SpinyOwl/cbchain)  
 [NanoVG -Small antialiased vector graphics rendering library for OpenGL.](https://github.com/memononen/nanovg)  

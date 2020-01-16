@@ -8,8 +8,15 @@ import org.liquidengine.legui.theme.Themes;
 /**
  * Dialog component is component which extended from {@link Widget} and have some additional functionality. On {@link #show(Frame)} method it added to new
  * created {@link DialogLayer} which forbid underlying layers to receive mouse click and keyboard events.
+ * <p>
+ * TODO: REIMPLEMENT THIS COMPONENT ACCORDING TO NEW LAYOUT SYSTEM
  */
 public class Dialog extends Widget {
+
+    /**
+     * Default dialog title.
+     */
+    public static final String DEFAULT_DIALOG_TITLE = "Dialog";
 
     /**
      * Used to hold dialog layer with dialog.
@@ -24,17 +31,17 @@ public class Dialog extends Widget {
      * Creates a dialog with default title text.
      */
     public Dialog() {
-        initialize(null, "Dialog");
+        initialize(null, DEFAULT_DIALOG_TITLE);
     }
 
     /**
      * Creates a dialog with default title text and specified position and size.
      *
-     * @param width width of component.
+     * @param width  width of component.
      * @param height height of component.
      */
     public Dialog(float width, float height) {
-        initialize(new Vector2f(width, height), "Dialog");
+        initialize(new Vector2f(width, height), DEFAULT_DIALOG_TITLE);
     }
 
     /**
@@ -43,7 +50,7 @@ public class Dialog extends Widget {
      * @param size size of component.
      */
     public Dialog(Vector2f size) {
-        initialize(size, "Dialog");
+        initialize(size, DEFAULT_DIALOG_TITLE);
     }
 
     /**
@@ -59,8 +66,8 @@ public class Dialog extends Widget {
     /**
      * Creates a dialog with specified title text and specified position and size.
      *
-     * @param title dialog text.
-     * @param width width of component.
+     * @param title  dialog text.
+     * @param width  width of component.
      * @param height height of component.
      */
     public Dialog(String title, float width, float height) {
@@ -71,7 +78,7 @@ public class Dialog extends Widget {
      * Creates a dialog with specified title text and specified position and size.
      *
      * @param title widget text.
-     * @param size size of component.
+     * @param size  size of component.
      */
     public Dialog(String title, Vector2f size) {
         initialize(size, title);
@@ -80,7 +87,7 @@ public class Dialog extends Widget {
     /**
      * Used to initialize dialog with title and size
      *
-     * @param size size of component.
+     * @param size  size of component.
      * @param title dialog text.
      */
     private void initialize(Vector2f size, String title) {

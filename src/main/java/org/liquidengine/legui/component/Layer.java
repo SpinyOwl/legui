@@ -12,8 +12,6 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
-import org.joml.Vector4f;
-import org.liquidengine.legui.border.Border;
 import org.liquidengine.legui.intersection.Intersector;
 import org.liquidengine.legui.listener.ListenerMap;
 
@@ -58,10 +56,16 @@ public class Layer<T extends Component> {
      * @param frame frame to attach.
      */
     protected void setFrame(Frame frame) {
-        if (!frame.containsLayer(this)) {
-            frame.addLayer(this);
+        if (frame == this.frame) {
+            return;
+        }
+        if (this.frame != null) {
+            this.frame.removeLayer(this);
         }
         this.frame = frame;
+        if (frame != null) {
+            frame.addLayer(this);
+        }
     }
 
     /**
@@ -167,9 +171,7 @@ public class Layer<T extends Component> {
 
     /**
      * Used to set parent component. By default used by containers to attach component to container. Parent component used by renderers and event listeners and
-     * processors.
-     * <p>
-     * Don't use this method if you want to attach component to container. In this case use {@link Component#add(Component)} method.
+     * processors. <p> Don't use this method if you want to attach component to container. In this case use {@link Component#add(Component)} method.
      *
      * @param parent component container.
      */
@@ -268,70 +270,6 @@ public class Layer<T extends Component> {
     }
 
     /**
-     * Returns {@link Vector4f} background color vector where x,y,z,w mapped to r,g,b,a values. <ul> <li>vector.x - red.</li> <li>vector.y - green.</li>
-     * <li>vector.z - blue.</li> <li>vector.a - alpha.</li> </ul>
-     *
-     * @return background color vector.
-     */
-    public Vector4f getBackgroundColor() {
-        return container.getBackgroundColor();
-    }
-
-    /**
-     * Used to set background color vector where x,y,z,w mapped to r,g,b,a values. <ul> <li>vector.x - red.</li> <li>vector.y - green.</li> <li>vector.z -
-     * blue.</li> <li>vector.a - alpha.</li> </ul>
-     *
-     * @param backgroundColor background color vector.
-     */
-    public void setBackgroundColor(Vector4f backgroundColor) {
-        container.setBackgroundColor(backgroundColor);
-    }
-
-    /**
-     * Used to set background color vector.
-     *
-     * @param r red value.
-     * @param g green value.
-     * @param b blue value.
-     * @param a alpha value.
-     */
-    public void setBackgroundColor(float r, float g, float b, float a) {
-        container.setBackgroundColor(r, g, b, a);
-    }
-
-    /**
-     * Returns {@link Vector4f} focused stroke color vector where x,y,z,w mapped to r,g,b,a values. <ul> <li>vector.x - red.</li> <li>vector.y - green.</li>
-     * <li>vector.z - blue.</li> <li>vector.a - alpha.</li> </ul>
-     *
-     * @return background color vector.
-     */
-    public Vector4f getFocusedStrokeColor() {
-        return container.getFocusedStrokeColor();
-    }
-
-    /**
-     * Used to set focused stroke color vector where x,y,z,w mapped to r,g,b,a values. <ul> <li>vector.x - red.</li> <li>vector.y - green.</li> <li>vector.z -
-     * blue.</li> <li>vector.a - alpha.</li> </ul>
-     *
-     * @param focusedStrokeColor focused stroke color vector.
-     */
-    public void setFocusedStrokeColor(Vector4f focusedStrokeColor) {
-        container.setFocusedStrokeColor(focusedStrokeColor);
-    }
-
-    /**
-     * Used to set focused stroke color vector.
-     *
-     * @param r red value.
-     * @param g green value.
-     * @param b blue value.
-     * @param a alpha value.
-     */
-    public void setFocusedStrokeColor(float r, float g, float b, float a) {
-        container.setFocusedStrokeColor(r, g, b, a);
-    }
-
-    /**
      * Returns true if component enabled. By default if component enabled it receives and proceed events.
      *
      * @return true if component enabled. default value is {@link Boolean#TRUE}.
@@ -356,15 +294,6 @@ public class Layer<T extends Component> {
      */
     public boolean isVisible() {
         return container.isVisible();
-    }
-
-    /**
-     * Used to make component visible or invisible. By default if component visible it will be rendered and will receive events.
-     *
-     * @param visible flag to set.
-     */
-    public void setVisible(boolean visible) {
-        container.setVisible(visible);
     }
 
     /**
@@ -403,42 +332,6 @@ public class Layer<T extends Component> {
      */
     public Map<String, Object> getMetadata() {
         return container.getMetadata();
-    }
-
-    /**
-     * Returns border of component.
-     *
-     * @return border.
-     */
-    public Border getBorder() {
-        return container.getBorder();
-    }
-
-    /**
-     * Used to set border for component.
-     *
-     * @param border border.
-     */
-    public void setBorder(Border border) {
-        container.setBorder(border);
-    }
-
-    /**
-     * Returns corner radius of component.
-     *
-     * @return corner radius.
-     */
-    public float getCornerRadius() {
-        return container.getCornerRadius();
-    }
-
-    /**
-     * Used to set corner radius.
-     *
-     * @param cornerRadius corner radius.
-     */
-    public void setCornerRadius(float cornerRadius) {
-        container.setCornerRadius(cornerRadius);
     }
 
     /**
@@ -585,6 +478,8 @@ public class Layer<T extends Component> {
      * Used to remove component.
      *
      * @param component component to remove.
+     *
+     * @return true if removed.
      */
     public boolean remove(T component) {
         return container.remove(component);
@@ -607,12 +502,10 @@ public class Layer<T extends Component> {
      *
      * @param filter a predicate which returns true for elements to be removed.
      *
-     * @return true if any components were removed.
-     *
      * @see List#removeIf(Predicate)
      */
-    public boolean removeIf(Predicate<? super Component> filter) {
-        return container.removeIf(filter);
+    public void removeIf(Predicate<? super Component> filter) {
+        container.removeIf(filter);
     }
 
     /**
@@ -620,8 +513,8 @@ public class Layer<T extends Component> {
      *
      * @see List#clear()
      */
-    public void clearChilds() {
-        container.clearChilds();
+    public void clearChildComponents() {
+        container.clearChildComponents();
     }
 
     /**
@@ -669,13 +562,11 @@ public class Layer<T extends Component> {
     }
 
     /**
-     * Used to retrieve child components as {@link List}.
-     * <p>
-     * <span style="color:red">NOTE: this method returns NEW {@link List} of components</span>.
+     * Used to retrieve child components as {@link List}. <p> <span style="color:red">NOTE: this method returns NEW {@link List} of components</span>.
      *
      * @return list of child components.
      */
-    public List<Component> getChilds() {
-        return container.getChilds();
+    public List<Component> getChildComponents() {
+        return container.getChildComponents();
     }
 }

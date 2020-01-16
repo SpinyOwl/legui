@@ -1,8 +1,10 @@
 package org.liquidengine.legui.system.renderer.nvg.icon;
 
 import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderImage;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.getBorderRadius;
 
 import java.util.HashMap;
+
 import org.joml.Vector2f;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.icon.ImageIcon;
@@ -21,22 +23,11 @@ public class NvgImageIconRenderer<I extends ImageIcon> extends NvgIconRenderer<I
             return;
         }
         // render simple rectangle border
-        Vector2f position = component.getAbsolutePosition();
-        Vector2f size = component.getSize();
         Vector2f iconSize = icon.getSize();
+        Vector2f p        = calculateIconPosition(icon, component, iconSize);
 
-        float x = position.x;
-        float y = position.y;
-        if (icon.getPosition() == null) {
-            x += icon.getHorizontalAlign().index * (size.x - iconSize.x) / 2f;
-            y += icon.getVerticalAlign().index * (size.y - iconSize.y) / 2f;
-        } else {
-            x += icon.getPosition().x;
-            y += icon.getPosition().y;
-        }
-
-        HashMap<String, Object> p = new HashMap<>();
-        p.put(ImageRenderer.C_RADIUS, component.getCornerRadius());
-        renderImage(icon.getImage(), new Vector2f(x, y), iconSize, p, context);
+        HashMap<String, Object> prop = new HashMap<>();
+        prop.put(ImageRenderer.C_RADIUS, getBorderRadius(component));
+        renderImage(icon.getImage(), new Vector2f(p.x, p.y), iconSize, prop, context);
     }
 }

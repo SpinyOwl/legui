@@ -1,9 +1,9 @@
 package org.liquidengine.legui.component;
 
 import org.joml.Vector2f;
-import org.liquidengine.legui.color.ColorConstants;
 import org.liquidengine.legui.component.misc.listener.layercontainer.LayerContainerWindowSizeEventListener;
 import org.liquidengine.legui.event.WindowSizeEvent;
+import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.theme.Themes;
 
 /**
@@ -48,8 +48,10 @@ public class LayerContainer extends Component {
      */
     private void initialize() {
         getListenerMap().addListener(WindowSizeEvent.class, new LayerContainerWindowSizeEventListener());
-        setBackgroundColor(ColorConstants.transparent());
-        setBorder(null);
+        getStyle().getBackground().setColor(ColorConstants.transparent());
+        getStyle().setBorder(null);
+        setFocusable(false);
+        setTabFocusable(false);
         Themes.getDefaultTheme().getThemeManager().getComponentTheme(LayerContainer.class).applyAll(this);
     }
 

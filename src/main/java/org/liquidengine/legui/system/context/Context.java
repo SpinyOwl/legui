@@ -22,7 +22,7 @@ public class Context {
 
     private Vector2f windowPosition;
     private Vector2i windowSize;
-    private Vector2f framebufferSize;
+    private Vector2i framebufferSize;
     private transient float pixelRatio;
     private Component mouseTargetGui;
     private Component focusedGui;
@@ -84,10 +84,10 @@ public class Context {
         glfwGetWindowPos(glfwWindow, xpos, ypos);
 
         update(windowWidth[0], windowHeight[0],
-            frameBufferWidth[0], frameBufferHeight[0],
-            xpos[0], ypos[0],
-            glfwGetWindowAttrib(glfwWindow, GLFW_ICONIFIED) == GLFW_TRUE
-        );
+               frameBufferWidth[0], frameBufferHeight[0],
+               xpos[0], ypos[0],
+               glfwGetWindowAttrib(glfwWindow, GLFW_ICONIFIED) == GLFW_TRUE
+              );
     }
 
     /**
@@ -102,9 +102,9 @@ public class Context {
      * @param iconified the iconified
      */
     public void update(int targetWidth, int targetHeight, int framebufferWidth, int framebufferHeight,
-        int targetPosX, int targetPosY, boolean iconified) {
+                       int targetPosX, int targetPosY, boolean iconified) {
         setWindowSize(new Vector2i(targetWidth, targetHeight));
-        setFramebufferSize(new Vector2f(framebufferWidth, framebufferHeight));
+        setFramebufferSize(new Vector2i(framebufferWidth, framebufferHeight));
         setPixelRatio((float) framebufferWidth / (float) targetWidth);
         setWindowPosition(new Vector2f(targetPosX, targetPosY));
         setIconified(iconified);
@@ -178,7 +178,7 @@ public class Context {
      *
      * @return the framebuffer size
      */
-    public Vector2f getFramebufferSize() {
+    public Vector2i getFramebufferSize() {
         return framebufferSize;
     }
 
@@ -187,7 +187,7 @@ public class Context {
      *
      * @param framebufferSize the framebuffer size
      */
-    public void setFramebufferSize(Vector2f framebufferSize) {
+    public void setFramebufferSize(Vector2i framebufferSize) {
         this.framebufferSize = framebufferSize;
     }
 

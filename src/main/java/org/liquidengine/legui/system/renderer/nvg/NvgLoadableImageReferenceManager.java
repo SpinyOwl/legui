@@ -1,5 +1,9 @@
 package org.liquidengine.legui.system.renderer.nvg;
 
+import static org.lwjgl.opengl.GL11.glGetInteger;
+import static org.lwjgl.opengl.GL30.GL_MAJOR_VERSION;
+import static org.lwjgl.opengl.GL30.GL_MINOR_VERSION;
+
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.RemovalListener;
@@ -13,8 +17,11 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import org.liquidengine.legui.image.FBOImage;
 import org.liquidengine.legui.image.LoadableImage;
 import org.lwjgl.nanovg.NanoVG;
+import org.lwjgl.nanovg.NanoVGGL2;
+import org.lwjgl.nanovg.NanoVGGL3;
 
 /**
  * Created by ShchAlexander on 1/26/2017.
@@ -108,7 +115,7 @@ public class NvgLoadableImageReferenceManager {
             String path = image.getPath();
             if (path != null) {
                 try {
-                    imageRef = imageCache.get(path, getIntegerCallable(image, context));
+                    imageRef = imageCache.get(path, createNewImageReference(image, context));
                 } catch (ExecutionException e) {
                     e.printStackTrace();
                 }
@@ -119,7 +126,7 @@ public class NvgLoadableImageReferenceManager {
         return imageRef;
     }
 
-    private Callable<Integer> getIntegerCallable(LoadableImage image, long context) {
+    private Callable<Integer> createNewImageReference(LoadableImage image, long context) {
         return () -> {
             Integer reference = 0;
             ByteBuffer imageData = image.getImageData();
@@ -129,6 +136,45 @@ public class NvgLoadableImageReferenceManager {
                 reference = NanoVG.nvgCreateImageRGBA(context, width, height, 0, imageData);
             }
             imageAssociationMap.put(image.getPath(), reference);
+            return reference;
+        };
+    }
+
+    public int getImageReference(FBOImage image, long context) {
+        Integer imageRef = 0;
+        if (image != null) {
+            int textureId = image.getTextureId();
+            if (textureId != 0) {
+                String path = getFboPath(textureId);
+                try {
+                    imageRef = imageCache.get(path, createNewImageReference(image, context));
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                return 0;
+            }
+        }
+        return imageRef;
+    }
+
+    private String getFboPath(int textureId) {
+        return "::FBO::" + textureId;
+    }
+
+    private Callable<Integer> createNewImageReference(FBOImage image, long context) {
+        return () -> {
+            int handle = image.getTextureId();
+            int width = image.getWidth();
+            int height = image.getHeight();
+            Integer reference = 0;
+            boolean isVersionNew = (glGetInteger(GL_MAJOR_VERSION) > 3) || (glGetInteger(GL_MAJOR_VERSION) == 3 && glGetInteger(GL_MINOR_VERSION) >= 2);
+            if (isVersionNew) {
+                reference = NanoVGGL3.nvglCreateImageFromHandle(context, handle, width, height, 0);
+            } else {
+                reference = NanoVGGL2.nvglCreateImageFromHandle(context, handle, width, height, 0);
+            }
+            imageAssociationMap.put(getFboPath(handle), reference);
             return reference;
         };
     }

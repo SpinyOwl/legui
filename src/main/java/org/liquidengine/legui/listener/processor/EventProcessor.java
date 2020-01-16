@@ -3,21 +3,28 @@ package org.liquidengine.legui.listener.processor;
 import org.liquidengine.legui.event.Event;
 
 /**
+ * UI Events processor interface.
+ *
  * @author ShchAlexander.
  */
-public abstract class EventProcessor {
+public interface EventProcessor {
 
-    private static EventProcessor INSTANCE = new EventProcessorImpl();
+    /**
+     * Should be called to process events.
+     */
+    void processEvents();
 
-    public static EventProcessor getInstance() {
-        return INSTANCE;
-    }
+    /**
+     * Used to push event to event processor.
+     *
+     * @param event event to push to event processor.
+     */
+    void pushEvent(Event event);
 
-    public static void setInstance(EventProcessor eventProcessor) {
-        INSTANCE = eventProcessor;
-    }
-
-    public abstract void processEvents();
-
-    public abstract void pushEvent(Event event);
+    /**
+     * Returns true if there are events that should be processed.
+     *
+     * @return true if there are events that should be processed.
+     */
+    boolean hasEvents();
 }

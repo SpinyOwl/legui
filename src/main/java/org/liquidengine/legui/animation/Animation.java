@@ -10,10 +10,18 @@ package org.liquidengine.legui.animation;
 public abstract class Animation {
 
     /**
+     * Flag that indicates if animation was started.
+     */
+    private boolean animationStarted = false;
+
+    /**
      * Adds animation to animator.
      */
     public void startAnimation() {
-        Animator.getInstance().pushAnimation(this);
+        if (!animationStarted) {
+            AnimatorProvider.getAnimator().pushAnimation(this);
+            animationStarted = true;
+        }
     }
 
     /**
@@ -28,7 +36,6 @@ public abstract class Animation {
      * true if animation is finished and could be removed from animator.
      *
      * @param delta delta time (from previous call).
-     *
      * @return true if animation is finished and could be removed from animator.
      */
     protected abstract boolean animate(double delta);
@@ -38,6 +45,22 @@ public abstract class Animation {
      */
     protected void afterAnimation() {
         // Could be implemented later.
+    }
+
+    /**
+     * Used to stop animation. Removes animation from animator.
+     */
+    public void stopAnimation() {
+        AnimatorProvider.getAnimator().removeAnimation(this);
+    }
+
+    /**
+     * Returns the flag that indicates if animation was started.
+     *
+     * @return the flag that indicates if animation was started.
+     */
+    public boolean isAnimationStarted() {
+        return animationStarted;
     }
 
 }

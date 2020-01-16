@@ -1,12 +1,12 @@
 package org.liquidengine.legui.component.misc.listener.checkbox;
 
-import static org.liquidengine.legui.event.MouseClickEvent.MouseClickAction.CLICK;
-
 import org.liquidengine.legui.component.CheckBox;
 import org.liquidengine.legui.component.event.checkbox.CheckBoxChangeValueEvent;
 import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.listener.MouseClickEventListener;
-import org.liquidengine.legui.listener.processor.EventProcessor;
+import org.liquidengine.legui.listener.processor.EventProcessorProvider;
+
+import static org.liquidengine.legui.event.MouseClickEvent.MouseClickAction.CLICK;
 
 /**
  * MouseClickEventListener for checkbox, used to toggle checkbox state on mouse click.
@@ -20,11 +20,11 @@ public class CheckBoxMouseClickEventListener implements MouseClickEventListener 
      */
     @Override
     public void process(MouseClickEvent event) {
-        CheckBox checkBox = (CheckBox) event.getComponent();
+        CheckBox checkBox = (CheckBox) event.getTargetComponent();
         if (event.getAction() == CLICK) {
             boolean checked = checkBox.isChecked();
             checkBox.setChecked(!checked);
-            EventProcessor.getInstance().pushEvent(new CheckBoxChangeValueEvent(checkBox, event.getContext(), event.getFrame(), checked, !checked));
+            EventProcessorProvider.getInstance().pushEvent(new CheckBoxChangeValueEvent(checkBox, event.getContext(), event.getFrame(), checked, !checked));
         }
     }
 

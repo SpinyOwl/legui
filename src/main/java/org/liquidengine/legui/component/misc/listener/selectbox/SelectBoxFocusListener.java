@@ -8,11 +8,11 @@ import org.liquidengine.legui.listener.FocusEventListener;
 /**
  * Default focus listener for selectbox. Used to collapse selectbox if it loses focus.
  */
-public class SelectBoxFocusListener implements FocusEventListener {
+public class SelectBoxFocusListener<T> implements FocusEventListener {
 
-    private SelectBox selectBox;
+    private SelectBox<T> selectBox;
 
-    public SelectBoxFocusListener(SelectBox selectBox) {
+    public SelectBoxFocusListener(SelectBox<T> selectBox) {
         this.selectBox = selectBox;
     }
 
@@ -21,7 +21,7 @@ public class SelectBoxFocusListener implements FocusEventListener {
         if (!event.isFocused() && !selectBox.isCollapsed()) {
             boolean collapse = true;
             Component nextFocus = event.getNextFocus();
-            for (SelectBox.SelectBoxElement selectBoxElement : selectBox.getSelectBoxElements()) {
+            for (SelectBox<T>.SelectBoxElement<T> selectBoxElement : selectBox.getSelectBoxElements()) {
                 if (nextFocus == selectBoxElement) {
                     collapse = false;
                 }
@@ -34,12 +34,13 @@ public class SelectBoxFocusListener implements FocusEventListener {
             }
             if (selectBox.isCollapsed() != collapse) {
                 selectBox.setCollapsed(collapse);
+                event.getFrame().removeLayer(selectBox.getSelectBoxLayer());
             }
         }
     }
 
     @Override
     public boolean equals(Object obj) {
-        return (obj != null) && ((obj == this) || ((obj != this) && (obj.getClass() == this.getClass())));
+        return obj != null && (obj == this || obj.getClass() == this.getClass());
     }
 }

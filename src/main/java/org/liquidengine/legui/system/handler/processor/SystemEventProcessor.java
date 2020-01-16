@@ -1,98 +1,59 @@
 package org.liquidengine.legui.system.handler.processor;
 
-import java.util.Queue;
-import java.util.concurrent.ConcurrentLinkedQueue;
 import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.system.context.CallbackKeeper;
 import org.liquidengine.legui.system.context.Context;
-import org.liquidengine.legui.system.event.SystemCharEvent;
-import org.liquidengine.legui.system.event.SystemCharModsEvent;
-import org.liquidengine.legui.system.event.SystemCursorEnterEvent;
-import org.liquidengine.legui.system.event.SystemCursorPosEvent;
-import org.liquidengine.legui.system.event.SystemDropEvent;
-import org.liquidengine.legui.system.event.SystemEvent;
-import org.liquidengine.legui.system.event.SystemFramebufferSizeEvent;
-import org.liquidengine.legui.system.event.SystemKeyEvent;
-import org.liquidengine.legui.system.event.SystemMouseClickEvent;
-import org.liquidengine.legui.system.event.SystemScrollEvent;
-import org.liquidengine.legui.system.event.SystemWindowCloseEvent;
-import org.liquidengine.legui.system.event.SystemWindowFocusEvent;
-import org.liquidengine.legui.system.event.SystemWindowIconifyEvent;
-import org.liquidengine.legui.system.event.SystemWindowPosEvent;
-import org.liquidengine.legui.system.event.SystemWindowRefreshEvent;
-import org.liquidengine.legui.system.event.SystemWindowSizeEvent;
-import org.liquidengine.legui.system.handler.SystemEventHandler;
-import org.liquidengine.legui.system.handler.SystemEventHandlerProvider;
-import org.lwjgl.glfw.GLFWCharCallbackI;
-import org.lwjgl.glfw.GLFWCharModsCallbackI;
-import org.lwjgl.glfw.GLFWCursorEnterCallbackI;
-import org.lwjgl.glfw.GLFWCursorPosCallbackI;
-import org.lwjgl.glfw.GLFWDropCallbackI;
-import org.lwjgl.glfw.GLFWFramebufferSizeCallbackI;
-import org.lwjgl.glfw.GLFWKeyCallbackI;
-import org.lwjgl.glfw.GLFWMouseButtonCallbackI;
-import org.lwjgl.glfw.GLFWScrollCallbackI;
-import org.lwjgl.glfw.GLFWWindowCloseCallbackI;
-import org.lwjgl.glfw.GLFWWindowFocusCallbackI;
-import org.lwjgl.glfw.GLFWWindowIconifyCallbackI;
-import org.lwjgl.glfw.GLFWWindowPosCallbackI;
-import org.lwjgl.glfw.GLFWWindowRefreshCallbackI;
-import org.lwjgl.glfw.GLFWWindowSizeCallbackI;
+import org.liquidengine.legui.system.event.*;
+import org.lwjgl.glfw.*;
 
 /**
  * Created by ShchAlexander on 1/25/2017.
  */
-public class SystemEventProcessor {
-
-    private Queue<SystemEvent> eventQueue = new ConcurrentLinkedQueue<>();
-
+public interface SystemEventProcessor {
     /**
-     * Process events.
+     * Used to process a bunch of events that already pushed to this event processor.
      *
-     * @param frame the frame
-     * @param context the context
+     * @param frame   target frame for events.
+     * @param context context.
      */
-    public void processEvents(Frame frame, Context context) {
-        for (SystemEvent event = eventQueue.poll(); event != null; event = eventQueue.poll()) {
-            SystemEventHandler processor = SystemEventHandlerProvider.getInstance().getProcessor(event.getClass());
-            if (processor != null) {
-                processor.handle(event, frame, context);
-            }
-        }
-    }
+    void processEvents(Frame frame, Context context);
 
     /**
      * Push event.
      *
      * @param event the event
      */
-    public void pushEvent(SystemEvent event) {
-        eventQueue.add(event);
-    }
+    void pushEvent(SystemEvent event);
 
+    /**
+     * Returns true if there are events that should be processed.
+     *
+     * @return true if there are events that should be processed.
+     */
+    boolean hasEvents();
 
     /**
      * Add default callbacks to callback keeper.
      *
      * @param guiCallbackKeeper the gui callback keeper
      */
-    public void addDefaultCallbacks(CallbackKeeper guiCallbackKeeper) {
+    static void addDefaultCallbacks(CallbackKeeper guiCallbackKeeper, SystemEventProcessor processor) {
         //@formatter:off
-        guiCallbackKeeper.getChainCharCallback()            .add(createDefaultGlfwCharCallbackI());
-        guiCallbackKeeper.getChainDropCallback()            .add(createDefaultGlfwDropCallbackI());
-        guiCallbackKeeper.getChainKeyCallback()             .add(createDefaultGlfwKeyCallbackI());
-        guiCallbackKeeper.getChainScrollCallback()          .add(createDefaultGlfwScrollCallbackI());
-        guiCallbackKeeper.getChainCharModsCallback()        .add(createDefaultGlfwCharModsCallbackI());
-        guiCallbackKeeper.getChainCursorEnterCallback()     .add(createDefaultGlfwCursorEnterCallbackI());
-        guiCallbackKeeper.getChainFramebufferSizeCallback() .add(createDefaultGlfwFramebufferSizeCallbackI());
-        guiCallbackKeeper.getChainMouseButtonCallback()     .add(createDefaultGlfwMouseButtonCallbackI());
-        guiCallbackKeeper.getChainCursorPosCallback()       .add(createDefaultGlfwCursorPosCallbackI());
-        guiCallbackKeeper.getChainWindowCloseCallback()     .add(createDefaultGlfwWindowCloseCallbackI());
-        guiCallbackKeeper.getChainWindowFocusCallback()     .add(createDefaultGlfwWindowFocusCallbackI());
-        guiCallbackKeeper.getChainWindowIconifyCallback()   .add(createDefaultGlfwWindowIconifyCallbackI());
-        guiCallbackKeeper.getChainWindowPosCallback()       .add(createDefaultGlfwWindowPosCallbackI());
-        guiCallbackKeeper.getChainWindowRefreshCallback()   .add(createDefaultGlfwWindowRefreshCallbackI());
-        guiCallbackKeeper.getChainWindowSizeCallback()      .add(createDefaultGlfwWindowSizeCallbackI());
+        guiCallbackKeeper.getChainCharCallback()            .add(createDefaultGlfwCharCallbackI            (processor));
+        guiCallbackKeeper.getChainDropCallback()            .add(createDefaultGlfwDropCallbackI            (processor));
+        guiCallbackKeeper.getChainKeyCallback()             .add(createDefaultGlfwKeyCallbackI             (processor));
+        guiCallbackKeeper.getChainScrollCallback()          .add(createDefaultGlfwScrollCallbackI          (processor));
+        guiCallbackKeeper.getChainCharModsCallback()        .add(createDefaultGlfwCharModsCallbackI        (processor));
+        guiCallbackKeeper.getChainCursorEnterCallback()     .add(createDefaultGlfwCursorEnterCallbackI     (processor));
+        guiCallbackKeeper.getChainFramebufferSizeCallback() .add(createDefaultGlfwFramebufferSizeCallbackI (processor));
+        guiCallbackKeeper.getChainMouseButtonCallback()     .add(createDefaultGlfwMouseButtonCallbackI     (processor));
+        guiCallbackKeeper.getChainCursorPosCallback()       .add(createDefaultGlfwCursorPosCallbackI       (processor));
+        guiCallbackKeeper.getChainWindowCloseCallback()     .add(createDefaultGlfwWindowCloseCallbackI     (processor));
+        guiCallbackKeeper.getChainWindowFocusCallback()     .add(createDefaultGlfwWindowFocusCallbackI     (processor));
+        guiCallbackKeeper.getChainWindowIconifyCallback()   .add(createDefaultGlfwWindowIconifyCallbackI   (processor));
+        guiCallbackKeeper.getChainWindowPosCallback()       .add(createDefaultGlfwWindowPosCallbackI       (processor));
+        guiCallbackKeeper.getChainWindowRefreshCallback()   .add(createDefaultGlfwWindowRefreshCallbackI   (processor));
+        guiCallbackKeeper.getChainWindowSizeCallback()      .add(createDefaultGlfwWindowSizeCallbackI      (processor));
         //@formatter:on
     }
 
@@ -101,8 +62,8 @@ public class SystemEventProcessor {
      *
      * @return the GLFWWindowSizeCallback.
      */
-    public GLFWWindowSizeCallbackI createDefaultGlfwWindowSizeCallbackI() {
-        return (window, width, height) -> eventQueue.add(new SystemWindowSizeEvent(window, width, height));
+    static GLFWWindowSizeCallbackI createDefaultGlfwWindowSizeCallbackI(SystemEventProcessor processor) {
+        return (window, width, height) -> processor.pushEvent(new SystemWindowSizeEvent(window, width, height));
     }
 
     /**
@@ -110,8 +71,8 @@ public class SystemEventProcessor {
      *
      * @return the GLFWWindowRefreshCallback.
      */
-    public GLFWWindowRefreshCallbackI createDefaultGlfwWindowRefreshCallbackI() {
-        return window -> eventQueue.add(new SystemWindowRefreshEvent(window));
+    static GLFWWindowRefreshCallbackI createDefaultGlfwWindowRefreshCallbackI(SystemEventProcessor processor) {
+        return window -> processor.pushEvent(new SystemWindowRefreshEvent(window));
     }
 
     /**
@@ -119,8 +80,8 @@ public class SystemEventProcessor {
      *
      * @return the GLFWWindowPosCallback.
      */
-    public GLFWWindowPosCallbackI createDefaultGlfwWindowPosCallbackI() {
-        return (window, xpos, ypos) -> eventQueue.add(new SystemWindowPosEvent(window, xpos, ypos));
+    static GLFWWindowPosCallbackI createDefaultGlfwWindowPosCallbackI(SystemEventProcessor processor) {
+        return (window, xpos, ypos) -> processor.pushEvent(new SystemWindowPosEvent(window, xpos, ypos));
     }
 
     /**
@@ -128,8 +89,8 @@ public class SystemEventProcessor {
      *
      * @return the GLFWWindowIconifyCallback.
      */
-    public GLFWWindowIconifyCallbackI createDefaultGlfwWindowIconifyCallbackI() {
-        return (window, iconified) -> eventQueue.add(new SystemWindowIconifyEvent(window, iconified));
+    static GLFWWindowIconifyCallbackI createDefaultGlfwWindowIconifyCallbackI(SystemEventProcessor processor) {
+        return (window, iconified) -> processor.pushEvent(new SystemWindowIconifyEvent(window, iconified));
     }
 
     /**
@@ -137,8 +98,8 @@ public class SystemEventProcessor {
      *
      * @return the GLFWWindowFocusCallback.
      */
-    public GLFWWindowFocusCallbackI createDefaultGlfwWindowFocusCallbackI() {
-        return (window, focused) -> eventQueue.add(new SystemWindowFocusEvent(window, focused));
+    static GLFWWindowFocusCallbackI createDefaultGlfwWindowFocusCallbackI(SystemEventProcessor processor) {
+        return (window, focused) -> processor.pushEvent(new SystemWindowFocusEvent(window, focused));
     }
 
     /**
@@ -146,8 +107,8 @@ public class SystemEventProcessor {
      *
      * @return the GLFWWindowCloseCallback.
      */
-    public GLFWWindowCloseCallbackI createDefaultGlfwWindowCloseCallbackI() {
-        return (window) -> eventQueue.add(new SystemWindowCloseEvent(window));
+    static GLFWWindowCloseCallbackI createDefaultGlfwWindowCloseCallbackI(SystemEventProcessor processor) {
+        return (window) -> processor.pushEvent(new SystemWindowCloseEvent(window));
     }
 
     /**
@@ -155,8 +116,8 @@ public class SystemEventProcessor {
      *
      * @return the GLFWCursorPosCallback.
      */
-    public GLFWCursorPosCallbackI createDefaultGlfwCursorPosCallbackI() {
-        return (window, xpos, ypos) -> eventQueue.add(new SystemCursorPosEvent(window, xpos, ypos));
+    static GLFWCursorPosCallbackI createDefaultGlfwCursorPosCallbackI(SystemEventProcessor processor) {
+        return (window, xpos, ypos) -> processor.pushEvent(new SystemCursorPosEvent(window, xpos, ypos));
     }
 
     /**
@@ -164,8 +125,8 @@ public class SystemEventProcessor {
      *
      * @return the GLFWMouseButtonCallback.
      */
-    public GLFWMouseButtonCallbackI createDefaultGlfwMouseButtonCallbackI() {
-        return (window, button, action, mods) -> eventQueue.add(new SystemMouseClickEvent(window, button, action, mods));
+    static GLFWMouseButtonCallbackI createDefaultGlfwMouseButtonCallbackI(SystemEventProcessor processor) {
+        return (window, button, action, mods) -> processor.pushEvent(new SystemMouseClickEvent(window, button, action, mods));
     }
 
     /**
@@ -173,8 +134,8 @@ public class SystemEventProcessor {
      *
      * @return the GLFWFramebufferSizeCallback.
      */
-    public GLFWFramebufferSizeCallbackI createDefaultGlfwFramebufferSizeCallbackI() {
-        return (window, width, height) -> eventQueue.add(new SystemFramebufferSizeEvent(window, width, height));
+    static GLFWFramebufferSizeCallbackI createDefaultGlfwFramebufferSizeCallbackI(SystemEventProcessor processor) {
+        return (window, width, height) -> processor.pushEvent(new SystemFramebufferSizeEvent(window, width, height));
     }
 
     /**
@@ -182,8 +143,8 @@ public class SystemEventProcessor {
      *
      * @return the GLFWCursorEnterCallback.
      */
-    public GLFWCursorEnterCallbackI createDefaultGlfwCursorEnterCallbackI() {
-        return (window, entered) -> eventQueue.add(new SystemCursorEnterEvent(window, entered));
+    static GLFWCursorEnterCallbackI createDefaultGlfwCursorEnterCallbackI(SystemEventProcessor processor) {
+        return (window, entered) -> processor.pushEvent(new SystemCursorEnterEvent(window, entered));
     }
 
     /**
@@ -191,8 +152,8 @@ public class SystemEventProcessor {
      *
      * @return the GLFWCharModsCallback.
      */
-    public GLFWCharModsCallbackI createDefaultGlfwCharModsCallbackI() {
-        return (window, codepoint, mods) -> eventQueue.add(new SystemCharModsEvent(window, codepoint, mods));
+    static GLFWCharModsCallbackI createDefaultGlfwCharModsCallbackI(SystemEventProcessor processor) {
+        return (window, codepoint, mods) -> processor.pushEvent(new SystemCharModsEvent(window, codepoint, mods));
     }
 
     /**
@@ -200,8 +161,8 @@ public class SystemEventProcessor {
      *
      * @return the GLFWScrollCallback.
      */
-    public GLFWScrollCallbackI createDefaultGlfwScrollCallbackI() {
-        return (window, xoffset, yoffset) -> eventQueue.add(new SystemScrollEvent(window, xoffset, yoffset));
+    static GLFWScrollCallbackI createDefaultGlfwScrollCallbackI(SystemEventProcessor processor) {
+        return (window, xoffset, yoffset) -> processor.pushEvent(new SystemScrollEvent(window, xoffset, yoffset));
     }
 
     /**
@@ -209,8 +170,8 @@ public class SystemEventProcessor {
      *
      * @return the GLFWKeyCallback.
      */
-    public GLFWKeyCallbackI createDefaultGlfwKeyCallbackI() {
-        return (window, key, scancode, action, mods) -> eventQueue.add(new SystemKeyEvent(window, key, scancode, action, mods));
+    static GLFWKeyCallbackI createDefaultGlfwKeyCallbackI(SystemEventProcessor processor) {
+        return (window, key, scancode, action, mods) -> processor.pushEvent(new SystemKeyEvent(window, key, scancode, action, mods));
     }
 
     /**
@@ -218,8 +179,8 @@ public class SystemEventProcessor {
      *
      * @return the GLFWDropCallback.
      */
-    public GLFWDropCallbackI createDefaultGlfwDropCallbackI() {
-        return (window, count, names) -> eventQueue.add(new SystemDropEvent(window, count, names));
+    static GLFWDropCallbackI createDefaultGlfwDropCallbackI(SystemEventProcessor processor) {
+        return (window, count, names) -> processor.pushEvent(new SystemDropEvent(window, count, names));
     }
 
     /**
@@ -227,7 +188,7 @@ public class SystemEventProcessor {
      *
      * @return the GLFWCharCallback.
      */
-    public GLFWCharCallbackI createDefaultGlfwCharCallbackI() {
-        return (window, codepoint) -> eventQueue.add(new SystemCharEvent(window, codepoint));
+    static GLFWCharCallbackI createDefaultGlfwCharCallbackI(SystemEventProcessor processor) {
+        return (window, codepoint) -> processor.pushEvent(new SystemCharEvent(window, codepoint));
     }
 }

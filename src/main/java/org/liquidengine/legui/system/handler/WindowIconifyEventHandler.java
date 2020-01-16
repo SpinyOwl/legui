@@ -5,7 +5,7 @@ import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.component.Layer;
 import org.liquidengine.legui.event.WindowIconifyEvent;
-import org.liquidengine.legui.listener.processor.EventProcessor;
+import org.liquidengine.legui.listener.processor.EventProcessorProvider;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.event.SystemWindowIconifyEvent;
 
@@ -25,9 +25,9 @@ public class WindowIconifyEventHandler extends AbstractSystemEventHandler<System
         if (!(component.isVisible())) {
             return;
         }
-        EventProcessor.getInstance().pushEvent(new WindowIconifyEvent(component, context, frame, event.iconified));
-        List<Component> childs = component.getChilds();
-        for (Component child : childs) {
+        EventProcessorProvider.getInstance().pushEvent(new WindowIconifyEvent(component, context, frame, event.iconified));
+        List<Component> childComponents = component.getChildComponents();
+        for (Component child : childComponents) {
             pushEvent(child, event, context, frame);
         }
     }

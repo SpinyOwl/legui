@@ -1,0 +1,82 @@
+language: java
+python: '3.5'
+sudo: false
+install: true
+
+if: branch IN (develop, snapshots, releases)
+
+env:
+  global:
+    secure: DsqkVoW3qoxmaTA/XZQKLRezTe/iCNnxsjqvYRWsmsnqhj8rMsAsbXCh/lnch2pCcQEoJ7hI8O0RjSeaiJEWLPx1nEHAVEuDsh4pOw2orklvtr9eVat2kaUqKz6OZ99TbWvILFewPO6KhWbkVN8f72/oXLOb9ouDg6SgpM1TnMq9cbMkkqY5JUupiEZpnzTr44E9BfdUTjsLJA/0njm8ngfMxd3Pn8YaDCXJSkZhrO8GMvWMDUsmSwugrLsfEZJe9t32fK/M9LPdsI2sLMJleMjbI9IqlFS9rXmeuB9LQ0DhIisubU129R41okr/vEUPeotNWWo4HRCSnSg0LwwtW7tIXZawCCZa3iYkwCQ5Qdgtnr/8bD8O8wjQOzRayzs5+U2m6z6QWZl80w6d/BqhGMr+4yeaCJ5Y1jG15+6Xrmt5q6h0OVjFGEWF6UIPh79PYvL8t79jT5XYYYhhVNjdlHVc115OXHqVEpHv3ZMg/TtrNPIZIqf6sB0ItvJQlosy2IgfiFcdSN6H3NUz2h8SaIEXxIi3uMVGHEUSHjX/SI+HQbRL30a+EtpOtKinbPMpOzW7gw5S0FSWMaw9EMhutBt64R2ccTaio1PcXbZ3N4IcRPQtSc6fZ8ndfALYNx8hRxcBp6WTA7LZ/xqDmClr/QtaeCr6qN57aa7JOCn8lLE=
+
+# Define version extension for publish task
+before_install:
+  - sudo apt-get install jq
+  - |
+    if [ "$TRAVIS_BRANCH" == "develop" ]; then
+      eval export VEXT=$TRAVIS_BUILD_NUMBER;
+    elif [ "$TRAVIS_BRANCH" == "snapshots" ]; then
+      eval export VEXT=SNAPSHOT;
+    fi
+    
+install:
+  - eval export version=$(cat version.json | jq '.version')
+
+jdk:
+  - openjdk8
+
+addons:
+  sonarcloud: true
+
+stages:
+  - name: build_and_publish_artifacts
+    if: type = push
+  - name: build_pull_request
+    if: (type = pull_request) AND (branch = develop)
+
+jobs:
+  include:
+    - stage: build_and_publish_artifacts
+      before_script:
+        - echo $deploy_rsa_password | gpg --passphrase-fd 0 deploy_rsa.gpg
+        - eval "$(ssh-agent)"
+        - chmod 600 ./deploy_rsa
+        - ssh-add ./deploy_rsa
+        - git config --global user.name SpinyOwlCI
+        - git config --global user.email ci@spinyowl.com
+      script: ./gradlew clean build test sonarqube uploadArchives -Dsonar.login=$SONAR_LOGIN -DpublishUsername=SpinyOwlCI -DpublishPassword=$CI_USER_PASSWORD -DpublishUrl=git:$TRAVIS_BRANCH://git@github.com:SpinyOwl/repo.git
+    - stage: build_pull_request
+      script: 
+        - echo "$TRAVIS_PULL_REQUEST_SLUG"
+        - echo "$TRAVIS_REPO_SLUG"
+        - |
+          if [ "$TRAVIS_PULL_REQUEST_SLUG" == "$TRAVIS_REPO_SLUG" ]; then
+            echo one &&
+             ./gradlew clean build test sonarqube -Dsonar.login=$SONAR_LOGIN -Dsonar.pullrequest.base=$TRAVIS_BRANCH -Dsonar.pullrequest.branch=$TRAVIS_PULL_REQUEST_BRANCH -Dsonar.pullrequest.key=$TRAVIS_PULL_REQUEST -Dsonar.pullrequest.provider=GitHub -Dsonar.pullrequest.github.repository=SpinyOwl/legui; 
+          fi
+        - |
+          if [ "$TRAVIS_PULL_REQUEST_SLUG" != "$TRAVIS_REPO_SLUG" ]; then
+            echo two &&
+             ./gradlew clean build test; 
+          fi
+
+cache:
+  directories:
+    - '$HOME/.m2/repository'
+    - '$HOME/.sonar/cache'
+    - '$HOME/.gradle'
+    - '.gradle'
+
+after_success:
+  - wget https://raw.githubusercontent.com/SpinyOwl/travis-ci-discord-webhook/master/send.sh
+  - chmod +x send.sh
+  - |
+    if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
+      ./send.sh success $WEBHOOK_URL $version-$VEXT https://github.com/SpinyOwl/repo/tree/$TRAVIS_BRANCH/org/liquidengine/legui/$version-$VEXT
+    else
+      ./send.sh success $WEBHOOK_URL $version-$VEXT
+    fi
+after_failure:
+  - wget https://raw.githubusercontent.com/SpinyOwl/travis-ci-discord-webhook/master/send.sh
+  - chmod +x send.sh
+  - ./send.sh failure $WEBHOOK_URL

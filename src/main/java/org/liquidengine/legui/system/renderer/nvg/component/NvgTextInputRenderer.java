@@ -1,31 +1,5 @@
 package org.liquidengine.legui.system.renderer.nvg.component;
 
-import static org.liquidengine.legui.color.ColorUtil.oppositeBlackOrWhite;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgColorUtil.rgba;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.alignTextInBox;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.calculateTextBoundsRect;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.createScissor;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.intersectScissor;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.resetScissor;
-import static org.lwjgl.nanovg.NanoVG.NVG_ROUND;
-import static org.lwjgl.nanovg.NanoVG.nnvgTextGlyphPositions;
-import static org.lwjgl.nanovg.NanoVG.nvgBeginPath;
-import static org.lwjgl.nanovg.NanoVG.nvgFillColor;
-import static org.lwjgl.nanovg.NanoVG.nvgFontFace;
-import static org.lwjgl.nanovg.NanoVG.nvgFontSize;
-import static org.lwjgl.nanovg.NanoVG.nvgLineCap;
-import static org.lwjgl.nanovg.NanoVG.nvgLineJoin;
-import static org.lwjgl.nanovg.NanoVG.nvgLineTo;
-import static org.lwjgl.nanovg.NanoVG.nvgMoveTo;
-import static org.lwjgl.nanovg.NanoVG.nvgStroke;
-import static org.lwjgl.nanovg.NanoVG.nvgStrokeColor;
-import static org.lwjgl.nanovg.NanoVG.nvgStrokeWidth;
-import static org.lwjgl.system.MemoryUtil.memAddress;
-import static org.lwjgl.system.MemoryUtil.memFree;
-import static org.lwjgl.system.MemoryUtil.memUTF8;
-
-import java.nio.ByteBuffer;
-import java.util.Map;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.TextInput;
@@ -33,12 +7,24 @@ import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
 import org.liquidengine.legui.input.Mouse;
+import org.liquidengine.legui.style.Style;
 import org.liquidengine.legui.system.context.Context;
+import org.liquidengine.legui.system.renderer.nvg.util.NvgColorUtil;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgShapes;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgText;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.nanovg.NVGColor;
 import org.lwjgl.nanovg.NVGGlyphPosition;
+
+import java.nio.ByteBuffer;
+import java.util.Map;
+
+import static org.liquidengine.legui.style.color.ColorUtil.oppositeBlackOrWhite;
+import static org.liquidengine.legui.style.util.StyleUtilities.getInnerContentRectangle;
+import static org.liquidengine.legui.style.util.StyleUtilities.getPadding;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.*;
+import static org.lwjgl.nanovg.NanoVG.*;
+import static org.lwjgl.system.MemoryUtil.*;
 
 /**
  * Created by ShchAlexander on 13.02.2017.
@@ -55,42 +41,44 @@ public class NvgTextInputRenderer extends NvgDefaultComponentRenderer<TextInput>
     /**
      * Used to render textInput.
      *
-     * @param textInput textInput to render.
+     * @param component textInput to render.
      * @param context legui context.
      * @param nanovg nanovg context pointer.
      */
     @Override
-    protected void renderSelf(TextInput textInput, Context context, long nanovg) {
-        createScissor(nanovg, textInput);
+    protected void renderSelf(TextInput component, Context context, long nanovg) {
+        createScissor(nanovg, component);
         {
-            Vector2f pos = textInput.getAbsolutePosition();
-            Vector2f size = textInput.getSize();
-            boolean enabled = textInput.isEnabled();
-            Vector4f bc = new Vector4f(textInput.getBackgroundColor());
+            Vector2f pos = component.getAbsolutePosition();
+            Vector2f size = component.getSize();
+            boolean enabled = component.isEnabled();
+            Style style = component.getStyle();
+            Vector4f bc = new Vector4f(style.getBackground().getColor());
 
-            if (enabled && textInput.isFocused()) {
+            if (enabled && component.isFocused()) {
                 bc.w *= 1.1f;
             } else if (!enabled) {
                 bc.w *= 0.5f;
             }
-            if (!textInput.isEditable()) {
+            if (!component.isEditable()) {
                 bc.w *= 0.3f;
             }
-            NvgShapes.drawRect(nanovg, pos, size, bc, textInput.getCornerRadius());
+            renderBackground(component, context, nanovg);
 
-            TextState textState = textInput.getTextState();
-            Vector4f p = new Vector4f(textState.getPadding()).add(2, 2, 2, 2);
-
-            Vector4f intersectRect = new Vector4f(pos.x + p.x, pos.y + p.y, size.x - p.x - p.z, size.y - p.y - p.w);
+            Vector4f padding = getPadding(component, style);
+            Vector4f intersectRect = getInnerContentRectangle(pos, size, padding);
             intersectScissor(nanovg, new Vector4f(intersectRect).sub(1, 1, -2, -2));
-            renderText(context, nanovg, textInput, size, intersectRect, bc);
+            renderText(context, nanovg, component, size, intersectRect, bc);
         }
         resetScissor(nanovg);
     }
 
     private void renderText(Context leguiContext, long context, TextInput gui, Vector2f size, Vector4f rect, Vector4f bc) {
 
-        try (NVGGlyphPosition.Buffer glyphs = NVGGlyphPosition.calloc(maxGlyphCount); NVGColor colorA = NVGColor.calloc()) {
+        try (
+                NVGGlyphPosition.Buffer glyphs = NVGGlyphPosition.calloc(maxGlyphCount);
+                NVGColor colorA = NVGColor.calloc()
+        ) {
             TextState textState = gui.getTextState();
             String text = textState.getText();
             String font = textState.getFont();
@@ -112,7 +100,8 @@ public class NvgTextInputRenderer extends NvgDefaultComponentRenderer<TextInput>
                 if (focused) {
                     // render caret
                     float nCaretX = rect.x + halign.index * rect.z / 2f;
-                    renderCaret(context, rect, nCaretX, rgba(caretColor, colorA));
+                    NvgColorUtil.fillNvgColorWithRGBA(caretColor, colorA);
+                    renderCaret(context, rect, nCaretX, colorA);
                 }
 
                 gui.setMouseCaretPosition(0);
@@ -120,16 +109,17 @@ public class NvgTextInputRenderer extends NvgDefaultComponentRenderer<TextInput>
             } else {
 
                 // initially configure text rendering
+                NvgColorUtil.fillNvgColorWithRGBA(textColor, colorA);
                 alignTextInBox(context, halign, valign);
                 nvgFontSize(context, fontSize);
                 nvgFontFace(context, font);
-                nvgFillColor(context, rgba(textColor, colorA));
+                nvgFillColor(context, colorA);
 
                 if (!focused) {
                     caretPosition = (halign == HorizontalAlign.LEFT ? 0 : (halign == HorizontalAlign.RIGHT ? text.length() : text.length() / 2));
                 }
 
-                float[] textBounds = calculateTextBoundsRect(context, rect, text, halign, valign);
+                float[] textBounds = calculateTextBoundsRect(context, rect, text, halign, valign, fontSize);
 
                 // calculate caret coordinate and mouse caret coordinate
                 float caretx;
@@ -224,23 +214,25 @@ public class NvgTextInputRenderer extends NvgDefaultComponentRenderer<TextInput>
                     float nCaretX = caretx - poffset;
 
                     drawSelection(context, rect, highlightColor,
-                        startSelectionIndex, endSelectionIndex,
-                        focused, startSelectionX, endSelectionX, poffset);
+                                  startSelectionIndex, endSelectionIndex,
+                                  focused, startSelectionX, endSelectionX, poffset);
                     // render text
 
                     NvgText.drawTextLineToRect(context, new Vector4f(textBounds[4] - poffset, textBounds[5], textBounds[6], textBounds[7]),
-                        false, HorizontalAlign.LEFT, VerticalAlign.MIDDLE, fontSize, font, text, textColor);
+                                               false, HorizontalAlign.LEFT, VerticalAlign.MIDDLE, fontSize, font, text, textColor);
 
                     if (focused) {
                         // render caret
-                        renderCaret(context, rect, nCaretX, rgba(caretColor, colorA));
+                        NvgColorUtil.fillNvgColorWithRGBA(caretColor, colorA);
+                        renderCaret(context, rect, nCaretX, colorA);
                     }
                     // render mouse caret
                     if (leguiContext.isDebugEnabled()) {
                         Vector4f cc = new Vector4f(this.caretColor);
                         cc.x = 1;
 
-                        renderCaret(context, rect, mouseCaretX, rgba(cc, colorA));
+                        NvgColorUtil.fillNvgColorWithRGBA(cc, colorA);
+                        renderCaret(context, rect, mouseCaretX, colorA);
                     }
 
                     // put last offset and ration to metadata
@@ -263,8 +255,8 @@ public class NvgTextInputRenderer extends NvgDefaultComponentRenderer<TextInput>
     }
 
     private void drawSelection(long context, Vector4f rect, Vector4f highlightColor,
-        int startSelectionIndex, int endSelectionIndex, boolean focused,
-        float startSelectionX, float endSelectionX, Float poffset) {
+                               int startSelectionIndex, int endSelectionIndex, boolean focused,
+                               float startSelectionX, float endSelectionX, Float poffset) {
         if (focused && startSelectionIndex != endSelectionIndex) {
             Vector2f position = new Vector2f(startSelectionX - poffset, rect.y);
             Vector2f size = new Vector2f(endSelectionX - startSelectionX, rect.w);
@@ -278,8 +270,8 @@ public class NvgTextInputRenderer extends NvgDefaultComponentRenderer<TextInput>
     }
 
     private Float recalculateOffsetX(Vector4f rect, HorizontalAlign halign,
-        float caretx, float ratio, float offsetX,
-        Float poffset, Float pratio, HorizontalAlign palign) {
+                                     float caretx, float ratio, float offsetX,
+                                     Float poffset, Float pratio, HorizontalAlign palign) {
         float newpoffset = poffset;
         if (pratio != ratio || palign != halign) {
             newpoffset = offsetX;

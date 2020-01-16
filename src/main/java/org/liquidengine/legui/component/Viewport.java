@@ -1,11 +1,14 @@
 package org.liquidengine.legui.component;
 
-import java.io.Serializable;
+import org.joml.Vector2f;
 
-public interface Viewport extends Serializable {
+/**
+ * @author Aliaksandr_Shcherbin.
+ */
+public interface Viewport {
 
-    /**
-     * Used to update viewport content position.
-     */
-    void updateViewport();
+    Vector2f getViewportSize();
+
+    Vector2f getViewportViewSize();
+
 }

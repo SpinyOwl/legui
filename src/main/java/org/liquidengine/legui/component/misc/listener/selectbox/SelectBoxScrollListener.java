@@ -5,7 +5,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.liquidengine.legui.component.ScrollBar;
 import org.liquidengine.legui.event.ScrollEvent;
 import org.liquidengine.legui.listener.ScrollEventListener;
-import org.liquidengine.legui.listener.processor.EventProcessor;
+import org.liquidengine.legui.listener.processor.EventProcessorProvider;
 
 /**
  * Listener of scroll action which used to scroll expanded selectbox.
@@ -22,7 +22,7 @@ public class SelectBoxScrollListener implements ScrollEventListener {
     public void process(ScrollEvent event) {
         ScrollEvent<ScrollBar> newEvent
             = new ScrollEvent<>(bar, event.getContext(), event.getFrame(), event.getXoffset(), event.getYoffset());
-        EventProcessor.getInstance().pushEvent(newEvent);
+        EventProcessorProvider.getInstance().pushEvent(newEvent);
     }
 
     @Override

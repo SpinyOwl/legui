@@ -11,14 +11,12 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
+
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
-import org.joml.Vector4f;
-import org.liquidengine.legui.border.Border;
-import org.liquidengine.legui.color.ColorConstants;
 import org.liquidengine.legui.component.misc.listener.component.TabKeyEventListener;
 import org.liquidengine.legui.component.misc.listener.component.TooltipCursorEnterListener;
 import org.liquidengine.legui.event.CursorEnterEvent;
@@ -26,6 +24,7 @@ import org.liquidengine.legui.event.KeyEvent;
 import org.liquidengine.legui.intersection.Intersector;
 import org.liquidengine.legui.intersection.RectangleIntersector;
 import org.liquidengine.legui.listener.ListenerMap;
+import org.liquidengine.legui.style.Style;
 import org.liquidengine.legui.theme.Themes;
 
 /**
@@ -57,34 +56,11 @@ public abstract class Component implements Serializable {
      * Size of component.
      */
     private Vector2f size = new Vector2f();
-    /**
-     * Component background color.
-     * <p>
-     * Represented by vector where (x=r,y=g,z=b,w=a).
-     * <p>
-     * For example white = {@code new Vector4f(1,1,1,1)}
-     */
-    private Vector4f backgroundColor = ColorConstants.white();
-    /**
-     * Stroke color. Used to render stroke if component is focused.
-     */
-    private Vector4f focusedStrokeColor = ColorConstants.lightBlue();
-    /**
-     * Component border.
-     */
-    private Border border = null;
-    /**
-     * Used to store corner radius of component.
-     */
-    private float cornerRadius = 0;
+
     /**
      * Used to enable and disable event processing for this component. If enabled==false then component won't receive events.
      */
     private boolean enabled = true;
-    /**
-     * Determines whether this component should be visible when its parent is visible. Components are initially visible.
-     */
-    private boolean visible = true;
     /**
      * Intersector which used to determine for example if cursor intersects component or not. Cannot be null.
      */
@@ -116,14 +92,37 @@ public abstract class Component implements Serializable {
      */
     private boolean tabFocusable = true;
 
+    /**
+     * Show if component can be focused.
+     * <br><b>Note! You should take in consideration that component that marked as non-focusable will not receive any events.
+     * In fact this could be used to organize elements using containers.</b>
+     */
+    private boolean focusable = true;
+
     ////////////////////////////////
     //// CONTAINER BASE DATA
     ////////////////////////////////
 
     /**
+     * Component style.
+     */
+    private Style style = new Style();
+    /**
+     * Component style.
+     */
+    private Style hoveredStyle = new Style();
+    /**
+     * Component style.
+     */
+    private Style focusedStyle = new Style();
+    /**
+     * Component style.
+     */
+    private Style pressedStyle = new Style();
+    /**
      * List of child components.
      */
-    private List<Component> childs = new CopyOnWriteArrayList<>();
+    private List<Component> childComponents = new CopyOnWriteArrayList<>();
 
     /**
      * Default constructor. Used to create component instance without any parameters.
@@ -134,13 +133,12 @@ public abstract class Component implements Serializable {
         this(0, 0, 10, 10);
     }
 
-
     /**
      * Constructor with position and size parameters.
      *
-     * @param x x position position in parent component.
-     * @param y y position position in parent component.
-     * @param width width of component.
+     * @param x      x position position in parent component.
+     * @param y      y position position in parent component.
+     * @param width  width of component.
      * @param height height of component.
      */
     public Component(float x, float y, float width, float height) {
@@ -151,12 +149,48 @@ public abstract class Component implements Serializable {
      * Constructor with position and size parameters.
      *
      * @param position position position in parent component.
-     * @param size size of component.
+     * @param size     size of component.
      */
     public Component(Vector2f position, Vector2f size) {
         this.position = position;
         this.size = size;
         initialize();
+    }
+
+    ////////////////////////////////
+    //// CONTAINER BASE DATA
+    ////////////////////////////////
+
+    public Style getFocusedStyle() {
+        return focusedStyle;
+    }
+
+    public Style getHoveredStyle() {
+        return hoveredStyle;
+    }
+
+    public Style getPressedStyle() {
+        return pressedStyle;
+    }
+
+    /**
+     * Returns component style.
+     *
+     * @return component style.
+     */
+    public Style getStyle() {
+        return style;
+    }
+
+    /**
+     * Used to set component style.
+     *
+     * @param style component style to set.
+     */
+    public void setStyle(Style style) {
+        if (style != null) {
+            this.style = style;
+        }
     }
 
     /**
@@ -281,7 +315,7 @@ public abstract class Component implements Serializable {
     /**
      * Used to set size vector.
      *
-     * @param width width to set.
+     * @param width  width to set.
      * @param height height to set.
      */
     public void setSize(float width, float height) {
@@ -295,74 +329,10 @@ public abstract class Component implements Serializable {
      */
     public Vector2f getAbsolutePosition() {
         Vector2f screenPos = new Vector2f(this.position);
-        for (Component parent = this.getParent(); parent != null; parent = parent.getParent()) {
-            screenPos.add(parent.getPosition());
+        for (Component p = this.getParent(); p != null; p = p.getParent()) {
+            screenPos.add(p.getPosition());
         }
         return screenPos;
-    }
-
-    /**
-     * Returns {@link Vector4f} background color vector where x,y,z,w mapped to r,g,b,a values. <ul> <li>vector.x - red.</li> <li>vector.y - green.</li>
-     * <li>vector.z - blue.</li> <li>vector.a - alpha.</li> </ul>
-     *
-     * @return background color vector.
-     */
-    public Vector4f getBackgroundColor() {
-        return backgroundColor;
-    }
-
-    /**
-     * Used to set background color vector where x,y,z,w mapped to r,g,b,a values. <ul> <li>vector.x - red.</li> <li>vector.y - green.</li> <li>vector.z -
-     * blue.</li> <li>vector.a - alpha.</li> </ul>
-     *
-     * @param backgroundColor background color vector.
-     */
-    public void setBackgroundColor(Vector4f backgroundColor) {
-        this.backgroundColor = backgroundColor;
-    }
-
-    /**
-     * Used to set background color vector.
-     *
-     * @param r red value.
-     * @param g green value.
-     * @param b blue value.
-     * @param a alpha value.
-     */
-    public void setBackgroundColor(float r, float g, float b, float a) {
-        backgroundColor.set(r, g, b, a);
-    }
-
-    /**
-     * Returns {@link Vector4f} focused stroke color vector where x,y,z,w mapped to r,g,b,a values. <ul> <li>vector.x - red.</li> <li>vector.y - green.</li>
-     * <li>vector.z - blue.</li> <li>vector.a - alpha.</li> </ul>
-     *
-     * @return background color vector.
-     */
-    public Vector4f getFocusedStrokeColor() {
-        return focusedStrokeColor;
-    }
-
-    /**
-     * Used to set focused stroke color vector where x,y,z,w mapped to r,g,b,a values. <ul> <li>vector.x - red.</li> <li>vector.y - green.</li> <li>vector.z -
-     * blue.</li> <li>vector.a - alpha.</li> </ul>
-     *
-     * @param focusedStrokeColor focused stroke color vector.
-     */
-    public void setFocusedStrokeColor(Vector4f focusedStrokeColor) {
-        this.focusedStrokeColor = focusedStrokeColor;
-    }
-
-    /**
-     * Used to set focused stroke color vector.
-     *
-     * @param r red value.
-     * @param g green value.
-     * @param b blue value.
-     * @param a alpha value.
-     */
-    public void setFocusedStrokeColor(float r, float g, float b, float a) {
-        backgroundColor.set(r, g, b, a);
     }
 
     /**
@@ -389,23 +359,13 @@ public abstract class Component implements Serializable {
      * @return true if component visible. default value is {@link Boolean#TRUE}.
      */
     public boolean isVisible() {
-        return visible;
-    }
-
-    /**
-     * Used to make component visible or invisible. By default if component visible it will be rendered and will receive events.
-     *
-     * @param visible flag to set.
-     */
-    public void setVisible(boolean visible) {
-        this.visible = visible;
+        return this.style.getDisplay() != Style.DisplayType.NONE;
     }
 
     /**
      * Used to determine if point intersects component (in screen space). This method uses component intersector.
      *
      * @param point point to check.
-     *
      * @return true if component intersected by point.
      */
     public boolean intersects(Vector2f point) {
@@ -440,42 +400,6 @@ public abstract class Component implements Serializable {
      */
     public Map<String, Object> getMetadata() {
         return metadata;
-    }
-
-    /**
-     * Returns border of component.
-     *
-     * @return border.
-     */
-    public Border getBorder() {
-        return border;
-    }
-
-    /**
-     * Used to set border for component.
-     *
-     * @param border border.
-     */
-    public void setBorder(Border border) {
-        this.border = border;
-    }
-
-    /**
-     * Returns corner radius of component.
-     *
-     * @return corner radius.
-     */
-    public float getCornerRadius() {
-        return cornerRadius;
-    }
-
-    /**
-     * Used to set corner radius.
-     *
-     * @param cornerRadius corner radius.
-     */
-    public void setCornerRadius(float cornerRadius) {
-        this.cornerRadius = cornerRadius;
     }
 
     /**
@@ -601,6 +525,26 @@ public abstract class Component implements Serializable {
         this.tabFocusable = tabFocusable;
     }
 
+    /**
+     * Returns true if component focused.
+     *
+     * @return true if component focused.
+     */
+    public boolean isFocusable() {
+        return focusable;
+    }
+
+    /**
+     * Used to set component focusable.
+     * <br><b>Note! You should take in consideration that component that marked as non-focusable will not receive any events.
+     * In fact this could be used to organize elements using containers.</b>
+     *
+     * @param focusable new focusable state.
+     */
+    public void setFocusable(boolean focusable) {
+        this.focusable = focusable;
+    }
+
     /////////////////////////////////
     //// CONTAINER METHODS
     /////////////////////////////////
@@ -609,31 +553,27 @@ public abstract class Component implements Serializable {
      * Returns count of child components.
      *
      * @return count of child components.
-     *
      * @see List#size()
      */
     public int count() {
-        return childs.size();
+        return childComponents.size();
     }
 
     /**
-     * Returns true if layerFrame contains no elements.
+     * Returns true if component contains no elements.
      *
-     * @return true if layerFrame contains no elements.
-     *
+     * @return true if component contains no elements.
      * @see List#isEmpty()
      */
     public boolean isEmpty() {
-        return childs.isEmpty();
+        return childComponents.isEmpty();
     }
 
     /**
-     * Returns true if layerFrame contains specified component.
+     * Returns true if component contains specified component.
      *
      * @param component component to check.
-     *
-     * @return true if layerFrame contains specified component.
-     *
+     * @return true if component contains specified component.
      * @see List#contains(Object)
      */
     public boolean contains(Component component) {
@@ -641,30 +581,27 @@ public abstract class Component implements Serializable {
     }
 
     /**
-     * Returns an iterator over the elements in this layerFrame. The elements are returned in no particular order.
+     * Returns an iterator over the elements in this component. The elements are returned in no particular order.
      *
-     * @return an iterator over the elements in this layerFrame.
-     *
+     * @return an iterator over the elements in this component.
      * @see List#iterator()
      */
     public Iterator<Component> containerIterator() {
-        return childs.iterator();
+        return childComponents.iterator();
     }
 
     /**
-     * Used to add component to layerFrame.
+     * Used to add component to component.
      *
      * @param component component to add.
-     *
      * @return true if component is added.
-     *
      * @see List#add(Object)
      */
     public boolean add(Component component) {
         if (component == null || component == this || isContains(component)) {
             return false;
         }
-        boolean added = childs.add(component);
+        boolean added = childComponents.add(component);
         if (added) {
             changeParent(component);
         }
@@ -675,11 +612,10 @@ public abstract class Component implements Serializable {
      * Used to check if component collection contains component or not. Checked by reference.
      *
      * @param component component to check.
-     *
      * @return true if collection contains provided component.
      */
     private boolean isContains(Component component) {
-        return childs.stream().anyMatch(c -> c == component);
+        return childComponents.stream().anyMatch(c -> c == component);
     }
 
     /**
@@ -699,12 +635,12 @@ public abstract class Component implements Serializable {
      * @param component component to change.
      */
     private void changeParent(Component component) {
-        Component parent = component.getParent();
-        if (parent == this) {
+        Component p = component.getParent();
+        if (p == this) {
             return;
         }
-        if (parent != null) {
-            parent.remove(component);
+        if (p != null) {
+            p.remove(component);
         }
         component.setParent(this);
     }
@@ -713,16 +649,14 @@ public abstract class Component implements Serializable {
      * Used to remove component.
      *
      * @param component component to remove.
-     *
      * @return true if removed.
-     *
      * @see List#remove(Object)
      */
     public boolean remove(Component component) {
         if (component != null) {
-            Component parent = component.getParent();
-            if (parent != null && parent == this && isContains(component)) {
-                boolean removed = childs.remove(component);
+            Component p = component.getParent();
+            if (p == this && isContains(component)) {
+                boolean removed = childComponents.remove(component);
                 if (removed) {
                     component.setParent(null);
                 }
@@ -736,78 +670,64 @@ public abstract class Component implements Serializable {
      * Used to remove components.
      *
      * @param components components to remove.
-     *
      * @see List#removeAll(Collection)
      */
     public void removeAll(Collection<? extends Component> components) {
-        List<Component> toRemove = new ArrayList<>();
-        components.forEach(compo -> {
-            if (compo != null) {
-                compo.setParent(null);
-                toRemove.add(compo);
-            }
-        });
-        this.childs.removeAll(toRemove);
+        if (components != null) {
+            components.forEach(this::remove);
+        }
     }
 
     /**
-     * Removes all of the elements of this layerFrame that satisfy the given predicate. Errors or runtime exceptions thrown during iteration or by the predicate
+     * Removes all of the elements of this component that satisfy the given predicate. Errors or runtime exceptions thrown during iteration or by the predicate
      * are relayed to the caller.
      *
      * @param filter a predicate which returns true for elements to be removed.
-     *
-     * @return true if any components were removed.
-     *
      * @see List#removeIf(Predicate)
      */
-    public boolean removeIf(Predicate<? super Component> filter) {
-        childs.stream().filter(filter).forEach(compo -> compo.setParent(null));
-        return childs.removeIf(filter);
+    public void removeIf(Predicate<? super Component> filter) {
+        childComponents.stream().filter(filter).forEach(this::remove);
     }
 
     /**
-     * Used to remove all child components from layerFrame.
+     * Used to remove all child components from component.
      *
      * @see List#clear()
      */
-    public void clearChilds() {
-        childs.forEach(compo -> compo.setParent(null));
-        childs.clear();
+    public void clearChildComponents() {
+        childComponents.forEach(compo -> compo.setParent(null));
+        childComponents.clear();
     }
 
     /**
      * Returns true if this Container contains all of the elements of the specified collection.
      *
      * @param components components collection to check.
-     *
      * @return true if this Container contains all of the elements of the specified collection.
-     *
      * @see List#containsAll(Collection)
      */
     public boolean containsAll(Collection<Component> components) {
-        return this.childs.containsAll(components);
+        return this.childComponents.containsAll(components);
     }
 
     /**
      * Returns a sequential Stream with this collection as its source.
      *
      * @return a sequential Stream with this collection as its source.
-     *
      * @see List#stream()
      */
     public Stream<Component> stream() {
-        return childs.stream();
+        return childComponents.stream();
     }
 
     /**
      * Returns a possibly parallel Stream with this collection as its source. It is allowable for this method to return a sequential stream.
      *
      * @return possibly parallel Stream with this collection as its source.
-     *
      * @see List#parallelStream()
      */
     public Stream<Component> parallelStream() {
-        return childs.parallelStream();
+        return childComponents.parallelStream();
     }
 
     /**
@@ -816,7 +736,7 @@ public abstract class Component implements Serializable {
      * @param action The action to be performed for each element.
      */
     public void forEach(Consumer<? super Component> action) {
-        childs.forEach(action);
+        childComponents.forEach(action);
     }
 
     /**
@@ -826,8 +746,8 @@ public abstract class Component implements Serializable {
      *
      * @return list of child components.
      */
-    public List<Component> getChilds() {
-        return new ArrayList<>(childs);
+    public List<Component> getChildComponents() {
+        return new ArrayList<>(childComponents);
     }
 
     @Override
@@ -843,63 +763,55 @@ public abstract class Component implements Serializable {
         Component component = (Component) o;
 
         return new EqualsBuilder()
-            .append(this.getCornerRadius(), component.getCornerRadius())
-            .append(this.isEnabled(), component.isEnabled())
-            .append(this.isVisible(), component.isVisible())
-            .append(this.isHovered(), component.isHovered())
-            .append(this.isFocused(), component.isFocused())
-            .append(this.isPressed(), component.isPressed())
-            .append(this.getListenerMap(), component.getListenerMap())
-            .append(this.getPosition(), component.getPosition())
-            .append(this.getSize(), component.getSize())
-            .append(this.getBackgroundColor(), component.getBackgroundColor())
-            .append(this.getBorder(), component.getBorder())
-            .append(this.getIntersector(), component.getIntersector())
-            .append(this.getTabIndex(), component.getTabIndex())
-            .append(this.isTabFocusable(), component.isTabFocusable())
-            .append(childs, component.childs)
-            .isEquals();
+                .append(this.isEnabled(), component.isEnabled())
+                .append(this.isVisible(), component.isVisible())
+                .append(this.isHovered(), component.isHovered())
+                .append(this.isFocused(), component.isFocused())
+                .append(this.isPressed(), component.isPressed())
+                .append(this.getListenerMap(), component.getListenerMap())
+                .append(this.getPosition(), component.getPosition())
+                .append(this.getSize(), component.getSize())
+                .append(this.getIntersector(), component.getIntersector())
+                .append(this.getTabIndex(), component.getTabIndex())
+                .append(this.isTabFocusable(), component.isTabFocusable())
+                .append(this.isFocusable(), component.isFocusable())
+                .append(childComponents, component.childComponents)
+                .isEquals();
     }
 
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
-            .append(cornerRadius)
-            .append(listenerMap)
-            .append(position)
-            .append(size)
-            .append(backgroundColor)
-            .append(border)
-            .append(enabled)
-            .append(visible)
-            .append(intersector)
-            .append(hovered)
-            .append(focused)
-            .append(pressed)
-            .append(tabIndex)
-            .append(tabFocusable)
-            .append(childs)
-            .toHashCode();
+                .append(listenerMap)
+                .append(position)
+                .append(size)
+                .append(enabled)
+                .append(intersector)
+                .append(hovered)
+                .append(focused)
+                .append(pressed)
+                .append(tabIndex)
+                .append(tabFocusable)
+                .append(focusable)
+                .append(childComponents)
+                .toHashCode();
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-            .append("cornerRadius", cornerRadius)
-            .append("listenerMap", listenerMap)
-            .append("position", position)
-            .append("size", size)
-            .append("backgroundColor", backgroundColor)
-            .append("border", border)
-            .append("enabled", enabled)
-            .append("visible", visible)
-            .append("intersector", intersector)
-            .append("hovered", hovered)
-            .append("focused", focused)
-            .append("tabIndex", tabIndex)
-            .append("tabFocusable", tabFocusable)
-            .append("pressed", pressed)
-            .toString();
+                .append("listenerMap", listenerMap)
+                .append("position", position)
+                .append("size", size)
+                .append("enabled", enabled)
+                .append("intersector", intersector)
+                .append("hovered", hovered)
+                .append("focused", focused)
+                .append("tabIndex", tabIndex)
+                .append("tabFocusable", tabFocusable)
+                .append("focusable", focusable)
+                .append("pressed", pressed)
+                .toString();
     }
 
 }

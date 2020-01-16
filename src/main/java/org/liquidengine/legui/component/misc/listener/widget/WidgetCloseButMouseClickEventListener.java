@@ -6,7 +6,7 @@ import org.liquidengine.legui.component.Widget;
 import org.liquidengine.legui.component.event.widget.WidgetCloseEvent;
 import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.listener.MouseClickEventListener;
-import org.liquidengine.legui.listener.processor.EventProcessor;
+import org.liquidengine.legui.listener.processor.EventProcessorProvider;
 
 /**
  * @author ShchAlexander.
@@ -22,8 +22,8 @@ public class WidgetCloseButMouseClickEventListener implements MouseClickEventLis
     @Override
     public void process(MouseClickEvent event) {
         if (CLICK == event.getAction()) {
-            widget.setVisible(false);
-            EventProcessor.getInstance().pushEvent(new WidgetCloseEvent<>(widget, event.getContext(), event.getFrame()));
+            widget.hide();
+            EventProcessorProvider.getInstance().pushEvent(new WidgetCloseEvent<>(widget, event.getContext(), event.getFrame()));
         }
     }
 

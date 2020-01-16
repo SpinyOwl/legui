@@ -1,3 +1,100 @@
+## [1.5.0]
+
+## [1.4.8]
+### Added
+- Added generic type support for SelectBox. 
+
+## [1.4.7]
+### Updated
+- Updated selectbox animation logic - so if number of elements is less than visible count - selectbox popup will be smaller.
+### Fixed
+- Fixed code inspection issues. 
+
+## [1.4.6]
+### Fixed
+- Huge memory leak during rendering shadows.
+
+## [1.4.5]
+### Added
+- CSS-like styles
+- Display types: FLEX, NONE and MANUAL.
+- Style options:
+  - display
+    - NONE
+    - FLEX
+    - MANUAL
+  - position
+    - ABSOLUTE
+    - RELATIVE
+  - flexStyle
+  - background
+  - border
+  - font
+  - borderTopLeftRadius
+  - borderTopRightRadius
+  - borderBottomRightRadius
+  - borderBottomLeftRadius
+  - width
+  - height
+  - minWidth
+  - minHeight
+  - maxWidth
+  - maxHeight
+  - paddingTop
+  - paddingBottom
+  - paddingRight
+  - paddingLeft
+  - marginTop
+  - marginBottom
+  - marginRight
+  - marginLeft
+  - top
+  - bottom
+  - right
+  - left
+- FLEX style options:
+  - flexDirection
+  - justifyContent
+  - alignItems
+  - flexWrap
+  - alignContent
+  - alignSelf
+  - flexGrow
+  - flexShrink
+  - flexBasis
+### Fixed
+- Fixed javadoc issues.
+- Fixed issue with rendering empty text area.
+
+### Changed
+- Updated animations for scrollable panel and scrollbar
+
+## [1.4.4]
+### Added
+- Moved demo classes to repo.
+- Added layout system.
+  - Added border layout.
+  - Added box layout.
+### Fixed
+- Added OpenGL version checking in renderer.
+- Fixed default initializer.
+- Use simple point in axis-aligned rectangle test.
+### Changed
+- Changed context api to frame buffer size (now returns `Vector2i` instead of `Vector2f`).
+- Changed api to child components of component (was `getChilds()` - now `getChildComponents()`).
+
+## [1.4.3]
+### Fixed
+- Fixed nvg password input renderer bug (with empty password rendering).
+ 
+## [1.4.2]
+### Major
+- Updated component structure to DOM-like. More information you can find in commits.
+ 
+## [1.4.1]
+### Fixed
+- Fixed issue with ToggleButton renderer.
+ 
 ## [1.4.0]
 ### Major
 - Added class bindings which describe how object should be marshalled.

@@ -1,0 +1,50 @@
+<class-binding xmlns="binding.legui.liquidengine.org"
+        for="org.liquidengine.legui.style.Style" to="style" default="true">
+
+    <bind field="display"/>
+    <bind field="position"/>
+
+    <bind field="flexStyle"/>
+    <bind field="background">
+        <using-binding path="org/liquidengine/legui/binding/style/StyleBackground.xml"/>
+    </bind>
+    <bind field="border"/>
+    <bind field="font"/>
+
+    <bind field="borderTopLeftRadius"/>
+    <bind field="borderTopRightRadius"/>
+    <bind field="borderBottomRightRadius"/>
+    <bind field="borderBottomLeftRadius"/>
+
+    <bind field="width"/>
+    <bind field="height"/>
+
+    <bind field="minWidth"/>
+    <bind field="minHeight"/>
+
+    <bind field="maxWidth"/>
+    <bind field="maxHeight"/>
+
+    <bind field="paddingTop"/>
+    <bind field="paddingBottom"/>
+    <bind field="paddingRight"/>
+    <bind field="paddingLeft"/>
+
+    <bind field="marginTop"/>
+    <bind field="marginBottom"/>
+    <bind field="marginRight"/>
+    <bind field="marginLeft"/>
+
+    <bind field="top"/>
+    <bind field="bottom"/>
+    <bind field="right"/>
+    <bind field="left"/>
+
+    <bind field="focusedStrokeColor">
+        <using-binding path="org/liquidengine/legui/binding/common/Vector4fColor.xml"/>
+    </bind>
+    <bind field="shadow">
+        <using-binding path="org/liquidengine/legui/binding/style/StyleShadow.xml"/>
+    </bind>
+
+</class-binding>

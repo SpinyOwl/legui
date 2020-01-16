@@ -20,33 +20,25 @@ public class NvgCharIconRenderer<I extends CharIcon> extends NvgIconRenderer<I> 
             return;
         }
         // render simple rectangle border
-        Vector2f position = component.getAbsolutePosition();
-        Vector2f size = component.getSize();
         Vector2f iconSize = icon.getSize();
+        Vector2f p        = calculateIconPosition(icon, component, iconSize);
+        float    w        = iconSize.x;
+        float    h        = iconSize.y;
 
-        float x = position.x;
-        float y = position.y;
-        if (icon.getPosition() == null) {
-            x += icon.getHorizontalAlign().index * (size.x - iconSize.x) / 2f;
-            y += icon.getVerticalAlign().index * (size.y - iconSize.y) / 2f;
-        } else {
-            x += icon.getPosition().x;
-            y += icon.getPosition().y;
-        }
-        float w = iconSize.x;
-        float h = iconSize.y;
-
-        drawIcon(nanovg, x, y, w, h, icon, component);
+        drawIcon(nanovg, p.x, p.y, w, h, icon, component);
     }
 
 
     private void drawIcon(long context, float x, float y, float w, float h, CharIcon icon, Component component) {
         if (component.isFocused()) {
-            NvgText.drawTextLineToRect(context, new Vector4f(x - 0.5f, y + 1, w, h), false, icon.getHorizontalAlign(), icon.getVerticalAlign(),
-                icon.getSize().y, icon.getFont(), TextUtil.cpToStr(icon.getCharCode()), component.getFocusedStrokeColor());
+            Vector4f focusedStrokeColor = component.getStyle().getFocusedStrokeColor();
+            if (focusedStrokeColor != null) {
+                NvgText.drawTextLineToRect(context, new Vector4f(x - 0.5f, y + 1, w, h), false, icon.getHorizontalAlign(), icon.getVerticalAlign(),
+                                           icon.getSize().y, icon.getFont(), TextUtil.cpToStr(icon.getCharCode()), focusedStrokeColor);
+            }
         }
 
         NvgText.drawTextLineToRect(context, new Vector4f(x + 0.5f, y, w, h), false, icon.getHorizontalAlign(), icon.getVerticalAlign(),
-            icon.getSize().y, icon.getFont(), TextUtil.cpToStr(icon.getCharCode()), icon.getColor());
+                                   icon.getSize().y, icon.getFont(), TextUtil.cpToStr(icon.getCharCode()), icon.getColor());
     }
 }

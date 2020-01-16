@@ -25,6 +25,10 @@ public abstract class AbstractTheme<T extends Component> {
      */
     public void applyAll(T component) {
         apply(component);
+
+        for (Component child : component.getChildComponents()) {
+            Themes.getDefaultTheme().applyAll(child);
+        }
     }
 
 }

@@ -5,7 +5,7 @@ import org.liquidengine.legui.listener.EventListener;
 /**
  * @author ShchAlexander.
  */
-public interface SelectBoxChangeSelectionEventListener extends EventListener<SelectBoxChangeSelectionEvent> {
+public interface SelectBoxChangeSelectionEventListener<T> extends EventListener<SelectBoxChangeSelectionEvent<T>> {
 
     /**
      * Used to handle {@link SelectBoxChangeSelectionEvent} event.
@@ -13,6 +13,6 @@ public interface SelectBoxChangeSelectionEventListener extends EventListener<Sel
      * @param event event to handle.
      */
     @Override
-    void process(SelectBoxChangeSelectionEvent event);
+    void process(SelectBoxChangeSelectionEvent<T> event);
 
 }
