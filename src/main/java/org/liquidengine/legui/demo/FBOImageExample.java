@@ -119,7 +119,7 @@ public class FBOImageExample {
             nvgContext = NanoVGGL2.nvgCreate(flags);
         }
         if (nvgContext != 0) {
-            fboTexture = createFBOTexture();
+            fboTexture = createFBOTexture(textureWidth, textureHeight);
 
             Widget widget = new Widget(10, 10, 100, 100);
             widget.setCloseable(false);
@@ -212,7 +212,7 @@ public class FBOImageExample {
         glfwTerminate();
     }
 
-    public static FBOImage createFBOTexture() {
+    public static FBOImage createFBOTexture(int textureWidth, int textureHeight) {
 
         frameBufferID = GL30.glGenFramebuffers();
         glBindFramebuffer(GL_FRAMEBUFFER, frameBufferID);
