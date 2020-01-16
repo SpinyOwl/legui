@@ -9,7 +9,7 @@ import groovy.json.JsonSlurper
 // SETUP VERSION
 def versionJson = new JsonSlurper().parseText(new File("$project.projectDir/version.json").text)
 def versionExt = System.getProperty("VEXT") ?: System.getenv("VEXT") ?: ""
-project.version = versionJson.version + (versionExt == "" ? "" : "-" + versionExt)
+project.version = versionJson.version + ((versionExt ==null || versionExt == "") ? "" : "-" + versionExt)
 
 println("VERSION : " + project.version)
 
