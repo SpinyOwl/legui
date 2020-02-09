@@ -10,8 +10,7 @@ import org.liquidengine.legui.system.renderer.nvg.util.NvgText;
 
 import static org.liquidengine.legui.style.util.StyleUtilities.getPadding;
 import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderIcon;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.createScissor;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.resetScissor;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.*;
 
 /**
  * Created by ShchAlexander on 11.02.2017.
@@ -41,7 +40,7 @@ public class NvgCheckBoxRenderer extends NvgDefaultComponentRenderer<CheckBox> {
             float x = pos.x + iconWidthForUse + padding.x;
             float w = size.x - iconWidthForUse - padding.z - padding.x;
 
-            NvgText.drawTextLineToRect(nanovg, textState, new Vector2f(x, y), new Vector2f(w, h), true);
+            NvgText.drawTextLineToRect(nanovg, textState, new Vector2f(x, y), new Vector2f(w, h), true, getFont(checkBox), getFontSize(checkBox));
 
             renderIcon(icon, checkBox, context);
         }

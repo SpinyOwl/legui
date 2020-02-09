@@ -1,6 +1,5 @@
 package org.liquidengine.legui.demo;
 
-import java.util.concurrent.atomic.AtomicInteger;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.animation.Animation;
@@ -34,6 +33,8 @@ import org.liquidengine.legui.theme.Theme;
 import org.liquidengine.legui.theme.Themes;
 import org.liquidengine.legui.util.TextUtil;
 import org.lwjgl.glfw.GLFW;
+
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.liquidengine.legui.component.optional.align.HorizontalAlign.*;
 import static org.liquidengine.legui.component.optional.align.VerticalAlign.*;
@@ -272,10 +273,10 @@ public class ExampleGui extends Panel {
         widget3.getContainer().add(new Panel(30, 30, 20, 20));
         widget3.getContainer().add(new Panel(5, 30, 20, 20));
         Button b = new Button(55, 5, 40, 20);
-        b.getTextState().setFont(FontRegistry.MATERIAL_ICONS_REGULAR);
+        b.getStyle().setFont(FontRegistry.MATERIAL_ICONS_REGULAR);
         b.getTextState().setVerticalAlign(MIDDLE);
         b.getTextState().setHorizontalAlign(CENTER);
-        b.getTextState().setFontSize(20);
+        b.getStyle().setFontSize(20f);
 
         String up = TextUtil.cpToStr(0xE5D8);
         String down = TextUtil.cpToStr(0xE5DB);
@@ -292,7 +293,7 @@ public class ExampleGui extends Panel {
         Button b2 = new Button(55, 30, 40, 20);
         b2.getTextState().setVerticalAlign(MIDDLE);
         b2.getTextState().setHorizontalAlign(CENTER);
-        b2.getTextState().setFontSize(20);
+        b2.getStyle().setFontSize(20f);
 
         String up2 = "-";
         String down2 = "+";
@@ -414,7 +415,7 @@ public class ExampleGui extends Panel {
 
         TextInput inpur = new TextInput(420, 430, 50, 35);
         inpur.getTextState().setText("00");
-        inpur.getTextState().setFontSize(35);
+        inpur.getStyle().setFontSize(35f);
         inpur.getTextState().setHorizontalAlign(CENTER);
         inpur.getTextState().setVerticalAlign(MIDDLE);
         inpur.getStyle().getBackground().setColor(ColorConstants.white());

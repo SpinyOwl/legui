@@ -1,6 +1,5 @@
 package org.liquidengine.legui.component.optional;
 
-import java.io.Serializable;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -10,6 +9,8 @@ import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
 import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.style.font.FontRegistry;
+
+import java.io.Serializable;
 
 /**
  * Used to hold text state of components.
@@ -84,42 +85,6 @@ public class TextState implements Serializable {
      */
     public TextState(String text) {
         setText(text);
-    }
-
-    /**
-     * Returns current font name.
-     *
-     * @return current font name.
-     */
-    public String getFont() {
-        return font;
-    }
-
-    /**
-     * Used to set new font.
-     *
-     * @param font new font.
-     */
-    public void setFont(String font) {
-        this.font = font;
-    }
-
-    /**
-     * Returns font size.
-     *
-     * @return font size.
-     */
-    public float getFontSize() {
-        return fontSize;
-    }
-
-    /**
-     * Used to set new font size.
-     *
-     * @param fontSize new font size.
-     */
-    public void setFontSize(float fontSize) {
-        this.fontSize = fontSize;
     }
 
     /**

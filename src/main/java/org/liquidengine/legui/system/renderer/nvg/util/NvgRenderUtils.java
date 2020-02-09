@@ -55,7 +55,7 @@ public final class NvgRenderUtils {
     public static float[] calculateTextBoundsRect(
             long context, float x, float y, float w, float h,
             ByteBuffer text, HorizontalAlign horizontalAlign, VerticalAlign verticalAlign, float fontSize) {
-        float bounds[] = new float[4];
+        float[] bounds = new float[4];
         if (text != null && text.limit() != 0) {
             nvgTextBounds(context, x, y, text, bounds);
             return createBounds(x, y, w, h, horizontalAlign, verticalAlign, bounds);
@@ -210,6 +210,38 @@ public final class NvgRenderUtils {
         }
 
         return r;
+    }
+
+    public static String getFont(Component component) {
+        Style style = component.getStyle();
+        String font = style.getFont();
+        if (component.isFocused() && component.getFocusedStyle().getFont() != null) {
+            font = component.getFocusedStyle().getFont();
+        }
+        if (component.isHovered() && component.getHoveredStyle().getFont() != null) {
+            font = component.getFocusedStyle().getFont();
+        }
+        if (component.isPressed() && component.getPressedStyle().getFont() != null) {
+            font = component.getFocusedStyle().getFont();
+        }
+
+        return font;
+    }
+
+    public static float getFontSize(Component component) {
+        Style style = component.getStyle();
+        float fontSize = style.getFontSize();
+        if (component.isFocused() && component.getFocusedStyle().getFontSize() != null) {
+            fontSize = component.getFocusedStyle().getFontSize();
+        }
+        if (component.isHovered() && component.getHoveredStyle().getFontSize() != null) {
+            fontSize = component.getFocusedStyle().getFontSize();
+        }
+        if (component.isPressed() && component.getPressedStyle().getFontSize() != null) {
+            fontSize = component.getFocusedStyle().getFontSize();
+        }
+
+        return fontSize;
     }
 
     private static void applyCurrentRadius(Vector4f r, Component component, Style curr) {

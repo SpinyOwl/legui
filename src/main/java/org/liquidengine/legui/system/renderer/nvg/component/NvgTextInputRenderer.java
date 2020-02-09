@@ -81,8 +81,8 @@ public class NvgTextInputRenderer extends NvgDefaultComponentRenderer<TextInput>
         ) {
             TextState textState = gui.getTextState();
             String text = textState.getText();
-            String font = textState.getFont();
-            float fontSize = textState.getFontSize();
+            String font = gui.getStyle().getFont();
+            float fontSize = gui.getStyle().getFontSize();
             Vector4f highlightColor = textState.getHighlightColor();
             HorizontalAlign halign = textState.getHorizontalAlign();
             VerticalAlign valign = textState.getVerticalAlign();

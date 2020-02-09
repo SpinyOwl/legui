@@ -25,17 +25,18 @@ public class NvgText {
     private NvgText() {
     }
 
-    public static void drawTextLineToRect(long nvg, TextState text, Vector2fc pos, Vector2fc size, boolean hideOverflow) {
+    public static void drawTextLineToRect(long nvg, TextState text, Vector2fc pos, Vector2fc size, boolean hideOverflow,
+                                          String font, float fontSize) {
         if (text.length() == 0) {
             return;
         }
         Vector4f rect = new Vector4f(pos, size.x(), size.y());
-        drawTextLineToRect(nvg, text, rect, hideOverflow);
+        drawTextLineToRect(nvg, text, rect, hideOverflow, font, fontSize);
     }
 
-    public static void drawTextLineToRect(long nvg, TextState text, Vector4fc rect, boolean hideOverflow) {
+    public static void drawTextLineToRect(long nvg, TextState text, Vector4fc rect, boolean hideOverflow, String font, float fontSize) {
         drawTextLineToRect(nvg, rect, hideOverflow, text.getHorizontalAlign(), text.getVerticalAlign(),
-                text.getFontSize(), text.getFont(), text.getText(), text.getTextColor());
+                fontSize, font, text.getText(), text.getTextColor());
     }
 
     public static void drawTextLineToRect(long nvg, Vector4fc rect, boolean hideOverflow, HorizontalAlign horizontalAlign, VerticalAlign verticalAlign,

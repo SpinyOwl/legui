@@ -1,11 +1,5 @@
 package org.liquidengine.legui.system.renderer.nvg.component;
 
-import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderIcon;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.createScissorByParent;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.getBorderRadius;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.resetScissor;
-import static org.lwjgl.nanovg.NanoVG.nvgIntersectScissor;
-
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.ToggleButton;
@@ -15,6 +9,10 @@ import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgShapes;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgText;
+
+import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderIcon;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.*;
+import static org.lwjgl.nanovg.NanoVG.nvgIntersectScissor;
 
 /**
  * Created by ShchAlexander on 11.02.2017.
@@ -33,7 +31,7 @@ public class NvgToggleButtonRenderer extends NvgDefaultComponentRenderer<ToggleB
 
             // Render text
             nvgIntersectScissor(nanovg, pos.x, pos.y, size.x, size.y);
-            NvgText.drawTextLineToRect(nanovg, toggleButton.getTextState(), pos, size, true);
+            NvgText.drawTextLineToRect(nanovg, toggleButton.getTextState(), pos, size, true, getFont(toggleButton), getFontSize(toggleButton));
         }
         resetScissor(nanovg);
     }
@@ -50,7 +48,7 @@ public class NvgToggleButtonRenderer extends NvgDefaultComponentRenderer<ToggleB
         Vector4f bgColor = style.getBackground().getColor();
         Vector4f cornerRadius = getBorderRadius(agui);
 
-        if(focused) {
+        if (focused) {
             currStyle = agui.getFocusedStyle();
             if (currStyle.getBackground().getColor() != null) {
                 bgColor = currStyle.getBackground().getColor();
@@ -59,7 +57,7 @@ public class NvgToggleButtonRenderer extends NvgDefaultComponentRenderer<ToggleB
                 icon = currStyle.getBackground().getIcon();
             }
         }
-        if(hovered) {
+        if (hovered) {
             currStyle = agui.getHoveredStyle();
             if (currStyle.getBackground().getColor() != null) {
                 bgColor = currStyle.getBackground().getColor();
@@ -68,7 +66,7 @@ public class NvgToggleButtonRenderer extends NvgDefaultComponentRenderer<ToggleB
                 icon = currStyle.getBackground().getIcon();
             }
         }
-        if(pressed) {
+        if (pressed) {
             currStyle = agui.getPressedStyle();
             if (currStyle.getBackground().getColor() != null) {
                 bgColor = currStyle.getBackground().getColor();

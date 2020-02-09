@@ -4,7 +4,6 @@ import org.joml.Vector4f;
 import org.liquidengine.legui.style.border.SimpleLineBorder;
 import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.style.flex.FlexStyle;
-import org.liquidengine.legui.style.font.Font;
 import org.liquidengine.legui.style.font.FontRegistry;
 import org.liquidengine.legui.style.length.Length;
 import org.liquidengine.legui.style.length.Unit;
@@ -25,7 +24,8 @@ public class Style {
     private FlexStyle flexStyle = new FlexStyle();
     private Background background = new Background();
     private Border border = new SimpleLineBorder(ColorConstants.gray(), 1);
-    private Font font = FontRegistry.getFont(FontRegistry.DEFAULT);
+    private String font = FontRegistry.DEFAULT;
+    private Float fontSize = 16f;
 
     private Length borderTopLeftRadius;
     private Length borderTopRightRadius;
@@ -81,7 +81,7 @@ public class Style {
      */
     public void setBorderRadius(Length radius) {
         borderTopLeftRadius = borderTopRightRadius =
-            borderBottomRightRadius = borderBottomLeftRadius = radius;
+                borderBottomRightRadius = borderBottomLeftRadius = radius;
     }
 
     /**
@@ -157,6 +157,15 @@ public class Style {
     }
 
     /**
+     * Returns top left border radius.
+     *
+     * @return top left border radius.
+     */
+    public Length getBorderTopLeftRadius() {
+        return borderTopLeftRadius;
+    }
+
+    /**
      * Used to set top left border radius. (PIXEL VERSION)
      *
      * @param borderTopLeftRadius top left border radius.
@@ -174,6 +183,14 @@ public class Style {
         this.borderTopLeftRadius = borderTopLeftRadius;
     }
 
+    /**
+     * Returns top right border radius.
+     *
+     * @return top right border radius.
+     */
+    public Length getBorderTopRightRadius() {
+        return borderTopRightRadius;
+    }
 
     /**
      * Used to set top right border radius. (PIXEL VERSION)
@@ -184,7 +201,6 @@ public class Style {
         setBorderTopRightRadius(pixel(borderTopRightRadius));
     }
 
-
     /**
      * Used to set top right border radius.
      *
@@ -192,6 +208,15 @@ public class Style {
      */
     public void setBorderTopRightRadius(Length borderTopRightRadius) {
         this.borderTopRightRadius = borderTopRightRadius;
+    }
+
+    /**
+     * Returns bottom right border radius.
+     *
+     * @return bottom right border radius.
+     */
+    public Length getBorderBottomRightRadius() {
+        return borderBottomRightRadius;
     }
 
     /**
@@ -213,6 +238,15 @@ public class Style {
     }
 
     /**
+     * Returns bottom left border radius.
+     *
+     * @return bottom left border radius.
+     */
+    public Length getBorderBottomLeftRadius() {
+        return borderBottomLeftRadius;
+    }
+
+    /**
      * Used to set bottom left border radius. (PIXEL VERSION)
      *
      * @param borderBottomLeftRadius bottom left border radius.
@@ -228,43 +262,6 @@ public class Style {
      */
     public void setBorderBottomLeftRadius(Length borderBottomLeftRadius) {
         this.borderBottomLeftRadius = borderBottomLeftRadius;
-    }
-
-    /**
-     * Returns top left border radius.
-     *
-     * @return top left border radius.
-     */
-    public Length getBorderTopLeftRadius() {
-        return borderTopLeftRadius;
-    }
-
-    /**
-     * Returns top right border radius.
-     *
-     * @return top right border radius.
-     */
-    public Length getBorderTopRightRadius() {
-        return borderTopRightRadius;
-    }
-
-    /**
-     * Returns bottom right border radius.
-     *
-     * @return bottom right border radius.
-     */
-    public Length getBorderBottomRightRadius() {
-        return borderBottomRightRadius;
-    }
-
-
-    /**
-     * Returns bottom left border radius.
-     *
-     * @return bottom left border radius.
-     */
-    public Length getBorderBottomLeftRadius() {
-        return borderBottomLeftRadius;
     }
 
     /**
@@ -365,7 +362,7 @@ public class Style {
 
     public void setPadding(Length padding) {
         paddingLeft = paddingRight =
-            paddingTop = paddingBottom = padding;
+                paddingTop = paddingBottom = padding;
     }
 
     public void setPadding(float topBottom, float leftRight) {
@@ -460,7 +457,7 @@ public class Style {
     }
 
     public void setMarginTop(Float marginTop) {
-	    setMarginTop(pixel(marginTop));
+        setMarginTop(pixel(marginTop));
     }
 
     public Unit getMarginBottom() {
@@ -471,9 +468,9 @@ public class Style {
         this.marginBottom = marginBottom;
     }
 
-	public void setMarginBottom(Float marginBottom) {
-		setMarginBottom(pixel(marginBottom));
-	}
+    public void setMarginBottom(Float marginBottom) {
+        setMarginBottom(pixel(marginBottom));
+    }
 
     public Unit getMarginRight() {
         return marginRight;
@@ -483,9 +480,9 @@ public class Style {
         this.marginRight = marginRight;
     }
 
-	public void setMarginRight(Float marginRight) {
-		setMarginRight(pixel(marginRight));
-	}
+    public void setMarginRight(Float marginRight) {
+        setMarginRight(pixel(marginRight));
+    }
 
     public Unit getMarginLeft() {
         return marginLeft;
@@ -495,9 +492,9 @@ public class Style {
         this.marginLeft = marginLeft;
     }
 
-	public void setMarginLeft(Float marginLeft) {
-		setMarginLeft(pixel(marginLeft));
-	}
+    public void setMarginLeft(Float marginLeft) {
+        setMarginLeft(pixel(marginLeft));
+    }
 
     /**
      * Returns top style.
@@ -673,7 +670,7 @@ public class Style {
      *
      * @return the font
      */
-    public Font getFont() {
+    public String getFont() {
         return font;
     }
 
@@ -682,7 +679,7 @@ public class Style {
      *
      * @param font the font
      */
-    public void setFont(Font font) {
+    public void setFont(String font) {
         this.font = font;
     }
 
@@ -775,6 +772,14 @@ public class Style {
 
     public void setShadow(Shadow shadow) {
         this.shadow = shadow;
+    }
+
+    public Float getFontSize() {
+        return fontSize;
+    }
+
+    public void setFontSize(Float fontSize) {
+        this.fontSize = fontSize;
     }
 
     /**

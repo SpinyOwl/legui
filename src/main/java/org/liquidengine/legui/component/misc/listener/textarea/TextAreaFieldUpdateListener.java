@@ -85,8 +85,8 @@ public class TextAreaFieldUpdateListener implements TextAreaFieldUpdateEventList
         float minValue = verticalScrollbar.getMinValue();
         float valueRange = verticalScrollbar.getMaxValue() - verticalScrollbar.getMinValue();
 
-        if (maxTextHeight != textAreaField.getTextState().getFontSize()) {
-            newVal = valueRange * caretY / (maxTextHeight - textAreaField.getTextState().getFontSize());
+        if (maxTextHeight != textAreaField.getStyle().getFontSize()) {
+            newVal = valueRange * caretY / (maxTextHeight - textAreaField.getStyle().getFontSize());
         }
 
         if (newVal > maxValue) {

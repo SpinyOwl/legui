@@ -9,8 +9,7 @@ import org.liquidengine.legui.system.renderer.nvg.util.NvgText;
 
 import static org.liquidengine.legui.style.util.StyleUtilities.getInnerContentRectangle;
 import static org.liquidengine.legui.style.util.StyleUtilities.getPadding;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.createScissor;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.resetScissor;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.*;
 
 /**
  * Created by ShchAlexander on 11.02.2017.
@@ -31,7 +30,7 @@ public class NvgLabelRenderer extends NvgDefaultComponentRenderer<Label> {
             TextState textState = label.getTextState();
             Vector4f padding = getPadding(label, label.getStyle());
             Vector4f rect = getInnerContentRectangle(pos, size, padding);
-            NvgText.drawTextLineToRect(nanovg, textState, rect, false);
+            NvgText.drawTextLineToRect(nanovg, textState, rect, false, getFont(label), getFontSize(label));
         }
         resetScissor(nanovg);
     }
