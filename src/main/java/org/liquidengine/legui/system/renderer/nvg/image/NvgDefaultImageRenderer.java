@@ -1,7 +1,6 @@
 package org.liquidengine.legui.system.renderer.nvg.image;
 
 
-import java.util.Map;
 import org.joml.Vector2fc;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
@@ -13,6 +12,8 @@ import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.nvg.NvgImageRenderer;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgShapes;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgText;
+
+import java.util.Map;
 
 /**
  * Used to render image rectangle if no other renderers implemented.

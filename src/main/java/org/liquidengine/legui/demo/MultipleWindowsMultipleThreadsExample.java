@@ -190,7 +190,7 @@ public class MultipleWindowsMultipleThreadsExample {
 
         Label label = new Label(20, 60, 200, 20);
         label.getTextState().setText("Generated on fly label");
-        label.getTextState().setTextColor(ColorConstants.red());
+        label.getStyle().setTextColor(ColorConstants.red());
 
         RadioButtonGroup group = new RadioButtonGroup();
         RadioButton radioButtonFirst = new RadioButton("First", 20, 90, 200, 20);

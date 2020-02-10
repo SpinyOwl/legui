@@ -53,6 +53,18 @@ public class MenuLayerDemo extends Demo {
         menuBarItem.getStyle().setMaxWidth(60f);
         menuBar.addMenu(menuBarItem);
 
+        MenuBarItemOption menuBarItemOption1 = new MenuBarItemOption("menuBarItemOption1");
+        menuBarItemOption1.getStyle().setWidth(120f);
+        menuBarItemOption1.getStyle().setMinWidth(120f);
+        menuBarItemOption1.getStyle().setMaxWidth(120f);
+        menuBarItem.addMenuBarItemOption(menuBarItemOption1);
+
+        MenuBarItemOption menuBarItemOption2 = new MenuBarItemOption("menuBarItemOption2");
+        menuBarItemOption2.getStyle().setWidth(120f);
+        menuBarItemOption2.getStyle().setMinWidth(120f);
+        menuBarItemOption2.getStyle().setMaxWidth(120f);
+        menuBarItem.addMenuBarItemOption(menuBarItemOption2);
+
         MenuBarItemOption exitOption = new MenuBarItemOption("Exit");
         exitOption.getStyle().setWidth(60f);
         exitOption.getStyle().setMinWidth(60f);
@@ -69,6 +81,13 @@ public class MenuLayerDemo extends Demo {
         about.getStyle().setMinWidth(60f);
         about.getStyle().setMaxWidth(60f);
         menuBar.addMenu(about);
+
+
+        MenuBarItemOption menuBarItemOption3 = new MenuBarItemOption("menuBarItemOption3");
+        menuBarItemOption3.getStyle().setWidth(60f);
+        menuBarItemOption3.getStyle().setMinWidth(60f);
+        menuBarItemOption3.getStyle().setMaxWidth(60f);
+        about.addMenuBarItemOption(menuBarItemOption3);
 
         frame.getComponentLayer().setContainer(menuContainer);
     }
@@ -223,6 +242,7 @@ public class MenuLayerDemo extends Demo {
                         layer.setSize(size.x, size.y - MENU_HEIGHT);
                         layer.getContainer().setPosition(0, MENU_HEIGHT);
                         event.getFrame().addLayer(layer);
+                        panel.setPosition(menuBarItem.getPosition().x, 0);
                     }
                 }
             });

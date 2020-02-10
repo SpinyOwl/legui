@@ -1,11 +1,5 @@
 package org.liquidengine.legui.system.renderer.nvg.component;
 
-import static org.liquidengine.legui.component.optional.Orientation.VERTICAL;
-import static org.liquidengine.legui.style.color.ColorUtil.oppositeBlackOrWhite;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.*;
-import static org.liquidengine.legui.util.TextUtil.cpToStr;
-import static org.lwjgl.nanovg.NanoVG.nvgSave;
-
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.ScrollBar;
@@ -15,6 +9,12 @@ import org.liquidengine.legui.style.font.FontRegistry;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgShapes;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgText;
+
+import static org.liquidengine.legui.component.optional.Orientation.VERTICAL;
+import static org.liquidengine.legui.style.color.ColorUtil.oppositeBlackOrWhite;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.*;
+import static org.liquidengine.legui.util.TextUtil.cpToStr;
+import static org.lwjgl.nanovg.NanoVG.nvgSave;
 
 /**
  * Created by ShchAlexander on 12.02.2017.

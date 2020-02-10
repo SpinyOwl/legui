@@ -1,7 +1,5 @@
 package org.liquidengine.legui.component;
 
-import static org.liquidengine.legui.style.font.FontRegistry.MATERIAL_ICONS_REGULAR;
-
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -14,6 +12,8 @@ import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.icon.CharIcon;
 import org.liquidengine.legui.icon.Icon;
 import org.liquidengine.legui.theme.Themes;
+
+import static org.liquidengine.legui.style.font.FontRegistry.MATERIAL_ICONS_REGULAR;
 
 /**
  * RadioButtons create a series of items where only one item can be checked. <p> By default all created radio buttons have no group so all of them can be

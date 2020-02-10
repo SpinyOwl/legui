@@ -1,13 +1,13 @@
 package org.liquidengine.legui.component.misc.listener.selectbox;
 
-import static org.liquidengine.legui.event.MouseClickEvent.MouseClickAction.CLICK;
-
 import org.joml.Vector2f;
 import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.component.SelectBox;
 import org.liquidengine.legui.component.SelectBoxLayer;
 import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.listener.MouseClickEventListener;
+
+import static org.liquidengine.legui.event.MouseClickEvent.MouseClickAction.CLICK;
 
 /**
  * Default mouse click listener for selectbox.

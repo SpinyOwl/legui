@@ -4,11 +4,6 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
-import org.joml.Vector4f;
-import org.liquidengine.legui.component.optional.align.HorizontalAlign;
-import org.liquidengine.legui.component.optional.align.VerticalAlign;
-import org.liquidengine.legui.style.color.ColorConstants;
-import org.liquidengine.legui.style.font.FontRegistry;
 
 import java.io.Serializable;
 
@@ -16,35 +11,10 @@ import java.io.Serializable;
  * Used to hold text state of components.
  */
 public class TextState implements Serializable {
-
-    /**
-     * Font name.
-     */
-    private String font = FontRegistry.DEFAULT;
-    /**
-     * Font size.
-     */
-    private float fontSize = 16;
     /**
      * Text data.
      */
     private String text = "";
-    /**
-     * Horizontal alignment. By default used {@link HorizontalAlign#CENTER}.
-     */
-    private HorizontalAlign horizontalAlign = HorizontalAlign.CENTER;
-    /**
-     * Vertical alignment.
-     */
-    private VerticalAlign verticalAlign = VerticalAlign.MIDDLE;
-    /**
-     * Text color.
-     */
-    private Vector4f textColor = ColorConstants.black();
-    /**
-     * Highlight color (used to highlight selection).
-     */
-    private Vector4f highlightColor = ColorConstants.blue();
 
     /**
      * Used to store caret position in text.
@@ -88,102 +58,6 @@ public class TextState implements Serializable {
     }
 
     /**
-     * Returns horizontal alignment.
-     *
-     * @return horizontal alignment.
-     */
-    public HorizontalAlign getHorizontalAlign() {
-        return horizontalAlign;
-    }
-
-    /**
-     * Used to set horizontal alignment.
-     *
-     * @param horizontalAlign horizontal alignment.
-     */
-    public void setHorizontalAlign(HorizontalAlign horizontalAlign) {
-        this.horizontalAlign = horizontalAlign;
-    }
-
-    /**
-     * Returns vertical alignment.
-     *
-     * @return vertical alignment.
-     */
-    public VerticalAlign getVerticalAlign() {
-        return verticalAlign;
-    }
-
-    /**
-     * Used to set vertical alignment.
-     *
-     * @param verticalAlign vertical alignment.
-     */
-    public void setVerticalAlign(VerticalAlign verticalAlign) {
-        this.verticalAlign = verticalAlign;
-    }
-
-    /**
-     * Returns text color.
-     *
-     * @return text color.
-     */
-    public Vector4f getTextColor() {
-        return textColor;
-    }
-
-    /**
-     * Used to set text color.
-     *
-     * @param textColor text color.
-     */
-    public void setTextColor(Vector4f textColor) {
-        this.textColor = textColor;
-    }
-
-    /**
-     * Used to set text color.
-     *
-     * @param r red component.
-     * @param g green component.
-     * @param b blue component.
-     * @param a alpha component.
-     */
-    public void setTextColor(float r, float g, float b, float a) {
-        this.textColor = new Vector4f(r, g, b, a);
-    }
-
-    /**
-     * Returns highlight color.
-     *
-     * @return highlight color
-     */
-    public Vector4f getHighlightColor() {
-        return highlightColor;
-    }
-
-    /**
-     * Used to set highlight color.
-     *
-     * @param highlightColor highlight color.
-     */
-    public void setHighlightColor(Vector4f highlightColor) {
-        this.highlightColor = highlightColor;
-    }
-
-    /**
-     * Used to set highlight color.
-     *
-     * @param r red component.
-     * @param g green component.
-     * @param b blue component.
-     * @param a alpha component.
-     */
-    public void setHighlightColor(float r, float g, float b, float a) {
-        this.highlightColor = new Vector4f(r, g, b, a);
-    }
-
-    /**
      * Returns text.
      *
      * @return text.
@@ -211,7 +85,6 @@ public class TextState implements Serializable {
      * Returns text length.
      *
      * @return text length.
-     *
      * @see StringBuffer#length()
      */
     public int length() {
@@ -224,19 +97,13 @@ public class TextState implements Serializable {
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-            .append("font", font)
-            .append("fontSize", fontSize)
-            .append("text", text)
-            .append("horizontalAlign", horizontalAlign)
-            .append("verticalAlign", verticalAlign)
-            .append("textColor", textColor)
-            .append("highlightColor", highlightColor)
-            .append("caretPosition", caretPosition)
-            .append("mouseCaretPosition", mouseCaretPosition)
-            .append("startSelectionIndex", startSelectionIndex)
-            .append("endSelectionIndex", endSelectionIndex)
-            .append("editable", editable)
-            .toString();
+                .append("text", text)
+                .append("caretPosition", caretPosition)
+                .append("mouseCaretPosition", mouseCaretPosition)
+                .append("startSelectionIndex", startSelectionIndex)
+                .append("endSelectionIndex", endSelectionIndex)
+                .append("editable", editable)
+                .toString();
     }
 
     /**
@@ -255,19 +122,13 @@ public class TextState implements Serializable {
         TextState textState = (TextState) o;
 
         return new EqualsBuilder()
-            .append(fontSize, textState.fontSize)
-            .append(font, textState.font)
-            .append(text, textState.text)
-            .append(horizontalAlign, textState.horizontalAlign)
-            .append(verticalAlign, textState.verticalAlign)
-            .append(textColor, textState.textColor)
-            .append(highlightColor, textState.highlightColor)
-            .append(caretPosition, this.caretPosition)
-            .append(mouseCaretPosition, this.mouseCaretPosition)
-            .append(startSelectionIndex, this.startSelectionIndex)
-            .append(endSelectionIndex, this.endSelectionIndex)
-            .append(editable, this.editable)
-            .isEquals();
+                .append(text, textState.text)
+                .append(caretPosition, this.caretPosition)
+                .append(mouseCaretPosition, this.mouseCaretPosition)
+                .append(startSelectionIndex, this.startSelectionIndex)
+                .append(endSelectionIndex, this.endSelectionIndex)
+                .append(editable, this.editable)
+                .isEquals();
     }
 
     /**
@@ -276,19 +137,13 @@ public class TextState implements Serializable {
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
-            .append(font)
-            .append(fontSize)
-            .append(text)
-            .append(horizontalAlign)
-            .append(verticalAlign)
-            .append(textColor)
-            .append(highlightColor)
-            .append(caretPosition)
-            .append(mouseCaretPosition)
-            .append(startSelectionIndex)
-            .append(endSelectionIndex)
-            .append(editable)
-            .toHashCode();
+                .append(text)
+                .append(caretPosition)
+                .append(mouseCaretPosition)
+                .append(startSelectionIndex)
+                .append(endSelectionIndex)
+                .append(editable)
+                .toHashCode();
     }
 
     /**
@@ -298,13 +153,7 @@ public class TextState implements Serializable {
      */
     public void copy(TextState state) {
         this.setText(state.getText());
-        this.font = state.font;
-        this.fontSize = state.fontSize;
         this.setText(state.text);
-        this.horizontalAlign = state.horizontalAlign;
-        this.verticalAlign = state.verticalAlign;
-        this.textColor.set(state.textColor);
-        this.highlightColor.set(state.highlightColor);
     }
 
 

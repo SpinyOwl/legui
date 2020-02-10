@@ -2,10 +2,9 @@ package org.liquidengine.legui.system.layout;
 
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.Frame;
-import org.liquidengine.legui.system.context.Context;
-
-import org.liquidengine.legui.component.event.component.ChangeSizeEvent;
 import org.liquidengine.legui.component.event.component.ChangePositionEvent;
+import org.liquidengine.legui.component.event.component.ChangeSizeEvent;
+import org.liquidengine.legui.system.context.Context;
 
 /**
  * Layout interface.

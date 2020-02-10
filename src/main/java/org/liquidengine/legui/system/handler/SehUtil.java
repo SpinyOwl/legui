@@ -1,12 +1,12 @@
 package org.liquidengine.legui.system.handler;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.joml.Vector2f;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.Layer;
 import org.liquidengine.legui.component.LayerContainer;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Utility class for system event handlers.

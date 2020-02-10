@@ -1,6 +1,5 @@
 package org.liquidengine.legui.system.handler;
 
-import java.util.List;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.component.Layer;
@@ -8,6 +7,8 @@ import org.liquidengine.legui.event.WindowRefreshEvent;
 import org.liquidengine.legui.listener.processor.EventProcessorProvider;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.event.SystemWindowRefreshEvent;
+
+import java.util.List;
 
 /**
  * Created by ShchAlexander on 2/2/2017.

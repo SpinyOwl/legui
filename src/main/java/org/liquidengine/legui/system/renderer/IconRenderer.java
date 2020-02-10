@@ -1,9 +1,10 @@
 package org.liquidengine.legui.system.renderer;
 
-import java.util.concurrent.atomic.AtomicBoolean;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.icon.Icon;
 import org.liquidengine.legui.system.context.Context;
+
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Icon renderer base.

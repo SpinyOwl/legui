@@ -1,10 +1,10 @@
 package org.liquidengine.legui.component.misc.listener.radiobutton;
 
-import static org.liquidengine.legui.event.MouseClickEvent.MouseClickAction.CLICK;
-
 import org.liquidengine.legui.component.RadioButton;
 import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.listener.MouseClickEventListener;
+
+import static org.liquidengine.legui.event.MouseClickEvent.MouseClickAction.CLICK;
 
 /**
  * RadioButton {@link MouseClickEvent} event listener. Used to update state of radio buttons in current radio button group.

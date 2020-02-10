@@ -36,6 +36,6 @@ public class FlatButtonTheme<T extends Button> extends FlatComponentTheme<T> {
             .setColor(settings.backgroundColor().mul(3).add(ColorUtil.oppositeBlackOrWhite(settings.backgroundColor())).div(4));
         component.getPressedStyle().getBackground()
             .setColor(settings.backgroundColor().mul(2).add(ColorUtil.oppositeBlackOrWhite(settings.backgroundColor())).div(3));
-        component.getTextState().setTextColor(ColorUtil.oppositeBlackOrWhite(settings.backgroundColor()));
+        component.getStyle().setTextColor(ColorUtil.oppositeBlackOrWhite(settings.backgroundColor()));
     }
 }

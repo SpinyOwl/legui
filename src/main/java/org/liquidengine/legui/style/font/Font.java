@@ -1,12 +1,13 @@
 package org.liquidengine.legui.style.font;
 
-import static org.liquidengine.legui.exception.LeguiExceptionTemplate.FAILED_TO_LOAD_FONT;
-
-import java.io.IOException;
-import java.nio.ByteBuffer;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.liquidengine.leutil.io.IOUtil;
+
+import java.io.IOException;
+import java.nio.ByteBuffer;
+
+import static org.liquidengine.legui.exception.LeguiExceptionTemplate.FAILED_TO_LOAD_FONT;
 
 /**
  * Representation of font. Used by text components to specify font to use by renderer.

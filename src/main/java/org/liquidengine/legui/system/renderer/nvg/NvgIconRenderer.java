@@ -1,12 +1,12 @@
 package org.liquidengine.legui.system.renderer.nvg;
 
-import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.NVG_CONTEXT;
-
 import org.joml.Vector2f;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.icon.Icon;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.IconRenderer;
+
+import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.NVG_CONTEXT;
 
 /**
  * Abstract renderer for Icon implementations.

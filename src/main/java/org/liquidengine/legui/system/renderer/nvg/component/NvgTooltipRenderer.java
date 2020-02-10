@@ -6,6 +6,7 @@ import org.liquidengine.legui.component.Tooltip;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
+import org.liquidengine.legui.style.Style;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgColorUtil;
 import org.lwjgl.nanovg.NVGColor;
@@ -30,16 +31,17 @@ public class NvgTooltipRenderer extends NvgDefaultComponentRenderer<Tooltip> {
     public void renderSelf(Tooltip component, Context context, long nanovg) {
         createScissor(nanovg, component);
         {
+            Style style = component.getStyle();
             TextState textState = component.getTextState();
             Vector2f pos = component.getAbsolutePosition();
             Vector2f size = component.getSize();
-            float fontSize = component.getStyle().getFontSize();
-            String font = component.getStyle().getFont();
+            float fontSize = style.getFontSize();
+            String font = style.getFont();
             String text = textState.getText();
-            HorizontalAlign horizontalAlign = textState.getHorizontalAlign();
-            VerticalAlign verticalAlign = textState.getVerticalAlign();
-            Vector4f textColor = textState.getTextColor();
-            Vector4f padding = getPadding(component, component.getStyle());
+            HorizontalAlign horizontalAlign = style.getHorizontalAlign();
+            VerticalAlign verticalAlign = style.getVerticalAlign();
+            Vector4f textColor = style.getTextColor();
+            Vector4f padding = getPadding(component, style);
 
             renderBackground(component, context, nanovg);
 

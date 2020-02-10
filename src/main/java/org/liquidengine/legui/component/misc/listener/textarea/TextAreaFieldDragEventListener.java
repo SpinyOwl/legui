@@ -1,12 +1,12 @@
 package org.liquidengine.legui.component.misc.listener.textarea;
 
-import static org.liquidengine.legui.input.Mouse.MouseButton.MOUSE_BUTTON_LEFT;
-
 import org.liquidengine.legui.component.TextAreaField;
 import org.liquidengine.legui.component.event.textarea.TextAreaFieldUpdateEvent;
 import org.liquidengine.legui.event.MouseDragEvent;
 import org.liquidengine.legui.listener.MouseDragEventListener;
 import org.liquidengine.legui.listener.processor.EventProcessorProvider;
+
+import static org.liquidengine.legui.input.Mouse.MouseButton.MOUSE_BUTTON_LEFT;
 
 /**
  * Mouse drag event listener for text area. Used to update selection indices.

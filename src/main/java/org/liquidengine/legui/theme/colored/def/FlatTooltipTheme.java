@@ -35,6 +35,6 @@ public class FlatTooltipTheme<T extends Tooltip> extends FlatComponentTheme<T> {
         component.getStyle().getBackground().setColor(bgc);
         component.getStyle().setShadow(new Shadow(1, 1, 16, -4, ColorUtil.oppositeBlackOrWhite(bgc).mul(0.8f)));
 
-        component.getTextState().setTextColor(ColorUtil.oppositeBlackOrWhite(bgc));
+        component.getStyle().setTextColor(ColorUtil.oppositeBlackOrWhite(bgc));
     }
 }

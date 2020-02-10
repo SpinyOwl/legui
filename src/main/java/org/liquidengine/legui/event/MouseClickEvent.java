@@ -1,12 +1,5 @@
 package org.liquidengine.legui.event;
 
-import static org.lwjgl.glfw.GLFW.GLFW_MOD_ALT;
-import static org.lwjgl.glfw.GLFW.GLFW_MOD_CAPS_LOCK;
-import static org.lwjgl.glfw.GLFW.GLFW_MOD_CONTROL;
-import static org.lwjgl.glfw.GLFW.GLFW_MOD_NUM_LOCK;
-import static org.lwjgl.glfw.GLFW.GLFW_MOD_SHIFT;
-import static org.lwjgl.glfw.GLFW.GLFW_MOD_SUPER;
-
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -17,6 +10,8 @@ import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.input.Mouse;
 import org.liquidengine.legui.input.Mouse.MouseButton;
 import org.liquidengine.legui.system.context.Context;
+
+import static org.lwjgl.glfw.GLFW.*;
 
 /**
  * Created by ShchAlexander on 2/10/2017.

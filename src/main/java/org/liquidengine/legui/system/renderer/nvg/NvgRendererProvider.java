@@ -1,23 +1,6 @@
 package org.liquidengine.legui.system.renderer.nvg;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import org.liquidengine.legui.component.Button;
-import org.liquidengine.legui.component.CheckBox;
-import org.liquidengine.legui.component.Component;
-import org.liquidengine.legui.component.ImageView;
-import org.liquidengine.legui.component.Label;
-import org.liquidengine.legui.component.PasswordInput;
-import org.liquidengine.legui.component.ProgressBar;
-import org.liquidengine.legui.component.RadioButton;
-import org.liquidengine.legui.component.ScrollBar;
-import org.liquidengine.legui.component.Slider;
-import org.liquidengine.legui.component.TextAreaField;
-import org.liquidengine.legui.component.TextInput;
-import org.liquidengine.legui.component.ToggleButton;
-import org.liquidengine.legui.component.Tooltip;
+import org.liquidengine.legui.component.*;
 import org.liquidengine.legui.icon.CharIcon;
 import org.liquidengine.legui.icon.Icon;
 import org.liquidengine.legui.icon.ImageIcon;
@@ -26,33 +9,21 @@ import org.liquidengine.legui.image.Image;
 import org.liquidengine.legui.image.LoadableImage;
 import org.liquidengine.legui.style.Border;
 import org.liquidengine.legui.style.border.SimpleLineBorder;
-import org.liquidengine.legui.system.renderer.BorderRenderer;
-import org.liquidengine.legui.system.renderer.ComponentRenderer;
-import org.liquidengine.legui.system.renderer.IconRenderer;
-import org.liquidengine.legui.system.renderer.ImageRenderer;
-import org.liquidengine.legui.system.renderer.RendererProvider;
+import org.liquidengine.legui.system.renderer.*;
 import org.liquidengine.legui.system.renderer.nvg.border.NvgDefaultBorderRenderer;
 import org.liquidengine.legui.system.renderer.nvg.border.NvgSimpleLineBorderRenderer;
-import org.liquidengine.legui.system.renderer.nvg.component.NvgButtonRenderer;
-import org.liquidengine.legui.system.renderer.nvg.component.NvgCheckBoxRenderer;
-import org.liquidengine.legui.system.renderer.nvg.component.NvgDefaultComponentRenderer;
-import org.liquidengine.legui.system.renderer.nvg.component.NvgImageViewRenderer;
-import org.liquidengine.legui.system.renderer.nvg.component.NvgLabelRenderer;
-import org.liquidengine.legui.system.renderer.nvg.component.NvgPasswordInputRenderer;
-import org.liquidengine.legui.system.renderer.nvg.component.NvgProgressBarRenderer;
-import org.liquidengine.legui.system.renderer.nvg.component.NvgRadioButtonRenderer;
-import org.liquidengine.legui.system.renderer.nvg.component.NvgScrollBarRenderer;
-import org.liquidengine.legui.system.renderer.nvg.component.NvgSliderRenderer;
-import org.liquidengine.legui.system.renderer.nvg.component.NvgTextAreaFieldRenderer;
-import org.liquidengine.legui.system.renderer.nvg.component.NvgTextInputRenderer;
-import org.liquidengine.legui.system.renderer.nvg.component.NvgToggleButtonRenderer;
-import org.liquidengine.legui.system.renderer.nvg.component.NvgTooltipRenderer;
+import org.liquidengine.legui.system.renderer.nvg.component.*;
 import org.liquidengine.legui.system.renderer.nvg.icon.NvgCharIconRenderer;
 import org.liquidengine.legui.system.renderer.nvg.icon.NvgDefaultIconRenderer;
 import org.liquidengine.legui.system.renderer.nvg.icon.NvgImageIconRenderer;
 import org.liquidengine.legui.system.renderer.nvg.image.NvgDefaultImageRenderer;
 import org.liquidengine.legui.system.renderer.nvg.image.NvgFBOImageRenderer;
 import org.liquidengine.legui.system.renderer.nvg.image.NvgLoadableImageRenderer;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created by ShchAlexander on 1/26/2017.

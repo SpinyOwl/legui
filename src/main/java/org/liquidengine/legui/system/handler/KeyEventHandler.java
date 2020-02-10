@@ -1,7 +1,5 @@
 package org.liquidengine.legui.system.handler;
 
-import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
-
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.event.KeyEvent;
@@ -9,6 +7,8 @@ import org.liquidengine.legui.input.Keyboard;
 import org.liquidengine.legui.listener.processor.EventProcessorProvider;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.event.SystemKeyEvent;
+
+import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
 
 /**
  * System handler that used to update key states of {@link Keyboard.Key}.

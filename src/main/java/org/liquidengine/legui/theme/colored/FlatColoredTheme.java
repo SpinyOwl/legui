@@ -1,50 +1,14 @@
 package org.liquidengine.legui.theme.colored;
 
 import org.joml.Vector4f;
-import org.liquidengine.legui.component.Button;
-import org.liquidengine.legui.component.CheckBox;
-import org.liquidengine.legui.component.Component;
-import org.liquidengine.legui.component.Label;
-import org.liquidengine.legui.component.LayerContainer;
-import org.liquidengine.legui.component.Panel;
-import org.liquidengine.legui.component.ProgressBar;
-import org.liquidengine.legui.component.RadioButton;
-import org.liquidengine.legui.component.ScrollBar;
-import org.liquidengine.legui.component.ScrollablePanel;
-import org.liquidengine.legui.component.SelectBox;
+import org.liquidengine.legui.component.*;
 import org.liquidengine.legui.component.SelectBox.SelectBoxElement;
 import org.liquidengine.legui.component.SelectBox.SelectBoxScrollablePanel;
-import org.liquidengine.legui.component.Slider;
-import org.liquidengine.legui.component.TextArea;
-import org.liquidengine.legui.component.TextAreaField;
-import org.liquidengine.legui.component.TextInput;
-import org.liquidengine.legui.component.ToggleButton;
-import org.liquidengine.legui.component.Tooltip;
-import org.liquidengine.legui.component.Widget;
 import org.liquidengine.legui.theme.AbstractTheme;
 import org.liquidengine.legui.theme.DefaultThemeManager;
 import org.liquidengine.legui.theme.Theme;
 import org.liquidengine.legui.theme.ThemeManager;
-import org.liquidengine.legui.theme.colored.def.FlatButtonTheme;
-import org.liquidengine.legui.theme.colored.def.FlatCheckBoxTheme;
-import org.liquidengine.legui.theme.colored.def.FlatComponentTheme;
-import org.liquidengine.legui.theme.colored.def.FlatLabelTheme;
-import org.liquidengine.legui.theme.colored.def.FlatLayerContainerTheme;
-import org.liquidengine.legui.theme.colored.def.FlatPanelTheme;
-import org.liquidengine.legui.theme.colored.def.FlatProgressBarTheme;
-import org.liquidengine.legui.theme.colored.def.FlatRadioButtonTheme;
-import org.liquidengine.legui.theme.colored.def.FlatScrollBarTheme;
-import org.liquidengine.legui.theme.colored.def.FlatScrollablePanelTheme;
-import org.liquidengine.legui.theme.colored.def.FlatSelectBoxElementTheme;
-import org.liquidengine.legui.theme.colored.def.FlatSelectBoxScrollablePanelTheme;
-import org.liquidengine.legui.theme.colored.def.FlatSelectBoxTheme;
-import org.liquidengine.legui.theme.colored.def.FlatSliderTheme;
-import org.liquidengine.legui.theme.colored.def.FlatTextAreaFieldTheme;
-import org.liquidengine.legui.theme.colored.def.FlatTextAreaTheme;
-import org.liquidengine.legui.theme.colored.def.FlatTextInputTheme;
-import org.liquidengine.legui.theme.colored.def.FlatToggleButtonTheme;
-import org.liquidengine.legui.theme.colored.def.FlatTooltipTheme;
-import org.liquidengine.legui.theme.colored.def.FlatWidgetTheme;
+import org.liquidengine.legui.theme.colored.def.*;
 
 /**
  * Dark Theme. Used to change theme of components to dark.

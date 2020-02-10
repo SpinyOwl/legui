@@ -1,16 +1,16 @@
 package org.liquidengine.legui.system.renderer.nvg.icon;
 
-import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderImage;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.getBorderRadius;
-
-import java.util.HashMap;
-
 import org.joml.Vector2f;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.icon.ImageIcon;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.ImageRenderer;
 import org.liquidengine.legui.system.renderer.nvg.NvgIconRenderer;
+
+import java.util.HashMap;
+
+import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderImage;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.getBorderRadius;
 
 /**
  * Created by ShchAlexander on 13.03.2017.

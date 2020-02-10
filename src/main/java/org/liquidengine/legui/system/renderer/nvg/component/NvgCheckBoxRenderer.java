@@ -1,10 +1,13 @@
 package org.liquidengine.legui.system.renderer.nvg.component;
 
 import org.joml.Vector2f;
+import org.joml.Vector2fc;
 import org.joml.Vector4f;
+import org.joml.Vector4fc;
 import org.liquidengine.legui.component.CheckBox;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.icon.Icon;
+import org.liquidengine.legui.style.Style;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgText;
 
@@ -21,6 +24,7 @@ public class NvgCheckBoxRenderer extends NvgDefaultComponentRenderer<CheckBox> {
     public void renderSelf(CheckBox checkBox, Context context, long nanovg) {
         createScissor(nanovg, checkBox);
         {
+            Style style = checkBox.getStyle();
             Vector2f pos = checkBox.getAbsolutePosition();
             Vector2f size = checkBox.getSize();
 
@@ -31,7 +35,7 @@ public class NvgCheckBoxRenderer extends NvgDefaultComponentRenderer<CheckBox> {
             Icon icon = checkBox.isChecked() ? checkBox.getIconChecked() : checkBox.getIconUnchecked();
             float iconWid = icon.getSize().x;
 
-            Vector4f padding = getPadding(checkBox, checkBox.getStyle());
+            Vector4f padding = getPadding(checkBox, style);
 
             float iconWidthForUse = (icon.getHorizontalAlign().index == 0 ? 1 : 0) * iconWid;
 
@@ -40,7 +44,10 @@ public class NvgCheckBoxRenderer extends NvgDefaultComponentRenderer<CheckBox> {
             float x = pos.x + iconWidthForUse + padding.x;
             float w = size.x - iconWidthForUse - padding.z - padding.x;
 
-            NvgText.drawTextLineToRect(nanovg, textState, new Vector2f(x, y), new Vector2f(w, h), true, getFont(checkBox), getFontSize(checkBox));
+            Vector2fc size1 = new Vector2f(w, h);
+            Vector4f rect = new Vector4f(new Vector2f(x, y), size1.x(), size1.y());
+            NvgText.drawTextLineToRect(nanovg, (Vector4fc) rect, true, style.getHorizontalAlign(), style.getVerticalAlign(),
+                    getFontSize(checkBox), getFont(checkBox), textState.getText(), style.getTextColor());
 
             renderIcon(icon, checkBox, context);
         }

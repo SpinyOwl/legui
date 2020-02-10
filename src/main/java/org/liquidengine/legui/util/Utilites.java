@@ -1,9 +1,10 @@
 package org.liquidengine.legui.util;
 
-import java.util.ArrayList;
-import java.util.List;
 import org.joml.Vector2f;
 import org.liquidengine.legui.component.Component;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Utility class which store some common methods.

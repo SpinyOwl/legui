@@ -79,14 +79,15 @@ public class NvgTextInputRenderer extends NvgDefaultComponentRenderer<TextInput>
                 NVGGlyphPosition.Buffer glyphs = NVGGlyphPosition.calloc(maxGlyphCount);
                 NVGColor colorA = NVGColor.calloc()
         ) {
+            Style style = gui.getStyle();
             TextState textState = gui.getTextState();
             String text = textState.getText();
-            String font = gui.getStyle().getFont();
-            float fontSize = gui.getStyle().getFontSize();
-            Vector4f highlightColor = textState.getHighlightColor();
-            HorizontalAlign halign = textState.getHorizontalAlign();
-            VerticalAlign valign = textState.getVerticalAlign();
-            Vector4f textColor = textState.getTextColor();
+            String font = style.getFont();
+            float fontSize = style.getFontSize();
+            Vector4f highlightColor = style.getHighlightColor();
+            HorizontalAlign halign = style.getHorizontalAlign();
+            VerticalAlign valign = style.getVerticalAlign();
+            Vector4f textColor = style.getTextColor();
             int caretPosition = gui.getCaretPosition();
             Map<String, Object> metadata = gui.getMetadata();
             int startSelectionIndex = gui.getStartSelectionIndex();

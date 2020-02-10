@@ -1,6 +1,8 @@
 package org.liquidengine.legui.style;
 
 import org.joml.Vector4f;
+import org.liquidengine.legui.component.optional.align.HorizontalAlign;
+import org.liquidengine.legui.component.optional.align.VerticalAlign;
 import org.liquidengine.legui.style.border.SimpleLineBorder;
 import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.style.flex.FlexStyle;
@@ -24,8 +26,6 @@ public class Style {
     private FlexStyle flexStyle = new FlexStyle();
     private Background background = new Background();
     private Border border = new SimpleLineBorder(ColorConstants.gray(), 1);
-    private String font = FontRegistry.DEFAULT;
-    private Float fontSize = 16f;
 
     private Length borderTopLeftRadius;
     private Length borderTopRightRadius;
@@ -62,6 +62,27 @@ public class Style {
      * Stroke color. Used to render stroke if component is focused.
      */
     private Vector4f focusedStrokeColor = ColorConstants.lightBlue();
+
+    // TEXT RELATED STYLE PROPERTIES.
+
+    private String font = FontRegistry.DEFAULT;
+    private Float fontSize = 16f;
+    /**
+     * Horizontal alignment. By default used {@link HorizontalAlign#CENTER}.
+     */
+    private HorizontalAlign horizontalAlign = HorizontalAlign.CENTER;
+    /**
+     * Vertical alignment.
+     */
+    private VerticalAlign verticalAlign = VerticalAlign.MIDDLE;
+    /**
+     * Text color.
+     */
+    private Vector4f textColor = ColorConstants.black();
+    /**
+     * Highlight color (used to highlight selection).
+     */
+    private Vector4f highlightColor = ColorConstants.blue();
 
 
     /**
@@ -780,6 +801,102 @@ public class Style {
 
     public void setFontSize(Float fontSize) {
         this.fontSize = fontSize;
+    }
+
+    /**
+     * Returns horizontal alignment.
+     *
+     * @return horizontal alignment.
+     */
+    public HorizontalAlign getHorizontalAlign() {
+        return horizontalAlign;
+    }
+
+    /**
+     * Used to set horizontal alignment.
+     *
+     * @param horizontalAlign horizontal alignment.
+     */
+    public void setHorizontalAlign(HorizontalAlign horizontalAlign) {
+        this.horizontalAlign = horizontalAlign;
+    }
+
+    /**
+     * Returns vertical alignment.
+     *
+     * @return vertical alignment.
+     */
+    public VerticalAlign getVerticalAlign() {
+        return verticalAlign;
+    }
+
+    /**
+     * Used to set vertical alignment.
+     *
+     * @param verticalAlign vertical alignment.
+     */
+    public void setVerticalAlign(VerticalAlign verticalAlign) {
+        this.verticalAlign = verticalAlign;
+    }
+
+    /**
+     * Returns text color.
+     *
+     * @return text color.
+     */
+    public Vector4f getTextColor() {
+        return textColor;
+    }
+
+    /**
+     * Used to set text color.
+     *
+     * @param textColor text color.
+     */
+    public void setTextColor(Vector4f textColor) {
+        this.textColor = textColor;
+    }
+
+    /**
+     * Used to set text color.
+     *
+     * @param r red component.
+     * @param g green component.
+     * @param b blue component.
+     * @param a alpha component.
+     */
+    public void setTextColor(float r, float g, float b, float a) {
+        this.textColor = new Vector4f(r, g, b, a);
+    }
+
+    /**
+     * Returns highlight color.
+     *
+     * @return highlight color
+     */
+    public Vector4f getHighlightColor() {
+        return highlightColor;
+    }
+
+    /**
+     * Used to set highlight color.
+     *
+     * @param highlightColor highlight color.
+     */
+    public void setHighlightColor(Vector4f highlightColor) {
+        this.highlightColor = highlightColor;
+    }
+
+    /**
+     * Used to set highlight color.
+     *
+     * @param r red component.
+     * @param g green component.
+     * @param b blue component.
+     * @param a alpha component.
+     */
+    public void setHighlightColor(float r, float g, float b, float a) {
+        this.highlightColor = new Vector4f(r, g, b, a);
     }
 
     /**

@@ -66,16 +66,17 @@ public class NvgTextAreaFieldRenderer extends NvgDefaultComponentRenderer<TextAr
 
         try (NVGGlyphPosition.Buffer glyphs = NVGGlyphPosition.calloc(maxGlyphCount)) {
 
+            Style style = gui.getStyle();
             TextState textState = gui.getTextState();
             String text = textState.getText();
-            String font = gui.getStyle().getFont();
-            float fontSize = gui.getStyle().getFontSize();
-            HorizontalAlign halign = textState.getHorizontalAlign();
-            VerticalAlign valign = textState.getVerticalAlign();
-            Vector4f textColor = textState.getTextColor();
+            String font = style.getFont();
+            float fontSize = style.getFontSize();
+            HorizontalAlign halign = style.getHorizontalAlign();
+            VerticalAlign valign = style.getVerticalAlign();
+            Vector4f textColor = style.getTextColor();
             int caretPosition = gui.getCaretPosition();
             boolean focused = gui.isFocused();
-            Vector4f highlightColor = textState.getHighlightColor();
+            Vector4f highlightColor = style.getHighlightColor();
             int caretLine = 0;
 
             preinitializeTextRendering(context, font, fontSize, halign, valign, textColor);

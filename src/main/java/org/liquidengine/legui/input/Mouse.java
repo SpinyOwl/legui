@@ -1,15 +1,8 @@
 package org.liquidengine.legui.input;
 
-import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_1;
-import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_2;
-import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_3;
-import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_4;
-import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_5;
-import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_6;
-import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_7;
-import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_8;
-
 import org.joml.Vector2f;
+
+import static org.lwjgl.glfw.GLFW.*;
 
 /**
  * This class used to hold mouse state.

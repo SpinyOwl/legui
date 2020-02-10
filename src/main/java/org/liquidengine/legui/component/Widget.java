@@ -207,8 +207,8 @@ public class Widget extends Component {
         closeButton.getStyle().getFlexStyle().setFlexShrink(1);
 
         closeButton.getListenerMap().addListener(MouseClickEvent.class, new WidgetCloseButMouseClickEventListener(this));
-        closeButton.getTextState().setVerticalAlign(VerticalAlign.MIDDLE);
-        closeButton.getTextState().setHorizontalAlign(HorizontalAlign.CENTER);
+        closeButton.getStyle().setVerticalAlign(VerticalAlign.MIDDLE);
+        closeButton.getStyle().setHorizontalAlign(HorizontalAlign.CENTER);
         closeButton.setTabFocusable(false);
 
         minimizeButton = new Button("");
@@ -242,8 +242,8 @@ public class Widget extends Component {
         minimizeButton.getStyle().setBorder(null);
 
         minimizeButton.getListenerMap().addListener(MouseClickEvent.class, new WidgetMinimizeButMouseClickEventListener(this));
-        minimizeButton.getTextState().setVerticalAlign(VerticalAlign.MIDDLE);
-        minimizeButton.getTextState().setHorizontalAlign(HorizontalAlign.CENTER);
+        minimizeButton.getStyle().setVerticalAlign(VerticalAlign.MIDDLE);
+        minimizeButton.getStyle().setHorizontalAlign(HorizontalAlign.CENTER);
 
         container = new Panel();
         container.setTabFocusable(false);
@@ -385,7 +385,7 @@ public class Widget extends Component {
      * @return close button text color.
      */
     public Vector4f getCloseButtonColor() {
-        return closeButton.getTextState().getTextColor();
+        return closeButton.getStyle().getTextColor();
     }
 
     /**
@@ -394,7 +394,7 @@ public class Widget extends Component {
      * @param closeButtonColor close button text color to set.
      */
     public void setCloseButtonColor(Vector4f closeButtonColor) {
-        this.closeButton.getTextState().setTextColor(closeButtonColor);
+        this.closeButton.getStyle().setTextColor(closeButtonColor);
     }
 
     /**

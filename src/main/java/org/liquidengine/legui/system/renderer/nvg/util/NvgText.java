@@ -1,10 +1,8 @@
 package org.liquidengine.legui.system.renderer.nvg.util;
 
 import org.joml.Vector2f;
-import org.joml.Vector2fc;
 import org.joml.Vector4f;
 import org.joml.Vector4fc;
-import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
 import org.lwjgl.nanovg.NVGColor;
@@ -25,22 +23,12 @@ public class NvgText {
     private NvgText() {
     }
 
-    public static void drawTextLineToRect(long nvg, TextState text, Vector2fc pos, Vector2fc size, boolean hideOverflow,
-                                          String font, float fontSize) {
-        if (text.length() == 0) {
+    public static void drawTextLineToRect(long nvg, Vector4fc rect, boolean hideOverflow,
+                                          HorizontalAlign horizontalAlign, VerticalAlign verticalAlign,
+                                          float fontSize, String font, String textToRender, Vector4f fontColor) {
+        if (textToRender.length() == 0) {
             return;
         }
-        Vector4f rect = new Vector4f(pos, size.x(), size.y());
-        drawTextLineToRect(nvg, text, rect, hideOverflow, font, fontSize);
-    }
-
-    public static void drawTextLineToRect(long nvg, TextState text, Vector4fc rect, boolean hideOverflow, String font, float fontSize) {
-        drawTextLineToRect(nvg, rect, hideOverflow, text.getHorizontalAlign(), text.getVerticalAlign(),
-                fontSize, font, text.getText(), text.getTextColor());
-    }
-
-    public static void drawTextLineToRect(long nvg, Vector4fc rect, boolean hideOverflow, HorizontalAlign horizontalAlign, VerticalAlign verticalAlign,
-                                          float fontSize, String font, String textToRender, Vector4f fontColor) {
         nvgFontSize(nvg, fontSize);
         nvgFontFace(nvg, font);
         textAlign(nvg, horizontalAlign, verticalAlign);

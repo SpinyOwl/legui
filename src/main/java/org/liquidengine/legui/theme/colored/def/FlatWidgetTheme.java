@@ -4,7 +4,6 @@ import org.joml.Vector2f;
 import org.liquidengine.legui.component.Button;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.Widget;
-import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
 import org.liquidengine.legui.icon.CharIcon;
@@ -43,12 +42,12 @@ public class FlatWidgetTheme<T extends Widget> extends FlatComponentTheme<T> {
         component.getStyle().getBackground().setColor(settings.backgroundColor());
 
         Button minimizeButton = component.getMinimizeButton();
-        minimizeButton.getTextState().setTextColor(ColorUtil.oppositeBlackOrWhite(settings.borderColor()));
+        minimizeButton.getStyle().setTextColor(ColorUtil.oppositeBlackOrWhite(settings.borderColor()));
         minimizeButton.getStyle().getBackground().setColor(settings.borderColor());
         minimizeButton.getStyle().setShadow(null);
 
         Button closeButton = component.getCloseButton();
-        closeButton.getTextState().setTextColor(ColorUtil.oppositeBlackOrWhite(settings.borderColor()));
+        closeButton.getStyle().setTextColor(ColorUtil.oppositeBlackOrWhite(settings.borderColor()));
         closeButton.getStyle().getBackground().setColor(settings.borderColor());
         closeButton.getStyle().setShadow(null);
 
@@ -68,9 +67,8 @@ public class FlatWidgetTheme<T extends Widget> extends FlatComponentTheme<T> {
         resizeButton.getStyle().getBackground().setIcon(icon);
         resizeButton.getStyle().setShadow(null);
 
-        TextState titleTextState = component.getTitleTextState();
         component.getTitle().getStyle().setPadding(3f, 5f);
-        titleTextState.setTextColor(ColorUtil.oppositeBlackOrWhite(settings.backgroundColor()));
+        component.getTitle().getStyle().setTextColor(ColorUtil.oppositeBlackOrWhite(settings.backgroundColor()));
         Icon closeIcon = component.getCloseIcon();
         if (closeIcon instanceof CharIcon) {
             CharIcon bgIcon = (CharIcon) closeIcon;

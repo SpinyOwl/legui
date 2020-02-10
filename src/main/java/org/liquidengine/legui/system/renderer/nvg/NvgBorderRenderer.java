@@ -1,11 +1,11 @@
 package org.liquidengine.legui.system.renderer.nvg;
 
-import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.NVG_CONTEXT;
-
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.style.Border;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.BorderRenderer;
+
+import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.NVG_CONTEXT;
 
 /**
  * Created by ShchAlexander on 11.02.2017.

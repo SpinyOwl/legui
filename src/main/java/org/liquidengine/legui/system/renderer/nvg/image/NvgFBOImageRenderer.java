@@ -2,17 +2,14 @@ package org.liquidengine.legui.system.renderer.nvg.image;
 
 
 import org.joml.Vector2fc;
-import org.joml.Vector4f;
 import org.liquidengine.legui.image.FBOImage;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.nvg.NvgImageRenderer;
 import org.liquidengine.legui.system.renderer.nvg.NvgLoadableImageReferenceManager;
-import org.lwjgl.nanovg.NVGPaint;
 
 import java.util.Map;
 
 import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.IMAGE_REFERENCE_MANAGER;
-import static org.lwjgl.nanovg.NanoVG.*;
 
 /**
  * Used to render image rectangle if no other renderers implemented.

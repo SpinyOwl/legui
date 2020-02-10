@@ -3,6 +3,7 @@ package org.liquidengine.legui.system.renderer.nvg.component;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.ToggleButton;
+import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.icon.Icon;
 import org.liquidengine.legui.style.Style;
 import org.liquidengine.legui.system.context.Context;
@@ -23,6 +24,7 @@ public class NvgToggleButtonRenderer extends NvgDefaultComponentRenderer<ToggleB
     protected void renderSelf(ToggleButton toggleButton, Context context, long nanovg) {
         NvgRenderUtils.createScissor(nanovg, toggleButton);
         {
+            Style style = toggleButton.getStyle();
             Vector2f pos = toggleButton.getAbsolutePosition();
             Vector2f size = toggleButton.getSize();
 
@@ -31,7 +33,10 @@ public class NvgToggleButtonRenderer extends NvgDefaultComponentRenderer<ToggleB
 
             // Render text
             nvgIntersectScissor(nanovg, pos.x, pos.y, size.x, size.y);
-            NvgText.drawTextLineToRect(nanovg, toggleButton.getTextState(), pos, size, true, getFont(toggleButton), getFontSize(toggleButton));
+            TextState text = toggleButton.getTextState();
+            Vector4f rect = new Vector4f(pos, size.x, size.y);
+            NvgText.drawTextLineToRect(nanovg, rect, true, style.getHorizontalAlign(), style.getVerticalAlign(),
+                    getFontSize(toggleButton), getFont(toggleButton), text.getText(), style.getTextColor());
         }
         resetScissor(nanovg);
     }
