@@ -7,6 +7,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 import org.liquidengine.legui.intersection.Intersector;
 import org.liquidengine.legui.listener.ListenerMap;
+import org.liquidengine.legui.style.Style;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -570,4 +571,91 @@ public class Layer<T extends Component> {
     public List<Component> getChildComponents() {
         return container.getChildComponents();
     }
+
+    public Style getFocusedStyle() {
+        return container.getFocusedStyle();
+    }
+
+    public Style getHoveredStyle() {
+        return container.getHoveredStyle();
+    }
+
+    public Style getPressedStyle() {
+        return container.getPressedStyle();
+    }
+
+    /**
+     * Returns component style.
+     *
+     * @return component style.
+     */
+    public Style getStyle() {
+        return container.getStyle();
+    }
+
+    /**
+     * Used to set component style.
+     *
+     * @param style component style to set.
+     */
+    public void setStyle(Style style) {
+        container.setStyle(style);
+    }
+
+    /**
+     * Returns tab index.
+     *
+     * @return tab index.
+     */
+    public int getTabIndex() {
+        return container.getTabIndex();
+    }
+
+    /**
+     * Used to set tab index.
+     *
+     * @param tabIndex tab index.
+     */
+    public void setTabIndex(int tabIndex) {
+        container.setTabIndex(tabIndex);
+    }
+
+    /**
+     * Returns true if component focused by tabbing.
+     *
+     * @return true if component focused by tabbing.
+     */
+    public boolean isTabFocusable() {
+        return container.isTabFocusable();
+    }
+
+    /**
+     * Used to set tab affecting for component.
+     *
+     * @param tabFocusable new tab affecting state.
+     */
+    public void setTabFocusable(boolean tabFocusable) {
+        container.setTabFocusable(tabFocusable);
+    }
+
+    /**
+     * Returns true if component focused.
+     *
+     * @return true if component focused.
+     */
+    public boolean isFocusable() {
+        return container.isFocusable();
+    }
+
+    /**
+     * Used to set component focusable.
+     * <br><b>Note! You should take in consideration that component that marked as non-focusable will not receive any events.
+     * In fact this could be used to organize elements using containers.</b>
+     *
+     * @param focusable new focusable state.
+     */
+    public void setFocusable(boolean focusable) {
+        container.setFocusable(focusable);
+    }
+
 }
