@@ -1,3 +1,46 @@
+## [2.2.1]
+- Added access to dialog layer from dialog object for more control over content and styling, added extra delegate methods to layer class
+
+## [2.2.0]
+### Added
+- added some examples
+
+### Changed
+- moved text related styling from TextState to Style class
+
+### Fixed
+- Fixed length evaluation for percentage
+
+## [2.1.0]
+### Added
+- added interfaces for system event processor and gui event processor
+- added position/size change events for widget drag/resize
+
+### Changed
+- reworked all themes
+
+### Fixed
+- fixed some typo issues
+- fixed float comparision in layout system
+- fixed some issues with themes
+- fixed [#110](https://github.com/LiquidEngine/legui/issues/110) issue
+- fixed predefined scroll event listeners
+- some code smell issues
+
+
+## [1.6.0]
+### Added
+- added `Length` and `Unit` types for styling and updated most style properties to use them.
+- added `focusable` property to component which allow to make component receive focus event or not.
+
+### Changed
+- removed marshalling/unmarshalling
+
+### Fixed
+- fixed some demo classes
+- fixed viewport animations
+
+
 ## [1.5.0]
 
 ## [1.4.8]
