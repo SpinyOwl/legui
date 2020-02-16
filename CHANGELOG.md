@@ -1,4 +1,9 @@
+## [2.2.2]
+### Fixed
+- fixed issue with hovered/focused/pressed styles related to text-related stylings
+
 ## [2.2.1]
+### Added
 - Added access to dialog layer from dialog object for more control over content and styling, added extra delegate methods to layer class
 
 ## [2.2.0]
