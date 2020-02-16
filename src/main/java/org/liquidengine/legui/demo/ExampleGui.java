@@ -639,6 +639,8 @@ public class ExampleGui extends Panel {
                                                             shadowWidget.getStyle().getShadow().sethOffset(hOffsetSlider.getValue() - 50f)
                                                        );
         Label hOffsetLabel = new Label(10, 5 + 20 * 0, 90, 10);
+        hOffsetLabel.getStyle().setFontSize(18f);
+        hOffsetLabel.getHoveredStyle().setFontSize(20f);
         hOffsetLabel.getTextState().setText("HOffset: ");
         shadowWidget.getContainer().add(hOffsetLabel);
 

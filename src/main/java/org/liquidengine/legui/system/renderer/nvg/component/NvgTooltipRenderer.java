@@ -7,6 +7,7 @@ import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
 import org.liquidengine.legui.style.Style;
+import org.liquidengine.legui.style.font.FontRegistry;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgColorUtil;
 import org.lwjgl.nanovg.NVGColor;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.liquidengine.legui.style.util.StyleUtilities.getPadding;
+import static org.liquidengine.legui.style.util.StyleUtilities.getStyle;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.*;
 import static org.lwjgl.nanovg.NanoVG.*;
 import static org.lwjgl.system.MemoryUtil.*;
@@ -35,12 +37,12 @@ public class NvgTooltipRenderer extends NvgDefaultComponentRenderer<Tooltip> {
             TextState textState = component.getTextState();
             Vector2f pos = component.getAbsolutePosition();
             Vector2f size = component.getSize();
-            float fontSize = style.getFontSize();
-            String font = style.getFont();
+            float fontSize = getStyle(component, Style::getFontSize, 16F);
+            String font = getStyle(component, Style::getFont, FontRegistry.DEFAULT);
             String text = textState.getText();
-            HorizontalAlign horizontalAlign = style.getHorizontalAlign();
-            VerticalAlign verticalAlign = style.getVerticalAlign();
-            Vector4f textColor = style.getTextColor();
+            HorizontalAlign horizontalAlign = getStyle(component, Style::getHorizontalAlign, HorizontalAlign.LEFT);
+            VerticalAlign verticalAlign = getStyle(component, Style::getVerticalAlign, VerticalAlign.MIDDLE);
+            Vector4f textColor = getStyle(component, Style::getTextColor);
             Vector4f padding = getPadding(component, style);
 
             renderBackground(component, context, nanovg);

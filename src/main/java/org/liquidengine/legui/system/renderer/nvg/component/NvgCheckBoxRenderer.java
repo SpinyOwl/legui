@@ -6,12 +6,16 @@ import org.joml.Vector4f;
 import org.joml.Vector4fc;
 import org.liquidengine.legui.component.CheckBox;
 import org.liquidengine.legui.component.optional.TextState;
+import org.liquidengine.legui.component.optional.align.HorizontalAlign;
+import org.liquidengine.legui.component.optional.align.VerticalAlign;
 import org.liquidengine.legui.icon.Icon;
 import org.liquidengine.legui.style.Style;
+import org.liquidengine.legui.style.font.FontRegistry;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgText;
 
 import static org.liquidengine.legui.style.util.StyleUtilities.getPadding;
+import static org.liquidengine.legui.style.util.StyleUtilities.getStyle;
 import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderIcon;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.*;
 
@@ -46,8 +50,13 @@ public class NvgCheckBoxRenderer extends NvgDefaultComponentRenderer<CheckBox> {
 
             Vector2fc size1 = new Vector2f(w, h);
             Vector4f rect = new Vector4f(new Vector2f(x, y), size1.x(), size1.y());
-            NvgText.drawTextLineToRect(nanovg, (Vector4fc) rect, true, style.getHorizontalAlign(), style.getVerticalAlign(),
-                    getFontSize(checkBox), getFont(checkBox), textState.getText(), style.getTextColor());
+            NvgText.drawTextLineToRect(nanovg, rect, true,
+                    getStyle(checkBox, Style::getHorizontalAlign, HorizontalAlign.LEFT),
+                    getStyle(checkBox, Style::getVerticalAlign, VerticalAlign.MIDDLE),
+                    getStyle(checkBox, Style::getFontSize, 16F),
+                    getStyle(checkBox, Style::getFont, FontRegistry.DEFAULT),
+                    textState.getText(),
+                    getStyle(checkBox, Style::getTextColor));
 
             renderIcon(icon, checkBox, context);
         }

@@ -6,12 +6,16 @@ import org.joml.Vector4f;
 import org.joml.Vector4fc;
 import org.liquidengine.legui.component.RadioButton;
 import org.liquidengine.legui.component.optional.TextState;
+import org.liquidengine.legui.component.optional.align.HorizontalAlign;
+import org.liquidengine.legui.component.optional.align.VerticalAlign;
 import org.liquidengine.legui.icon.Icon;
 import org.liquidengine.legui.style.Style;
+import org.liquidengine.legui.style.font.FontRegistry;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgText;
 
 import static org.liquidengine.legui.style.util.StyleUtilities.getPadding;
+import static org.liquidengine.legui.style.util.StyleUtilities.getStyle;
 import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderIcon;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.*;
 
@@ -44,8 +48,13 @@ public class NvgRadioButtonRenderer extends NvgDefaultComponentRenderer<RadioBut
             Vector2f textRectSize = new Vector2f(size.x - iconWidthForUse - pad.z, size.y - (pad.y + pad.w));
 
             Vector4f rect = new Vector4f(textRectPos, ((Vector2fc) textRectSize).x(), ((Vector2fc) textRectSize).y());
-            NvgText.drawTextLineToRect(nanovg, (Vector4fc) rect, true, style.getHorizontalAlign(), style.getVerticalAlign(),
-                    getFontSize(radioButton), getFont(radioButton), textState.getText(), style.getTextColor());
+            NvgText.drawTextLineToRect(nanovg, rect, true,
+                    getStyle(radioButton, Style::getHorizontalAlign, HorizontalAlign.LEFT),
+                    getStyle(radioButton, Style::getVerticalAlign, VerticalAlign.MIDDLE),
+                    getStyle(radioButton, Style::getFontSize, 16F),
+                    getStyle(radioButton, Style::getFont, FontRegistry.DEFAULT),
+                    textState.getText(),
+                    getStyle(radioButton, Style::getTextColor));
             renderIcon(icon, radioButton, context);
         }
         resetScissor(nanovg);

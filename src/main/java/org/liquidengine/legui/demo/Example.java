@@ -9,6 +9,7 @@ import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.event.WindowSizeEvent;
 import org.liquidengine.legui.listener.WindowSizeEventListener;
 import org.liquidengine.legui.style.color.ColorConstants;
+import org.liquidengine.legui.style.font.FontRegistry;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.layout.LayoutManager;
 import org.liquidengine.legui.system.renderer.Renderer;
@@ -68,7 +69,10 @@ public class Example {
             fromInt(100, 181, 246, 1), // strokeColor
             fromInt(165, 214, 167, 1), // allowColor
             fromInt(239, 154, 154, 1), // denyColor
-            ColorConstants.transparent() // shadowColor
+            ColorConstants.transparent(), // shadowColor
+            ColorConstants.darkGray(), // text color
+            FontRegistry.DEFAULT, // font
+            16f //font size
         ));
 
         // Firstly we need to create frame component for window.

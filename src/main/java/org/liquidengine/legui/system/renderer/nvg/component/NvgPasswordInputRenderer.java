@@ -8,6 +8,7 @@ import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
 import org.liquidengine.legui.input.Mouse;
 import org.liquidengine.legui.style.Style;
+import org.liquidengine.legui.style.font.FontRegistry;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgColorUtil;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgShapes;
@@ -20,8 +21,7 @@ import java.nio.ByteBuffer;
 import java.util.Map;
 
 import static org.liquidengine.legui.style.color.ColorUtil.oppositeBlackOrWhite;
-import static org.liquidengine.legui.style.util.StyleUtilities.getInnerContentRectangle;
-import static org.liquidengine.legui.style.util.StyleUtilities.getPadding;
+import static org.liquidengine.legui.style.util.StyleUtilities.*;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.*;
 import static org.lwjgl.nanovg.NanoVG.*;
 import static org.lwjgl.system.MemoryUtil.*;
@@ -68,11 +68,11 @@ public class NvgPasswordInputRenderer extends NvgDefaultComponentRenderer<Passwo
      * This method used to render password field and cursor.
      *
      * @param leguiContext legui context.
-     * @param context nanovg context.
-     * @param gui password input.
-     * @param size input size.
-     * @param rect rectangle in which should be rendered password.
-     * @param bc background color.
+     * @param context      nanovg context.
+     * @param gui          password input.
+     * @param size         input size.
+     * @param rect         rectangle in which should be rendered password.
+     * @param bc           background color.
      */
     private void renderText(Context leguiContext, long context, PasswordInput gui, Vector2f size, Vector4f rect, Vector4f bc) {
 
@@ -85,12 +85,12 @@ public class NvgPasswordInputRenderer extends NvgDefaultComponentRenderer<Passwo
             TextState textState = gui.getTextState();
             String text = textState.getText();
             String maskedText = createMaskedText(gui, text);
-            String font = style.getFont();
-            float fontSize = style.getFontSize();
-            Vector4f highlightColor = style.getHighlightColor();
-            HorizontalAlign halign = style.getHorizontalAlign();
-            VerticalAlign valign = style.getVerticalAlign();
-            Vector4f textColor = style.getTextColor();
+            String font = getStyle(gui, Style::getFont, FontRegistry.DEFAULT);
+            float fontSize = getStyle(gui, Style::getFontSize, 16f);
+            Vector4f highlightColor = getStyle(gui, Style::getHighlightColor);
+            HorizontalAlign halign = getStyle(gui, Style::getHorizontalAlign, HorizontalAlign.LEFT);
+            VerticalAlign valign = getStyle(gui, Style::getVerticalAlign, VerticalAlign.MIDDLE);
+            Vector4f textColor = getStyle(gui, Style::getTextColor);
             int caretPosition = gui.getCaretPosition();
             Map<String, Object> metadata = gui.getMetadata();
             int startSelectionIndex = gui.getStartSelectionIndex();
@@ -215,11 +215,11 @@ public class NvgPasswordInputRenderer extends NvgDefaultComponentRenderer<Passwo
                     float nCaretX = caretx - poffset;
 
                     drawSelectionAndUpdateCaret(context, rect, bc, highlightColor, startSelectionIndex, endSelectionIndex, focused, startSelectionX,
-                                                endSelectionX,
-                                                poffset);
+                            endSelectionX,
+                            poffset);
                     // render text
                     NvgText.drawTextLineToRect(context, new Vector4f(textBounds[4] - poffset, textBounds[5], textBounds[6], textBounds[7]),
-                                               false, HorizontalAlign.LEFT, VerticalAlign.MIDDLE, fontSize, font, maskedText, textColor);
+                            false, HorizontalAlign.LEFT, VerticalAlign.MIDDLE, fontSize, font, maskedText, textColor);
 
                     if (focused) {
                         // render caret

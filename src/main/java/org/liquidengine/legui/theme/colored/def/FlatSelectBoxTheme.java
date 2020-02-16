@@ -44,7 +44,6 @@ public class FlatSelectBoxTheme<T extends SelectBox> extends FlatComponentTheme<
         Button selectionButton = component.getSelectionButton();
         selectionButton.getStyle().setShadow(null);
         selectionButton.getStyle().getBackground().setColor(ColorConstants.transparent());
-        selectionButton.getStyle().setTextColor(ColorUtil.oppositeBlackOrWhite(settings.backgroundColor()));
 
         Icon collapseIcon = component.getCollapseIcon();
         if (collapseIcon instanceof CharIcon) {

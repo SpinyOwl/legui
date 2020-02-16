@@ -4,13 +4,17 @@ import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.ToggleButton;
 import org.liquidengine.legui.component.optional.TextState;
+import org.liquidengine.legui.component.optional.align.HorizontalAlign;
+import org.liquidengine.legui.component.optional.align.VerticalAlign;
 import org.liquidengine.legui.icon.Icon;
 import org.liquidengine.legui.style.Style;
+import org.liquidengine.legui.style.font.FontRegistry;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgShapes;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgText;
 
+import static org.liquidengine.legui.style.util.StyleUtilities.getStyle;
 import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderIcon;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.*;
 import static org.lwjgl.nanovg.NanoVG.nvgIntersectScissor;
@@ -35,8 +39,13 @@ public class NvgToggleButtonRenderer extends NvgDefaultComponentRenderer<ToggleB
             nvgIntersectScissor(nanovg, pos.x, pos.y, size.x, size.y);
             TextState text = toggleButton.getTextState();
             Vector4f rect = new Vector4f(pos, size.x, size.y);
-            NvgText.drawTextLineToRect(nanovg, rect, true, style.getHorizontalAlign(), style.getVerticalAlign(),
-                    getFontSize(toggleButton), getFont(toggleButton), text.getText(), style.getTextColor());
+            NvgText.drawTextLineToRect(nanovg, rect, true,
+                    getStyle(toggleButton, Style::getHorizontalAlign, HorizontalAlign.LEFT),
+                    getStyle(toggleButton, Style::getVerticalAlign, VerticalAlign.MIDDLE),
+                    getStyle(toggleButton, Style::getFontSize, 16F),
+                    getStyle(toggleButton, Style::getFont, FontRegistry.DEFAULT),
+                    text.getText(),
+                    getStyle(toggleButton, Style::getTextColor));
         }
         resetScissor(nanovg);
     }

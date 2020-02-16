@@ -3,6 +3,7 @@ package org.liquidengine.legui.theme.colored.def;
 import org.joml.Vector2f;
 import org.liquidengine.legui.component.CheckBox;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
+import org.liquidengine.legui.component.optional.align.VerticalAlign;
 import org.liquidengine.legui.icon.CharIcon;
 import org.liquidengine.legui.style.color.ColorUtil;
 import org.liquidengine.legui.theme.colored.FlatColoredTheme.FlatColoredThemeSettings;
@@ -34,8 +35,6 @@ public class FlatCheckBoxTheme<T extends CheckBox> extends FlatBorderlessTheme<T
     @Override
     public void apply(T component) {
         super.apply(component);
-        component.getStyle().setTextColor(ColorUtil.oppositeBlackOrWhite(settings.backgroundColor()));
-        component.getStyle().setHorizontalAlign(HorizontalAlign.LEFT);
         component.setIconUnchecked(
             new CharIcon(new Vector2f(14), MATERIAL_ICONS_REGULAR, (char) 0xE835, ColorUtil.oppositeBlackOrWhite(settings.backgroundColor())));
         component

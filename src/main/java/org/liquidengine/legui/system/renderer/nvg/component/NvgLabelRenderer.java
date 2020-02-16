@@ -4,12 +4,14 @@ import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.Label;
 import org.liquidengine.legui.component.optional.TextState;
+import org.liquidengine.legui.component.optional.align.HorizontalAlign;
+import org.liquidengine.legui.component.optional.align.VerticalAlign;
 import org.liquidengine.legui.style.Style;
+import org.liquidengine.legui.style.font.FontRegistry;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgText;
 
-import static org.liquidengine.legui.style.util.StyleUtilities.getInnerContentRectangle;
-import static org.liquidengine.legui.style.util.StyleUtilities.getPadding;
+import static org.liquidengine.legui.style.util.StyleUtilities.*;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.*;
 
 /**
@@ -32,8 +34,13 @@ public class NvgLabelRenderer extends NvgDefaultComponentRenderer<Label> {
             TextState textState = label.getTextState();
             Vector4f padding = getPadding(label, style);
             Vector4f rect = getInnerContentRectangle(pos, size, padding);
-            NvgText.drawTextLineToRect(nanovg, rect, false, style.getHorizontalAlign(), style.getVerticalAlign(),
-                    getFontSize(label), getFont(label), textState.getText(), style.getTextColor());
+            NvgText.drawTextLineToRect(nanovg, rect, false,
+                    getStyle(label, Style::getHorizontalAlign, HorizontalAlign.LEFT),
+                    getStyle(label, Style::getVerticalAlign, VerticalAlign.MIDDLE),
+                    getStyle(label, Style::getFontSize, 16F),
+                    getStyle(label, Style::getFont, FontRegistry.DEFAULT),
+                    textState.getText(),
+                    getStyle(label, Style::getTextColor));
         }
         resetScissor(nanovg);
     }

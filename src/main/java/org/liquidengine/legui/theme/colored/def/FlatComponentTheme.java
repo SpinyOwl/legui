@@ -2,6 +2,8 @@ package org.liquidengine.legui.theme.colored.def;
 
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.Tooltip;
+import org.liquidengine.legui.component.optional.align.HorizontalAlign;
+import org.liquidengine.legui.component.optional.align.VerticalAlign;
 import org.liquidengine.legui.style.border.SimpleLineBorder;
 import org.liquidengine.legui.style.shadow.Shadow;
 import org.liquidengine.legui.theme.AbstractTheme;
@@ -53,6 +55,11 @@ public class FlatComponentTheme<T extends Component> extends AbstractTheme<T> {
         component.getStyle().setBorderRadius(2f);
         component.getStyle().getBackground().setColor(settings.backgroundColor());
         component.getStyle().setFocusedStrokeColor(settings.strokeColor());
+        component.getStyle().setTextColor(settings.textColor());
+        component.getStyle().setFontSize(settings.fontSize());
+        component.getStyle().setFont(settings.font());
+        component.getStyle().setHorizontalAlign(HorizontalAlign.LEFT);
+        component.getStyle().setVerticalAlign(VerticalAlign.MIDDLE);
 
         if (settings.shadowColor() != null && settings.shadowColor().length() > 0.00001f) {
             component.getStyle().setShadow(new Shadow(1, 1, 16, -4, settings.shadowColor()));

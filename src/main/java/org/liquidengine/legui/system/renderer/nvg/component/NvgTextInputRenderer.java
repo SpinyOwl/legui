@@ -8,6 +8,7 @@ import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
 import org.liquidengine.legui.input.Mouse;
 import org.liquidengine.legui.style.Style;
+import org.liquidengine.legui.style.font.FontRegistry;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgColorUtil;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgShapes;
@@ -20,8 +21,7 @@ import java.nio.ByteBuffer;
 import java.util.Map;
 
 import static org.liquidengine.legui.style.color.ColorUtil.oppositeBlackOrWhite;
-import static org.liquidengine.legui.style.util.StyleUtilities.getInnerContentRectangle;
-import static org.liquidengine.legui.style.util.StyleUtilities.getPadding;
+import static org.liquidengine.legui.style.util.StyleUtilities.*;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.*;
 import static org.lwjgl.nanovg.NanoVG.*;
 import static org.lwjgl.system.MemoryUtil.*;
@@ -42,8 +42,8 @@ public class NvgTextInputRenderer extends NvgDefaultComponentRenderer<TextInput>
      * Used to render textInput.
      *
      * @param component textInput to render.
-     * @param context legui context.
-     * @param nanovg nanovg context pointer.
+     * @param context   legui context.
+     * @param nanovg    nanovg context pointer.
      */
     @Override
     protected void renderSelf(TextInput component, Context context, long nanovg) {
@@ -79,15 +79,14 @@ public class NvgTextInputRenderer extends NvgDefaultComponentRenderer<TextInput>
                 NVGGlyphPosition.Buffer glyphs = NVGGlyphPosition.calloc(maxGlyphCount);
                 NVGColor colorA = NVGColor.calloc()
         ) {
-            Style style = gui.getStyle();
             TextState textState = gui.getTextState();
             String text = textState.getText();
-            String font = style.getFont();
-            float fontSize = style.getFontSize();
-            Vector4f highlightColor = style.getHighlightColor();
-            HorizontalAlign halign = style.getHorizontalAlign();
-            VerticalAlign valign = style.getVerticalAlign();
-            Vector4f textColor = style.getTextColor();
+            String font = getStyle(gui, Style::getFont, FontRegistry.DEFAULT);
+            float fontSize = getStyle(gui, Style::getFontSize, 16F);
+            Vector4f highlightColor = getStyle(gui, Style::getHighlightColor);
+            HorizontalAlign halign = getStyle(gui, Style::getHorizontalAlign, HorizontalAlign.LEFT);
+            VerticalAlign valign = getStyle(gui, Style::getVerticalAlign, VerticalAlign.MIDDLE);
+            Vector4f textColor = getStyle(gui, Style::getTextColor);
             int caretPosition = gui.getCaretPosition();
             Map<String, Object> metadata = gui.getMetadata();
             int startSelectionIndex = gui.getStartSelectionIndex();
@@ -215,12 +214,12 @@ public class NvgTextInputRenderer extends NvgDefaultComponentRenderer<TextInput>
                     float nCaretX = caretx - poffset;
 
                     drawSelection(context, rect, highlightColor,
-                                  startSelectionIndex, endSelectionIndex,
-                                  focused, startSelectionX, endSelectionX, poffset);
+                            startSelectionIndex, endSelectionIndex,
+                            focused, startSelectionX, endSelectionX, poffset);
                     // render text
 
                     NvgText.drawTextLineToRect(context, new Vector4f(textBounds[4] - poffset, textBounds[5], textBounds[6], textBounds[7]),
-                                               false, HorizontalAlign.LEFT, VerticalAlign.MIDDLE, fontSize, font, text, textColor);
+                            false, HorizontalAlign.LEFT, VerticalAlign.MIDDLE, fontSize, font, text, textColor);
 
                     if (focused) {
                         // render caret

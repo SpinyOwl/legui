@@ -9,7 +9,6 @@ import org.liquidengine.legui.component.optional.align.VerticalAlign;
 import org.liquidengine.legui.icon.CharIcon;
 import org.liquidengine.legui.icon.Icon;
 import org.liquidengine.legui.style.color.ColorConstants;
-import org.liquidengine.legui.style.color.ColorUtil;
 import org.liquidengine.legui.style.font.FontRegistry;
 import org.liquidengine.legui.theme.Themes;
 import org.liquidengine.legui.theme.colored.FlatColoredTheme.FlatColoredThemeSettings;
@@ -42,12 +41,10 @@ public class FlatWidgetTheme<T extends Widget> extends FlatComponentTheme<T> {
         component.getStyle().getBackground().setColor(settings.backgroundColor());
 
         Button minimizeButton = component.getMinimizeButton();
-        minimizeButton.getStyle().setTextColor(ColorUtil.oppositeBlackOrWhite(settings.borderColor()));
         minimizeButton.getStyle().getBackground().setColor(settings.borderColor());
         minimizeButton.getStyle().setShadow(null);
 
         Button closeButton = component.getCloseButton();
-        closeButton.getStyle().setTextColor(ColorUtil.oppositeBlackOrWhite(settings.borderColor()));
         closeButton.getStyle().getBackground().setColor(settings.borderColor());
         closeButton.getStyle().setShadow(null);
 
@@ -63,16 +60,16 @@ public class FlatWidgetTheme<T extends Widget> extends FlatComponentTheme<T> {
         CharIcon icon = new CharIcon(FontRegistry.MATERIAL_DESIGN_ICONS, '\uF45D');
         icon.setSize(new Vector2f(20, 20));
         icon.setPosition(new Vector2f(-10, -10));
-        icon.setColor(ColorUtil.oppositeBlackOrWhite(settings.backgroundColor()));
+        icon.setColor(settings.textColor());
         resizeButton.getStyle().getBackground().setIcon(icon);
         resizeButton.getStyle().setShadow(null);
 
         component.getTitle().getStyle().setPadding(3f, 5f);
-        component.getTitle().getStyle().setTextColor(ColorUtil.oppositeBlackOrWhite(settings.backgroundColor()));
+
         Icon closeIcon = component.getCloseIcon();
         if (closeIcon instanceof CharIcon) {
             CharIcon bgIcon = (CharIcon) closeIcon;
-            bgIcon.setColor(ColorUtil.oppositeBlackOrWhite(settings.backgroundColor()));
+            bgIcon.setColor(settings.textColor());
             bgIcon.setHorizontalAlign(HorizontalAlign.CENTER);
             bgIcon.setVerticalAlign(VerticalAlign.MIDDLE);
         }
@@ -80,7 +77,7 @@ public class FlatWidgetTheme<T extends Widget> extends FlatComponentTheme<T> {
         Icon minimizeIcon = component.getMinimizeIcon();
         if (minimizeIcon instanceof CharIcon) {
             CharIcon bgIcon = (CharIcon) minimizeIcon;
-            bgIcon.setColor(ColorUtil.oppositeBlackOrWhite(settings.backgroundColor()));
+            bgIcon.setColor(settings.textColor());
             bgIcon.setHorizontalAlign(HorizontalAlign.CENTER);
             bgIcon.setVerticalAlign(VerticalAlign.MIDDLE);
         }
@@ -88,7 +85,7 @@ public class FlatWidgetTheme<T extends Widget> extends FlatComponentTheme<T> {
         Icon maximizeIcon = component.getMaximizeIcon();
         if (maximizeIcon instanceof CharIcon) {
             CharIcon bgIcon = (CharIcon) maximizeIcon;
-            bgIcon.setColor(ColorUtil.oppositeBlackOrWhite(settings.backgroundColor()));
+            bgIcon.setColor(settings.textColor());
             bgIcon.setHorizontalAlign(HorizontalAlign.CENTER);
             bgIcon.setVerticalAlign(VerticalAlign.MIDDLE);
         }

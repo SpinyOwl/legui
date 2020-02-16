@@ -14,6 +14,7 @@ import org.lwjgl.nanovg.NVGPaint;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 
 import static org.lwjgl.nanovg.NanoVG.*;
 import static org.lwjgl.system.MemoryUtil.memFree;
@@ -210,38 +211,6 @@ public final class NvgRenderUtils {
         }
 
         return r;
-    }
-
-    public static String getFont(Component component) {
-        Style style = component.getStyle();
-        String font = style.getFont();
-        if (component.isFocused() && component.getFocusedStyle().getFont() != null) {
-            font = component.getFocusedStyle().getFont();
-        }
-        if (component.isHovered() && component.getHoveredStyle().getFont() != null) {
-            font = component.getFocusedStyle().getFont();
-        }
-        if (component.isPressed() && component.getPressedStyle().getFont() != null) {
-            font = component.getFocusedStyle().getFont();
-        }
-
-        return font;
-    }
-
-    public static float getFontSize(Component component) {
-        Style style = component.getStyle();
-        float fontSize = style.getFontSize();
-        if (component.isFocused() && component.getFocusedStyle().getFontSize() != null) {
-            fontSize = component.getFocusedStyle().getFontSize();
-        }
-        if (component.isHovered() && component.getHoveredStyle().getFontSize() != null) {
-            fontSize = component.getFocusedStyle().getFontSize();
-        }
-        if (component.isPressed() && component.getPressedStyle().getFontSize() != null) {
-            fontSize = component.getFocusedStyle().getFontSize();
-        }
-
-        return fontSize;
     }
 
     private static void applyCurrentRadius(Vector4f r, Component component, Style curr) {

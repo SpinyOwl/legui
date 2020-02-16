@@ -33,8 +33,6 @@ public class FlatTextInputTheme<T extends TextInput> extends FlatComponentTheme<
 
         component.getFocusedStyle().getBackground()
             .setColor(settings.backgroundColor().mul(3).add(ColorUtil.oppositeBlackOrWhite(settings.backgroundColor())).div(4));
-        component.getStyle().setTextColor(ColorUtil.oppositeBlackOrWhite(settings.backgroundColor()));
-        component.getStyle().setHorizontalAlign(HorizontalAlign.LEFT);
         component.getStyle().setHighlightColor(settings.strokeColor());
         component.getStyle().getBackground().setColor(settings.backgroundColor());
     }

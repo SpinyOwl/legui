@@ -8,6 +8,7 @@ import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
 import org.liquidengine.legui.input.Mouse;
 import org.liquidengine.legui.style.Style;
+import org.liquidengine.legui.style.font.FontRegistry;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgColorUtil;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgShapes;
@@ -22,8 +23,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.liquidengine.legui.style.color.ColorUtil.oppositeBlackOrWhite;
-import static org.liquidengine.legui.style.util.StyleUtilities.getInnerContentRectangle;
-import static org.liquidengine.legui.style.util.StyleUtilities.getPadding;
+import static org.liquidengine.legui.style.util.StyleUtilities.*;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.*;
 import static org.lwjgl.nanovg.NanoVG.*;
 import static org.lwjgl.system.MemoryUtil.*;
@@ -66,17 +66,16 @@ public class NvgTextAreaFieldRenderer extends NvgDefaultComponentRenderer<TextAr
 
         try (NVGGlyphPosition.Buffer glyphs = NVGGlyphPosition.calloc(maxGlyphCount)) {
 
-            Style style = gui.getStyle();
             TextState textState = gui.getTextState();
             String text = textState.getText();
-            String font = style.getFont();
-            float fontSize = style.getFontSize();
-            HorizontalAlign halign = style.getHorizontalAlign();
-            VerticalAlign valign = style.getVerticalAlign();
-            Vector4f textColor = style.getTextColor();
+            String font = getStyle(gui, Style::getFont, FontRegistry.DEFAULT);
+            float fontSize = getStyle(gui, Style::getFontSize, 16F);
+            HorizontalAlign halign = getStyle(gui, Style::getHorizontalAlign, HorizontalAlign.LEFT);
+            VerticalAlign valign = getStyle(gui, Style::getVerticalAlign, VerticalAlign.MIDDLE);
+            Vector4f textColor = getStyle(gui, Style::getTextColor);
             int caretPosition = gui.getCaretPosition();
             boolean focused = gui.isFocused();
-            Vector4f highlightColor = style.getHighlightColor();
+            Vector4f highlightColor = getStyle(gui, Style::getHighlightColor);
             int caretLine = 0;
 
             preinitializeTextRendering(context, font, fontSize, halign, valign, textColor);
@@ -103,7 +102,7 @@ public class NvgTextAreaFieldRenderer extends NvgDefaultComponentRenderer<TextAr
             if (!focused) {
                 caretLine = (valign == VerticalAlign.TOP ? 0 : (valign == VerticalAlign.BOTTOM ? lineCount - 1 : lineCount / 2));
                 lineCaretPosition = (halign == HorizontalAlign.LEFT ? 0
-                    : (halign == HorizontalAlign.RIGHT ? lines[caretLine].length() : lines[caretLine].length() / 2));
+                        : (halign == HorizontalAlign.RIGHT ? lines[caretLine].length() : lines[caretLine].length() / 2));
             }
 
             int vp = valign == VerticalAlign.TOP ? 0 : valign == VerticalAlign.MIDDLE ? 1 : valign == VerticalAlign.BOTTOM ? 2 : 1;
@@ -162,7 +161,7 @@ public class NvgTextAreaFieldRenderer extends NvgDefaultComponentRenderer<TextAr
 
             // render selection background
             renderSelectionBackground(context, gui, fontSize, focused, highlightColor, lines, lineCount, lineStartIndeces, voffset,
-                bounds, glyphs, spaceWidth);
+                    bounds, glyphs, spaceWidth);
 
             // render every line of text
             for (int i = 0; i < lineCount; i++) {
@@ -265,8 +264,8 @@ public class NvgTextAreaFieldRenderer extends NvgDefaultComponentRenderer<TextAr
                     char[] spaces = new char[gui.getTabSize()];
                     Arrays.fill(spaces, SPACEC);
                     NvgText.drawTextLineToRect(context, new Vector4f(lineX, lineY, bounds[i][6], bounds[i][7]),
-                        false, HorizontalAlign.LEFT, VerticalAlign.MIDDLE,
-                        fontSize, font, line.replace(TABS, new String(spaces)), textColor);
+                            false, HorizontalAlign.LEFT, VerticalAlign.MIDDLE,
+                            fontSize, font, line.replace(TABS, new String(spaces)), textColor);
                     if (i == caretLine && focused) {
                         // render caret
                         NvgShapes.drawRectStroke(context, new Vector4f(caretx - 1, lineY, 1, bounds[i][7]), caretColor, 1);
@@ -347,9 +346,9 @@ public class NvgTextAreaFieldRenderer extends NvgDefaultComponentRenderer<TextAr
                 endSelectionIndexInLine = endSelectionIndex - lineStartIndeces[endSelectionLine];
 
                 float startSelectionCaretX =
-                    getCaretx(context, startSelectionIndexInLine, lines[startSelectionLine], bounds[startSelectionLine], glyphs, spaceWidth, gui.getTabSize());
+                        getCaretx(context, startSelectionIndexInLine, lines[startSelectionLine], bounds[startSelectionLine], glyphs, spaceWidth, gui.getTabSize());
                 float endSelectionCaretX =
-                    getCaretx(context, endSelectionIndexInLine, lines[endSelectionLine], bounds[endSelectionLine], glyphs, spaceWidth, gui.getTabSize());
+                        getCaretx(context, endSelectionIndexInLine, lines[endSelectionLine], bounds[endSelectionLine], glyphs, spaceWidth, gui.getTabSize());
 
                 for (int i = 0; i < lineCount; i++) {
                     if (i >= startSelectionLine && i <= endSelectionLine) {
@@ -364,7 +363,7 @@ public class NvgTextAreaFieldRenderer extends NvgDefaultComponentRenderer<TextAr
                         }
                         w = x2 - x1;
                         NvgShapes
-                            .drawRect(context, new Vector4f(x1, bounds[i][5] + voffset + fontSize * i, w, bounds[i][7]), selectionColor);
+                                .drawRect(context, new Vector4f(x1, bounds[i][5] + voffset + fontSize * i, w, bounds[i][7]), selectionColor);
                     }
                 }
             }
@@ -408,7 +407,7 @@ public class NvgTextAreaFieldRenderer extends NvgDefaultComponentRenderer<TextAr
 
     private void preinitializeTextRendering(long context, String font, float fontSize, HorizontalAlign halign, VerticalAlign valign, Vector4f textColor) {
         try (
-            NVGColor colorA = NVGColor.calloc()
+                NVGColor colorA = NVGColor.calloc()
         ) {
             NvgColorUtil.fillNvgColorWithRGBA(textColor, colorA);
             alignTextInBox(context, halign, valign);

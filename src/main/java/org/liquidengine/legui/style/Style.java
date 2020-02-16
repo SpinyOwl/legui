@@ -65,24 +65,24 @@ public class Style {
 
     // TEXT RELATED STYLE PROPERTIES.
 
-    private String font = FontRegistry.DEFAULT;
-    private Float fontSize = 16f;
+    private String font;
+    private Float fontSize;
     /**
      * Horizontal alignment. By default used {@link HorizontalAlign#CENTER}.
      */
-    private HorizontalAlign horizontalAlign = HorizontalAlign.CENTER;
+    private HorizontalAlign horizontalAlign;
     /**
      * Vertical alignment.
      */
-    private VerticalAlign verticalAlign = VerticalAlign.MIDDLE;
+    private VerticalAlign verticalAlign;
     /**
      * Text color.
      */
-    private Vector4f textColor = ColorConstants.black();
+    private Vector4f textColor;
     /**
      * Highlight color (used to highlight selection).
      */
-    private Vector4f highlightColor = ColorConstants.blue();
+    private Vector4f highlightColor;
 
 
     /**

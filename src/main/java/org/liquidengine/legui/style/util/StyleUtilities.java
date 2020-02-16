@@ -7,6 +7,8 @@ import org.liquidengine.legui.style.Style;
 import org.liquidengine.legui.style.length.Length;
 import org.liquidengine.legui.style.length.Unit;
 
+import java.util.function.Function;
+
 import static org.liquidengine.legui.style.length.LengthType.PERCENT;
 import static org.liquidengine.legui.style.length.LengthType.PIXEL;
 
@@ -117,5 +119,27 @@ public final class StyleUtilities {
             getFloatLengthNullSafe(borderBottomLeftRadius, component.getSize().x)
         );
     }
+
+
+    public static <T> T getStyle(Component component, Function<Style, T> getter) {
+        return getStyle(component, getter, null);
+    }
+
+    public static <T> T getStyle(Component component, Function<Style, T> getter, T fallback) {
+        Style style = component.getStyle();
+        T general = getter.apply(style);
+        T value = general == null ? fallback : general;
+        if (component.isFocused() && getter.apply(component.getFocusedStyle()) != null) {
+            value = getter.apply(component.getFocusedStyle());
+        }
+        if (component.isHovered() && getter.apply(component.getHoveredStyle()) != null) {
+            value = getter.apply(component.getHoveredStyle());
+        }
+        if (component.isPressed() && getter.apply(component.getPressedStyle()) != null) {
+            value = getter.apply(component.getPressedStyle());
+        }
+        return value;
+    }
+
 
 }
