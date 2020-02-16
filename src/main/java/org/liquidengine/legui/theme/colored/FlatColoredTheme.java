@@ -26,13 +26,14 @@ public class FlatColoredTheme extends Theme {
      * @param allowColor      allow color.
      * @param denyColor       deny color.
      * @param shadowColor     shadow color.
+     * @param textColor       text color.
      */
     public FlatColoredTheme(
             Vector4f backgroundColor, Vector4f borderColor, Vector4f strokeColor,
-            Vector4f allowColor, Vector4f denyColor, Vector4f shadowColor
+            Vector4f allowColor, Vector4f denyColor, Vector4f shadowColor, Vector4f textColor
     ) {
         super(createThemeManager(new FlatColoredThemeSettings(backgroundColor, borderColor, borderColor, strokeColor,
-                allowColor, denyColor, shadowColor, borderColor, FontRegistry.DEFAULT, 16f)));
+                allowColor, denyColor, shadowColor, textColor, FontRegistry.DEFAULT, 16f)));
     }
 
     /**
@@ -45,14 +46,15 @@ public class FlatColoredTheme extends Theme {
      * @param allowColor      allow color.
      * @param denyColor       deny color.
      * @param shadowColor     shadow color.
+     * @param textColor       text color.
      */
     public FlatColoredTheme(
             Vector4f backgroundColor, Vector4f borderColor, Vector4f sliderColor, Vector4f strokeColor,
-            Vector4f allowColor, Vector4f denyColor, Vector4f shadowColor
+            Vector4f allowColor, Vector4f denyColor, Vector4f shadowColor, Vector4f textColor
     ) {
         super(createThemeManager(
                 new FlatColoredThemeSettings(backgroundColor, borderColor, sliderColor,
-                        strokeColor, allowColor, denyColor, shadowColor, borderColor, FontRegistry.DEFAULT, 16f)));
+                        strokeColor, allowColor, denyColor, shadowColor, textColor, FontRegistry.DEFAULT, 16f)));
     }
 
     /**
