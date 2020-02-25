@@ -11,10 +11,7 @@ import org.liquidengine.legui.component.event.slider.SliderChangeValueEventListe
 import org.liquidengine.legui.component.optional.Orientation;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
-import org.liquidengine.legui.event.CursorEnterEvent;
-import org.liquidengine.legui.event.FocusEvent;
-import org.liquidengine.legui.event.KeyEvent;
-import org.liquidengine.legui.event.MouseClickEvent;
+import org.liquidengine.legui.event.*;
 import org.liquidengine.legui.icon.Icon;
 import org.liquidengine.legui.icon.ImageIcon;
 import org.liquidengine.legui.image.BufferedImage;
@@ -34,6 +31,7 @@ import org.liquidengine.legui.theme.Themes;
 import org.liquidengine.legui.util.TextUtil;
 import org.lwjgl.glfw.GLFW;
 
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.liquidengine.legui.component.optional.align.HorizontalAlign.*;
@@ -405,6 +403,17 @@ public class ExampleGui extends Panel {
             } else if (event.getKey() == GLFW.GLFW_KEY_F8 && event.getAction() == GLFW.GLFW_RELEASE) {
                 textArea.getTextAreaField().getStyle().setVerticalAlign(BASELINE);
             }
+        });
+
+        textArea.getTextAreaField().getListenerMap().addListener(DropEvent.class, e->{
+            String text = textArea.getTextAreaField().getTextState().getText();
+            StringBuilder t = new StringBuilder(text);
+            List<String> files = e.getFiles();
+            for (String file : files) {
+                t.append(file).append("\n");
+            }
+            textArea.getTextAreaField().getTextState().setText(t.toString());
+            textArea.getTextAreaField().getTextState().setCaretPosition(t.length()-1);
         });
 
         Label passLabel = new Label("Password:", 420, 390, 150, 15);
