@@ -1,8 +1,0 @@
-<class-binding xmlns="binding.legui.liquidengine.org"
-    for="org.liquidengine.legui.component.TextArea" to="textArea" default="true"
-    inherit="org/liquidengine/legui/binding/component/Component.xml">
-    <unbind field="childComponents"/>
-    <bind field="verticalScrollBar" to="verticalScrollBar"/>
-    <bind field="horizontalScrollBar" to="horizontalScrollBar"/>
-    <bind field="textAreaField" to="textAreaField"/>
-</class-binding>

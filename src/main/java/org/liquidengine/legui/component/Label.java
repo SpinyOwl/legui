@@ -7,7 +7,10 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.style.color.ColorConstants;
+import org.liquidengine.legui.style.font.TextDirection;
 import org.liquidengine.legui.theme.Themes;
+
+import java.util.Objects;
 
 /**
  * Class represent single line non-editable text component.
@@ -23,6 +26,11 @@ public class Label extends Component implements TextComponent {
      * Used to hold text state of component.
      */
     private TextState textState = new TextState();
+
+    /**
+     * Used to set text direction (vertical, horizontal).
+     */
+    private TextDirection textDirection = TextDirection.HORIZONTAL;
 
     /**
      * Default constructor. Creates label with 'Label' text.
@@ -109,6 +117,15 @@ public class Label extends Component implements TextComponent {
         return textState;
     }
 
+
+    public TextDirection getTextDirection() {
+        return textDirection;
+    }
+
+    public void setTextDirection(TextDirection textDirection) {
+        this.textDirection = Objects.requireNonNull(textDirection);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -124,6 +141,7 @@ public class Label extends Component implements TextComponent {
         return new EqualsBuilder()
                 .appendSuper(super.equals(o))
                 .append(textState, label.textState)
+                .append(textDirection, label.textDirection)
                 .isEquals();
     }
 
@@ -132,6 +150,7 @@ public class Label extends Component implements TextComponent {
         return new HashCodeBuilder(17, 37)
                 .appendSuper(super.hashCode())
                 .append(textState)
+                .append(textDirection)
                 .toHashCode();
     }
 
@@ -139,6 +158,7 @@ public class Label extends Component implements TextComponent {
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .append("textState", textState)
+                .append("textDirection", textDirection)
                 .toString();
     }
 

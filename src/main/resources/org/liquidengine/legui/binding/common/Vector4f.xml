@@ -1,7 +1,0 @@
-<class-binding xmlns="binding.legui.liquidengine.org"
-    for="org.joml.Vector4f" to="vector4f" default="true">
-    <bind field="x"/>
-    <bind field="y"/>
-    <bind field="z"/>
-    <bind field="w"/>
-</class-binding>

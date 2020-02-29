@@ -25,6 +25,7 @@ import org.liquidengine.legui.style.Style.PositionType;
 import org.liquidengine.legui.style.border.SimpleLineBorder;
 import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.style.font.FontRegistry;
+import org.liquidengine.legui.style.font.TextDirection;
 import org.liquidengine.legui.style.shadow.Shadow;
 import org.liquidengine.legui.theme.Theme;
 import org.liquidengine.legui.theme.Themes;
@@ -99,6 +100,26 @@ public class ExampleGui extends Panel {
         this.add(debugLabel = new Label("Debug Label", 10, height - 75, width - 20, 20));
         this.add(mouseLabel = new Label("Hello Label 3", 130, 30, 100, 20));
         this.add(upsLabel = new Label("Hello Label 4", 130, 60, 100, 20));
+
+        Label verticalLabel = new Label("VERTICAL LABEL", 500, 500, 50, 50);
+        verticalLabel.getStyle().setBorder(new SimpleLineBorder(ColorConstants.red(), 2));
+        verticalLabel.setTextDirection(TextDirection.VERTICAL_TOP_DOWN);
+        //@formatter:on
+        verticalLabel.getListenerMap().addListener(KeyEvent.class, (e) -> {
+            if (e.getKey() == GLFW.GLFW_KEY_LEFT) verticalLabel.getPosition().x -= 5;
+            if (e.getKey() == GLFW.GLFW_KEY_RIGHT) verticalLabel.getPosition().x += 5;
+            if (e.getKey() == GLFW.GLFW_KEY_UP) verticalLabel.getPosition().y -= 5;
+            if (e.getKey() == GLFW.GLFW_KEY_DOWN) verticalLabel.getPosition().y += 5;
+
+            if (e.getKey() == GLFW.GLFW_KEY_KP_1)
+                verticalLabel.setTextDirection(TextDirection.HORIZONTAL);
+            if (e.getKey() == GLFW.GLFW_KEY_KP_2)
+                verticalLabel.setTextDirection(TextDirection.VERTICAL_TOP_DOWN);
+            if (e.getKey() == GLFW.GLFW_KEY_KP_3)
+                verticalLabel.setTextDirection(TextDirection.VERTICAL_DOWN_TOP);
+        });
+        //@formatter:off
+        this.add(verticalLabel);
 
         this.add(createImageWrapperWidgetWithImage());
         this.add(createButtonWithTooltip());

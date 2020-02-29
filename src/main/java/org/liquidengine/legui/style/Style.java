@@ -6,7 +6,7 @@ import org.liquidengine.legui.component.optional.align.VerticalAlign;
 import org.liquidengine.legui.style.border.SimpleLineBorder;
 import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.style.flex.FlexStyle;
-import org.liquidengine.legui.style.font.FontRegistry;
+import org.liquidengine.legui.style.font.TextDirection;
 import org.liquidengine.legui.style.length.Length;
 import org.liquidengine.legui.style.length.Unit;
 import org.liquidengine.legui.style.shadow.Shadow;

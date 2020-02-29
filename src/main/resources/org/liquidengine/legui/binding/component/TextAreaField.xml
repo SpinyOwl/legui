@@ -1,8 +1,0 @@
-<class-binding xmlns="binding.legui.liquidengine.org"
-    for="org.liquidengine.legui.component.TextAreaField" to="textAreaField" default="true"
-    inherit="org/liquidengine/legui/binding/component/Component.xml">
-    <bind field="textState" to="textState">
-        <using-binding path="org/liquidengine/legui/binding/component/optional/TextState.xml"/>
-    </bind>
-    <bind field="tabSize" to="textState"/>
-</class-binding>

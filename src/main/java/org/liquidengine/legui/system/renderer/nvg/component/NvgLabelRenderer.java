@@ -12,7 +12,8 @@ import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgText;
 
 import static org.liquidengine.legui.style.util.StyleUtilities.*;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.*;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.createScissor;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.resetScissor;
 
 /**
  * Created by ShchAlexander on 11.02.2017.
@@ -40,7 +41,8 @@ public class NvgLabelRenderer extends NvgDefaultComponentRenderer<Label> {
                     getStyle(label, Style::getFontSize, 16F),
                     getStyle(label, Style::getFont, FontRegistry.DEFAULT),
                     textState.getText(),
-                    getStyle(label, Style::getTextColor));
+                    getStyle(label, Style::getTextColor),
+                    label.getTextDirection());
         }
         resetScissor(nanovg);
     }

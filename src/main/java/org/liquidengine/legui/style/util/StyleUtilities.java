@@ -125,10 +125,10 @@ public final class StyleUtilities {
         return getStyle(component, getter, null);
     }
 
-    public static <T> T getStyle(Component component, Function<Style, T> getter, T fallback) {
+    public static <T> T getStyle(Component component, Function<Style, T> getter, T defaultValue) {
         Style style = component.getStyle();
         T general = getter.apply(style);
-        T value = general == null ? fallback : general;
+        T value = general == null ? defaultValue : general;
         if (component.isFocused() && getter.apply(component.getFocusedStyle()) != null) {
             value = getter.apply(component.getFocusedStyle());
         }
