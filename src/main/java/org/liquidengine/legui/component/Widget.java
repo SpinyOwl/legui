@@ -32,8 +32,7 @@ import java.util.List;
 
 /**
  * Widget component is container which have predefined components such as container, title label, close and minimize buttons and predefined event listeners.
- * This component can be moved, minimized and restored, closed. Also now you can enable or disable title. <p> TODO: REIMPLEMENT THIS COMPONENT ACCORDING TO NEW
- * LAYOUT SYSTEM
+ * This component can be moved, minimized and restored, closed. Also now you can enable or disable title.
  */
 public class Widget extends Component {
 

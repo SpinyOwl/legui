@@ -26,7 +26,7 @@ public class Panel extends Component {
      */
     public Panel(float x, float y, float width, float height) {
         super(x, y, width, height);
-        Themes.getDefaultTheme().getThemeManager().getComponentTheme(Panel.class).applyAll(this);
+        Themes.getDefaultTheme().applyAll(this);
     }
 
     /**

@@ -35,7 +35,7 @@ public class NvgTextInputRenderer extends NvgDefaultComponentRenderer<TextInput>
     public static final String PALIGN = "palign";
     public static final String POFFSET = "poffset";
     private final Vector4f caretColor = new Vector4f(0, 0, 0, 0.5f);
-    private final int maxGlyphCount = 1024;
+    private static final int maxGlyphCount = 1024;
 
 
     /**
@@ -105,7 +105,6 @@ public class NvgTextInputRenderer extends NvgDefaultComponentRenderer<TextInput>
                 }
 
                 gui.setMouseCaretPosition(0);
-                return;
             } else {
 
                 // initially configure text rendering

@@ -200,6 +200,7 @@ public class Example {
         if (context != null) {
             Component mouseTargetGui = context.getMouseTargetGui();
             gui.getMouseTargetLabel().getTextState().setText("-> " + (mouseTargetGui == null ? null : mouseTargetGui.getClass().getSimpleName()));
+            gui.update();
         }
     }
 

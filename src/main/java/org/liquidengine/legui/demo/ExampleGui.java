@@ -55,6 +55,7 @@ public class ExampleGui extends Panel {
     private final Label debugLabel;
     private ImageView imageView;
     private CheckBox generateEventsByLayoutManager;
+    private SplitPanel splitPanel;
 
     public ExampleGui() {
         this(800, 600);
@@ -100,26 +101,6 @@ public class ExampleGui extends Panel {
         this.add(debugLabel = new Label("Debug Label", 10, height - 75, width - 20, 20));
         this.add(mouseLabel = new Label("Hello Label 3", 130, 30, 100, 20));
         this.add(upsLabel = new Label("Hello Label 4", 130, 60, 100, 20));
-
-        Label verticalLabel = new Label("VERTICAL LABEL", 500, 500, 50, 50);
-        verticalLabel.getStyle().setBorder(new SimpleLineBorder(ColorConstants.red(), 2));
-        verticalLabel.setTextDirection(TextDirection.VERTICAL_TOP_DOWN);
-        //@formatter:on
-        verticalLabel.getListenerMap().addListener(KeyEvent.class, (e) -> {
-            if (e.getKey() == GLFW.GLFW_KEY_LEFT) verticalLabel.getPosition().x -= 5;
-            if (e.getKey() == GLFW.GLFW_KEY_RIGHT) verticalLabel.getPosition().x += 5;
-            if (e.getKey() == GLFW.GLFW_KEY_UP) verticalLabel.getPosition().y -= 5;
-            if (e.getKey() == GLFW.GLFW_KEY_DOWN) verticalLabel.getPosition().y += 5;
-
-            if (e.getKey() == GLFW.GLFW_KEY_KP_1)
-                verticalLabel.setTextDirection(TextDirection.HORIZONTAL);
-            if (e.getKey() == GLFW.GLFW_KEY_KP_2)
-                verticalLabel.setTextDirection(TextDirection.VERTICAL_TOP_DOWN);
-            if (e.getKey() == GLFW.GLFW_KEY_KP_3)
-                verticalLabel.setTextDirection(TextDirection.VERTICAL_DOWN_TOP);
-        });
-        //@formatter:off
-        this.add(verticalLabel);
 
         this.add(createImageWrapperWidgetWithImage());
         this.add(createButtonWithTooltip());
@@ -360,12 +341,45 @@ public class ExampleGui extends Panel {
         scrollBar2.setArrowColor(ColorConstants.white());
         this.add(scrollBar2);
 
-        Panel panel1 = new Panel(420, 170, 100, 100);
-        panel1.getStyle().getBackground().setColor(ColorConstants.blue());
-        this.add(panel1);
-        Panel panel2 = new Panel(470, 170, 100, 100);
-        panel2.getStyle().getBackground().setColor(ColorConstants.green());
-        this.add(panel2);
+        final Orientation[] ori = { Orientation.VERTICAL };
+        splitPanel = new SplitPanel(ori[0]);
+        splitPanel.setPosition(420, 170);
+        splitPanel.setSize(200, 100);
+        splitPanel.getStyle().getBackground().setColor(ColorConstants.blue());
+
+        Button panelChange = new Button("Change Orientation");
+        panelChange.setSize(80,30);
+        panelChange.setPosition(10,10);
+        panelChange.getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener)event-> {
+            if(event.getAction().equals(CLICK)){
+                if(ori[0] == Orientation.HORIZONTAL) ori[0] = Orientation.VERTICAL ;
+                else ori[0] = Orientation.HORIZONTAL;
+                splitPanel.setOrientation(ori[0]);
+            }
+        });
+        splitPanel.setTopLeft(panelChange);
+
+        this.add(splitPanel);
+
+        Label verticalLabel = new Label("VERTICAL LABEL", 630, 170, 20, 100);
+        verticalLabel.getStyle().setBorder(new SimpleLineBorder(ColorConstants.red(), 2));
+        verticalLabel.setTextDirection(TextDirection.VERTICAL_TOP_DOWN);
+        //@formatter:on
+        verticalLabel.getListenerMap().addListener(KeyEvent.class, (e) -> {
+            if (e.getKey() == GLFW.GLFW_KEY_LEFT) verticalLabel.getPosition().x -= 5;
+            if (e.getKey() == GLFW.GLFW_KEY_RIGHT) verticalLabel.getPosition().x += 5;
+            if (e.getKey() == GLFW.GLFW_KEY_UP) verticalLabel.getPosition().y -= 5;
+            if (e.getKey() == GLFW.GLFW_KEY_DOWN) verticalLabel.getPosition().y += 5;
+
+            if (e.getKey() == GLFW.GLFW_KEY_KP_1)
+                verticalLabel.setTextDirection(TextDirection.HORIZONTAL);
+            if (e.getKey() == GLFW.GLFW_KEY_KP_2)
+                verticalLabel.setTextDirection(TextDirection.VERTICAL_TOP_DOWN);
+            if (e.getKey() == GLFW.GLFW_KEY_KP_3)
+                verticalLabel.setTextDirection(TextDirection.VERTICAL_DOWN_TOP);
+        });
+        //@formatter:off
+        this.add(verticalLabel);
 
         createButtonWithTooltip().getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
             MouseClickEvent.MouseClickAction action = event.getAction();
@@ -864,5 +878,9 @@ public class ExampleGui extends Panel {
 
     public Label getDebugLabel() {
         return debugLabel;
+    }
+
+    public void update() {
+        splitPanel.getTopLeft();
     }
 }
