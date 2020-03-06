@@ -56,6 +56,7 @@ public class ExampleGui extends Panel {
     private ImageView imageView;
     private CheckBox generateEventsByLayoutManager;
     private SplitPanel splitPanel;
+    private TabbedPanel tabbedPane;
 
     public ExampleGui() {
         this(800, 600);
@@ -214,6 +215,27 @@ public class ExampleGui extends Panel {
             textArea.getTextAreaField().getTextState().setText(t.toString());
             textArea.getTextAreaField().getTextState().setCaretPosition(t.length()-1);
         });
+
+        tabbedPane = new TabbedPanel();
+        tabbedPane.setPosition(420 + 160, 310);
+        tabbedPane.setSize(150, 80);
+        this.add(tabbedPane);
+        Panel firstPanel = new Panel();
+        firstPanel.getStyle().getBackground().setColor(ColorConstants.lightGreen());
+        Panel secondPanel = new Panel();
+        secondPanel.getStyle().getBackground().setColor(ColorConstants.lightBlue());
+        tabbedPane.addTab(firstPanel);
+        tabbedPane.addTab(secondPanel);
+
+        Button newTab = new Button("New Tab");
+        newTab.setPosition(420 + 160 + 160, 310);
+        newTab.setSize(60, 80);
+        newTab.getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) event-> {
+            if (event.getAction() == CLICK) {
+                tabbedPane.addTab();
+            }
+        });
+        this.add(newTab);
 
         Label passLabel = new Label("Password:", 420, 390, 150, 15);
         this.add(passLabel);
