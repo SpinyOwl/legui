@@ -20,6 +20,7 @@ import org.liquidengine.legui.icon.CharIcon;
 import org.liquidengine.legui.icon.Icon;
 import org.liquidengine.legui.listener.EventListener;
 import org.liquidengine.legui.listener.MouseDragEventListener;
+import org.liquidengine.legui.style.Style;
 import org.liquidengine.legui.style.Style.DisplayType;
 import org.liquidengine.legui.style.Style.PositionType;
 import org.liquidengine.legui.style.color.ColorConstants;
@@ -245,11 +246,7 @@ public class Widget extends Component {
         minimizeButton.getStyle().setHorizontalAlign(HorizontalAlign.CENTER);
 
         container = new Panel();
-        container.setTabFocusable(false);
-        // flex
-        container.getStyle().getFlexStyle().setFlexShrink(1);
-        container.getStyle().getFlexStyle().setFlexGrow(1);
-        container.getStyle().setPosition(PositionType.RELATIVE);
+        applyStylesToContainer(container);
 
         titleContainer.add(this.title);
         titleContainer.add(minimizeButton);
@@ -274,6 +271,13 @@ public class Widget extends Component {
         this.add(resizeButton);
 
         Themes.getDefaultTheme().getThemeManager().getComponentTheme(Widget.class).applyAll(this);
+    }
+
+    private void applyStylesToContainer(Component container) {
+        container.setTabFocusable(false);
+        container.getStyle().getFlexStyle().setFlexShrink(1);
+        container.getStyle().getFlexStyle().setFlexGrow(1);
+        container.getStyle().setPosition(PositionType.RELATIVE);
     }
 
     /**
@@ -414,6 +418,9 @@ public class Widget extends Component {
         this.remove(this.container);
         this.container = container;
         this.add(this.container);
+        this.remove(resizeButton);
+        this.add(resizeButton);
+        applyStylesToContainer(this.container);
     }
 
     /**
