@@ -147,15 +147,19 @@ public class ExampleGui extends Panel {
         //@formatter:off
         this.add(verticalLabel);
 
-        Widget w = new Widget(660, 170, 100, 100);
+        ScrollablePanel scpp = new ScrollablePanel();
+        scpp.setAutoResize(true);
+        scpp.setPosition(660,170);
+        scpp.setSize(100,100);
+        this.add(scpp);
 
-        ScrollablePanel wscp = new ScrollablePanel();
-        wscp.setSize(100,100);
-        wscp.setPosition(660, 170);
-
-        w.setContainer(wscp);
-
-        this.add(w);
+        Button b = new Button("+");
+        b.setPosition(660,280);
+        b.setSize(100, 20);
+        int[] x = {0};
+        int[] y = {0};
+        b.getListenerMap().addListener(MouseClickEvent.class,e->{if(e.getAction() == CLICK) {scpp.getContainer().add(new Panel(x[0]+=20,y[0]+=20,10,10));}});
+        this.add(b);
 
         createButtonWithTooltip().getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
             MouseClickEvent.MouseClickAction action = event.getAction();

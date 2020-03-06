@@ -7,11 +7,13 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 import org.liquidengine.legui.component.misc.listener.component.TabKeyEventListener;
 import org.liquidengine.legui.component.misc.listener.component.TooltipCursorEnterListener;
+import org.liquidengine.legui.event.AddChildEvent;
 import org.liquidengine.legui.event.CursorEnterEvent;
 import org.liquidengine.legui.event.KeyEvent;
 import org.liquidengine.legui.intersection.Intersector;
 import org.liquidengine.legui.intersection.RectangleIntersector;
 import org.liquidengine.legui.listener.ListenerMap;
+import org.liquidengine.legui.listener.processor.EventProcessorProvider;
 import org.liquidengine.legui.style.Style;
 import org.liquidengine.legui.theme.Themes;
 
@@ -599,6 +601,7 @@ public abstract class Component implements Serializable {
         boolean added = childComponents.add(component);
         if (added) {
             changeParent(component);
+            EventProcessorProvider.getInstance().pushEvent(new AddChildEvent<>(this, component));
         }
         return added;
     }

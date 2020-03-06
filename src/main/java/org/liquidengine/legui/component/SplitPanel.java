@@ -2,16 +2,23 @@ package org.liquidengine.legui.component;
 
 import org.joml.Vector2f;
 import org.liquidengine.legui.component.optional.Orientation;
+import org.liquidengine.legui.component.optional.align.HorizontalAlign;
+import org.liquidengine.legui.component.optional.align.VerticalAlign;
+import org.liquidengine.legui.event.CursorEnterEvent;
+import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.event.MouseDragEvent;
-import org.liquidengine.legui.listener.MouseDragEventListener;
 import org.liquidengine.legui.style.Style;
 import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.style.flex.FlexStyle;
+import org.liquidengine.legui.style.font.TextDirection;
 import org.liquidengine.legui.theme.Themes;
+import org.lwjgl.glfw.GLFW;
 
 import java.util.Objects;
 
 import static org.liquidengine.legui.component.optional.Orientation.HORIZONTAL;
+import static org.liquidengine.legui.event.MouseClickEvent.MouseClickAction.PRESS;
+import static org.liquidengine.legui.event.MouseClickEvent.MouseClickAction.RELEASE;
 
 public class SplitPanel extends Panel {
 
@@ -27,7 +34,7 @@ public class SplitPanel extends Panel {
 
     private float position = 50f;
 
-    private int separatorThickness = 2;
+    private float separatorThickness = 4f;
 
     /**
      * Default constructor. Used to create component instance without any parameters. <p> Also if you want to make it easy to use with Json
@@ -45,7 +52,22 @@ public class SplitPanel extends Panel {
         topLeftContainer = new Panel();
         bottomRightContainer = new Panel();
 
-        separator.getListenerMap().addListener(MouseDragEvent.class, (MouseDragEventListener) event -> {
+        separator.getTextState().setText("");
+
+        this.add(topLeftContainer);
+        this.add(separator);
+        this.add(bottomRightContainer);
+
+        boolean[] dragging = {false};
+        separator.getListenerMap().addListener(MouseClickEvent.class, e -> {
+            if (e.getAction() == PRESS) {
+                dragging[0] = true;
+            }
+            if (e.getAction() == RELEASE) {
+                dragging[0] = false;
+            }
+        });
+        separator.getListenerMap().addListener(MouseDragEvent.class, event -> {
             Vector2f delta = event.getDelta();
             float d;
             if (orientation == HORIZONTAL) {
@@ -60,11 +82,18 @@ public class SplitPanel extends Panel {
             rs.setFlexGrow(getRight());
         });
 
-        resetStyle();
+        separator.getListenerMap().addListener(CursorEnterEvent.class, e -> {
+            long window = e.getContext().getGlfwWindow();
+            if (e.isEntered() && orientation == HORIZONTAL) {
+                GLFW.glfwSetCursor(window, GLFW.glfwCreateStandardCursor(GLFW.GLFW_HRESIZE_CURSOR));
+            } else if (e.isEntered() && orientation != HORIZONTAL) {
+                GLFW.glfwSetCursor(window, GLFW.glfwCreateStandardCursor(GLFW.GLFW_VRESIZE_CURSOR));
+            } else if(!dragging[0]) {
+                GLFW.glfwSetCursor(window, GLFW.glfwCreateStandardCursor(GLFW.GLFW_ARROW_CURSOR));
+            }
+        });
 
-        this.add(topLeftContainer);
-        this.add(separator);
-        this.add(bottomRightContainer);
+        resetStyle();
 
         Themes.getDefaultTheme().applyAll(this);
 
@@ -110,41 +139,42 @@ public class SplitPanel extends Panel {
 
     public void resetStyle() {
         this.getStyle().setDisplay(Style.DisplayType.FLEX);
+        separator.setTextDirection(orientation != HORIZONTAL ? TextDirection.HORIZONTAL : TextDirection.VERTICAL_TOP_DOWN);
 
         separator.getStyle().setPosition(Style.PositionType.RELATIVE);
         separator.getStyle().getFlexStyle().setFlexGrow(1);
         separator.getStyle().getFlexStyle().setFlexShrink(1);
+        separator.getStyle().setHorizontalAlign(HorizontalAlign.CENTER);
+        separator.getStyle().setVerticalAlign(VerticalAlign.MIDDLE);
         separator.setTabFocusable(false);
 
-        switch (orientation) {
-            case VERTICAL:
-                this.getStyle().getFlexStyle().setFlexDirection(FlexStyle.FlexDirection.COLUMN);
+        if (orientation == Orientation.VERTICAL) {
+            this.getStyle().getFlexStyle().setFlexDirection(FlexStyle.FlexDirection.COLUMN);
 
-                this.separator.getStyle().setMaxHeight(separatorThickness);
-                this.separator.getStyle().setMinHeight(separatorThickness);
-                this.separator.getStyle().setMaxWidth(null);
-                this.separator.getStyle().setMinWidth(null);
+            this.separator.getStyle().setMaxHeight(separatorThickness);
+            this.separator.getStyle().setMinHeight(separatorThickness);
+            this.separator.getStyle().setMaxWidth(null);
+            this.separator.getStyle().setMinWidth(null);
+        } else {
+            this.getStyle().getFlexStyle().setFlexDirection(FlexStyle.FlexDirection.ROW);
 
-                break;
-            case HORIZONTAL:
-                this.getStyle().getFlexStyle().setFlexDirection(FlexStyle.FlexDirection.ROW);
-
-                this.separator.getStyle().setMaxHeight(null);
-                this.separator.getStyle().setMinHeight(null);
-                this.separator.getStyle().setMaxWidth(separatorThickness);
-                this.separator.getStyle().setMinWidth(separatorThickness);
-
-                break;
+            this.separator.getStyle().setMaxHeight(null);
+            this.separator.getStyle().setMinHeight(null);
+            this.separator.getStyle().setMaxWidth(separatorThickness);
+            this.separator.getStyle().setMinWidth(separatorThickness);
         }
+        separator.getStyle().setBorderRadius(0);
 
         topLeftContainer.getStyle().setPosition(Style.PositionType.RELATIVE);
         topLeftContainer.getStyle().getFlexStyle().setFlexGrow(getLeft());
         topLeftContainer.getStyle().getFlexStyle().setFlexShrink(1);
+        topLeftContainer.getStyle().setBorderRadius(0);
         topLeftContainer.setTabFocusable(false);
 
         bottomRightContainer.getStyle().setPosition(Style.PositionType.RELATIVE);
         bottomRightContainer.getStyle().getFlexStyle().setFlexGrow(getRight());
         bottomRightContainer.getStyle().getFlexStyle().setFlexShrink(1);
+        bottomRightContainer.getStyle().setBorderRadius(0);
         bottomRightContainer.setTabFocusable(false);
 
     }
@@ -179,11 +209,11 @@ public class SplitPanel extends Panel {
         }
     }
 
-    public int getSeparatorThickness() {
+    public float getSeparatorThickness() {
         return separatorThickness;
     }
 
-    public void setSeparatorThickness(int separatorThickness) {
+    public void setSeparatorThickness(float separatorThickness) {
         if (separatorThickness <= 0) return;
         this.separatorThickness = separatorThickness;
         if (HORIZONTAL == orientation) {

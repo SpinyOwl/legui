@@ -9,8 +9,9 @@ import org.liquidengine.legui.animation.Animation;
 import org.liquidengine.legui.component.misc.animation.scrollablepanel.ScrollablePanelAnimation;
 import org.liquidengine.legui.component.misc.listener.scrollablepanel.ScrollablePanelViewportScrollListener;
 import org.liquidengine.legui.component.optional.Orientation;
+import org.liquidengine.legui.event.AddChildEvent;
+import org.liquidengine.legui.event.RemoveChildEvent;
 import org.liquidengine.legui.event.ScrollEvent;
-import org.liquidengine.legui.style.Style;
 import org.liquidengine.legui.style.Style.DisplayType;
 import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.style.length.Length;
@@ -51,6 +52,8 @@ public class ScrollablePanel extends Component implements Viewport {
      * Scrollable panel animation. Updates container position in viewport.
      */
     private Animation animation;
+
+    private boolean autoResize = false;
 
     /**
      * Default constructor. Used to create component instance without any parameters. <p> Also if you want to make it easy to use with Json
@@ -114,6 +117,8 @@ public class ScrollablePanel extends Component implements Viewport {
 
         container = new ScrollablePanelContainer();
         container.setTabFocusable(false);
+        container.getListenerMap().addListener(AddChildEvent.class, e -> calculateSize());
+        container.getListenerMap().addListener(RemoveChildEvent.class, e -> calculateSize());
 
         viewport = new ScrollablePanelViewport();
         viewport.add(container);
@@ -132,9 +137,10 @@ public class ScrollablePanel extends Component implements Viewport {
         horizontalScrollBar.setOrientation(Orientation.HORIZONTAL);
         horizontalScrollBar.setTabFocusable(false);
 
-        applySizeChanges();
-
         applyStyles();
+        autoResize = true;
+        calculateSize();
+        autoResize = false;
 
         Themes.getDefaultTheme().getThemeManager().getComponentTheme(ScrollablePanel.class).applyAll(this);
 
@@ -142,50 +148,77 @@ public class ScrollablePanel extends Component implements Viewport {
         animation.startAnimation();
     }
 
+    private void calculateSize() {
+        if (autoResize) {
+            Vector2f viewportSize = calculateViewportSize();
+
+            Vector2f size = new Vector2f(viewportSize);
+            for (Component childComponent : container.getChildComponents()) {
+                float right = childComponent.getPosition().x + childComponent.getSize().x;
+                float bottom = childComponent.getPosition().y + childComponent.getSize().y;
+                if (right > size.x) {
+                    size.x = right;
+                }
+                if (bottom > size.y) {
+                    size.y = bottom;
+                }
+            }
+            container.setSize(size);
+        }
+    }
+
     private void applyStyles() {
-        verticalScrollBar.getStyle().setWidth(INITIAL_SCROLL_SIZE);
-        verticalScrollBar.getStyle().setTop(0f);
-        verticalScrollBar.getStyle().setRight(0f);
-        verticalScrollBar.getStyle().setBottom(INITIAL_SCROLL_SIZE);
+        this.getStyle().setDisplay(DisplayType.FLEX);
 
-        horizontalScrollBar.getStyle().setHeight(INITIAL_SCROLL_SIZE);
-        horizontalScrollBar.getStyle().setLeft(0f);
-        horizontalScrollBar.getStyle().setRight(INITIAL_SCROLL_SIZE);
-        horizontalScrollBar.getStyle().setBottom(0f);
-
-
-        viewport.getStyle().getBackground().setColor(1, 1, 1, 0);
-        viewport.getStyle().setBorder(null);
-        viewport.getStyle().setTop(0f);
-        viewport.getStyle().setLeft(0f);
-        viewport.getStyle().setBottom(INITIAL_SCROLL_SIZE);
-        viewport.getStyle().setRight(INITIAL_SCROLL_SIZE);
+        setVStyles();
+        setHStyles();
+        setViewportStyles();
 
         container.getStyle().setBorder(null);
 
         this.getStyle().getBackground().setColor(ColorConstants.transparent());
     }
 
-    private void applySizeChanges() {
-        this.getStyle().setDisplay(DisplayType.FLEX);
+    private void setVStyles() {
+        verticalScrollBar.getStyle().setWidth(INITIAL_SCROLL_SIZE);
+        verticalScrollBar.getStyle().setTop(0f);
+        verticalScrollBar.getStyle().setRight(0f);
+        verticalScrollBar.getStyle().setBottom(INITIAL_SCROLL_SIZE);
+    }
 
-        float viewportWidth = getSize().x - INITIAL_SCROLL_SIZE;
-        float viewportHeight = getSize().y - INITIAL_SCROLL_SIZE;
+    private void setHStyles() {
+        horizontalScrollBar.getStyle().setHeight(INITIAL_SCROLL_SIZE);
+        horizontalScrollBar.getStyle().setLeft(0f);
+        horizontalScrollBar.getStyle().setRight(INITIAL_SCROLL_SIZE);
+        horizontalScrollBar.getStyle().setBottom(0f);
+    }
 
-        viewport.setSize(viewportWidth, viewportHeight);
-        container.setSize(viewportWidth, viewportHeight);
+    private void setViewportStyles() {
+        viewport.getStyle().getBackground().setColor(1, 1, 1, 0);
+        viewport.getStyle().setBorder(null);
+        viewport.getStyle().setTop(0f);
+        viewport.getStyle().setLeft(0f);
+        viewport.getStyle().setBottom(INITIAL_SCROLL_SIZE);
+        viewport.getStyle().setRight(INITIAL_SCROLL_SIZE);
+    }
+
+    private Vector2f calculateViewportSize() {
+        Vector2f size = getSize();
+        float viewportWidth = size.x - (isVerticalScrollBarVisible() ? verticalScrollBar.getSize().x : 0f);
+        float viewportHeight = size.y - (isHorizontalScrollBarVisible() ? horizontalScrollBar.getSize().y : 0f);
+        return new Vector2f(viewportWidth, viewportHeight);
     }
 
     @Override
     public void setSize(float width, float height) {
         super.setSize(width, height);
-        applySizeChanges();
+        calculateSize();
     }
 
     @Override
     public void setSize(Vector2f size) {
         super.setSize(size);
-        applySizeChanges();
+        calculateSize();
     }
 
     /**
@@ -208,6 +241,7 @@ public class ScrollablePanel extends Component implements Viewport {
         this.verticalScrollBar = verticalScrollBar;
         this.add(verticalScrollBar);
         this.verticalScrollBar.setViewport(this);
+        calculateSize();
     }
 
     /**
@@ -230,6 +264,7 @@ public class ScrollablePanel extends Component implements Viewport {
         this.horizontalScrollBar = horizontalScrollBar;
         this.add(horizontalScrollBar);
         this.horizontalScrollBar.setViewport(this);
+        calculateSize();
     }
 
     public void setHorizontalScrollBarVisible(boolean enabled) {
@@ -246,6 +281,11 @@ public class ScrollablePanel extends Component implements Viewport {
             this.verticalScrollBar.getStyle().setBottom(0f);
         }
         this.horizontalScrollBar.getStyle().setDisplay(enabled ? DisplayType.MANUAL : DisplayType.NONE);
+        calculateSize();
+    }
+
+    public boolean isHorizontalScrollBarVisible() {
+        return horizontalScrollBar.getStyle().getDisplay() != DisplayType.NONE;
     }
 
     public void setVerticalScrollBarVisible(boolean enabled) {
@@ -262,18 +302,25 @@ public class ScrollablePanel extends Component implements Viewport {
             this.horizontalScrollBar.getStyle().setRight(0f);
         }
         this.verticalScrollBar.getStyle().setDisplay(enabled ? DisplayType.MANUAL : DisplayType.NONE);
+        calculateSize();
+    }
+
+    public boolean isVerticalScrollBarVisible() {
+        return verticalScrollBar.getStyle().getDisplay() != DisplayType.NONE;
     }
 
     public void setHorizontalScrollBarHeight(float height) {
         this.horizontalScrollBar.getStyle().setHeight(height);
         this.viewport.getStyle().setBottom(height);
         this.verticalScrollBar.getStyle().setBottom(height);
+        calculateSize();
     }
 
     public void setVerticalScrollBarWidth(float width) {
         this.verticalScrollBar.getStyle().setWidth(width);
         this.viewport.getStyle().setRight(width);
         this.horizontalScrollBar.getStyle().setRight(width);
+        calculateSize();
     }
 
 
@@ -351,6 +398,14 @@ public class ScrollablePanel extends Component implements Viewport {
     @Override
     public Vector2f getViewportViewSize() {
         return new Vector2f(container.getSize());
+    }
+
+    public boolean isAutoResize() {
+        return autoResize;
+    }
+
+    public void setAutoResize(boolean autoResize) {
+        this.autoResize = autoResize;
     }
 
     public static class ScrollablePanelViewport extends Panel {
