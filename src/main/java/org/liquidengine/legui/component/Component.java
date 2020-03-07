@@ -597,10 +597,16 @@ public abstract class Component implements Serializable {
             return false;
         }
         boolean added = childComponents.add(component);
-        if (added) {
-            changeParent(component);
-        }
+        changeParent(component);
         return added;
+    }
+
+    public void add(int index, Component component) {
+        if (component == null || component == this || isContains(component)) {
+            return;
+        }
+        childComponents.add(index, component);
+        changeParent(component);
     }
 
     /**
@@ -659,6 +665,14 @@ public abstract class Component implements Serializable {
             }
         }
         return false;
+    }
+
+    public Component remove(int index) {
+        Component component = childComponents.remove(index);
+        if(component!=null) {
+            component.setParent(null);
+        }
+        return component;
     }
 
     /**
