@@ -10,6 +10,7 @@ import org.liquidengine.legui.component.misc.listener.component.TooltipCursorEnt
 import org.liquidengine.legui.event.AddChildEvent;
 import org.liquidengine.legui.event.CursorEnterEvent;
 import org.liquidengine.legui.event.KeyEvent;
+import org.liquidengine.legui.event.RemoveChildEvent;
 import org.liquidengine.legui.intersection.Intersector;
 import org.liquidengine.legui.intersection.RectangleIntersector;
 import org.liquidengine.legui.listener.ListenerMap;
@@ -599,11 +600,18 @@ public abstract class Component implements Serializable {
             return false;
         }
         boolean added = childComponents.add(component);
-        if (added) {
-            changeParent(component);
-            EventProcessorProvider.getInstance().pushEvent(new AddChildEvent<>(this, component));
-        }
+        changeParent(component);
+        EventProcessorProvider.getInstance().pushEvent(new AddChildEvent<>(this, component));
         return added;
+    }
+
+    public void add(int index, Component component) {
+        if (component == null || component == this || isContains(component)) {
+            return;
+        }
+        childComponents.add(index, component);
+        changeParent(component);
+        EventProcessorProvider.getInstance().pushEvent(new AddChildEvent<>(this, component));
     }
 
     /**
@@ -655,13 +663,21 @@ public abstract class Component implements Serializable {
             Component p = component.getParent();
             if (p == this && isContains(component)) {
                 boolean removed = childComponents.remove(component);
-                if (removed) {
-                    component.setParent(null);
-                }
+                component.setParent(null);
+                EventProcessorProvider.getInstance().pushEvent(new RemoveChildEvent<>(this, component));
                 return removed;
             }
         }
         return false;
+    }
+
+    public Component remove(int index) {
+        Component component = childComponents.remove(index);
+        if (component != null) {
+            component.setParent(null);
+            EventProcessorProvider.getInstance().pushEvent(new RemoveChildEvent<>(this, component));
+        }
+        return component;
     }
 
     /**
