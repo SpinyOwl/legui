@@ -828,4 +828,7 @@ public abstract class Component implements Serializable {
                 .toString();
     }
 
+    public int indexOfChild(Component component) {
+        return childComponents.indexOf(component);
+    }
 }
