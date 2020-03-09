@@ -24,23 +24,22 @@ public class SplitPanel extends Panel {
 
     private Orientation orientation;
 
-    private Panel topLeftContainer;
     private Component topLeft;
-
-    private Panel bottomRightContainer;
     private Component bottomRight;
 
     private Button separator;
 
-    private float position = 50f;
+    private float ratio = 50f;
 
     private float separatorThickness = 4f;
 
     /**
-     * Default constructor. Used to create component instance without any parameters. <p> Also if you want to make it easy to use with Json
-     * marshaller/unmarshaller component should contain empty constructor.
+     * Default constructor. Used to create component instance without any parameters. <p> Also if
+     * you want to make it easy to use with Json marshaller/unmarshaller component should contain
+     * empty constructor.
      *
-     * @param orientation used to specify orientation of split panel. If orientation is VERTICAL then two components will be located vertically.
+     * @param orientation used to specify orientation of split panel. If orientation is VERTICAL
+     *                    then two components will be located vertically.
      */
     public SplitPanel(Orientation orientation) {
         this.orientation = Objects.requireNonNull(orientation);
@@ -49,14 +48,14 @@ public class SplitPanel extends Panel {
 
     private void initialize() {
         separator = new Button();
-        topLeftContainer = new Panel();
-        bottomRightContainer = new Panel();
+        topLeft = new Panel();
+        bottomRight = new Panel();
 
         separator.getTextState().setText("");
 
-        this.add(topLeftContainer);
+        this.add(topLeft);
         this.add(separator);
-        this.add(bottomRightContainer);
+        this.add(bottomRight);
 
         boolean[] dragging = {false};
         separator.getListenerMap().addListener(MouseClickEvent.class, e -> {
@@ -65,6 +64,8 @@ public class SplitPanel extends Panel {
             }
             if (e.getAction() == RELEASE) {
                 dragging[0] = false;
+                GLFW.glfwSetCursor(e.getContext().getGlfwWindow(),
+                    GLFW.glfwCreateStandardCursor(GLFW.GLFW_ARROW_CURSOR));
             }
         });
         separator.getListenerMap().addListener(MouseDragEvent.class, event -> {
@@ -75,11 +76,8 @@ public class SplitPanel extends Panel {
             } else {
                 d = delta.y;
             }
-            position += 100 * d / getActual();
-            FlexStyle ls = topLeftContainer.getStyle().getFlexStyle();
-            FlexStyle rs = bottomRightContainer.getStyle().getFlexStyle();
-            ls.setFlexGrow(getLeft());
-            rs.setFlexGrow(getRight());
+            ratio += 100 * d / getActualSpace();
+            updateGrow();
         });
 
         separator.getListenerMap().addListener(CursorEnterEvent.class, e -> {
@@ -88,21 +86,41 @@ public class SplitPanel extends Panel {
                 GLFW.glfwSetCursor(window, GLFW.glfwCreateStandardCursor(GLFW.GLFW_HRESIZE_CURSOR));
             } else if (e.isEntered() && orientation != HORIZONTAL) {
                 GLFW.glfwSetCursor(window, GLFW.glfwCreateStandardCursor(GLFW.GLFW_VRESIZE_CURSOR));
-            } else if(!dragging[0]) {
+            } else if (!dragging[0]) {
                 GLFW.glfwSetCursor(window, GLFW.glfwCreateStandardCursor(GLFW.GLFW_ARROW_CURSOR));
             }
         });
+        separator.setTextDirection(
+            orientation != HORIZONTAL ? TextDirection.HORIZONTAL : TextDirection.VERTICAL_TOP_DOWN);
+
+        separator.getStyle().setHorizontalAlign(HorizontalAlign.CENTER);
+        separator.getStyle().setVerticalAlign(VerticalAlign.MIDDLE);
+        separator.setTabFocusable(false);
+        separator.getStyle().setBorderRadius(0);
+
+        topLeft.getStyle().setBorderRadius(0);
+        topLeft.setTabFocusable(false);
+
+        bottomRight.getStyle().setBorderRadius(0);
+        bottomRight.setTabFocusable(false);
 
         resetStyle();
 
         Themes.getDefaultTheme().applyAll(this);
 
-        topLeftContainer.getStyle().getBackground().setColor(ColorConstants.lightGreen());
-        bottomRightContainer.getStyle().getBackground().setColor(ColorConstants.lightBlue());
+        topLeft.getStyle().getBackground().setColor(ColorConstants.lightGreen());
+        bottomRight.getStyle().getBackground().setColor(ColorConstants.lightBlue());
+    }
+
+    private void updateGrow() {
+        topLeft.getStyle().getFlexStyle().setFlexGrow(getLeftGrow());
+        bottomRight.getStyle().getFlexStyle().setFlexGrow(getRightGrow());
     }
 
     public void setOrientation(Orientation orientation) {
-        if (orientation == null) return;
+        if (orientation == null) {
+            return;
+        }
         this.orientation = orientation;
         resetStyle();
     }
@@ -119,15 +137,15 @@ public class SplitPanel extends Panel {
         resetStyle();
     }
 
-    private int getLeft() {
-        return (int) (position * getActual() / 100f);
+    private int getLeftGrow() {
+        return (int) (ratio * getActualSpace() / 100f);
     }
 
-    private int getRight() {
-        return (int) ((100 - position) * getActual() / 100f);
+    private int getRightGrow() {
+        return (int) ((100 - ratio) * getActualSpace() / 100f);
     }
 
-    private float getActual() {
+    private float getActualSpace() {
         float actual;
         if (HORIZONTAL == orientation) {
             actual = this.getSize().x - separatorThickness;
@@ -139,14 +157,6 @@ public class SplitPanel extends Panel {
 
     public void resetStyle() {
         this.getStyle().setDisplay(Style.DisplayType.FLEX);
-        separator.setTextDirection(orientation != HORIZONTAL ? TextDirection.HORIZONTAL : TextDirection.VERTICAL_TOP_DOWN);
-
-        separator.getStyle().setPosition(Style.PositionType.RELATIVE);
-        separator.getStyle().getFlexStyle().setFlexGrow(1);
-        separator.getStyle().getFlexStyle().setFlexShrink(1);
-        separator.getStyle().setHorizontalAlign(HorizontalAlign.CENTER);
-        separator.getStyle().setVerticalAlign(VerticalAlign.MIDDLE);
-        separator.setTabFocusable(false);
 
         if (orientation == Orientation.VERTICAL) {
             this.getStyle().getFlexStyle().setFlexDirection(FlexStyle.FlexDirection.COLUMN);
@@ -163,50 +173,28 @@ public class SplitPanel extends Panel {
             this.separator.getStyle().setMaxWidth(separatorThickness);
             this.separator.getStyle().setMinWidth(separatorThickness);
         }
-        separator.getStyle().setBorderRadius(0);
 
-        topLeftContainer.getStyle().setPosition(Style.PositionType.RELATIVE);
-        topLeftContainer.getStyle().getFlexStyle().setFlexGrow(getLeft());
-        topLeftContainer.getStyle().getFlexStyle().setFlexShrink(1);
-        topLeftContainer.getStyle().setBorderRadius(0);
-        topLeftContainer.setTabFocusable(false);
-
-        bottomRightContainer.getStyle().setPosition(Style.PositionType.RELATIVE);
-        bottomRightContainer.getStyle().getFlexStyle().setFlexGrow(getRight());
-        bottomRightContainer.getStyle().getFlexStyle().setFlexShrink(1);
-        bottomRightContainer.getStyle().setBorderRadius(0);
-        bottomRightContainer.setTabFocusable(false);
-
+        resetSeparator();
+        resetTopLeft();
+        resetBottomRight();
     }
 
-    public Component getTopLeft() {
-        return topLeft;
+    private void resetSeparator() {
+        separator.getStyle().setPosition(Style.PositionType.RELATIVE);
+        separator.getStyle().getFlexStyle().setFlexGrow(1);
+        separator.getStyle().getFlexStyle().setFlexShrink(1);
     }
 
-    public void setTopLeft(Component topLeft) {
-        Component left = this.topLeft;
-        if (left != null) {
-            topLeftContainer.remove(left);
-        }
-        this.topLeft = topLeft;
-        if (topLeft != null) {
-            topLeftContainer.add(topLeft);
-        }
+    private void resetBottomRight() {
+        bottomRight.getStyle().setPosition(Style.PositionType.RELATIVE);
+        bottomRight.getStyle().getFlexStyle().setFlexGrow(getRightGrow());
+        bottomRight.getStyle().getFlexStyle().setFlexShrink(1);
     }
 
-    public Component getBottomRight() {
-        return bottomRight;
-    }
-
-    public void setBottomRight(Component bottomRight) {
-        Component right = this.bottomRight;
-        if (right != null) {
-            bottomRightContainer.remove(right);
-        }
-        this.bottomRight = bottomRight;
-        if (bottomRight != null) {
-            bottomRightContainer.add(right);
-        }
+    private void resetTopLeft() {
+        topLeft.getStyle().setPosition(Style.PositionType.RELATIVE);
+        topLeft.getStyle().getFlexStyle().setFlexGrow(getLeftGrow());
+        topLeft.getStyle().getFlexStyle().setFlexShrink(1);
     }
 
     public float getSeparatorThickness() {
@@ -214,7 +202,9 @@ public class SplitPanel extends Panel {
     }
 
     public void setSeparatorThickness(float separatorThickness) {
-        if (separatorThickness <= 0) return;
+        if (separatorThickness <= 0) {
+            return;
+        }
         this.separatorThickness = separatorThickness;
         if (HORIZONTAL == orientation) {
             separator.getStyle().setMaxWidth(separatorThickness);
@@ -223,5 +213,50 @@ public class SplitPanel extends Panel {
             separator.getStyle().setMaxHeight(separatorThickness);
             separator.getStyle().setMinHeight(separatorThickness);
         }
+    }
+
+    public Component getTopLeft() {
+        return topLeft;
+    }
+
+    public void setTopLeft(Component topLeft) {
+        if (topLeft != null) {
+            this.remove(this.topLeft);
+            this.topLeft = topLeft;
+            this.add(0, topLeft);
+            resetTopLeft();
+        }
+    }
+
+    public Component getBottomRight() {
+        return bottomRight;
+    }
+
+    public void setBottomRight(Component bottomRight) {
+        if (bottomRight != null) {
+            this.remove(this.bottomRight);
+            this.bottomRight = bottomRight;
+            this.add(bottomRight);
+            resetBottomRight();
+        }
+    }
+
+    public float getRatio() {
+        return ratio;
+    }
+
+    public void setRatio(float ratio) {
+        if (ratio < 0f) {
+            ratio = 0f;
+        } else if (ratio > 100f) {
+            ratio = 100f;
+        }
+        this.ratio = ratio;
+
+        updateGrow();
+    }
+
+    public Button getSeparator() {
+        return separator;
     }
 }
