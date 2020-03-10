@@ -1,11 +1,8 @@
 package org.liquidengine.legui.component.misc.listener.component;
 
 import org.liquidengine.legui.component.Component;
-import org.liquidengine.legui.component.Frame;
-import org.liquidengine.legui.event.FocusEvent;
 import org.liquidengine.legui.event.KeyEvent;
 import org.liquidengine.legui.listener.EventListener;
-import org.liquidengine.legui.listener.processor.EventProcessorProvider;
 import org.liquidengine.legui.system.context.Context;
 import org.lwjgl.glfw.GLFW;
 
@@ -35,10 +32,10 @@ public class TabKeyEventListener implements EventListener<KeyEvent> {
             boolean shiftPressed = (event.getMods() & GLFW.GLFW_MOD_SHIFT) != 0;
             if (controlPressed && !shiftPressed) {
                 Component next = findNext(event.getTargetComponent());
-                moveToNextTabFocusableComponent(event.getContext(), event.getTargetComponent(), next, event.getFrame());
+                Context.setFocusedGui(next, event.getContext(), event.getFrame());
             } else if (controlPressed) {
                 Component prev = findPrev(event.getTargetComponent());
-                moveToNextTabFocusableComponent(event.getContext(), event.getTargetComponent(), prev, event.getFrame());
+                Context.setFocusedGui(prev, event.getContext(), event.getFrame());
             }
         }
     }
@@ -231,31 +228,6 @@ public class TabKeyEventListener implements EventListener<KeyEvent> {
         }
 
         return next;
-    }
-
-    /**
-     * Used to move to found focusable component.
-     *
-     * @param context   context (used in {@link FocusEvent} generation).
-     * @param component current component.
-     * @param next      next component.
-     * @param frame     frame (used in {@link FocusEvent} generation).
-     */
-    private void moveToNextTabFocusableComponent(Context context, Component component, Component next, Frame frame) {
-        if (component != null) {
-            component.setFocused(false);
-            EventProcessorProvider.getInstance().pushEvent(new FocusEvent<>(component, context, frame, next, false));
-        }
-        if (next != null) {
-            Component focusedGui = context.getFocusedGui();
-            if (focusedGui != null && focusedGui != component) {
-                EventProcessorProvider.getInstance().pushEvent(new FocusEvent<>(focusedGui, context, frame, next, false));
-                focusedGui.setFocused(false);
-            }
-            next.setFocused(true);
-            EventProcessorProvider.getInstance().pushEvent(new FocusEvent<>(next, context, frame, next, true));
-            context.setFocusedGui(next);
-        }
     }
 
     /**

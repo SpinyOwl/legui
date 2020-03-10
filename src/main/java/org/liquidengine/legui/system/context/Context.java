@@ -3,6 +3,9 @@ package org.liquidengine.legui.system.context;
 import org.joml.Vector2f;
 import org.joml.Vector2i;
 import org.liquidengine.legui.component.Component;
+import org.liquidengine.legui.component.Frame;
+import org.liquidengine.legui.event.FocusEvent;
+import org.liquidengine.legui.listener.processor.EventProcessorProvider;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -239,5 +242,20 @@ public class Context {
      */
     public void setIconified(boolean iconified) {
         this.iconified = iconified;
+    }
+
+    public static void setFocusedGui(Component toGainFocus, Context context, Frame frame) {
+        Component current = context == null ? null : context.focusedGui;
+        if (current != null) {
+            current.setFocused(false);
+            EventProcessorProvider.getInstance().pushEvent(new FocusEvent<>(current, context, frame, toGainFocus, false));
+        }
+        if (toGainFocus != null) {
+            toGainFocus.setFocused(true);
+            EventProcessorProvider.getInstance().pushEvent(new FocusEvent<>(toGainFocus, context, frame, toGainFocus, true));
+            if (context != null) {
+                context.setFocusedGui(toGainFocus);
+            }
+        }
     }
 }
