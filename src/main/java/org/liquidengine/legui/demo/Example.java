@@ -146,6 +146,13 @@ public class Example {
             // Clear screen
             glClear(GL_COLOR_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
+            // We need to relayout components.
+            if(gui.getGenerateEventsByLayoutManager().isChecked()) {
+                LayoutManager.getInstance().layout(frame, context);
+            } else {
+                LayoutManager.getInstance().layout(frame);
+            }
+
             // render frame
             renderer.render(frame, context);
 
@@ -171,13 +178,6 @@ public class Example {
                 }
                 fullscreen = !fullscreen;
                 toggleFullscreen = false;
-            }
-
-            if(gui.getGenerateEventsByLayoutManager().isChecked()) {
-                // When everything done we need to relayout components.
-                LayoutManager.getInstance().layout(frame, context);
-            } else {
-                LayoutManager.getInstance().layout(frame);
             }
 
             update();
