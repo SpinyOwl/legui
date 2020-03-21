@@ -36,6 +36,8 @@ public class TextAreaField extends Component implements TextComponent {
      */
     private int tabSize = 4;
 
+    private boolean stickToAlignment = true;
+
     /**
      * Default constructor. Used to create component instance without any parameters. <p> Also if you want to make it easy to use with Json
      * marshaller/unmarshaller component should contain empty constructor.
@@ -311,5 +313,17 @@ public class TextAreaField extends Component implements TextComponent {
 
     public void setCaretY(float caretY) {
         this.caretY = caretY;
+    }
+
+    /**
+     * If returns true - caret position during rendering will stick to 0/mid/end depending on alignment
+     * @return true if caret position should stick to alignment during rendering
+     */
+    public boolean isStickToAlignment() {
+        return stickToAlignment;
+    }
+
+    public void setStickToAlignment(boolean stickToAlignment) {
+        this.stickToAlignment = stickToAlignment;
     }
 }

@@ -99,7 +99,7 @@ public class NvgTextAreaFieldRenderer extends NvgDefaultComponentRenderer<TextAr
             int lineCaretPosition = caretPosition - caretOffset;
 
             // if not focused set caret line and caret position in line to default
-            if (!focused) {
+            if (!focused && gui.isStickToAlignment()) {
                 caretLine = (valign == VerticalAlign.TOP ? 0 : (valign == VerticalAlign.BOTTOM ? lineCount - 1 : lineCount / 2));
                 lineCaretPosition = (halign == HorizontalAlign.LEFT ? 0
                         : (halign == HorizontalAlign.RIGHT ? lines[caretLine].length() : lines[caretLine].length() / 2));
