@@ -5,6 +5,8 @@ import org.liquidengine.legui.component.misc.listener.splitpanel.SplitPanelDragL
 import org.liquidengine.legui.component.optional.Orientation;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
+import org.liquidengine.legui.cursor.Cursor;
+import org.liquidengine.legui.cursor.CursorServiceProvider;
 import org.liquidengine.legui.event.CursorEnterEvent;
 import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.event.MouseDragEvent;
@@ -65,20 +67,18 @@ public class SplitPanel extends Panel {
             }
             if (e.getAction() == RELEASE) {
                 dragging[0] = false;
-                GLFW.glfwSetCursor(e.getContext().getGlfwWindow(),
-                    GLFW.glfwCreateStandardCursor(GLFW.GLFW_ARROW_CURSOR));
+                CursorServiceProvider.getInstance().setCursor(Cursor.ARROW, e.getContext());
             }
         });
         separator.getListenerMap().addListener(MouseDragEvent.class, new SplitPanelDragListener(this));
 
         separator.getListenerMap().addListener(CursorEnterEvent.class, e -> {
-            long window = e.getContext().getGlfwWindow();
             if (e.isEntered() && orientation == HORIZONTAL) {
-                GLFW.glfwSetCursor(window, GLFW.glfwCreateStandardCursor(GLFW.GLFW_HRESIZE_CURSOR));
+                CursorServiceProvider.getInstance().setCursor(Cursor.H_RESIZE, e.getContext());
             } else if (e.isEntered() && orientation != HORIZONTAL) {
-                GLFW.glfwSetCursor(window, GLFW.glfwCreateStandardCursor(GLFW.GLFW_VRESIZE_CURSOR));
+                CursorServiceProvider.getInstance().setCursor(Cursor.V_RESIZE, e.getContext());
             } else if (!dragging[0]) {
-                GLFW.glfwSetCursor(window, GLFW.glfwCreateStandardCursor(GLFW.GLFW_ARROW_CURSOR));
+                CursorServiceProvider.getInstance().setCursor(Cursor.ARROW, e.getContext());
             }
         });
         separator.setTextDirection(
