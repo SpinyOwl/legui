@@ -1,5 +1,7 @@
 package org.liquidengine.legui.component.misc.listener.textarea;
 
+import static org.liquidengine.legui.style.util.StyleUtilities.getPadding;
+
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.Component;
@@ -9,8 +11,6 @@ import org.liquidengine.legui.component.TextArea.TextAreaViewport;
 import org.liquidengine.legui.component.TextAreaField;
 import org.liquidengine.legui.component.event.textarea.TextAreaFieldUpdateEvent;
 import org.liquidengine.legui.component.event.textarea.TextAreaFieldUpdateEventListener;
-
-import static org.liquidengine.legui.style.util.StyleUtilities.getPadding;
 
 
 /**
@@ -85,9 +85,7 @@ public class TextAreaFieldUpdateListener implements TextAreaFieldUpdateEventList
         float minValue = verticalScrollbar.getMinValue();
         float valueRange = verticalScrollbar.getMaxValue() - verticalScrollbar.getMinValue();
 
-        if (maxTextHeight != textAreaField.getStyle().getFontSize()) {
-            newVal = valueRange * caretY / (maxTextHeight - textAreaField.getStyle().getFontSize());
-        }
+        newVal = valueRange * caretY / (maxTextHeight - textAreaField.getStyle().getFontSize());
 
         if (newVal > maxValue) {
             newVal = maxValue;
