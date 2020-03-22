@@ -1,6 +1,7 @@
 package org.liquidengine.legui.component;
 
 import org.joml.Vector2f;
+import org.liquidengine.legui.component.misc.listener.splitpanel.SplitPanelDragListener;
 import org.liquidengine.legui.component.optional.Orientation;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
@@ -68,17 +69,7 @@ public class SplitPanel extends Panel {
                     GLFW.glfwCreateStandardCursor(GLFW.GLFW_ARROW_CURSOR));
             }
         });
-        separator.getListenerMap().addListener(MouseDragEvent.class, event -> {
-            Vector2f delta = event.getDelta();
-            float d;
-            if (orientation == HORIZONTAL) {
-                d = delta.x;
-            } else {
-                d = delta.y;
-            }
-            ratio += 100 * d / getActualSpace();
-            updateGrow();
-        });
+        separator.getListenerMap().addListener(MouseDragEvent.class, new SplitPanelDragListener(this));
 
         separator.getListenerMap().addListener(CursorEnterEvent.class, e -> {
             long window = e.getContext().getGlfwWindow();
@@ -258,5 +249,9 @@ public class SplitPanel extends Panel {
 
     public Button getSeparator() {
         return separator;
+    }
+
+    public Orientation getOrientation() {
+        return orientation;
     }
 }
