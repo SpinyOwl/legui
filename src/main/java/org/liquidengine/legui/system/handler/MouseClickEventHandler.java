@@ -82,7 +82,7 @@ public class MouseClickEventHandler implements SystemEventHandler<SystemMouseCli
                 if (focusedGui != null && focusedGui == target) {
                     EventProcessorProvider.getInstance().pushEvent(new MouseClickEvent<>(target, ctx, frame, CLICK, btn, pos, cursorPos, mods));
                 }
-                EventProcessorProvider.getInstance().pushEvent(new MouseClickEvent<>(target, ctx, frame, RELEASE, btn, pos, cursorPos, mods));
+                EventProcessorProvider.getInstance().pushEvent(new MouseClickEvent<>(focusedGui, ctx, frame, RELEASE, btn, pos, cursorPos, mods));
             }
             pushWidgetsUp(target);
         }
