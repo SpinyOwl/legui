@@ -71,7 +71,7 @@ public class Example {
             fromInt(239, 154, 154, 1), // denyColor
             ColorConstants.transparent(), // shadowColor
             ColorConstants.darkGray(), // text color
-            FontRegistry.DEFAULT, // font
+            FontRegistry.getDefaultFont(), // font
             16f //font size
         ));
 

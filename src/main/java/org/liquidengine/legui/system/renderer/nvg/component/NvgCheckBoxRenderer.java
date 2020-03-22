@@ -54,7 +54,7 @@ public class NvgCheckBoxRenderer extends NvgDefaultComponentRenderer<CheckBox> {
                     getStyle(checkBox, Style::getHorizontalAlign, HorizontalAlign.LEFT),
                     getStyle(checkBox, Style::getVerticalAlign, VerticalAlign.MIDDLE),
                     getStyle(checkBox, Style::getFontSize, 16F),
-                    getStyle(checkBox, Style::getFont, FontRegistry.DEFAULT),
+                    getStyle(checkBox, Style::getFont, FontRegistry.getDefaultFont()),
                     textState.getText(),
                     getStyle(checkBox, Style::getTextColor));
 

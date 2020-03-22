@@ -85,7 +85,7 @@ public class NvgPasswordInputRenderer extends NvgDefaultComponentRenderer<Passwo
             TextState textState = gui.getTextState();
             String text = textState.getText();
             String maskedText = createMaskedText(gui, text);
-            String font = getStyle(gui, Style::getFont, FontRegistry.DEFAULT);
+            String font = getStyle(gui, Style::getFont, FontRegistry.getDefaultFont());
             float fontSize = getStyle(gui, Style::getFontSize, 16f);
             Vector4f highlightColor = getStyle(gui, Style::getHighlightColor);
             HorizontalAlign halign = getStyle(gui, Style::getHorizontalAlign, HorizontalAlign.LEFT);

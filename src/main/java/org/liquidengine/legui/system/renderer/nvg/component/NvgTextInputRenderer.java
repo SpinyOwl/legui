@@ -81,7 +81,7 @@ public class NvgTextInputRenderer extends NvgDefaultComponentRenderer<TextInput>
         ) {
             TextState textState = gui.getTextState();
             String text = textState.getText();
-            String font = getStyle(gui, Style::getFont, FontRegistry.DEFAULT);
+            String font = getStyle(gui, Style::getFont, FontRegistry.getDefaultFont());
             float fontSize = getStyle(gui, Style::getFontSize, 16F);
             Vector4f highlightColor = getStyle(gui, Style::getHighlightColor);
             HorizontalAlign halign = getStyle(gui, Style::getHorizontalAlign, HorizontalAlign.LEFT);
@@ -218,8 +218,11 @@ public class NvgTextInputRenderer extends NvgDefaultComponentRenderer<TextInput>
                             focused, startSelectionX, endSelectionX, poffset);
                     // render text
 
-                    NvgText.drawTextLineToRect(context, new Vector4f(textBounds[4] - poffset, textBounds[5], textBounds[6], textBounds[7]),
-                            false, HorizontalAlign.LEFT, VerticalAlign.MIDDLE, fontSize, font, text, textColor);
+                    Vector4f bounds = new Vector4f(textBounds[4] - poffset, textBounds[5], textBounds[6], textBounds[7]);
+                    NvgText.drawTextLineToRect(context, bounds, false,
+                                               HorizontalAlign.LEFT,
+                                               VerticalAlign.MIDDLE,
+                                               fontSize, font, text, textColor);
 
                     if (focused) {
                         // render caret

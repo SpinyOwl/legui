@@ -38,7 +38,7 @@ public class NvgTooltipRenderer extends NvgDefaultComponentRenderer<Tooltip> {
             Vector2f pos = component.getAbsolutePosition();
             Vector2f size = component.getSize();
             float fontSize = getStyle(component, Style::getFontSize, 16F);
-            String font = getStyle(component, Style::getFont, FontRegistry.DEFAULT);
+            String font = getStyle(component, Style::getFont, FontRegistry.getDefaultFont());
             String text = textState.getText();
             HorizontalAlign horizontalAlign = getStyle(component, Style::getHorizontalAlign, HorizontalAlign.LEFT);
             VerticalAlign verticalAlign = getStyle(component, Style::getVerticalAlign, VerticalAlign.MIDDLE);

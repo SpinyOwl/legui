@@ -1,5 +1,34 @@
 package org.liquidengine.legui.system.renderer.nvg.util;
 
+import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_BASELINE;
+import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_BOTTOM;
+import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_CENTER;
+import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_LEFT;
+import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_MIDDLE;
+import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_RIGHT;
+import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_TOP;
+import static org.lwjgl.nanovg.NanoVG.NVG_HOLE;
+import static org.lwjgl.nanovg.NanoVG.NVG_SOLID;
+import static org.lwjgl.nanovg.NanoVG.nvgBeginPath;
+import static org.lwjgl.nanovg.NanoVG.nvgBoxGradient;
+import static org.lwjgl.nanovg.NanoVG.nvgFill;
+import static org.lwjgl.nanovg.NanoVG.nvgFillPaint;
+import static org.lwjgl.nanovg.NanoVG.nvgIntersectScissor;
+import static org.lwjgl.nanovg.NanoVG.nvgPathWinding;
+import static org.lwjgl.nanovg.NanoVG.nvgRect;
+import static org.lwjgl.nanovg.NanoVG.nvgResetScissor;
+import static org.lwjgl.nanovg.NanoVG.nvgRoundedRect;
+import static org.lwjgl.nanovg.NanoVG.nvgRoundedRectVarying;
+import static org.lwjgl.nanovg.NanoVG.nvgScissor;
+import static org.lwjgl.nanovg.NanoVG.nvgTextAlign;
+import static org.lwjgl.nanovg.NanoVG.nvgTextBounds;
+import static org.lwjgl.nanovg.NanoVG.nvgTextMetrics;
+import static org.lwjgl.system.MemoryUtil.memFree;
+import static org.lwjgl.system.MemoryUtil.memUTF8;
+
+import java.nio.ByteBuffer;
+import java.util.ArrayList;
+import java.util.List;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.Component;
@@ -10,15 +39,6 @@ import org.liquidengine.legui.style.shadow.Shadow;
 import org.liquidengine.legui.style.util.StyleUtilities;
 import org.lwjgl.nanovg.NVGColor;
 import org.lwjgl.nanovg.NVGPaint;
-
-import java.nio.ByteBuffer;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Function;
-
-import static org.lwjgl.nanovg.NanoVG.*;
-import static org.lwjgl.system.MemoryUtil.memFree;
-import static org.lwjgl.system.MemoryUtil.memUTF8;
 
 /**
  * Created by ShchAlexander on 2/2/2017.
@@ -59,14 +79,20 @@ public final class NvgRenderUtils {
         float[] bounds = new float[4];
         if (text != null && text.limit() != 0) {
             nvgTextBounds(context, x, y, text, bounds);
-            return createBounds(x, y, w, h, horizontalAlign, verticalAlign, bounds);
+            return createBounds(context, x, y, w, h, horizontalAlign, verticalAlign, bounds);
         }
         return createBounds(x, y, w, h, horizontalAlign, verticalAlign, 0, fontSize);
     }
 
-    public static float[] createBounds(float x, float y, float w, float h, HorizontalAlign horizontalAlign, VerticalAlign verticalAlign, float[] bounds) {
+    public static float[] createBounds(long context, float x, float y, float w, float h, HorizontalAlign horizontalAlign, VerticalAlign verticalAlign,
+                                       float[] bounds) {
+        float[] ascender = {0}, descender = {0}, lineh = {0};
+        nvgTextMetrics(context, ascender, descender, lineh);
+
+        int addition = (ascender[0] - (int) ascender[0] > 0) ? 1 : 0;
+
         float ww = bounds[2] - bounds[0];
-        float hh = bounds[3] - bounds[1];
+        float hh = bounds[3] - bounds[1] + addition;
         return createBounds(x, y, w, h, horizontalAlign, verticalAlign, /*bounds, */ww, hh);
     }
 

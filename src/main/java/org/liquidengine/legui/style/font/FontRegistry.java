@@ -2,6 +2,7 @@ package org.liquidengine.legui.style.font;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -40,7 +41,16 @@ public class FontRegistry {
     /**
      * Font used by default. {@link #ROBOTO_BOLD}.
      */
-    public static final String DEFAULT = ROBOTO_LIGHT;
+    private static String defaultFont = ROBOTO_LIGHT;
+
+    public static String getDefaultFont() {
+        return defaultFont;
+    }
+
+    public static void setDefaultFont(String defaultFont) {
+        FontRegistry.defaultFont = Objects.requireNonNull(defaultFont);
+    }
+
     /**
      * Font register.
      */

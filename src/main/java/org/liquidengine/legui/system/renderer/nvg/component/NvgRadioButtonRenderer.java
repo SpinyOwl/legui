@@ -52,7 +52,7 @@ public class NvgRadioButtonRenderer extends NvgDefaultComponentRenderer<RadioBut
                     getStyle(radioButton, Style::getHorizontalAlign, HorizontalAlign.LEFT),
                     getStyle(radioButton, Style::getVerticalAlign, VerticalAlign.MIDDLE),
                     getStyle(radioButton, Style::getFontSize, 16F),
-                    getStyle(radioButton, Style::getFont, FontRegistry.DEFAULT),
+                    getStyle(radioButton, Style::getFont, FontRegistry.getDefaultFont()),
                     textState.getText(),
                     getStyle(radioButton, Style::getTextColor));
             renderIcon(icon, radioButton, context);

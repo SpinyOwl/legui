@@ -40,7 +40,7 @@ public class NvgButtonRenderer extends NvgDefaultComponentRenderer<Button> {
                     getStyle(component, Style::getHorizontalAlign, HorizontalAlign.LEFT),
                     getStyle(component, Style::getVerticalAlign, VerticalAlign.MIDDLE),
                     getStyle(component, Style::getFontSize, 16F),
-                    getStyle(component, Style::getFont, FontRegistry.DEFAULT),
+                    getStyle(component, Style::getFont, FontRegistry.getDefaultFont()),
                     text.getText(),
                     getStyle(component, Style::getTextColor));
 

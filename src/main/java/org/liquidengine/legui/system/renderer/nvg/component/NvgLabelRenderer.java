@@ -39,7 +39,7 @@ public class NvgLabelRenderer extends NvgDefaultComponentRenderer<Label> {
                     getStyle(label, Style::getHorizontalAlign, HorizontalAlign.LEFT),
                     getStyle(label, Style::getVerticalAlign, VerticalAlign.MIDDLE),
                     getStyle(label, Style::getFontSize, 16F),
-                    getStyle(label, Style::getFont, FontRegistry.DEFAULT),
+                    getStyle(label, Style::getFont, FontRegistry.getDefaultFont()),
                     textState.getText(),
                     getStyle(label, Style::getTextColor),
                     label.getTextDirection());

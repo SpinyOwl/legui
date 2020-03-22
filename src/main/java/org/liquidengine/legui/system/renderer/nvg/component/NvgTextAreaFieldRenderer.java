@@ -68,7 +68,7 @@ public class NvgTextAreaFieldRenderer extends NvgDefaultComponentRenderer<TextAr
 
             TextState textState = gui.getTextState();
             String text = textState.getText();
-            String font = getStyle(gui, Style::getFont, FontRegistry.DEFAULT);
+            String font = getStyle(gui, Style::getFont, FontRegistry.getDefaultFont());
             float fontSize = getStyle(gui, Style::getFontSize, 16F);
             HorizontalAlign halign = getStyle(gui, Style::getHorizontalAlign, HorizontalAlign.LEFT);
             VerticalAlign valign = getStyle(gui, Style::getVerticalAlign, VerticalAlign.MIDDLE);

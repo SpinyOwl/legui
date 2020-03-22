@@ -43,7 +43,7 @@ public class NvgToggleButtonRenderer extends NvgDefaultComponentRenderer<ToggleB
                     getStyle(toggleButton, Style::getHorizontalAlign, HorizontalAlign.LEFT),
                     getStyle(toggleButton, Style::getVerticalAlign, VerticalAlign.MIDDLE),
                     getStyle(toggleButton, Style::getFontSize, 16F),
-                    getStyle(toggleButton, Style::getFont, FontRegistry.DEFAULT),
+                    getStyle(toggleButton, Style::getFont, FontRegistry.getDefaultFont()),
                     text.getText(),
                     getStyle(toggleButton, Style::getTextColor));
         }
