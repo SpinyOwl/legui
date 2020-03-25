@@ -1,5 +1,6 @@
 plugins {
     id "org.sonarqube" version "2.7"
+    id 'net.nemerosa.versioning' version '2.6.1'
 }
 
 group 'org.liquidengine'
@@ -9,7 +10,7 @@ import groovy.json.JsonSlurper
 // SETUP VERSION
 def versionJson = new JsonSlurper().parseText(new File("$project.projectDir/version.json").text)
 def versionExt = System.getProperty("VEXT") ?: System.getenv("VEXT") ?: ""
-project.version = versionJson.version + ((versionExt ==null || versionExt == "") ? "" : "-" + versionExt)
+project.version = versionJson.version + ((versionExt == null || versionExt == "") ? "" : "-" + versionExt)
 
 println("VERSION : " + project.version)
 
@@ -30,16 +31,16 @@ targetCompatibility = 1.8
 compileJava.options.encoding = 'UTF-8'
 
 //@formatter:off
-def log4j_version        = '2.3'
-def commons_version      = '3.4'
-def commons_collections  = '4.1'
-def guava_version        = '19.0'
-def gson_version         = '2.7'
+def log4j_version = '2.3'
+def commons_version = '3.4'
+def commons_collections = '4.1'
+def guava_version = '19.0'
+def gson_version = '2.7'
 
-def joml_version         = "1.9.18-SNAPSHOT"
-def lwjgl_version        = '3.2.3-SNAPSHOT'
-def le_cbchain           = '1.0.0'
-def le_util              = '1.0.0'
+def joml_version = "1.9.23-SNAPSHOT"
+def lwjgl_version = '3.2.4-SNAPSHOT'
+def le_cbchain = '1.0.0'
+def le_util = '1.0.0'
 //@formatter:on
 
 repositories {
@@ -55,45 +56,45 @@ dependencies {
     compile group: 'org.reflections', name: 'reflections', version: '0.9.11'
 
     //@formatter:off
-    compile group: "org.joml",                   name: "joml",                 version: joml_version,          changing: true
-    compile group: 'org.apache.logging.log4j',   name: 'log4j-core',           version: log4j_version,         changing: false
-    compile group: 'org.apache.commons',         name: 'commons-lang3',        version: commons_version,       changing: false
-    compile group: 'org.apache.commons',         name: 'commons-collections4', version: commons_collections,   changing: false
-    compile group: 'com.google.guava',           name: 'guava',                version: guava_version,         changing: false
-    compile group: 'com.google.code.gson',       name: 'gson',                 version: gson_version,          changing: false
+    compile group: "org.joml", name: "joml", version: joml_version, changing: true
+    compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: log4j_version, changing: false
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: commons_version, changing: false
+    compile group: 'org.apache.commons', name: 'commons-collections4', version: commons_collections, changing: false
+    compile group: 'com.google.guava', name: 'guava', version: guava_version, changing: false
+    compile group: 'com.google.code.gson', name: 'gson', version: gson_version, changing: false
 
-    compile group: 'org.liquidengine',           name: 'cbchain',              version: le_cbchain,            changing: true
-    compile group: 'org.liquidengine',           name: 'leutil',               version: le_util,               changing: true
+    compile group: 'org.liquidengine', name: 'cbchain', version: le_cbchain, changing: true
+    compile group: 'org.liquidengine', name: 'leutil', version: le_util, changing: true
 
-    compile group: 'org.lwjgl',                  name: 'lwjgl-stb',            version: lwjgl_version,         changing: true
-    runtime group: 'org.lwjgl',                  name: 'lwjgl-stb',            version: lwjgl_version,         changing: true,  classifier: 'natives-windows'
-    runtime group: 'org.lwjgl',                  name: 'lwjgl-stb',            version: lwjgl_version,         changing: true,  classifier: 'natives-linux'
-    runtime group: 'org.lwjgl',                  name: 'lwjgl-stb',            version: lwjgl_version,         changing: true,  classifier: 'natives-macos'
+    compile group: 'org.lwjgl', name: 'lwjgl-stb', version: lwjgl_version, changing: true
+    runtime group: 'org.lwjgl', name: 'lwjgl-stb', version: lwjgl_version, changing: true, classifier: 'natives-windows'
+    runtime group: 'org.lwjgl', name: 'lwjgl-stb', version: lwjgl_version, changing: true, classifier: 'natives-linux'
+    runtime group: 'org.lwjgl', name: 'lwjgl-stb', version: lwjgl_version, changing: true, classifier: 'natives-macos'
 
-    compile group: 'org.lwjgl',                  name: 'lwjgl-glfw',           version: lwjgl_version,         changing: true
-    runtime group: 'org.lwjgl',                  name: 'lwjgl-glfw',           version: lwjgl_version,         changing: true,  classifier: 'natives-windows'
-    runtime group: 'org.lwjgl',                  name: 'lwjgl-glfw',           version: lwjgl_version,         changing: true,  classifier: 'natives-linux'
-    runtime group: 'org.lwjgl',                  name: 'lwjgl-glfw',           version: lwjgl_version,         changing: true,  classifier: 'natives-macos'
+    compile group: 'org.lwjgl', name: 'lwjgl-glfw', version: lwjgl_version, changing: true
+    runtime group: 'org.lwjgl', name: 'lwjgl-glfw', version: lwjgl_version, changing: true, classifier: 'natives-windows'
+    runtime group: 'org.lwjgl', name: 'lwjgl-glfw', version: lwjgl_version, changing: true, classifier: 'natives-linux'
+    runtime group: 'org.lwjgl', name: 'lwjgl-glfw', version: lwjgl_version, changing: true, classifier: 'natives-macos'
 
-    compile group: 'org.lwjgl',                  name: 'lwjgl-nanovg',         version: lwjgl_version,         changing: true
-    runtime group: 'org.lwjgl',                  name: 'lwjgl-nanovg',         version: lwjgl_version,         changing: true,  classifier: 'natives-windows'
-    runtime group: 'org.lwjgl',                  name: 'lwjgl-nanovg',         version: lwjgl_version,         changing: true,  classifier: 'natives-linux'
-    runtime group: 'org.lwjgl',                  name: 'lwjgl-nanovg',         version: lwjgl_version,         changing: true,  classifier: 'natives-macos'
+    compile group: 'org.lwjgl', name: 'lwjgl-nanovg', version: lwjgl_version, changing: true
+    runtime group: 'org.lwjgl', name: 'lwjgl-nanovg', version: lwjgl_version, changing: true, classifier: 'natives-windows'
+    runtime group: 'org.lwjgl', name: 'lwjgl-nanovg', version: lwjgl_version, changing: true, classifier: 'natives-linux'
+    runtime group: 'org.lwjgl', name: 'lwjgl-nanovg', version: lwjgl_version, changing: true, classifier: 'natives-macos'
 
-    compile group: 'org.lwjgl',                  name: 'lwjgl-opengl',         version: lwjgl_version,         changing: true
-    compile group: 'org.lwjgl',                  name: 'lwjgl-opengl',         version: lwjgl_version,         changing: true,  classifier: 'natives-windows'
-    compile group: 'org.lwjgl',                  name: 'lwjgl-opengl',         version: lwjgl_version,         changing: true,  classifier: 'natives-linux'
-    compile group: 'org.lwjgl',                  name: 'lwjgl-opengl',         version: lwjgl_version,         changing: true,  classifier: 'natives-macos'
+    compile group: 'org.lwjgl', name: 'lwjgl-opengl', version: lwjgl_version, changing: true
+    compile group: 'org.lwjgl', name: 'lwjgl-opengl', version: lwjgl_version, changing: true, classifier: 'natives-windows'
+    compile group: 'org.lwjgl', name: 'lwjgl-opengl', version: lwjgl_version, changing: true, classifier: 'natives-linux'
+    compile group: 'org.lwjgl', name: 'lwjgl-opengl', version: lwjgl_version, changing: true, classifier: 'natives-macos'
 
-    compile group: 'org.lwjgl',                  name: 'lwjgl',                version: lwjgl_version,         changing: true
-    runtime group: 'org.lwjgl',                  name: 'lwjgl',                version: lwjgl_version,         changing: true,  classifier: 'natives-windows'
-    runtime group: 'org.lwjgl',                  name: 'lwjgl',                version: lwjgl_version,         changing: true,  classifier: 'natives-linux'
-    runtime group: 'org.lwjgl',                  name: 'lwjgl',                version: lwjgl_version,         changing: true,  classifier: 'natives-macos'
+    compile group: 'org.lwjgl', name: 'lwjgl', version: lwjgl_version, changing: true
+    runtime group: 'org.lwjgl', name: 'lwjgl', version: lwjgl_version, changing: true, classifier: 'natives-windows'
+    runtime group: 'org.lwjgl', name: 'lwjgl', version: lwjgl_version, changing: true, classifier: 'natives-linux'
+    runtime group: 'org.lwjgl', name: 'lwjgl', version: lwjgl_version, changing: true, classifier: 'natives-macos'
 
-    compile group: 'org.lwjgl',                  name: 'lwjgl-yoga',           version: lwjgl_version,         changing: true
-    runtime group: 'org.lwjgl',                  name: 'lwjgl-yoga',           version: lwjgl_version,         changing: true,  classifier: 'natives-windows'
-    runtime group: 'org.lwjgl',                  name: 'lwjgl-yoga',           version: lwjgl_version,         changing: true,  classifier: 'natives-linux'
-    runtime group: 'org.lwjgl',                  name: 'lwjgl-yoga',           version: lwjgl_version,         changing: true,  classifier: 'natives-macos'
+    compile group: 'org.lwjgl', name: 'lwjgl-yoga', version: lwjgl_version, changing: true
+    runtime group: 'org.lwjgl', name: 'lwjgl-yoga', version: lwjgl_version, changing: true, classifier: 'natives-windows'
+    runtime group: 'org.lwjgl', name: 'lwjgl-yoga', version: lwjgl_version, changing: true, classifier: 'natives-linux'
+    runtime group: 'org.lwjgl', name: 'lwjgl-yoga', version: lwjgl_version, changing: true, classifier: 'natives-macos'
     //@formatter:on
     testCompile group: 'junit', name: 'junit', version: '4.11'
 }
@@ -122,19 +123,31 @@ uploadArchives {
     }
 }
 
+//@formatter:off
 jar {
     exclude("org/liquidengine/legui/demo/**")
+    manifest {
+        attributes(
+                'Build-Timestamp': new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").format(new Date()),
+                'Build-Revision' : versioning.info.commit,
+                'Created-By'     : "Gradle ${gradle.gradleVersion}",
+                'Build-Jdk'      : "${System.properties['java.version']} (${System.properties['java.vendor']} ${System.properties['java.vm.version']})",
+                'Build-OS'       : "${System.properties['os.name']} ${System.properties['os.arch']} ${System.properties['os.version']}",
+                'Full-Version'   : project.version
+        )
+    }
 }
+//@formatter:on
 
 task sourcesJar(type: Jar, dependsOn: classes) {
-    classifier = 'sources'
+    archiveClassifier.set('sources')
     from(sourceSets.main.allSource) {
         exclude("org/liquidengine/legui/demo/**")
     }
 }
 
 task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
+    archiveClassifier.set('javadoc')
     from(javadoc.destinationDir) {
         exclude("org/liquidengine/legui/demo/**")
     }
