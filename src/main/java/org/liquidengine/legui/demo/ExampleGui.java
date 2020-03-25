@@ -491,12 +491,14 @@ public class ExampleGui extends Panel {
 
     private Widget createImageWrapperWidgetWithImage() {
         Widget imageWrapper = new Widget(20, 30, 100, 100);
+        imageWrapper.setAscendible(true);
         imageWrapper.setTitleEnabled(true);
 
         imageView = new ImageView(new BufferedImage("org/liquidengine/legui/demo/1.jpg"));
         imageView.setPosition(15, 5);
         imageView.setSize(70, 70);
         imageView.getStyle().setBorderRadius(10f);
+        imageWrapper.getTitle().getTextState().setText("Ascendible widget");
         imageWrapper.getContainer().add(imageView);
         imageWrapper.setCloseable(false);
         return imageWrapper;
@@ -658,6 +660,7 @@ public class ExampleGui extends Panel {
         shadowWidget.getTitleTextState().setText("Shadow test widget");
         shadowWidget.setCloseable(false);
         shadowWidget.setResizable(false);
+        shadowWidget.setAscendible(true);
 
         shadowWidget.getStyle().setShadow(new Shadow());
         shadowWidget.getStyle().getShadow().setColor(ColorConstants.red());
