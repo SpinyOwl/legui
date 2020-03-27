@@ -86,7 +86,9 @@ public final class NvgRenderUtils {
 
     public static float[] createBounds(long context, float x, float y, float w, float h, HorizontalAlign horizontalAlign, VerticalAlign verticalAlign,
                                        float[] bounds) {
-        float[] ascender = {0}, descender = {0}, lineh = {0};
+        float[] ascender = {0};
+        float[] descender = {0};
+        float[] lineh = {0};
         nvgTextMetrics(context, ascender, descender, lineh);
 
         int addition = (ascender[0] - (int) ascender[0] > 0) ? 1 : 0;

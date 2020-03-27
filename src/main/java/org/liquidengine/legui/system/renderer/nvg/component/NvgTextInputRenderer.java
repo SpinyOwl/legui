@@ -35,15 +35,15 @@ public class NvgTextInputRenderer extends NvgDefaultComponentRenderer<TextInput>
     public static final String PALIGN = "palign";
     public static final String POFFSET = "poffset";
     private final Vector4f caretColor = new Vector4f(0, 0, 0, 0.5f);
-    private final int maxGlyphCount = 1024;
+    private static final int MAX_GLYPH_COUNT = 1024;
 
 
     /**
      * Used to render textInput.
      *
      * @param component textInput to render.
-     * @param context   legui context.
-     * @param nanovg    nanovg context pointer.
+     * @param context legui context.
+     * @param nanovg nanovg context pointer.
      */
     @Override
     protected void renderSelf(TextInput component, Context context, long nanovg) {
@@ -76,8 +76,8 @@ public class NvgTextInputRenderer extends NvgDefaultComponentRenderer<TextInput>
     private void renderText(Context leguiContext, long context, TextInput gui, Vector2f size, Vector4f rect, Vector4f bc) {
 
         try (
-                NVGGlyphPosition.Buffer glyphs = NVGGlyphPosition.calloc(maxGlyphCount);
-                NVGColor colorA = NVGColor.calloc()
+            NVGGlyphPosition.Buffer glyphs = NVGGlyphPosition.calloc(MAX_GLYPH_COUNT);
+            NVGColor colorA = NVGColor.calloc()
         ) {
             TextState textState = gui.getTextState();
             String text = textState.getText();
@@ -100,12 +100,10 @@ public class NvgTextInputRenderer extends NvgDefaultComponentRenderer<TextInput>
                 if (focused) {
                     // render caret
                     float nCaretX = rect.x + halign.index * rect.z / 2f;
-                    NvgColorUtil.fillNvgColorWithRGBA(caretColor, colorA);
-                    renderCaret(context, rect, nCaretX, colorA);
+                    renderCaret(context, rect, nCaretX, caretColor);
                 }
 
                 gui.setMouseCaretPosition(0);
-                return;
             } else {
 
                 // initially configure text rendering
@@ -115,8 +113,9 @@ public class NvgTextInputRenderer extends NvgDefaultComponentRenderer<TextInput>
                 nvgFontFace(context, font);
                 nvgFillColor(context, colorA);
 
+                int textLength = text.length();
                 if (!focused) {
-                    caretPosition = (halign == HorizontalAlign.LEFT ? 0 : (halign == HorizontalAlign.RIGHT ? text.length() : text.length() / 2));
+                    caretPosition = (halign == HorizontalAlign.LEFT ? 0 : (halign == HorizontalAlign.RIGHT ? textLength : textLength / 2));
                 }
 
                 float[] textBounds = calculateTextBoundsRect(context, rect, text, halign, valign, fontSize);
@@ -135,7 +134,7 @@ public class NvgTextInputRenderer extends NvgDefaultComponentRenderer<TextInput>
 
                     // align text for calculations
                     alignTextInBox(context, HorizontalAlign.LEFT, VerticalAlign.MIDDLE);
-                    int ng = nnvgTextGlyphPositions(context, textBounds[4], 0, memAddress(textBytes), 0, memAddress(glyphs), maxGlyphCount);
+                    int ng = nnvgTextGlyphPositions(context, textBounds[4], 0, memAddress(textBytes), 0, memAddress(glyphs), MAX_GLYPH_COUNT);
 
                     // get caret position on screen based on caret position in text
                     // and get x position of first and last selection
@@ -160,7 +159,7 @@ public class NvgTextInputRenderer extends NvgDefaultComponentRenderer<TextInput>
                     poffset = recalculateOffsetX(rect, halign, caretx, ratio, offsetX, poffset, pratio, palign);
 
                     // calculate mouse caret position
-                    if (text.length() == 0) {
+                    if (textLength == 0) {
                         mouseCaretX = caretx;
                     } else {
                         float mx = Mouse.getCursorPosition().x + poffset;
@@ -214,8 +213,8 @@ public class NvgTextInputRenderer extends NvgDefaultComponentRenderer<TextInput>
                     float nCaretX = caretx - poffset;
 
                     drawSelection(context, rect, highlightColor,
-                            startSelectionIndex, endSelectionIndex,
-                            focused, startSelectionX, endSelectionX, poffset);
+                                  startSelectionIndex, endSelectionIndex,
+                                  focused, startSelectionX, endSelectionX, poffset);
                     // render text
 
                     Vector4f bounds = new Vector4f(textBounds[4] - poffset, textBounds[5], textBounds[6], textBounds[7]);
@@ -226,16 +225,13 @@ public class NvgTextInputRenderer extends NvgDefaultComponentRenderer<TextInput>
 
                     if (focused) {
                         // render caret
-                        NvgColorUtil.fillNvgColorWithRGBA(caretColor, colorA);
-                        renderCaret(context, rect, nCaretX, colorA);
+                        renderCaret(context, rect, nCaretX, caretColor);
                     }
                     // render mouse caret
                     if (leguiContext.isDebugEnabled()) {
                         Vector4f cc = new Vector4f(this.caretColor);
                         cc.x = 1;
-
-                        NvgColorUtil.fillNvgColorWithRGBA(cc, colorA);
-                        renderCaret(context, rect, mouseCaretX, colorA);
+                        renderCaret(context, rect, mouseCaretX, caretColor);
                     }
 
                     // put last offset and ration to metadata
@@ -299,15 +295,8 @@ public class NvgTextInputRenderer extends NvgDefaultComponentRenderer<TextInput>
         return offsetX;
     }
 
-    private void renderCaret(long context, Vector4f rect, float nCaretX, NVGColor rgba) {
-        nvgLineCap(context, NVG_ROUND);
-        nvgLineJoin(context, NVG_ROUND);
-        nvgStrokeWidth(context, 1);
-        nvgStrokeColor(context, rgba);
-        nvgBeginPath(context);
-        nvgMoveTo(context, nCaretX, rect.y);
-        nvgLineTo(context, nCaretX, rect.y + rect.w);
-        nvgStroke(context);
+    private void renderCaret(long context, Vector4f rect, float nCaretX, Vector4f color) {
+        NvgShapes.drawLine(context, 1, color, NVG_ROUND, nCaretX, rect.y, nCaretX, rect.y + rect.w);
     }
 
     private float calculateCaretPos(int caretPosition, float[] textBounds, int ng, NVGGlyphPosition.Buffer glyphs) {

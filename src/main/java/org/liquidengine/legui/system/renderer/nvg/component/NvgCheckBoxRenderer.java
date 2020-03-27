@@ -1,9 +1,14 @@
 package org.liquidengine.legui.system.renderer.nvg.component;
 
+import static org.liquidengine.legui.style.util.StyleUtilities.getPadding;
+import static org.liquidengine.legui.style.util.StyleUtilities.getStyle;
+import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderIcon;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.createScissor;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.resetScissor;
+
 import org.joml.Vector2f;
 import org.joml.Vector2fc;
 import org.joml.Vector4f;
-import org.joml.Vector4fc;
 import org.liquidengine.legui.component.CheckBox;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
@@ -13,11 +18,6 @@ import org.liquidengine.legui.style.Style;
 import org.liquidengine.legui.style.font.FontRegistry;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgText;
-
-import static org.liquidengine.legui.style.util.StyleUtilities.getPadding;
-import static org.liquidengine.legui.style.util.StyleUtilities.getStyle;
-import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderIcon;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.*;
 
 /**
  * Created by ShchAlexander on 11.02.2017.

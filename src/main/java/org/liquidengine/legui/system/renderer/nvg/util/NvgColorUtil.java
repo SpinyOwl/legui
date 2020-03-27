@@ -6,7 +6,10 @@ import org.lwjgl.nanovg.NVGColor;
 /**
  * NanoVG utility. Used to convert some NanoVG elements to other. For example {@link NVGColor} to {@link org.joml.Vector4f} and back.
  */
-public class NvgColorUtil {
+public final class NvgColorUtil {
+
+    private NvgColorUtil() {
+    }
 
     /**
      * Used to fill {@link NVGColor}.
@@ -27,7 +30,8 @@ public class NvgColorUtil {
     /**
      * Used to fill {@link NVGColor}.
      *
-     * @param rgba rgba color {@link Vector4fc} of floats. <ul> <li>rgba.x - red.</li> <li>rgba.y - green.</li> <li>rgba.z - blue.</li> <li>rgba.w - alpha.</li>
+     * @param rgba rgba color {@link Vector4fc} of floats. <ul> <li>rgba.x - red.</li> <li>rgba.y - green.</li> <li>rgba.z - blue.</li> <li>rgba.w -
+     * alpha.</li>
      * </ul>
      * @param color color to fill.
      */

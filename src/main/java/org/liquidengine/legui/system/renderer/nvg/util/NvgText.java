@@ -86,7 +86,7 @@ public class NvgText {
                         nnvgText(nvg, rect.w() * horizontalAlign.index / 2f, rect.z() * verticalAlign.index / 2f, rowStart, rowEnd);
                     } else {
                         nvgTranslate(nvg, rect.x(), rect.y());
-                        nnvgText(nvg, textPosition.x - rect.x(), textPosition.y - rect.y(), rowStart, rowEnd);
+                        nnvgText(nvg, textPosition.x - rect.x(), ((int)textPosition.y - rect.y()), rowStart, rowEnd);
                     }
                     nvgRestore(nvg);
                 }
@@ -99,8 +99,8 @@ public class NvgText {
     }
 
     public static void textAlign(long context, HorizontalAlign horizontalAlign, VerticalAlign verticalAlign) {
-        int nvgHorizontalAlign = NVG_ALIGN_LEFT;
-        int nvgVerticalAlign = NVG_ALIGN_MIDDLE;
+        int nvgHorizontalAlign = 0;
+        int nvgVerticalAlign = 0;
         // @formatter:off
         switch (horizontalAlign) {
             case LEFT:
