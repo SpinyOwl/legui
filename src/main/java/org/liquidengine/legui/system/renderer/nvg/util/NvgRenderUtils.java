@@ -22,7 +22,6 @@ import static org.lwjgl.nanovg.NanoVG.nvgRoundedRectVarying;
 import static org.lwjgl.nanovg.NanoVG.nvgScissor;
 import static org.lwjgl.nanovg.NanoVG.nvgTextAlign;
 import static org.lwjgl.nanovg.NanoVG.nvgTextBounds;
-import static org.lwjgl.nanovg.NanoVG.nvgTextMetrics;
 import static org.lwjgl.system.MemoryUtil.memFree;
 import static org.lwjgl.system.MemoryUtil.memUTF8;
 
@@ -79,23 +78,15 @@ public final class NvgRenderUtils {
         float[] bounds = new float[4];
         if (text != null && text.limit() != 0) {
             nvgTextBounds(context, x, y, text, bounds);
-            return createBounds(context, x, y, w, h, horizontalAlign, verticalAlign, bounds);
+            return createBounds(x, y, w, h, horizontalAlign, verticalAlign, bounds);
         }
         return createBounds(x, y, w, h, horizontalAlign, verticalAlign, 0, fontSize);
     }
 
-    public static float[] createBounds(long context, float x, float y, float w, float h, HorizontalAlign horizontalAlign, VerticalAlign verticalAlign,
-                                       float[] bounds) {
-        float[] ascender = {0};
-        float[] descender = {0};
-        float[] lineh = {0};
-        nvgTextMetrics(context, ascender, descender, lineh);
-
-        int addition = (ascender[0] - (int) ascender[0] > 0) ? 1 : 0;
-
+    public static float[] createBounds(float x, float y, float w, float h, HorizontalAlign horizontalAlign, VerticalAlign verticalAlign, float[] bounds) {
         float ww = bounds[2] - bounds[0];
-        float hh = bounds[3] - bounds[1] + addition;
-        return createBounds(x, y, w, h, horizontalAlign, verticalAlign, /*bounds, */ww, hh);
+        float hh = bounds[3] - bounds[1];
+        return createBounds(x, y, w, h, horizontalAlign, verticalAlign, ww, hh);
     }
 
     public static float[] createBounds(float w, float h, HorizontalAlign horizontalAlign, VerticalAlign verticalAlign, float[] bounds, float ww, float hh) {
