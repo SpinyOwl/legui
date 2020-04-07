@@ -1,12 +1,16 @@
 package org.liquidengine.legui.component;
 
+import static org.liquidengine.legui.component.optional.Orientation.HORIZONTAL;
+
+import java.util.Objects;
 import org.joml.Vector2f;
 import org.liquidengine.legui.component.misc.listener.splitpanel.SplitPanelDragListener;
+import org.liquidengine.legui.component.misc.listener.splitpanel.SplitPanelSeparatorClickListener;
+import org.liquidengine.legui.component.misc.listener.splitpanel.SplitPanelSeparatorCursorEnterListener;
+import org.liquidengine.legui.component.misc.listener.splitpanel.SplitPanelSeparatorListenerDelegate;
 import org.liquidengine.legui.component.optional.Orientation;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
-import org.liquidengine.legui.cursor.Cursor;
-import org.liquidengine.legui.cursor.CursorServiceProvider;
 import org.liquidengine.legui.event.CursorEnterEvent;
 import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.event.MouseDragEvent;
@@ -15,13 +19,6 @@ import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.style.flex.FlexStyle;
 import org.liquidengine.legui.style.font.TextDirection;
 import org.liquidengine.legui.theme.Themes;
-import org.lwjgl.glfw.GLFW;
-
-import java.util.Objects;
-
-import static org.liquidengine.legui.component.optional.Orientation.HORIZONTAL;
-import static org.liquidengine.legui.event.MouseClickEvent.MouseClickAction.PRESS;
-import static org.liquidengine.legui.event.MouseClickEvent.MouseClickAction.RELEASE;
 
 public class SplitPanel extends Panel {
 
@@ -30,19 +27,17 @@ public class SplitPanel extends Panel {
     private Component topLeft;
     private Component bottomRight;
 
-    private Button separator;
+    private SeparatorButton separator;
 
     private float ratio = 50f;
 
     private float separatorThickness = 4f;
 
     /**
-     * Default constructor. Used to create component instance without any parameters. <p> Also if
-     * you want to make it easy to use with Json marshaller/unmarshaller component should contain
-     * empty constructor.
+     * Default constructor. Used to create component instance without any parameters. <p> Also if you want to make it easy to use with Json
+     * marshaller/unmarshaller component should contain empty constructor.
      *
-     * @param orientation used to specify orientation of split panel. If orientation is VERTICAL
-     *                    then two components will be located vertically.
+     * @param orientation used to specify orientation of split panel. If orientation is VERTICAL then two components will be located vertically.
      */
     public SplitPanel(Orientation orientation) {
         this.orientation = Objects.requireNonNull(orientation);
@@ -50,7 +45,7 @@ public class SplitPanel extends Panel {
     }
 
     private void initialize() {
-        separator = new Button();
+        separator = new SeparatorButton();
         topLeft = new Panel();
         bottomRight = new Panel();
 
@@ -59,28 +54,10 @@ public class SplitPanel extends Panel {
         this.add(topLeft);
         this.add(separator);
         this.add(bottomRight);
-
-        boolean[] dragging = {false};
-        separator.getListenerMap().addListener(MouseClickEvent.class, e -> {
-            if (e.getAction() == PRESS) {
-                dragging[0] = true;
-            }
-            if (e.getAction() == RELEASE) {
-                dragging[0] = false;
-                CursorServiceProvider.getInstance().setCursor(Cursor.ARROW, e.getContext());
-            }
-        });
+        SplitPanelSeparatorListenerDelegate delegate = new SplitPanelSeparatorListenerDelegate(this);
+        separator.getListenerMap().addListener(MouseClickEvent.class, new SplitPanelSeparatorClickListener(delegate));
+        separator.getListenerMap().addListener(CursorEnterEvent.class, new SplitPanelSeparatorCursorEnterListener(delegate));
         separator.getListenerMap().addListener(MouseDragEvent.class, new SplitPanelDragListener(this));
-
-        separator.getListenerMap().addListener(CursorEnterEvent.class, e -> {
-            if (e.isEntered() && orientation == HORIZONTAL) {
-                CursorServiceProvider.getInstance().setCursor(Cursor.H_RESIZE, e.getContext());
-            } else if (e.isEntered() && orientation != HORIZONTAL) {
-                CursorServiceProvider.getInstance().setCursor(Cursor.V_RESIZE, e.getContext());
-            } else if (!dragging[0]) {
-                CursorServiceProvider.getInstance().setCursor(Cursor.ARROW, e.getContext());
-            }
-        });
         separator.setTextDirection(
             orientation != HORIZONTAL ? TextDirection.HORIZONTAL : TextDirection.VERTICAL_TOP_DOWN);
 
@@ -106,14 +83,6 @@ public class SplitPanel extends Panel {
     private void updateGrow() {
         topLeft.getStyle().getFlexStyle().setFlexGrow(getLeftGrow());
         bottomRight.getStyle().getFlexStyle().setFlexGrow(getRightGrow());
-    }
-
-    public void setOrientation(Orientation orientation) {
-        if (orientation == null) {
-            return;
-        }
-        this.orientation = orientation;
-        resetStyle();
     }
 
     @Override
@@ -253,5 +222,17 @@ public class SplitPanel extends Panel {
 
     public Orientation getOrientation() {
         return orientation;
+    }
+
+    public void setOrientation(Orientation orientation) {
+        if (orientation == null) {
+            return;
+        }
+        this.orientation = orientation;
+        resetStyle();
+    }
+
+    private static class SeparatorButton extends Button {
+
     }
 }
