@@ -8,11 +8,14 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.jar.JarFile;
 import java.util.jar.Manifest;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * This class can be used to query the LEGUI version.
  */
 public final class Version {
+    private static final Logger LOGGER = LogManager.getLogger();
 
     private Version() {
     }
@@ -25,7 +28,7 @@ public final class Version {
                 try (InputStream stream = new URL(classURL.substring(0, classURL.lastIndexOf('!') + 1) + '/' + JarFile.MANIFEST_NAME).openStream()) {
                     return new Manifest(stream).getMainAttributes().getValue("Full-Version");
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    LOGGER.error(e.getMessage(), e);
                 }
             }
         }

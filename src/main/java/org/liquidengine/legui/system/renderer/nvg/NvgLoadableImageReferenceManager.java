@@ -3,6 +3,8 @@ package org.liquidengine.legui.system.renderer.nvg;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.RemovalListener;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.liquidengine.legui.image.FBOImage;
 import org.liquidengine.legui.image.LoadableImage;
 import org.lwjgl.nanovg.NanoVG;
@@ -22,6 +24,7 @@ import static org.lwjgl.opengl.GL30.GL_MINOR_VERSION;
  * Created by ShchAlexander on 1/26/2017.
  */
 public class NvgLoadableImageReferenceManager {
+    private static final Logger LOGGER = LogManager.getLogger();
 
     /**
      * BufferedImage queue to remove.
@@ -112,7 +115,7 @@ public class NvgLoadableImageReferenceManager {
                 try {
                     imageRef = imageCache.get(path, createNewImageReference(image, context));
                 } catch (ExecutionException e) {
-                    e.printStackTrace();
+                    LOGGER.error(e.getMessage(), e);
                 }
             } else {
                 return 0;
@@ -144,7 +147,7 @@ public class NvgLoadableImageReferenceManager {
                 try {
                     imageRef = imageCache.get(path, createNewImageReference(image, context));
                 } catch (ExecutionException e) {
-                    e.printStackTrace();
+                    LOGGER.error(e.getMessage(), e);
                 }
             } else {
                 return 0;
