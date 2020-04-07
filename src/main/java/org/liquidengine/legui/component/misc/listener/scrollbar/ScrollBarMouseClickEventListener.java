@@ -106,9 +106,4 @@ public class ScrollBarMouseClickEventListener implements MouseClickEventListener
         EventProcessorProvider.getInstance().pushEvent(new ScrollBarChangeValueEvent<>(scrollBar, context, frame, curValue, valueToUse));
         scrollBar.setCurValue(valueToUse);
     }
-
-    @Override
-    public boolean equals(Object obj) {
-        return obj != null && (obj == this || obj.getClass() == this.getClass());
-    }
 }

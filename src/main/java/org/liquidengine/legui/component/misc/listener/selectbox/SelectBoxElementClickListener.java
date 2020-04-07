@@ -32,9 +32,4 @@ public class SelectBoxElementClickListener<T> implements MouseClickEventListener
             event.getFrame().removeLayer(selectBox.getSelectBoxLayer());
         }
     }
-
-    @Override
-    public boolean equals(Object obj) {
-        return obj != null && (obj == this || obj.getClass() == this.getClass());
-    }
 }

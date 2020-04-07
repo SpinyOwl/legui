@@ -26,9 +26,4 @@ public class TextInputMouseClickEventListener implements MouseClickEventListener
             }
         }
     }
-
-    @Override
-    public boolean equals(Object obj) {
-        return obj != null && (obj == this || obj.getClass() == this.getClass());
-    }
 }

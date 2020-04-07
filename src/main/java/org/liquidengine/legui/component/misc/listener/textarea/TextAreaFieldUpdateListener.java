@@ -98,9 +98,4 @@ public class TextAreaFieldUpdateListener implements TextAreaFieldUpdateEventList
         verticalScrollbar.setCurValue(newVal);
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        return obj != null && (obj == this || obj.getClass() == this.getClass());
-    }
-
 }

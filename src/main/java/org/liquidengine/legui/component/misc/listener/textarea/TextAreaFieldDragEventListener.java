@@ -29,9 +29,4 @@ public class TextAreaFieldDragEventListener implements MouseDragEventListener {
             EventProcessorProvider.getInstance().pushEvent(new TextAreaFieldUpdateEvent(textAreaField, event.getContext(), event.getFrame()));
         }
     }
-
-    @Override
-    public boolean equals(Object obj) {
-        return obj != null && (obj == this || obj.getClass() == this.getClass());
-    }
 }

@@ -16,9 +16,4 @@ public class ToggleButtonMouseClickListener implements MouseClickEventListener {
             toggleButton.setToggled(!toggleButton.isToggled());
         }
     }
-
-    @Override
-    public boolean equals(Object obj) {
-        return (obj != null) && ((obj == this) || ((obj != this) && (obj.getClass() == this.getClass())));
-    }
 }

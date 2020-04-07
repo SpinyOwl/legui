@@ -53,9 +53,4 @@ public class TextInputCharEventListener implements CharEventListener {
             EventProcessorProvider.getInstance().pushEvent(new TextInputContentChangeEvent(textInput, event.getContext(), event.getFrame(), oldText, newText));
         }
     }
-
-    @Override
-    public boolean equals(Object obj) {
-        return obj != null && (obj == this || obj.getClass() == this.getClass());
-    }
 }

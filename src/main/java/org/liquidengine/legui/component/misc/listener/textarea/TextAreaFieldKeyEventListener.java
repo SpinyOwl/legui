@@ -466,11 +466,6 @@ public class TextAreaFieldKeyEventListener implements KeyEventListener {
         return new LineData(caretPosition - caretOffset, caretLine);
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        return obj != null && (obj == this || obj.getClass() == this.getClass());
-    }
-
     private static class LineData {
 
         private int caretPositionInLine;
