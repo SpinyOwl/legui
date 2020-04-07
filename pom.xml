@@ -1,0 +1,41 @@
+<!--
+  This file is only useful for tracking GitHub projects that depend on LEGUI.
+  -->
+<project
+    xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+>
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.liquidengine</groupId>
+    <artifactId>legui</artifactId>
+    <version>2.2.2</version>
+
+    <name>LEGUI</name>
+    <description>The LEGUI library.</description>
+    <url>https://github.com/SpinyOwl/legui</url>
+
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>https://github.com/SpinyOwl/legui/blob/develop/LICENSE</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <id>ShchAlexander</id>
+            <name>Aliaksandr Shcherbin</name>
+            <email>shchalexander@gmail.com</email>
+            <url>https://github.com/ShchAlexander</url>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:https://github.com/SpinyOwl/legui.git</connection>
+        <developerConnection>scm:git:https://github.com/SpinyOwl/legui.git</developerConnection>
+        <url>https://github.com/SpinyOwl/legui.git</url>
+    </scm>
+</project>
