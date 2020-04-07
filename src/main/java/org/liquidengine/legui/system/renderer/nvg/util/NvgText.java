@@ -86,8 +86,7 @@ public class NvgText {
             );
 
             if (rowStart != 0 || rowEnd != 0) {
-                try (NVGColor textColor = NVGColor.calloc()) {
-                    NvgColorUtil.fillNvgColorWithRGBA(fontColor, textColor);
+                try (NVGColor textColor = NvgColorUtil.create(fontColor)) {
 
                     nvgSave(nvg);
                     nvgBeginPath(nvg);

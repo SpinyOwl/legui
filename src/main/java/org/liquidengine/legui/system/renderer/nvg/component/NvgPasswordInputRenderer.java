@@ -1,5 +1,25 @@
 package org.liquidengine.legui.system.renderer.nvg.component;
 
+import static org.liquidengine.legui.style.color.ColorUtil.oppositeBlackOrWhite;
+import static org.liquidengine.legui.style.util.StyleUtilities.getInnerContentRectangle;
+import static org.liquidengine.legui.style.util.StyleUtilities.getPadding;
+import static org.liquidengine.legui.style.util.StyleUtilities.getStyle;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.alignTextInBox;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.calculateTextBoundsRect;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.createScissor;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.intersectScissor;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.resetScissor;
+import static org.lwjgl.nanovg.NanoVG.NVG_ROUND;
+import static org.lwjgl.nanovg.NanoVG.nnvgTextGlyphPositions;
+import static org.lwjgl.nanovg.NanoVG.nvgFillColor;
+import static org.lwjgl.nanovg.NanoVG.nvgFontFace;
+import static org.lwjgl.nanovg.NanoVG.nvgFontSize;
+import static org.lwjgl.system.MemoryUtil.memAddress;
+import static org.lwjgl.system.MemoryUtil.memFree;
+import static org.lwjgl.system.MemoryUtil.memUTF8;
+
+import java.nio.ByteBuffer;
+import java.util.Map;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.PasswordInput;
@@ -17,15 +37,6 @@ import org.lwjgl.glfw.GLFW;
 import org.lwjgl.nanovg.NVGColor;
 import org.lwjgl.nanovg.NVGGlyphPosition;
 
-import java.nio.ByteBuffer;
-import java.util.Map;
-
-import static org.liquidengine.legui.style.color.ColorUtil.oppositeBlackOrWhite;
-import static org.liquidengine.legui.style.util.StyleUtilities.*;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.*;
-import static org.lwjgl.nanovg.NanoVG.*;
-import static org.lwjgl.system.MemoryUtil.*;
-
 /**
  * Password input renderer.
  */
@@ -34,8 +45,8 @@ public class NvgPasswordInputRenderer extends NvgDefaultComponentRenderer<Passwo
     public static final String PRATIO = "pratio";
     public static final String PALIGN = "palign";
     public static final String POFFSET = "poffset";
-    private final Vector4f caretColor = new Vector4f(0, 0, 0, 0.5f);
     private static final int MAX_GLYPH_COUNT = 1024;
+    private final Vector4f caretColor = new Vector4f(0, 0, 0, 0.5f);
 
     @Override
     public void renderSelf(PasswordInput component, Context leguiContext, long nanovg) {
@@ -75,10 +86,10 @@ public class NvgPasswordInputRenderer extends NvgDefaultComponentRenderer<Passwo
      * @param bc background color.
      */
     private void renderText(Context leguiContext, long context, PasswordInput gui, Vector2f size, Vector4f rect, Vector4f bc) {
-
+        Vector4f textColor = getStyle(gui, Style::getTextColor);
         try (
             NVGGlyphPosition.Buffer glyphs = NVGGlyphPosition.calloc(MAX_GLYPH_COUNT);
-            NVGColor colorA = NVGColor.calloc()
+            NVGColor colorA = NvgColorUtil.create(textColor)
         ) {
 
             TextState textState = gui.getTextState();
@@ -89,7 +100,6 @@ public class NvgPasswordInputRenderer extends NvgDefaultComponentRenderer<Passwo
             Vector4f highlightColor = getStyle(gui, Style::getHighlightColor);
             HorizontalAlign halign = getStyle(gui, Style::getHorizontalAlign, HorizontalAlign.LEFT);
             VerticalAlign valign = getStyle(gui, Style::getVerticalAlign, VerticalAlign.MIDDLE);
-            Vector4f textColor = getStyle(gui, Style::getTextColor);
             int caretPosition = gui.getCaretPosition();
             Map<String, Object> metadata = gui.getMetadata();
             int startSelectionIndex = gui.getStartSelectionIndex();
@@ -97,7 +107,6 @@ public class NvgPasswordInputRenderer extends NvgDefaultComponentRenderer<Passwo
             boolean focused = gui.isFocused();
 
             // initially configure text rendering
-            NvgColorUtil.fillNvgColorWithRGBA(textColor, colorA);
             alignTextInBox(context, halign, valign);
             nvgFontSize(context, fontSize);
             nvgFontFace(context, font);

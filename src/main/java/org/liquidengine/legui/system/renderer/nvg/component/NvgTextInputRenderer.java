@@ -74,10 +74,10 @@ public class NvgTextInputRenderer extends NvgDefaultComponentRenderer<TextInput>
     }
 
     private void renderText(Context leguiContext, long context, TextInput gui, Vector2f size, Vector4f rect, Vector4f bc) {
-
+        Vector4f textColor = getStyle(gui, Style::getTextColor);
         try (
             NVGGlyphPosition.Buffer glyphs = NVGGlyphPosition.calloc(MAX_GLYPH_COUNT);
-            NVGColor colorA = NVGColor.calloc()
+            NVGColor colorA = NvgColorUtil.create(textColor)
         ) {
             TextState textState = gui.getTextState();
             String text = textState.getText();
@@ -86,7 +86,6 @@ public class NvgTextInputRenderer extends NvgDefaultComponentRenderer<TextInput>
             Vector4f highlightColor = getStyle(gui, Style::getHighlightColor);
             HorizontalAlign halign = getStyle(gui, Style::getHorizontalAlign, HorizontalAlign.LEFT);
             VerticalAlign valign = getStyle(gui, Style::getVerticalAlign, VerticalAlign.MIDDLE);
-            Vector4f textColor = getStyle(gui, Style::getTextColor);
             int caretPosition = gui.getCaretPosition();
             Map<String, Object> metadata = gui.getMetadata();
             int startSelectionIndex = gui.getStartSelectionIndex();
@@ -107,7 +106,6 @@ public class NvgTextInputRenderer extends NvgDefaultComponentRenderer<TextInput>
             } else {
 
                 // initially configure text rendering
-                NvgColorUtil.fillNvgColorWithRGBA(textColor, colorA);
                 alignTextInBox(context, halign, valign);
                 nvgFontSize(context, fontSize);
                 nvgFontFace(context, font);

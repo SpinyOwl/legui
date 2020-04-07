@@ -245,11 +245,9 @@ public final class NvgRenderUtils {
 
             try (
                     NVGPaint shadowPaint = NVGPaint.calloc();
-                    NVGColor firstColor = NVGColor.calloc();
-                    NVGColor secondColor = NVGColor.calloc()
+                    NVGColor firstColor = NvgColorUtil.create(shadow.getColor());
+                    NVGColor secondColor = NvgColorUtil.create(0,0,0,0)
             ) {
-                NvgColorUtil.fillNvgColorWithRGBA(shadow.getColor(), firstColor);
-                NvgColorUtil.fillNvgColorWithRGBA(0, 0, 0, 0, secondColor);
                 // creating gradient and put it to shadowPaint
                 nvgBoxGradient(context,
                         x + hOffset - spread,

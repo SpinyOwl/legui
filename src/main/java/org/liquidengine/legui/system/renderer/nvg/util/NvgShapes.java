@@ -48,8 +48,7 @@ public class NvgShapes {
         if (bgColor.w() <= MIN_ALPHA) {
             return;
         }
-        try (NVGColor fillColor = NVGColor.calloc()) {
-            NvgColorUtil.fillNvgColorWithRGBA(bgColor, fillColor);
+        try (NVGColor fillColor = NvgColorUtil.create(bgColor)) {
             nvgBeginPath(nvg);
             nvgFillColor(nvg, fillColor);
             nvgRect(nvg, position.x(), position.y(), size.x(), size.y());
@@ -68,8 +67,7 @@ public class NvgShapes {
         if (bgColor.w() <= MIN_ALPHA) {
             return;
         }
-        try (NVGColor fillColor = NVGColor.calloc()) {
-            NvgColorUtil.fillNvgColorWithRGBA(bgColor, fillColor);
+        try (NVGColor fillColor = NvgColorUtil.create(bgColor)) {
             nvgBeginPath(nvg);
             nvgFillColor(nvg, fillColor);
             nvgRect(nvg, rectangle.x(), rectangle.y(), rectangle.z(), rectangle.w());
@@ -90,8 +88,7 @@ public class NvgShapes {
         if (bgColor.w() <= MIN_ALPHA) {
             return;
         }
-        try (NVGColor fillColor = NVGColor.calloc()) {
-            NvgColorUtil.fillNvgColorWithRGBA(bgColor, fillColor);
+        try (NVGColor fillColor = NvgColorUtil.create(bgColor)) {
             nvgBeginPath(nvg);
             nvgFillColor(nvg, fillColor);
             nvgRoundedRect(nvg, position.x(), position.y(), size.x(), size.y(), radius);
@@ -111,8 +108,7 @@ public class NvgShapes {
      */
     public static void drawRect(long nvg, Vector2fc position, Vector2fc size, Vector4fc bgColor, Vector4f radius) {
         if (radius != null && !radius.equals(ZERO_CORNDERS)) {
-            try (NVGColor fillColor = NVGColor.calloc()) {
-                NvgColorUtil.fillNvgColorWithRGBA(bgColor, fillColor);
+            try (NVGColor fillColor = NvgColorUtil.create(bgColor)) {
                 nvgBeginPath(nvg);
                 nvgFillColor(nvg, fillColor);
                 if (radius.x == radius.y && radius.x == radius.z && radius.x == radius.w) {
@@ -139,8 +135,7 @@ public class NvgShapes {
         if (bgColor.w() <= MIN_ALPHA) {
             return;
         }
-        try (NVGColor fillColor = NVGColor.calloc()) {
-            NvgColorUtil.fillNvgColorWithRGBA(bgColor, fillColor);
+        try (NVGColor fillColor = NvgColorUtil.create(bgColor)) {
             nvgBeginPath(nvg);
             nvgFillColor(nvg, fillColor);
             nvgRoundedRect(nvg, rectangle.x(), rectangle.y(), rectangle.z(), rectangle.w(), radius);
@@ -159,8 +154,7 @@ public class NvgShapes {
      */
     public static void drawRect(long nvg, Vector4fc rectangle, Vector4fc bgColor, Vector4f radius) {
         if (radius != null && !radius.equals(ZERO_CORNDERS)) {
-            try (NVGColor fillColor = NVGColor.calloc()) {
-                NvgColorUtil.fillNvgColorWithRGBA(bgColor, fillColor);
+            try (NVGColor fillColor = NvgColorUtil.create(bgColor)) {
                 nvgBeginPath(nvg);
                 nvgFillColor(nvg, fillColor);
                 nvgRoundedRectVarying(nvg, rectangle.x(), rectangle.y(), rectangle.z(), rectangle.w(), radius.x, radius.y, radius.z, radius.w);
@@ -184,8 +178,7 @@ public class NvgShapes {
         if (rectStrokeColor.w() <= MIN_ALPHA) {
             return;
         }
-        try (NVGColor strokeColor = NVGColor.calloc()) {
-            NvgColorUtil.fillNvgColorWithRGBA(rectStrokeColor, strokeColor);
+        try (NVGColor strokeColor = NvgColorUtil.create(rectStrokeColor)) {
             nvgBeginPath(nvg);
             nvgStrokeColor(nvg, strokeColor);
             nvgStrokeWidth(nvg, strokeWidth);
@@ -206,8 +199,7 @@ public class NvgShapes {
         if (rectStrokeColor.w() <= MIN_ALPHA) {
             return;
         }
-        try (NVGColor strokeColor = NVGColor.calloc()) {
-            NvgColorUtil.fillNvgColorWithRGBA(rectStrokeColor, strokeColor);
+        try (NVGColor strokeColor = NvgColorUtil.create(rectStrokeColor)) {
             nvgBeginPath(nvg);
             nvgStrokeColor(nvg, strokeColor);
             nvgStrokeWidth(nvg, strokeWidth);
@@ -227,8 +219,7 @@ public class NvgShapes {
      */
     public static void drawRectStroke(long nvg, Vector4fc rectangle, Vector4fc rectStrokeColor, float strokeWidth, Vector4f radius) {
         if (radius != null && !radius.equals(ZERO_CORNDERS)) {
-            try (NVGColor strokeColor = NVGColor.calloc()) {
-                NvgColorUtil.fillNvgColorWithRGBA(rectStrokeColor, strokeColor);
+            try (NVGColor strokeColor = NvgColorUtil.create(rectStrokeColor)) {
                 nvgBeginPath(nvg);
                 nvgStrokeColor(nvg, strokeColor);
                 nvgStrokeWidth(nvg, strokeWidth);
@@ -254,8 +245,7 @@ public class NvgShapes {
         if (rectStrokeColor.w() <= MIN_ALPHA) {
             return;
         }
-        try (NVGColor strokeColor = NVGColor.calloc()) {
-            NvgColorUtil.fillNvgColorWithRGBA(rectStrokeColor, strokeColor);
+        try (NVGColor strokeColor = NvgColorUtil.create(rectStrokeColor)) {
             nvgBeginPath(nvg);
             nvgStrokeColor(nvg, strokeColor);
             nvgStrokeWidth(nvg, strokeWidth);
@@ -276,8 +266,7 @@ public class NvgShapes {
      */
     public static void drawRectStroke(long nvg, Vector2fc position, Vector2fc size, Vector4fc rectStrokeColor, float strokeWidth, Vector4f radius) {
         if (radius != null && !radius.equals(ZERO_CORNDERS)) {
-            try (NVGColor strokeColor = NVGColor.calloc()) {
-                NvgColorUtil.fillNvgColorWithRGBA(rectStrokeColor, strokeColor);
+            try (NVGColor strokeColor = NvgColorUtil.create(rectStrokeColor)) {
                 nvgBeginPath(nvg);
                 nvgStrokeColor(nvg, strokeColor);
                 nvgStrokeWidth(nvg, strokeWidth);
@@ -302,8 +291,7 @@ public class NvgShapes {
         if (rectStrokeColor.w() <= MIN_ALPHA) {
             return;
         }
-        try (NVGColor strokeColor = NVGColor.calloc()) {
-            NvgColorUtil.fillNvgColorWithRGBA(rectStrokeColor, strokeColor);
+        try (NVGColor strokeColor = NvgColorUtil.create(rectStrokeColor)) {
             nvgBeginPath(nvg);
             nvgStrokeColor(nvg, strokeColor);
             nvgStrokeWidth(nvg, strokeWidth);
@@ -327,10 +315,7 @@ public class NvgShapes {
      * @param toY y coordinate of end point of line
      */
     public static void drawLine(long nvg, float width, Vector4f color, int lineCap, float fromX, float fromY, float toX, float toY) {
-        try (
-            NVGColor colorA = NVGColor.calloc()
-        ) {
-            NvgColorUtil.fillNvgColorWithRGBA(color, colorA);
+        try (NVGColor colorA = NvgColorUtil.create(color)) {
             nvgLineCap(nvg, lineCap);
             nvgLineJoin(nvg, NVG_ROUND);
             nvgStrokeWidth(nvg, width);

@@ -406,10 +406,7 @@ public class NvgTextAreaFieldRenderer extends NvgDefaultComponentRenderer<TextAr
     }
 
     private void preinitializeTextRendering(long context, String font, float fontSize, HorizontalAlign halign, VerticalAlign valign, Vector4f textColor) {
-        try (
-                NVGColor colorA = NVGColor.calloc()
-        ) {
-            NvgColorUtil.fillNvgColorWithRGBA(textColor, colorA);
+        try (NVGColor colorA = NvgColorUtil.create(textColor)) {
             alignTextInBox(context, halign, valign);
             nvgFontSize(context, fontSize);
             nvgFontFace(context, font);
