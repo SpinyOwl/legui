@@ -142,8 +142,8 @@ public class NvgRenderer extends AbstractRenderer {
         glEnable(GL_DEPTH_TEST);
 
         imageReferenceManager.removeOldImages(nvgContext);
-        context.getContextData().remove(NVG_CONTEXT, nvgContext);
-        context.getContextData().remove(IMAGE_REFERENCE_MANAGER, imageReferenceManager);
+        context.getContextData().remove(NVG_CONTEXT);
+        context.getContextData().remove(IMAGE_REFERENCE_MANAGER);
     }
 
     @Override

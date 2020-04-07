@@ -25,9 +25,4 @@ public class DialogCloseEventListener implements WidgetCloseEventListener<Widget
         dialog.close();
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        return obj != null && (obj == this || obj.getClass() == this.getClass());
-    }
-
 }

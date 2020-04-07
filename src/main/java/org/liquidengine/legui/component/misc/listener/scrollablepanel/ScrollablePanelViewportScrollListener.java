@@ -39,9 +39,4 @@ public class ScrollablePanelViewportScrollListener implements EventListener<Scro
         if (Math.abs(event.getXoffset()) > 0)
             updateScrollBarValue(event.getXoffset(), event.getContext(), event.getFrame(), scrollablePanel.getHorizontalScrollBar());
     }
-
-    @Override
-    public boolean equals(Object obj) {
-        return obj != null && (obj == this || obj.getClass() == this.getClass());
-    }
 }

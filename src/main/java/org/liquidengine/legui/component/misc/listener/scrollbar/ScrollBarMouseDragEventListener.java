@@ -67,9 +67,4 @@ public class ScrollBarMouseDragEventListener implements MouseDragEventListener {
                 .pushEvent(new ScrollBarChangeValueEvent<>(scrollBar, event.getContext(), event.getFrame(), scrollBar.getCurValue(), newVal));
         scrollBar.setCurValue(newVal);
     }
-
-    @Override
-    public boolean equals(Object obj) {
-        return obj != null && (obj == this || obj.getClass() == this.getClass());
-    }
 }

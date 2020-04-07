@@ -336,9 +336,4 @@ public class TextInputKeyEventListener implements KeyEventListener {
         }
         gui.setCaretPosition(newCaretPosition);
     }
-
-    @Override
-    public boolean equals(Object obj) {
-        return obj == this || obj instanceof TextInputKeyEventListener;
-    }
 }

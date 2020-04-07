@@ -27,9 +27,4 @@ public class SliderMouseClickEventListener implements MouseClickEventListener {
                 new SliderChangeValueEvent(slider, event.getContext(), event.getFrame(), oldValue, slider.getValue())
         );
     }
-
-    @Override
-    public boolean equals(Object obj) {
-        return obj != null && (obj == this || obj.getClass() == this.getClass());
-    }
 }

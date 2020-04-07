@@ -777,7 +777,6 @@ public abstract class Component implements Serializable {
                 .append(this.isHovered(), component.isHovered())
                 .append(this.isFocused(), component.isFocused())
                 .append(this.isPressed(), component.isPressed())
-                .append(this.getListenerMap(), component.getListenerMap())
                 .append(this.getPosition(), component.getPosition())
                 .append(this.getSize(), component.getSize())
                 .append(this.getIntersector(), component.getIntersector())
@@ -791,7 +790,6 @@ public abstract class Component implements Serializable {
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
-                .append(listenerMap)
                 .append(position)
                 .append(size)
                 .append(enabled)
@@ -809,7 +807,6 @@ public abstract class Component implements Serializable {
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("listenerMap", listenerMap)
                 .append("position", position)
                 .append("size", size)
                 .append("enabled", enabled)

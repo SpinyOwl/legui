@@ -24,28 +24,4 @@ public class SelectBoxScrollListener implements ScrollEventListener {
             = new ScrollEvent<>(bar, event.getContext(), event.getFrame(), event.getXoffset(), event.getYoffset());
         EventProcessorProvider.getInstance().pushEvent(newEvent);
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
-        SelectBoxScrollListener that = (SelectBoxScrollListener) o;
-
-        return new EqualsBuilder()
-            .append(bar, that.bar)
-            .isEquals();
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder(17, 37)
-            .append(bar)
-            .toHashCode();
-    }
 }

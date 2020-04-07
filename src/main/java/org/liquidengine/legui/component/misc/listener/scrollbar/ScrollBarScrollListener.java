@@ -19,9 +19,4 @@ public class ScrollBarScrollListener implements ScrollEventListener {
         else if (Math.abs(event.getXoffset()) > 0)
             updateScrollBarValue(event.getXoffset(), event.getContext(), event.getFrame(), scrollBar);
     }
-
-    @Override
-    public boolean equals(Object obj) {
-        return obj != null && (obj == this || obj.getClass() == this.getClass());
-    }
 }

@@ -26,9 +26,4 @@ public class WidgetCloseButMouseClickEventListener implements MouseClickEventLis
             EventProcessorProvider.getInstance().pushEvent(new WidgetCloseEvent<>(widget, event.getContext(), event.getFrame()));
         }
     }
-
-    @Override
-    public boolean equals(Object obj) {
-        return (obj != null) && ((obj == this) || ((obj != this) && (obj.getClass() == this.getClass())));
-    }
 }
