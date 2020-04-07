@@ -1,5 +1,28 @@
 package org.liquidengine.legui.system.renderer.nvg.component;
 
+import static org.liquidengine.legui.style.color.ColorUtil.oppositeBlackOrWhite;
+import static org.liquidengine.legui.style.util.StyleUtilities.getInnerContentRectangle;
+import static org.liquidengine.legui.style.util.StyleUtilities.getPadding;
+import static org.liquidengine.legui.style.util.StyleUtilities.getStyle;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.alignTextInBox;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.calculateTextBoundsRect;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.createScissor;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.intersectScissor;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.resetScissor;
+import static org.lwjgl.nanovg.NanoVG.nnvgTextGlyphPositions;
+import static org.lwjgl.nanovg.NanoVG.nvgFillColor;
+import static org.lwjgl.nanovg.NanoVG.nvgFontFace;
+import static org.lwjgl.nanovg.NanoVG.nvgFontSize;
+import static org.lwjgl.system.MemoryUtil.memAddress;
+import static org.lwjgl.system.MemoryUtil.memFree;
+import static org.lwjgl.system.MemoryUtil.memUTF8;
+
+import java.nio.ByteBuffer;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.TextAreaField;
@@ -17,21 +40,11 @@ import org.lwjgl.glfw.GLFW;
 import org.lwjgl.nanovg.NVGColor;
 import org.lwjgl.nanovg.NVGGlyphPosition;
 
-import java.nio.ByteBuffer;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import static org.liquidengine.legui.style.color.ColorUtil.oppositeBlackOrWhite;
-import static org.liquidengine.legui.style.util.StyleUtilities.*;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.*;
-import static org.lwjgl.nanovg.NanoVG.*;
-import static org.lwjgl.system.MemoryUtil.*;
-
 /**
  * NanoVG Text area renderer.
  */
 public class NvgTextAreaFieldRenderer extends NvgDefaultComponentRenderer<TextAreaField> {
+    private static final Logger LOGGER = LogManager.getLogger();
 
     public static final String NEWLINE = "\n";
     private static final String TABS = "\t";
@@ -102,7 +115,7 @@ public class NvgTextAreaFieldRenderer extends NvgDefaultComponentRenderer<TextAr
             if (!focused && gui.isStickToAlignment()) {
                 caretLine = (valign == VerticalAlign.TOP ? 0 : (valign == VerticalAlign.BOTTOM ? lineCount - 1 : lineCount / 2));
                 lineCaretPosition = (halign == HorizontalAlign.LEFT ? 0
-                        : (halign == HorizontalAlign.RIGHT ? lines[caretLine].length() : lines[caretLine].length() / 2));
+                    : (halign == HorizontalAlign.RIGHT ? lines[caretLine].length() : lines[caretLine].length() / 2));
             }
 
             int vp = valign == VerticalAlign.TOP ? 0 : valign == VerticalAlign.MIDDLE ? 1 : valign == VerticalAlign.BOTTOM ? 2 : 1;
@@ -161,7 +174,7 @@ public class NvgTextAreaFieldRenderer extends NvgDefaultComponentRenderer<TextAr
 
             // render selection background
             renderSelectionBackground(context, gui, fontSize, focused, highlightColor, lines, lineCount, lineStartIndeces, voffset,
-                    bounds, glyphs, spaceWidth);
+                                      bounds, glyphs, spaceWidth);
 
             // render every line of text
             for (int i = 0; i < lineCount; i++) {
@@ -264,8 +277,8 @@ public class NvgTextAreaFieldRenderer extends NvgDefaultComponentRenderer<TextAr
                     char[] spaces = new char[gui.getTabSize()];
                     Arrays.fill(spaces, SPACEC);
                     NvgText.drawTextLineToRect(context, new Vector4f(lineX, lineY, bounds[i][6], bounds[i][7]),
-                            false, HorizontalAlign.LEFT, VerticalAlign.MIDDLE,
-                            fontSize, font, line.replace(TABS, new String(spaces)), textColor);
+                                               false, HorizontalAlign.LEFT, VerticalAlign.MIDDLE,
+                                               fontSize, font, line.replace(TABS, new String(spaces)), textColor);
                     if (i == caretLine && focused) {
                         // render caret
                         NvgShapes.drawRectStroke(context, new Vector4f(caretx - 1, lineY, 1, bounds[i][7]), caretColor, 1);
@@ -286,6 +299,7 @@ public class NvgTextAreaFieldRenderer extends NvgDefaultComponentRenderer<TextAr
      * Used to get space width.
      *
      * @param context nanovg context.
+     *
      * @return space width.
      */
     private float getSpaceWidth(long context) {
@@ -346,9 +360,9 @@ public class NvgTextAreaFieldRenderer extends NvgDefaultComponentRenderer<TextAr
                 endSelectionIndexInLine = endSelectionIndex - lineStartIndeces[endSelectionLine];
 
                 float startSelectionCaretX =
-                        getCaretx(context, startSelectionIndexInLine, lines[startSelectionLine], bounds[startSelectionLine], glyphs, spaceWidth, gui.getTabSize());
+                    getCaretx(context, startSelectionIndexInLine, lines[startSelectionLine], bounds[startSelectionLine], glyphs, spaceWidth, gui.getTabSize());
                 float endSelectionCaretX =
-                        getCaretx(context, endSelectionIndexInLine, lines[endSelectionLine], bounds[endSelectionLine], glyphs, spaceWidth, gui.getTabSize());
+                    getCaretx(context, endSelectionIndexInLine, lines[endSelectionLine], bounds[endSelectionLine], glyphs, spaceWidth, gui.getTabSize());
 
                 for (int i = 0; i < lineCount; i++) {
                     if (i >= startSelectionLine && i <= endSelectionLine) {
@@ -363,7 +377,7 @@ public class NvgTextAreaFieldRenderer extends NvgDefaultComponentRenderer<TextAr
                         }
                         w = x2 - x1;
                         NvgShapes
-                                .drawRect(context, new Vector4f(x1, bounds[i][5] + voffset + fontSize * i, w, bounds[i][7]), selectionColor);
+                            .drawRect(context, new Vector4f(x1, bounds[i][5] + voffset + fontSize * i, w, bounds[i][7]), selectionColor);
                     }
                 }
             }
@@ -373,12 +387,13 @@ public class NvgTextAreaFieldRenderer extends NvgDefaultComponentRenderer<TextAr
     /**
      * Used to obtain caret (x) position (on screen) by text line and caret position in text(index).
      *
-     * @param context         context
-     * @param caretPosInText  position of caret in text.
-     * @param text            text.
+     * @param context context
+     * @param caretPosInText position of caret in text.
+     * @param text text.
      * @param caretLineBounds text bounds on screen.
-     * @param glyphs          glyphs.
-     * @param spaceWidth      space width.
+     * @param glyphs glyphs.
+     * @param spaceWidth space width.
+     *
      * @return caret x position on screen.
      */
     private float getCaretx(long context, int caretPosInText, String text, float[] caretLineBounds, NVGGlyphPosition.Buffer glyphs, float spaceWidth,
@@ -420,7 +435,7 @@ public class NvgTextAreaFieldRenderer extends NvgDefaultComponentRenderer<TextAr
             try {
                 caretx = glyphs.get(caretPosition).x();
             } catch (IndexOutOfBoundsException e) {
-                e.printStackTrace();
+                LOGGER.error(e.getMessage(), e);
             }
         } else {
             if (ng > 0) {

@@ -1,5 +1,7 @@
 package org.liquidengine.legui.system.renderer.nvg.component;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.TextInput;
@@ -30,6 +32,7 @@ import static org.lwjgl.system.MemoryUtil.*;
  * Created by ShchAlexander on 13.02.2017.
  */
 public class NvgTextInputRenderer extends NvgDefaultComponentRenderer<TextInput> {
+    private static final Logger LOGGER = LogManager.getLogger();
 
     public static final String PRATIO = "pratio";
     public static final String PALIGN = "palign";
@@ -241,7 +244,7 @@ public class NvgTextInputRenderer extends NvgDefaultComponentRenderer<TextInput>
                 gui.setMouseCaretPosition(mouseCaretPosition);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage(), e);
         }
     }
 
@@ -303,7 +306,7 @@ public class NvgTextInputRenderer extends NvgDefaultComponentRenderer<TextInput>
             try {
                 caretx = glyphs.get(caretPosition).x();
             } catch (IndexOutOfBoundsException e) {
-                e.printStackTrace();
+                LOGGER.error(e.getMessage(), e);
             }
         } else {
             if (ng > 0) {

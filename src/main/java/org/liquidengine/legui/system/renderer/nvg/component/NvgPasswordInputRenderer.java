@@ -20,6 +20,8 @@ import static org.lwjgl.system.MemoryUtil.memUTF8;
 
 import java.nio.ByteBuffer;
 import java.util.Map;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.PasswordInput;
@@ -41,6 +43,7 @@ import org.lwjgl.nanovg.NVGGlyphPosition;
  * Password input renderer.
  */
 public class NvgPasswordInputRenderer extends NvgDefaultComponentRenderer<PasswordInput> {
+    private static final Logger LOGGER = LogManager.getLogger();
 
     public static final String PRATIO = "pratio";
     public static final String PALIGN = "palign";
@@ -247,7 +250,7 @@ public class NvgPasswordInputRenderer extends NvgDefaultComponentRenderer<Passwo
                 gui.setMouseCaretPosition(mouseCaretPosition);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage(), e);
         }
     }
 
@@ -322,7 +325,7 @@ public class NvgPasswordInputRenderer extends NvgDefaultComponentRenderer<Passwo
             try {
                 caretx = glyphs.get(caretPosition).x();
             } catch (IndexOutOfBoundsException e) {
-                e.printStackTrace();
+                LOGGER.error(e.getMessage(), e);
             }
         } else {
             if (ng > 0) {
