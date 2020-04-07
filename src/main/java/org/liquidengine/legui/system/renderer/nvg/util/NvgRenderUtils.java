@@ -8,16 +8,14 @@ import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_MIDDLE;
 import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_RIGHT;
 import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_TOP;
 import static org.lwjgl.nanovg.NanoVG.NVG_HOLE;
-import static org.lwjgl.nanovg.NanoVG.NVG_SOLID;
 import static org.lwjgl.nanovg.NanoVG.nvgBeginPath;
 import static org.lwjgl.nanovg.NanoVG.nvgBoxGradient;
 import static org.lwjgl.nanovg.NanoVG.nvgFill;
 import static org.lwjgl.nanovg.NanoVG.nvgFillPaint;
 import static org.lwjgl.nanovg.NanoVG.nvgIntersectScissor;
 import static org.lwjgl.nanovg.NanoVG.nvgPathWinding;
-import static org.lwjgl.nanovg.NanoVG.nvgRect;
 import static org.lwjgl.nanovg.NanoVG.nvgResetScissor;
-import static org.lwjgl.nanovg.NanoVG.nvgRoundedRect;
+import static org.lwjgl.nanovg.NanoVG.nvgRestore;
 import static org.lwjgl.nanovg.NanoVG.nvgRoundedRectVarying;
 import static org.lwjgl.nanovg.NanoVG.nvgScissor;
 import static org.lwjgl.nanovg.NanoVG.nvgTextAlign;
@@ -124,25 +122,6 @@ public final class NvgRenderUtils {
         int vAlign = vAlig == VerticalAlign.TOP ? NVG_ALIGN_TOP : vAlig == VerticalAlign.BOTTOM ?
                 NVG_ALIGN_BOTTOM : vAlig == VerticalAlign.MIDDLE ? NVG_ALIGN_MIDDLE : NVG_ALIGN_BASELINE;
         nvgTextAlign(context, hAlign | vAlign);
-    }
-
-    public static void dropShadow(long context, float x, float y, float w, float h, float cornerRadius, Vector4f shadowColor) {
-        try (
-                NVGPaint shadowPaint = NVGPaint.calloc();
-                NVGColor colorA = NVGColor.calloc();
-                NVGColor colorB = NVGColor.calloc()
-        ) {
-            NvgColorUtil.fillNvgColorWithRGBA(shadowColor, colorA);
-            NvgColorUtil.fillNvgColorWithRGBA(0, 0, 0, 0, colorB);
-
-            nvgBoxGradient(context, x, y + 2, w, h, cornerRadius * 2, 10, colorA, colorB, shadowPaint);
-            nvgBeginPath(context);
-            nvgRect(context, x - 10, y - 10, w + 20, h + 30);
-            nvgRoundedRect(context, x, y, w, h, cornerRadius);
-            nvgPathWinding(context, NVG_HOLE);
-            nvgFillPaint(context, shadowPaint);
-            nvgFill(context);
-        }
     }
 
     /**
@@ -283,7 +262,6 @@ public final class NvgRenderUtils {
                         secondColor,
                         shadowPaint);
                 nvgBeginPath(context);
-                nvgPathWinding(context, NVG_SOLID);
                 nvgRoundedRectVarying(context,
                         x + hOffset - spread - blur,
                         y + vOffset - spread - blur,
@@ -294,11 +272,12 @@ public final class NvgRenderUtils {
                         borderRadius.z + spread,
                         borderRadius.w + spread
                 );
-                nvgPathWinding(context, NVG_HOLE);
                 nvgRoundedRectVarying(context, x, y, w, h, borderRadius.x, borderRadius.y, borderRadius.z, borderRadius.w);
+                nvgPathWinding(context, NVG_HOLE);
                 nvgFillPaint(context, shadowPaint);
                 nvgFill(context);
             }
         }
+        nvgRestore(context);
     }
 }
