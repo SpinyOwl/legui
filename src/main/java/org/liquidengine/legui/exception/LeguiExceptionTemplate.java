@@ -9,14 +9,6 @@ public enum LeguiExceptionTemplate {
      */
     UNHANDLED_EXCEPTION("Unhandled exception: %s"),
     /**
-     * Marshal exception. Used by {@link org.liquidengine.legui.marshal.json.JsonMarshaller}.
-     */
-    MARSHAL_EXCEPTION("Can't marshal your component"),
-    /**
-     * Unmarshal exception. Used by {@link org.liquidengine.legui.marshal.json.JsonMarshaller}.
-     */
-    UNMARSHAL_EXCEPTION("Can't unmarshal your component"),
-    /**
      * Used by {@link org.liquidengine.legui.style.font.Font}.
      */
     FAILED_TO_LOAD_FONT("Failed to initialize font. (%s)"),

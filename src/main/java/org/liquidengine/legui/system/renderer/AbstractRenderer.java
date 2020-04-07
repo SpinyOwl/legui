@@ -10,8 +10,6 @@ import org.liquidengine.legui.system.context.Context;
  */
 public abstract class AbstractRenderer implements Renderer {
 
-    public abstract void initialize();
-
     protected abstract void preRender(Context context);
 
     protected abstract void postRender(Context context);
@@ -24,7 +22,5 @@ public abstract class AbstractRenderer implements Renderer {
         }
         postRender(context);
     }
-
-    public abstract void destroy();
 
 }

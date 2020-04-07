@@ -33,7 +33,7 @@ public class FlatColoredTheme extends Theme {
             Vector4f allowColor, Vector4f denyColor, Vector4f shadowColor, Vector4f textColor
     ) {
         super(createThemeManager(new FlatColoredThemeSettings(backgroundColor, borderColor, borderColor, strokeColor,
-                allowColor, denyColor, shadowColor, textColor, FontRegistry.DEFAULT, 16f)));
+                allowColor, denyColor, shadowColor, textColor, FontRegistry.getDefaultFont(), 16f)));
     }
 
     /**
@@ -54,7 +54,7 @@ public class FlatColoredTheme extends Theme {
     ) {
         super(createThemeManager(
                 new FlatColoredThemeSettings(backgroundColor, borderColor, sliderColor,
-                        strokeColor, allowColor, denyColor, shadowColor, textColor, FontRegistry.DEFAULT, 16f)));
+                        strokeColor, allowColor, denyColor, shadowColor, textColor, FontRegistry.getDefaultFont(), 16f)));
     }
 
     /**
@@ -211,7 +211,7 @@ public class FlatColoredTheme extends Theme {
         ) {
             this(backgroundColor, borderColor, borderColor,
                     strokeColor, allowColor, denyColor,
-                    shadowColor, borderColor, FontRegistry.DEFAULT, 16f);
+                    shadowColor, borderColor, FontRegistry.getDefaultFont(), 16f);
         }
 
         /**

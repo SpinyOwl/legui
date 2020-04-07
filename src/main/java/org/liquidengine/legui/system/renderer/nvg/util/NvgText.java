@@ -1,5 +1,27 @@
 package org.liquidengine.legui.system.renderer.nvg.util;
 
+import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_BASELINE;
+import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_BOTTOM;
+import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_CENTER;
+import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_LEFT;
+import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_MIDDLE;
+import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_RIGHT;
+import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_TOP;
+import static org.lwjgl.nanovg.NanoVG.nnvgText;
+import static org.lwjgl.nanovg.NanoVG.nnvgTextBreakLines;
+import static org.lwjgl.nanovg.NanoVG.nvgBeginPath;
+import static org.lwjgl.nanovg.NanoVG.nvgFillColor;
+import static org.lwjgl.nanovg.NanoVG.nvgFontFace;
+import static org.lwjgl.nanovg.NanoVG.nvgFontSize;
+import static org.lwjgl.nanovg.NanoVG.nvgRestore;
+import static org.lwjgl.nanovg.NanoVG.nvgRotate;
+import static org.lwjgl.nanovg.NanoVG.nvgSave;
+import static org.lwjgl.nanovg.NanoVG.nvgTextAlign;
+import static org.lwjgl.nanovg.NanoVG.nvgTranslate;
+import static org.lwjgl.system.MemoryUtil.memAddress;
+import static org.lwjgl.system.MemoryUtil.memUTF8;
+
+import java.nio.ByteBuffer;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.joml.Vector4fc;
@@ -9,12 +31,6 @@ import org.liquidengine.legui.style.font.TextDirection;
 import org.lwjgl.nanovg.NVGColor;
 import org.lwjgl.nanovg.NVGTextRow;
 import org.lwjgl.system.MemoryUtil;
-
-import java.nio.ByteBuffer;
-
-import static org.lwjgl.nanovg.NanoVG.*;
-import static org.lwjgl.system.MemoryUtil.memAddress;
-import static org.lwjgl.system.MemoryUtil.memUTF8;
 
 /**
  * Created by ShchAlexander on 19.09.2017.
@@ -54,7 +70,8 @@ public class NvgText {
             long rowEnd = endPointer;
             if (hideOverflow) {
                 try (NVGTextRow.Buffer buffer = NVGTextRow.calloc(1)) {
-                    int rows = nnvgTextBreakLines(nvg, startPointer, endPointer, direction == TextDirection.HORIZONTAL ? rect.z() : rect.w(), memAddress(buffer), 1);
+                    int rows = nnvgTextBreakLines(nvg, startPointer, endPointer, direction == TextDirection.HORIZONTAL ? rect.z() : rect.w(),
+                                                  memAddress(buffer), 1);
                     if (rows != 0) {
                         NVGTextRow row = buffer.get(0);
                         rowStart = row.start();
@@ -64,30 +81,35 @@ public class NvgText {
             }
 
             Vector2f textPosition = new Vector2f(
-                    rect.x() + rect.z() * horizontalAlign.index / 2f,
-                    rect.y() + rect.w() * verticalAlign.index / 2f
+                rect.x() + rect.z() * horizontalAlign.index / 2f,
+                rect.y() + rect.w() * verticalAlign.index / 2f
             );
 
             if (rowStart != 0 || rowEnd != 0) {
-                try (NVGColor textColor = NVGColor.calloc()) {
-                    NvgColorUtil.fillNvgColorWithRGBA(fontColor, textColor);
+                try (NVGColor textColor = NvgColorUtil.create(fontColor)) {
 
                     nvgSave(nvg);
                     nvgBeginPath(nvg);
 
                     nvgFillColor(nvg, textColor);
+                    float x;
+                    float y;
                     if (direction == TextDirection.VERTICAL_TOP_DOWN) {
                         nvgTranslate(nvg, rect.x() + rect.z(), rect.y());
                         nvgRotate(nvg, _90);
-                        nnvgText(nvg, rect.w() * horizontalAlign.index / 2f, rect.z() * verticalAlign.index / 2f, rowStart, rowEnd);
+                        x = rect.w() * horizontalAlign.index / 2f;
+                        y = rect.z() * verticalAlign.index / 2f;
                     } else if (direction == TextDirection.VERTICAL_DOWN_TOP) {
                         nvgTranslate(nvg, rect.x(), rect.y() + rect.w());
                         nvgRotate(nvg, _270);
-                        nnvgText(nvg, rect.w() * horizontalAlign.index / 2f, rect.z() * verticalAlign.index / 2f, rowStart, rowEnd);
+                        x = rect.w() * horizontalAlign.index / 2f;
+                        y = rect.z() * verticalAlign.index / 2f;
                     } else {
                         nvgTranslate(nvg, rect.x(), rect.y());
-                        nnvgText(nvg, textPosition.x - rect.x(), textPosition.y - rect.y(), rowStart, rowEnd);
+                        x = textPosition.x - rect.x();
+                        y = (int) textPosition.y - rect.y();
                     }
+                    nnvgText(nvg, (int)x, (int)y, rowStart, rowEnd);
                     nvgRestore(nvg);
                 }
             }
@@ -99,8 +121,8 @@ public class NvgText {
     }
 
     public static void textAlign(long context, HorizontalAlign horizontalAlign, VerticalAlign verticalAlign) {
-        int nvgHorizontalAlign = NVG_ALIGN_LEFT;
-        int nvgVerticalAlign = NVG_ALIGN_MIDDLE;
+        int nvgHorizontalAlign = 0;
+        int nvgVerticalAlign = 0;
         // @formatter:off
         switch (horizontalAlign) {
             case LEFT:

@@ -38,7 +38,7 @@ public class NvgTooltipRenderer extends NvgDefaultComponentRenderer<Tooltip> {
             Vector2f pos = component.getAbsolutePosition();
             Vector2f size = component.getSize();
             float fontSize = getStyle(component, Style::getFontSize, 16F);
-            String font = getStyle(component, Style::getFont, FontRegistry.DEFAULT);
+            String font = getStyle(component, Style::getFont, FontRegistry.getDefaultFont());
             String text = textState.getText();
             HorizontalAlign horizontalAlign = getStyle(component, Style::getHorizontalAlign, HorizontalAlign.LEFT);
             VerticalAlign verticalAlign = getStyle(component, Style::getVerticalAlign, VerticalAlign.MIDDLE);
@@ -68,10 +68,9 @@ public class NvgTooltipRenderer extends NvgDefaultComponentRenderer<Tooltip> {
                 List<long[]> indicesList = new ArrayList<>();
 
                 try (
-                        NVGColor colorA = NVGColor.calloc();
+                        NVGColor colorA = NvgColorUtil.create(textColor);
                         NVGTextRow.Buffer buffer = NVGTextRow.calloc(1)
                 ) {
-                    NvgColorUtil.fillNvgColorWithRGBA(textColor, colorA);
                     alignTextInBox(nanovg, HorizontalAlign.LEFT, VerticalAlign.MIDDLE);
                     nvgFontSize(nanovg, fontSize);
                     nvgFontFace(nanovg, font);
@@ -93,8 +92,6 @@ public class NvgTooltipRenderer extends NvgDefaultComponentRenderer<Tooltip> {
                     float offsetY = 0.5f * fontSize * ((rows - 1) * verticalAlign.index - 1);
 
                     // render text lines
-                    NvgColorUtil.fillNvgColorWithRGBA(textColor, colorA);
-                    nvgFillColor(nanovg, colorA);
                     for (int i = 0; i < rows; i++) {
                         float[] bounds = boundList.get(i);
                         long[] indices = indicesList.get(i);

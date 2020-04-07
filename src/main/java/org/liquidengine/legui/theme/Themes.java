@@ -19,7 +19,7 @@ public final class Themes {
         rgba(231, 76, 60, 1), // denyColor
         rgba(0, 0, 0, 1f),  // shadowColor
         ColorConstants.black(),
-        FontRegistry.DEFAULT,
+        FontRegistry.getDefaultFont(),
         16f
     );
     public static final Theme FLAT_PETERRIVER_DARK = new FlatColoredTheme(
@@ -31,7 +31,7 @@ public final class Themes {
         rgba(192, 57, 43, 1), // denyColor
         rgba(0, 0, 0, 1f),  // shadowColor
         ColorConstants.white(),
-        FontRegistry.DEFAULT,
+        FontRegistry.getDefaultFont(),
         16f
     );
     public static final Theme FLAT_WHITE = new FlatColoredTheme(
@@ -43,7 +43,7 @@ public final class Themes {
         rgba(239, 154, 154, 1), // denyColor
         ColorConstants.black(),  // shadowColor
         ColorConstants.black(),
-        FontRegistry.DEFAULT,
+        FontRegistry.getDefaultFont(),
         16f
     );
     public static final Theme FLAT_DARK = new FlatColoredTheme(
@@ -55,7 +55,7 @@ public final class Themes {
         rgba(183, 28, 28, 1), // denyColor
         rgba(250, 250, 250, 0.5f),  // shadowColor
         ColorConstants.white(),
-        FontRegistry.DEFAULT,
+        FontRegistry.getDefaultFont(),
         16f
     );
     private static Theme DEFAULT_THEME = FLAT_WHITE;

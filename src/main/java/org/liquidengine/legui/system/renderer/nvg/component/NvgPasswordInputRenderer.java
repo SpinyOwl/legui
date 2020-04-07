@@ -1,5 +1,25 @@
 package org.liquidengine.legui.system.renderer.nvg.component;
 
+import static org.liquidengine.legui.style.color.ColorUtil.oppositeBlackOrWhite;
+import static org.liquidengine.legui.style.util.StyleUtilities.getInnerContentRectangle;
+import static org.liquidengine.legui.style.util.StyleUtilities.getPadding;
+import static org.liquidengine.legui.style.util.StyleUtilities.getStyle;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.alignTextInBox;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.calculateTextBoundsRect;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.createScissor;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.intersectScissor;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.resetScissor;
+import static org.lwjgl.nanovg.NanoVG.NVG_ROUND;
+import static org.lwjgl.nanovg.NanoVG.nnvgTextGlyphPositions;
+import static org.lwjgl.nanovg.NanoVG.nvgFillColor;
+import static org.lwjgl.nanovg.NanoVG.nvgFontFace;
+import static org.lwjgl.nanovg.NanoVG.nvgFontSize;
+import static org.lwjgl.system.MemoryUtil.memAddress;
+import static org.lwjgl.system.MemoryUtil.memFree;
+import static org.lwjgl.system.MemoryUtil.memUTF8;
+
+import java.nio.ByteBuffer;
+import java.util.Map;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.PasswordInput;
@@ -17,15 +37,6 @@ import org.lwjgl.glfw.GLFW;
 import org.lwjgl.nanovg.NVGColor;
 import org.lwjgl.nanovg.NVGGlyphPosition;
 
-import java.nio.ByteBuffer;
-import java.util.Map;
-
-import static org.liquidengine.legui.style.color.ColorUtil.oppositeBlackOrWhite;
-import static org.liquidengine.legui.style.util.StyleUtilities.*;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.*;
-import static org.lwjgl.nanovg.NanoVG.*;
-import static org.lwjgl.system.MemoryUtil.*;
-
 /**
  * Password input renderer.
  */
@@ -34,8 +45,8 @@ public class NvgPasswordInputRenderer extends NvgDefaultComponentRenderer<Passwo
     public static final String PRATIO = "pratio";
     public static final String PALIGN = "palign";
     public static final String POFFSET = "poffset";
+    private static final int MAX_GLYPH_COUNT = 1024;
     private final Vector4f caretColor = new Vector4f(0, 0, 0, 0.5f);
-    private final int maxGlyphCount = 1024;
 
     @Override
     public void renderSelf(PasswordInput component, Context leguiContext, long nanovg) {
@@ -68,29 +79,27 @@ public class NvgPasswordInputRenderer extends NvgDefaultComponentRenderer<Passwo
      * This method used to render password field and cursor.
      *
      * @param leguiContext legui context.
-     * @param context      nanovg context.
-     * @param gui          password input.
-     * @param size         input size.
-     * @param rect         rectangle in which should be rendered password.
-     * @param bc           background color.
+     * @param context nanovg context.
+     * @param gui password input.
+     * @param size input size.
+     * @param rect rectangle in which should be rendered password.
+     * @param bc background color.
      */
     private void renderText(Context leguiContext, long context, PasswordInput gui, Vector2f size, Vector4f rect, Vector4f bc) {
-
+        Vector4f textColor = getStyle(gui, Style::getTextColor);
         try (
-                NVGGlyphPosition.Buffer glyphs = NVGGlyphPosition.calloc(maxGlyphCount);
-                NVGColor colorA = NVGColor.calloc()
+            NVGGlyphPosition.Buffer glyphs = NVGGlyphPosition.calloc(MAX_GLYPH_COUNT);
+            NVGColor colorA = NvgColorUtil.create(textColor)
         ) {
 
-            Style style = gui.getStyle();
             TextState textState = gui.getTextState();
             String text = textState.getText();
             String maskedText = createMaskedText(gui, text);
-            String font = getStyle(gui, Style::getFont, FontRegistry.DEFAULT);
+            String font = getStyle(gui, Style::getFont, FontRegistry.getDefaultFont());
             float fontSize = getStyle(gui, Style::getFontSize, 16f);
             Vector4f highlightColor = getStyle(gui, Style::getHighlightColor);
             HorizontalAlign halign = getStyle(gui, Style::getHorizontalAlign, HorizontalAlign.LEFT);
             VerticalAlign valign = getStyle(gui, Style::getVerticalAlign, VerticalAlign.MIDDLE);
-            Vector4f textColor = getStyle(gui, Style::getTextColor);
             int caretPosition = gui.getCaretPosition();
             Map<String, Object> metadata = gui.getMetadata();
             int startSelectionIndex = gui.getStartSelectionIndex();
@@ -98,27 +107,24 @@ public class NvgPasswordInputRenderer extends NvgDefaultComponentRenderer<Passwo
             boolean focused = gui.isFocused();
 
             // initially configure text rendering
-            NvgColorUtil.fillNvgColorWithRGBA(textColor, colorA);
             alignTextInBox(context, halign, valign);
             nvgFontSize(context, fontSize);
             nvgFontFace(context, font);
             nvgFillColor(context, colorA);
 
+            int maskedLength = maskedText.length();
             if (!focused) {
-                caretPosition = (halign == HorizontalAlign.LEFT ? 0 : (halign == HorizontalAlign.RIGHT ? maskedText.length() : maskedText.length() / 2));
+                caretPosition = (halign == HorizontalAlign.LEFT ? 0 : (halign == HorizontalAlign.RIGHT ? maskedLength : maskedLength / 2));
             }
 
             if (text == null || text.isEmpty()) {
 
                 if (focused) {
                     // render caret
-                    float nCaretX = rect.x + halign.index * rect.z / 2f;
-                    NvgColorUtil.fillNvgColorWithRGBA(caretColor, colorA);
-                    renderCaret(context, rect, nCaretX, colorA);
+                    renderCaret(context, rect, rect.x + halign.index * rect.z / 2f);
                 }
 
                 gui.setMouseCaretPosition(0);
-                return;
             } else {
                 float[] textBounds = calculateTextBoundsRect(context, rect, maskedText, halign, valign, fontSize);
 
@@ -136,7 +142,7 @@ public class NvgPasswordInputRenderer extends NvgDefaultComponentRenderer<Passwo
 
                     // align text for calculations
                     alignTextInBox(context, HorizontalAlign.LEFT, VerticalAlign.MIDDLE);
-                    int ng = nnvgTextGlyphPositions(context, textBounds[4], 0, memAddress(textBytes), 0, memAddress(glyphs), maxGlyphCount);
+                    int ng = nnvgTextGlyphPositions(context, textBounds[4], 0, memAddress(textBytes), 0, memAddress(glyphs), MAX_GLYPH_COUNT);
 
                     // get caret position on screen based on caret position in text
                     // and get x position of first and last selection
@@ -161,7 +167,7 @@ public class NvgPasswordInputRenderer extends NvgDefaultComponentRenderer<Passwo
                     poffset = recalculateOffsetX(rect, halign, caretx, ratio, offsetX, poffset, pratio, palign);
 
                     // calculate mouse caret position
-                    if (maskedText.length() == 0) {
+                    if (maskedLength == 0) {
                         mouseCaretX = caretx;
                     } else {
                         float mx = Mouse.getCursorPosition().x + poffset;
@@ -215,24 +221,21 @@ public class NvgPasswordInputRenderer extends NvgDefaultComponentRenderer<Passwo
                     float nCaretX = caretx - poffset;
 
                     drawSelectionAndUpdateCaret(context, rect, bc, highlightColor, startSelectionIndex, endSelectionIndex, focused, startSelectionX,
-                            endSelectionX,
-                            poffset);
+                                                endSelectionX,
+                                                poffset);
                     // render text
                     NvgText.drawTextLineToRect(context, new Vector4f(textBounds[4] - poffset, textBounds[5], textBounds[6], textBounds[7]),
-                            false, HorizontalAlign.LEFT, VerticalAlign.MIDDLE, fontSize, font, maskedText, textColor);
+                                               false, HorizontalAlign.LEFT, VerticalAlign.MIDDLE, fontSize, font, maskedText, textColor);
 
                     if (focused) {
                         // render caret
-                        NvgColorUtil.fillNvgColorWithRGBA(caretColor, colorA);
-                        renderCaret(context, rect, nCaretX, colorA);
+                        renderCaret(context, rect, nCaretX);
                     }
                     // render mouse caret
                     if (leguiContext.isDebugEnabled()) {
                         Vector4f cc = new Vector4f(this.caretColor);
                         cc.x = 1;
-
-                        NvgColorUtil.fillNvgColorWithRGBA(cc, colorA);
-                        renderCaret(context, rect, mouseCaretX, colorA);
+                        renderCaret(context, rect, mouseCaretX);
                     }
 
                     // put last offset and ration to metadata
@@ -309,15 +312,8 @@ public class NvgPasswordInputRenderer extends NvgDefaultComponentRenderer<Passwo
         return offsetX;
     }
 
-    private void renderCaret(long context, Vector4f rect, float nCaretX, NVGColor rgba) {
-        nvgLineCap(context, NVG_ROUND);
-        nvgLineJoin(context, NVG_ROUND);
-        nvgStrokeWidth(context, 1);
-        nvgStrokeColor(context, rgba);
-        nvgBeginPath(context);
-        nvgMoveTo(context, nCaretX, rect.y);
-        nvgLineTo(context, nCaretX, rect.y + rect.w);
-        nvgStroke(context);
+    private void renderCaret(long context, Vector4f rect, float nCaretX) {
+        NvgShapes.drawLine(context, 1, caretColor, NVG_ROUND, nCaretX, rect.y, nCaretX, rect.y + rect.w);
     }
 
     private float calculateCaretPos(int caretPosition, float[] textBounds, int ng, NVGGlyphPosition.Buffer glyphs) {

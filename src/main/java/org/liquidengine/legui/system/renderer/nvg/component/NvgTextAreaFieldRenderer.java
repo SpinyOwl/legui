@@ -68,7 +68,7 @@ public class NvgTextAreaFieldRenderer extends NvgDefaultComponentRenderer<TextAr
 
             TextState textState = gui.getTextState();
             String text = textState.getText();
-            String font = getStyle(gui, Style::getFont, FontRegistry.DEFAULT);
+            String font = getStyle(gui, Style::getFont, FontRegistry.getDefaultFont());
             float fontSize = getStyle(gui, Style::getFontSize, 16F);
             HorizontalAlign halign = getStyle(gui, Style::getHorizontalAlign, HorizontalAlign.LEFT);
             VerticalAlign valign = getStyle(gui, Style::getVerticalAlign, VerticalAlign.MIDDLE);
@@ -406,10 +406,7 @@ public class NvgTextAreaFieldRenderer extends NvgDefaultComponentRenderer<TextAr
     }
 
     private void preinitializeTextRendering(long context, String font, float fontSize, HorizontalAlign halign, VerticalAlign valign, Vector4f textColor) {
-        try (
-                NVGColor colorA = NVGColor.calloc()
-        ) {
-            NvgColorUtil.fillNvgColorWithRGBA(textColor, colorA);
+        try (NVGColor colorA = NvgColorUtil.create(textColor)) {
             alignTextInBox(context, halign, valign);
             nvgFontSize(context, fontSize);
             nvgFontFace(context, font);

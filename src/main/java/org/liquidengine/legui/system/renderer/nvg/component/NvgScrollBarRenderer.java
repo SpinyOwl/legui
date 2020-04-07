@@ -34,7 +34,6 @@ public class NvgScrollBarRenderer extends NvgDefaultComponentRenderer<ScrollBar>
             nvgSave(nanovg);
             Vector2f pos = scrollBar.getAbsolutePosition();
             Vector2f size = scrollBar.getSize();
-            Vector4f backgroundColor = new Vector4f(scrollBar.getStyle().getBackground().getColor());
 
             float arrowSize = scrollBar.getArrowSize();
 

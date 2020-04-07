@@ -1,5 +1,31 @@
 package org.liquidengine.legui.system.renderer.nvg.util;
 
+import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_BASELINE;
+import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_BOTTOM;
+import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_CENTER;
+import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_LEFT;
+import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_MIDDLE;
+import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_RIGHT;
+import static org.lwjgl.nanovg.NanoVG.NVG_ALIGN_TOP;
+import static org.lwjgl.nanovg.NanoVG.NVG_HOLE;
+import static org.lwjgl.nanovg.NanoVG.nvgBeginPath;
+import static org.lwjgl.nanovg.NanoVG.nvgBoxGradient;
+import static org.lwjgl.nanovg.NanoVG.nvgFill;
+import static org.lwjgl.nanovg.NanoVG.nvgFillPaint;
+import static org.lwjgl.nanovg.NanoVG.nvgIntersectScissor;
+import static org.lwjgl.nanovg.NanoVG.nvgPathWinding;
+import static org.lwjgl.nanovg.NanoVG.nvgResetScissor;
+import static org.lwjgl.nanovg.NanoVG.nvgRestore;
+import static org.lwjgl.nanovg.NanoVG.nvgRoundedRectVarying;
+import static org.lwjgl.nanovg.NanoVG.nvgScissor;
+import static org.lwjgl.nanovg.NanoVG.nvgTextAlign;
+import static org.lwjgl.nanovg.NanoVG.nvgTextBounds;
+import static org.lwjgl.system.MemoryUtil.memFree;
+import static org.lwjgl.system.MemoryUtil.memUTF8;
+
+import java.nio.ByteBuffer;
+import java.util.ArrayList;
+import java.util.List;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.Component;
@@ -10,15 +36,6 @@ import org.liquidengine.legui.style.shadow.Shadow;
 import org.liquidengine.legui.style.util.StyleUtilities;
 import org.lwjgl.nanovg.NVGColor;
 import org.lwjgl.nanovg.NVGPaint;
-
-import java.nio.ByteBuffer;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Function;
-
-import static org.lwjgl.nanovg.NanoVG.*;
-import static org.lwjgl.system.MemoryUtil.memFree;
-import static org.lwjgl.system.MemoryUtil.memUTF8;
 
 /**
  * Created by ShchAlexander on 2/2/2017.
@@ -67,7 +84,7 @@ public final class NvgRenderUtils {
     public static float[] createBounds(float x, float y, float w, float h, HorizontalAlign horizontalAlign, VerticalAlign verticalAlign, float[] bounds) {
         float ww = bounds[2] - bounds[0];
         float hh = bounds[3] - bounds[1];
-        return createBounds(x, y, w, h, horizontalAlign, verticalAlign, /*bounds, */ww, hh);
+        return createBounds(x, y, w, h, horizontalAlign, verticalAlign, ww, hh);
     }
 
     public static float[] createBounds(float w, float h, HorizontalAlign horizontalAlign, VerticalAlign verticalAlign, float[] bounds, float ww, float hh) {
@@ -105,25 +122,6 @@ public final class NvgRenderUtils {
         int vAlign = vAlig == VerticalAlign.TOP ? NVG_ALIGN_TOP : vAlig == VerticalAlign.BOTTOM ?
                 NVG_ALIGN_BOTTOM : vAlig == VerticalAlign.MIDDLE ? NVG_ALIGN_MIDDLE : NVG_ALIGN_BASELINE;
         nvgTextAlign(context, hAlign | vAlign);
-    }
-
-    public static void dropShadow(long context, float x, float y, float w, float h, float cornerRadius, Vector4f shadowColor) {
-        try (
-                NVGPaint shadowPaint = NVGPaint.calloc();
-                NVGColor colorA = NVGColor.calloc();
-                NVGColor colorB = NVGColor.calloc()
-        ) {
-            NvgColorUtil.fillNvgColorWithRGBA(shadowColor, colorA);
-            NvgColorUtil.fillNvgColorWithRGBA(0, 0, 0, 0, colorB);
-
-            nvgBoxGradient(context, x, y + 2, w, h, cornerRadius * 2, 10, colorA, colorB, shadowPaint);
-            nvgBeginPath(context);
-            nvgRect(context, x - 10, y - 10, w + 20, h + 30);
-            nvgRoundedRect(context, x, y, w, h, cornerRadius);
-            nvgPathWinding(context, NVG_HOLE);
-            nvgFillPaint(context, shadowPaint);
-            nvgFill(context);
-        }
     }
 
     /**
@@ -247,11 +245,9 @@ public final class NvgRenderUtils {
 
             try (
                     NVGPaint shadowPaint = NVGPaint.calloc();
-                    NVGColor firstColor = NVGColor.calloc();
-                    NVGColor secondColor = NVGColor.calloc()
+                    NVGColor firstColor = NvgColorUtil.create(shadow.getColor());
+                    NVGColor secondColor = NvgColorUtil.create(0,0,0,0)
             ) {
-                NvgColorUtil.fillNvgColorWithRGBA(shadow.getColor(), firstColor);
-                NvgColorUtil.fillNvgColorWithRGBA(0, 0, 0, 0, secondColor);
                 // creating gradient and put it to shadowPaint
                 nvgBoxGradient(context,
                         x + hOffset - spread,
@@ -264,7 +260,6 @@ public final class NvgRenderUtils {
                         secondColor,
                         shadowPaint);
                 nvgBeginPath(context);
-                nvgPathWinding(context, NVG_SOLID);
                 nvgRoundedRectVarying(context,
                         x + hOffset - spread - blur,
                         y + vOffset - spread - blur,
@@ -275,11 +270,12 @@ public final class NvgRenderUtils {
                         borderRadius.z + spread,
                         borderRadius.w + spread
                 );
-                nvgPathWinding(context, NVG_HOLE);
                 nvgRoundedRectVarying(context, x, y, w, h, borderRadius.x, borderRadius.y, borderRadius.z, borderRadius.w);
+                nvgPathWinding(context, NVG_HOLE);
                 nvgFillPaint(context, shadowPaint);
                 nvgFill(context);
             }
         }
+        nvgRestore(context);
     }
 }
