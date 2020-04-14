@@ -14,7 +14,6 @@ import org.liquidengine.legui.component.misc.listener.label.UpdateLabelWidthList
 import org.liquidengine.legui.component.optional.Orientation;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
-import org.liquidengine.legui.demo.layout.DesktopIcon;
 import org.liquidengine.legui.event.*;
 import org.liquidengine.legui.icon.Icon;
 import org.liquidengine.legui.icon.ImageIcon;
@@ -112,28 +111,17 @@ public class ExampleGui extends Panel {
         verticalLabel.setTextDirection(TextDirection.VERTICAL_TOP_DOWN);
         //@formatter:on
         verticalLabel.getListenerMap().addListener(KeyEvent.class, (e) -> {
-            if (e.getKey() == GLFW.GLFW_KEY_LEFT) {
-                verticalLabel.getPosition().x -= 5;
-            }
-            if (e.getKey() == GLFW.GLFW_KEY_RIGHT) {
-                verticalLabel.getPosition().x += 5;
-            }
-            if (e.getKey() == GLFW.GLFW_KEY_UP) {
-                verticalLabel.getPosition().y -= 5;
-            }
-            if (e.getKey() == GLFW.GLFW_KEY_DOWN) {
-                verticalLabel.getPosition().y += 5;
-            }
+            if (e.getKey() == GLFW.GLFW_KEY_LEFT) verticalLabel.getPosition().x -= 5;
+            if (e.getKey() == GLFW.GLFW_KEY_RIGHT) verticalLabel.getPosition().x += 5;
+            if (e.getKey() == GLFW.GLFW_KEY_UP) verticalLabel.getPosition().y -= 5;
+            if (e.getKey() == GLFW.GLFW_KEY_DOWN) verticalLabel.getPosition().y += 5;
 
-            if (e.getKey() == GLFW.GLFW_KEY_KP_1) {
+            if (e.getKey() == GLFW.GLFW_KEY_KP_1)
                 verticalLabel.setTextDirection(TextDirection.HORIZONTAL);
-            }
-            if (e.getKey() == GLFW.GLFW_KEY_KP_2) {
+            if (e.getKey() == GLFW.GLFW_KEY_KP_2)
                 verticalLabel.setTextDirection(TextDirection.VERTICAL_TOP_DOWN);
-            }
-            if (e.getKey() == GLFW.GLFW_KEY_KP_3) {
+            if (e.getKey() == GLFW.GLFW_KEY_KP_3)
                 verticalLabel.setTextDirection(TextDirection.VERTICAL_DOWN_TOP);
-            }
         });
         //@formatter:off
         this.add(verticalLabel);
@@ -498,7 +486,6 @@ public class ExampleGui extends Panel {
         //@formatter:on
 
         this.add(createSwitchThemeButton());
-        this.add(createDesktopIcon());
 
         this.add(createShadowWidget());
     }
@@ -659,10 +646,6 @@ public class ExampleGui extends Panel {
         bgImageNormal.setPosition(new Vector2f(40 - 100 * 40 / 60, 0));
         toggleButton.getStyle().getBackground().setIcon(bgImageNormal);
         return toggleButton;
-    }
-
-    private Component createDesktopIcon() {
-        return new DesktopIcon(600, 300, "DESKTOP ICON", () -> System.out.println("HELLO FROM DB"));
     }
 
     private Button createSwitchThemeButton() {
