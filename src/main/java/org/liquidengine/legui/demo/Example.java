@@ -147,7 +147,7 @@ public class Example {
             glClear(GL_COLOR_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
             // We need to relayout components.
-            if(gui.getGenerateEventsByLayoutManager().isChecked()) {
+            if (gui.getGenerateEventsByLayoutManager().isChecked()) {
                 LayoutManager.getInstance().layout(frame, context);
             } else {
                 LayoutManager.getInstance().layout(frame);
@@ -200,6 +200,9 @@ public class Example {
         if (context != null) {
             Component mouseTargetGui = context.getMouseTargetGui();
             gui.getMouseTargetLabel().getTextState().setText("-> " + (mouseTargetGui == null ? null : mouseTargetGui.getClass().getSimpleName()));
+
+            Component focusedGui = context.getFocusedGui();
+            gui.getFocusedGuiLabel().getTextState().setText("-> " + (focusedGui == null ? null : focusedGui.getClass().getSimpleName()));
         }
     }
 

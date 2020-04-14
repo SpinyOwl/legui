@@ -33,15 +33,14 @@ public class TextAreaFieldUpdateListener implements TextAreaFieldUpdateEventList
         if (parent instanceof TextAreaViewport) {
             TextAreaViewport textAreaViewport = (TextAreaViewport) parent;
 
-
             float maxTextWidth = Math.max(
                 textAreaField.getMaxTextWidth() + padding.x + padding.z,
                 textAreaViewport.getSize().x
-            );
+                                         );
             float maxTextHeight = Math.max(
                 textAreaField.getMaxTextHeight() + padding.y + padding.w,
                 textAreaViewport.getSize().y
-            );
+                                          );
             textAreaField.setSize(maxTextWidth, maxTextHeight);
         }
 
@@ -53,7 +52,7 @@ public class TextAreaFieldUpdateListener implements TextAreaFieldUpdateEventList
 
     private void updateHorizontalOffset(TextAreaField textAreaField, Vector2f absolutePosition, float paddingLeft) {
         ScrollBar horizontalScrollBar = textArea.getHorizontalScrollBar();
-        float caretX = textAreaField.getCaretX() - absolutePosition.x - paddingLeft;
+        float caretX = (textAreaField.getCaretX() == null ? 0 : textAreaField.getCaretX()) - absolutePosition.x - paddingLeft;
         float maxTextWidth = textAreaField.getMaxTextWidth();
 
         float newVal = 0;
@@ -76,7 +75,7 @@ public class TextAreaFieldUpdateListener implements TextAreaFieldUpdateEventList
 
     private void updateVerticalOffset(TextAreaField textAreaField, Vector2f absolutePosition, float paddingTop) {
         ScrollBar verticalScrollbar = textArea.getVerticalScrollBar();
-        float caretY = textAreaField.getCaretY() - absolutePosition.y - paddingTop;
+        float caretY = (textAreaField.getCaretY() == null ? 0 : textAreaField.getCaretY()) - absolutePosition.y - paddingTop;
         float maxTextHeight = textAreaField.getMaxTextHeight();
 
         float newVal = 0;

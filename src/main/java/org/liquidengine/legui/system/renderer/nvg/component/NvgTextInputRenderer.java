@@ -104,6 +104,10 @@ public class NvgTextInputRenderer extends NvgDefaultComponentRenderer<TextInput>
                     float nCaretX = rect.x + halign.index * rect.z / 2f;
                     renderCaret(context, rect, nCaretX, caretColor);
                 }
+                textState.setTextWidth(0);
+                textState.setTextHeight(fontSize);
+                textState.setCaretX(null);
+                textState.setCaretY(null);
 
                 gui.setMouseCaretPosition(0);
             } else {
@@ -120,7 +124,6 @@ public class NvgTextInputRenderer extends NvgDefaultComponentRenderer<TextInput>
                 }
 
                 float[] textBounds = calculateTextBoundsRect(context, rect, text, halign, valign, fontSize);
-
                 // calculate caret coordinate and mouse caret coordinate
                 float caretx;
                 float startSelectionX;
@@ -212,6 +215,11 @@ public class NvgTextInputRenderer extends NvgDefaultComponentRenderer<TextInput>
                     }
                     mouseCaretX -= poffset;
                     float nCaretX = caretx - poffset;
+
+                    textState.setTextWidth(textBounds[2]);
+                    textState.setTextHeight(fontSize);
+                    textState.setCaretX(nCaretX);
+                    textState.setCaretY(textBounds[5]);
 
                     drawSelection(context, rect, highlightColor,
                                   startSelectionIndex, endSelectionIndex,

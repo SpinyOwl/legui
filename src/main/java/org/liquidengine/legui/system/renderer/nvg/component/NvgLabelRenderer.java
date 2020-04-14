@@ -12,6 +12,7 @@ import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgText;
 
 import static org.liquidengine.legui.style.util.StyleUtilities.*;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.calculateTextBoundsRect;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.createScissor;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.resetScissor;
 
@@ -35,14 +36,21 @@ public class NvgLabelRenderer extends NvgDefaultComponentRenderer<Label> {
             TextState textState = label.getTextState();
             Vector4f padding = getPadding(label, style);
             Vector4f rect = getInnerContentRectangle(pos, size, padding);
+            Float fontSize = getStyle(label, Style::getFontSize, 16F);
+            VerticalAlign verticalAlign = getStyle(label, Style::getVerticalAlign, VerticalAlign.MIDDLE);
+            HorizontalAlign horizontalAlign = getStyle(label, Style::getHorizontalAlign, HorizontalAlign.LEFT);
             NvgText.drawTextLineToRect(nanovg, rect, false,
-                    getStyle(label, Style::getHorizontalAlign, HorizontalAlign.LEFT),
-                    getStyle(label, Style::getVerticalAlign, VerticalAlign.MIDDLE),
-                    getStyle(label, Style::getFontSize, 16F),
-                    getStyle(label, Style::getFont, FontRegistry.getDefaultFont()),
-                    textState.getText(),
-                    getStyle(label, Style::getTextColor),
-                    label.getTextDirection());
+                                       horizontalAlign, verticalAlign, fontSize,
+                                       getStyle(label, Style::getFont, FontRegistry.getDefaultFont()),
+                                       textState.getText(),
+                                       getStyle(label, Style::getTextColor),
+                                       label.getTextDirection());
+
+            float[] textBounds = calculateTextBoundsRect(nanovg, rect, textState.getText(), horizontalAlign, verticalAlign, fontSize);
+            textState.setTextWidth(textBounds[2]);
+            textState.setTextHeight(fontSize);
+            textState.setCaretX(null);
+            textState.setCaretY(null);
         }
         resetScissor(nanovg);
     }
