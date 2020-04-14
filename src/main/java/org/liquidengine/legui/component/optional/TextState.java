@@ -57,6 +57,7 @@ public class TextState implements Serializable {
      * Default constructor.
      */
     public TextState() {
+        this("", null);
     }
 
     /**
@@ -65,7 +66,7 @@ public class TextState implements Serializable {
      * @param text text to set.
      */
     public TextState(String text) {
-        setText(text);
+        this(text, null);
     }
 
     /**
@@ -75,7 +76,7 @@ public class TextState implements Serializable {
      * second arg.
      */
     public TextState(BiConsumer<String, String> textSetCallback) {
-        this.textSetCallback = textSetCallback;
+        this("", textSetCallback);
     }
 
     /**
@@ -86,8 +87,8 @@ public class TextState implements Serializable {
      * second arg.
      */
     public TextState(String text, BiConsumer<String, String> textSetCallback) {
-        this.text = text;
         this.textSetCallback = textSetCallback;
+        setText(text);
     }
 
     /**
