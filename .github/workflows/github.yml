@@ -1,0 +1,25 @@
+name: Build and publish
+
+on:
+  push:
+    branches:
+      - snapshots
+      - releases
+      - develop
+
+jobs:
+  build:
+    name: Build LEGUI
+    runs-on: ubuntu-latest
+    steps:
+    - name: Set env to develop
+      if: endsWith(github.ref, 'develop')
+      run: |
+        echo "::set-env name=ENVIRONMENT::dev"
+    - name: Set env to release
+      if: endsWith(github.ref, 'releases')
+      run: |
+        echo "::set-env name=ENVIRONMENT::release"
+    - name: Echo env
+      run: |
+        echo "ENV VAR IS: $ENVIRONMENT"
