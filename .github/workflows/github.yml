@@ -32,6 +32,7 @@ jobs:
           echo "::set-env name=VEXT::SNAPSHOT";
           echo "::set-env name=publishUrl::git:snapshots://git@github.com:SpinyOwl/repo.git"
           echo "::set-env name=version::$V-SNAPSHOT"
+          echo "::set-env name=repoUrl::https://github.com/SpinyOwl/repo/tree/releases/org/liquidengine/legui/$version"
 
       - name: Set env to release
         if: endsWith(github.ref, 'releases')
@@ -39,14 +40,18 @@ jobs:
           echo "::set-env name=VEXT::"
           echo "::set-env name=publishUrl::git:releases://git@github.com:SpinyOwl/repo.git"
           echo "::set-env name=version::$V"
+          echo "::set-env name=repoUrl::https://github.com/SpinyOwl/repo/tree/releases/org/liquidengine/legui/$version"
 
-      # ECHO VARIABLES
-      - name: Echo env
-        run: |
-          echo "Publisg url is '$publishUrl'"
-          echo "Version is '${{steps.extract_version.outputs.prop}}'"
-          echo "Version extension is '$VEXT'"
-          echo "Full version is '$version'"
+      # CALL WEBHOOK
+
+      - name: send success message
+        uses: appleboy/discord-action@master
+        if: success()
+        with:
+          webhook_id: ${{ secrets.WEBHOOK_ID }}
+          webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
+          color: "#f75b00"
+          message: Build started for version - `${{env.version}}`
 
       # PREPARE AND BUILD
       - name: Set up JDK 1.8
@@ -100,9 +105,8 @@ jobs:
         with:
           webhook_id: ${{ secrets.WEBHOOK_ID }}
           webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
-          color: "#f75b00"
-          message: Build successfully finished. Artifact version - `${{env.version}}`
-
+          color: "#00FF00"
+          message: Build successfully finished. Artifact version - `${{env.version}}`. [Open repository](${{env.repoUrl}})
 
       - name: send failure message
         uses: appleboy/discord-action@master
