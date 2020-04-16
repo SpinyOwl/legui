@@ -32,7 +32,7 @@ jobs:
           echo "::set-env name=VEXT::SNAPSHOT";
           echo "::set-env name=publishUrl::git:snapshots://git@github.com:SpinyOwl/repo.git"
           echo "::set-env name=version::$V-SNAPSHOT"
-          echo "::set-env name=repoUrl::https://github.com/SpinyOwl/repo/tree/releases/org/liquidengine/legui/$version"
+          echo "::set-env name=repoUrl::https://github.com/SpinyOwl/repo/tree/snapshots/org/liquidengine/legui/$version"
 
       - name: Set env to release
         if: endsWith(github.ref, 'releases')
