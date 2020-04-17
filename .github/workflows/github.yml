@@ -27,7 +27,7 @@ jobs:
         run: echo "::set-env name=V::${{steps.extract_version.outputs.prop}}"
 
       - name: Set env to develop
-        if: github.base_ref == 'refs/heads/develop'
+        if: github.ref == 'refs/heads/develop'
         run: |
           echo "::set-env name=branch::develop";
           echo "::set-env name=VEXT::SNAPSHOT";
@@ -36,7 +36,7 @@ jobs:
           echo "::set-env name=repoUrl::https://github.com/SpinyOwl/repo/tree/snapshots/org/liquidengine/legui/$version"
 
       - name: Set env to release
-        if: github.base_ref == 'refs/heads/releases'
+        if: github.ref == 'refs/heads/releases'
         run: |
           echo "::set-env name=branch::releases"
           echo "::set-env name=VEXT::"
