@@ -27,16 +27,18 @@ jobs:
         run: echo "::set-env name=V::${{steps.extract_version.outputs.prop}}"
 
       - name: Set env to develop
-        if: endsWith(github.ref, 'develop')
+        if: github.base_ref == 'refs/heads/develop'
         run: |
+          echo "::set-env name=branch::develop";
           echo "::set-env name=VEXT::SNAPSHOT";
           echo "::set-env name=publishUrl::git:snapshots://git@github.com:SpinyOwl/repo.git"
           echo "::set-env name=version::$V-SNAPSHOT"
           echo "::set-env name=repoUrl::https://github.com/SpinyOwl/repo/tree/snapshots/org/liquidengine/legui/$version"
 
       - name: Set env to release
-        if: endsWith(github.ref, 'releases')
+        if: github.base_ref == 'refs/heads/releases'
         run: |
+          echo "::set-env name=branch::releases"
           echo "::set-env name=VEXT::"
           echo "::set-env name=publishUrl::git:releases://git@github.com:SpinyOwl/repo.git"
           echo "::set-env name=version::$V"
@@ -51,7 +53,7 @@ jobs:
           webhook_id: ${{ secrets.WEBHOOK_ID }}
           webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
           color: "#f75b00"
-          message: Build started for version - `${{env.version}}`
+          message: Build started on branch `${{env.branch}}`
 
       # PREPARE AND BUILD
       - name: Set up JDK 1.8
@@ -81,17 +83,20 @@ jobs:
 
       # PUBLISH ARTIFACTS
       - name: prepare to publish
+        if: "!contains(github.event.head_commit.message, '[skip publish]')"
         run: |
           git config --global user.name ${{ secrets.publishUsername }}
           git config --global user.email ${{ secrets.publishEmail }}
 
       - name: SSH Setup
+        if: "!contains(github.event.head_commit.message, '[skip publish]')"
         uses: MrSquaare/ssh-setup-action@v1.0.0
         with:
           host:  github.com
           private-key: ${{ secrets.REPO_TOKEN }}
 
       - name: publish
+        if: "!contains(github.event.head_commit.message, '[skip publish]')"
         env:
           publishUsername: ${{ secrets.publishUsername }}
           publishPassword: ${{ secrets.publishPassword }}
@@ -101,12 +106,22 @@ jobs:
 
       - name: send success message
         uses: appleboy/discord-action@master
-        if: success()
+        if: success() && !contains(github.event.head_commit.message, '[skip publish]')
         with:
           webhook_id: ${{ secrets.WEBHOOK_ID }}
           webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
           color: "#00FF00"
-          message: Build successfully finished. Artifact version - `${{env.version}}`. [Open repository](${{env.repoUrl}})
+          message: Build successfully finished on branch `${{env.branch}}`.\n Artifact version - `${{env.version}}`. [Open repository](${{env.repoUrl}})
+
+
+      - name: send success message
+        uses: appleboy/discord-action@master
+        if: success() && contains(github.event.head_commit.message, '[skip publish]')
+        with:
+          webhook_id: ${{ secrets.WEBHOOK_ID }}
+          webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
+          color: "#00FF00"
+          message: Build successfully finished on branch `${{env.branch}}`.
 
       - name: send failure message
         uses: appleboy/discord-action@master
@@ -115,7 +130,7 @@ jobs:
           webhook_id: ${{ secrets.WEBHOOK_ID }}
           webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
           color: "#FF0000"
-          message: "Build failed."
+          message: Build failed on branch `${{env.branch}}`.
 
       - name: send cancelled message
         uses: appleboy/discord-action@master
@@ -124,4 +139,4 @@ jobs:
           webhook_id: ${{ secrets.WEBHOOK_ID }}
           webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
           color: "#899e8b"
-          message: "Build cancelled."
+          message: Build cancelled on branch `${{env.branch}}`.
