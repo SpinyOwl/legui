@@ -26,11 +26,6 @@ public class TextAreaField extends Component implements TextComponent {
      */
     protected TextState textState;
 
-    private float maxTextWidth;
-    private float maxTextHeight;
-    private float caretX;
-    private float caretY;
-
     /**
      * Used to describe size of '\t' symbol in spaces.
      */
@@ -284,39 +279,24 @@ public class TextAreaField extends Component implements TextComponent {
     }
 
     public float getMaxTextWidth() {
-        return maxTextWidth;
-    }
-
-    public void setMaxTextWidth(float maxTextWidth) {
-        this.maxTextWidth = maxTextWidth;
+        return textState.getTextWidth();
     }
 
     public float getMaxTextHeight() {
-        return maxTextHeight;
+        return textState.getTextHeight();
     }
 
-    public void setMaxTextHeight(float maxTextHeight) {
-        this.maxTextHeight = maxTextHeight;
+    public Float getCaretX() {
+        return textState.getCaretX();
     }
 
-    public float getCaretX() {
-        return caretX;
-    }
-
-    public void setCaretX(float caretX) {
-        this.caretX = caretX;
-    }
-
-    public float getCaretY() {
-        return caretY;
-    }
-
-    public void setCaretY(float caretY) {
-        this.caretY = caretY;
+    public Float getCaretY() {
+        return textState.getCaretY();
     }
 
     /**
      * If returns true - caret position during rendering will stick to 0/mid/end depending on alignment
+     *
      * @return true if caret position should stick to alignment during rendering
      */
     public boolean isStickToAlignment() {

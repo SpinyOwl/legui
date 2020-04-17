@@ -5,9 +5,12 @@ import org.joml.Vector4f;
 import org.liquidengine.legui.animation.Animation;
 import org.liquidengine.legui.component.*;
 import org.liquidengine.legui.component.event.component.ChangeSizeEvent;
+import org.liquidengine.legui.component.event.label.LabelContentChangeEvent;
 import org.liquidengine.legui.component.event.selectbox.SelectBoxChangeSelectionEventListener;
 import org.liquidengine.legui.component.event.slider.SliderChangeValueEvent;
 import org.liquidengine.legui.component.event.slider.SliderChangeValueEventListener;
+import org.liquidengine.legui.component.misc.listener.label.UpdateLabelStyleWidthListener;
+import org.liquidengine.legui.component.misc.listener.label.UpdateLabelWidthListener;
 import org.liquidengine.legui.component.optional.Orientation;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
@@ -70,6 +73,8 @@ public class ExampleGui extends Panel {
 
         focusedGuiLabel = new Label("Hello Label 2", 10, height - 50, width - 20, 20);
         focusedGuiLabel.getStyle().setBorder(new SimpleLineBorder(ColorConstants.red(), 1));
+        focusedGuiLabel.getListenerMap().addListener(LabelContentChangeEvent.class,new UpdateLabelStyleWidthListener());
+
         this.add(focusedGuiLabel);
 
         this.add(debugLabel = new Label("Debug Label", 10, height - 75, width - 20, 20));

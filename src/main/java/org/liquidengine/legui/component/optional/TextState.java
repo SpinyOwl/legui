@@ -1,9 +1,8 @@
 package org.liquidengine.legui.component.optional;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
+import java.util.Objects;
+import java.util.function.BiConsumer;
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 
 import java.io.Serializable;
 
@@ -11,6 +10,7 @@ import java.io.Serializable;
  * Used to hold text state of components.
  */
 public class TextState implements Serializable {
+
     /**
      * Text data.
      */
@@ -41,11 +41,23 @@ public class TextState implements Serializable {
      */
     private boolean editable = true;
 
+    private float textWidth;
+    private float textHeight;
+
+    private Float caretX;
+    private Float caretY;
+
+    /**
+     * Should be defined to call some extra functionality after {@link #setText(String)}.  Accepts old value as first arg, and new value as the second arg.
+     */
+    private BiConsumer<String, String> textSetCallback;
+
 
     /**
      * Default constructor.
      */
     public TextState() {
+        this("", null);
     }
 
     /**
@@ -54,6 +66,28 @@ public class TextState implements Serializable {
      * @param text text to set.
      */
     public TextState(String text) {
+        this(text, null);
+    }
+
+    /**
+     * Used to create TextState with predefined text.
+     *
+     * @param textSetCallback callback to call some extra functionality after {@link #setText(String)}. Accepts old value as first arg, and new value as the
+     * second arg.
+     */
+    public TextState(BiConsumer<String, String> textSetCallback) {
+        this("", textSetCallback);
+    }
+
+    /**
+     * Used to create TextState with predefined text.
+     *
+     * @param text text to set.
+     * @param textSetCallback callback to call some extra functionality after {@link #setText(String)}. Accepts old value as first arg, and new value as the
+     * second arg.
+     */
+    public TextState(String text, BiConsumer<String, String> textSetCallback) {
+        this.textSetCallback = textSetCallback;
         setText(text);
     }
 
@@ -72,90 +106,32 @@ public class TextState implements Serializable {
      * @param text new text.
      */
     public void setText(String text) {
-        if (text != null)
+        String oldValue = this.text;
+        String newValue = text;
+
+        if (text != null) {
             this.text = text;
-        else {
+        } else {
             this.text = "";
         }
+
         this.caretPosition = this.startSelectionIndex = this.endSelectionIndex = 0;
 
+        if (this.textSetCallback != null) {
+            textSetCallback.accept(oldValue, newValue);
+        }
     }
 
     /**
      * Returns text length.
      *
      * @return text length.
+     *
      * @see StringBuffer#length()
      */
     public int length() {
         return text.length();
     }
-
-    /**
-     * {@inheritDoc}.
-     */
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("text", text)
-                .append("caretPosition", caretPosition)
-                .append("mouseCaretPosition", mouseCaretPosition)
-                .append("startSelectionIndex", startSelectionIndex)
-                .append("endSelectionIndex", endSelectionIndex)
-                .append("editable", editable)
-                .toString();
-    }
-
-    /**
-     * {@inheritDoc}.
-     */
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
-        TextState textState = (TextState) o;
-
-        return new EqualsBuilder()
-                .append(text, textState.text)
-                .append(caretPosition, this.caretPosition)
-                .append(mouseCaretPosition, this.mouseCaretPosition)
-                .append(startSelectionIndex, this.startSelectionIndex)
-                .append(endSelectionIndex, this.endSelectionIndex)
-                .append(editable, this.editable)
-                .isEquals();
-    }
-
-    /**
-     * {@inheritDoc}.
-     */
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder(17, 37)
-                .append(text)
-                .append(caretPosition)
-                .append(mouseCaretPosition)
-                .append(startSelectionIndex)
-                .append(endSelectionIndex)
-                .append(editable)
-                .toHashCode();
-    }
-
-    /**
-     * Used to copy provided text state to current state.
-     *
-     * @param state state to copy.
-     */
-    public void copy(TextState state) {
-        this.setText(state.getText());
-        this.setText(state.text);
-    }
-
 
     /**
      * Returns mouse caret position.
@@ -264,5 +240,91 @@ public class TextState implements Serializable {
             selection = text.substring(startSelectionIndex, endSelectionIndex);
         }
         return selection;
+    }
+
+    public float getTextWidth() {
+        return textWidth;
+    }
+
+    public void setTextWidth(float textWidth) {
+        this.textWidth = textWidth;
+    }
+
+    public float getTextHeight() {
+        return textHeight;
+    }
+
+    public void setTextHeight(float textHeight) {
+        this.textHeight = textHeight;
+    }
+
+    /**
+     * Absolute caret X position.
+     *
+     * @return absolute caret X position.
+     */
+    public Float getCaretX() {
+        return caretX;
+    }
+
+    /**
+     * Used by renderer to set absolute caret x position.
+     *
+     * @param caretX caret x position.
+     */
+    public void setCaretX(Float caretX) {
+        this.caretX = caretX;
+    }
+
+    /**
+     * Absolute caret Y position.
+     *
+     * @return absolute caret Y position.
+     */
+    public Float getCaretY() {
+        return caretY;
+    }
+
+    /**
+     * Used by renderer to set absolute caret y position.
+     *
+     * @param caretY caret x position.
+     */
+    public void setCaretY(Float caretY) {
+        this.caretY = caretY;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        TextState textState = (TextState) o;
+        return caretPosition == textState.caretPosition &&
+            mouseCaretPosition == textState.mouseCaretPosition &&
+            startSelectionIndex == textState.startSelectionIndex &&
+            endSelectionIndex == textState.endSelectionIndex &&
+            editable == textState.editable &&
+            Objects.equals(text, textState.text);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(text, caretPosition, mouseCaretPosition, startSelectionIndex, endSelectionIndex, editable);
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+            .append("text", text)
+            .append("caretPosition", caretPosition)
+            .append("mouseCaretPosition", mouseCaretPosition)
+            .append("startSelectionIndex", startSelectionIndex)
+            .append("endSelectionIndex", endSelectionIndex)
+            .append("editable", editable)
+            .toString();
     }
 }

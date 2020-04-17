@@ -1,0 +1,127 @@
+name: Build and publish
+
+on:
+  push:
+    branches:
+      - releases
+      - develop
+
+jobs:
+  build:
+    name: Build LEGUI
+    runs-on: ubuntu-latest
+    steps:
+
+      # CHECKOUT
+      - uses: actions/checkout@v2
+
+      # EVALUATE VARIABLES
+      - name: Get JSON Property
+        id: extract_version
+        uses: notiz-dev/github-action-json-property@release
+        with:
+          path: version.json
+          prop_path: version
+
+      - name: Set env version
+        run: echo "::set-env name=V::${{steps.extract_version.outputs.prop}}"
+
+      - name: Set env to develop
+        if: endsWith(github.ref, 'develop')
+        run: |
+          echo "::set-env name=VEXT::SNAPSHOT";
+          echo "::set-env name=publishUrl::git:snapshots://git@github.com:SpinyOwl/repo.git"
+          echo "::set-env name=version::$V-SNAPSHOT"
+          echo "::set-env name=repoUrl::https://github.com/SpinyOwl/repo/tree/snapshots/org/liquidengine/legui/$version"
+
+      - name: Set env to release
+        if: endsWith(github.ref, 'releases')
+        run: |
+          echo "::set-env name=VEXT::"
+          echo "::set-env name=publishUrl::git:releases://git@github.com:SpinyOwl/repo.git"
+          echo "::set-env name=version::$V"
+          echo "::set-env name=repoUrl::https://github.com/SpinyOwl/repo/tree/releases/org/liquidengine/legui/$version"
+
+      # CALL WEBHOOK
+
+      - name: send success message
+        uses: appleboy/discord-action@master
+        if: success()
+        with:
+          webhook_id: ${{ secrets.WEBHOOK_ID }}
+          webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
+          color: "#f75b00"
+          message: Build started for version - `${{env.version}}`
+
+      # PREPARE AND BUILD
+      - name: Set up JDK 1.8
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+          server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
+          settings-path: ${{ github.workspace }} # location for the settings.xml file
+
+      - name: Build with Gradle
+        run: ./gradlew build
+
+      # RUN TESTS
+      - name: Run tests
+        run: ./gradlew test
+
+      # SONAR CHECK
+      - name: Run sonarqube check
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          sonarLogin: ${{secrets.sonarToken}}
+          sonarUsername: ${{secrets.sonarUsername}}
+          sonarPassword: ${{secrets.sonarPassword}}
+          JAVA_OPTS: -Xmx3072m -XX:MaxPermSize=512m -XX:ReservedCodeCacheSize=128m
+          GRADLE_OPTS: -Xmx3800m -XX:ReservedCodeCacheSize=128m -Dorg.gradle.daemon=false
+        run: ./gradlew sonarqube
+
+      # PUBLISH ARTIFACTS
+      - name: prepare to publish
+        run: |
+          git config --global user.name ${{ secrets.publishUsername }}
+          git config --global user.email ${{ secrets.publishEmail }}
+
+      - name: SSH Setup
+        uses: MrSquaare/ssh-setup-action@v1.0.0
+        with:
+          host:  github.com
+          private-key: ${{ secrets.REPO_TOKEN }}
+
+      - name: publish
+        env:
+          publishUsername: ${{ secrets.publishUsername }}
+          publishPassword: ${{ secrets.publishPassword }}
+        run: ./gradlew uploadArchives
+
+      # CALL WEBHOOK
+
+      - name: send success message
+        uses: appleboy/discord-action@master
+        if: success()
+        with:
+          webhook_id: ${{ secrets.WEBHOOK_ID }}
+          webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
+          color: "#00FF00"
+          message: Build successfully finished. Artifact version - `${{env.version}}`. [Open repository](${{env.repoUrl}})
+
+      - name: send failure message
+        uses: appleboy/discord-action@master
+        if: failure()
+        with:
+          webhook_id: ${{ secrets.WEBHOOK_ID }}
+          webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
+          color: "#FF0000"
+          message: "Build failed."
+
+      - name: send cancelled message
+        uses: appleboy/discord-action@master
+        if: cancelled()
+        with:
+          webhook_id: ${{ secrets.WEBHOOK_ID }}
+          webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
+          color: "#899e8b"
+          message: "Build cancelled."

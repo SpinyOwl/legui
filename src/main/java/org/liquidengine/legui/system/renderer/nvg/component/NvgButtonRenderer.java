@@ -1,8 +1,10 @@
 package org.liquidengine.legui.system.renderer.nvg.component;
 
 import static org.liquidengine.legui.style.util.StyleUtilities.getStyle;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.calculateTextBoundsRect;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.createScissor;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.resetScissor;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgText.*;
 import static org.lwjgl.nanovg.NanoVG.nvgIntersectScissor;
 
 import org.joml.Vector2f;
@@ -33,17 +35,23 @@ public class NvgButtonRenderer extends NvgDefaultComponentRenderer<Button> {
 
             // Render text
             nvgIntersectScissor(nanovg, pos.x, pos.y, size.x, size.y);
-            TextState text = component.getTextState();
+            TextState textState = component.getTextState();
             Vector4f rect = new Vector4f(pos, size.x(), size.y());
-            NvgText.drawTextLineToRect(nanovg, rect, true,
-                    getStyle(component, Style::getHorizontalAlign, HorizontalAlign.LEFT),
-                    getStyle(component, Style::getVerticalAlign, VerticalAlign.MIDDLE),
-                    getStyle(component, Style::getFontSize, 16F),
+            HorizontalAlign horizontalAlign = getStyle(component, Style::getHorizontalAlign, HorizontalAlign.LEFT);
+            VerticalAlign verticalAlign = getStyle(component, Style::getVerticalAlign, VerticalAlign.MIDDLE);
+            Float fontSize = getStyle(component, Style::getFontSize, 16F);
+            drawTextLineToRect(nanovg, rect, true,
+                    horizontalAlign, verticalAlign, fontSize,
                     getStyle(component, Style::getFont, FontRegistry.getDefaultFont()),
-                    text.getText(),
+                    textState.getText(),
                     getStyle(component, Style::getTextColor),
                     component.getTextDirection());
 
+            float[] textBounds = calculateTextBoundsRect(nanovg, rect, textState.getText(), horizontalAlign, verticalAlign, fontSize);
+            textState.setTextWidth(textBounds[2]);
+            textState.setTextHeight(fontSize);
+            textState.setCaretX(null);
+            textState.setCaretY(null);
         }
         resetScissor(nanovg);
     }

@@ -1,5 +1,6 @@
 package org.liquidengine.legui.theme.colored.def;
 
+import java.util.List;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.Tooltip;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
@@ -9,8 +10,6 @@ import org.liquidengine.legui.style.shadow.Shadow;
 import org.liquidengine.legui.theme.AbstractTheme;
 import org.liquidengine.legui.theme.Themes;
 import org.liquidengine.legui.theme.colored.FlatColoredTheme.FlatColoredThemeSettings;
-
-import java.util.List;
 
 /**
  * Dark Component Theme for all components. Used to make component dark.

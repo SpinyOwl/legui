@@ -153,10 +153,10 @@ public class NvgTextAreaFieldRenderer extends NvgDefaultComponentRenderer<TextAr
                     bounds[i][6] += spaceWidth * (line.length() - line.replace(TABS, "").length()) * (gui.getTabSize() - 1);
                 }
             }
-            gui.setMaxTextWidth(maxWid);
-            gui.setMaxTextHeight((lines.length) * fontSize);
-            gui.setCaretX(caretx);
-            gui.setCaretY(caretLineBounds[5] + voffset + fontSize * caretLine);
+            textState.setTextWidth(maxWid);
+            textState.setTextHeight((lines.length) * fontSize);
+            textState.setCaretX(caretx);
+            textState.setCaretY(caretLineBounds[5] + voffset + fontSize * caretLine);
 
             // calculate default mouse line index
             if (lineCount > 0) {
