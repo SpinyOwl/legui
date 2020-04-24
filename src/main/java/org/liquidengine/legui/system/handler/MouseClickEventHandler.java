@@ -52,14 +52,18 @@ public class MouseClickEventHandler implements SystemEventHandler<SystemMouseCli
                 break;
             }
         }
+        int mods = event.mods;
         if (target == null) {
             if (event.action == GLFW_RELEASE) {
-                updateReleasePosAndFocusedGui(btn, cursorPos, focusedGui);
+                if (focusedGui != null) {
+                    updateReleasePosAndFocusedGui(btn, cursorPos, focusedGui);
+                    EventProcessorProvider.getInstance()
+                        .pushEvent(new MouseClickEvent<>(focusedGui, ctx, frame, RELEASE, btn, buttonCursorPosition(cursorPos, focusedGui), cursorPos, mods));
+                }
             } else {
                 ctx.setFocusedGui(null);
             }
         } else {
-            int mods = event.mods;
             if (event.action == GLFW.GLFW_PRESS) {
                 btn.setPressPosition(cursorPos);
                 removeFocus(target, frame, ctx);
@@ -70,8 +74,8 @@ public class MouseClickEventHandler implements SystemEventHandler<SystemMouseCli
                     ctx.setFocusedGui(target);
                 }
 
-                Vector2f position = target.getAbsolutePosition().sub(cursorPos).negate();
-                EventProcessorProvider.getInstance().pushEvent(new MouseClickEvent<>(target, ctx, frame, PRESS, btn, position, cursorPos, mods));
+                EventProcessorProvider.getInstance()
+                    .pushEvent(new MouseClickEvent<>(target, ctx, frame, PRESS, btn, buttonCursorPosition(cursorPos, target), cursorPos, mods));
 
                 if (focusedGui != target) {
                     EventProcessorProvider.getInstance().pushEvent(new FocusEvent<>(target, ctx, frame, target, true));
@@ -79,14 +83,21 @@ public class MouseClickEventHandler implements SystemEventHandler<SystemMouseCli
             } else {
                 updateReleasePosAndFocusedGui(btn, cursorPos, focusedGui);
 
-                Vector2f pos = target.getAbsolutePosition().sub(cursorPos).negate();
-                if (focusedGui != null && focusedGui == target) {
-                    EventProcessorProvider.getInstance().pushEvent(new MouseClickEvent<>(target, ctx, frame, CLICK, btn, pos, cursorPos, mods));
+                if (focusedGui != null) {
+                    if (focusedGui == target) {
+                        EventProcessorProvider.getInstance()
+                            .pushEvent(new MouseClickEvent<>(target, ctx, frame, CLICK, btn, buttonCursorPosition(cursorPos, target), cursorPos, mods));
+                    }
+                    EventProcessorProvider.getInstance()
+                        .pushEvent(new MouseClickEvent<>(focusedGui, ctx, frame, RELEASE, btn, buttonCursorPosition(cursorPos, focusedGui), cursorPos, mods));
                 }
-                EventProcessorProvider.getInstance().pushEvent(new MouseClickEvent<>(focusedGui, ctx, frame, RELEASE, btn, pos, cursorPos, mods));
             }
             pushWidgetsUp(target);
         }
+    }
+
+    private Vector2f buttonCursorPosition(Vector2f cursorPos, Component target) {
+        return target.getAbsolutePosition().sub(cursorPos).negate();
     }
 
     private void updateReleasePosAndFocusedGui(Mouse.MouseButton button, Vector2f cursorPosition, Component focusedGui) {

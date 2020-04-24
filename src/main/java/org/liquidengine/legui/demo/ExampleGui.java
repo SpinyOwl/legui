@@ -58,6 +58,7 @@ public class ExampleGui extends Panel {
     private final Label debugLabel;
     private ImageView imageView;
     private CheckBox generateEventsByLayoutManager;
+    private SplitPanel splitPanel;
 
     public ExampleGui() {
         this(800, 600);
@@ -66,33 +67,7 @@ public class ExampleGui extends Panel {
     public ExampleGui(int width, int height) {
         super(0, 0, width, height);
         //@formatter:off
-        Panel p1 = new Panel(1 * 20, 10, 10, 10);
-        this.add(p1);
-        p1.getListenerMap().addListener(FocusEvent.class, (FocusEventListener) System.out::println);
-        Panel p2 = new Panel(2 * 20, 10, 10, 10);
-        this.add(p2);
-        p2.getListenerMap().addListener(FocusEvent.class, (FocusEventListener) System.out::println);
-        Panel p3 = new Panel(3 * 20, 10, 10, 10);
-        this.add(p3);
-        p3.getListenerMap().addListener(FocusEvent.class, (FocusEventListener) System.out::println);
-        Panel p4 = new Panel(4 * 20, 10, 10, 10);
-        this.add(p4);
-        p4.getListenerMap().addListener(FocusEvent.class, (FocusEventListener) System.out::println);
-        Panel p5 = new Panel(5 * 20, 10, 10, 10);
-        this.add(p5);
-        p5.getListenerMap().addListener(FocusEvent.class, (FocusEventListener) System.out::println);
-        Panel p6 = new Panel(6 * 20, 10, 10, 10);
-        this.add(p6);
-        p6.getListenerMap().addListener(FocusEvent.class, (FocusEventListener) System.out::println);
-        Panel p7 = new Panel(7 * 20, 10, 10, 10);
-        this.add(p7);
-        p7.getListenerMap().addListener(FocusEvent.class, (FocusEventListener) System.out::println);
-        Panel p8 = new Panel(8 * 20, 10, 10, 10);
-        this.add(p8);
-        p8.getListenerMap().addListener(FocusEvent.class, (FocusEventListener) System.out::println);
-        Panel p9 = new Panel(9 * 20, 10, 10, 10);
-        this.add(p9);
-        p9.getListenerMap().addListener(FocusEvent.class, (FocusEventListener) System.out::println);
+        createNinePanels();
 
         this.add(mouseTargetLabel = new Label("Hello Label 1", 10, height - 30, width - 20, 20));
 
@@ -106,7 +81,58 @@ public class ExampleGui extends Panel {
         this.add(mouseLabel = new Label("Hello Label 3", 130, 30, 100, 20));
         this.add(upsLabel = new Label("Hello Label 4", 130, 60, 100, 20));
 
-        Label verticalLabel = new Label("VERTICAL LABEL", 500, 500, 50, 50);
+        this.add(createImageWrapperWidgetWithImage());
+        this.add(createButtonWithTooltip());
+
+        generateEventsByLayoutManager = new CheckBox("Generate events by layout manager", 20, 200, 200, 20);
+        this.add(generateEventsByLayoutManager);
+        this.add(createCheckboxWithAnimation(generateEventsByLayoutManager));
+
+        createProgressBar();
+        createRadioButtons();
+
+        Slider slider1 = createFirstSlider();
+        Slider slider2 = createSecondSlider();
+
+        textInput = new TextInput(250, 130, 100, 30);
+        textInput.getStyle().setHorizontalAlign(RIGHT);
+        textInput.getListenerMap().addListener(KeyEvent.class, (KeyEventListener) event -> {
+            if (event.getKey() == GLFW.GLFW_KEY_F1 && event.getAction() == GLFW.GLFW_RELEASE) {
+                textInput.getStyle().setHorizontalAlign(LEFT);
+            } else if (event.getKey() == GLFW.GLFW_KEY_F2 && event.getAction() == GLFW.GLFW_RELEASE) {
+                textInput.getStyle().setHorizontalAlign(CENTER);
+            } else if (event.getKey() == GLFW.GLFW_KEY_F3 && event.getAction() == GLFW.GLFW_RELEASE) {
+                textInput.getStyle().setHorizontalAlign(RIGHT);
+            }
+        });
+        this.add(textInput);
+
+        createWidgetsWithSomeButtons();
+        createFirstScrollBar();
+        createSecondScrollBar();
+        createThirdScrollBar();
+
+        final Orientation[] ori = { Orientation.VERTICAL };
+        splitPanel = new SplitPanel(ori[0]);
+        splitPanel.setPosition(420, 170);
+        splitPanel.setSize(200, 100);
+        splitPanel.getStyle().getBackground().setColor(ColorConstants.blue());
+
+        Button panelChange = new Button("Change Orientation");
+        panelChange.setSize(80,30);
+        panelChange.setPosition(10,10);
+        panelChange.getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener)event-> {
+            if(event.getAction().equals(CLICK)){
+                if(ori[0] == Orientation.HORIZONTAL) ori[0] = Orientation.VERTICAL ;
+                else ori[0] = Orientation.HORIZONTAL;
+                splitPanel.setOrientation(ori[0]);
+            }
+        });
+        splitPanel.setTopLeft(panelChange);
+
+        this.add(splitPanel);
+
+        Label verticalLabel = new Label("VERTICAL LABEL", 630, 170, 20, 100);
         verticalLabel.getStyle().setBorder(new SimpleLineBorder(ColorConstants.red(), 2));
         verticalLabel.setTextDirection(TextDirection.VERTICAL_TOP_DOWN);
         //@formatter:on
@@ -126,66 +152,163 @@ public class ExampleGui extends Panel {
         //@formatter:off
         this.add(verticalLabel);
 
-        this.add(createImageWrapperWidgetWithImage());
-        this.add(createButtonWithTooltip());
+        ScrollablePanel scpp = new ScrollablePanel();
+        scpp.setAutoResize(true);
+        scpp.setPosition(660,170);
+        scpp.setSize(100,100);
+        this.add(scpp);
 
-        generateEventsByLayoutManager = new CheckBox("Generate events by layout manager", 20, 200, 200, 20);
-        this.add(generateEventsByLayoutManager);
-        this.add(createCheckboxWithAnimation(generateEventsByLayoutManager));
+        Button b = new Button("+");
+        b.setPosition(660,280);
+        b.setSize(100, 20);
+        int[] x = {0};
+        int[] y = {0};
+        b.getListenerMap().addListener(MouseClickEvent.class,e->{if(e.getAction() == CLICK) {scpp.getContainer().add(new Panel(x[0]+=20,y[0]+=20,10,10));}});
+        this.add(b);
 
-        ProgressBar progressBar = new ProgressBar(250, 10, 100, 10);
-        progressBar.setValue(50);
-        this.add(progressBar);
-
-        {
-            RadioButtonGroup radioButtonGroup = new RadioButtonGroup();
-
-            RadioButton radioButton1 = new RadioButton(250, 30, 100, 20);
-            RadioButton radioButton2 = new RadioButton(250, 60, 100, 20);
-
-            radioButton1.setChecked(true);
-            radioButton2.setChecked(false);
-
-            radioButton1.setRadioButtonGroup(radioButtonGroup);
-            radioButton2.setRadioButtonGroup(radioButtonGroup);
-
-            this.add(radioButton1);
-            this.add(radioButton2);
-        }
-
-        Slider slider1 = new Slider(250, 90, 100, 20);
-        slider1.setMinValue(-1f);
-        slider1.setMaxValue(1f);
-        slider1.setStepSize(.1f);
-        slider1.setValue(0f);
-        final Tooltip slider1Tooltip = new Tooltip();
-        slider1Tooltip.setSize(100, 20);
-        slider1Tooltip.setPosition(slider1.getSize().x + 2, 0);
-        slider1Tooltip.getTextState().setText("Value: " + String.format("%.2f", slider1.getValue()));
-        slider1.addSliderChangeValueEventListener((SliderChangeValueEventListener) event -> {
-            slider1Tooltip.getTextState().setText(String.format("Value: %.2f", event.getNewValue()));
-            slider1Tooltip.setSize(100, 20);
-        });
-        slider1.setTooltip(slider1Tooltip);
-        this.add(slider1);
-
-        Slider slider2 = new Slider(220, 90, 20, 100, 50f);
-        slider2.setOrientation(Orientation.VERTICAL);
-        this.add(slider2);
-
-        textInput = new TextInput(250, 130, 100, 30);
-        textInput.getStyle().setHorizontalAlign(RIGHT);
-        textInput.getListenerMap().addListener(KeyEvent.class, (KeyEventListener) event -> {
-            if (event.getKey() == GLFW.GLFW_KEY_F1 && event.getAction() == GLFW.GLFW_RELEASE) {
-                textInput.getStyle().setHorizontalAlign(LEFT);
-            } else if (event.getKey() == GLFW.GLFW_KEY_F2 && event.getAction() == GLFW.GLFW_RELEASE) {
-                textInput.getStyle().setHorizontalAlign(CENTER);
-            } else if (event.getKey() == GLFW.GLFW_KEY_F3 && event.getAction() == GLFW.GLFW_RELEASE) {
-                textInput.getStyle().setHorizontalAlign(RIGHT);
+        createButtonWithTooltip().getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
+            MouseClickEvent.MouseClickAction action = event.getAction();
+            if (CLICK == action) {
+                mouseTargetLabel.getStyle().setDisplay(mouseTargetLabel.isVisible() ? Style.DisplayType.NONE : Style.DisplayType.MANUAL);
+            }
+            if (RELEASE == action) {
+                System.out.println("RELEASE");
+            }
+            if (PRESS == action) {
+                System.out.println("PRESS");
             }
         });
-        this.add(textInput);
 
+        ScrollablePanel scrollablePanel = new ScrollablePanel(420, 10, 250, 150);
+        scrollablePanel.getStyle().getBackground().setColor(1, 1, 1, 1);
+        scrollablePanel.getContainer().setSize(300, 200);
+
+        ScrollablePanel scp = new ScrollablePanel(10, 10, 150, 100);
+        scp.getContainer().setSize(300, 300);
+
+        scp.getContainer().add(new TextInput("Hello Scrollable", 10, 10, 150, 20));
+
+        scrollablePanel.getContainer().add(scp);
+        this.add(scrollablePanel);
+
+        slider2.getListenerMap().addListener(SliderChangeValueEvent.class,
+                                             (SliderChangeValueEventListener) event -> scrollablePanel
+                                                 .setHorizontalScrollBarHeight(event.getNewValue() / 2f + 10)
+                                            );
+        slider1.getListenerMap().addListener(SliderChangeValueEvent.class,
+                                             (SliderChangeValueEventListener) event -> scrollablePanel.getHorizontalScrollBar()
+                                                 .setArrowSize(event.getNewValue() / 4f + 10)
+                                            );
+
+        textArea = new TextArea(420, 280, 150, 100);
+        textArea.getTextState().setText("ABC DEF GH\r\nI JKL MNO PQR\nSTU VWXYZ");
+        textArea.setCaretPosition(12);
+        textArea.getTextAreaField().getStyle().setHorizontalAlign(CENTER);
+        textArea.getTextAreaField().getStyle().setVerticalAlign(BOTTOM);
+        this.add(textArea);
+
+        textArea.getTextAreaField().getListenerMap().addListener(KeyEvent.class, (KeyEventListener) this::textAreaKeyEventListener);
+
+        textArea.getTextAreaField().getListenerMap().addListener(DropEvent.class, e->{
+            String text = textArea.getTextAreaField().getTextState().getText();
+            StringBuilder t = new StringBuilder(text);
+            List<String> files = e.getFiles();
+            for (String file : files) {
+                t.append(file).append("\n");
+            }
+            textArea.getTextAreaField().getTextState().setText(t.toString());
+            textArea.getTextAreaField().getTextState().setCaretPosition(t.length()-1);
+        });
+
+        Label passLabel = new Label("Password:", 420, 390, 150, 15);
+        this.add(passLabel);
+        PasswordInput caretp = new PasswordInput(420, 405, 150, 20);
+        caretp.getStyle().setHorizontalAlign(CENTER);
+        this.add(caretp);
+
+        TextInput inpur = new TextInput(420, 430, 50, 35);
+        inpur.getTextState().setText("00");
+        inpur.getStyle().setFontSize(35f);
+        inpur.getStyle().setHorizontalAlign(CENTER);
+        inpur.getStyle().setVerticalAlign(MIDDLE);
+        inpur.getStyle().getBackground().setColor(ColorConstants.white());
+        this.add(inpur);
+
+        createSelectBox();
+
+        this.add(createToggleButtonWithLongTooltip());
+        //@formatter:on
+
+        this.add(createSwitchThemeButton());
+
+        this.add(createShadowWidget());
+    }
+
+    private void createSelectBox() {
+        SelectBox<Object> selectBox = new SelectBox<>(20, 260, 100, 20);
+        selectBox.addElement(0.25f);
+        selectBox.addElement(0.5d);
+        selectBox.addElement(1);
+        selectBox.addElement("MyText");
+        selectBox.addElement(new Long(2L));
+        selectBox.setVisibleCount(7);
+        selectBox.setElementHeight(20);
+        selectBox.addSelectBoxChangeSelectionEventListener((SelectBoxChangeSelectionEventListener<Object>) event -> {
+            Dialog dialog = new Dialog("SelectBox clicked", 300, 100);
+            Label valueLabel = new Label("Value: " + event.getNewValue().toString(), 10, 10, 300, 20);
+            dialog.getContainer().add(valueLabel);
+            Label classLabel = new Label("Class: " + event.getNewValue().getClass().getName(), 10, 30, 300, 20);
+            dialog.getContainer().add(classLabel);
+            dialog.show(event.getFrame());
+        });
+        this.add(selectBox);
+
+        Button sbb = new Button("Add element", 130, 260, 70, 20);
+        sbb.getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
+            if (event.getAction() == CLICK) {
+                selectBox.addElement("Dynamic#" + selectBox.getElements().size());
+            }
+        });
+        this.add(sbb);
+    }
+
+    private void createThirdScrollBar() {
+        ScrollBar scrollBar2 = new ScrollBar(250, 280, 100, 20, 20);
+        scrollBar2.setOrientation(Orientation.HORIZONTAL);
+        scrollBar2.setVisibleAmount(20);
+        scrollBar2.setArrowsEnabled(true);
+        scrollBar2.getStyle().setBorder(new SimpleLineBorder(ColorConstants.black(), 1));
+        scrollBar2.getStyle().getBackground().setColor(ColorConstants.darkGray());
+        scrollBar2.setScrollColor(ColorConstants.white());
+        scrollBar2.setArrowColor(ColorConstants.white());
+        this.add(scrollBar2);
+    }
+
+    private void createSecondScrollBar() {
+        ScrollBar scrollBar11 = new ScrollBar(385, 170, 7, 100, 20);
+        scrollBar11.setOrientation(Orientation.VERTICAL);
+        scrollBar11.setVisibleAmount(20);
+        scrollBar11.setArrowsEnabled(false);
+        scrollBar11.getStyle().getBackground().setColor(ColorConstants.white());
+        scrollBar11.setScrollColor(ColorConstants.darkGray());
+        scrollBar11.getStyle().setBorder(new SimpleLineBorder(ColorConstants.darkGray(), 1));
+        scrollBar11.getStyle().setBorderRadius(null);
+        this.add(scrollBar11);
+    }
+
+    private void createFirstScrollBar() {
+        ScrollBar scrollBar1 = new ScrollBar(360, 170, 20, 100, 20);
+        scrollBar1.setOrientation(Orientation.VERTICAL);
+        scrollBar1.setVisibleAmount(20);
+        scrollBar1.setArrowsEnabled(true);
+        scrollBar1.getStyle().getBackground().setColor(ColorConstants.white());
+        scrollBar1.setScrollColor(ColorConstants.darkGray());
+        scrollBar1.setArrowColor(ColorConstants.darkGray());
+        scrollBar1.getStyle().setBorder(new SimpleLineBorder(ColorConstants.red(), 1));
+        this.add(scrollBar1);
+    }
+
+    private void createWidgetsWithSomeButtons() {
         Widget widget = new Widget("Hello widget", 250, 170, 100, 100);
         widget.setTitleHeight(20);
         widget.getTitleContainer().getStyle().getBackground().setColor(ColorConstants.lightGreen());
@@ -334,160 +457,84 @@ public class ExampleGui extends Panel {
         widget3.getStyle().setMinHeight(50f);
         widget3.getStyle().setMaxWidth(400f);
         widget3.getStyle().setMaxHeight(150f);
+    }
 
-        ScrollBar scrollBar1 = new ScrollBar(360, 170, 20, 100, 20);
-        scrollBar1.setOrientation(Orientation.VERTICAL);
-        scrollBar1.setVisibleAmount(20);
-        scrollBar1.setArrowsEnabled(true);
-        scrollBar1.getStyle().getBackground().setColor(ColorConstants.white());
-        scrollBar1.setScrollColor(ColorConstants.darkGray());
-        scrollBar1.setArrowColor(ColorConstants.darkGray());
-        scrollBar1.getStyle().setBorder(new SimpleLineBorder(ColorConstants.red(), 1));
-        this.add(scrollBar1);
+    private Slider createSecondSlider() {
+        Slider slider2 = new Slider(220, 90, 20, 100, 50f);
+        slider2.setOrientation(Orientation.VERTICAL);
+        this.add(slider2);
+        return slider2;
+    }
 
-        ScrollBar scrollBar11 = new ScrollBar(385, 170, 7, 100, 20);
-        scrollBar11.setOrientation(Orientation.VERTICAL);
-        scrollBar11.setVisibleAmount(20);
-        scrollBar11.setArrowsEnabled(false);
-        scrollBar11.getStyle().getBackground().setColor(ColorConstants.white());
-        scrollBar11.setScrollColor(ColorConstants.darkGray());
-        scrollBar11.getStyle().setBorder(new SimpleLineBorder(ColorConstants.darkGray(), 1));
-        scrollBar11.getStyle().setBorderRadius(null);
-        this.add(scrollBar11);
-
-        ScrollBar scrollBar2 = new ScrollBar(250, 280, 100, 20, 20);
-        scrollBar2.setOrientation(Orientation.HORIZONTAL);
-        scrollBar2.setVisibleAmount(20);
-        scrollBar2.setArrowsEnabled(true);
-        scrollBar2.getStyle().setBorder(new SimpleLineBorder(ColorConstants.black(), 1));
-        scrollBar2.getStyle().getBackground().setColor(ColorConstants.darkGray());
-        scrollBar2.setScrollColor(ColorConstants.white());
-        scrollBar2.setArrowColor(ColorConstants.white());
-        this.add(scrollBar2);
-
-        Panel panel1 = new Panel(420, 170, 100, 100);
-        panel1.getStyle().getBackground().setColor(ColorConstants.blue());
-        this.add(panel1);
-        Panel panel2 = new Panel(470, 170, 100, 100);
-        panel2.getStyle().getBackground().setColor(ColorConstants.green());
-        this.add(panel2);
-
-        createButtonWithTooltip().getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
-            MouseClickEvent.MouseClickAction action = event.getAction();
-            if (CLICK == action) {
-                mouseTargetLabel.getStyle().setDisplay(mouseTargetLabel.isVisible() ? Style.DisplayType.NONE : Style.DisplayType.MANUAL);
-            }
-            if (RELEASE == action) {
-                System.out.println("RELEASE");
-            }
-            if (PRESS == action) {
-                System.out.println("PRESS");
-            }
+    private Slider createFirstSlider() {
+        Slider slider1 = new Slider(250, 90, 100, 20);
+        slider1.setMinValue(-1f);
+        slider1.setMaxValue(1f);
+        slider1.setStepSize(.1f);
+        slider1.setValue(0f);
+        final Tooltip slider1Tooltip = new Tooltip();
+        slider1Tooltip.setSize(100, 20);
+        slider1Tooltip.setPosition(slider1.getSize().x + 2, 0);
+        slider1Tooltip.getTextState().setText("Value: " + String.format("%.2f", slider1.getValue()));
+        slider1.addSliderChangeValueEventListener((SliderChangeValueEventListener) event -> {
+            slider1Tooltip.getTextState().setText(String.format("Value: %.2f", event.getNewValue()));
+            slider1Tooltip.setSize(100, 20);
         });
+        slider1.setTooltip(slider1Tooltip);
+        this.add(slider1);
+        return slider1;
+    }
 
-        ScrollablePanel scrollablePanel = new ScrollablePanel(420, 10, 250, 150);
-        scrollablePanel.getStyle().getBackground().setColor(1, 1, 1, 1);
-        scrollablePanel.getContainer().setSize(300, 200);
+    private void createProgressBar() {
+        ProgressBar progressBar = new ProgressBar(250, 10, 100, 10);
+        progressBar.setValue(50);
+        this.add(progressBar);
+    }
 
-        ScrollablePanel scp = new ScrollablePanel(10, 10, 150, 100);
-        scp.getContainer().setSize(300, 300);
+    private void createRadioButtons() {
+        RadioButtonGroup radioButtonGroup = new RadioButtonGroup();
 
-        scp.getContainer().add(new TextInput("Hello Scrollable", 10, 10, 150, 20));
+        RadioButton radioButton1 = new RadioButton(250, 30, 100, 20);
+        RadioButton radioButton2 = new RadioButton(250, 60, 100, 20);
 
-        scrollablePanel.getContainer().add(scp);
-        this.add(scrollablePanel);
+        radioButton1.setChecked(true);
+        radioButton2.setChecked(false);
 
-        slider2.getListenerMap().addListener(SliderChangeValueEvent.class,
-                                             (SliderChangeValueEventListener) event -> scrollablePanel
-                                                 .setHorizontalScrollBarHeight(event.getNewValue() / 2f + 10)
-                                            );
-        slider1.getListenerMap().addListener(SliderChangeValueEvent.class,
-                                             (SliderChangeValueEventListener) event -> scrollablePanel.getHorizontalScrollBar()
-                                                 .setArrowSize(event.getNewValue() / 4f + 10)
-                                            );
+        radioButton1.setRadioButtonGroup(radioButtonGroup);
+        radioButton2.setRadioButtonGroup(radioButtonGroup);
 
-        textArea = new TextArea(420, 280, 150, 100);
-        textArea.getTextState().setText("ABC DEF GH\r\nI JKL MNO PQR\nSTU VWXYZ");
-        textArea.setCaretPosition(12);
-        textArea.getTextAreaField().getStyle().setHorizontalAlign(CENTER);
-        textArea.getTextAreaField().getStyle().setVerticalAlign(BOTTOM);
-        this.add(textArea);
+        this.add(radioButton1);
+        this.add(radioButton2);
+    }
 
-        textArea.getTextAreaField().getListenerMap().addListener(KeyEvent.class, (KeyEventListener) event -> {
-            if (event.getKey() == GLFW.GLFW_KEY_F1 && event.getAction() == GLFW.GLFW_RELEASE) {
-                textArea.getTextAreaField().getStyle().setHorizontalAlign(LEFT);
-            } else if (event.getKey() == GLFW.GLFW_KEY_F2 && event.getAction() == GLFW.GLFW_RELEASE) {
-                textArea.getTextAreaField().getStyle().setHorizontalAlign(CENTER);
-            } else if (event.getKey() == GLFW.GLFW_KEY_F3 && event.getAction() == GLFW.GLFW_RELEASE) {
-                textArea.getTextAreaField().getStyle().setHorizontalAlign(RIGHT);
-            } else if (event.getKey() == GLFW.GLFW_KEY_F5 && event.getAction() == GLFW.GLFW_RELEASE) {
-                textArea.getTextAreaField().getStyle().setVerticalAlign(TOP);
-            } else if (event.getKey() == GLFW.GLFW_KEY_F6 && event.getAction() == GLFW.GLFW_RELEASE) {
-                textArea.getTextAreaField().getStyle().setVerticalAlign(MIDDLE);
-            } else if (event.getKey() == GLFW.GLFW_KEY_F7 && event.getAction() == GLFW.GLFW_RELEASE) {
-                textArea.getTextAreaField().getStyle().setVerticalAlign(BOTTOM);
-            } else if (event.getKey() == GLFW.GLFW_KEY_F8 && event.getAction() == GLFW.GLFW_RELEASE) {
-                textArea.getTextAreaField().getStyle().setVerticalAlign(BASELINE);
-            }
-        });
-
-        textArea.getTextAreaField().getListenerMap().addListener(DropEvent.class, e->{
-            String text = textArea.getTextAreaField().getTextState().getText();
-            StringBuilder t = new StringBuilder(text);
-            List<String> files = e.getFiles();
-            for (String file : files) {
-                t.append(file).append("\n");
-            }
-            textArea.getTextAreaField().getTextState().setText(t.toString());
-            textArea.getTextAreaField().getTextState().setCaretPosition(t.length()-1);
-        });
-
-        Label passLabel = new Label("Password:", 420, 390, 150, 15);
-        this.add(passLabel);
-        PasswordInput caretp = new PasswordInput(420, 405, 150, 20);
-        caretp.getStyle().setHorizontalAlign(CENTER);
-        this.add(caretp);
-
-        TextInput inpur = new TextInput(420, 430, 50, 35);
-        inpur.getTextState().setText("00");
-        inpur.getStyle().setFontSize(35f);
-        inpur.getStyle().setHorizontalAlign(CENTER);
-        inpur.getStyle().setVerticalAlign(MIDDLE);
-        inpur.getStyle().getBackground().setColor(ColorConstants.white());
-        this.add(inpur);
-
-        SelectBox<Object> selectBox = new SelectBox<>(20, 260, 100, 20);
-        selectBox.addElement(0.25f);
-        selectBox.addElement(0.5d);
-        selectBox.addElement(1);
-        selectBox.addElement("MyText");
-        selectBox.addElement(new Long(2L));
-        selectBox.setVisibleCount(7);
-        selectBox.setElementHeight(20);
-        selectBox.addSelectBoxChangeSelectionEventListener((SelectBoxChangeSelectionEventListener<Object>) event -> {
-            Dialog dialog = new Dialog("SelectBox clicked", 300, 100);
-            Label valueLabel = new Label("Value: " + event.getNewValue().toString(), 10, 10, 300, 20);
-            dialog.getContainer().add(valueLabel);
-            Label classLabel = new Label("Class: " + event.getNewValue().getClass().getName(), 10, 30, 300, 20);
-            dialog.getContainer().add(classLabel);
-            dialog.show(event.getFrame());
-        });
-        this.add(selectBox);
-
-        Button sbb = new Button("Add element", 130, 260, 70, 20);
-        sbb.getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
-            if (event.getAction() == CLICK) {
-                selectBox.addElement("Dynamic#" + selectBox.getElements().size());
-            }
-        });
-        this.add(sbb);
-
-        this.add(createToggleButtonWithLongTooltip());
-        //@formatter:on
-
-        this.add(createSwitchThemeButton());
-
-        this.add(createShadowWidget());
+    private void createNinePanels() {
+        Panel p1 = new Panel(1 * 20, 10, 10, 10);
+        this.add(p1);
+        p1.getListenerMap().addListener(FocusEvent.class, (FocusEventListener) System.out::println);
+        Panel p2 = new Panel(2 * 20, 10, 10, 10);
+        this.add(p2);
+        p2.getListenerMap().addListener(FocusEvent.class, (FocusEventListener) System.out::println);
+        Panel p3 = new Panel(3 * 20, 10, 10, 10);
+        this.add(p3);
+        p3.getListenerMap().addListener(FocusEvent.class, (FocusEventListener) System.out::println);
+        Panel p4 = new Panel(4 * 20, 10, 10, 10);
+        this.add(p4);
+        p4.getListenerMap().addListener(FocusEvent.class, (FocusEventListener) System.out::println);
+        Panel p5 = new Panel(5 * 20, 10, 10, 10);
+        this.add(p5);
+        p5.getListenerMap().addListener(FocusEvent.class, (FocusEventListener) System.out::println);
+        Panel p6 = new Panel(6 * 20, 10, 10, 10);
+        this.add(p6);
+        p6.getListenerMap().addListener(FocusEvent.class, (FocusEventListener) System.out::println);
+        Panel p7 = new Panel(7 * 20, 10, 10, 10);
+        this.add(p7);
+        p7.getListenerMap().addListener(FocusEvent.class, (FocusEventListener) System.out::println);
+        Panel p8 = new Panel(8 * 20, 10, 10, 10);
+        this.add(p8);
+        p8.getListenerMap().addListener(FocusEvent.class, (FocusEventListener) System.out::println);
+        Panel p9 = new Panel(9 * 20, 10, 10, 10);
+        this.add(p9);
+        p9.getListenerMap().addListener(FocusEvent.class, (FocusEventListener) System.out::println);
     }
 
     public CheckBox getGenerateEventsByLayoutManager() {
@@ -872,5 +919,27 @@ public class ExampleGui extends Panel {
 
     public Label getDebugLabel() {
         return debugLabel;
+    }
+
+    public void update() {
+        splitPanel.getTopLeft();
+    }
+
+    private void textAreaKeyEventListener(KeyEvent event) {
+        if (event.getKey() == GLFW.GLFW_KEY_F1 && event.getAction() == GLFW.GLFW_RELEASE) {
+            textArea.getTextAreaField().getStyle().setHorizontalAlign(LEFT);
+        } else if (event.getKey() == GLFW.GLFW_KEY_F2 && event.getAction() == GLFW.GLFW_RELEASE) {
+            textArea.getTextAreaField().getStyle().setHorizontalAlign(CENTER);
+        } else if (event.getKey() == GLFW.GLFW_KEY_F3 && event.getAction() == GLFW.GLFW_RELEASE) {
+            textArea.getTextAreaField().getStyle().setHorizontalAlign(RIGHT);
+        } else if (event.getKey() == GLFW.GLFW_KEY_F5 && event.getAction() == GLFW.GLFW_RELEASE) {
+            textArea.getTextAreaField().getStyle().setVerticalAlign(TOP);
+        } else if (event.getKey() == GLFW.GLFW_KEY_F6 && event.getAction() == GLFW.GLFW_RELEASE) {
+            textArea.getTextAreaField().getStyle().setVerticalAlign(MIDDLE);
+        } else if (event.getKey() == GLFW.GLFW_KEY_F7 && event.getAction() == GLFW.GLFW_RELEASE) {
+            textArea.getTextAreaField().getStyle().setVerticalAlign(BOTTOM);
+        } else if (event.getKey() == GLFW.GLFW_KEY_F8 && event.getAction() == GLFW.GLFW_RELEASE) {
+            textArea.getTextAreaField().getStyle().setVerticalAlign(BASELINE);
+        }
     }
 }

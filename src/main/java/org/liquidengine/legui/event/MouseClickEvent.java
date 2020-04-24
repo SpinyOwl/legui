@@ -1,5 +1,12 @@
 package org.liquidengine.legui.event;
 
+import static org.lwjgl.glfw.GLFW.GLFW_MOD_ALT;
+import static org.lwjgl.glfw.GLFW.GLFW_MOD_CAPS_LOCK;
+import static org.lwjgl.glfw.GLFW.GLFW_MOD_CONTROL;
+import static org.lwjgl.glfw.GLFW.GLFW_MOD_NUM_LOCK;
+import static org.lwjgl.glfw.GLFW.GLFW_MOD_SHIFT;
+import static org.lwjgl.glfw.GLFW.GLFW_MOD_SUPER;
+
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -10,8 +17,6 @@ import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.input.Mouse;
 import org.liquidengine.legui.input.Mouse.MouseButton;
 import org.liquidengine.legui.system.context.Context;
-
-import static org.lwjgl.glfw.GLFW.*;
 
 /**
  * Created by ShchAlexander on 2/10/2017.
@@ -42,10 +47,20 @@ public class MouseClickEvent<T extends Component> extends Event<T> {
         return button;
     }
 
+    /**
+     * Cursor position in button coordinates.
+     *
+     * @return cursor position in button coordinates.
+     */
     public Vector2f getPosition() {
         return position;
     }
 
+    /**
+     * Cursor position in frame coordinates.
+     *
+     * @return cursor position in frame coordinates.
+     */
     public Vector2f getAbsolutePosition() {
         return absolutePosition;
     }
@@ -78,12 +93,6 @@ public class MouseClickEvent<T extends Component> extends Event<T> {
         return (mods & GLFW_MOD_NUM_LOCK) != 0;
     }
 
-    public enum MouseClickAction {
-        PRESS,
-        CLICK,
-        RELEASE,;
-    }
-
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
@@ -98,9 +107,13 @@ public class MouseClickEvent<T extends Component> extends Event<T> {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
+        if (this == o) {
+            return true;
+        }
 
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         MouseClickEvent<?> that = (MouseClickEvent<?>) o;
 
@@ -124,5 +137,12 @@ public class MouseClickEvent<T extends Component> extends Event<T> {
             .append(absolutePosition)
             .append(mods)
             .toHashCode();
+    }
+
+    public enum MouseClickAction {
+        PRESS,
+        CLICK,
+        RELEASE,
+        ;
     }
 }

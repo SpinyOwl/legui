@@ -41,10 +41,11 @@ public class NvgButtonRenderer extends NvgDefaultComponentRenderer<Button> {
             VerticalAlign verticalAlign = getStyle(component, Style::getVerticalAlign, VerticalAlign.MIDDLE);
             Float fontSize = getStyle(component, Style::getFontSize, 16F);
             drawTextLineToRect(nanovg, rect, true,
-                               horizontalAlign, verticalAlign, fontSize,
-                               getStyle(component, Style::getFont, FontRegistry.getDefaultFont()),
-                               textState.getText(),
-                               getStyle(component, Style::getTextColor));
+                    horizontalAlign, verticalAlign, fontSize,
+                    getStyle(component, Style::getFont, FontRegistry.getDefaultFont()),
+                    textState.getText(),
+                    getStyle(component, Style::getTextColor),
+                    component.getTextDirection());
 
             float[] textBounds = calculateTextBoundsRect(nanovg, rect, textState.getText(), horizontalAlign, verticalAlign, fontSize);
             textState.setTextWidth(textBounds[2]);

@@ -327,11 +327,7 @@ public class Widget extends Component {
         minimizeButton.getStyle().setHorizontalAlign(HorizontalAlign.CENTER);
 
         container = new Panel();
-        container.setTabFocusable(false);
-        // flex
-        container.getStyle().getFlexStyle().setFlexShrink(1);
-        container.getStyle().getFlexStyle().setFlexGrow(1);
-        container.getStyle().setPosition(PositionType.RELATIVE);
+        applyStylesToContainer(container);
 
         titleContainer.add(this.title);
         titleContainer.add(minimizeButton);
@@ -356,6 +352,13 @@ public class Widget extends Component {
         this.add(resizeButton);
 
         Themes.getDefaultTheme().getThemeManager().getComponentTheme(Widget.class).applyAll(this);
+    }
+
+    private void applyStylesToContainer(Component container) {
+        container.setTabFocusable(false);
+        container.getStyle().getFlexStyle().setFlexShrink(1);
+        container.getStyle().getFlexStyle().setFlexGrow(1);
+        container.getStyle().setPosition(PositionType.RELATIVE);
     }
 
     /**
@@ -495,7 +498,8 @@ public class Widget extends Component {
     public void setContainer(Component container) {
         this.remove(this.container);
         this.container = container;
-        this.add(this.container);
+        this.add(1, this.container);
+        applyStylesToContainer(this.container);
     }
 
     /**

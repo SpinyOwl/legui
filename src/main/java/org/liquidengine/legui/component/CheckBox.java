@@ -143,7 +143,9 @@ public class CheckBox extends Component implements TextComponent {
      * @param iconUnchecked checkbox icon for non-selected state to set.
      */
     public void setIconUnchecked(Icon iconUnchecked) {
-        this.iconUnchecked = iconUnchecked;
+        if (iconUnchecked != null) {
+            this.iconUnchecked = iconUnchecked;
+        }
     }
 
     /**

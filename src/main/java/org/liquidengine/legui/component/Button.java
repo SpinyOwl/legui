@@ -9,6 +9,7 @@ import org.joml.Vector2f;
 import org.liquidengine.legui.component.event.button.ButtonContentChangeEvent;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
+import org.liquidengine.legui.style.font.TextDirection;
 import org.liquidengine.legui.listener.processor.EventProcessorProvider;
 import org.liquidengine.legui.theme.Themes;
 
@@ -25,6 +26,11 @@ public class Button extends Component implements TextComponent {
      * Button text state.
      */
     private TextState textState;
+
+    /**
+     * Used to set text direction (vertical, horizontal).
+     */
+    private TextDirection textDirection = TextDirection.HORIZONTAL;
 
     /**
      * Creates a button with default text.
@@ -143,5 +149,13 @@ public class Button extends Component implements TextComponent {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
             .append("textState", textState)
             .toString();
+    }
+
+    public TextDirection getTextDirection() {
+        return textDirection;
+    }
+
+    public void setTextDirection(TextDirection textDirection) {
+        this.textDirection = textDirection;
     }
 }
