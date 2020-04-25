@@ -4,6 +4,8 @@ import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.component.TextInput;
 import org.liquidengine.legui.component.event.textinput.TextInputContentChangeEvent;
 import org.liquidengine.legui.component.optional.TextState;
+import org.liquidengine.legui.config.Configuration;
+import org.liquidengine.legui.config.KeyConfig;
 import org.liquidengine.legui.event.KeyEvent;
 import org.liquidengine.legui.listener.KeyEventListener;
 import org.liquidengine.legui.listener.processor.EventProcessorProvider;
@@ -36,6 +38,13 @@ public class TextInputKeyEventListener implements KeyEventListener {
     }
 
     private void processKeys(KeyEvent event, TextInput gui) {
+        KeyConfig keyConfig = Configuration.getInstance().getKeyConfigMap().get(Configuration.getInstance().getKeyboardLayout());
+
+        Integer copyKey = keyConfig.getCopy();
+        Integer pasteKey = keyConfig.getPaste();
+        Integer cutKey = keyConfig.getCut();
+        Integer selectAllKey = keyConfig.getSelectAll();
+
         int mods = event.getMods();
         int key = event.getKey();
         if (key == GLFW_KEY_LEFT) {
@@ -50,15 +59,19 @@ public class TextInputKeyEventListener implements KeyEventListener {
             keyBackSpaceAction(gui, event.getContext(), event.getFrame(), mods);
         } else if (key == GLFW_KEY_DELETE) {
             keyDeleteAction(gui, event.getContext(), event.getFrame(), mods);
-        } else if (key == GLFW_KEY_V) {
+        } else if (isShortcut(event, pasteKey, GLFW_KEY_V)) {
             pasteAction(gui, event.getContext(), event.getFrame(), mods);
-        } else if (key == GLFW_KEY_C && isModControl(mods)) {
+        } else if (isShortcut(event, copyKey, GLFW_KEY_C)) {
             copyAction(gui, mods);
-        } else if (key == GLFW_KEY_X && isModControl(mods)) {
+        } else if (isShortcut(event, cutKey, GLFW_KEY_X)) {
             cutAction(gui, event.getContext(), event.getFrame(), mods);
-        } else if (key == GLFW_KEY_A && isModControl(mods)) {
+        } else if (isShortcut(event, selectAllKey, GLFW_KEY_A)) {
             selectAllAction(gui, mods);
         }
+    }
+
+    private boolean isShortcut(KeyEvent<?> event, Integer keyCode, int defaultKeyCode) {
+        return isModControl(event.getMods()) && (keyCode != null && event.getKey() == keyCode || event.getKey() == defaultKeyCode);
     }
 
     private boolean isModControl(int mods) {
