@@ -49,7 +49,7 @@ jobs:
         uses: rjstone/discord-webhook-notify@v1
         with:
           severity: info
-          color: '#f75b00'
+          color: '#808080'
           description: Build started on branch `${{env.branch}}`
           footer: "https://github.com/SpinyOwl/legui"
           webhookUrl:  ${{ secrets.WEBHOOK_URL }}
