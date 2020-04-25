@@ -51,7 +51,7 @@ jobs:
           severity: info
           color: '#f75b00'
           description: Build started on branch `${{env.branch}}`
-          footer: "Open in GitHub: https://github.com/SpinyOwl/repo/tree/${{env.branch}}"
+          footer: "https://github.com/SpinyOwl/legui"
           webhookUrl:  ${{ secrets.WEBHOOK_URL }}
       
       # PREPARE AND BUILD
@@ -107,11 +107,11 @@ jobs:
         if: success() && !contains(github.event.head_commit.message, '[skip publish]')
         with:
           severity: info
-          details: >
-            "Build successfully finished on branch `${{env.branch}}`.\n
-            **Artifact version** - `${{env.version}}`.\n
-            Open in GitHub: [Open repository](${{env.repoUrl}})"
-          footer: ""
+          details: |
+            Build successfully finished on branch `${{env.branch}}`.
+            **Artifact version** - `${{env.version}}`.
+            Open in GitHub: [Open repository](${{env.repoUrl}})
+          footer: "https://github.com/SpinyOwl/legui"
           webhookUrl:  ${{ secrets.WEBHOOK_URL }}
 
       - name: send message build finished
@@ -119,10 +119,10 @@ jobs:
         if: success() && contains(github.event.head_commit.message, '[skip publish]')
         with:
           severity: info
-          description: >
-            "Build successfully finished on branch `${{env.branch}}`.\n
-            Open in GitHub: [Open repository](${{env.repoUrl}})"
-          footer: ""
+          description: |
+            Build successfully finished on branch `${{env.branch}}`.
+            Open in GitHub: [Open repository](${{env.repoUrl}})
+          footer: "https://github.com/SpinyOwl/legui"
           webhookUrl:  ${{ secrets.WEBHOOK_URL }}
 
       - name: send failure message
@@ -130,10 +130,10 @@ jobs:
         if: failure()
         with:
           severity: error
-          description: >
-            "Build failed on branch `${{env.branch}}`.\n
-            Open in GitHub: [Open repository](${{env.repoUrl}})"
-          footer: ""
+          description: |
+            Build failed on branch `${{env.branch}}`.
+            Open in GitHub: [Open repository](${{env.repoUrl}})
+          footer: "https://github.com/SpinyOwl/legui"
           webhookUrl:  ${{ secrets.WEBHOOK_URL }}
 
       - name: send cancelled message
@@ -141,8 +141,8 @@ jobs:
         if: cancelled()
         with:
           severity: warn
-          description: >
-            "Build cancelled on branch `${{env.branch}}`.\n
-            Open in GitHub: [Open repository](${{env.repoUrl}})"
-          footer: ""
+          description: |
+            Build cancelled on branch `${{env.branch}}`.
+            Open in GitHub: [Open repository](${{env.repoUrl}})
+          footer: "https://github.com/SpinyOwl/legui"
           webhookUrl:  ${{ secrets.WEBHOOK_URL }}
