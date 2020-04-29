@@ -27,7 +27,7 @@ public class LeguiException extends RuntimeException {
      * <i>not</i> automatically incorporated in this runtime exception's detail message.
      *
      * @param message the detail message (which is saved for later retrieval by the {@link #getMessage()} method).
-     * @param cause the cause (which is saved for later retrieval by the {@link #getCause()} method).  (A <b>null</b> value is permitted, and indicates that
+     * @param cause the cause (which is saved for later retrieval by the {@link #getCause()} method).  (A <tt>null</tt> value is permitted, and indicates that
      * the cause is nonexistent or unknown.)
      *
      * @since 1.4
@@ -37,11 +37,11 @@ public class LeguiException extends RuntimeException {
     }
 
     /**
-     * Constructs a new runtime exception with the specified cause and a detail message of <b>(cause==null ? null : cause.toString())</b> (which typically
-     * contains the class and detail message of <b>cause</b>).  This constructor is useful for runtime exceptions that are little more than wrappers for other
+     * Constructs a new runtime exception with the specified cause and a detail message of <tt>(cause==null ? null : cause.toString())</tt> (which typically
+     * contains the class and detail message of <tt>cause</tt>).  This constructor is useful for runtime exceptions that are little more than wrappers for other
      * throwables.
      *
-     * @param cause the cause (which is saved for later retrieval by the {@link #getCause()} method).  (A <b>null</b> value is permitted, and indicates that
+     * @param cause the cause (which is saved for later retrieval by the {@link #getCause()} method).  (A <tt>null</tt> value is permitted, and indicates that
      * the cause is nonexistent or unknown.)
      *
      * @since 1.4
