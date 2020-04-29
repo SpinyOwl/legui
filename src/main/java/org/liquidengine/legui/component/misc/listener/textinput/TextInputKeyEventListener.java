@@ -7,6 +7,7 @@ import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.config.Configuration;
 import org.liquidengine.legui.config.KeyConfig;
 import org.liquidengine.legui.event.KeyEvent;
+import org.liquidengine.legui.input.Keyboard;
 import org.liquidengine.legui.listener.KeyEventListener;
 import org.liquidengine.legui.listener.processor.EventProcessorProvider;
 import org.liquidengine.legui.system.Clipboard;
@@ -38,7 +39,11 @@ public class TextInputKeyEventListener implements KeyEventListener {
     }
 
     private void processKeys(KeyEvent event, TextInput gui) {
-        KeyConfig keyConfig = Configuration.getInstance().getKeyConfigMap().get(Configuration.getInstance().getKeyboardLayout());
+        String keyboardLayout = Configuration.getInstance().getCurrentKeyboardLayout();
+        Keyboard keyboard = Keyboard.getKeyboard(keyboardLayout);
+
+        Configuration.Shortcuts shortcuts = Configuration.getInstance().getShortcuts();
+        Configuration.Shortcut copy = shortcuts.getCopy();
 
         Integer copyKey = keyConfig.getCopy();
         Integer pasteKey = keyConfig.getPaste();

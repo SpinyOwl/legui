@@ -3,14 +3,17 @@ package org.liquidengine.legui.config;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.liquidengine.leutil.io.IOUtil;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 public class Configuration {
     private static final Logger LOGGER = LogManager.getLogger();
@@ -24,27 +27,26 @@ public class Configuration {
     /**
      * Defines keyboard layout configuration to use.
      */
-    private String keyboardLayout;
+    private String currentKeyboardLayout;
+
+    /**
+     * Set of shortcuts used in application.
+     */
+    private Shortcuts shortcuts;
+
     /**
      * Map that contains key configurations per keyboard layout.
      */
-    private Map<String, KeyConfig> keyConfigMap;
+    private Map<String, Map<String, Integer>> keyboardLayouts;
 
     private static void initialize() {
         Gson gson = new Gson();
         try {
+            String defaultConfig = new String(IOUtil.resourceToByteBuffer("defaultConfig.json").array(), StandardCharsets.UTF_8);
             String config = new String(IOUtil.resourceToByteBuffer("config.json").array(), StandardCharsets.UTF_8);
 
-            Configuration defaultConfig = new Configuration();
-            HashMap<String, KeyConfig> map = new HashMap<>();
-            map.put("qwerty", new KeyConfig());
-            map.put("йцукен", new KeyConfig());
-            map.put("azerty", new KeyConfig(67, 86, 81, 88));
-            defaultConfig.keyConfigMap = map;
-            defaultConfig.keyboardLayout = "qwerty";
-
-            JsonObject initial = gson.toJsonTree(defaultConfig).getAsJsonObject();
-            JsonObject imported = gson.fromJson(config, JsonElement.class).getAsJsonObject();
+            JsonObject initial = gson.fromJson(defaultConfig, JsonObject.class);
+            JsonObject imported = gson.fromJson(config, JsonObject.class);
 
             merge(initial, imported);
 
@@ -73,19 +75,99 @@ public class Configuration {
         Configuration.instance = instance;
     }
 
-    public String getKeyboardLayout() {
-        return keyboardLayout;
+    public String getCurrentKeyboardLayout() {
+        return currentKeyboardLayout;
     }
 
-    public void setKeyboardLayout(String keyboardLayout) {
-        this.keyboardLayout = keyboardLayout;
+    public void setCurrentKeyboardLayout(String currentKeyboardLayout) {
+        this.currentKeyboardLayout = currentKeyboardLayout;
     }
 
-    public Map<String, KeyConfig> getKeyConfigMap() {
-        return keyConfigMap;
+    public Map<String, Map<String, Integer>> getKeyboardLayouts() {
+        return keyboardLayouts;
     }
 
-    public void setKeyConfigMap(Map<String, KeyConfig> keyConfigMap) {
-        this.keyConfigMap = keyConfigMap;
+    public void setKeyboardLayouts(Map<String, Map<String, Integer>> keyboardLayouts) {
+        this.keyboardLayouts = keyboardLayouts;
     }
+
+    public Shortcuts getShortcuts() {
+        return shortcuts;
+    }
+
+    public void setShortcuts(Shortcuts shortcuts) {
+        this.shortcuts = shortcuts;
+    }
+
+    public static class Shortcuts {
+        private Shortcut copy;
+        private Shortcut paste;
+        private Shortcut cut;
+        private Shortcut selectAll;
+
+        public Shortcut getCopy() {
+            return copy;
+        }
+
+        public void setCopy(Shortcut copy) {
+            this.copy = copy;
+        }
+
+        public Shortcut getPaste() {
+            return paste;
+        }
+
+        public void setPaste(Shortcut paste) {
+            this.paste = paste;
+        }
+
+        public Shortcut getCut() {
+            return cut;
+        }
+
+        public void setCut(Shortcut cut) {
+            this.cut = cut;
+        }
+
+        public Shortcut getSelectAll() {
+            return selectAll;
+        }
+
+        public void setSelectAll(Shortcut selectAll) {
+            this.selectAll = selectAll;
+        }
+    }
+
+    public static class Shortcut {
+        private String key;
+        private Set<Mod> mods;
+
+        public Shortcut(String key, Set<Mod> mods) {
+            this.key = key;
+            this.mods = mods;
+        }
+
+        public Shortcut(String key, Mod... mods) {
+            this.key = key;
+            this.mods = new HashSet<>(Arrays.asList(mods));
+        }
+
+        public String getKey() {
+            return key;
+        }
+
+        public void setKey(String key) {
+            this.key = key;
+        }
+
+        public Set<Mod> getMods() {
+            return mods;
+        }
+
+        public void setMods(Set<Mod> mods) {
+            this.mods = mods;
+        }
+
+    }
+
 }
