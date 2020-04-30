@@ -1,125 +1,141 @@
 package org.liquidengine.legui.input;
 
-public class KeyCode {
-    private static final String keyUnknown = "Unknown";
-    private static final String keySpace = "Space";
-    private static final String keyApostrophe = "Apostrophe";
-    private static final String keyComma = "Comma";
-    private static final String keyMinus = "Minus";
-    private static final String keyPeriod = "Period";
-    private static final String keySlash = "Slash";
-    private static final String key0 = "0";
-    private static final String key1 = "1";
-    private static final String key2 = "2";
-    private static final String key3 = "3";
-    private static final String key4 = "4";
-    private static final String key5 = "5";
-    private static final String key6 = "6";
-    private static final String key7 = "7";
-    private static final String key8 = "8";
-    private static final String key9 = "9";
-    private static final String keySemicolon = "Semicolon";
-    private static final String keyEqual = "Equal";
-    private static final String keyA = "A";
-    private static final String keyB = "B";
-    private static final String keyC = "C";
-    private static final String keyD = "D";
-    private static final String keyE = "E";
-    private static final String keyF = "F";
-    private static final String keyG = "G";
-    private static final String keyH = "H";
-    private static final String keyI = "I";
-    private static final String keyJ = "J";
-    private static final String keyK = "K";
-    private static final String keyL = "L";
-    private static final String keyM = "M";
-    private static final String keyN = "N";
-    private static final String keyO = "O";
-    private static final String keyP = "P";
-    private static final String keyQ = "Q";
-    private static final String keyR = "R";
-    private static final String keyS = "S";
-    private static final String keyT = "T";
-    private static final String keyU = "U";
-    private static final String keyV = "V";
-    private static final String keyW = "W";
-    private static final String keyX = "X";
-    private static final String keyY = "Y";
-    private static final String keyZ = "Z";
-    private static final String keyLeftBracket = "LeftBracket";
-    private static final String keyBackslash = "Backslash";
-    private static final String keyRightBracket = "RightBracket";
-    private static final String keyGraveAccent = "GraveAccent";
-    private static final String keyWorld1 = "World1";
-    private static final String keyWorld2 = "World2";
-    private static final String keyEscape = "Escape";
-    private static final String keyEnter = "Enter";
-    private static final String keyTab = "Tab";
-    private static final String keyBackspace = "Backspace";
-    private static final String keyInsert = "Insert";
-    private static final String keyDelete = "Delete";
-    private static final String keyRight = "Right";
-    private static final String keyLeft = "Left";
-    private static final String keyDown = "Down";
-    private static final String keyUp = "Up";
-    private static final String keyPageUp = "PageUp";
-    private static final String keyPageDown = "PageDown";
-    private static final String keyHome = "Home";
-    private static final String keyEnd = "End";
-    private static final String keyCapsLock = "CapsLock";
-    private static final String keyScrollLock = "ScrollLock";
-    private static final String keyNumLock = "NumLock";
-    private static final String keyPrintScreen = "PrintScreen";
-    private static final String keyPause = "Pause";
-    private static final String keyF1 = "F1";
-    private static final String keyF2 = "F2";
-    private static final String keyF3 = "F3";
-    private static final String keyF4 = "F4";
-    private static final String keyF5 = "F5";
-    private static final String keyF6 = "F6";
-    private static final String keyF7 = "F7";
-    private static final String keyF8 = "F8";
-    private static final String keyF9 = "F9";
-    private static final String keyF10 = "F10";
-    private static final String keyF11 = "F11";
-    private static final String keyF12 = "F12";
-    private static final String keyF13 = "F13";
-    private static final String keyF14 = "F14";
-    private static final String keyF15 = "F15";
-    private static final String keyF16 = "F16";
-    private static final String keyF17 = "F17";
-    private static final String keyF18 = "F18";
-    private static final String keyF19 = "F19";
-    private static final String keyF20 = "F20";
-    private static final String keyF21 = "F21";
-    private static final String keyF22 = "F22";
-    private static final String keyF23 = "F23";
-    private static final String keyF24 = "F24";
-    private static final String keyF25 = "F25";
-    private static final String keyKp0 = "Kp0";
-    private static final String keyKp1 = "Kp1";
-    private static final String keyKp2 = "Kp2";
-    private static final String keyKp3 = "Kp3";
-    private static final String keyKp4 = "Kp4";
-    private static final String keyKp5 = "Kp5";
-    private static final String keyKp6 = "Kp6";
-    private static final String keyKp7 = "Kp7";
-    private static final String keyKp8 = "Kp8";
-    private static final String keyKp9 = "Kp9";
-    private static final String keyKpDecimal = "KpDecimal";
-    private static final String keyKpDivide = "KpDivide";
-    private static final String keyKpMultiply = "KpMultiply";
-    private static final String keyKpSubtract = "KpSubtract";
-    private static final String keyKpAdd = "KpAdd";
-    private static final String keyKpEnter = "KpEnter";
-    private static final String keyKpEqual = "KpEqual";
-    private static final String keyLeftShift = "LeftShift";
-    private static final String keyLeftControl = "LeftControl";
-    private static final String keyLeftAlt = "LeftAlt";
-    private static final String keyLeftSuper = "LeftSuper";
-    private static final String keyRightShift = "RightShift";
-    private static final String keyRightControl = "RightControl";
-    private static final String keyRightAlt = "RightAlt";
-    private static final String keyRightSuper = "RightSuper";
-    private static final String keyMenu = "Menu";
+import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
+
+import java.util.EnumMap;
+import java.util.Map;
+
+import static org.lwjgl.glfw.GLFW.*;
+
+/**
+ * <p> Key code is code value of the physical key represented by the event.</p>
+ * <p style="background-color:#FFAAAA; color: black;"><b>NOTE</b>: This ignores the user's keyboard layout, so that if the user presses the key at the "Y"
+ * position in a QWERTY keyboard layout (near the middle of the row above the home row), this will always return "KeyY",
+ * even if the user has a QWERTZ keyboard (which would mean the user expects a "Z" and all the other properties
+ * would indicate a "Z") or a Dvorak keyboard layout (where the user would expect an "F").
+ * </p>
+ */
+public enum KeyCode {
+    UNKNOWN,
+    SPACE,
+    APOSTROPHE,
+    COMMA,
+    MINUS,
+    PERIOD,
+    SLASH,
+    KEY_0,
+    KEY_1,
+    KEY_2,
+    KEY_3,
+    KEY_4,
+    KEY_5,
+    KEY_6,
+    KEY_7,
+    KEY_8,
+    KEY_9,
+    SEMICOLON,
+    EQUAL,
+    KEY_A,
+    KEY_B,
+    KEY_C,
+    KEY_D,
+    KEY_E,
+    KEY_F,
+    KEY_G,
+    KEY_H,
+    KEY_I,
+    KEY_J,
+    KEY_K,
+    KEY_L,
+    KEY_M,
+    KEY_N,
+    KEY_O,
+    KEY_P,
+    KEY_Q,
+    KEY_R,
+    KEY_S,
+    KEY_T,
+    KEY_U,
+    KEY_V,
+    KEY_W,
+    KEY_X,
+    KEY_Y,
+    KEY_Z,
+    LEFT_BRACKET,
+    BACKSLASH,
+    RIGHT_BRACKET,
+    GRAVE_ACCENT,
+    WORLD_1,
+    WORLD_2,
+    ESCAPE,
+    ENTER,
+    TAB,
+    BACKSPACE,
+    INSERT,
+    DELETE,
+    RIGHT,
+    LEFT,
+    DOWN,
+    UP,
+    PAGE_UP,
+    PAGE_DOWN,
+    HOME,
+    END,
+    CAPS_LOCK,
+    SCROLL_LOCK,
+    NUM_LOCK,
+    PRINT_SCREEN,
+    PAUSE,
+    KEY_F1,
+    KEY_F2,
+    KEY_F3,
+    KEY_F4,
+    KEY_F5,
+    KEY_F6,
+    KEY_F7,
+    KEY_F8,
+    KEY_F9,
+    KEY_F10,
+    KEY_F11,
+    KEY_F12,
+    KEY_F13,
+    KEY_F14,
+    KEY_F15,
+    KEY_F16,
+    KEY_F17,
+    KEY_F18,
+    KEY_F19,
+    KEY_F20,
+    KEY_F21,
+    KEY_F22,
+    KEY_F23,
+    KEY_F24,
+    KEY_F25,
+    NUMPAD_0,
+    NUMPAD_1,
+    NUMPAD_2,
+    NUMPAD_3,
+    NUMPAD_4,
+    NUMPAD_5,
+    NUMPAD_6,
+    NUMPAD_7,
+    NUMPAD_8,
+    NUMPAD_9,
+    NUMPAD_DECIMAL,
+    NUMPAD_DIVIDE,
+    NUMPAD_MULTIPLY,
+    NUMPAD_SUBTRACT,
+    NUMPAD_ADD,
+    NUMPAD_ENTER,
+    NUMPAD_EQUAL,
+    LEFT_SHIFT,
+    LEFT_CONTROL,
+    LEFT_ALT,
+    LEFT_SUPER,
+    RIGHT_SHIFT,
+    RIGHT_CONTROL,
+    RIGHT_ALT,
+    RIGHT_SUPER,
+    KEY_MENU;
 }

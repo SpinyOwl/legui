@@ -6,7 +6,6 @@ import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.event.KeyEvent;
 import org.liquidengine.legui.listener.KeyEventListener;
 import org.liquidengine.legui.listener.processor.EventProcessorProvider;
-import org.liquidengine.legui.system.Clipboard;
 
 import static org.liquidengine.legui.util.TextUtil.findNextWord;
 import static org.liquidengine.legui.util.TextUtil.findPrevWord;
@@ -25,12 +24,12 @@ public class TextAreaFieldKeyEventListener implements KeyEventListener {
     @Override
     public void process(KeyEvent event) {
         if (
-            event.getKey() == GLFW_KEY_LEFT_SHIFT ||
-                event.getKey() == GLFW_KEY_RIGHT_SHIFT ||
-                event.getKey() == GLFW_KEY_LEFT_CONTROL ||
-                event.getKey() == GLFW_KEY_RIGHT_CONTROL ||
-                event.getKey() == GLFW_KEY_LEFT_ALT ||
-                event.getKey() == GLFW_KEY_RIGHT_ALT
+                event.getKey() == GLFW_KEY_LEFT_SHIFT ||
+                        event.getKey() == GLFW_KEY_RIGHT_SHIFT ||
+                        event.getKey() == GLFW_KEY_LEFT_CONTROL ||
+                        event.getKey() == GLFW_KEY_RIGHT_CONTROL ||
+                        event.getKey() == GLFW_KEY_LEFT_ALT ||
+                        event.getKey() == GLFW_KEY_RIGHT_ALT
         )
             return;
 
@@ -67,14 +66,6 @@ public class TextAreaFieldKeyEventListener implements KeyEventListener {
             keyBackSpaceAction(textAreaField, mods);
         } else if (key == GLFW_KEY_DELETE) {
             keyDeleteAction(textAreaField, mods);
-        } else if (key == GLFW_KEY_V) {
-            pasteAction(textAreaField, mods);
-        } else if (key == GLFW_KEY_C) {
-            copyAction(textAreaField, mods);
-        } else if (key == GLFW_KEY_X) {
-            cutAction(textAreaField, mods);
-        } else if (key == GLFW_KEY_A) {
-            selectAllAction(textAreaField, mods);
         } else if (key == GLFW_KEY_TAB) {
             addTab(textAreaField, mods);
         }
@@ -104,110 +95,6 @@ public class TextAreaFieldKeyEventListener implements KeyEventListener {
             textAreaField.setCaretPosition(caretPosition);
             textAreaField.setStartSelectionIndex(caretPosition);
             textAreaField.setEndSelectionIndex(caretPosition);
-        }
-    }
-
-    /**
-     * Selects all text.
-     *
-     * @param gui  text area to work with.
-     * @param mods
-     */
-    private void selectAllAction(TextAreaField gui, int mods) {
-        if (!isControlPressed(mods)) {
-            return;
-        }
-        TextState textState = gui.getTextState();
-        gui.setStartSelectionIndex(0);
-        gui.setEndSelectionIndex(textState.length());
-        gui.setCaretPosition(textState.length());
-    }
-
-    /**
-     * Used to cut some string from text area and put it to clipboard.
-     *
-     * @param gui  text area to work with.
-     * @param mods
-     */
-    private void cutAction(TextAreaField gui, int mods) {
-        if (!isControlPressed(mods)) {
-            return;
-        }
-        if (gui.isEditable()) {
-            TextState textState = gui.getTextState();
-            String s = gui.getSelection();
-            if (s != null) {
-                int start = gui.getStartSelectionIndex();
-                int end = gui.getEndSelectionIndex();
-                if (start > end) {
-                    int swap = start;
-                    start = end;
-                    end = swap;
-                }
-                StringBuilder builder = new StringBuilder(textState.getText());
-                builder.delete(start, end);
-                textState.setText(builder.toString());
-                gui.setCaretPosition(start);
-                gui.setStartSelectionIndex(start);
-                gui.setEndSelectionIndex(start);
-                Clipboard.getInstance().setClipboardString(s);
-            }
-        }
-    }
-
-    /**
-     * Used to copy selected text to clipboard.
-     *
-     * @param gui  gui.
-     * @param mods
-     */
-    private void copyAction(TextAreaField gui, int mods) {
-        if (!isControlPressed(mods)) {
-            return;
-        }
-        String s = gui.getSelection();
-        if (s != null) {
-            Clipboard.getInstance().setClipboardString(s);
-        }
-    }
-
-    /**
-     * Used to paste clipboard data to gui element.
-     *
-     * @param gui  gui to paste
-     * @param mods
-     */
-    private void pasteAction(TextAreaField gui, int mods) {
-        if (!isControlPressed(mods)) {
-            return;
-        }
-        if (gui.isEditable()) {
-            TextState textState = gui.getTextState();
-            int caretPosition = gui.getCaretPosition();
-            String s = Clipboard.getInstance().getClipboardString();
-            if (s != null) {
-
-                int start = gui.getStartSelectionIndex();
-                int end = gui.getEndSelectionIndex();
-                if (start > end) {
-                    start = gui.getEndSelectionIndex();
-                    end = gui.getStartSelectionIndex();
-                }
-                if (start != end) {
-                    StringBuilder t = new StringBuilder(textState.getText());
-                    t.delete(start, end);
-                    textState.setText(t.toString());
-                    gui.setCaretPosition(start);
-                    gui.setStartSelectionIndex(start);
-                    gui.setEndSelectionIndex(start);
-                    caretPosition = start;
-                }
-
-                StringBuilder builder = new StringBuilder(textState.getText());
-                builder.insert(caretPosition, s);
-                textState.setText(builder.toString());
-                gui.setCaretPosition(caretPosition + s.length());
-            }
         }
     }
 
@@ -468,8 +355,8 @@ public class TextAreaFieldKeyEventListener implements KeyEventListener {
 
     private static class LineData {
 
-        private int caretPositionInLine;
-        private int lineIndex;
+        private final int caretPositionInLine;
+        private final int lineIndex;
 
         private LineData(int caretPositionInLine, int lineIndex) {
             this.caretPositionInLine = caretPositionInLine;

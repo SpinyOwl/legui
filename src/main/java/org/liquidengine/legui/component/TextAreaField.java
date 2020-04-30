@@ -5,15 +5,11 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
-import org.liquidengine.legui.component.misc.listener.textarea.TextAreaFieldCharEventListener;
-import org.liquidengine.legui.component.misc.listener.textarea.TextAreaFieldDragEventListener;
-import org.liquidengine.legui.component.misc.listener.textarea.TextAreaFieldKeyEventListener;
-import org.liquidengine.legui.component.misc.listener.textarea.TextAreaFieldMouseClickEventListener;
+import org.liquidengine.legui.component.misc.listener.text.CopyTextEventListener;
+import org.liquidengine.legui.component.misc.listener.text.SelectAllTextEventListener;
+import org.liquidengine.legui.component.misc.listener.textarea.*;
 import org.liquidengine.legui.component.optional.TextState;
-import org.liquidengine.legui.event.CharEvent;
-import org.liquidengine.legui.event.KeyEvent;
-import org.liquidengine.legui.event.MouseClickEvent;
-import org.liquidengine.legui.event.MouseDragEvent;
+import org.liquidengine.legui.event.*;
 import org.liquidengine.legui.theme.Themes;
 
 /**
@@ -44,9 +40,9 @@ public class TextAreaField extends Component implements TextComponent {
     /**
      * Constructor with position and size parameters.
      *
-     * @param x x position position in parent component.
-     * @param y y position position in parent component.
-     * @param width width of component.
+     * @param x      x position position in parent component.
+     * @param y      y position position in parent component.
+     * @param width  width of component.
      * @param height height of component.
      */
     public TextAreaField(float x, float y, float width, float height) {
@@ -58,7 +54,7 @@ public class TextAreaField extends Component implements TextComponent {
      * Constructor with position and size parameters.
      *
      * @param position position position in parent component.
-     * @param size size of component.
+     * @param size     size of component.
      */
     public TextAreaField(Vector2f position, Vector2f size) {
         super(position, size);
@@ -77,10 +73,10 @@ public class TextAreaField extends Component implements TextComponent {
     /**
      * Constructor with text, position and size parameters.
      *
-     * @param text text to set.
-     * @param x x position position in parent component.
-     * @param y y position position in parent component.
-     * @param width width of component.
+     * @param text   text to set.
+     * @param x      x position position in parent component.
+     * @param y      y position position in parent component.
+     * @param width  width of component.
      * @param height height of component.
      */
     public TextAreaField(String text, float x, float y, float width, float height) {
@@ -91,9 +87,9 @@ public class TextAreaField extends Component implements TextComponent {
     /**
      * Constructor with text, position and size parameters.
      *
-     * @param text text to set.
+     * @param text     text to set.
      * @param position position position in parent component.
-     * @param size size of component.
+     * @param size     size of component.
      */
     public TextAreaField(String text, Vector2f position, Vector2f size) {
         super(position, size);
@@ -111,6 +107,10 @@ public class TextAreaField extends Component implements TextComponent {
 
         getListenerMap().addListener(MouseDragEvent.class, new TextAreaFieldDragEventListener());
         getListenerMap().addListener(MouseClickEvent.class, new TextAreaFieldMouseClickEventListener());
+        getListenerMap().addListener(KeyboardEvent.class, new CutTextAreaKeyboardEventListener());
+        getListenerMap().addListener(KeyboardEvent.class, new PasteTextAreaKeyboardEventListener());
+        getListenerMap().addListener(KeyboardEvent.class, new SelectAllTextEventListener());
+        getListenerMap().addListener(KeyboardEvent.class, new CopyTextEventListener());
         getListenerMap().addListener(KeyEvent.class, new TextAreaFieldKeyEventListener());
         getListenerMap().addListener(CharEvent.class, new TextAreaFieldCharEventListener());
 
@@ -258,24 +258,24 @@ public class TextAreaField extends Component implements TextComponent {
         TextAreaField textAreaField = (TextAreaField) o;
 
         return new EqualsBuilder()
-            .appendSuper(super.equals(o))
-            .append(textState, textAreaField.textState)
-            .isEquals();
+                .appendSuper(super.equals(o))
+                .append(textState, textAreaField.textState)
+                .isEquals();
     }
 
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
-            .appendSuper(super.hashCode())
-            .append(textState)
-            .toHashCode();
+                .appendSuper(super.hashCode())
+                .append(textState)
+                .toHashCode();
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-            .append("textState", textState)
-            .toString();
+                .append("textState", textState)
+                .toString();
     }
 
     public float getMaxTextWidth() {

@@ -7,7 +7,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.input.KeyAction;
-import org.liquidengine.legui.input.Key;
+import org.liquidengine.legui.input.KeyboardKey;
 import org.liquidengine.legui.input.KeyMod;
 import org.liquidengine.legui.system.context.Context;
 
@@ -20,10 +20,10 @@ import java.util.Set;
 public class KeyboardEvent<T extends Component> extends Event<T> {
 
     private final KeyAction action;
-    private final Key key;
+    private final KeyboardKey key;
     private final Set<KeyMod> mods;
 
-    public KeyboardEvent(T component, Context context, Frame frame, KeyAction action, Key key, Set<KeyMod> mods) {
+    public KeyboardEvent(T component, Context context, Frame frame, KeyAction action, KeyboardKey key, Set<KeyMod> mods) {
         super(component, context, frame);
         this.action = action;
         this.key = key;
@@ -34,7 +34,7 @@ public class KeyboardEvent<T extends Component> extends Event<T> {
         return action;
     }
 
-    public Key getKey() {
+    public KeyboardKey getKey() {
         return key;
     }
 

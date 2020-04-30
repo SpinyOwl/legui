@@ -4,7 +4,7 @@ import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.event.KeyEvent;
 import org.liquidengine.legui.event.KeyboardEvent;
-import org.liquidengine.legui.input.Key;
+import org.liquidengine.legui.input.KeyboardKey;
 import org.liquidengine.legui.input.KeyAction;
 import org.liquidengine.legui.input.Keyboard;
 import org.liquidengine.legui.input.KeyMod;
@@ -18,17 +18,14 @@ import java.util.Set;
 import static org.lwjgl.glfw.GLFW.*;
 
 /**
- * System handler that used to update key states of {@link Key}.
+ * System handler that used to update key states of {@link KeyboardKey}.
  */
 public class KeyEventHandler implements SystemEventHandler<SystemKeyEvent> {
 
     @Override
     public void handle(SystemKeyEvent event, Frame frame, Context context) {
         int keyCode = event.key;
-        Key key = Keyboard.getKeyboard().getKey(keyCode);
-        if (key != null) {
-            key.setPressed(event.action != GLFW_RELEASE);
-        }
+        KeyboardKey key = new KeyboardKey(Keyboard.getKeyCode(event.key), event.key);
 
         Component focusedGui = context.getFocusedGui();
         if (focusedGui == null) {

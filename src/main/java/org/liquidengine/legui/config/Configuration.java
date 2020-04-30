@@ -3,17 +3,15 @@ package org.liquidengine.legui.config;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.liquidengine.legui.input.Shortcut;
 import org.liquidengine.leutil.io.IOUtil;
 
 import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 public class Configuration {
     private static final Logger LOGGER = LogManager.getLogger();
@@ -27,7 +25,7 @@ public class Configuration {
     /**
      * Defines keyboard layout configuration to use.
      */
-    private String currentKeyboardLayout;
+    private String keyboardLayout;
 
     /**
      * Set of shortcuts used in application.
@@ -43,12 +41,15 @@ public class Configuration {
         Gson gson = new Gson();
         try {
             String defaultConfig = new String(IOUtil.resourceToByteBuffer("defaultConfig.json").array(), StandardCharsets.UTF_8);
-            String config = new String(IOUtil.resourceToByteBuffer("config.json").array(), StandardCharsets.UTF_8);
-
             JsonObject initial = gson.fromJson(defaultConfig, JsonObject.class);
-            JsonObject imported = gson.fromJson(config, JsonObject.class);
-
-            merge(initial, imported);
+            try {
+                ByteBuffer configBytes = IOUtil.resourceToByteBuffer("config.json");
+                String config = new String(configBytes.array(), StandardCharsets.UTF_8);
+                JsonObject imported = gson.fromJson(config, JsonObject.class);
+                merge(initial, imported);
+            } catch (Exception e) {
+                // skip
+            }
 
             instance = gson.fromJson(initial, Configuration.class);
         } catch (IOException e) {
@@ -75,12 +76,12 @@ public class Configuration {
         Configuration.instance = instance;
     }
 
-    public String getCurrentKeyboardLayout() {
-        return currentKeyboardLayout;
+    public String getKeyboardLayout() {
+        return keyboardLayout;
     }
 
-    public void setCurrentKeyboardLayout(String currentKeyboardLayout) {
-        this.currentKeyboardLayout = currentKeyboardLayout;
+    public void setKeyboardLayout(String keyboardLayout) {
+        this.keyboardLayout = keyboardLayout;
     }
 
     public Map<String, Map<String, Integer>> getKeyboardLayouts() {
@@ -98,6 +99,7 @@ public class Configuration {
     public void setShortcuts(Shortcuts shortcuts) {
         this.shortcuts = shortcuts;
     }
+
 
     public static class Shortcuts {
         private Shortcut copy;
@@ -137,37 +139,4 @@ public class Configuration {
             this.selectAll = selectAll;
         }
     }
-
-    public static class Shortcut {
-        private String key;
-        private Set<Mod> mods;
-
-        public Shortcut(String key, Set<Mod> mods) {
-            this.key = key;
-            this.mods = mods;
-        }
-
-        public Shortcut(String key, Mod... mods) {
-            this.key = key;
-            this.mods = new HashSet<>(Arrays.asList(mods));
-        }
-
-        public String getKey() {
-            return key;
-        }
-
-        public void setKey(String key) {
-            this.key = key;
-        }
-
-        public Set<Mod> getMods() {
-            return mods;
-        }
-
-        public void setMods(Set<Mod> mods) {
-            this.mods = mods;
-        }
-
-    }
-
 }

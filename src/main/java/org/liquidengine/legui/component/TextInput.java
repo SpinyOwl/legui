@@ -6,13 +6,12 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 import org.liquidengine.legui.component.event.textinput.TextInputContentChangeEvent;
-import org.liquidengine.legui.component.misc.listener.textinput.TextInputCharEventListener;
-import org.liquidengine.legui.component.misc.listener.textinput.TextInputDragEventListener;
-import org.liquidengine.legui.component.misc.listener.textinput.TextInputKeyEventListener;
-import org.liquidengine.legui.component.misc.listener.textinput.TextInputMouseClickEventListener;
+import org.liquidengine.legui.component.misc.listener.text.CopyTextEventListener;
+import org.liquidengine.legui.component.misc.listener.text.SelectAllTextEventListener;
+import org.liquidengine.legui.component.misc.listener.textinput.*;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.event.CharEvent;
-import org.liquidengine.legui.event.KeyEvent;
+import org.liquidengine.legui.event.KeyboardEvent;
 import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.event.MouseDragEvent;
 import org.liquidengine.legui.listener.EventListener;
@@ -41,9 +40,9 @@ public class TextInput extends Component implements TextComponent {
     /**
      * Constructor with position and size parameters.
      *
-     * @param x x position position in parent component.
-     * @param y y position position in parent component.
-     * @param width width of component.
+     * @param x      x position position in parent component.
+     * @param y      y position position in parent component.
+     * @param width  width of component.
      * @param height height of component.
      */
     public TextInput(float x, float y, float width, float height) {
@@ -55,7 +54,7 @@ public class TextInput extends Component implements TextComponent {
      * Constructor with position and size parameters.
      *
      * @param position position position in parent component.
-     * @param size size of component.
+     * @param size     size of component.
      */
     public TextInput(Vector2f position, Vector2f size) {
         super(position, size);
@@ -75,10 +74,10 @@ public class TextInput extends Component implements TextComponent {
     /**
      * Constructor with text, position and size parameters.
      *
-     * @param text text to set.
-     * @param x x position position in parent component.
-     * @param y y position position in parent component.
-     * @param width width of component.
+     * @param text   text to set.
+     * @param x      x position position in parent component.
+     * @param y      y position position in parent component.
+     * @param width  width of component.
      * @param height height of component.
      */
     public TextInput(String text, float x, float y, float width, float height) {
@@ -89,9 +88,9 @@ public class TextInput extends Component implements TextComponent {
     /**
      * Constructor with text, position and size parameters.
      *
-     * @param text text to set.
+     * @param text     text to set.
      * @param position position position in parent component.
-     * @param size size of component.
+     * @param size     size of component.
      */
     public TextInput(String text, Vector2f position, Vector2f size) {
         super(position, size);
@@ -107,7 +106,11 @@ public class TextInput extends Component implements TextComponent {
         textState = new TextState(text);
         getStyle().setPadding(1f, 5f);
 
-        getListenerMap().addListener(KeyEvent.class, new TextInputKeyEventListener());
+        getListenerMap().addListener(KeyboardEvent.class, new TextInputKeyEventListener());
+        getListenerMap().addListener(KeyboardEvent.class, new SelectAllTextEventListener());
+        getListenerMap().addListener(KeyboardEvent.class, new CopyTextEventListener());
+        getListenerMap().addListener(KeyboardEvent.class, new PasteTextInputKeyboardEventListener());
+        getListenerMap().addListener(KeyboardEvent.class, new CutTextInputKeyboardEventListener());
         getListenerMap().addListener(MouseClickEvent.class, new TextInputMouseClickEventListener());
         getListenerMap().addListener(MouseDragEvent.class, new TextInputDragEventListener());
         getListenerMap().addListener(CharEvent.class, new TextInputCharEventListener());
@@ -253,8 +256,8 @@ public class TextInput extends Component implements TextComponent {
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-            .append("textState", textState)
-            .toString();
+                .append("textState", textState)
+                .toString();
     }
 
     @Override
@@ -270,17 +273,17 @@ public class TextInput extends Component implements TextComponent {
         TextInput input = (TextInput) o;
 
         return new EqualsBuilder()
-            .appendSuper(super.equals(o))
-            .append(textState, input.textState)
-            .isEquals();
+                .appendSuper(super.equals(o))
+                .append(textState, input.textState)
+                .isEquals();
     }
 
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
-            .appendSuper(super.hashCode())
-            .append(textState)
-            .toHashCode();
+                .appendSuper(super.hashCode())
+                .append(textState)
+                .toHashCode();
     }
 
 }
