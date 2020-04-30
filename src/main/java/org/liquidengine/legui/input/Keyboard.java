@@ -1,7 +1,7 @@
 package org.liquidengine.legui.input;
 
-import com.google.common.collect.BiMap;
-import com.google.common.collect.HashBiMap;
+import org.apache.commons.collections4.BidiMap;
+import org.apache.commons.collections4.bidimap.DualHashBidiMap;
 
 import java.util.Map;
 
@@ -18,7 +18,7 @@ public final class Keyboard {
     private static final Shortcut selectAllShortcut = new Shortcut(KeyCode.KEY_A, KeyMod.CONTROL);
     private static final Shortcut cutShortcut = new Shortcut(KeyCode.KEY_X, KeyMod.CONTROL);
 
-    private static final BiMap<KeyCode, Integer> keys = HashBiMap.create();
+    private static final BidiMap<KeyCode, Integer> keys = new DualHashBidiMap<>();
 
     static {
         keys.put(KeyCode.UNKNOWN, GLFW_KEY_UNKNOWN);
@@ -152,7 +152,7 @@ public final class Keyboard {
     }
 
     public static KeyCode getKeyCode(int nativeCode) {
-        return keys.inverse().get(nativeCode);
+        return keys.getKey(nativeCode);
     }
 
     public static int getNativeCode(KeyCode keyCode) {

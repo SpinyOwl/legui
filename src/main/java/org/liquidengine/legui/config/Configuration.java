@@ -5,11 +5,11 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.liquidengine.legui.input.KeyCode;
 import org.liquidengine.legui.input.Shortcut;
 import org.liquidengine.leutil.io.IOUtil;
 
 import java.io.IOException;
-import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
@@ -35,16 +35,16 @@ public class Configuration {
     /**
      * Map that contains key configurations per keyboard layout.
      */
-    private Map<String, Map<String, Integer>> keyboardLayouts;
+    private Map<String, Map<KeyCode, Integer>> keyboardLayouts;
 
     private static void initialize() {
         Gson gson = new Gson();
         try {
-            String defaultConfig = new String(IOUtil.resourceToByteBuffer("defaultConfig.json").array(), StandardCharsets.UTF_8);
+            String defaultConfig = new String(IOUtil.resourceToString("defaultLegui.json").getBytes(), StandardCharsets.UTF_8);
             JsonObject initial = gson.fromJson(defaultConfig, JsonObject.class);
             try {
-                ByteBuffer configBytes = IOUtil.resourceToByteBuffer("config.json");
-                String config = new String(configBytes.array(), StandardCharsets.UTF_8);
+                String configBytes = IOUtil.resourceToString("legui.json");
+                String config = new String(configBytes.getBytes(), StandardCharsets.UTF_8);
                 JsonObject imported = gson.fromJson(config, JsonObject.class);
                 merge(initial, imported);
             } catch (Exception e) {
@@ -84,11 +84,11 @@ public class Configuration {
         this.keyboardLayout = keyboardLayout;
     }
 
-    public Map<String, Map<String, Integer>> getKeyboardLayouts() {
+    public Map<String, Map<KeyCode, Integer>> getKeyboardLayouts() {
         return keyboardLayouts;
     }
 
-    public void setKeyboardLayouts(Map<String, Map<String, Integer>> keyboardLayouts) {
+    public void setKeyboardLayouts(Map<String, Map<KeyCode, Integer>> keyboardLayouts) {
         this.keyboardLayouts = keyboardLayouts;
     }
 
