@@ -45,6 +45,7 @@ public class TextInputKeyEventListener implements EventListener<KeyboardEvent> {
         Set<KeyMod> mods = event.getMods();
         KeyCode key = event.getKey().getKeyCode();
         if (key == LEFT) {
+
             keyLeftAction(gui, mods);
         } else if (key == RIGHT) {
             keyRightAction(gui, mods);
