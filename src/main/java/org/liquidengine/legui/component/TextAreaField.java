@@ -111,7 +111,7 @@ public class TextAreaField extends Component implements TextComponent {
         getListenerMap().addListener(KeyboardEvent.class, new PasteTextAreaKeyboardEventListener());
         getListenerMap().addListener(KeyboardEvent.class, new SelectAllTextEventListener());
         getListenerMap().addListener(KeyboardEvent.class, new CopyTextEventListener());
-        getListenerMap().addListener(KeyEvent.class, new TextAreaFieldKeyEventListener());
+        getListenerMap().addListener(KeyboardEvent.class, new TextAreaFieldKeyEventListener());
         getListenerMap().addListener(CharEvent.class, new TextAreaFieldCharEventListener());
 
         Themes.getDefaultTheme().getThemeManager().getComponentTheme(TextAreaField.class).applyAll(this);

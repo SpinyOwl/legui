@@ -3,6 +3,7 @@ package org.liquidengine.legui.input;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 public class Shortcut {
@@ -35,4 +36,17 @@ public class Shortcut {
         this.mods = mods;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Shortcut shortcut = (Shortcut) o;
+        return key == shortcut.key &&
+            Objects.equals(mods, shortcut.mods);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(key, mods);
+    }
 }

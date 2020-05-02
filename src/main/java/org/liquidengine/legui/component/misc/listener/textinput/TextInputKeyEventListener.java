@@ -1,7 +1,9 @@
 package org.liquidengine.legui.component.misc.listener.textinput;
 
 import org.liquidengine.legui.component.Frame;
+import org.liquidengine.legui.component.TextAreaField;
 import org.liquidengine.legui.component.TextInput;
+import org.liquidengine.legui.component.event.textarea.TextAreaFieldContentChangeEvent;
 import org.liquidengine.legui.component.event.textinput.TextInputContentChangeEvent;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.event.KeyEvent;
@@ -37,7 +39,15 @@ public class TextInputKeyEventListener implements EventListener<KeyboardEvent> {
             return;
         }
 
+        String oldText = gui.getTextState().getText();
         processKeys(event, gui);
+        String newText = gui.getTextState().getText();
+        if (!oldText.equals(newText)) {
+            EventProcessorProvider.getInstance().pushEvent(
+                new TextAreaFieldContentChangeEvent<>(
+                    (TextAreaField) event.getTargetComponent(),
+                    event.getContext(), event.getFrame(), oldText, newText));
+        }
     }
 
     private void processKeys(KeyboardEvent<?> event, TextInput gui) {
@@ -76,7 +86,6 @@ public class TextInputKeyEventListener implements EventListener<KeyboardEvent> {
                 start = gui.getEndSelectionIndex();
                 end = gui.getStartSelectionIndex();
             }
-            String oldText = textState.getText();
             if (start == end && caretPosition != textState.length()) {
                 if (mods.contains(KeyMod.CONTROL)) {
                     end = findNextWord(textState.getText(), caretPosition);
@@ -102,8 +111,6 @@ public class TextInputKeyEventListener implements EventListener<KeyboardEvent> {
                 gui.setStartSelectionIndex(start);
                 gui.setEndSelectionIndex(start);
             }
-            String newText = textState.getText();
-            EventProcessorProvider.getInstance().pushEvent(new TextInputContentChangeEvent<>(gui, leguiContext, frame, oldText, newText));
         }
     }
 
@@ -123,7 +130,6 @@ public class TextInputKeyEventListener implements EventListener<KeyboardEvent> {
                 start = gui.getEndSelectionIndex();
                 end = gui.getStartSelectionIndex();
             }
-            String oldText = textState.getText();
             if (start == end && caretPosition != 0) {
                 if (mods.contains(KeyMod.CONTROL)) {
                     start = findPrevWord(textState.getText(), caretPosition);
@@ -150,8 +156,6 @@ public class TextInputKeyEventListener implements EventListener<KeyboardEvent> {
                 gui.setStartSelectionIndex(start);
                 gui.setEndSelectionIndex(start);
             }
-            String newText = textState.getText();
-            EventProcessorProvider.getInstance().pushEvent(new TextInputContentChangeEvent<>(gui, leguiContext, frame, oldText, newText));
         }
     }
 

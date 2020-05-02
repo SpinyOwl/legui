@@ -1,13 +1,5 @@
 package org.liquidengine.legui.input;
 
-import com.google.common.collect.BiMap;
-import com.google.common.collect.HashBiMap;
-
-import java.util.EnumMap;
-import java.util.Map;
-
-import static org.lwjgl.glfw.GLFW.*;
-
 /**
  * <p> Key code is code value of the physical key represented by the event.</p>
  * <p style="background-color:#FFAAAA; color: black;"><b>NOTE</b>: This ignores the user's keyboard layout, so that if the user presses the key at the "Y"
