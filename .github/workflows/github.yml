@@ -119,7 +119,7 @@ jobs:
         if: success() && contains(github.event.head_commit.message, '[skip publish]')
         with:
           severity: info
-          description: |
+          details: |
             Build successfully finished on branch `${{env.branch}}`.
             Open in GitHub: [Open repository](${{env.repoUrl}})
           footer: "https://github.com/SpinyOwl/legui"
@@ -130,7 +130,7 @@ jobs:
         if: failure()
         with:
           severity: error
-          description: |
+          details: |
             Build failed on branch `${{env.branch}}`.
             Open in GitHub: [Open repository](${{env.repoUrl}})
           footer: "https://github.com/SpinyOwl/legui"
@@ -141,7 +141,7 @@ jobs:
         if: cancelled()
         with:
           severity: warn
-          description: |
+          details: |
             Build cancelled on branch `${{env.branch}}`.
             Open in GitHub: [Open repository](${{env.repoUrl}})
           footer: "https://github.com/SpinyOwl/legui"
