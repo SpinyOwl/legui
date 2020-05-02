@@ -27,14 +27,15 @@ jobs:
 
       # CALL WEBHOOK
 
-      - name: send success message
-        uses: appleboy/discord-action@master
+      - name: send message build started
+        uses: rjstone/discord-webhook-notify@v1
         if: success()
         with:
-          webhook_id: ${{ secrets.WEBHOOK_ID }}
-          webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
-          color: "#f75b00"
-          message: Build started for PR to `${{env.branch}}`
+          severity: info
+          color: '#808080'
+          description: Build started on branch `${{env.branch}}`
+          footer: "https://github.com/SpinyOwl/legui"
+          webhookUrl:  ${{ secrets.WEBHOOK_URL }}
 
       # PREPARE AND BUILD
       - name: Set up JDK 1.8
@@ -63,30 +64,32 @@ jobs:
         run: ./gradlew sonarqube
 
       # CALL WEBHOOK
-
-      - name: send success message
-        uses: appleboy/discord-action@master
+      - name: send message build finished
+        uses: rjstone/discord-webhook-notify@v1
         if: success()
         with:
-          webhook_id: ${{ secrets.WEBHOOK_ID }}
-          webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
-          color: "#00FF00"
-          message: Build successfully finished for PR to `${{env.branch}}`
+          severity: info
+          description: |
+            Build successfully finished for PR to `${{env.branch}}`
+          footer: "https://github.com/SpinyOwl/legui"
+          webhookUrl:  ${{ secrets.WEBHOOK_URL }}
 
       - name: send failure message
-        uses: appleboy/discord-action@master
+        uses: rjstone/discord-webhook-notify@v1
         if: failure()
         with:
-          webhook_id: ${{ secrets.WEBHOOK_ID }}
-          webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
-          color: "#FF0000"
-          message: Build failed for PR to `${{env.branch}}`
+          severity: error
+          description: |
+            Build failed for PR to `${{env.branch}}`
+          footer: "https://github.com/SpinyOwl/legui"
+          webhookUrl:  ${{ secrets.WEBHOOK_URL }}
 
       - name: send cancelled message
-        uses: appleboy/discord-action@master
+        uses: rjstone/discord-webhook-notify@v1
         if: cancelled()
         with:
-          webhook_id: ${{ secrets.WEBHOOK_ID }}
-          webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
-          color: "#899e8b"
-          message: Build cancelled for PR to `${{env.branch}}`
+          severity: warn
+          description: |
+            Build cancelled for PR to `${{env.branch}}`
+          footer: "https://github.com/SpinyOwl/legui"
+          webhookUrl:  ${{ secrets.WEBHOOK_URL }}

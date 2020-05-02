@@ -137,7 +137,7 @@ jobs:
           webhookUrl:  ${{ secrets.WEBHOOK_URL }}
 
       - name: send cancelled message
-        uses: appleboy/discord-action@master
+        uses: rjstone/discord-webhook-notify@v1
         if: cancelled()
         with:
           severity: warn
