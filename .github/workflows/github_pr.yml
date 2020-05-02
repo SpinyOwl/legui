@@ -33,7 +33,7 @@ jobs:
         with:
           severity: info
           color: '#808080'
-          description: Build started for PR to `${{github.context.payload.base.ref}}` from `${{github.context.payload.head.ref}}`
+          description: Build started for PR to `${{github.base_ref}}` from `${{github.head_ref}}`
           footer: "https://github.com/SpinyOwl/legui"
           webhookUrl:  ${{ secrets.WEBHOOK_URL }}
 
@@ -70,7 +70,7 @@ jobs:
         with:
           severity: info
           details: |
-            Build successfully finished for PR to `${{github.context.payload.base.ref}}` from `${{github.context.payload.head.ref}}`
+            Build successfully finished for PR to `${{github.base_ref}}` from `${{github.head_ref}}`
           footer: "https://github.com/SpinyOwl/legui"
           webhookUrl:  ${{ secrets.WEBHOOK_URL }}
 
@@ -80,7 +80,7 @@ jobs:
         with:
           severity: error
           details: |
-            Build failed for PR to `${{github.context.payload.base.ref}}` from `${{github.context.payload.head.ref}}`
+            Build failed for PR to `${{github.base_ref}}` from `${{github.head_ref}}`
           footer: "https://github.com/SpinyOwl/legui"
           webhookUrl:  ${{ secrets.WEBHOOK_URL }}
 
@@ -90,6 +90,6 @@ jobs:
         with:
           severity: warn
           details: |
-            Build cancelled for PR to `${{github.context.payload.base.ref}}` from `${{github.context.payload.head.ref}}`
+            Build cancelled for PR to `${{github.base_ref}}` from `${{github.head_ref}}`
           footer: "https://github.com/SpinyOwl/legui"
           webhookUrl:  ${{ secrets.WEBHOOK_URL }}
