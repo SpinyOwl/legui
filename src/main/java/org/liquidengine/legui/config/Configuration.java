@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.liquidengine.legui.input.KeyCode;
+import org.liquidengine.legui.input.Keyboard;
 import org.liquidengine.legui.input.Shortcut;
 import org.liquidengine.leutil.io.IOUtil;
 
@@ -52,6 +53,32 @@ public class Configuration {
             }
 
             instance = gson.fromJson(initial, Configuration.class);
+
+            Map<KeyCode, Integer> mapping = instance.getKeyboardLayouts().get(instance.getKeyboardLayout());
+            if (mapping != null) {
+                Keyboard.updateMapping(mapping);
+            }
+            Shortcut copy = instance.getShortcuts().getCopy();
+            if (copy != null) {
+                Keyboard.setCopyShortcut(copy);
+            }
+
+            Shortcut cut = instance.getShortcuts().getCut();
+            if (cut != null) {
+                Keyboard.setCutShortcut(cut);
+            }
+
+            Shortcut paste = instance.getShortcuts().getPaste();
+            if (paste != null) {
+                Keyboard.setPasteShortcut(paste);
+            }
+
+            Shortcut selectAll = instance.getShortcuts().getSelectAll();
+            if (selectAll != null) {
+                Keyboard.setSelectAllShortcut(selectAll);
+            }
+
+
         } catch (IOException e) {
             LOGGER.error("LEGUI - Failed to load config.");
         }

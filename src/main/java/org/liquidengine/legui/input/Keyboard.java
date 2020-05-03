@@ -4,6 +4,7 @@ import org.apache.commons.collections4.BidiMap;
 import org.apache.commons.collections4.bidimap.DualHashBidiMap;
 
 import java.util.Map;
+import java.util.Objects;
 
 import static org.lwjgl.glfw.GLFW.*;
 
@@ -13,12 +14,11 @@ import static org.lwjgl.glfw.GLFW.*;
  */
 public final class Keyboard {
 
-    private static final Shortcut copyShortcut = new Shortcut(KeyCode.KEY_C, KeyMod.CONTROL);
-    private static final Shortcut pasteShortcut = new Shortcut(KeyCode.KEY_V, KeyMod.CONTROL);
-    private static final Shortcut selectAllShortcut = new Shortcut(KeyCode.KEY_A, KeyMod.CONTROL);
-    private static final Shortcut cutShortcut = new Shortcut(KeyCode.KEY_X, KeyMod.CONTROL);
-
     private static final BidiMap<KeyCode, Integer> keys = new DualHashBidiMap<>();
+    private static Shortcut copyShortcut = new Shortcut(KeyCode.KEY_C, KeyMod.CONTROL);
+    private static Shortcut pasteShortcut = new Shortcut(KeyCode.KEY_V, KeyMod.CONTROL);
+    private static Shortcut selectAllShortcut = new Shortcut(KeyCode.KEY_A, KeyMod.CONTROL);
+    private static Shortcut cutShortcut = new Shortcut(KeyCode.KEY_X, KeyMod.CONTROL);
 
     static {
         keys.put(KeyCode.UNKNOWN, GLFW_KEY_UNKNOWN);
@@ -163,17 +163,31 @@ public final class Keyboard {
         return copyShortcut;
     }
 
+    public static void setCopyShortcut(Shortcut copyShortcut) {
+        Keyboard.copyShortcut = Objects.requireNonNull(copyShortcut);
+    }
+
     public static Shortcut getPasteShortcut() {
         return pasteShortcut;
+    }
+
+    public static void setPasteShortcut(Shortcut pasteShortcut) {
+        Keyboard.pasteShortcut = Objects.requireNonNull(pasteShortcut);
     }
 
     public static Shortcut getSelectAllShortcut() {
         return selectAllShortcut;
     }
 
+    public static void setSelectAllShortcut(Shortcut selectAllShortcut) {
+        Keyboard.selectAllShortcut = Objects.requireNonNull(selectAllShortcut);
+    }
+
     public static Shortcut getCutShortcut() {
         return cutShortcut;
     }
 
-
+    public static void setCutShortcut(Shortcut cutShortcut) {
+        Keyboard.cutShortcut = Objects.requireNonNull(cutShortcut);
+    }
 }
