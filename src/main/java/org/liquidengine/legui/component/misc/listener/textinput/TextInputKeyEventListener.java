@@ -1,9 +1,6 @@
 package org.liquidengine.legui.component.misc.listener.textinput;
 
-import org.liquidengine.legui.component.Frame;
-import org.liquidengine.legui.component.TextAreaField;
 import org.liquidengine.legui.component.TextInput;
-import org.liquidengine.legui.component.event.textarea.TextAreaFieldContentChangeEvent;
 import org.liquidengine.legui.component.event.textinput.TextInputContentChangeEvent;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.event.KeyEvent;
@@ -13,7 +10,6 @@ import org.liquidengine.legui.input.KeyCode;
 import org.liquidengine.legui.input.KeyMod;
 import org.liquidengine.legui.listener.EventListener;
 import org.liquidengine.legui.listener.processor.EventProcessorProvider;
-import org.liquidengine.legui.system.context.Context;
 
 import java.util.Set;
 
@@ -44,9 +40,7 @@ public class TextInputKeyEventListener implements EventListener<KeyboardEvent> {
         String newText = gui.getTextState().getText();
         if (!oldText.equals(newText)) {
             EventProcessorProvider.getInstance().pushEvent(
-                new TextAreaFieldContentChangeEvent<>(
-                    (TextAreaField) event.getTargetComponent(),
-                    event.getContext(), event.getFrame(), oldText, newText));
+                new TextInputContentChangeEvent<>(gui, event.getContext(), event.getFrame(), oldText, newText));
         }
     }
 
@@ -64,9 +58,9 @@ public class TextInputKeyEventListener implements EventListener<KeyboardEvent> {
         } else if ((key == DOWN || key == END)) {
             keyDownAndEndAction(gui, mods);
         } else if (key == BACKSPACE) {
-            keyBackSpaceAction(gui, event.getContext(), event.getFrame(), mods);
+            keyBackSpaceAction(gui, mods);
         } else if (key == DELETE) {
-            keyDeleteAction(gui, event.getContext(), event.getFrame(), mods);
+            keyDeleteAction(gui, mods);
         }
     }
 
@@ -76,7 +70,7 @@ public class TextInputKeyEventListener implements EventListener<KeyboardEvent> {
      * @param gui  gui to remove data from text state.
      * @param mods key mods.
      */
-    private void keyDeleteAction(TextInput gui, Context leguiContext, Frame frame, Set<KeyMod> mods) {
+    private void keyDeleteAction(TextInput gui, Set<KeyMod> mods) {
         if (gui.isEditable()) {
             TextState textState = gui.getTextState();
             int caretPosition = gui.getCaretPosition();
@@ -120,7 +114,7 @@ public class TextInputKeyEventListener implements EventListener<KeyboardEvent> {
      * @param gui  gui to remove text data.
      * @param mods key mods.
      */
-    private void keyBackSpaceAction(TextInput gui, Context leguiContext, Frame frame, Set<KeyMod> mods) {
+    private void keyBackSpaceAction(TextInput gui, Set<KeyMod> mods) {
         if (gui.isEditable()) {
             TextState textState = gui.getTextState();
             int caretPosition = gui.getCaretPosition();
