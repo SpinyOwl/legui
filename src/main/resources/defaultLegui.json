@@ -1,5 +1,5 @@
 {
-  "currentKeyboardLayout": "qwerty",
+  "keyboardLayout": "qwerty",
   "keyboardLayouts": {
     "qwerty": {
       "UNKNOWN" : -1,
