@@ -17,9 +17,8 @@ public abstract class IconRenderer<I extends Icon> {
     public void render(I icon, Component component, Context context) {
         if (!initialized.getAndSet(true)) {
             initialize();
-        } else {
-            renderIcon(icon, component, context);
         }
+        renderIcon(icon, component, context);
     }
 
     public abstract void renderIcon(I icon, Component component, Context context);

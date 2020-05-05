@@ -13,33 +13,32 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public abstract class ImageRenderer<I extends Image> {
 
     public static final String C_RADIUS = "C_RADIUS";
-    private AtomicBoolean initialized = new AtomicBoolean(false);
+    private final AtomicBoolean initialized = new AtomicBoolean(false);
 
     /**
      * This method called by base abstract image renderer.
      *
-     * @param image image to render.
-     * @param position image position.
-     * @param size image size.
+     * @param image      image to render.
+     * @param position   image position.
+     * @param size       image size.
      * @param properties rendering properties.
-     * @param context context.
+     * @param context    context.
      */
     public void render(I image, Vector2fc position, Vector2fc size, Map<String, Object> properties, Context context) {
         if (!initialized.getAndSet(true)) {
             initialize();
-        } else {
-            renderImage(image, position, size, properties, context);
         }
+        renderImage(image, position, size, properties, context);
     }
 
     /**
      * This method called by base abstract image renderer.
      *
-     * @param image image to render.
-     * @param position image position.
-     * @param size image size.
+     * @param image      image to render.
+     * @param position   image position.
+     * @param size       image size.
      * @param properties rendering properties.
-     * @param context context.
+     * @param context    context.
      */
     public abstract void renderImage(I image, Vector2fc position, Vector2fc size, Map<String, Object> properties, Context context);
 

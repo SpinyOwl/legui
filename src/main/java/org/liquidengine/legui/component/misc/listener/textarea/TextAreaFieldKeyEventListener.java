@@ -207,25 +207,25 @@ public class TextAreaFieldKeyEventListener implements EventListener<KeyboardEven
             int start = gui.getStartSelectionIndex();
             int end = gui.getEndSelectionIndex();
             TextState textState = gui.getTextState();
+            StringBuilder builder = new StringBuilder(textState.getText());
+            int caretPosition = gui.getCaretPosition();
+
             if (start != end) {
                 if (start > end) {
                     start = gui.getEndSelectionIndex();
                     end = gui.getStartSelectionIndex();
                 }
 
-                StringBuilder builder = new StringBuilder(textState.getText());
                 builder.delete(start, end);
                 textState.setText(builder.toString());
-                gui.setCaretPosition(start);
-                gui.setStartSelectionIndex(start);
-                gui.setEndSelectionIndex(start);
+                caretPosition = start;
             }
 
-            int caretPosition = gui.getCaretPosition();
-            StringBuilder builder = new StringBuilder(textState.getText());
             builder.insert(caretPosition, "\n");
             textState.setText(builder.toString());
+
             int newCaretPosition = caretPosition + 1;
+
             gui.setStartSelectionIndex(newCaretPosition);
             gui.setEndSelectionIndex(newCaretPosition);
             gui.setCaretPosition(newCaretPosition);
@@ -235,19 +235,21 @@ public class TextAreaFieldKeyEventListener implements EventListener<KeyboardEven
     private void keyEndAction(TextAreaField gui, Set<KeyMod> mods) {
         TextState textState = gui.getTextState();
         int caretPosition = gui.getCaretPosition();
+
         String text = textState.getText();
         String[] lines = text.split("\n", -1);
         LineData currentLine = getStartLineIndexAndLineNumber(lines, caretPosition);
         int cl = lines[currentLine.lineIndex].length();
         int delta = cl - currentLine.caretPositionInLine;
 
-        int newCaretPosition = caretPosition + delta;
-        gui.setEndSelectionIndex(newCaretPosition);
-        //update start selection index if SHIFT was not pressed.
-        if (mods.contains(KeyMod.SHIFT)) {
-            gui.setStartSelectionIndex(newCaretPosition);
+        int newCaretPosition;
+        if (mods.contains(KeyMod.CONTROL)) {
+            newCaretPosition = text.length();
+        } else {
+            newCaretPosition = caretPosition + delta;
         }
-        gui.setCaretPosition(newCaretPosition);
+
+        updateIndices(gui, mods, newCaretPosition);
     }
 
     private void keyHomeAction(TextAreaField gui, Set<KeyMod> mods) {
@@ -257,13 +259,14 @@ public class TextAreaFieldKeyEventListener implements EventListener<KeyboardEven
         String[] lines = text.split("\n", -1);
         LineData some = getStartLineIndexAndLineNumber(lines, caretPosition);
 
-        int newCaretPosition = caretPosition - some.caretPositionInLine;
-        gui.setEndSelectionIndex(newCaretPosition);
-        //update start selection index if SHIFT was not pressed.
-        if (mods.contains(KeyMod.SHIFT)) {
-            gui.setStartSelectionIndex(newCaretPosition);
+        int newCaretPosition;
+        if (mods.contains(KeyMod.CONTROL)) {
+            newCaretPosition = 0;
+        } else {
+            newCaretPosition = caretPosition - some.caretPositionInLine;
         }
-        gui.setCaretPosition(newCaretPosition);
+
+        updateIndices(gui, mods, newCaretPosition);
     }
 
     private void keyDownAction(TextAreaField gui, Set<KeyMod> mods) {
@@ -273,8 +276,8 @@ public class TextAreaFieldKeyEventListener implements EventListener<KeyboardEven
             String text = textState.getText();
             String[] lines = text.split("\n", -1);
             LineData some = getStartLineIndexAndLineNumber(lines, caretPosition);
-            int newCaretPosition = text.length();
 
+            int newCaretPosition;
             if (some.lineIndex < lines.length - 1) {
                 int nl = lines[some.lineIndex + 1].length() + 1;
                 int cl = lines[some.lineIndex].length() + 1;
@@ -283,12 +286,11 @@ public class TextAreaFieldKeyEventListener implements EventListener<KeyboardEven
                 } else {
                     newCaretPosition = caretPosition + cl;
                 }
+            } else {
+                newCaretPosition = text.length();
             }
-            gui.setEndSelectionIndex(newCaretPosition);
-            if (mods.contains(KeyMod.SHIFT)) {
-                gui.setStartSelectionIndex(newCaretPosition);
-            }
-            gui.setCaretPosition(newCaretPosition);
+
+            updateIndices(gui, mods, newCaretPosition);
         }
     }
 
@@ -299,54 +301,61 @@ public class TextAreaFieldKeyEventListener implements EventListener<KeyboardEven
             String text = textState.getText();
             String[] lines = text.split("\n", -1);
             LineData some = getStartLineIndexAndLineNumber(lines, caretPosition);
-            int newCaretPosition = 0;
+
+            int newCaretPosition;
             if (some.lineIndex > 0) {
                 int nl = lines[some.lineIndex - 1].length() + 1;
                 newCaretPosition = caretPosition - (some.caretPositionInLine >= nl - 1 ? some.caretPositionInLine + 1 : nl);
+            } else {
+                newCaretPosition = 0;
             }
 
-            gui.setEndSelectionIndex(newCaretPosition);
-            if (mods.contains(KeyMod.SHIFT)) {
-                gui.setStartSelectionIndex(newCaretPosition);
-            }
-            gui.setCaretPosition(newCaretPosition);
+            updateIndices(gui, mods, newCaretPosition);
         }
     }
 
     private void keyRightAction(TextAreaField gui, Set<KeyMod> mods) {
         TextState textState = gui.getTextState();
         int caretPosition = gui.getCaretPosition();
-        int newCaretPosition = caretPosition + 1;
-        // reset if out of bounds
-        if (newCaretPosition >= textState.length()) {
-            newCaretPosition = textState.length();
-        }
+
+        int newCaretPosition;
         if (mods.contains(KeyMod.CONTROL)) {
             newCaretPosition = findNextWord(gui.getTextState().getText(), caretPosition);
+        } else {
+            newCaretPosition = caretPosition + 1;
+            // reset if out of bounds
+            if (newCaretPosition >= textState.length()) {
+                newCaretPosition = textState.length();
+            }
         }
-        gui.setEndSelectionIndex(newCaretPosition);
-        if (mods.contains(KeyMod.SHIFT)) {
-            gui.setStartSelectionIndex(newCaretPosition);
-        }
-        gui.setCaretPosition(newCaretPosition);
+
+        updateIndices(gui, mods, newCaretPosition);
     }
 
     private void keyLeftAction(TextAreaField gui, Set<KeyMod> mods) {
         int caretPosition = gui.getCaretPosition();
-        int newCaretPosition = caretPosition - 1;
-        // reset if out of bounds.
-        if (newCaretPosition <= 0) {
-            newCaretPosition = 0;
-        }
+
+        int newCaretPosition;
         if (mods.contains(KeyMod.CONTROL)) {
             newCaretPosition = findPrevWord(gui.getTextState().getText(), caretPosition);
+        } else {
+            newCaretPosition = caretPosition - 1;
+            // reset if out of bounds.
+            if (newCaretPosition <= 0) {
+                newCaretPosition = 0;
+            }
         }
-        gui.setEndSelectionIndex(newCaretPosition);
-        if (mods.contains(KeyMod.SHIFT)) {
+
+        updateIndices(gui, mods, newCaretPosition);
+    }
+
+    private void updateIndices(TextAreaField gui, Set<KeyMod> mods, int newCaretPosition) {
+        if (!mods.contains(KeyMod.SHIFT)) {
             gui.setStartSelectionIndex(newCaretPosition);
         }
-        gui.setCaretPosition(newCaretPosition);
 
+        gui.setEndSelectionIndex(newCaretPosition);
+        gui.setCaretPosition(newCaretPosition);
     }
 
     private LineData getStartLineIndexAndLineNumber(String[] lines, int caretPosition) {
