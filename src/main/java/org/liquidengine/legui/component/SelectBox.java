@@ -34,7 +34,7 @@ import java.util.concurrent.locks.ReentrantLock;
 import static org.liquidengine.legui.style.font.FontRegistry.MATERIAL_ICONS_REGULAR;
 
 /**
- * Creates drop-down list with select options. <p> TODO: REIMPLEMENT THIS COMPONENT ACCORDING TO NEW LAYOUT SYSTEM
+ * Creates drop-down list with select options.
  */
 public class SelectBox<T> extends Component {
 
@@ -78,9 +78,9 @@ public class SelectBox<T> extends Component {
     /**
      * Constructor with position and size parameters.
      *
-     * @param x x position position in parent component.
-     * @param y y position position in parent component.
-     * @param width width of component.
+     * @param x      x position position in parent component.
+     * @param y      y position position in parent component.
+     * @param width  width of component.
      * @param height height of component.
      */
     public SelectBox(float x, float y, float width, float height) {
@@ -92,7 +92,7 @@ public class SelectBox<T> extends Component {
      * Constructor with position and size parameters.
      *
      * @param position position position in parent component.
-     * @param size size of component.
+     * @param size     size of component.
      */
     public SelectBox(Vector2f position, Vector2f size) {
         super(position, size);
@@ -168,7 +168,7 @@ public class SelectBox<T> extends Component {
         MouseClickEventListener mouseClickEventListener = new SelectBoxClickListener<>(this);
         selectionButton.getListenerMap().addListener(MouseClickEvent.class, mouseClickEventListener);
         expandButton.getListenerMap().addListener(MouseClickEvent.class, mouseClickEventListener);
-        selectBoxLayer.getContainer().getListenerMap().addListener(MouseClickEvent.class, mouseClickEventListener);
+        selectBoxLayer.getListenerMap().addListener(MouseClickEvent.class, mouseClickEventListener);
 
         FocusEventListener focusEventListener = new SelectBoxFocusListener<>(this);
         selectionListPanel.getVerticalScrollBar().getListenerMap().getListeners(FocusEvent.class).add(focusEventListener);
@@ -355,7 +355,7 @@ public class SelectBox<T> extends Component {
     /**
      * Used to set selected state of element.
      *
-     * @param element element to set state.
+     * @param element  element to set state.
      * @param selected state of element to set.
      */
     public void setSelected(T element, boolean selected) {
@@ -366,7 +366,7 @@ public class SelectBox<T> extends Component {
     /**
      * Used to set selected state of element on specified index.
      *
-     * @param index index of element to set state.
+     * @param index    index of element to set state.
      * @param selected state of element to set.
      */
     public void setSelected(int index, boolean selected) {

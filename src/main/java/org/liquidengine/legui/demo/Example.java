@@ -211,6 +211,5 @@ public class Example {
         gui.setFocusable(false);
         gui.getListenerMap().addListener(WindowSizeEvent.class, (WindowSizeEventListener) event -> gui.setSize(event.getWidth(), event.getHeight()));
         frame.getContainer().add(gui);
-        frame.getContainer().setFocusable(false);
     }
 }

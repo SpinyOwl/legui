@@ -26,7 +26,7 @@ public class WindowPosEventHandler extends AbstractSystemEventHandler<SystemWind
      */
     @Override
     protected boolean handle(SystemWindowPosEvent event, Layer layer, Context context, Frame frame) {
-        pushEvent(layer.getContainer(), event, context, frame);
+        pushEvent(layer, event, context, frame);
         return false;
     }
 

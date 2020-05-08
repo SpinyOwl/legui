@@ -1,11 +1,9 @@
 package org.liquidengine.legui.component;
 
-import org.liquidengine.legui.component.SelectBox.SelectBoxScrollablePanel;
-
 /**
  * @author Aliaksandr_Shcherbin.
  */
-public class SelectBoxLayer extends Layer<SelectBoxScrollablePanel> {
+public class SelectBoxLayer extends Layer {
 
     /**
      * Default constructor of dialog layer.

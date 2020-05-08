@@ -34,7 +34,7 @@ public class DefaultLayoutManager extends LayoutManager {
     @Override
     public void layout(Frame frame, Context context) {
         for (Layer layer : frame.getAllLayers()) {
-            layout(layer.getContainer(), frame, context);
+            layout(layer, frame, context);
         }
     }
 

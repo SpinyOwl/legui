@@ -5,10 +5,12 @@ import org.apache.logging.log4j.Logger;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.TextInput;
+import org.liquidengine.legui.component.event.textinput.TextInputWidthChangeEvent;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
 import org.liquidengine.legui.input.Mouse;
+import org.liquidengine.legui.listener.processor.EventProcessorProvider;
 import org.liquidengine.legui.style.Style;
 import org.liquidengine.legui.style.font.FontRegistry;
 import org.liquidengine.legui.system.context.Context;
@@ -32,21 +34,19 @@ import static org.lwjgl.system.MemoryUtil.*;
  * Created by ShchAlexander on 13.02.2017.
  */
 public class NvgTextInputRenderer extends NvgDefaultComponentRenderer<TextInput> {
-    private static final Logger LOGGER = LogManager.getLogger();
-
     public static final String PRATIO = "pratio";
     public static final String PALIGN = "palign";
     public static final String POFFSET = "poffset";
-    private final Vector4f caretColor = new Vector4f(0, 0, 0, 0.5f);
+    private static final Logger LOGGER = LogManager.getLogger();
     private static final int MAX_GLYPH_COUNT = 1024;
-
+    private final Vector4f caretColor = new Vector4f(0, 0, 0, 0.5f);
 
     /**
      * Used to render textInput.
      *
      * @param component textInput to render.
-     * @param context legui context.
-     * @param nanovg nanovg context pointer.
+     * @param context   legui context.
+     * @param nanovg    nanovg context pointer.
      */
     @Override
     protected void renderSelf(TextInput component, Context context, long nanovg) {
@@ -97,18 +97,14 @@ public class NvgTextInputRenderer extends NvgDefaultComponentRenderer<TextInput>
             if (focused) {
                 updateCaret(bc);
             }
-            if (text == null || text.isEmpty()) {
+            if (text.isEmpty()) {
 
                 if (focused) {
                     // render caret
                     float nCaretX = rect.x + halign.index * rect.z / 2f;
                     renderCaret(context, rect, nCaretX, caretColor);
                 }
-                textState.setTextWidth(0);
                 textState.setTextHeight(fontSize);
-                textState.setCaretX(null);
-                textState.setCaretY(null);
-
                 gui.setMouseCaretPosition(0);
             } else {
 
@@ -216,21 +212,25 @@ public class NvgTextInputRenderer extends NvgDefaultComponentRenderer<TextInput>
                     mouseCaretX -= poffset;
                     float nCaretX = caretx - poffset;
 
+                    float textWidth = textState.getTextWidth();
+
                     textState.setTextWidth(textBounds[2]);
                     textState.setTextHeight(fontSize);
                     textState.setCaretX(nCaretX);
                     textState.setCaretY(textBounds[5]);
 
+                    if (Math.abs(textWidth - textBounds[2]) > 0.001) {
+                        EventProcessorProvider.getInstance().pushEvent(new TextInputWidthChangeEvent(gui, leguiContext, gui.getFrame(), textBounds[2]));
+                    }
+
                     drawSelection(context, rect, highlightColor,
-                                  startSelectionIndex, endSelectionIndex,
-                                  focused, startSelectionX, endSelectionX, poffset);
+                        startSelectionIndex, endSelectionIndex,
+                        focused, startSelectionX, endSelectionX, poffset);
                     // render text
 
                     Vector4f bounds = new Vector4f(textBounds[4] - poffset, textBounds[5], textBounds[6], textBounds[7]);
                     NvgText.drawTextLineToRect(context, bounds, false,
-                                               HorizontalAlign.LEFT,
-                                               VerticalAlign.MIDDLE,
-                                               fontSize, font, text, textColor);
+                        HorizontalAlign.LEFT, VerticalAlign.MIDDLE, fontSize, font, text, textColor);
 
                     if (focused) {
                         // render caret

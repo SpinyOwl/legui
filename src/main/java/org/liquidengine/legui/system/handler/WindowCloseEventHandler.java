@@ -17,7 +17,7 @@ public class WindowCloseEventHandler extends AbstractSystemEventHandler<SystemWi
 
     @Override
     protected boolean handle(SystemWindowCloseEvent event, Layer layer, Context context, Frame frame) {
-        pushEvent(layer.getContainer(), context, frame);
+        pushEvent(layer, context, frame);
         return false;
     }
 

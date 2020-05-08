@@ -6,10 +6,13 @@ import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.TextAreaField;
+import org.liquidengine.legui.component.event.textarea.TextAreaFieldHeightChangeEvent;
+import org.liquidengine.legui.component.event.textarea.TextAreaFieldWidthChangeEvent;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
 import org.liquidengine.legui.input.Mouse;
+import org.liquidengine.legui.listener.processor.EventProcessorProvider;
 import org.liquidengine.legui.style.Style;
 import org.liquidengine.legui.style.font.FontRegistry;
 import org.liquidengine.legui.system.context.Context;
@@ -66,9 +69,7 @@ public class NvgTextAreaFieldRenderer extends NvgDefaultComponentRenderer<TextAr
 
             intersectScissor(nanovg, new Vector4f(textRect));
 
-            if (component.getTextState().getText() != null) {
-                renderText(context, nanovg, component, textRect, viewportRect, backgroundColor);
-            }
+            renderText(context, nanovg, component, textRect, viewportRect, backgroundColor);
         }
         resetScissor(nanovg);
     }
@@ -142,7 +143,7 @@ public class NvgTextAreaFieldRenderer extends NvgDefaultComponentRenderer<TextAr
 
             // binary search line in view rect
             int first = 0;
-            int last = lineCount-1;
+            int last = lineCount - 1;
 
             if (viewportRect != null) {
                 {
@@ -159,8 +160,9 @@ public class NvgTextAreaFieldRenderer extends NvgDefaultComponentRenderer<TextAr
 
                         if (lineY > viewportRect.y + viewportRect.w) {
                             last = mid - 1;
-                        } else if (lineY <= viewportRect.y + viewportRect.w && lineY + lineHeight >= viewportRect.y) {break;}
-                        else {
+                        } else if (lineY <= viewportRect.y + viewportRect.w && lineY + lineHeight >= viewportRect.y) {
+                            break;
+                        } else {
                             first = mid + 1;
                         }
 
@@ -217,10 +219,22 @@ public class NvgTextAreaFieldRenderer extends NvgDefaultComponentRenderer<TextAr
             }
 
 
+            float textWidth = textState.getTextWidth();
+            float textHeight = textState.getTextHeight();
+
             textState.setTextWidth(maxWid);
-            textState.setTextHeight((lines.length) * fontSize);
+            float newTextHeight = (lines.length) * fontSize;
+            textState.setTextHeight(newTextHeight);
             textState.setCaretX(caretx);
             textState.setCaretY(caretLineBounds[5] + voffset + fontSize * caretLine);
+
+            if (Math.abs(textWidth - maxWid) > 0.001) {
+                EventProcessorProvider.getInstance().pushEvent(new TextAreaFieldWidthChangeEvent(gui, leguiContext, gui.getFrame(), maxWid));
+            }
+
+            if (Math.abs(textHeight - newTextHeight) > 0.001) {
+                EventProcessorProvider.getInstance().pushEvent(new TextAreaFieldHeightChangeEvent(gui, leguiContext, gui.getFrame(), newTextHeight));
+            }
 
             // calculate default mouse line index
             if (lineCount > 0) {

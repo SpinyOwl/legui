@@ -1,22 +1,22 @@
 package org.liquidengine.legui.theme.colored.def;
 
-import org.liquidengine.legui.component.LayerContainer;
+import org.liquidengine.legui.component.Layer;
 import org.liquidengine.legui.theme.colored.FlatColoredTheme.FlatColoredThemeSettings;
 
 /**
  * Dark LayerContainer Theme for all layer containers. Used to make layer container dark.
  *
- * @param <T> {@link LayerContainer} subclasses.
+ * @param <T> {@link Layer} subclasses.
  */
-public class FlatLayerContainerTheme<T extends LayerContainer> extends FlatBorderlessTheme<T> {
+public class FlatLayerTheme<T extends Layer> extends FlatBorderlessTheme<T> {
 
     /**
      * Default constructor. Settings should be specified before using this theme.
      */
-    public FlatLayerContainerTheme() {
+    public FlatLayerTheme() {
     }
 
-    public FlatLayerContainerTheme(FlatColoredThemeSettings settings) {
+    public FlatLayerTheme(FlatColoredThemeSettings settings) {
         super(settings);
     }
 

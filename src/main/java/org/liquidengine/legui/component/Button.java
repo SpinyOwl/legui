@@ -103,7 +103,7 @@ public class Button extends Component implements TextComponent {
      */
     private void initialize(String text) {
         BiConsumer<String, String> callback = (oldValue, newValue) ->
-            EventProcessorProvider.getInstance().pushEvent(new ButtonContentChangeEvent(this, null, null, oldValue, newValue));
+            EventProcessorProvider.getInstance().pushEvent(new ButtonContentChangeEvent(this, null, this.getFrame(), oldValue, newValue));
         this.textState = new TextState(text, callback);
         getStyle().setHorizontalAlign(HorizontalAlign.CENTER);
         Themes.getDefaultTheme().getThemeManager().getComponentTheme(Button.class).applyAll(this);

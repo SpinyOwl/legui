@@ -28,7 +28,7 @@ public abstract class AbstractSystemEventHandler<E extends SystemEvent> implemen
         Collections.reverse(layers);
         for (Layer layer : layers) {
             if (layer.isEventReceivable()) {
-                if (!layer.getContainer().isVisible() || !layer.getContainer().isEnabled()) {
+                if (!layer.isVisible() || !layer.isEnabled()) {
                     continue;
                 }
                 if (handle(event, layer, context, frame)) {

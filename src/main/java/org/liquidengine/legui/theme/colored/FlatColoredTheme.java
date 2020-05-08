@@ -104,7 +104,7 @@ public class FlatColoredTheme extends Theme {
         m.setComponentTheme(CheckBox.class, new FlatCheckBoxTheme<>());
         m.setComponentTheme(Component.class, new FlatComponentTheme<>());
         m.setComponentTheme(Label.class, new FlatLabelTheme<>());
-        m.setComponentTheme(LayerContainer.class, new FlatLayerContainerTheme<>());
+        m.setComponentTheme(Layer.class, new FlatLayerTheme<>());
         m.setComponentTheme(ProgressBar.class, new FlatProgressBarTheme<>());
         m.setComponentTheme(ScrollablePanel.class, new FlatScrollablePanelTheme<>());
         m.setComponentTheme(RadioButton.class, new FlatRadioButtonTheme<>());

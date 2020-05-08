@@ -89,10 +89,10 @@ public class MenuLayerDemo extends Demo {
         menuBarItemOption3.getStyle().setMaxWidth(60f);
         about.addMenuBarItemOption(menuBarItemOption3);
 
-        frame.getComponentLayer().setContainer(menuContainer);
+        frame.setComponentLayer(menuContainer);
     }
 
-    private class MenuContainer extends LayerContainer {
+    private class MenuContainer extends Layer {
 
         private MenuBar menuBar;
         private Panel container;
@@ -180,7 +180,7 @@ public class MenuLayerDemo extends Demo {
 
     private class MenuBarItem extends ToggleButton {
 
-        private Layer<MenuBarItemOptionPanel> layer;
+        private Layer layer;
         private MenuBarItemOptionPanel panel;
 
         public MenuBarItem(String text) {
@@ -193,16 +193,16 @@ public class MenuLayerDemo extends Demo {
         }
 
         private void initialize() {
-            layer = new Layer<>();
+            layer = new Layer();
             panel = new MenuBarItemOptionPanel(layer, this);
 
             layer.setEventPassable(true);
             layer.setEventReceivable(true);
 
             layer.add(panel);
-            layer.getContainer().getStyle().getBackground().setColor(ColorConstants.red().div(4f));
-            layer.getContainer().setFocusable(true);
-            layer.getContainer().getListenerMap().addListener(MouseClickEvent.class, event -> {
+            layer.getStyle().getBackground().setColor(ColorConstants.red().div(4f));
+            layer.setFocusable(true);
+            layer.getListenerMap().addListener(MouseClickEvent.class, event -> {
                 event.getFrame().removeLayer(layer);
                 this.setToggled(false);
             });
@@ -240,7 +240,7 @@ public class MenuLayerDemo extends Demo {
                         // show menu bar panel
                         Vector2f size = event.getFrame().getContainer().getSize();
                         layer.setSize(size.x, size.y - MENU_HEIGHT);
-                        layer.getContainer().setPosition(0, MENU_HEIGHT);
+                        layer.setPosition(0, MENU_HEIGHT);
                         event.getFrame().addLayer(layer);
                         panel.setPosition(menuBarItem.getPosition().x, 0);
                     }
@@ -252,10 +252,10 @@ public class MenuLayerDemo extends Demo {
     private class MenuBarItemOptionPanel extends Panel {
 
         private List<MenuBarItemOption> menuBarItemOptions;
-        private Layer<MenuBarItemOptionPanel> layer;
-        private MenuBarItem menuBarItem;
+        private final Layer layer;
+        private final MenuBarItem menuBarItem;
 
-        public MenuBarItemOptionPanel(Layer<MenuBarItemOptionPanel> layer, MenuBarItem menuBarItem) {
+        public MenuBarItemOptionPanel(Layer layer, MenuBarItem menuBarItem) {
             this.layer = layer;
             this.menuBarItem = menuBarItem;
             initialize();
@@ -293,7 +293,7 @@ public class MenuLayerDemo extends Demo {
 
     private class MenuBarItemOption extends Button {
 
-        private Layer<MenuBarItemOptionPanel> layer;
+        private Layer layer;
         private MenuBarItem menuBarItem;
 
         public MenuBarItemOption(String text) {
@@ -328,11 +328,11 @@ public class MenuLayerDemo extends Demo {
             });
         }
 
-        public Layer<MenuBarItemOptionPanel> getLayer() {
+        public Layer getLayer() {
             return layer;
         }
 
-        public void setLayer(Layer<MenuBarItemOptionPanel> layer) {
+        public void setLayer(Layer layer) {
             this.layer = layer;
         }
 

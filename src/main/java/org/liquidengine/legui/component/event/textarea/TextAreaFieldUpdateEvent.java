@@ -6,6 +6,8 @@ import org.liquidengine.legui.event.Event;
 import org.liquidengine.legui.system.context.Context;
 
 /**
+ * Generated when any key combination is pressed.
+ *
  * @author ShchAlexander.
  */
 public class TextAreaFieldUpdateEvent extends Event<TextAreaField> {

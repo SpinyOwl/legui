@@ -35,7 +35,7 @@ public abstract class Component implements Serializable {
     /**
      * Metadata map, place where renderers or event processors can store state of component.
      */
-    private Map<String, Object> metadata = new HashMap<>();
+    private final Map<String, Object> metadata = new HashMap<>();
     /**
      * Parent component container. For root components it could be null.
      */
@@ -108,19 +108,19 @@ public abstract class Component implements Serializable {
     /**
      * Component style.
      */
-    private Style hoveredStyle = new Style();
+    private final Style hoveredStyle = new Style();
     /**
      * Component style.
      */
-    private Style focusedStyle = new Style();
+    private final Style focusedStyle = new Style();
     /**
      * Component style.
      */
-    private Style pressedStyle = new Style();
+    private final Style pressedStyle = new Style();
     /**
      * List of child components.
      */
-    private List<Component> childComponents = new CopyOnWriteArrayList<>();
+    private final List<Component> childComponents = new CopyOnWriteArrayList<>();
 
     /**
      * Default constructor. Used to create component instance without any parameters.
@@ -777,55 +777,59 @@ public abstract class Component implements Serializable {
         Component component = (Component) o;
 
         return new EqualsBuilder()
-                .append(this.isEnabled(), component.isEnabled())
-                .append(this.isVisible(), component.isVisible())
-                .append(this.isHovered(), component.isHovered())
-                .append(this.isFocused(), component.isFocused())
-                .append(this.isPressed(), component.isPressed())
-                .append(this.getPosition(), component.getPosition())
-                .append(this.getSize(), component.getSize())
-                .append(this.getIntersector(), component.getIntersector())
-                .append(this.getTabIndex(), component.getTabIndex())
-                .append(this.isTabFocusable(), component.isTabFocusable())
-                .append(this.isFocusable(), component.isFocusable())
-                .append(childComponents, component.childComponents)
-                .isEquals();
+            .append(this.isEnabled(), component.isEnabled())
+            .append(this.isVisible(), component.isVisible())
+            .append(this.isHovered(), component.isHovered())
+            .append(this.isFocused(), component.isFocused())
+            .append(this.isPressed(), component.isPressed())
+            .append(this.getPosition(), component.getPosition())
+            .append(this.getSize(), component.getSize())
+            .append(this.getIntersector(), component.getIntersector())
+            .append(this.getTabIndex(), component.getTabIndex())
+            .append(this.isTabFocusable(), component.isTabFocusable())
+            .append(this.isFocusable(), component.isFocusable())
+            .append(childComponents, component.childComponents)
+            .isEquals();
     }
 
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
-                .append(position)
-                .append(size)
-                .append(enabled)
-                .append(intersector)
-                .append(hovered)
-                .append(focused)
-                .append(pressed)
-                .append(tabIndex)
-                .append(tabFocusable)
-                .append(focusable)
-                .append(childComponents)
-                .toHashCode();
+            .append(position)
+            .append(size)
+            .append(enabled)
+            .append(intersector)
+            .append(hovered)
+            .append(focused)
+            .append(pressed)
+            .append(tabIndex)
+            .append(tabFocusable)
+            .append(focusable)
+            .append(childComponents)
+            .toHashCode();
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("position", position)
-                .append("size", size)
-                .append("enabled", enabled)
-                .append("intersector", intersector)
-                .append("hovered", hovered)
-                .append("focused", focused)
-                .append("tabIndex", tabIndex)
-                .append("tabFocusable", tabFocusable)
-                .append("focusable", focusable)
-                .append("pressed", pressed)
-                .toString();
+            .append("position", position)
+            .append("size", size)
+            .append("enabled", enabled)
+            .append("intersector", intersector)
+            .append("hovered", hovered)
+            .append("focused", focused)
+            .append("tabIndex", tabIndex)
+            .append("tabFocusable", tabFocusable)
+            .append("focusable", focusable)
+            .append("pressed", pressed)
+            .toString();
     }
 
     public int indexOfChild(Component component) {
         return childComponents.indexOf(component);
+    }
+
+    public Frame getFrame() {
+        return parent == null ? null : parent.getFrame();
     }
 }

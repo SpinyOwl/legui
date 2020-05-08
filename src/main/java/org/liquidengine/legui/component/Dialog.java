@@ -111,7 +111,7 @@ public class Dialog extends Widget {
             this.setPosition((dialogLayerSize.x - this.getSize().x) / 2f, (dialogLayerSize.y - this.getSize().y) / 2f);
 
             this.frame.addLayer(dialogLayer);
-            dialogLayer.getContainer().setSize(dialogLayerSize);
+            dialogLayer.setSize(dialogLayerSize);
             dialogLayer.add(this);
         }
     }

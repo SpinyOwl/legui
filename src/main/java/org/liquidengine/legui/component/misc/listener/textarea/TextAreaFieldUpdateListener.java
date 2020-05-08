@@ -14,11 +14,12 @@ import static org.liquidengine.legui.style.util.StyleUtilities.getPadding;
 
 
 /**
+ * Used to update text area field sizes according to changes in text area field.
  * Created by ShchAlexander on 17.07.2018.
  */
 public class TextAreaFieldUpdateListener implements TextAreaFieldUpdateEventListener {
 
-    private TextArea textArea;
+    private final TextArea textArea;
 
     public TextAreaFieldUpdateListener(TextArea textArea) {
         this.textArea = textArea;
@@ -36,11 +37,11 @@ public class TextAreaFieldUpdateListener implements TextAreaFieldUpdateEventList
             float maxTextWidth = Math.max(
                 textAreaField.getMaxTextWidth() + padding.x + padding.z,
                 textAreaViewport.getSize().x
-                                         );
+            );
             float maxTextHeight = Math.max(
                 textAreaField.getMaxTextHeight() + padding.y + padding.w,
                 textAreaViewport.getSize().y
-                                          );
+            );
             textAreaField.setSize(maxTextWidth, maxTextHeight);
         }
 

@@ -17,7 +17,7 @@ public class WindowRefreshEventHandler extends AbstractSystemEventHandler<System
 
     @Override
     protected boolean handle(SystemWindowRefreshEvent event, Layer layer, Context context, Frame frame) {
-        pushEvent(layer.getContainer(), context, frame);
+        pushEvent(layer, context, frame);
         return false;
     }
 

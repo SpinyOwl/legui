@@ -107,7 +107,7 @@ public class Label extends Component implements TextComponent {
     private void initialize(String text) {
 
         BiConsumer<String, String> callback = (oldValue, newValue) ->
-            EventProcessorProvider.getInstance().pushEvent(new LabelContentChangeEvent(this, null, null, oldValue, newValue));
+            EventProcessorProvider.getInstance().pushEvent(new LabelContentChangeEvent(this, null, this.getFrame(), oldValue, newValue));
 
         textState = new TextState(text, callback);
 

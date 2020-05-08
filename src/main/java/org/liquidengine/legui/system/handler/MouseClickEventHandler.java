@@ -40,7 +40,7 @@ public class MouseClickEventHandler implements SystemEventHandler<SystemMouseCli
         Component target = null;
         for (Layer layer : layers) {
             if (layer.isEventReceivable()) {
-                if (!layer.getContainer().isVisible() || !layer.getContainer().isEnabled()) {
+                if (!layer.isVisible() || !layer.isEnabled()) {
                     continue;
                 }
                 target = SehUtil.getTargetComponent(layer, cursorPos);
@@ -110,7 +110,7 @@ public class MouseClickEventHandler implements SystemEventHandler<SystemMouseCli
     private void removeFocus(Component targetComponent, Frame frame, Context context) {
         List<Layer> allLayers = frame.getAllLayers();
         for (Layer layer : allLayers) {
-            List<Component> childComponents = layer.getContainer().getChildComponents();
+            List<Component> childComponents = layer.getChildComponents();
             for (Component child : childComponents) {
                 removeFocus(targetComponent, child, context, frame);
             }

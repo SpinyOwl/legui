@@ -10,9 +10,12 @@ import static org.lwjgl.nanovg.NanoVG.nvgIntersectScissor;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.Button;
+import org.liquidengine.legui.component.event.button.ButtonWidthChangeEvent;
+import org.liquidengine.legui.component.event.label.LabelWidthChangeEvent;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
+import org.liquidengine.legui.listener.processor.EventProcessorProvider;
 import org.liquidengine.legui.style.Style;
 import org.liquidengine.legui.style.font.FontRegistry;
 import org.liquidengine.legui.system.context.Context;
@@ -48,10 +51,16 @@ public class NvgButtonRenderer extends NvgDefaultComponentRenderer<Button> {
                     component.getTextDirection());
 
             float[] textBounds = calculateTextBoundsRect(nanovg, rect, textState.getText(), horizontalAlign, verticalAlign, fontSize);
+            float textWidth = textState.getTextWidth();
+
             textState.setTextWidth(textBounds[2]);
             textState.setTextHeight(fontSize);
             textState.setCaretX(null);
             textState.setCaretY(null);
+
+            if (Math.abs(textWidth - textBounds[2]) > 0.001) {
+                EventProcessorProvider.getInstance().pushEvent(new ButtonWidthChangeEvent(component, context, component.getFrame(), textBounds[2]));
+            }
         }
         resetScissor(nanovg);
     }

@@ -9,7 +9,7 @@ public class RemoveChildEvent<T extends Component> extends Event<T> {
     private final Component removed;
 
     public RemoveChildEvent(T targetComponent, Component removed) {
-        super(targetComponent, null, null);
+        super(targetComponent, null, targetComponent.getFrame());
         this.removed = removed;
     }
 

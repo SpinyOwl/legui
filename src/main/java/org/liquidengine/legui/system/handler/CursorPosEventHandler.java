@@ -36,7 +36,7 @@ public class CursorPosEventHandler extends AbstractSystemEventHandler<SystemCurs
         Collections.reverse(allLayers);
         Component targetComponent = null;
         for (Layer layer : allLayers) {
-            if (!layer.isEventReceivable() || !layer.getContainer().isVisible() || !layer.getContainer().isEnabled()) {
+            if (!layer.isEventReceivable() || !layer.isVisible() || !layer.isEnabled()) {
                 continue;
             }
             targetComponent = SehUtil.getTargetComponent(layer, cursorPosition);
@@ -73,7 +73,7 @@ public class CursorPosEventHandler extends AbstractSystemEventHandler<SystemCurs
      */
     @Override
     protected boolean handle(SystemCursorPosEvent event, Layer layer, Context context, Frame frame) {
-        List<Component> childComponents = layer.getContainer().getChildComponents();
+        List<Component> childComponents = layer.getChildComponents();
         for (Component child : childComponents) {
             handle(child, context, frame);
         }

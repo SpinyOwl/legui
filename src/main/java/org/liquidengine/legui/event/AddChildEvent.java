@@ -9,7 +9,7 @@ public class AddChildEvent<T extends Component> extends Event<T> {
     private final Component added;
 
     public AddChildEvent(T targetComponent, Component added) {
-        super(targetComponent, null, null);
+        super(targetComponent, null, targetComponent.getFrame());
         this.added = added;
     }
 
