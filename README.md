@@ -11,13 +11,12 @@
 [![Discord](https://img.shields.io/discord/245558983123927040.svg?slongCache=true&label=Discord&logo=discord)](https://discord.gg/6wfqXpJ)
 
 ___
-# LEGUI
+
 ![banner](images/banner.png)
-![banner](images/preview.png)
+![preview](images/preview.png)
 
 ___
 # TOC
-* [LEGUI](#legui)
 * [LEGUI - What is it?](#legui---what-is-it)
 * [Contribution to LEGUI](#contribution-to-legui)
 * [System requirements](#system-requirements)
