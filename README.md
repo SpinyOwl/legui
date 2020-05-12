@@ -2,10 +2,8 @@
 ![CODE SIZE](https://img.shields.io/github/languages/code-size/SpinyOwl/legui.svg) 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=SpinyOwl_legui&metric=alert_status)](https://sonarcloud.io/dashboard?id=SpinyOwl_legui)
 ![License](https://img.shields.io/github/license/SpinyOwl/legui.svg)  
-[![DEVELOP BUILD](https://img.shields.io/travis/SpinyOwl/legui/develop.svg?label=develop&logo=travis)](https://travis-ci.org/SpinyOwl/legui)
-[![SNAPSHOT BUILD](https://img.shields.io/travis/SpinyOwl/legui/snapshots.svg?label=snapshots&logo=travis)](https://travis-ci.org/SpinyOwl/legui)
-[![RELEASE BUILD](https://img.shields.io/travis/SpinyOwl/legui/releases.svg?label=releases&logo=travis)](https://travis-ci.org/SpinyOwl/legui)  
-[![STABLE DEVELOP VERSION](https://img.shields.io/badge/dynamic/xml.svg?label=develop&url=https%3A%2F%2Fraw.github.com%2FSpinyOwl%2Frepo%2Fdevelop%2Forg%2Fliquidengine%2Flegui%2Fmaven-metadata.xml&query=%2F%2Fmetadata%2Fversioning%2Fversions%2Fversion%5Blast()%5D&colorB=blue)](https://github.com/SpinyOwl/repo/tree/develop/org/liquidengine/legui)
+![Build and publish](https://img.shields.io/github/workflow/status/SpinyOwl/legui/Build%20and%20publish/develop?label=build%20develop&logo=Github)
+![Build and publish](https://img.shields.io/github/workflow/status/SpinyOwl/legui/Build%20and%20publish/releases?label=build%20develop&logo=Github)  
 [![STABLE SNAPSHOT VERSION](https://img.shields.io/badge/dynamic/xml.svg?label=snapshot&url=https%3A%2F%2Fraw.github.com%2FSpinyOwl%2Frepo%2Fsnapshots%2Forg%2Fliquidengine%2Flegui%2Fmaven-metadata.xml&query=%2F%2Fmetadata%2Fversioning%2Fversions%2Fversion%5Blast()%5D&colorB=blue)](https://github.com/SpinyOwl/repo/tree/snapshots/org/liquidengine/legui)
 [![STABLE RELEASE VERSION](https://img.shields.io/badge/dynamic/xml.svg?label=release&url=https%3A%2F%2Fraw.github.com%2FSpinyOwl%2Frepo%2Freleases%2Forg%2Fliquidengine%2Flegui%2Fmaven-metadata.xml&query=%2F%2Fmetadata%2Fversioning%2Fversions%2Fversion%5Blast()%5D&colorB=blue)](https://github.com/SpinyOwl/repo/tree/releases/org/liquidengine/legui)    
 [![LAST FEATURE VERSION](https://img.shields.io/badge/dynamic/xml.svg?label=feature&url=https%3A%2F%2Fraw.github.com%2FSpinyOwl%2Frepo%2Ffeature%2Forg%2Fliquidengine%2Flegui%2Fmaven-metadata.xml&query=%2F%2Fmetadata%2Fversioning%2Fversions%2Fversion%5Blast()%5D&colorB=blue)](https://github.com/SpinyOwl/repo/tree/feature/org/liquidengine/legui)
@@ -14,8 +12,8 @@
 
 ___
 # LEGUI
-
-<img src="https://i.ibb.co/4mk6v70/image.png" />
+![banner](images/banner.png)
+![banner](images/preview.png)
 
 ___
 # TOC
