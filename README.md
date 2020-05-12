@@ -12,7 +12,7 @@
 
 ___
 
-![banner](images/banner.png)
+![legui_api](images/legui_api.png)
 ![preview](images/preview.png)
 
 ___
