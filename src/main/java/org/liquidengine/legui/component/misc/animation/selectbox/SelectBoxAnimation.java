@@ -33,10 +33,12 @@ public class SelectBoxAnimation extends Animation {
     @Override
     protected boolean animate(double delta) {
         SelectBox selectBox = this.selectBox.get();
-        if (selectBox.isCollapsed()) return false;
         SelectBoxScrollablePanel selectionListPanel = this.selectionListPanel.get();
         if (selectBox == null || selectionListPanel == null) {
             return true;
+        }
+        if (selectBox.isCollapsed()) {
+        	return false;
         }
         deltaSum += delta;
 
