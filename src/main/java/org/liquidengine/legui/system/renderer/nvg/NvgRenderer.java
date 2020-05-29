@@ -33,7 +33,7 @@ public class NvgRenderer extends AbstractRenderer {
     public static final String IMAGE_REFERENCE_MANAGER = "IMAGE_REFERENCE_MANAGER";
     protected Map<String, Font> loadedFonts = new ConcurrentHashMap<>();
     private long nvgContext;
-    private NvgLoadableImageReferenceManager imageReferenceManager;
+    private NvgImageReferenceManager imageReferenceManager;
     private boolean isVersionNew;
 
     /**
@@ -104,7 +104,7 @@ public class NvgRenderer extends AbstractRenderer {
             int flags = NanoVGGL2.NVG_STENCIL_STROKES | NanoVGGL2.NVG_ANTIALIAS;
             nvgContext = NanoVGGL2.nvgCreate(flags);
         }
-        imageReferenceManager = new NvgLoadableImageReferenceManager();
+        imageReferenceManager = new NvgImageReferenceManager();
         RendererProvider.getInstance().getComponentRenderers().forEach(ComponentRenderer::initialize);
     }
 

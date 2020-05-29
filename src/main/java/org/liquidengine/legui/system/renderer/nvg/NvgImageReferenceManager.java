@@ -6,7 +6,9 @@ import com.google.common.cache.RemovalListener;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.liquidengine.legui.image.FBOImage;
+import org.liquidengine.legui.image.ImageChannels;
 import org.liquidengine.legui.image.LoadableImage;
+import org.liquidengine.legui.image.TextureImageRGBA;
 import org.lwjgl.nanovg.NanoVG;
 import org.lwjgl.nanovg.NanoVGGL2;
 import org.lwjgl.nanovg.NanoVGGL3;
@@ -16,6 +18,7 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.concurrent.*;
 
+import static org.lwjgl.nanovg.NanoVG.nvgCreateImageRGBA;
 import static org.lwjgl.opengl.GL11.glGetInteger;
 import static org.lwjgl.opengl.GL30.GL_MAJOR_VERSION;
 import static org.lwjgl.opengl.GL30.GL_MINOR_VERSION;
@@ -23,36 +26,36 @@ import static org.lwjgl.opengl.GL30.GL_MINOR_VERSION;
 /**
  * Created by ShchAlexander on 1/26/2017.
  */
-public class NvgLoadableImageReferenceManager {
+public class NvgImageReferenceManager {
     private static final Logger LOGGER = LogManager.getLogger();
 
     /**
      * BufferedImage queue to remove.
      */
-    private Queue<String> imagesToRemove = new ConcurrentLinkedQueue<>();
+    private final Queue<String> imagesToRemove = new ConcurrentLinkedQueue<>();
 
     /**
      * Removal listener.
      */
-    private RemovalListener<String, Integer> removalListener = removal -> imagesToRemove.add(removal.getKey());
+    private final RemovalListener<String, Integer> removalListener = removal -> imagesToRemove.add(removal.getKey());
 
     /**
      * Cache of loaded images. If image is reached only by soft reference it will be deleted.
      */
-    private Cache<String, Integer> imageCache;
+    private final Cache<String, Integer> imageCache;
 
     /**
      * Cleanup scheduler.
      */
-    private ScheduledExecutorService cleanup = Executors.newSingleThreadScheduledExecutor();
-    private Map<String, Integer> imageAssociationMap = new ConcurrentHashMap<>();
+    private final ScheduledExecutorService cleanup = Executors.newSingleThreadScheduledExecutor();
+    private final Map<String, Integer> imageAssociationMap = new ConcurrentHashMap<>();
 
     /**
      * Used to create image reference manager.
      */
-    protected NvgLoadableImageReferenceManager() {
+    protected NvgImageReferenceManager() {
         imageCache = CacheBuilder.newBuilder().initialCapacity(200)
-            .expireAfterAccess(300, TimeUnit.SECONDS).removalListener(removalListener).build();
+            .expireAfterAccess(3000, TimeUnit.SECONDS).removalListener(removalListener).build();
         cleanup.scheduleAtFixedRate(() -> imageCache.cleanUp(), 1, 1, TimeUnit.SECONDS);
     }
 
@@ -61,7 +64,7 @@ public class NvgLoadableImageReferenceManager {
      *
      * @param expireCleanupEnabled the expire cleanup enabled.
      */
-    protected NvgLoadableImageReferenceManager(boolean expireCleanupEnabled) {
+    protected NvgImageReferenceManager(boolean expireCleanupEnabled) {
         CacheBuilder<String, Integer> cacheBuilder = CacheBuilder.newBuilder().initialCapacity(200).removalListener(removalListener);
         if (expireCleanupEnabled) {
             cacheBuilder.expireAfterAccess(300, TimeUnit.SECONDS);
@@ -75,7 +78,7 @@ public class NvgLoadableImageReferenceManager {
      *
      * @param duration the duration after which cache should clean unused references.
      */
-    protected NvgLoadableImageReferenceManager(int duration) {
+    protected NvgImageReferenceManager(int duration) {
         imageCache = CacheBuilder.newBuilder().initialCapacity(200)
             .removalListener(removalListener).expireAfterAccess(duration, TimeUnit.SECONDS).build();
         cleanup.scheduleAtFixedRate(() -> imageCache.cleanUp(), 1, 1, TimeUnit.SECONDS);
@@ -101,9 +104,8 @@ public class NvgLoadableImageReferenceManager {
     /**
      * Used to obtain image reference by image.
      *
-     * @param image image to get reference.
+     * @param image   image to get reference.
      * @param context nanovg context.
-     *
      * @return reference of provided image or 0 if not found.
      */
     public int getImageReference(LoadableImage image, long context) {
@@ -131,7 +133,11 @@ public class NvgLoadableImageReferenceManager {
             if (imageData != null) {
                 int width = image.getWidth();
                 int height = image.getHeight();
-                reference = NanoVG.nvgCreateImageRGBA(context, width, height, 0, imageData);
+                if (image.getChannels() == ImageChannels.RGBA) {
+                    reference = NanoVG.nvgCreateImageRGBA(context, width, height, 0, imageData);
+                } else {
+                    reference = NanoVG.nvgCreateImageMem(context, 0, imageData);
+                }
             }
             imageAssociationMap.put(image.getPath(), reference);
             return reference;
@@ -154,6 +160,27 @@ public class NvgLoadableImageReferenceManager {
             }
         }
         return imageRef;
+    }
+
+    public int getImageReference(TextureImageRGBA image, long context) {
+        Integer imageRef = 0;
+        if (image != null) {
+            String path = getPath(image);
+            try {
+                imageRef = imageCache.get(path, () -> {
+                    int reference = nvgCreateImageRGBA(context, image.getWidth(), image.getHeight(), 0, image.getImageData());
+                    imageAssociationMap.put(getPath(image), reference);
+                    return reference;
+                });
+            } catch (ExecutionException e) {
+                LOGGER.error(e.getMessage(), e);
+            }
+        }
+        return imageRef;
+    }
+
+    private String getPath(TextureImageRGBA image) {
+        return "TI::RGBA::" + image;
     }
 
     private String getFboPath(int textureId) {

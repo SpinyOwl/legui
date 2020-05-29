@@ -3,8 +3,8 @@ package org.liquidengine.legui.system.renderer.nvg.image;
 import org.joml.Vector2fc;
 import org.liquidengine.legui.image.LoadableImage;
 import org.liquidengine.legui.system.context.Context;
+import org.liquidengine.legui.system.renderer.nvg.NvgImageReferenceManager;
 import org.liquidengine.legui.system.renderer.nvg.NvgImageRenderer;
-import org.liquidengine.legui.system.renderer.nvg.NvgLoadableImageReferenceManager;
 
 import java.util.Map;
 
@@ -29,7 +29,7 @@ public class NvgLoadableImageRenderer<I extends LoadableImage> extends NvgImageR
     @Override
     protected void renderImage(I image, Vector2fc position, Vector2fc size, Map<String, Object> properties, Context context, long nanovg) {
 
-        NvgLoadableImageReferenceManager manager = (NvgLoadableImageReferenceManager) context.getContextData().get(IMAGE_REFERENCE_MANAGER);
+        NvgImageReferenceManager manager = (NvgImageReferenceManager) context.getContextData().get(IMAGE_REFERENCE_MANAGER);
         int imageRef = manager.getImageReference(image, nanovg);
 
         renderImage(imageRef, position, size, properties, nanovg);

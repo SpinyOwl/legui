@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
 import org.liquidengine.legui.component.Button;
 import org.liquidengine.legui.component.CheckBox;
 import org.liquidengine.legui.component.Component;
@@ -21,9 +22,7 @@ import org.liquidengine.legui.component.Tooltip;
 import org.liquidengine.legui.icon.CharIcon;
 import org.liquidengine.legui.icon.Icon;
 import org.liquidengine.legui.icon.ImageIcon;
-import org.liquidengine.legui.image.FBOImage;
-import org.liquidengine.legui.image.Image;
-import org.liquidengine.legui.image.LoadableImage;
+import org.liquidengine.legui.image.*;
 import org.liquidengine.legui.style.Border;
 import org.liquidengine.legui.style.border.SimpleLineBorder;
 import org.liquidengine.legui.system.renderer.BorderRenderer;
@@ -50,24 +49,22 @@ import org.liquidengine.legui.system.renderer.nvg.component.NvgTooltipRenderer;
 import org.liquidengine.legui.system.renderer.nvg.icon.NvgCharIconRenderer;
 import org.liquidengine.legui.system.renderer.nvg.icon.NvgDefaultIconRenderer;
 import org.liquidengine.legui.system.renderer.nvg.icon.NvgImageIconRenderer;
-import org.liquidengine.legui.system.renderer.nvg.image.NvgDefaultImageRenderer;
-import org.liquidengine.legui.system.renderer.nvg.image.NvgFBOImageRenderer;
-import org.liquidengine.legui.system.renderer.nvg.image.NvgLoadableImageRenderer;
+import org.liquidengine.legui.system.renderer.nvg.image.*;
 
 /**
  * Created by ShchAlexander on 1/26/2017.
  */
 public class NvgRendererProvider implements RendererProvider {
 
-    private Map<Class<? extends Component>, ComponentRenderer<? extends Component>> componentRendererMap = new ConcurrentHashMap<>();
-    private Map<Class<? extends Border>, BorderRenderer<? extends Border>> borderRendererMap = new ConcurrentHashMap<>();
-    private Map<Class<? extends Icon>, IconRenderer<? extends Icon>> iconRendererMap = new ConcurrentHashMap<>();
-    private Map<Class<? extends Image>, ImageRenderer<? extends Image>> imageRendererMap = new ConcurrentHashMap<>();
+    private final Map<Class<? extends Component>, ComponentRenderer<? extends Component>> componentRendererMap = new ConcurrentHashMap<>();
+    private final Map<Class<? extends Border>, BorderRenderer<? extends Border>> borderRendererMap = new ConcurrentHashMap<>();
+    private final Map<Class<? extends Icon>, IconRenderer<? extends Icon>> iconRendererMap = new ConcurrentHashMap<>();
+    private final Map<Class<? extends Image>, ImageRenderer<? extends Image>> imageRendererMap = new ConcurrentHashMap<>();
 
-    private NvgComponentRenderer defaultComponentRenderer = new NvgDefaultComponentRenderer();
-    private NvgBorderRenderer defaultBorderRenderer = new NvgDefaultBorderRenderer();
-    private NvgIconRenderer defaultIconRenderer = new NvgDefaultIconRenderer();
-    private NvgImageRenderer defaultImageRenderer = new NvgDefaultImageRenderer();
+    private final NvgComponentRenderer defaultComponentRenderer = new NvgDefaultComponentRenderer();
+    private final NvgBorderRenderer defaultBorderRenderer = new NvgDefaultBorderRenderer();
+    private final NvgIconRenderer defaultIconRenderer = new NvgDefaultIconRenderer();
+    private final NvgImageRenderer defaultImageRenderer = new NvgDefaultImageRenderer();
 
     private NvgRendererProvider() {
 
@@ -96,6 +93,7 @@ public class NvgRendererProvider implements RendererProvider {
         // register image renderers
         imageRendererMap.put(LoadableImage.class, new NvgLoadableImageRenderer<>());
         imageRendererMap.put(FBOImage.class, new NvgFBOImageRenderer());
+        imageRendererMap.put(TextureImageRGBA.class, new NvgTextureImageRGBARenderer());
     }
 
     public static NvgRendererProvider getInstance() {
