@@ -3,10 +3,9 @@
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=SpinyOwl_legui&metric=alert_status)](https://sonarcloud.io/dashboard?id=SpinyOwl_legui)
 ![License](https://img.shields.io/github/license/SpinyOwl/legui.svg)  
 ![Build and publish](https://img.shields.io/github/workflow/status/SpinyOwl/legui/Build%20and%20publish/develop?label=build%20develop&logo=Github)
-![Build and publish](https://img.shields.io/github/workflow/status/SpinyOwl/legui/Build%20and%20publish/releases?label=build%20develop&logo=Github)  
+![Build and publish](https://img.shields.io/github/workflow/status/SpinyOwl/legui/Build%20and%20publish/releases?label=build%20releases&logo=Github)  
 [![STABLE SNAPSHOT VERSION](https://img.shields.io/badge/dynamic/xml.svg?label=snapshot&url=https%3A%2F%2Fraw.github.com%2FSpinyOwl%2Frepo%2Fsnapshots%2Forg%2Fliquidengine%2Flegui%2Fmaven-metadata.xml&query=%2F%2Fmetadata%2Fversioning%2Fversions%2Fversion%5Blast()%5D&colorB=blue)](https://github.com/SpinyOwl/repo/tree/snapshots/org/liquidengine/legui)
-[![STABLE RELEASE VERSION](https://img.shields.io/badge/dynamic/xml.svg?label=release&url=https%3A%2F%2Fraw.github.com%2FSpinyOwl%2Frepo%2Freleases%2Forg%2Fliquidengine%2Flegui%2Fmaven-metadata.xml&query=%2F%2Fmetadata%2Fversioning%2Fversions%2Fversion%5Blast()%5D&colorB=blue)](https://github.com/SpinyOwl/repo/tree/releases/org/liquidengine/legui)    
-[![LAST FEATURE VERSION](https://img.shields.io/badge/dynamic/xml.svg?label=feature&url=https%3A%2F%2Fraw.github.com%2FSpinyOwl%2Frepo%2Ffeature%2Forg%2Fliquidengine%2Flegui%2Fmaven-metadata.xml&query=%2F%2Fmetadata%2Fversioning%2Fversions%2Fversion%5Blast()%5D&colorB=blue)](https://github.com/SpinyOwl/repo/tree/feature/org/liquidengine/legui)
+[![STABLE RELEASE VERSION](https://img.shields.io/badge/dynamic/xml.svg?label=release&url=https%3A%2F%2Fraw.github.com%2FSpinyOwl%2Frepo%2Freleases%2Forg%2Fliquidengine%2Flegui%2Fmaven-metadata.xml&query=%2F%2Fmetadata%2Fversioning%2Fversions%2Fversion%5Blast()%5D&colorB=blue)](https://github.com/SpinyOwl/repo/tree/releases/org/liquidengine/legui)
 
 [![Discord](https://img.shields.io/discord/245558983123927040.svg?slongCache=true&label=Discord&logo=discord)](https://discord.gg/6wfqXpJ)
 
