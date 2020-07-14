@@ -16,7 +16,7 @@ import org.liquidengine.legui.component.optional.align.VerticalAlign;
 import org.liquidengine.legui.event.*;
 import org.liquidengine.legui.icon.Icon;
 import org.liquidengine.legui.icon.ImageIcon;
-import org.liquidengine.legui.image.BufferedImage;
+import org.liquidengine.legui.image.StbBackedLoadableImage;
 import org.liquidengine.legui.listener.CursorEnterEventListener;
 import org.liquidengine.legui.listener.FocusEventListener;
 import org.liquidengine.legui.listener.KeyEventListener;
@@ -341,13 +341,13 @@ public class ExampleGui extends Panel {
                 widget.show();
             }
         });
-        Icon bgIm = new ImageIcon(new BufferedImage("org/liquidengine/legui/demo/1.png"));
+        Icon bgIm = new ImageIcon(new StbBackedLoadableImage("org/liquidengine/legui/demo/1.png"));
         bgIm.setSize(new Vector2f(20, 20));
         turnWidVisible.getStyle().getBackground().setIcon(bgIm);
-        Icon hbgIm = new ImageIcon(new BufferedImage("org/liquidengine/legui/demo/2.png"));
+        Icon hbgIm = new ImageIcon(new StbBackedLoadableImage("org/liquidengine/legui/demo/2.png"));
         hbgIm.setSize(new Vector2f(20, 20));
 //        turnWidVisible.setHoveredBackgroundIcon(hbgIm);
-        Icon pbIm = new ImageIcon(new BufferedImage("org/liquidengine/legui/demo/3.png"));
+        Icon pbIm = new ImageIcon(new StbBackedLoadableImage("org/liquidengine/legui/demo/3.png"));
         pbIm.setSize(new Vector2f(20, 20));
 //        turnWidVisible.setPressedBackgroundIcon(pbIm);
 
@@ -549,7 +549,7 @@ public class ExampleGui extends Panel {
         imageWrapper.setAscendible(true);
         imageWrapper.setTitleEnabled(true);
 
-        imageView = new ImageView(new BufferedImage("org/liquidengine/legui/demo/1.jpg"));
+        imageView = new ImageView(new StbBackedLoadableImage("org/liquidengine/legui/demo/1.jpg"));
         imageView.setPosition(15, 5);
         imageView.setSize(70, 70);
         imageView.getStyle().setBorderRadius(10f);
@@ -634,7 +634,7 @@ public class ExampleGui extends Panel {
 
     private ToggleButton createToggleButtonWithLongTooltip() {
         ToggleButton toggleButton = new ToggleButton("", 100, 170, 40, 20);
-        Icon bgImageNormal = new ImageIcon(new BufferedImage("org/liquidengine/legui/demo/toggle.png"));
+        Icon bgImageNormal = new ImageIcon(new StbBackedLoadableImage("org/liquidengine/legui/demo/toggle.png"));
 
         toggleButton.getListenerMap().addListener(CursorEnterEvent.class, (CursorEnterEventListener) System.out::println);
 

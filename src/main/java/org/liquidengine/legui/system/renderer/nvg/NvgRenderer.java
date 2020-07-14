@@ -31,16 +31,16 @@ public class NvgRenderer extends AbstractRenderer {
 
     public static final String NVG_CONTEXT = "NVG_CONTEXT";
     public static final String IMAGE_REFERENCE_MANAGER = "IMAGE_REFERENCE_MANAGER";
+    private final NvgImageReferenceManager imageReferenceManager = NvgImageReferenceManager.getInstance();
     protected Map<String, Font> loadedFonts = new ConcurrentHashMap<>();
     private long nvgContext;
-    private NvgImageReferenceManager imageReferenceManager;
     private boolean isVersionNew;
 
     /**
      * Used to render border.
      *
      * @param component component for which should be rendered border.
-     * @param context context.
+     * @param context   context.
      */
     public static void renderBorder(Component component, Context context) {
         Border border = component.getStyle().getBorder();
@@ -55,8 +55,8 @@ public class NvgRenderer extends AbstractRenderer {
      * Used to render border with scissor.
      *
      * @param component component for which should be rendered border.
-     * @param context context.
-     * @param nanovg nanovg context.
+     * @param context   context.
+     * @param nanovg    nanovg context.
      */
     public static void renderBorderWScissor(Component component, Context context, long nanovg) {
         NvgRenderUtils.createScissor(nanovg, component);
@@ -69,9 +69,9 @@ public class NvgRenderer extends AbstractRenderer {
     /**
      * Used to render icon of component.
      *
-     * @param icon icon to render.
+     * @param icon      icon to render.
      * @param component icon owner.
-     * @param context context.
+     * @param context   context.
      */
     public static void renderIcon(Icon icon, Component component, Context context) {
         if (icon != null && component != null) {
@@ -82,10 +82,10 @@ public class NvgRenderer extends AbstractRenderer {
     /**
      * Used to render image of component.
      *
-     * @param image image to render.
+     * @param image    image to render.
      * @param position image position.
-     * @param size image size.
-     * @param context context.
+     * @param size     image size.
+     * @param context  context.
      */
     public static void renderImage(Image image, Vector2fc position, Vector2fc size, Map<String, Object> properties, Context context) {
         if (image != null) {
@@ -104,7 +104,6 @@ public class NvgRenderer extends AbstractRenderer {
             int flags = NanoVGGL2.NVG_STENCIL_STROKES | NanoVGGL2.NVG_ANTIALIAS;
             nvgContext = NanoVGGL2.nvgCreate(flags);
         }
-        imageReferenceManager = new NvgImageReferenceManager();
         RendererProvider.getInstance().getComponentRenderers().forEach(ComponentRenderer::initialize);
     }
 
@@ -124,7 +123,6 @@ public class NvgRenderer extends AbstractRenderer {
     protected void preRender(Context context) {
         loadFontsToNvg();
         context.getContextData().put(NVG_CONTEXT, nvgContext);
-        context.getContextData().put(IMAGE_REFERENCE_MANAGER, imageReferenceManager);
 
         glDisable(GL_DEPTH_TEST);
         glEnable(GL_BLEND);

@@ -1,6 +1,6 @@
 package org.liquidengine.legui.image.loader;
 
-import org.liquidengine.legui.image.BufferedImage;
+import org.liquidengine.legui.image.StbBackedLoadableImage;
 import org.liquidengine.legui.image.LoadableImage;
 
 /**
@@ -10,6 +10,6 @@ public class DefaultImageLoader extends ImageLoader {
 
     @Override
     protected LoadableImage createImage(String path) {
-        return new BufferedImage(path);
+        return new StbBackedLoadableImage(path);
     }
 }

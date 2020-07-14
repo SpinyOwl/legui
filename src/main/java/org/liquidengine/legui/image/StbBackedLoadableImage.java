@@ -17,7 +17,7 @@ import java.nio.ByteBuffer;
 /**
  * Created by ShchAlexander on 2/6/2017.
  */
-public class BufferedImage extends LoadableImage {
+public class StbBackedLoadableImage extends LoadableImage {
 
     private static final Logger LOGGER = LogManager.getLogger();
     private int width;
@@ -28,7 +28,7 @@ public class BufferedImage extends LoadableImage {
     /**
      * This constructor should be used with {@link #setPath(String)} and {@link #load()} methods.
      */
-    public BufferedImage() {
+    public StbBackedLoadableImage() {
     }
 
     /**
@@ -36,7 +36,7 @@ public class BufferedImage extends LoadableImage {
      *
      * @param path path to image source.
      */
-    public BufferedImage(String path) {
+    public StbBackedLoadableImage(String path) {
         super(path);
         try {
             load();
@@ -128,7 +128,7 @@ public class BufferedImage extends LoadableImage {
             return false;
         }
 
-        BufferedImage image = (BufferedImage) obj;
+        StbBackedLoadableImage image = (StbBackedLoadableImage) obj;
 
         return new EqualsBuilder()
             .append(width, image.width)
