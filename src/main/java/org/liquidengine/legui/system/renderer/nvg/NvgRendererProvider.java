@@ -24,6 +24,7 @@ import org.liquidengine.legui.icon.ImageIcon;
 import org.liquidengine.legui.image.FBOImage;
 import org.liquidengine.legui.image.Image;
 import org.liquidengine.legui.image.LoadableImage;
+import org.liquidengine.legui.image.StbBackedLoadableImage;
 import org.liquidengine.legui.style.Border;
 import org.liquidengine.legui.style.border.SimpleLineBorder;
 import org.liquidengine.legui.system.renderer.BorderRenderer;
@@ -52,7 +53,7 @@ import org.liquidengine.legui.system.renderer.nvg.icon.NvgDefaultIconRenderer;
 import org.liquidengine.legui.system.renderer.nvg.icon.NvgImageIconRenderer;
 import org.liquidengine.legui.system.renderer.nvg.image.NvgDefaultImageRenderer;
 import org.liquidengine.legui.system.renderer.nvg.image.NvgFBOImageRenderer;
-import org.liquidengine.legui.system.renderer.nvg.image.NvgLoadableImageRenderer;
+import org.liquidengine.legui.system.renderer.nvg.image.NvgStbBackedLoadableImageRenderer;
 
 /**
  * Created by ShchAlexander on 1/26/2017.
@@ -94,7 +95,7 @@ public class NvgRendererProvider implements RendererProvider {
         iconRendererMap.put(CharIcon.class, new NvgCharIconRenderer<>());
 
         // register image renderers
-        imageRendererMap.put(LoadableImage.class, new NvgLoadableImageRenderer<>());
+        imageRendererMap.put(StbBackedLoadableImage.class, new NvgStbBackedLoadableImageRenderer());
         imageRendererMap.put(FBOImage.class, new NvgFBOImageRenderer());
     }
 

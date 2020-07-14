@@ -1,5 +1,7 @@
 package org.liquidengine.legui.exception;
 
+import org.liquidengine.legui.image.StbBackedLoadableImage;
+
 /**
  * Exception message templates. Used to build exception with predefined message.
  */
@@ -13,7 +15,7 @@ public enum LeguiExceptionTemplate {
      */
     FAILED_TO_LOAD_FONT("Failed to initialize font. (%s)"),
     /**
-     * Used by {@link org.liquidengine.legui.image.BufferedImage}.
+     * Used by {@link StbBackedLoadableImage}.
      */
     FAILED_TO_LOAD_IMAGE("Failed to initialize image. (%s)"),;
 
