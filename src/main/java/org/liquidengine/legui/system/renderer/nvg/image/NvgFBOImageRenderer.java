@@ -16,7 +16,6 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.function.IntFunction;
 
-import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.IMAGE_REFERENCE_MANAGER;
 import static org.lwjgl.opengl.GL11.glGetInteger;
 import static org.lwjgl.opengl.GL30.GL_MAJOR_VERSION;
 import static org.lwjgl.opengl.GL30.GL_MINOR_VERSION;
@@ -77,7 +76,7 @@ public class NvgFBOImageRenderer extends NvgImageRenderer<FBOImage> {
     @Override
     protected void renderImage(FBOImage image, Vector2fc position, Vector2fc size, Map<String, Object> properties, Context context, long nanovg) {
 
-        NvgImageReferenceManager manager = (NvgImageReferenceManager) context.getContextData().get(IMAGE_REFERENCE_MANAGER);
+        NvgImageReferenceManager manager = NvgImageReferenceManager.getInstance();
         int imageRef = manager.getImageReference(image, nanovg);
 
         renderImage(imageRef, position, size, properties, nanovg);
