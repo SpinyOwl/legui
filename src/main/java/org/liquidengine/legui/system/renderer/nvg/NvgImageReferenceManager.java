@@ -3,30 +3,19 @@ package org.liquidengine.legui.system.renderer.nvg;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.RemovalListener;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.liquidengine.legui.image.FBOImage;
 import org.liquidengine.legui.image.Image;
 import org.lwjgl.nanovg.NanoVG;
-import org.lwjgl.nanovg.NanoVGGL2;
-import org.lwjgl.nanovg.NanoVGGL3;
 
 import java.util.Map;
 import java.util.Objects;
 import java.util.Queue;
 import java.util.concurrent.*;
 import java.util.function.BiFunction;
-import java.util.function.IntFunction;
-
-import static org.lwjgl.opengl.GL11.glGetInteger;
-import static org.lwjgl.opengl.GL30.GL_MAJOR_VERSION;
-import static org.lwjgl.opengl.GL30.GL_MINOR_VERSION;
 
 /**
  * Created by ShchAlexander on 1/26/2017.
  */
 public final class NvgImageReferenceManager {
-    private static final Logger LOGGER = LogManager.getLogger();
     private static final NvgImageReferenceManager INSTANCE = new NvgImageReferenceManager();
     /**
      * BufferedImage queue to remove.
@@ -53,7 +42,7 @@ public final class NvgImageReferenceManager {
     private NvgImageReferenceManager() {
         imageCache = CacheBuilder.newBuilder().initialCapacity(200)
             .expireAfterAccess(3000, TimeUnit.SECONDS).removalListener(removalListener).build();
-        cleanup.scheduleAtFixedRate(() -> imageCache.cleanUp(), 1, 1, TimeUnit.SECONDS);
+        cleanup.scheduleAtFixedRate(imageCache::cleanUp, 1, 1, TimeUnit.SECONDS);
     }
 
     public static NvgImageReferenceManager getInstance() {
