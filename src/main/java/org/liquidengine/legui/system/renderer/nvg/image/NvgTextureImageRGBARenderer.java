@@ -59,7 +59,7 @@ public class NvgTextureImageRGBARenderer extends NvgImageRenderer<TextureImageRG
 
         NvgImageReferenceManager manager = NvgImageReferenceManager.getInstance();
         int imageRef = manager.getImageReference(image, nanovg);
-        if (image.needsToUpdate())
+        if (image.isUpdated())
             NanoVG.nvgUpdateImage(nanovg, imageRef, image.getImageData());
         renderImage(imageRef, position, size, properties, nanovg);
     }

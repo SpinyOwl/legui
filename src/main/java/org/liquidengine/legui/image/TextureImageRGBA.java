@@ -36,7 +36,7 @@ public class TextureImageRGBA extends Image {
 
     }
 
-    public void passDataToPixelBuffer(ByteBuffer data) {
+    public void updateImageData(ByteBuffer data) {
         if (data.capacity() != dataSize) {
             throw new IllegalArgumentException("Wrong size of data");
         }
@@ -54,7 +54,7 @@ public class TextureImageRGBA extends Image {
         needToRead.set(true);
     }
 
-    public boolean needsToUpdate() {
+    public boolean isUpdated() {
         return needToRead.get();
     }
 
