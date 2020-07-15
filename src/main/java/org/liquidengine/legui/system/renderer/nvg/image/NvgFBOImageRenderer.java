@@ -77,7 +77,7 @@ public class NvgFBOImageRenderer extends NvgImageRenderer<FBOImage> {
     @Override
     protected void renderImage(FBOImage image, Vector2fc position, Vector2fc size, Map<String, Object> properties, Context context, long nanovg) {
 
-        NvgImageReferenceManager manager = (NvgImageReferenceManager) context.getContextData().get(IMAGE_REFERENCE_MANAGER);
+        NvgImageReferenceManager manager = NvgImageReferenceManager.getInstance();
         int imageRef = manager.getImageReference(image, nanovg);
 
         renderImage(imageRef, position, size, properties, nanovg);
