@@ -17,18 +17,22 @@ import java.util.function.BiFunction;
  */
 public final class NvgImageReferenceManager {
     private static final NvgImageReferenceManager INSTANCE = new NvgImageReferenceManager();
+
     /**
      * BufferedImage queue to remove.
      */
     private final Queue<String> imagesToRemove = new ConcurrentLinkedQueue<>();
+
     /**
      * Removal listener.
      */
     private final RemovalListener<String, Integer> removalListener = removal -> imagesToRemove.add(removal.getKey());
+
     /**
      * Cache of loaded images. If image is reached only by soft reference it will be deleted.
      */
     private final Cache<String, Integer> imageCache;
+
     /**
      * Cleanup scheduler.
      */
