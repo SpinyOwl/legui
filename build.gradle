@@ -8,8 +8,9 @@ group 'org.liquidengine'
 import groovy.json.JsonSlurper
 
 // SETUP VERSION
+def versionJson = new JsonSlurper().parseText(new File("$project.projectDir/version.json").text)
 def versionExt = System.getProperty("VEXT") ?: System.getenv("VEXT") ?: ""
-project.version = project.version + ((versionExt == null || versionExt == "") ? "" : "-" + versionExt)
+project.version = versionJson.version + ((versionExt == null || versionExt == "") ? "" : "-" + versionExt)
 
 printProjectInfo()
 
