@@ -6,7 +6,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 /**
  * Created by ShchAlexander on 30.05.2018.
  */
-public class TextureImageRGBA extends Image {
+public class BufferedImageRGBA extends Image {
     // image data that would be passed to gpu
     private final ByteBuffer[] byteBuffers = new ByteBuffer[2];
     private final AtomicBoolean needToRead = new AtomicBoolean(false);
@@ -20,7 +20,7 @@ public class TextureImageRGBA extends Image {
     private volatile int writePB = 0;
 
 
-    public TextureImageRGBA(int width, int height) {
+    public BufferedImageRGBA(int width, int height) {
         this.width = width;
         this.height = height;
         this.dataSize = width * height * 4;

@@ -5,7 +5,7 @@ import org.liquidengine.legui.animation.AnimatorProvider;
 import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.component.ImageView;
 import org.liquidengine.legui.component.Widget;
-import org.liquidengine.legui.image.TextureImageRGBA;
+import org.liquidengine.legui.image.BufferedImageRGBA;
 import org.liquidengine.legui.listener.processor.EventProcessorProvider;
 import org.liquidengine.legui.style.Style;
 import org.liquidengine.legui.style.color.ColorConstants;
@@ -37,7 +37,7 @@ public class SingleClassExampleImageRendering {
     public static final int WIDTH = 400;
     public static final int HEIGHT = 300;
     private static volatile boolean running = false;
-    private static TextureImageRGBA img;
+    private static BufferedImageRGBA img;
     private static int textureWidth;
     private static int textureHeight;
     private static int color;
@@ -186,7 +186,7 @@ public class SingleClassExampleImageRendering {
             textureHeight = HEIGHT / 2;
             byteBuffer = generateEmptyImage(ByteBuffer.allocate(textureWidth * textureHeight * 4));
 
-            img = new TextureImageRGBA(textureWidth, textureHeight);
+            img = new BufferedImageRGBA(textureWidth, textureHeight);
             img.updateImageData(generateEmptyImage(byteBuffer));
             imageView.setImage(img);
         };

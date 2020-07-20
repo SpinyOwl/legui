@@ -4,7 +4,7 @@ package org.liquidengine.legui.system.renderer.nvg.image;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.joml.Vector2fc;
-import org.liquidengine.legui.image.TextureImageRGBA;
+import org.liquidengine.legui.image.BufferedImageRGBA;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.nvg.NvgImageReferenceManager;
 import org.liquidengine.legui.system.renderer.nvg.NvgImageRenderer;
@@ -19,15 +19,15 @@ import static org.lwjgl.nanovg.NanoVG.nvgCreateImageRGBA;
 /**
  * Used to render image rectangle if no other renderers implemented.
  */
-public class NvgTextureImageRGBARenderer extends NvgImageRenderer<TextureImageRGBA> {
+public class NvgBufferedImageRGBARenderer extends NvgImageRenderer<BufferedImageRGBA> {
     private static final Logger LOGGER = LogManager.getLogger();
 
     @Override
     public void initialize() {
         NvgImageReferenceManager manager = NvgImageReferenceManager.getInstance();
-        manager.putImageReferenceProvider(TextureImageRGBA.class, (image, context) -> {
+        manager.putImageReferenceProvider(BufferedImageRGBA.class, (image, context) -> {
             int imageRef = 0;
-            Function<TextureImageRGBA, String> getPath = i -> "TI::RGBA::" + i.hashCode();
+            Function<BufferedImageRGBA, String> getPath = i -> "TI::RGBA::" + i.hashCode();
 
             if (image != null) {
                 String path = getPath.apply(image);
@@ -55,7 +55,7 @@ public class NvgTextureImageRGBARenderer extends NvgImageRenderer<TextureImageRG
      * @param nanovg   nanoVG context.
      */
     @Override
-    protected void renderImage(TextureImageRGBA image, Vector2fc position, Vector2fc size, Map<String, Object> properties, Context context, long nanovg) {
+    protected void renderImage(BufferedImageRGBA image, Vector2fc position, Vector2fc size, Map<String, Object> properties, Context context, long nanovg) {
 
         NvgImageReferenceManager manager = NvgImageReferenceManager.getInstance();
         int imageRef = manager.getImageReference(image, nanovg);

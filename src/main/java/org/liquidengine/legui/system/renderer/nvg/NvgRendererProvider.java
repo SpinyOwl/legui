@@ -99,7 +99,7 @@ public class NvgRendererProvider implements RendererProvider {
         // register image renderers
         imageRendererMap.put(StbBackedLoadableImage.class, new NvgStbBackedLoadableImageRenderer());
         imageRendererMap.put(FBOImage.class, new NvgFBOImageRenderer());
-        imageRendererMap.put(TextureImageRGBA.class, new NvgTextureImageRGBARenderer());
+        imageRendererMap.put(BufferedImageRGBA.class, new NvgBufferedImageRGBARenderer());
     }
 
     public static NvgRendererProvider getInstance() {
