@@ -36,6 +36,23 @@ public class NvgRenderer extends AbstractRenderer {
     private long nvgContext;
     private boolean isVersionNew;
 
+    private final boolean antialiasingEnabled;
+
+    /**
+     * Allows to create nvg renderer with directly enabled/disabled antialiasing
+     * @param antialiasingEnabled if antialiasing shoould be enabled
+     */
+    public NvgRenderer(boolean antialiasingEnabled) {
+        this.antialiasingEnabled = antialiasingEnabled;
+    }
+
+    /**
+     * Creates nvg renderer with enabled antialiasing
+     */
+    public NvgRenderer() {
+        this(true);
+    }
+
     /**
      * Used to render border.
      *
@@ -98,10 +115,10 @@ public class NvgRenderer extends AbstractRenderer {
         isVersionNew = (glGetInteger(GL30.GL_MAJOR_VERSION) > 3) || (glGetInteger(GL30.GL_MAJOR_VERSION) == 3 && glGetInteger(GL30.GL_MINOR_VERSION) >= 2);
 
         if (isVersionNew) {
-            int flags = NanoVGGL3.NVG_STENCIL_STROKES | NanoVGGL3.NVG_ANTIALIAS;
+            int flags = antialiasingEnabled ? NanoVGGL3.NVG_STENCIL_STROKES | NanoVGGL3.NVG_ANTIALIAS : NanoVGGL3.NVG_STENCIL_STROKES;
             nvgContext = NanoVGGL3.nvgCreate(flags);
         } else {
-            int flags = NanoVGGL2.NVG_STENCIL_STROKES | NanoVGGL2.NVG_ANTIALIAS;
+            int flags = antialiasingEnabled ? NanoVGGL2.NVG_STENCIL_STROKES | NanoVGGL2.NVG_ANTIALIAS : NanoVGGL2.NVG_STENCIL_STROKES;
             nvgContext = NanoVGGL2.nvgCreate(flags);
         }
         RendererProvider.getInstance().getComponentRenderers().forEach(ComponentRenderer::initialize);
