@@ -54,13 +54,13 @@ dependencies {
     //@formatter:off
     compile group: "org.joml", name: "joml", version: joml_version, changing: true
     compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: log4j_version, changing: false
+    compile group: 'commons-io', name: 'commons-io', version: commons_io
     compile group: 'org.apache.commons', name: 'commons-lang3', version: commons_version, changing: false
     compile group: 'org.apache.commons', name: 'commons-collections4', version: commons_collections, changing: false
     compile group: 'com.google.guava', name: 'guava', version: guava_version, changing: false
     compile group: 'com.google.code.gson', name: 'gson', version: gson_version, changing: false
 
     compile group: 'org.liquidengine', name: 'cbchain', version: le_cbchain, changing: true
-    compile group: 'org.liquidengine', name: 'leutil', version: le_util, changing: true
 
     compile group: 'org.lwjgl', name: 'lwjgl-stb', version: lwjgl_version, changing: true
     runtime group: 'org.lwjgl', name: 'lwjgl-stb', version: lwjgl_version, changing: true, classifier: 'natives-windows'

@@ -8,7 +8,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.liquidengine.legui.exception.LeguiException;
 import org.liquidengine.legui.exception.LeguiExceptionTemplate;
-import org.liquidengine.leutil.io.IOUtil;
+import org.liquidengine.legui.util.IOUtil;
 import org.lwjgl.stb.STBImage;
 
 import java.io.IOException;

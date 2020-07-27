@@ -8,7 +8,7 @@ import org.apache.logging.log4j.Logger;
 import org.liquidengine.legui.input.KeyCode;
 import org.liquidengine.legui.input.Keyboard;
 import org.liquidengine.legui.input.Shortcut;
-import org.liquidengine.leutil.io.IOUtil;
+import org.liquidengine.legui.util.IOUtil;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;

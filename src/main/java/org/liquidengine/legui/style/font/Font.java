@@ -2,7 +2,7 @@ package org.liquidengine.legui.style.font;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.liquidengine.leutil.io.IOUtil;
+import org.liquidengine.legui.util.IOUtil;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;

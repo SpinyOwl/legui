@@ -13,10 +13,14 @@ import org.liquidengine.legui.component.misc.listener.label.UpdateLabelWidthList
 import org.liquidengine.legui.component.optional.Orientation;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
-import org.liquidengine.legui.event.*;
+import org.liquidengine.legui.event.CursorEnterEvent;
+import org.liquidengine.legui.event.DropEvent;
+import org.liquidengine.legui.event.FocusEvent;
+import org.liquidengine.legui.event.KeyEvent;
+import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.icon.Icon;
 import org.liquidengine.legui.icon.ImageIcon;
-import org.liquidengine.legui.image.StbBackedLoadableImage;
+import org.liquidengine.legui.image.loader.ImageLoader;
 import org.liquidengine.legui.listener.CursorEnterEventListener;
 import org.liquidengine.legui.listener.FocusEventListener;
 import org.liquidengine.legui.listener.KeyEventListener;
@@ -37,9 +41,16 @@ import org.lwjgl.glfw.GLFW;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static org.liquidengine.legui.component.optional.align.HorizontalAlign.*;
-import static org.liquidengine.legui.component.optional.align.VerticalAlign.*;
-import static org.liquidengine.legui.event.MouseClickEvent.MouseClickAction.*;
+import static org.liquidengine.legui.component.optional.align.HorizontalAlign.CENTER;
+import static org.liquidengine.legui.component.optional.align.HorizontalAlign.LEFT;
+import static org.liquidengine.legui.component.optional.align.HorizontalAlign.RIGHT;
+import static org.liquidengine.legui.component.optional.align.VerticalAlign.BASELINE;
+import static org.liquidengine.legui.component.optional.align.VerticalAlign.BOTTOM;
+import static org.liquidengine.legui.component.optional.align.VerticalAlign.MIDDLE;
+import static org.liquidengine.legui.component.optional.align.VerticalAlign.TOP;
+import static org.liquidengine.legui.event.MouseClickEvent.MouseClickAction.CLICK;
+import static org.liquidengine.legui.event.MouseClickEvent.MouseClickAction.PRESS;
+import static org.liquidengine.legui.event.MouseClickEvent.MouseClickAction.RELEASE;
 import static org.liquidengine.legui.input.Mouse.MouseButton.MOUSE_BUTTON_LEFT;
 
 
@@ -341,13 +352,13 @@ public class ExampleGui extends Panel {
                 widget.show();
             }
         });
-        Icon bgIm = new ImageIcon(new StbBackedLoadableImage("org/liquidengine/legui/demo/1.png"));
+        Icon bgIm = new ImageIcon(ImageLoader.loadImage("org/liquidengine/legui/demo/1.png"));
         bgIm.setSize(new Vector2f(20, 20));
         turnWidVisible.getStyle().getBackground().setIcon(bgIm);
-        Icon hbgIm = new ImageIcon(new StbBackedLoadableImage("org/liquidengine/legui/demo/2.png"));
+        Icon hbgIm = new ImageIcon(ImageLoader.loadImage("org/liquidengine/legui/demo/2.png"));
         hbgIm.setSize(new Vector2f(20, 20));
 //        turnWidVisible.setHoveredBackgroundIcon(hbgIm);
-        Icon pbIm = new ImageIcon(new StbBackedLoadableImage("org/liquidengine/legui/demo/3.png"));
+        Icon pbIm = new ImageIcon(ImageLoader.loadImage("org/liquidengine/legui/demo/3.png"));
         pbIm.setSize(new Vector2f(20, 20));
 //        turnWidVisible.setPressedBackgroundIcon(pbIm);
 
@@ -368,7 +379,7 @@ public class ExampleGui extends Panel {
                 Dialog dialog = new Dialog("Question:", 300, 100);
 
                 Label questionLabel = new Label("Are you sure want to turn " + (widget2.isDraggable() ? "off" : "on") + "this widget draggable?", 10, 10, 200,
-                    20);
+                        20);
                 Button yesButton = new Button("Yes", 10, 50, 50, 20);
                 Button noButton = new Button("No", 70, 50, 50, 20);
                 yesButton.getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) e -> {
@@ -549,7 +560,7 @@ public class ExampleGui extends Panel {
         imageWrapper.setAscendible(true);
         imageWrapper.setTitleEnabled(true);
 
-        imageView = new ImageView(new StbBackedLoadableImage("org/liquidengine/legui/demo/1.jpg"));
+        imageView = new ImageView(ImageLoader.loadImage("org/liquidengine/legui/demo/1.jpg"));
         imageView.setPosition(15, 5);
         imageView.setSize(70, 70);
         imageView.getStyle().setBorderRadius(10f);
@@ -634,7 +645,7 @@ public class ExampleGui extends Panel {
 
     private ToggleButton createToggleButtonWithLongTooltip() {
         ToggleButton toggleButton = new ToggleButton("", 100, 170, 40, 20);
-        Icon bgImageNormal = new ImageIcon(new StbBackedLoadableImage("org/liquidengine/legui/demo/toggle.png"));
+        Icon bgImageNormal = new ImageIcon(ImageLoader.loadImage("org/liquidengine/legui/demo/toggle.png"));
 
         toggleButton.getListenerMap().addListener(CursorEnterEvent.class, (CursorEnterEventListener) System.out::println);
 
@@ -647,7 +658,7 @@ public class ExampleGui extends Panel {
             }
         });
         toggleButton.getListenerMap().addListener(MouseClickEvent.class,
-            (MouseClickEventListener) event -> getSlideImageOnClick(toggleButton, bgImageNormal).startAnimation());
+                (MouseClickEventListener) event -> getSlideImageOnClick(toggleButton, bgImageNormal).startAnimation());
 
         toggleButton.getTooltip().setPosition(45, 0);
         toggleButton.getTooltip().getSize().set(140, 40);
@@ -724,7 +735,7 @@ public class ExampleGui extends Panel {
         shadowWidget.getContainer().add(hOffsetSlider);
         hOffsetSlider.setValue(50f);
         hOffsetSlider.addSliderChangeValueEventListener((e) ->
-            shadowWidget.getStyle().getShadow().sethOffset(hOffsetSlider.getValue() - 50f)
+                shadowWidget.getStyle().getShadow().sethOffset(hOffsetSlider.getValue() - 50f)
         );
         Label hOffsetLabel = new Label(10, 5 + 20 * 0, 90, 10);
         hOffsetLabel.getStyle().setFontSize(18f);
@@ -736,7 +747,7 @@ public class ExampleGui extends Panel {
         shadowWidget.getContainer().add(vOffsetSlider);
         vOffsetSlider.setValue(50f);
         vOffsetSlider.addSliderChangeValueEventListener((e) ->
-            shadowWidget.getStyle().getShadow().setvOffset(vOffsetSlider.getValue() - 50f)
+                shadowWidget.getStyle().getShadow().setvOffset(vOffsetSlider.getValue() - 50f)
         );
         Label vOffsetLabel = new Label(10, 5 + 20 * 1, 90, 10);
         vOffsetLabel.getTextState().setText("VOffset: ");
@@ -745,7 +756,7 @@ public class ExampleGui extends Panel {
         Slider blurSlider = new Slider(110, 5 + 20 * 2, 80, 10);
         shadowWidget.getContainer().add(blurSlider);
         blurSlider.addSliderChangeValueEventListener((e) ->
-            shadowWidget.getStyle().getShadow().setBlur(blurSlider.getValue())
+                shadowWidget.getStyle().getShadow().setBlur(blurSlider.getValue())
         );
         Label blurLabel = new Label(10, 5 + 20 * 2, 90, 10);
         blurLabel.getTextState().setText("Blur: ");
@@ -755,7 +766,7 @@ public class ExampleGui extends Panel {
         shadowWidget.getContainer().add(spreadSlider);
         spreadSlider.setValue(50f);
         spreadSlider.addSliderChangeValueEventListener((e) ->
-            shadowWidget.getStyle().getShadow().setSpread(spreadSlider.getValue() - 50f)
+                shadowWidget.getStyle().getShadow().setSpread(spreadSlider.getValue() - 50f)
         );
         Label spreadLabel = new Label(10, 5 + 20 * 3, 90, 10);
         spreadLabel.getTextState().setText("Spread: ");
@@ -789,8 +800,8 @@ public class ExampleGui extends Panel {
             protected boolean animate(double delta) {
                 time += delta;
                 targetComponent.getStyle().getBackground().getColor().set(new Vector4f(initialColor)
-                    .add(new Vector4f(colorRange)
-                        .mul((float) Math.abs(Math.sin(time * 2)))));
+                        .add(new Vector4f(colorRange)
+                                .mul((float) Math.abs(Math.sin(time * 2)))));
                 return !component.isHovered();
             }
 
