@@ -29,9 +29,13 @@ import org.lwjgl.glfw.GLFWKeyCallbackI;
 import org.lwjgl.glfw.GLFWWindowCloseCallbackI;
 import org.lwjgl.opengl.GL;
 
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.DataLine;
+import javax.sound.sampled.SourceDataLine;
 import java.io.IOException;
 import java.nio.ByteBuffer;
-import java.util.concurrent.TimeUnit;
+import java.nio.ShortBuffer;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static org.bytedeco.opencv.global.opencv_imgproc.CV_BGR2RGBA;
@@ -188,10 +192,28 @@ public class SingleClassExampleImageRendering {
         imageView.getStyle().setRight(0);
         imageView.getStyle().getBackground().setColor(ColorConstants.lightGray());
 
-        FrameGrabber fg = new FFmpegFrameGrabber("E:\\2.mp4");
+        FrameGrabber fg = new FFmpegFrameGrabber("E:\\4.mp4");
         OpenCVFrameConverter converter = new OpenCVFrameConverter.ToMat();
+
         try {
+            final AudioFormat audioFormat;
+            final DataLine.Info info;
+            final SourceDataLine soundLine;
+
             fg.start();
+            audioFormat = new AudioFormat(
+                    fg.getSampleRate(), 16,
+                    fg.getAudioChannels(), true, true);
+
+            System.out.println(fg.getFrameRate());
+            System.out.println(fg.getSampleRate());
+
+
+            info = new DataLine.Info(SourceDataLine.class, audioFormat);
+            soundLine = (SourceDataLine) AudioSystem.getLine(info);
+            soundLine.open(audioFormat);
+            soundLine.start();
+
             if (imageView.getImage() == null) {
                 textureWidth = fg.getImageWidth();
                 textureHeight = fg.getImageHeight();
@@ -202,47 +224,93 @@ public class SingleClassExampleImageRendering {
                 imageView.setImage(img);
             }
             fg.stop();
-        } catch (Exception e) {
+            AtomicBoolean started = new AtomicBoolean(false);
 
-        }
-        AtomicBoolean started = new AtomicBoolean(false);
+            button.getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
+                if (event.getAction() == MouseClickEvent.MouseClickAction.CLICK && !started.getAndSet(true)) {
+                    new Thread(() -> {
+                        try {
+                            fg.restart();
+                            org.bytedeco.javacv.Frame f = fg.grab();
 
-        button.getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) event -> {
-            if (event.getAction() == MouseClickEvent.MouseClickAction.CLICK && !started.getAndSet(true)) {
-                new Thread(() -> {
-                    try {
-                        fg.restart();
-                        org.bytedeco.javacv.Frame f;
-                        long prev = 0;
-                        long diff = 0;
-                        while ((f = fg.grab()) != null) {
-                            try {
-                                long timestamp = f.timestamp;
-                                diff = timestamp - prev;
-                                prev = timestamp;
-                                if (f.image != null && f.image.length > 0 && f.image[0] instanceof ByteBuffer) {
-                                    Mat mat = converter.convertToMat(f);
-                                    Mat returnMatrix = new Mat(mat.rows(), mat.cols(), mat.depth(), 4);
-                                    cvtColor(mat, returnMatrix, CV_BGR2RGBA);
-                                    org.bytedeco.javacv.Frame ff = converter.convert(returnMatrix);
+                            org.bytedeco.javacv.Frame videoFrame;
+                            org.bytedeco.javacv.Frame audioFrame;
 
-                                    TimeUnit.MICROSECONDS.sleep(diff);
-                                    img.passDataToPixelBuffer((ByteBuffer) ff.image[0]);
+                            long audioTimestamp = 0;
+                            long videoTimestamp = 0;
+
+                            long startTime = System.nanoTime() / 1000;
+                            long elapsedTime = 0;
+
+//                            System.out.println(String.format("%10s | %10s | %10s", "elapsed", "video", "audio"));
+
+                            while (f != null) {
+
+                                if (f.image == null) {
+                                    videoFrame = null;
+                                    audioFrame = f.clone();
+                                    audioTimestamp = f.timestamp;
+                                } else {
+                                    videoFrame = f.clone();
+                                    audioFrame = null;
+                                    videoTimestamp = f.timestamp;
                                 }
-                            } catch (Exception e) {
-                                e.printStackTrace();
+
+//                                System.out.println(String.format("%10d | %10d | %10d", elapsedTime, videoTimestamp, audioTimestamp));
+                                try {
+                                    // pass image data to texture
+
+                                    if (videoFrame != null) {
+                                        if (videoFrame.image.length > 0 && f.image[0] instanceof ByteBuffer) {
+                                            if (videoTimestamp <= elapsedTime) {
+                                                Mat mat = converter.convertToMat(f);
+                                                Mat returnMatrix = new Mat(mat.rows(), mat.cols(), mat.depth(), 4);
+                                                cvtColor(mat, returnMatrix, CV_BGR2RGBA);
+                                                org.bytedeco.javacv.Frame ff = converter.convert(returnMatrix);
+
+                                                // if
+                                                img.passDataToPixelBuffer((ByteBuffer) ff.image[0]);
+                                            }
+                                        }
+                                    }
+
+                                    if (audioFrame != null) {
+                                        final ShortBuffer channelSamplesShortBuffer = (ShortBuffer) audioFrame.samples[0];
+
+                                        channelSamplesShortBuffer.rewind();
+
+                                        final ByteBuffer outBuffer = ByteBuffer
+                                                .allocate(channelSamplesShortBuffer.capacity() * 2);
+
+                                        for (int i = 0; i < channelSamplesShortBuffer.capacity(); i++) {
+                                            short val = channelSamplesShortBuffer.get(i);
+                                            outBuffer.putShort(val);
+                                        }
+
+                                        soundLine.write(outBuffer.array(), 0, outBuffer.capacity());
+                                        outBuffer.clear();
+                                    }
+
+                                    // read next frame
+                                    f = fg.grab();
+//
+                                    elapsedTime = System.nanoTime() / 1000 - startTime;
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
                             }
+                            started.set(false);
+                        } catch (FrameGrabber.Exception e) {
+                            e.printStackTrace();
                         }
-                        started.set(false);
-//                            fg.stop();
-                    } catch (FrameGrabber.Exception e) {
-                        e.printStackTrace();
-                    }
-                }).start();
+                    }).start();
 
-            }
-        });
+                }
+            });
 
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         frame.getContainer().add(button);
         widget.getContainer().add(imageView);
