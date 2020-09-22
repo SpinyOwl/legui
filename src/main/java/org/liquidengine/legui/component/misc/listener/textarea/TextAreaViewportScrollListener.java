@@ -1,5 +1,6 @@
 package org.liquidengine.legui.component.misc.listener.textarea;
 
+import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.ScrollablePanel;
@@ -7,18 +8,19 @@ import org.liquidengine.legui.component.TextArea;
 import org.liquidengine.legui.component.TextAreaField;
 import org.liquidengine.legui.event.ScrollEvent;
 import org.liquidengine.legui.input.Mouse;
-import org.liquidengine.legui.listener.EventListener;
+import org.liquidengine.legui.listener.ScrollEventListener;
 import org.liquidengine.legui.system.handler.SehUtil;
 
 import java.util.ArrayList;
 
+import static org.liquidengine.legui.component.misc.listener.EventUtils.hasViewportsInAboveLayersUnderCursor;
 import static org.liquidengine.legui.component.misc.listener.scrollbar.ScrollBarHelper.updateScrollBarValue;
 import static org.liquidengine.legui.style.util.StyleUtilities.getPadding;
 
 /**
  * Created by ShchAlexander on 23.07.2017.
  */
-public class TextAreaViewportScrollListener implements EventListener<ScrollEvent> {
+public class TextAreaViewportScrollListener implements ScrollEventListener {
 
 
     /**
@@ -28,6 +30,11 @@ public class TextAreaViewportScrollListener implements EventListener<ScrollEvent
      */
     @Override
     public void process(ScrollEvent event) {
+        Vector2f cursorPosition = Mouse.getCursorPosition();
+        Component targetComponent = event.getTargetComponent();
+
+        if (hasViewportsInAboveLayersUnderCursor(targetComponent, cursorPosition)) return;
+
         ArrayList<Component> targetList = new ArrayList<>();
         SehUtil.recursiveTargetComponentListSearch(Mouse.getCursorPosition(), event.getTargetComponent(), targetList);
         for (Component component : targetList) {

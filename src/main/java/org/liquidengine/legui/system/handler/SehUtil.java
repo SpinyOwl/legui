@@ -2,7 +2,6 @@ package org.liquidengine.legui.system.handler;
 
 import org.joml.Vector2f;
 import org.liquidengine.legui.component.Component;
-import org.liquidengine.legui.component.Layer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,15 +15,15 @@ public final class SehUtil {
     }
 
     /**
-     * Used to find target component for provided layer and vector. Target means top component which intersected by provided point(vector).
+     * Used to find target component for provided component and vector. Target means top component which intersected by provided point(vector).
      *
-     * @param layer  layer to search.
-     * @param vector point to search.
-     * @return top component from layer intersected by vector.
+     * @param component component to search.
+     * @param vector    point to search.
+     * @return top component from component intersected by vector.
      */
-    public static Component getTargetComponent(Layer layer, Vector2f vector) {
-        Component target = layer.isFocusable() ? layer : null;
-        List<Component> childComponents = layer.getChildComponents();
+    public static Component getTargetComponent(Component component, Vector2f vector) {
+        Component target = component.isFocusable() ? component : null;
+        List<Component> childComponents = component.getChildComponents();
         for (Component child : childComponents) {
             target = recursiveTargetComponentSearch(vector, child, target);
         }
@@ -57,13 +56,13 @@ public final class SehUtil {
     /**
      * Used to search all components (under point) in component.
      *
-     * @param vector vector to point.
-     * @param layer  layer to search.
-     * @return all top visible components in layer under point(vector).
+     * @param vector    vector to point.
+     * @param component component to search in.
+     * @return all top visible components in component under point(vector).
      */
-    public static List<Component> getTargetComponentList(Layer layer, Vector2f vector) {
+    public static List<Component> getTargetComponentList(Component component, Vector2f vector) {
         List<Component> targetList = new ArrayList<>();
-        recursiveTargetComponentListSearch(vector, layer, targetList);
+        recursiveTargetComponentListSearch(vector, component, targetList);
         return targetList;
     }
 

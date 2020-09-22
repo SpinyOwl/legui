@@ -37,6 +37,22 @@ public abstract class Component implements Serializable {
      */
     private final Map<String, Object> metadata = new HashMap<>();
     /**
+     * Component style.
+     */
+    private final Style hoveredStyle = new Style();
+    /**
+     * Component style.
+     */
+    private final Style focusedStyle = new Style();
+    /**
+     * Component style.
+     */
+    private final Style pressedStyle = new Style();
+    /**
+     * List of child components.
+     */
+    private final List<Component> childComponents = new CopyOnWriteArrayList<>();
+    /**
      * Parent component container. For root components it could be null.
      */
     private Component parent;
@@ -54,7 +70,6 @@ public abstract class Component implements Serializable {
      * Size of component.
      */
     private Vector2f size = new Vector2f();
-
     /**
      * Used to enable and disable event processing for this component. If enabled==false then component won't receive events.
      */
@@ -75,52 +90,32 @@ public abstract class Component implements Serializable {
      * Determines whether this component pressed or not (Mouse button is down and on this component).
      */
     private boolean pressed;
+
+    ////////////////////////////////
+    //// CONTAINER BASE DATA
+    ////////////////////////////////
     /**
      * Tooltip.
      */
     private Tooltip tooltip;
-
     /**
      * Tab index. Used to switch between components using tab key.
      */
     private int tabIndex;
-
     /**
      * Show if component can be focused by tabbing.
      */
     private boolean tabFocusable = true;
-
     /**
      * Show if component can be focused.
      * <br><b>Note! You should take in consideration that component that marked as non-focusable will not receive any events.
      * In fact this could be used to organize elements using containers.</b>
      */
     private boolean focusable = true;
-
-    ////////////////////////////////
-    //// CONTAINER BASE DATA
-    ////////////////////////////////
-
     /**
      * Component style.
      */
     private Style style = new Style();
-    /**
-     * Component style.
-     */
-    private final Style hoveredStyle = new Style();
-    /**
-     * Component style.
-     */
-    private final Style focusedStyle = new Style();
-    /**
-     * Component style.
-     */
-    private final Style pressedStyle = new Style();
-    /**
-     * List of child components.
-     */
-    private final List<Component> childComponents = new CopyOnWriteArrayList<>();
 
     /**
      * Default constructor. Used to create component instance without any parameters.
@@ -777,56 +772,63 @@ public abstract class Component implements Serializable {
         Component component = (Component) o;
 
         return new EqualsBuilder()
-            .append(this.isEnabled(), component.isEnabled())
-            .append(this.isVisible(), component.isVisible())
-            .append(this.isHovered(), component.isHovered())
-            .append(this.isFocused(), component.isFocused())
-            .append(this.isPressed(), component.isPressed())
-            .append(this.getPosition(), component.getPosition())
-            .append(this.getSize(), component.getSize())
-            .append(this.getIntersector(), component.getIntersector())
-            .append(this.getTabIndex(), component.getTabIndex())
-            .append(this.isTabFocusable(), component.isTabFocusable())
-            .append(this.isFocusable(), component.isFocusable())
-            .append(childComponents, component.childComponents)
-            .isEquals();
+                .append(this.isEnabled(), component.isEnabled())
+                .append(this.isVisible(), component.isVisible())
+                .append(this.isHovered(), component.isHovered())
+                .append(this.isFocused(), component.isFocused())
+                .append(this.isPressed(), component.isPressed())
+                .append(this.getPosition(), component.getPosition())
+                .append(this.getSize(), component.getSize())
+                .append(this.getIntersector(), component.getIntersector())
+                .append(this.getTabIndex(), component.getTabIndex())
+                .append(this.isTabFocusable(), component.isTabFocusable())
+                .append(this.isFocusable(), component.isFocusable())
+                .append(childComponents, component.childComponents)
+                .isEquals();
     }
 
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
-            .append(position)
-            .append(size)
-            .append(enabled)
-            .append(intersector)
-            .append(hovered)
-            .append(focused)
-            .append(pressed)
-            .append(tabIndex)
-            .append(tabFocusable)
-            .append(focusable)
-            .append(childComponents)
-            .toHashCode();
+                .append(position)
+                .append(size)
+                .append(enabled)
+                .append(intersector)
+                .append(hovered)
+                .append(focused)
+                .append(pressed)
+                .append(tabIndex)
+                .append(tabFocusable)
+                .append(focusable)
+                .append(childComponents)
+                .toHashCode();
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-            .append("position", position)
-            .append("size", size)
-            .append("enabled", enabled)
-            .append("intersector", intersector)
-            .append("hovered", hovered)
-            .append("focused", focused)
-            .append("tabIndex", tabIndex)
-            .append("tabFocusable", tabFocusable)
-            .append("focusable", focusable)
-            .append("pressed", pressed)
-            .toString();
+                .append("position", position)
+                .append("size", size)
+                .append("enabled", enabled)
+                .append("intersector", intersector)
+                .append("hovered", hovered)
+                .append("focused", focused)
+                .append("tabIndex", tabIndex)
+                .append("tabFocusable", tabFocusable)
+                .append("focusable", focusable)
+                .append("pressed", pressed)
+                .toString();
     }
 
     public int indexOfChild(Component component) {
         return childComponents.indexOf(component);
+    }
+
+    public Layer getLayer() {
+        if (parent == null) {
+            return null;
+        }
+        return parent instanceof Layer ? (Layer) parent : parent.getLayer();
     }
 
     public Frame getFrame() {

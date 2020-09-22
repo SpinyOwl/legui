@@ -11,7 +11,6 @@ import org.liquidengine.legui.component.misc.animation.selectbox.SelectBoxAnimat
 import org.liquidengine.legui.component.misc.listener.selectbox.SelectBoxClickListener;
 import org.liquidengine.legui.component.misc.listener.selectbox.SelectBoxElementClickListener;
 import org.liquidengine.legui.component.misc.listener.selectbox.SelectBoxFocusListener;
-import org.liquidengine.legui.component.misc.listener.selectbox.SelectBoxScrollListener;
 import org.liquidengine.legui.event.FocusEvent;
 import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.icon.CharIcon;
@@ -55,7 +54,6 @@ public class SelectBox<T> extends Component {
     private List<T> elements = new CopyOnWriteArrayList<>();
 
     private SelectBoxScrollablePanel selectionListPanel = new SelectBoxScrollablePanel();
-    private final SelectBoxScrollListener selectBoxScrollListener = new SelectBoxScrollListener(selectionListPanel.getVerticalScrollBar());
     private Button selectionButton = new Button(NULL);
     private T selectedElement = null;
     private float elementHeight = 16;
@@ -370,12 +368,12 @@ public class SelectBox<T> extends Component {
      * @param selected state of element to set.
      */
     public void setSelected(int index, boolean selected) {
-        if (elements.size() > 0) {
-            T element = elements.get(index);
-            setSelected(element, selected, index);
-        } else {
+        if (elements.isEmpty()) {
             selectedElement = null;
             selectionButton.getTextState().setText(NULL);
+        } else {
+            T element = elements.get(index);
+            setSelected(element, selected, index);
         }
     }
 
@@ -485,7 +483,6 @@ public class SelectBox<T> extends Component {
             .append(selectBoxElements, selectBox.selectBoxElements)
             .append(elements, selectBox.elements)
             .append(selectionListPanel, selectBox.selectionListPanel)
-            .append(selectBoxScrollListener, selectBox.selectBoxScrollListener)
             .append(selectionButton, selectBox.selectionButton)
             .append(selectedElement, selectBox.selectedElement)
             .append(expandButton, selectBox.expandButton)
@@ -508,7 +505,6 @@ public class SelectBox<T> extends Component {
             .append(selectBoxElements)
             .append(elements)
             .append(selectionListPanel)
-            .append(selectBoxScrollListener)
             .append(selectionButton)
             .append(selectedElement)
             .append(elementHeight)
