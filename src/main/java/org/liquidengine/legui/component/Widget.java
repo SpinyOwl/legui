@@ -1,5 +1,6 @@
 package org.liquidengine.legui.component;
 
+import java.util.List;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -28,12 +29,10 @@ import org.liquidengine.legui.style.font.FontRegistry;
 import org.liquidengine.legui.style.length.Length;
 import org.liquidengine.legui.theme.Themes;
 
-import java.util.List;
-
 /**
  * Widget component is container which have predefined components such as container, title label, close and minimize buttons and predefined event listeners.
- * This component can be moved, minimized and restored, closed. Also now you can enable or disable title. <p> TODO: REIMPLEMENT THIS COMPONENT ACCORDING TO NEW
- * LAYOUT SYSTEM
+ * This component can be moved, minimized and restored, closed. Also you can enable or disable title and make widget non-ascendible using {@link
+ * #setAscendible(boolean)}.
  */
 public class Widget extends Component {
 
@@ -78,19 +77,31 @@ public class Widget extends Component {
     private Length maximizedWidth;
     private Length maximizedHeight;
 
+    private boolean ascendible = true;
+
     /**
-     * Creates a widget with default title text.
+     * Creates a widget with default title text. Ascendible by default (See {@link #isAscendible()}).
      */
     public Widget() {
         initialize(DEFAULT_WIDGET_TITLE);
     }
 
     /**
-     * Creates a widget with default title text and specified position and size.
+     * Creates a widget with default title text. Ascendible by default (See {@link #isAscendible()}).
      *
-     * @param x      x position in parent.
-     * @param y      y position in parent.
-     * @param width  width of component.
+     * @param ascendible used to make it ascendible or not.
+     */
+    public Widget(boolean ascendible) {
+        this.ascendible = ascendible;
+        initialize(DEFAULT_WIDGET_TITLE);
+    }
+
+    /**
+     * Creates a widget with default title text and specified position and size. Ascendible by default (See {@link #isAscendible()}).
+     *
+     * @param x x position in parent.
+     * @param y y position in parent.
+     * @param width width of component.
      * @param height height of component.
      */
     public Widget(float x, float y, float width, float height) {
@@ -99,18 +110,47 @@ public class Widget extends Component {
     }
 
     /**
-     * Creates a widget with default title text and specified position and size.
+     * Creates a widget with default title text and specified position and size. Ascendible by default (See {@link #isAscendible()}).
+     *
+     * @param x x position in parent.
+     * @param y y position in parent.
+     * @param width width of component.
+     * @param height height of component.
+     * @param ascendible used to make it ascendible or not.
+     */
+    public Widget(float x, float y, float width, float height, boolean ascendible) {
+        super(x, y, width, height);
+        this.ascendible = ascendible;
+        initialize(DEFAULT_WIDGET_TITLE);
+    }
+
+    /**
+     * Creates a widget with default title text and specified position and size. Ascendible by default (See {@link #isAscendible()}).
      *
      * @param position position in parent.
-     * @param size     size of component.
+     * @param size size of component.
      */
     public Widget(Vector2f position, Vector2f size) {
         super(position, size);
         initialize(DEFAULT_WIDGET_TITLE);
     }
 
+
     /**
-     * Creates a widget with specified title text.
+     * Creates a widget with default title text and specified position and size. Ascendible by default (See {@link #isAscendible()}).
+     *
+     * @param position position in parent.
+     * @param size size of component.
+     * @param ascendible used to make it ascendible or not.
+     */
+    public Widget(Vector2f position, Vector2f size, boolean ascendible) {
+        super(position, size);
+        this.ascendible = ascendible;
+        initialize(DEFAULT_WIDGET_TITLE);
+    }
+
+    /**
+     * Creates a widget with specified title text. Ascendible by default (See {@link #isAscendible()}).
      *
      * @param title widget text.
      */
@@ -119,12 +159,23 @@ public class Widget extends Component {
     }
 
     /**
-     * Creates a widget with specified title text and specified position and size.
+     * Creates a widget with specified title text. Ascendible by default (See {@link #isAscendible()}).
      *
-     * @param title  widget text.
-     * @param x      x position in parent.
-     * @param y      y position in parent.
-     * @param width  width of component.
+     * @param title widget text.
+     * @param ascendible used to make it ascendible or not.
+     */
+    public Widget(String title, boolean ascendible) {
+        this.ascendible = ascendible;
+        initialize(title);
+    }
+
+    /**
+     * Creates a widget with specified title text and specified position and size. Ascendible by default (See {@link #isAscendible()}).
+     *
+     * @param title widget text.
+     * @param x x position in parent.
+     * @param y y position in parent.
+     * @param width width of component.
      * @param height height of component.
      */
     public Widget(String title, float x, float y, float width, float height) {
@@ -133,14 +184,44 @@ public class Widget extends Component {
     }
 
     /**
-     * Creates a widget with specified title text and specified position and size.
+     * Creates a widget with specified title text and specified position and size. Ascendible by default (See {@link #isAscendible()}).
      *
-     * @param title    widget text.
+     * @param title widget text.
+     * @param x x position in parent.
+     * @param y y position in parent.
+     * @param width width of component.
+     * @param height height of component.
+     * @param ascendible used to make it ascendible or not.
+     */
+    public Widget(String title, float x, float y, float width, float height, boolean ascendible) {
+        super(x, y, width, height);
+        this.ascendible = ascendible;
+        initialize(title);
+    }
+
+    /**
+     * Creates a widget with specified title text and specified position and size. Ascendible by default (See {@link #isAscendible()}).
+     *
+     * @param title widget text.
      * @param position position in parent.
-     * @param size     size of component.
+     * @param size size of component.
      */
     public Widget(String title, Vector2f position, Vector2f size) {
         super(position, size);
+        initialize(title);
+    }
+
+    /**
+     * Creates a widget with specified title text and specified position and size. Ascendible by default (See {@link #isAscendible()}).
+     *
+     * @param title widget text.
+     * @param position position in parent.
+     * @param size size of component.
+     * @param ascendible used to make it ascendible or not.
+     */
+    public Widget(String title, Vector2f position, Vector2f size, boolean ascendible) {
+        super(position, size);
+        this.ascendible = ascendible;
         initialize(title);
     }
 
@@ -189,7 +270,7 @@ public class Widget extends Component {
 
         int iconSize = INITIAL_TITLE_HEIGHT * 2 / 3;
         closeIcon = new CharIcon(new Vector2f(iconSize), FontRegistry.MATERIAL_DESIGN_ICONS, (char) CLOSE_ICON_CHAR,
-            ColorConstants.black());
+                                 ColorConstants.black());
         closeIcon.setHorizontalAlign(HorizontalAlign.CENTER);
         closeIcon.setVerticalAlign(VerticalAlign.MIDDLE);
 
@@ -207,24 +288,24 @@ public class Widget extends Component {
         closeButton.getStyle().getFlexStyle().setFlexShrink(1);
 
         closeButton.getListenerMap().addListener(MouseClickEvent.class, new WidgetCloseButMouseClickEventListener(this));
-        closeButton.getTextState().setVerticalAlign(VerticalAlign.MIDDLE);
-        closeButton.getTextState().setHorizontalAlign(HorizontalAlign.CENTER);
+        closeButton.getStyle().setVerticalAlign(VerticalAlign.MIDDLE);
+        closeButton.getStyle().setHorizontalAlign(HorizontalAlign.CENTER);
         closeButton.setTabFocusable(false);
 
         minimizeButton = new Button("");
         minimizeButton.setTabFocusable(false);
 
         minimizeIcon = new CharIcon(new Vector2f(iconSize),
-            FontRegistry.MATERIAL_DESIGN_ICONS,
-            (char) MINIMIZE_ICON_CHAR,
-            ColorConstants.black());
+                                    FontRegistry.MATERIAL_DESIGN_ICONS,
+                                    (char) MINIMIZE_ICON_CHAR,
+                                    ColorConstants.black());
         minimizeIcon.setHorizontalAlign(HorizontalAlign.CENTER);
         minimizeIcon.setVerticalAlign(VerticalAlign.MIDDLE);
 
         maximizeIcon = new CharIcon(new Vector2f(iconSize),
-            FontRegistry.MATERIAL_DESIGN_ICONS,
-            (char) MAXIMIZE_ICON_CHAR,
-            ColorConstants.black());
+                                    FontRegistry.MATERIAL_DESIGN_ICONS,
+                                    (char) MAXIMIZE_ICON_CHAR,
+                                    ColorConstants.black());
         maximizeIcon.setHorizontalAlign(HorizontalAlign.CENTER);
         maximizeIcon.setVerticalAlign(VerticalAlign.MIDDLE);
 
@@ -242,15 +323,11 @@ public class Widget extends Component {
         minimizeButton.getStyle().setBorder(null);
 
         minimizeButton.getListenerMap().addListener(MouseClickEvent.class, new WidgetMinimizeButMouseClickEventListener(this));
-        minimizeButton.getTextState().setVerticalAlign(VerticalAlign.MIDDLE);
-        minimizeButton.getTextState().setHorizontalAlign(HorizontalAlign.CENTER);
+        minimizeButton.getStyle().setVerticalAlign(VerticalAlign.MIDDLE);
+        minimizeButton.getStyle().setHorizontalAlign(HorizontalAlign.CENTER);
 
         container = new Panel();
-        container.setTabFocusable(false);
-        // flex
-        container.getStyle().getFlexStyle().setFlexShrink(1);
-        container.getStyle().getFlexStyle().setFlexGrow(1);
-        container.getStyle().setPosition(PositionType.RELATIVE);
+        applyStylesToContainer(container);
 
         titleContainer.add(this.title);
         titleContainer.add(minimizeButton);
@@ -275,6 +352,13 @@ public class Widget extends Component {
         this.add(resizeButton);
 
         Themes.getDefaultTheme().getThemeManager().getComponentTheme(Widget.class).applyAll(this);
+    }
+
+    private void applyStylesToContainer(Component container) {
+        container.setTabFocusable(false);
+        container.getStyle().getFlexStyle().setFlexShrink(1);
+        container.getStyle().getFlexStyle().setFlexGrow(1);
+        container.getStyle().setPosition(PositionType.RELATIVE);
     }
 
     /**
@@ -385,7 +469,7 @@ public class Widget extends Component {
      * @return close button text color.
      */
     public Vector4f getCloseButtonColor() {
-        return closeButton.getTextState().getTextColor();
+        return closeButton.getStyle().getTextColor();
     }
 
     /**
@@ -394,7 +478,7 @@ public class Widget extends Component {
      * @param closeButtonColor close button text color to set.
      */
     public void setCloseButtonColor(Vector4f closeButtonColor) {
-        this.closeButton.getTextState().setTextColor(closeButtonColor);
+        this.closeButton.getStyle().setTextColor(closeButtonColor);
     }
 
     /**
@@ -414,7 +498,8 @@ public class Widget extends Component {
     public void setContainer(Component container) {
         this.remove(this.container);
         this.container = container;
-        this.add(this.container);
+        this.add(1, this.container);
+        applyStylesToContainer(this.container);
     }
 
     /**
@@ -697,5 +782,23 @@ public class Widget extends Component {
 
     public Button getResizeButton() {
         return resizeButton;
+    }
+
+    /**
+     * Returns true if widget could ascend to the top in parent container.
+     *
+     * @return true if widget could ascend to the top in parent container.
+     */
+    public boolean isAscendible() {
+        return ascendible;
+    }
+
+    /**
+     * Set true to make widget ascend to the top in parent container on click event on widget or any component inside.
+     *
+     * @param ascendible new state.
+     */
+    public void setAscendible(boolean ascendible) {
+        this.ascendible = ascendible;
     }
 }

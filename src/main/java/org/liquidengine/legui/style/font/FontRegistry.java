@@ -2,12 +2,16 @@ package org.liquidengine.legui.style.font;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Created by ShchAlexander on 1/26/2017.
  */
 public class FontRegistry {
+    private static final Logger LOGGER = LogManager.getLogger();
 
     /**
      * Default entypo font.
@@ -40,7 +44,16 @@ public class FontRegistry {
     /**
      * Font used by default. {@link #ROBOTO_BOLD}.
      */
-    public static final String DEFAULT = ROBOTO_LIGHT;
+    private static String defaultFont = ROBOTO_LIGHT;
+
+    public static String getDefaultFont() {
+        return defaultFont;
+    }
+
+    public static void setDefaultFont(String defaultFont) {
+        FontRegistry.defaultFont = Objects.requireNonNull(defaultFont);
+    }
+
     /**
      * Font register.
      */
@@ -73,7 +86,7 @@ public class FontRegistry {
             Font font = new Font(path);
             fontRegister.put(name, font);
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage(), e);
         }
     }
 

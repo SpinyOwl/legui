@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
 import org.liquidengine.legui.component.Button;
 import org.liquidengine.legui.component.CheckBox;
 import org.liquidengine.legui.component.Component;
@@ -21,9 +22,10 @@ import org.liquidengine.legui.component.Tooltip;
 import org.liquidengine.legui.icon.CharIcon;
 import org.liquidengine.legui.icon.Icon;
 import org.liquidengine.legui.icon.ImageIcon;
+import org.liquidengine.legui.image.*;
 import org.liquidengine.legui.image.FBOImage;
 import org.liquidengine.legui.image.Image;
-import org.liquidengine.legui.image.LoadableImage;
+import org.liquidengine.legui.image.StbBackedLoadableImage;
 import org.liquidengine.legui.style.Border;
 import org.liquidengine.legui.style.border.SimpleLineBorder;
 import org.liquidengine.legui.system.renderer.BorderRenderer;
@@ -50,24 +52,25 @@ import org.liquidengine.legui.system.renderer.nvg.component.NvgTooltipRenderer;
 import org.liquidengine.legui.system.renderer.nvg.icon.NvgCharIconRenderer;
 import org.liquidengine.legui.system.renderer.nvg.icon.NvgDefaultIconRenderer;
 import org.liquidengine.legui.system.renderer.nvg.icon.NvgImageIconRenderer;
+import org.liquidengine.legui.system.renderer.nvg.image.*;
 import org.liquidengine.legui.system.renderer.nvg.image.NvgDefaultImageRenderer;
 import org.liquidengine.legui.system.renderer.nvg.image.NvgFBOImageRenderer;
-import org.liquidengine.legui.system.renderer.nvg.image.NvgLoadableImageRenderer;
+import org.liquidengine.legui.system.renderer.nvg.image.NvgStbBackedLoadableImageRenderer;
 
 /**
  * Created by ShchAlexander on 1/26/2017.
  */
-public class NvgRendererProvider extends RendererProvider {
+public class NvgRendererProvider implements RendererProvider {
 
-    private Map<Class<? extends Component>, ComponentRenderer<? extends Component>> componentRendererMap = new ConcurrentHashMap<>();
-    private Map<Class<? extends Border>, BorderRenderer<? extends Border>> borderRendererMap = new ConcurrentHashMap<>();
-    private Map<Class<? extends Icon>, IconRenderer<? extends Icon>> iconRendererMap = new ConcurrentHashMap<>();
-    private Map<Class<? extends Image>, ImageRenderer<? extends Image>> imageRendererMap = new ConcurrentHashMap<>();
+    private final Map<Class<? extends Component>, ComponentRenderer<? extends Component>> componentRendererMap = new ConcurrentHashMap<>();
+    private final Map<Class<? extends Border>, BorderRenderer<? extends Border>> borderRendererMap = new ConcurrentHashMap<>();
+    private final Map<Class<? extends Icon>, IconRenderer<? extends Icon>> iconRendererMap = new ConcurrentHashMap<>();
+    private final Map<Class<? extends Image>, ImageRenderer<? extends Image>> imageRendererMap = new ConcurrentHashMap<>();
 
-    private NvgComponentRenderer defaultComponentRenderer = new NvgDefaultComponentRenderer();
-    private NvgBorderRenderer defaultBorderRenderer = new NvgDefaultBorderRenderer();
-    private NvgIconRenderer defaultIconRenderer = new NvgDefaultIconRenderer();
-    private NvgImageRenderer defaultImageRenderer = new NvgDefaultImageRenderer();
+    private final NvgComponentRenderer defaultComponentRenderer = new NvgDefaultComponentRenderer();
+    private final NvgBorderRenderer defaultBorderRenderer = new NvgDefaultBorderRenderer();
+    private final NvgIconRenderer defaultIconRenderer = new NvgDefaultIconRenderer();
+    private final NvgImageRenderer defaultImageRenderer = new NvgDefaultImageRenderer();
 
     private NvgRendererProvider() {
 
@@ -94,8 +97,9 @@ public class NvgRendererProvider extends RendererProvider {
         iconRendererMap.put(CharIcon.class, new NvgCharIconRenderer<>());
 
         // register image renderers
-        imageRendererMap.put(LoadableImage.class, new NvgLoadableImageRenderer<>());
+        imageRendererMap.put(StbBackedLoadableImage.class, new NvgStbBackedLoadableImageRenderer());
         imageRendererMap.put(FBOImage.class, new NvgFBOImageRenderer());
+        imageRendererMap.put(BufferedImageRGBA.class, new NvgBufferedImageRGBARenderer());
     }
 
     public static NvgRendererProvider getInstance() {
@@ -126,7 +130,7 @@ public class NvgRendererProvider extends RendererProvider {
         R renderer = null;
         Class cClass = componentClass;
         while (renderer == null) {
-            renderer = ((Map<Class<C>, R>) map).get(cClass);
+            renderer = (R) map.get(cClass);
             if (cClass.isAssignableFrom(Component.class)) {
                 break;
             }
@@ -138,47 +142,32 @@ public class NvgRendererProvider extends RendererProvider {
         return renderer;
     }
 
-
     public <I extends Component, R extends NvgComponentRenderer<I>> void putComponentRenderer(Class<I> imageClass, R renderer) {
         addComponentRenderer(imageClass, renderer);
     }
 
-    protected <I extends Component, R extends ComponentRenderer<I>> void addComponentRenderer(Class<I> imageClass, R renderer) {
+    public <I extends Component, R extends ComponentRenderer<I>> void addComponentRenderer(Class<I> imageClass, R renderer) {
         if (imageClass == null || renderer == null) {
             return;
         }
         componentRendererMap.put(imageClass, renderer);
     }
 
-    public <I extends Border, R extends NvgBorderRenderer<I>> void putBorderRenderer(Class<I> imageClass, R renderer) {
-        addBorderRenderer(imageClass, renderer);
-    }
-
-    protected <I extends Border, R extends BorderRenderer<I>> void addBorderRenderer(Class<I> imageClass, R renderer) {
+    public <I extends Border, R extends BorderRenderer<I>> void addBorderRenderer(Class<I> imageClass, R renderer) {
         if (imageClass == null || renderer == null) {
             return;
         }
         borderRendererMap.put(imageClass, renderer);
     }
 
-
-    public <I extends Icon, R extends NvgIconRenderer<I>> void putIconRenderer(Class<I> imageClass, R renderer) {
-        addIconRenderer(imageClass, renderer);
-    }
-
-    protected <I extends Icon, R extends IconRenderer<I>> void addIconRenderer(Class<I> imageClass, R renderer) {
+    public <I extends Icon, R extends IconRenderer<I>> void addIconRenderer(Class<I> imageClass, R renderer) {
         if (imageClass == null || renderer == null) {
             return;
         }
         iconRendererMap.put(imageClass, renderer);
     }
 
-
-    public <I extends Image, R extends NvgImageRenderer<I>> void putImageRenderer(Class<I> imageClass, R renderer) {
-        addImageRenderer(imageClass, renderer);
-    }
-
-    protected <I extends Image, R extends ImageRenderer<I>> void addImageRenderer(Class<I> imageClass, R renderer) {
+    public <I extends Image, R extends ImageRenderer<I>> void addImageRenderer(Class<I> imageClass, R renderer) {
         if (imageClass == null || renderer == null) {
             return;
         }

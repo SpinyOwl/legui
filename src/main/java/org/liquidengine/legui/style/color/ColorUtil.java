@@ -1,7 +1,8 @@
 package org.liquidengine.legui.style.color;
 
-import java.util.Random;
 import org.joml.Vector4f;
+
+import java.util.Random;
 
 /**
  * Used to perform some operations with color vectors.

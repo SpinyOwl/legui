@@ -1,7 +1,6 @@
 package org.liquidengine.legui.system.renderer.nvg.image;
 
 
-import java.util.Map;
 import org.joml.Vector2fc;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
@@ -13,6 +12,8 @@ import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.nvg.NvgImageRenderer;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgShapes;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgText;
+
+import java.util.Map;
 
 /**
  * Used to render image rectangle if no other renderers implemented.
@@ -43,7 +44,7 @@ public class NvgDefaultImageRenderer<I extends Image> extends NvgImageRenderer<I
         NvgShapes.drawRectStroke(nanovg, position, size, ColorConstants.black, 1, 1);
 
         NvgText.drawTextLineToRect(nanovg, new Vector4f(x, y, w, h), true, HorizontalAlign.LEFT, VerticalAlign.MIDDLE,
-                                   h / 3, FontRegistry.DEFAULT, IMAGE, ColorConstants.black());
+                                   h / 3, FontRegistry.getDefaultFont(), IMAGE, ColorConstants.black());
 
     }
 }

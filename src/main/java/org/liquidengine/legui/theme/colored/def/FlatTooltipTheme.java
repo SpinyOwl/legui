@@ -31,10 +31,10 @@ public class FlatTooltipTheme<T extends Tooltip> extends FlatComponentTheme<T> {
     @Override
     public void apply(T component) {
         super.apply(component);
-        Vector4f bgc = ColorUtil.negativeColorRGB(settings.backgroundColor());
+        Vector4f bgc = ColorUtil.oppositeBlackOrWhite(settings.backgroundColor());
         component.getStyle().getBackground().setColor(bgc);
-        component.getStyle().setShadow(new Shadow(1, 1, 16, -4, ColorUtil.oppositeBlackOrWhite(bgc).mul(0.8f)));
-
-        component.getTextState().setTextColor(ColorUtil.oppositeBlackOrWhite(bgc));
+        Vector4f tc = ColorUtil.oppositeBlackOrWhite(bgc);
+        component.getStyle().setTextColor(tc);
+        component.getStyle().setShadow(new Shadow(1, 1, 16, -4, tc.mul(0.8f, new Vector4f())));
     }
 }

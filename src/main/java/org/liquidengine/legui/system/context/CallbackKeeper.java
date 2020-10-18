@@ -1,36 +1,8 @@
 package org.liquidengine.legui.system.context;
 
-import static org.lwjgl.glfw.GLFW.glfwSetCharCallback;
-import static org.lwjgl.glfw.GLFW.glfwSetCharModsCallback;
-import static org.lwjgl.glfw.GLFW.glfwSetCursorEnterCallback;
-import static org.lwjgl.glfw.GLFW.glfwSetCursorPosCallback;
-import static org.lwjgl.glfw.GLFW.glfwSetDropCallback;
-import static org.lwjgl.glfw.GLFW.glfwSetFramebufferSizeCallback;
-import static org.lwjgl.glfw.GLFW.glfwSetKeyCallback;
-import static org.lwjgl.glfw.GLFW.glfwSetMouseButtonCallback;
-import static org.lwjgl.glfw.GLFW.glfwSetScrollCallback;
-import static org.lwjgl.glfw.GLFW.glfwSetWindowCloseCallback;
-import static org.lwjgl.glfw.GLFW.glfwSetWindowFocusCallback;
-import static org.lwjgl.glfw.GLFW.glfwSetWindowIconifyCallback;
-import static org.lwjgl.glfw.GLFW.glfwSetWindowPosCallback;
-import static org.lwjgl.glfw.GLFW.glfwSetWindowRefreshCallback;
-import static org.lwjgl.glfw.GLFW.glfwSetWindowSizeCallback;
+import org.liquidengine.cbchain.*;
 
-import org.liquidengine.cbchain.IChainCharCallback;
-import org.liquidengine.cbchain.IChainCharModsCallback;
-import org.liquidengine.cbchain.IChainCursorEnterCallback;
-import org.liquidengine.cbchain.IChainCursorPosCallback;
-import org.liquidengine.cbchain.IChainDropCallback;
-import org.liquidengine.cbchain.IChainFramebufferSizeCallback;
-import org.liquidengine.cbchain.IChainKeyCallback;
-import org.liquidengine.cbchain.IChainMouseButtonCallback;
-import org.liquidengine.cbchain.IChainScrollCallback;
-import org.liquidengine.cbchain.IChainWindowCloseCallback;
-import org.liquidengine.cbchain.IChainWindowFocusCallback;
-import org.liquidengine.cbchain.IChainWindowIconifyCallback;
-import org.liquidengine.cbchain.IChainWindowPosCallback;
-import org.liquidengine.cbchain.IChainWindowRefreshCallback;
-import org.liquidengine.cbchain.IChainWindowSizeCallback;
+import static org.lwjgl.glfw.GLFW.*;
 
 /**
  * Interface determines that class which implement it should provide chain callbacks.

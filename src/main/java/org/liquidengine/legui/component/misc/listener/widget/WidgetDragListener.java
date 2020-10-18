@@ -31,14 +31,4 @@ public class WidgetDragListener implements MouseDragEventListener {
         }
     }
 
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-            .toString();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        return (obj != null) && ((obj == this) || ((obj != this) && (obj.getClass() == this.getClass())));
-    }
 }

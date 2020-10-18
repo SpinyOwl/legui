@@ -47,10 +47,20 @@ public class MouseClickEvent<T extends Component> extends Event<T> {
         return button;
     }
 
+    /**
+     * Cursor position in button coordinates.
+     *
+     * @return cursor position in button coordinates.
+     */
     public Vector2f getPosition() {
         return position;
     }
 
+    /**
+     * Cursor position in frame coordinates.
+     *
+     * @return cursor position in frame coordinates.
+     */
     public Vector2f getAbsolutePosition() {
         return absolutePosition;
     }
@@ -83,12 +93,6 @@ public class MouseClickEvent<T extends Component> extends Event<T> {
         return (mods & GLFW_MOD_NUM_LOCK) != 0;
     }
 
-    public enum MouseClickAction {
-        PRESS,
-        CLICK,
-        RELEASE,;
-    }
-
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
@@ -103,9 +107,13 @@ public class MouseClickEvent<T extends Component> extends Event<T> {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
+        if (this == o) {
+            return true;
+        }
 
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         MouseClickEvent<?> that = (MouseClickEvent<?>) o;
 
@@ -129,5 +137,12 @@ public class MouseClickEvent<T extends Component> extends Event<T> {
             .append(absolutePosition)
             .append(mods)
             .toHashCode();
+    }
+
+    public enum MouseClickAction {
+        PRESS,
+        CLICK,
+        RELEASE,
+        ;
     }
 }

@@ -1,37 +1,37 @@
 package org.liquidengine.legui.system.context;
 
-import static org.lwjgl.glfw.GLFW.GLFW_ICONIFIED;
-import static org.lwjgl.glfw.GLFW.GLFW_TRUE;
-import static org.lwjgl.glfw.GLFW.glfwGetFramebufferSize;
-import static org.lwjgl.glfw.GLFW.glfwGetWindowAttrib;
-import static org.lwjgl.glfw.GLFW.glfwGetWindowPos;
-import static org.lwjgl.glfw.GLFW.glfwGetWindowSize;
-
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import org.joml.Vector2f;
 import org.joml.Vector2i;
 import org.liquidengine.legui.component.Component;
+import org.liquidengine.legui.component.Frame;
+import org.liquidengine.legui.config.Configuration;
+import org.liquidengine.legui.event.FocusEvent;
+import org.liquidengine.legui.listener.processor.EventProcessorProvider;
+
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+import static org.lwjgl.glfw.GLFW.*;
 
 /**
  * Created by ShchAlexander on 1/25/2017.
  */
 public class Context {
 
-    private final long glfwWindow;
+    static {
+        Configuration.getInstance();
+    }
 
+    private final long glfwWindow;
     private Vector2f windowPosition;
     private Vector2i windowSize;
     private Vector2i framebufferSize;
     private transient float pixelRatio;
     private Component mouseTargetGui;
     private Component focusedGui;
-
     private boolean debugEnabled;
-
     private boolean iconified;
-
-    private Map<String, Object> contextData = new ConcurrentHashMap<>();
+    private final Map<String, Object> contextData = new ConcurrentHashMap<>();
 
     /**
      * Instantiates a new Context.
@@ -40,6 +40,21 @@ public class Context {
      */
     public Context(long glfwWindow) {
         this.glfwWindow = glfwWindow;
+    }
+
+    public static void setFocusedGui(Component toGainFocus, Context context, Frame frame) {
+        Component current = context == null ? null : context.focusedGui;
+        if (current != null) {
+            current.setFocused(false);
+            EventProcessorProvider.getInstance().pushEvent(new FocusEvent<>(current, context, frame, toGainFocus, false));
+        }
+        if (toGainFocus != null) {
+            toGainFocus.setFocused(true);
+            EventProcessorProvider.getInstance().pushEvent(new FocusEvent<>(toGainFocus, context, frame, toGainFocus, true));
+            if (context != null) {
+                context.setFocusedGui(toGainFocus);
+            }
+        }
     }
 
     /**
@@ -84,22 +99,22 @@ public class Context {
         glfwGetWindowPos(glfwWindow, xpos, ypos);
 
         update(windowWidth[0], windowHeight[0],
-               frameBufferWidth[0], frameBufferHeight[0],
-               xpos[0], ypos[0],
-               glfwGetWindowAttrib(glfwWindow, GLFW_ICONIFIED) == GLFW_TRUE
-              );
+            frameBufferWidth[0], frameBufferHeight[0],
+            xpos[0], ypos[0],
+            glfwGetWindowAttrib(glfwWindow, GLFW_ICONIFIED) == GLFW_TRUE
+        );
     }
 
     /**
      * Update.
      *
-     * @param targetWidth the target width
-     * @param targetHeight the target height
-     * @param framebufferWidth the framebuffer width
+     * @param targetWidth       the target width
+     * @param targetHeight      the target height
+     * @param framebufferWidth  the framebuffer width
      * @param framebufferHeight the framebuffer height
-     * @param targetPosX the target pos x
-     * @param targetPosY the target pos y
-     * @param iconified the iconified
+     * @param targetPosX        the target pos x
+     * @param targetPosY        the target pos y
+     * @param iconified         the iconified
      */
     public void update(int targetWidth, int targetHeight, int framebufferWidth, int framebufferHeight,
                        int targetPosX, int targetPosY, boolean iconified) {

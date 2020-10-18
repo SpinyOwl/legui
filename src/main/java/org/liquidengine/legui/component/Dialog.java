@@ -8,8 +8,6 @@ import org.liquidengine.legui.theme.Themes;
 /**
  * Dialog component is component which extended from {@link Widget} and have some additional functionality. On {@link #show(Frame)} method it added to new
  * created {@link DialogLayer} which forbid underlying layers to receive mouse click and keyboard events.
- * <p>
- * TODO: REIMPLEMENT THIS COMPONENT ACCORDING TO NEW LAYOUT SYSTEM
  */
 public class Dialog extends Widget {
 
@@ -25,7 +23,7 @@ public class Dialog extends Widget {
     /**
      * Used to hold dialog.
      */
-    private DialogLayer dialogLayer;
+    private DialogLayer dialogLayer = new DialogLayer();
 
     /**
      * Creates a dialog with default title text.
@@ -112,13 +110,14 @@ public class Dialog extends Widget {
             Vector2f dialogLayerSize = new Vector2f(frame.getContainer().getSize());
             this.setPosition((dialogLayerSize.x - this.getSize().x) / 2f, (dialogLayerSize.y - this.getSize().y) / 2f);
 
-            if (dialogLayer == null) {
-                dialogLayer = new DialogLayer();
-            }
             this.frame.addLayer(dialogLayer);
-            dialogLayer.getContainer().setSize(dialogLayerSize);
+            dialogLayer.setSize(dialogLayerSize);
             dialogLayer.add(this);
         }
+    }
+
+    public DialogLayer getDialogLayer() {
+        return dialogLayer;
     }
 
     /**

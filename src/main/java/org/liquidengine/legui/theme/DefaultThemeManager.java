@@ -1,8 +1,9 @@
 package org.liquidengine.legui.theme;
 
+import org.liquidengine.legui.component.Component;
+
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import org.liquidengine.legui.component.Component;
 
 public class DefaultThemeManager extends ThemeManager {
 

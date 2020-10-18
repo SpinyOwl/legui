@@ -1,11 +1,12 @@
 package org.liquidengine.legui.style;
 
 import org.joml.Vector4f;
+import org.liquidengine.legui.component.optional.align.HorizontalAlign;
+import org.liquidengine.legui.component.optional.align.VerticalAlign;
 import org.liquidengine.legui.style.border.SimpleLineBorder;
 import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.style.flex.FlexStyle;
-import org.liquidengine.legui.style.font.Font;
-import org.liquidengine.legui.style.font.FontRegistry;
+import org.liquidengine.legui.style.font.TextDirection;
 import org.liquidengine.legui.style.length.Length;
 import org.liquidengine.legui.style.length.Unit;
 import org.liquidengine.legui.style.shadow.Shadow;
@@ -25,7 +26,6 @@ public class Style {
     private FlexStyle flexStyle = new FlexStyle();
     private Background background = new Background();
     private Border border = new SimpleLineBorder(ColorConstants.gray(), 1);
-    private Font font = FontRegistry.getFont(FontRegistry.DEFAULT);
 
     private Length borderTopLeftRadius;
     private Length borderTopRightRadius;
@@ -63,6 +63,27 @@ public class Style {
      */
     private Vector4f focusedStrokeColor = ColorConstants.lightBlue();
 
+    // TEXT RELATED STYLE PROPERTIES.
+
+    private String font;
+    private Float fontSize;
+    /**
+     * Horizontal alignment. By default used {@link HorizontalAlign#CENTER}.
+     */
+    private HorizontalAlign horizontalAlign;
+    /**
+     * Vertical alignment.
+     */
+    private VerticalAlign verticalAlign;
+    /**
+     * Text color.
+     */
+    private Vector4f textColor;
+    /**
+     * Highlight color (used to highlight selection).
+     */
+    private Vector4f highlightColor;
+
 
     /**
      * Used to set border radius for all four corners. (PIXEL VERSION)
@@ -81,7 +102,7 @@ public class Style {
      */
     public void setBorderRadius(Length radius) {
         borderTopLeftRadius = borderTopRightRadius =
-            borderBottomRightRadius = borderBottomLeftRadius = radius;
+                borderBottomRightRadius = borderBottomLeftRadius = radius;
     }
 
     /**
@@ -157,6 +178,15 @@ public class Style {
     }
 
     /**
+     * Returns top left border radius.
+     *
+     * @return top left border radius.
+     */
+    public Length getBorderTopLeftRadius() {
+        return borderTopLeftRadius;
+    }
+
+    /**
      * Used to set top left border radius. (PIXEL VERSION)
      *
      * @param borderTopLeftRadius top left border radius.
@@ -174,6 +204,14 @@ public class Style {
         this.borderTopLeftRadius = borderTopLeftRadius;
     }
 
+    /**
+     * Returns top right border radius.
+     *
+     * @return top right border radius.
+     */
+    public Length getBorderTopRightRadius() {
+        return borderTopRightRadius;
+    }
 
     /**
      * Used to set top right border radius. (PIXEL VERSION)
@@ -184,7 +222,6 @@ public class Style {
         setBorderTopRightRadius(pixel(borderTopRightRadius));
     }
 
-
     /**
      * Used to set top right border radius.
      *
@@ -192,6 +229,15 @@ public class Style {
      */
     public void setBorderTopRightRadius(Length borderTopRightRadius) {
         this.borderTopRightRadius = borderTopRightRadius;
+    }
+
+    /**
+     * Returns bottom right border radius.
+     *
+     * @return bottom right border radius.
+     */
+    public Length getBorderBottomRightRadius() {
+        return borderBottomRightRadius;
     }
 
     /**
@@ -213,6 +259,15 @@ public class Style {
     }
 
     /**
+     * Returns bottom left border radius.
+     *
+     * @return bottom left border radius.
+     */
+    public Length getBorderBottomLeftRadius() {
+        return borderBottomLeftRadius;
+    }
+
+    /**
      * Used to set bottom left border radius. (PIXEL VERSION)
      *
      * @param borderBottomLeftRadius bottom left border radius.
@@ -228,43 +283,6 @@ public class Style {
      */
     public void setBorderBottomLeftRadius(Length borderBottomLeftRadius) {
         this.borderBottomLeftRadius = borderBottomLeftRadius;
-    }
-
-    /**
-     * Returns top left border radius.
-     *
-     * @return top left border radius.
-     */
-    public Length getBorderTopLeftRadius() {
-        return borderTopLeftRadius;
-    }
-
-    /**
-     * Returns top right border radius.
-     *
-     * @return top right border radius.
-     */
-    public Length getBorderTopRightRadius() {
-        return borderTopRightRadius;
-    }
-
-    /**
-     * Returns bottom right border radius.
-     *
-     * @return bottom right border radius.
-     */
-    public Length getBorderBottomRightRadius() {
-        return borderBottomRightRadius;
-    }
-
-
-    /**
-     * Returns bottom left border radius.
-     *
-     * @return bottom left border radius.
-     */
-    public Length getBorderBottomLeftRadius() {
-        return borderBottomLeftRadius;
     }
 
     /**
@@ -365,7 +383,7 @@ public class Style {
 
     public void setPadding(Length padding) {
         paddingLeft = paddingRight =
-            paddingTop = paddingBottom = padding;
+                paddingTop = paddingBottom = padding;
     }
 
     public void setPadding(float topBottom, float leftRight) {
@@ -460,7 +478,7 @@ public class Style {
     }
 
     public void setMarginTop(Float marginTop) {
-	    setMarginTop(pixel(marginTop));
+        setMarginTop(pixel(marginTop));
     }
 
     public Unit getMarginBottom() {
@@ -471,9 +489,9 @@ public class Style {
         this.marginBottom = marginBottom;
     }
 
-	public void setMarginBottom(Float marginBottom) {
-		setMarginBottom(pixel(marginBottom));
-	}
+    public void setMarginBottom(Float marginBottom) {
+        setMarginBottom(pixel(marginBottom));
+    }
 
     public Unit getMarginRight() {
         return marginRight;
@@ -483,9 +501,9 @@ public class Style {
         this.marginRight = marginRight;
     }
 
-	public void setMarginRight(Float marginRight) {
-		setMarginRight(pixel(marginRight));
-	}
+    public void setMarginRight(Float marginRight) {
+        setMarginRight(pixel(marginRight));
+    }
 
     public Unit getMarginLeft() {
         return marginLeft;
@@ -495,9 +513,9 @@ public class Style {
         this.marginLeft = marginLeft;
     }
 
-	public void setMarginLeft(Float marginLeft) {
-		setMarginLeft(pixel(marginLeft));
-	}
+    public void setMarginLeft(Float marginLeft) {
+        setMarginLeft(pixel(marginLeft));
+    }
 
     /**
      * Returns top style.
@@ -673,7 +691,7 @@ public class Style {
      *
      * @return the font
      */
-    public Font getFont() {
+    public String getFont() {
         return font;
     }
 
@@ -682,7 +700,7 @@ public class Style {
      *
      * @param font the font
      */
-    public void setFont(Font font) {
+    public void setFont(String font) {
         this.font = font;
     }
 
@@ -775,6 +793,110 @@ public class Style {
 
     public void setShadow(Shadow shadow) {
         this.shadow = shadow;
+    }
+
+    public Float getFontSize() {
+        return fontSize;
+    }
+
+    public void setFontSize(Float fontSize) {
+        this.fontSize = fontSize;
+    }
+
+    /**
+     * Returns horizontal alignment.
+     *
+     * @return horizontal alignment.
+     */
+    public HorizontalAlign getHorizontalAlign() {
+        return horizontalAlign;
+    }
+
+    /**
+     * Used to set horizontal alignment.
+     *
+     * @param horizontalAlign horizontal alignment.
+     */
+    public void setHorizontalAlign(HorizontalAlign horizontalAlign) {
+        this.horizontalAlign = horizontalAlign;
+    }
+
+    /**
+     * Returns vertical alignment.
+     *
+     * @return vertical alignment.
+     */
+    public VerticalAlign getVerticalAlign() {
+        return verticalAlign;
+    }
+
+    /**
+     * Used to set vertical alignment.
+     *
+     * @param verticalAlign vertical alignment.
+     */
+    public void setVerticalAlign(VerticalAlign verticalAlign) {
+        this.verticalAlign = verticalAlign;
+    }
+
+    /**
+     * Returns text color.
+     *
+     * @return text color.
+     */
+    public Vector4f getTextColor() {
+        return textColor;
+    }
+
+    /**
+     * Used to set text color.
+     *
+     * @param textColor text color.
+     */
+    public void setTextColor(Vector4f textColor) {
+        this.textColor = textColor;
+    }
+
+    /**
+     * Used to set text color.
+     *
+     * @param r red component.
+     * @param g green component.
+     * @param b blue component.
+     * @param a alpha component.
+     */
+    public void setTextColor(float r, float g, float b, float a) {
+        this.textColor = new Vector4f(r, g, b, a);
+    }
+
+    /**
+     * Returns highlight color.
+     *
+     * @return highlight color
+     */
+    public Vector4f getHighlightColor() {
+        return highlightColor;
+    }
+
+    /**
+     * Used to set highlight color.
+     *
+     * @param highlightColor highlight color.
+     */
+    public void setHighlightColor(Vector4f highlightColor) {
+        this.highlightColor = highlightColor;
+    }
+
+    /**
+     * Used to set highlight color.
+     *
+     * @param r red component.
+     * @param g green component.
+     * @param b blue component.
+     * @param a alpha component.
+     */
+    public void setHighlightColor(float r, float g, float b, float a) {
+        this.highlightColor = new Vector4f(r, g, b, a);
     }
 
     /**

@@ -1,9 +1,0 @@
-<class-binding xmlns="binding.legui.liquidengine.org"
-    for="org.liquidengine.legui.component.CheckBox" to="checkbox" default="true"
-    inherit="org/liquidengine/legui/binding/component/Component.xml">
-    <bind field="textState" to="textState" as="field"/>
-    <bind field="checked"/>
-    <bind field="iconChecked" as="field"/>
-    <bind field="iconUnchecked" as="field"/>
-
-</class-binding>

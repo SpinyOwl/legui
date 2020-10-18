@@ -1,12 +1,5 @@
 package org.liquidengine.legui.component;
 
-import static org.liquidengine.legui.style.font.FontRegistry.MATERIAL_ICONS_REGULAR;
-
-import java.util.List;
-import java.util.Objects;
-import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -18,7 +11,6 @@ import org.liquidengine.legui.component.misc.animation.selectbox.SelectBoxAnimat
 import org.liquidengine.legui.component.misc.listener.selectbox.SelectBoxClickListener;
 import org.liquidengine.legui.component.misc.listener.selectbox.SelectBoxElementClickListener;
 import org.liquidengine.legui.component.misc.listener.selectbox.SelectBoxFocusListener;
-import org.liquidengine.legui.component.misc.listener.selectbox.SelectBoxScrollListener;
 import org.liquidengine.legui.event.FocusEvent;
 import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.icon.CharIcon;
@@ -32,8 +24,16 @@ import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.style.flex.FlexStyle.FlexDirection;
 import org.liquidengine.legui.theme.Themes;
 
+import java.util.List;
+import java.util.Objects;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
+import static org.liquidengine.legui.style.font.FontRegistry.MATERIAL_ICONS_REGULAR;
+
 /**
- * Creates drop-down list with select options. <p> TODO: REIMPLEMENT THIS COMPONENT ACCORDING TO NEW LAYOUT SYSTEM
+ * Creates drop-down list with select options.
  */
 public class SelectBox<T> extends Component {
 
@@ -54,7 +54,6 @@ public class SelectBox<T> extends Component {
     private List<T> elements = new CopyOnWriteArrayList<>();
 
     private SelectBoxScrollablePanel selectionListPanel = new SelectBoxScrollablePanel();
-    private final SelectBoxScrollListener selectBoxScrollListener = new SelectBoxScrollListener(selectionListPanel.getVerticalScrollBar());
     private Button selectionButton = new Button(NULL);
     private T selectedElement = null;
     private float elementHeight = 16;
@@ -77,9 +76,9 @@ public class SelectBox<T> extends Component {
     /**
      * Constructor with position and size parameters.
      *
-     * @param x x position position in parent component.
-     * @param y y position position in parent component.
-     * @param width width of component.
+     * @param x      x position position in parent component.
+     * @param y      y position position in parent component.
+     * @param width  width of component.
      * @param height height of component.
      */
     public SelectBox(float x, float y, float width, float height) {
@@ -91,7 +90,7 @@ public class SelectBox<T> extends Component {
      * Constructor with position and size parameters.
      *
      * @param position position position in parent component.
-     * @param size size of component.
+     * @param size     size of component.
      */
     public SelectBox(Vector2f position, Vector2f size) {
         super(position, size);
@@ -167,7 +166,7 @@ public class SelectBox<T> extends Component {
         MouseClickEventListener mouseClickEventListener = new SelectBoxClickListener<>(this);
         selectionButton.getListenerMap().addListener(MouseClickEvent.class, mouseClickEventListener);
         expandButton.getListenerMap().addListener(MouseClickEvent.class, mouseClickEventListener);
-        selectBoxLayer.getContainer().getListenerMap().addListener(MouseClickEvent.class, mouseClickEventListener);
+        selectBoxLayer.getListenerMap().addListener(MouseClickEvent.class, mouseClickEventListener);
 
         FocusEventListener focusEventListener = new SelectBoxFocusListener<>(this);
         selectionListPanel.getVerticalScrollBar().getListenerMap().getListeners(FocusEvent.class).add(focusEventListener);
@@ -354,7 +353,7 @@ public class SelectBox<T> extends Component {
     /**
      * Used to set selected state of element.
      *
-     * @param element element to set state.
+     * @param element  element to set state.
      * @param selected state of element to set.
      */
     public void setSelected(T element, boolean selected) {
@@ -365,16 +364,16 @@ public class SelectBox<T> extends Component {
     /**
      * Used to set selected state of element on specified index.
      *
-     * @param index index of element to set state.
+     * @param index    index of element to set state.
      * @param selected state of element to set.
      */
     public void setSelected(int index, boolean selected) {
-        if (elements.size() > 0) {
-            T element = elements.get(index);
-            setSelected(element, selected, index);
-        } else {
+        if (elements.isEmpty()) {
             selectedElement = null;
             selectionButton.getTextState().setText(NULL);
+        } else {
+            T element = elements.get(index);
+            setSelected(element, selected, index);
         }
     }
 
@@ -484,7 +483,6 @@ public class SelectBox<T> extends Component {
             .append(selectBoxElements, selectBox.selectBoxElements)
             .append(elements, selectBox.elements)
             .append(selectionListPanel, selectBox.selectionListPanel)
-            .append(selectBoxScrollListener, selectBox.selectBoxScrollListener)
             .append(selectionButton, selectBox.selectionButton)
             .append(selectedElement, selectBox.selectedElement)
             .append(expandButton, selectBox.expandButton)
@@ -507,7 +505,6 @@ public class SelectBox<T> extends Component {
             .append(selectBoxElements)
             .append(elements)
             .append(selectionListPanel)
-            .append(selectBoxScrollListener)
             .append(selectionButton)
             .append(selectedElement)
             .append(elementHeight)

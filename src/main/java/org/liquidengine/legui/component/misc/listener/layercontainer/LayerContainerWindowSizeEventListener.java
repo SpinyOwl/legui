@@ -17,9 +17,4 @@ public class LayerContainerWindowSizeEventListener implements WindowSizeEventLis
     public void process(WindowSizeEvent event) {
         event.getTargetComponent().getSize().set(event.getWidth(), event.getHeight());
     }
-
-    @Override
-    public boolean equals(Object obj) {
-        return obj != null && (obj == this || obj.getClass() == this.getClass());
-    }
 }

@@ -5,15 +5,11 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
-import org.liquidengine.legui.component.misc.listener.textarea.TextAreaFieldCharEventListener;
-import org.liquidengine.legui.component.misc.listener.textarea.TextAreaFieldDragEventListener;
-import org.liquidengine.legui.component.misc.listener.textarea.TextAreaFieldKeyEventListener;
-import org.liquidengine.legui.component.misc.listener.textarea.TextAreaFieldMouseClickEventListener;
+import org.liquidengine.legui.component.misc.listener.text.CopyTextEventListener;
+import org.liquidengine.legui.component.misc.listener.text.SelectAllTextEventListener;
+import org.liquidengine.legui.component.misc.listener.textarea.*;
 import org.liquidengine.legui.component.optional.TextState;
-import org.liquidengine.legui.event.CharEvent;
-import org.liquidengine.legui.event.KeyEvent;
-import org.liquidengine.legui.event.MouseClickEvent;
-import org.liquidengine.legui.event.MouseDragEvent;
+import org.liquidengine.legui.event.*;
 import org.liquidengine.legui.theme.Themes;
 
 /**
@@ -26,15 +22,12 @@ public class TextAreaField extends Component implements TextComponent {
      */
     protected TextState textState;
 
-    private float maxTextWidth;
-    private float maxTextHeight;
-    private float caretX;
-    private float caretY;
-
     /**
      * Used to describe size of '\t' symbol in spaces.
      */
     private int tabSize = 4;
+
+    private boolean stickToAlignment = true;
 
     /**
      * Default constructor. Used to create component instance without any parameters. <p> Also if you want to make it easy to use with Json
@@ -47,9 +40,9 @@ public class TextAreaField extends Component implements TextComponent {
     /**
      * Constructor with position and size parameters.
      *
-     * @param x x position position in parent component.
-     * @param y y position position in parent component.
-     * @param width width of component.
+     * @param x      x position position in parent component.
+     * @param y      y position position in parent component.
+     * @param width  width of component.
      * @param height height of component.
      */
     public TextAreaField(float x, float y, float width, float height) {
@@ -61,7 +54,7 @@ public class TextAreaField extends Component implements TextComponent {
      * Constructor with position and size parameters.
      *
      * @param position position position in parent component.
-     * @param size size of component.
+     * @param size     size of component.
      */
     public TextAreaField(Vector2f position, Vector2f size) {
         super(position, size);
@@ -80,10 +73,10 @@ public class TextAreaField extends Component implements TextComponent {
     /**
      * Constructor with text, position and size parameters.
      *
-     * @param text text to set.
-     * @param x x position position in parent component.
-     * @param y y position position in parent component.
-     * @param width width of component.
+     * @param text   text to set.
+     * @param x      x position position in parent component.
+     * @param y      y position position in parent component.
+     * @param width  width of component.
      * @param height height of component.
      */
     public TextAreaField(String text, float x, float y, float width, float height) {
@@ -94,9 +87,9 @@ public class TextAreaField extends Component implements TextComponent {
     /**
      * Constructor with text, position and size parameters.
      *
-     * @param text text to set.
+     * @param text     text to set.
      * @param position position position in parent component.
-     * @param size size of component.
+     * @param size     size of component.
      */
     public TextAreaField(String text, Vector2f position, Vector2f size) {
         super(position, size);
@@ -114,7 +107,11 @@ public class TextAreaField extends Component implements TextComponent {
 
         getListenerMap().addListener(MouseDragEvent.class, new TextAreaFieldDragEventListener());
         getListenerMap().addListener(MouseClickEvent.class, new TextAreaFieldMouseClickEventListener());
-        getListenerMap().addListener(KeyEvent.class, new TextAreaFieldKeyEventListener());
+        getListenerMap().addListener(KeyboardEvent.class, new CutTextAreaKeyboardEventListener());
+        getListenerMap().addListener(KeyboardEvent.class, new PasteTextAreaKeyboardEventListener());
+        getListenerMap().addListener(KeyboardEvent.class, new SelectAllTextEventListener());
+        getListenerMap().addListener(KeyboardEvent.class, new CopyTextEventListener());
+        getListenerMap().addListener(KeyboardEvent.class, new TextAreaFieldKeyEventListener());
         getListenerMap().addListener(CharEvent.class, new TextAreaFieldCharEventListener());
 
         Themes.getDefaultTheme().getThemeManager().getComponentTheme(TextAreaField.class).applyAll(this);
@@ -261,55 +258,52 @@ public class TextAreaField extends Component implements TextComponent {
         TextAreaField textAreaField = (TextAreaField) o;
 
         return new EqualsBuilder()
-            .appendSuper(super.equals(o))
-            .append(textState, textAreaField.textState)
-            .isEquals();
+                .appendSuper(super.equals(o))
+                .append(textState, textAreaField.textState)
+                .isEquals();
     }
 
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
-            .appendSuper(super.hashCode())
-            .append(textState)
-            .toHashCode();
+                .appendSuper(super.hashCode())
+                .append(textState)
+                .toHashCode();
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-            .append("textState", textState)
-            .toString();
+                .append("textState", textState)
+                .toString();
     }
 
     public float getMaxTextWidth() {
-        return maxTextWidth;
-    }
-
-    public void setMaxTextWidth(float maxTextWidth) {
-        this.maxTextWidth = maxTextWidth;
+        return textState.getTextWidth();
     }
 
     public float getMaxTextHeight() {
-        return maxTextHeight;
+        return textState.getTextHeight();
     }
 
-    public void setMaxTextHeight(float maxTextHeight) {
-        this.maxTextHeight = maxTextHeight;
+    public Float getCaretX() {
+        return textState.getCaretX();
     }
 
-    public float getCaretX() {
-        return caretX;
+    public Float getCaretY() {
+        return textState.getCaretY();
     }
 
-    public void setCaretX(float caretX) {
-        this.caretX = caretX;
+    /**
+     * If returns true - caret position during rendering will stick to 0/mid/end depending on alignment
+     *
+     * @return true if caret position should stick to alignment during rendering
+     */
+    public boolean isStickToAlignment() {
+        return stickToAlignment;
     }
 
-    public float getCaretY() {
-        return caretY;
-    }
-
-    public void setCaretY(float caretY) {
-        this.caretY = caretY;
+    public void setStickToAlignment(boolean stickToAlignment) {
+        this.stickToAlignment = stickToAlignment;
     }
 }

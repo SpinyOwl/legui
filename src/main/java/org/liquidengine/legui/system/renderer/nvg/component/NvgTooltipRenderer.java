@@ -6,6 +6,8 @@ import org.liquidengine.legui.component.Tooltip;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
+import org.liquidengine.legui.style.Style;
+import org.liquidengine.legui.style.font.FontRegistry;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgColorUtil;
 import org.lwjgl.nanovg.NVGColor;
@@ -16,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.liquidengine.legui.style.util.StyleUtilities.getPadding;
+import static org.liquidengine.legui.style.util.StyleUtilities.getStyle;
 import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.*;
 import static org.lwjgl.nanovg.NanoVG.*;
 import static org.lwjgl.system.MemoryUtil.*;
@@ -30,16 +33,17 @@ public class NvgTooltipRenderer extends NvgDefaultComponentRenderer<Tooltip> {
     public void renderSelf(Tooltip component, Context context, long nanovg) {
         createScissor(nanovg, component);
         {
+            Style style = component.getStyle();
             TextState textState = component.getTextState();
             Vector2f pos = component.getAbsolutePosition();
             Vector2f size = component.getSize();
-            float fontSize = textState.getFontSize();
-            String font = textState.getFont();
+            float fontSize = getStyle(component, Style::getFontSize, 16F);
+            String font = getStyle(component, Style::getFont, FontRegistry.getDefaultFont());
             String text = textState.getText();
-            HorizontalAlign horizontalAlign = textState.getHorizontalAlign();
-            VerticalAlign verticalAlign = textState.getVerticalAlign();
-            Vector4f textColor = textState.getTextColor();
-            Vector4f padding = getPadding(component, component.getStyle());
+            HorizontalAlign horizontalAlign = getStyle(component, Style::getHorizontalAlign, HorizontalAlign.LEFT);
+            VerticalAlign verticalAlign = getStyle(component, Style::getVerticalAlign, VerticalAlign.MIDDLE);
+            Vector4f textColor = getStyle(component, Style::getTextColor);
+            Vector4f padding = getPadding(component, style);
 
             renderBackground(component, context, nanovg);
 
@@ -64,10 +68,9 @@ public class NvgTooltipRenderer extends NvgDefaultComponentRenderer<Tooltip> {
                 List<long[]> indicesList = new ArrayList<>();
 
                 try (
-                        NVGColor colorA = NVGColor.calloc();
+                        NVGColor colorA = NvgColorUtil.create(textColor);
                         NVGTextRow.Buffer buffer = NVGTextRow.calloc(1)
                 ) {
-                    NvgColorUtil.fillNvgColorWithRGBA(textColor, colorA);
                     alignTextInBox(nanovg, HorizontalAlign.LEFT, VerticalAlign.MIDDLE);
                     nvgFontSize(nanovg, fontSize);
                     nvgFontFace(nanovg, font);
@@ -89,8 +92,6 @@ public class NvgTooltipRenderer extends NvgDefaultComponentRenderer<Tooltip> {
                     float offsetY = 0.5f * fontSize * ((rows - 1) * verticalAlign.index - 1);
 
                     // render text lines
-                    NvgColorUtil.fillNvgColorWithRGBA(textColor, colorA);
-                    nvgFillColor(nanovg, colorA);
                     for (int i = 0; i < rows; i++) {
                         float[] bounds = boundList.get(i);
                         long[] indices = indicesList.get(i);

@@ -37,6 +37,9 @@ public class SelectBoxAnimation extends Animation {
         if (selectBox == null || selectionListPanel == null) {
             return true;
         }
+        if (selectBox.isCollapsed()) {
+        	return false;
+        }
         deltaSum += delta;
 
         if (deltaSum < 0.01d) {

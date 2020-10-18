@@ -3,7 +3,7 @@ package org.liquidengine.legui.component;
 /**
  * Dialog layer used to hold dialog window.
  */
-public class DialogLayer extends Layer<Dialog> {
+public class DialogLayer extends Layer {
 
     /**
      * Default constructor of dialog layer.
@@ -12,6 +12,6 @@ public class DialogLayer extends Layer<Dialog> {
         setEventPassable(false);
         setEventReceivable(true);
 
-        getContainer().getStyle().getBackground().setColor(0, 0, 0, 0.2f);
+        getStyle().getBackground().setColor(0, 0, 0, 0.2f);
     }
 }

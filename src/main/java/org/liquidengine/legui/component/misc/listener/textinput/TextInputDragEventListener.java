@@ -1,10 +1,10 @@
 package org.liquidengine.legui.component.misc.listener.textinput;
 
-import static org.liquidengine.legui.input.Mouse.MouseButton.MOUSE_BUTTON_LEFT;
-
 import org.liquidengine.legui.component.TextInput;
 import org.liquidengine.legui.event.MouseDragEvent;
 import org.liquidengine.legui.listener.MouseDragEventListener;
+
+import static org.liquidengine.legui.input.Mouse.MouseButton.MOUSE_BUTTON_LEFT;
 
 /**
  * Mouse drag event listener for text input. Used to update selection indices.
@@ -19,10 +19,5 @@ public class TextInputDragEventListener implements MouseDragEventListener {
             textInput.setCaretPosition(mouseCaretPosition);
             textInput.setEndSelectionIndex(mouseCaretPosition);
         }
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        return obj != null && (obj == this || obj.getClass() == this.getClass());
     }
 }

@@ -1,6 +1,5 @@
 package org.liquidengine.legui.system.handler;
 
-import java.util.List;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.component.Layer;
@@ -9,6 +8,8 @@ import org.liquidengine.legui.listener.processor.EventProcessorProvider;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.event.SystemWindowIconifyEvent;
 
+import java.util.List;
+
 /**
  * Created by ShchAlexander on 03.02.2017.
  */
@@ -16,7 +17,7 @@ public class WindowIconifyEventHandler extends AbstractSystemEventHandler<System
 
     @Override
     protected boolean handle(SystemWindowIconifyEvent event, Layer layer, Context context, Frame frame) {
-        pushEvent(layer.getContainer(), event, context, frame);
+        pushEvent(layer, event, context, frame);
         return false;
     }
 

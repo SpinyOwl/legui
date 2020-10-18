@@ -1,7 +1,6 @@
 package org.liquidengine.legui.theme.colored.def;
 
 import org.liquidengine.legui.component.TextInput;
-import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.style.color.ColorUtil;
 import org.liquidengine.legui.theme.colored.FlatColoredTheme.FlatColoredThemeSettings;
 
@@ -33,9 +32,7 @@ public class FlatTextInputTheme<T extends TextInput> extends FlatComponentTheme<
 
         component.getFocusedStyle().getBackground()
             .setColor(settings.backgroundColor().mul(3).add(ColorUtil.oppositeBlackOrWhite(settings.backgroundColor())).div(4));
-        component.getTextState().setTextColor(ColorUtil.oppositeBlackOrWhite(settings.backgroundColor()));
-        component.getTextState().setHorizontalAlign(HorizontalAlign.LEFT);
-        component.getTextState().setHighlightColor(settings.strokeColor());
+        component.getStyle().setHighlightColor(settings.strokeColor());
         component.getStyle().getBackground().setColor(settings.backgroundColor());
     }
 }

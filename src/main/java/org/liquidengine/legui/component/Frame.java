@@ -1,13 +1,15 @@
 package org.liquidengine.legui.component;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Default structure which should be associated with OpenGL window. Contains two default layers: <ul> <li>Component layer - holds components and always on
@@ -17,22 +19,22 @@ import org.joml.Vector2f;
 public class Frame {
 
     /**
+     * All other layers added to this list.
+     */
+    private final List<Layer> layers = new CopyOnWriteArrayList<>();
+    /**
      * Used to hold tooltips.
      */
-    private TooltipLayer tooltipLayer;
+    private Layer tooltipLayer;
     /**
      * Used to hold components.
      */
-    private Layer<Component> componentLayer;
-    /**
-     * All other layers added to this list.
-     */
-    private List<Layer> layers = new CopyOnWriteArrayList<>();
+    private Layer componentLayer;
 
     /**
      * Used to create frame and initialize layers with specified size.
      *
-     * @param width width.
+     * @param width  width.
      * @param height height.
      */
     public Frame(float width, float height) {
@@ -58,12 +60,17 @@ public class Frame {
     /**
      * Used to initialize frame and layers.
      *
-     * @param width initial layer containers width.
+     * @param width  initial layer containers width.
      * @param height initial layer containers height.
      */
     private void initialize(float width, float height) {
-        tooltipLayer = new TooltipLayer();
-        componentLayer = new ComponentLayer();
+        tooltipLayer = new Layer();
+        tooltipLayer.setEventPassable(true);
+        tooltipLayer.setEventReceivable(false);
+
+        componentLayer = new Layer();
+        componentLayer.setFocusable(true);
+
         tooltipLayer.setFrame(this);
         componentLayer.setFrame(this);
         setSize(width, height);
@@ -81,13 +88,13 @@ public class Frame {
     /**
      * Used to set layer containers size. NOTE: All LayerContainers will be resized to specified size!
      *
-     * @param width width.
+     * @param width  width.
      * @param height height.
      */
     public void setSize(float width, float height) {
-        tooltipLayer.getContainer().setSize(width, height);
-        componentLayer.getContainer().setSize(width, height);
-        layers.forEach(l -> l.getContainer().setSize(width, height));
+        tooltipLayer.setSize(width, height);
+        componentLayer.setSize(width, height);
+        layers.forEach(l -> l.setSize(width, height));
     }
 
     /**
@@ -139,7 +146,6 @@ public class Frame {
      * Used to check if layer list contains provided layer.
      *
      * @param layer layer to check.
-     *
      * @return true if layer list contains provided layer.
      */
     public boolean containsLayer(Layer layer) {
@@ -151,8 +157,12 @@ public class Frame {
      *
      * @return default component layer.
      */
-    public Layer<Component> getComponentLayer() {
+    public Layer getComponentLayer() {
         return componentLayer;
+    }
+
+    public void setComponentLayer(Layer componentLayer) {
+        this.componentLayer = Objects.requireNonNull(componentLayer);
     }
 
     /**
@@ -160,8 +170,12 @@ public class Frame {
      *
      * @return default tooltip layer.
      */
-    public TooltipLayer getTooltipLayer() {
+    public Layer getTooltipLayer() {
         return tooltipLayer;
+    }
+
+    public void setTooltipLayer(Layer tooltipLayer) {
+        this.tooltipLayer = Objects.requireNonNull(tooltipLayer);
     }
 
     /**
@@ -194,7 +208,7 @@ public class Frame {
      * @return container of default component layer.
      */
     public Component getContainer() {
-        return componentLayer.getContainer();
+        return componentLayer;
     }
 
     @Override

@@ -1,50 +1,15 @@
 package org.liquidengine.legui.theme.colored;
 
 import org.joml.Vector4f;
-import org.liquidengine.legui.component.Button;
-import org.liquidengine.legui.component.CheckBox;
-import org.liquidengine.legui.component.Component;
-import org.liquidengine.legui.component.Label;
-import org.liquidengine.legui.component.LayerContainer;
-import org.liquidengine.legui.component.Panel;
-import org.liquidengine.legui.component.ProgressBar;
-import org.liquidengine.legui.component.RadioButton;
-import org.liquidengine.legui.component.ScrollBar;
-import org.liquidengine.legui.component.ScrollablePanel;
-import org.liquidengine.legui.component.SelectBox;
+import org.liquidengine.legui.component.*;
 import org.liquidengine.legui.component.SelectBox.SelectBoxElement;
 import org.liquidengine.legui.component.SelectBox.SelectBoxScrollablePanel;
-import org.liquidengine.legui.component.Slider;
-import org.liquidengine.legui.component.TextArea;
-import org.liquidengine.legui.component.TextAreaField;
-import org.liquidengine.legui.component.TextInput;
-import org.liquidengine.legui.component.ToggleButton;
-import org.liquidengine.legui.component.Tooltip;
-import org.liquidengine.legui.component.Widget;
+import org.liquidengine.legui.style.font.FontRegistry;
 import org.liquidengine.legui.theme.AbstractTheme;
 import org.liquidengine.legui.theme.DefaultThemeManager;
 import org.liquidengine.legui.theme.Theme;
 import org.liquidengine.legui.theme.ThemeManager;
-import org.liquidengine.legui.theme.colored.def.FlatButtonTheme;
-import org.liquidengine.legui.theme.colored.def.FlatCheckBoxTheme;
-import org.liquidengine.legui.theme.colored.def.FlatComponentTheme;
-import org.liquidengine.legui.theme.colored.def.FlatLabelTheme;
-import org.liquidengine.legui.theme.colored.def.FlatLayerContainerTheme;
-import org.liquidengine.legui.theme.colored.def.FlatPanelTheme;
-import org.liquidengine.legui.theme.colored.def.FlatProgressBarTheme;
-import org.liquidengine.legui.theme.colored.def.FlatRadioButtonTheme;
-import org.liquidengine.legui.theme.colored.def.FlatScrollBarTheme;
-import org.liquidengine.legui.theme.colored.def.FlatScrollablePanelTheme;
-import org.liquidengine.legui.theme.colored.def.FlatSelectBoxElementTheme;
-import org.liquidengine.legui.theme.colored.def.FlatSelectBoxScrollablePanelTheme;
-import org.liquidengine.legui.theme.colored.def.FlatSelectBoxTheme;
-import org.liquidengine.legui.theme.colored.def.FlatSliderTheme;
-import org.liquidengine.legui.theme.colored.def.FlatTextAreaFieldTheme;
-import org.liquidengine.legui.theme.colored.def.FlatTextAreaTheme;
-import org.liquidengine.legui.theme.colored.def.FlatTextInputTheme;
-import org.liquidengine.legui.theme.colored.def.FlatToggleButtonTheme;
-import org.liquidengine.legui.theme.colored.def.FlatTooltipTheme;
-import org.liquidengine.legui.theme.colored.def.FlatWidgetTheme;
+import org.liquidengine.legui.theme.colored.def.*;
 
 /**
  * Dark Theme. Used to change theme of components to dark.
@@ -60,12 +25,14 @@ public class FlatColoredTheme extends Theme {
      * @param allowColor allow color.
      * @param denyColor deny color.
      * @param shadowColor shadow color.
+     * @param textColor text color.
      */
     public FlatColoredTheme(
         Vector4f backgroundColor, Vector4f borderColor, Vector4f strokeColor,
-        Vector4f allowColor, Vector4f denyColor, Vector4f shadowColor
+        Vector4f allowColor, Vector4f denyColor, Vector4f shadowColor, Vector4f textColor
                            ) {
-        super(createThemeManager(new FlatColoredThemeSettings(backgroundColor, borderColor, strokeColor, allowColor, denyColor, shadowColor)));
+        super(createThemeManager(new FlatColoredThemeSettings(backgroundColor, borderColor, borderColor, strokeColor,
+                                                              allowColor, denyColor, shadowColor, textColor, FontRegistry.getDefaultFont(), 16f)));
     }
 
     /**
@@ -78,18 +45,44 @@ public class FlatColoredTheme extends Theme {
      * @param allowColor allow color.
      * @param denyColor deny color.
      * @param shadowColor shadow color.
+     * @param textColor text color.
      */
     public FlatColoredTheme(
         Vector4f backgroundColor, Vector4f borderColor, Vector4f sliderColor, Vector4f strokeColor,
-        Vector4f allowColor, Vector4f denyColor, Vector4f shadowColor
+        Vector4f allowColor, Vector4f denyColor, Vector4f shadowColor, Vector4f textColor
                            ) {
-        super(createThemeManager(new FlatColoredThemeSettings(backgroundColor, borderColor,sliderColor, strokeColor, allowColor, denyColor, shadowColor)));
+        super(createThemeManager(
+            new FlatColoredThemeSettings(backgroundColor, borderColor, sliderColor,
+                                         strokeColor, allowColor, denyColor, shadowColor, textColor, FontRegistry.getDefaultFont(), 16f)));
+    }
+
+    /**
+     * Used to create theme instance.
+     *
+     * @param backgroundColor background color.
+     * @param borderColor border color.
+     * @param sliderColor slider color.
+     * @param strokeColor stroke color.
+     * @param allowColor allow color.
+     * @param denyColor deny color.
+     * @param shadowColor shadow color.
+     * @param textColor text color.
+     * @param fontSize font size.
+     */
+    public FlatColoredTheme(
+        Vector4f backgroundColor, Vector4f borderColor, Vector4f sliderColor, Vector4f strokeColor,
+        Vector4f allowColor, Vector4f denyColor, Vector4f shadowColor, Vector4f textColor, String font, Float fontSize
+                           ) {
+        super(createThemeManager(
+            new FlatColoredThemeSettings(backgroundColor, borderColor, sliderColor,
+                                         strokeColor, allowColor, denyColor, shadowColor, textColor, font, fontSize)));
     }
 
     /**
      * Used to initialize theme manager.
      *
      * @param settings settings to use by components theme.
+     *
      * @return initialized theme manager.
      */
     private static ThemeManager createThemeManager(FlatColoredThemeSettings settings) {
@@ -111,7 +104,7 @@ public class FlatColoredTheme extends Theme {
         m.setComponentTheme(CheckBox.class, new FlatCheckBoxTheme<>());
         m.setComponentTheme(Component.class, new FlatComponentTheme<>());
         m.setComponentTheme(Label.class, new FlatLabelTheme<>());
-        m.setComponentTheme(LayerContainer.class, new FlatLayerContainerTheme<>());
+        m.setComponentTheme(Layer.class, new FlatLayerTheme<>());
         m.setComponentTheme(ProgressBar.class, new FlatProgressBarTheme<>());
         m.setComponentTheme(ScrollablePanel.class, new FlatScrollablePanelTheme<>());
         m.setComponentTheme(RadioButton.class, new FlatRadioButtonTheme<>());
@@ -163,6 +156,15 @@ public class FlatColoredTheme extends Theme {
          * Shadow color.
          */
         private final Vector4f shadowColor;
+        /**
+         * Font color.
+         */
+        private final Vector4f textColor;
+        private final String font;
+        /**
+         * Font size
+         */
+        private final Float fontSize;
 
         /**
          * Used to create theme settings instance.
@@ -174,10 +176,12 @@ public class FlatColoredTheme extends Theme {
          * @param allowColor allow color.
          * @param denyColor deny color.
          * @param shadowColor shadow color.
+         * @param textColor text color.
+         * @param fontSize font size.
          */
         public FlatColoredThemeSettings(
             Vector4f backgroundColor, Vector4f borderColor, Vector4f sliderColor, Vector4f strokeColor,
-            Vector4f allowColor, Vector4f denyColor, Vector4f shadowColor
+            Vector4f allowColor, Vector4f denyColor, Vector4f shadowColor, Vector4f textColor, String font, Float fontSize
                                        ) {
             this.backgroundColor = backgroundColor;
             this.borderColor = borderColor;
@@ -186,6 +190,9 @@ public class FlatColoredTheme extends Theme {
             this.strokeColor = strokeColor;
             this.denyColor = denyColor;
             this.shadowColor = shadowColor;
+            this.textColor = textColor;
+            this.font = font;
+            this.fontSize = fontSize;
         }
 
         /**
@@ -202,7 +209,9 @@ public class FlatColoredTheme extends Theme {
             Vector4f backgroundColor, Vector4f borderColor, Vector4f strokeColor,
             Vector4f allowColor, Vector4f denyColor, Vector4f shadowColor
                                        ) {
-            this(backgroundColor, borderColor, borderColor, strokeColor, allowColor, denyColor, shadowColor);
+            this(backgroundColor, borderColor, borderColor,
+                 strokeColor, allowColor, denyColor,
+                 shadowColor, borderColor, FontRegistry.getDefaultFont(), 16f);
         }
 
         /**
@@ -267,6 +276,18 @@ public class FlatColoredTheme extends Theme {
          */
         public Vector4f shadowColor() {
             return shadowColor == null ? null : new Vector4f(shadowColor);
+        }
+
+        public String font() {
+            return font;
+        }
+
+        public Float fontSize() {
+            return fontSize;
+        }
+
+        public Vector4f textColor() {
+            return textColor == null ? null : new Vector4f(textColor);
         }
     }
 

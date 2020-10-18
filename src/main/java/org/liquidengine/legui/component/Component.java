@@ -1,17 +1,5 @@
 package org.liquidengine.legui.component;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.function.Consumer;
-import java.util.function.Predicate;
-import java.util.stream.Stream;
-
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -19,13 +7,23 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 import org.liquidengine.legui.component.misc.listener.component.TabKeyEventListener;
 import org.liquidengine.legui.component.misc.listener.component.TooltipCursorEnterListener;
+import org.liquidengine.legui.event.AddChildEvent;
 import org.liquidengine.legui.event.CursorEnterEvent;
 import org.liquidengine.legui.event.KeyEvent;
+import org.liquidengine.legui.event.RemoveChildEvent;
 import org.liquidengine.legui.intersection.Intersector;
 import org.liquidengine.legui.intersection.RectangleIntersector;
 import org.liquidengine.legui.listener.ListenerMap;
+import org.liquidengine.legui.listener.processor.EventProcessorProvider;
 import org.liquidengine.legui.style.Style;
 import org.liquidengine.legui.theme.Themes;
+
+import java.io.Serializable;
+import java.util.*;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
+import java.util.stream.Stream;
 
 /**
  * Component is an object that have graphical representation in legui system.
@@ -37,7 +35,23 @@ public abstract class Component implements Serializable {
     /**
      * Metadata map, place where renderers or event processors can store state of component.
      */
-    private Map<String, Object> metadata = new HashMap<>();
+    private final Map<String, Object> metadata = new HashMap<>();
+    /**
+     * Component style.
+     */
+    private final Style hoveredStyle = new Style();
+    /**
+     * Component style.
+     */
+    private final Style focusedStyle = new Style();
+    /**
+     * Component style.
+     */
+    private final Style pressedStyle = new Style();
+    /**
+     * List of child components.
+     */
+    private final List<Component> childComponents = new CopyOnWriteArrayList<>();
     /**
      * Parent component container. For root components it could be null.
      */
@@ -56,7 +70,6 @@ public abstract class Component implements Serializable {
      * Size of component.
      */
     private Vector2f size = new Vector2f();
-
     /**
      * Used to enable and disable event processing for this component. If enabled==false then component won't receive events.
      */
@@ -77,52 +90,32 @@ public abstract class Component implements Serializable {
      * Determines whether this component pressed or not (Mouse button is down and on this component).
      */
     private boolean pressed;
+
+    ////////////////////////////////
+    //// CONTAINER BASE DATA
+    ////////////////////////////////
     /**
      * Tooltip.
      */
     private Tooltip tooltip;
-
     /**
      * Tab index. Used to switch between components using tab key.
      */
     private int tabIndex;
-
     /**
      * Show if component can be focused by tabbing.
      */
     private boolean tabFocusable = true;
-
     /**
      * Show if component can be focused.
      * <br><b>Note! You should take in consideration that component that marked as non-focusable will not receive any events.
      * In fact this could be used to organize elements using containers.</b>
      */
     private boolean focusable = true;
-
-    ////////////////////////////////
-    //// CONTAINER BASE DATA
-    ////////////////////////////////
-
     /**
      * Component style.
      */
     private Style style = new Style();
-    /**
-     * Component style.
-     */
-    private Style hoveredStyle = new Style();
-    /**
-     * Component style.
-     */
-    private Style focusedStyle = new Style();
-    /**
-     * Component style.
-     */
-    private Style pressedStyle = new Style();
-    /**
-     * List of child components.
-     */
-    private List<Component> childComponents = new CopyOnWriteArrayList<>();
 
     /**
      * Default constructor. Used to create component instance without any parameters.
@@ -602,10 +595,18 @@ public abstract class Component implements Serializable {
             return false;
         }
         boolean added = childComponents.add(component);
-        if (added) {
-            changeParent(component);
-        }
+        changeParent(component);
+        EventProcessorProvider.getInstance().pushEvent(new AddChildEvent<>(this, component));
         return added;
+    }
+
+    public void add(int index, Component component) {
+        if (component == null || component == this || isContains(component)) {
+            return;
+        }
+        childComponents.add(index, component);
+        changeParent(component);
+        EventProcessorProvider.getInstance().pushEvent(new AddChildEvent<>(this, component));
     }
 
     /**
@@ -657,13 +658,21 @@ public abstract class Component implements Serializable {
             Component p = component.getParent();
             if (p == this && isContains(component)) {
                 boolean removed = childComponents.remove(component);
-                if (removed) {
-                    component.setParent(null);
-                }
+                component.setParent(null);
+                EventProcessorProvider.getInstance().pushEvent(new RemoveChildEvent<>(this, component));
                 return removed;
             }
         }
         return false;
+    }
+
+    public Component remove(int index) {
+        Component component = childComponents.remove(index);
+        if (component != null) {
+            component.setParent(null);
+            EventProcessorProvider.getInstance().pushEvent(new RemoveChildEvent<>(this, component));
+        }
+        return component;
     }
 
     /**
@@ -768,7 +777,6 @@ public abstract class Component implements Serializable {
                 .append(this.isHovered(), component.isHovered())
                 .append(this.isFocused(), component.isFocused())
                 .append(this.isPressed(), component.isPressed())
-                .append(this.getListenerMap(), component.getListenerMap())
                 .append(this.getPosition(), component.getPosition())
                 .append(this.getSize(), component.getSize())
                 .append(this.getIntersector(), component.getIntersector())
@@ -782,7 +790,6 @@ public abstract class Component implements Serializable {
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
-                .append(listenerMap)
                 .append(position)
                 .append(size)
                 .append(enabled)
@@ -800,7 +807,6 @@ public abstract class Component implements Serializable {
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("listenerMap", listenerMap)
                 .append("position", position)
                 .append("size", size)
                 .append("enabled", enabled)
@@ -814,4 +820,18 @@ public abstract class Component implements Serializable {
                 .toString();
     }
 
+    public int indexOfChild(Component component) {
+        return childComponents.indexOf(component);
+    }
+
+    public Layer getLayer() {
+        if (parent == null) {
+            return null;
+        }
+        return parent instanceof Layer ? (Layer) parent : parent.getLayer();
+    }
+
+    public Frame getFrame() {
+        return parent == null ? null : parent.getFrame();
+    }
 }

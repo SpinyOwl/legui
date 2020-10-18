@@ -1,13 +1,13 @@
 package org.liquidengine.legui.component.misc.listener.selectbox;
 
-import static org.liquidengine.legui.event.MouseClickEvent.MouseClickAction.CLICK;
-
 import org.joml.Vector2f;
 import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.component.SelectBox;
 import org.liquidengine.legui.component.SelectBoxLayer;
 import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.listener.MouseClickEventListener;
+
+import static org.liquidengine.legui.event.MouseClickEvent.MouseClickAction.CLICK;
 
 /**
  * Default mouse click listener for selectbox.
@@ -32,17 +32,12 @@ public class SelectBoxClickListener<T> implements MouseClickEventListener {
             box.setCollapsed(!collapsed);
             if (collapsed) {
                 Vector2f layerSize = new Vector2f(frame.getContainer().getSize());
-                selectBoxLayer.getContainer().setSize(layerSize);
+                selectBoxLayer.setSize(layerSize);
 
                 frame.addLayer(selectBoxLayer);
             } else {
                 frame.removeLayer(selectBoxLayer);
             }
         }
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        return obj != null && (obj == this || obj.getClass() == this.getClass());
     }
 }

@@ -1,50 +1,8 @@
 package org.liquidengine.legui.system.context;
 
-import org.liquidengine.cbchain.IChainCharCallback;
-import org.liquidengine.cbchain.IChainCharModsCallback;
-import org.liquidengine.cbchain.IChainCursorEnterCallback;
-import org.liquidengine.cbchain.IChainCursorPosCallback;
-import org.liquidengine.cbchain.IChainDropCallback;
-import org.liquidengine.cbchain.IChainFramebufferSizeCallback;
-import org.liquidengine.cbchain.IChainKeyCallback;
-import org.liquidengine.cbchain.IChainMouseButtonCallback;
-import org.liquidengine.cbchain.IChainScrollCallback;
-import org.liquidengine.cbchain.IChainWindowCloseCallback;
-import org.liquidengine.cbchain.IChainWindowFocusCallback;
-import org.liquidengine.cbchain.IChainWindowIconifyCallback;
-import org.liquidengine.cbchain.IChainWindowPosCallback;
-import org.liquidengine.cbchain.IChainWindowRefreshCallback;
-import org.liquidengine.cbchain.IChainWindowSizeCallback;
-import org.liquidengine.cbchain.impl.ChainCharCallback;
-import org.liquidengine.cbchain.impl.ChainCharModsCallback;
-import org.liquidengine.cbchain.impl.ChainCursorEnterCallback;
-import org.liquidengine.cbchain.impl.ChainCursorPosCallback;
-import org.liquidengine.cbchain.impl.ChainDropCallback;
-import org.liquidengine.cbchain.impl.ChainFramebufferSizeCallback;
-import org.liquidengine.cbchain.impl.ChainKeyCallback;
-import org.liquidengine.cbchain.impl.ChainMouseButtonCallback;
-import org.liquidengine.cbchain.impl.ChainScrollCallback;
-import org.liquidengine.cbchain.impl.ChainWindowCloseCallback;
-import org.liquidengine.cbchain.impl.ChainWindowFocusCallback;
-import org.liquidengine.cbchain.impl.ChainWindowIconifyCallback;
-import org.liquidengine.cbchain.impl.ChainWindowPosCallback;
-import org.liquidengine.cbchain.impl.ChainWindowRefreshCallback;
-import org.liquidengine.cbchain.impl.ChainWindowSizeCallback;
-import org.lwjgl.glfw.GLFWCharCallbackI;
-import org.lwjgl.glfw.GLFWCharModsCallbackI;
-import org.lwjgl.glfw.GLFWCursorEnterCallbackI;
-import org.lwjgl.glfw.GLFWCursorPosCallbackI;
-import org.lwjgl.glfw.GLFWDropCallbackI;
-import org.lwjgl.glfw.GLFWFramebufferSizeCallbackI;
-import org.lwjgl.glfw.GLFWKeyCallbackI;
-import org.lwjgl.glfw.GLFWMouseButtonCallbackI;
-import org.lwjgl.glfw.GLFWScrollCallbackI;
-import org.lwjgl.glfw.GLFWWindowCloseCallbackI;
-import org.lwjgl.glfw.GLFWWindowFocusCallbackI;
-import org.lwjgl.glfw.GLFWWindowIconifyCallbackI;
-import org.lwjgl.glfw.GLFWWindowPosCallbackI;
-import org.lwjgl.glfw.GLFWWindowRefreshCallbackI;
-import org.lwjgl.glfw.GLFWWindowSizeCallbackI;
+import org.liquidengine.cbchain.*;
+import org.liquidengine.cbchain.impl.*;
+import org.lwjgl.glfw.*;
 
 /**
  * Used to hold all callbacks for specified window.

@@ -1,21 +1,20 @@
 package org.liquidengine.legui.component.misc.listener.scrollablepanel;
 
+import org.joml.Vector2f;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.ScrollablePanel;
-import org.liquidengine.legui.component.TextArea;
 import org.liquidengine.legui.event.ScrollEvent;
 import org.liquidengine.legui.input.Mouse;
-import org.liquidengine.legui.listener.EventListener;
-import org.liquidengine.legui.system.handler.SehUtil;
+import org.liquidengine.legui.listener.ScrollEventListener;
 
-import java.util.ArrayList;
-
+import static org.liquidengine.legui.component.misc.listener.EventUtils.hasScrollableInChildComponentsUnderCursor;
+import static org.liquidengine.legui.component.misc.listener.EventUtils.hasViewportsInAboveLayersUnderCursor;
 import static org.liquidengine.legui.component.misc.listener.scrollbar.ScrollBarHelper.updateScrollBarValue;
 
 /**
  * Created by ShchAlexander on 23.07.2017.
  */
-public class ScrollablePanelViewportScrollListener implements EventListener<ScrollEvent> {
+public class ScrollablePanelViewportScrollListener implements ScrollEventListener {
 
     /**
      * Used to handle specific event.
@@ -24,15 +23,13 @@ public class ScrollablePanelViewportScrollListener implements EventListener<Scro
      */
     @Override
     public void process(ScrollEvent event) {
-        ArrayList<Component> targetList = new ArrayList<>();
-        SehUtil.recursiveTargetComponentListSearch(Mouse.getCursorPosition(), event.getTargetComponent(), targetList);
-        for (Component component : targetList) {
-            if ((component instanceof TextArea) || (component instanceof ScrollablePanel)) {
-                return;
-            }
-        }
+        Vector2f cursorPosition = Mouse.getCursorPosition();
+        Component targetComponent = event.getTargetComponent();
 
-        ScrollablePanel scrollablePanel = (ScrollablePanel) event.getTargetComponent().getParent();
+        if (hasViewportsInAboveLayersUnderCursor(targetComponent, cursorPosition)) return;
+        if (hasScrollableInChildComponentsUnderCursor(targetComponent, cursorPosition)) return;
+
+        ScrollablePanel scrollablePanel = (ScrollablePanel) targetComponent.getParent();
 
         if (Math.abs(event.getYoffset()) > 0)
             updateScrollBarValue(event.getYoffset(), event.getContext(), event.getFrame(), scrollablePanel.getVerticalScrollBar());
@@ -40,8 +37,4 @@ public class ScrollablePanelViewportScrollListener implements EventListener<Scro
             updateScrollBarValue(event.getXoffset(), event.getContext(), event.getFrame(), scrollablePanel.getHorizontalScrollBar());
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        return obj != null && (obj == this || obj.getClass() == this.getClass());
-    }
 }

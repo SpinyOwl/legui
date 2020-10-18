@@ -3,7 +3,6 @@ package org.liquidengine.legui.component.misc.listener.widget;
 import org.joml.Vector2f;
 import org.liquidengine.legui.component.Button;
 import org.liquidengine.legui.component.Widget;
-import org.liquidengine.legui.component.event.component.ChangePositionEvent;
 import org.liquidengine.legui.component.event.component.ChangeSizeEvent;
 import org.liquidengine.legui.event.MouseDragEvent;
 import org.liquidengine.legui.input.Mouse;

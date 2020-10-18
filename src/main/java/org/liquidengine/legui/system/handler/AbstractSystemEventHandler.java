@@ -1,12 +1,13 @@
 package org.liquidengine.legui.system.handler;
 
-import java.util.Collections;
-import java.util.List;
 import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.component.Layer;
 import org.liquidengine.legui.event.Event;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.event.SystemEvent;
+
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Abstract handler for {@link SystemEvent}s. Used to handle events and transform them to UI events (Subclasses of {@link Event}).
@@ -27,7 +28,7 @@ public abstract class AbstractSystemEventHandler<E extends SystemEvent> implemen
         Collections.reverse(layers);
         for (Layer layer : layers) {
             if (layer.isEventReceivable()) {
-                if (!layer.getContainer().isVisible() || !layer.getContainer().isEnabled()) {
+                if (!layer.isVisible() || !layer.isEnabled()) {
                     continue;
                 }
                 if (handle(event, layer, context, frame)) {

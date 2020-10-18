@@ -1,5 +1,0 @@
-<class-binding xmlns="binding.legui.liquidengine.org"
-    for="org.liquidengine.legui.component.Label" to="label" default="true"
-    inherit="org/liquidengine/legui/binding/component/Component.xml">
-    <bind field="textState" to="textState"/>
-</class-binding>

@@ -1,7 +1,5 @@
 package org.liquidengine.legui.system.renderer.nvg;
 
-import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.NVG_CONTEXT;
-
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.style.border.SimpleLineBorder;
 import org.liquidengine.legui.style.color.ColorConstants;
@@ -9,6 +7,8 @@ import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.ComponentRenderer;
 import org.liquidengine.legui.system.renderer.nvg.border.NvgSimpleLineBorderRenderer;
 import org.liquidengine.legui.util.Utilites;
+
+import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.NVG_CONTEXT;
 
 /**
  * The base NanoVG component renderer.

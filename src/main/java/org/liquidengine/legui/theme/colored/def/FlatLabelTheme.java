@@ -1,9 +1,6 @@
 package org.liquidengine.legui.theme.colored.def;
 
 import org.liquidengine.legui.component.Label;
-import org.liquidengine.legui.component.optional.align.HorizontalAlign;
-import org.liquidengine.legui.style.color.ColorConstants;
-import org.liquidengine.legui.style.color.ColorUtil;
 import org.liquidengine.legui.theme.colored.FlatColoredTheme.FlatColoredThemeSettings;
 
 /**
@@ -31,7 +28,5 @@ public class FlatLabelTheme<T extends Label> extends FlatBorderlessTheme<T> {
     @Override
     public void apply(T component) {
         super.apply(component);
-        component.getTextState().setTextColor(ColorUtil.oppositeBlackOrWhite(settings.backgroundColor()));
-        component.getTextState().setHorizontalAlign(HorizontalAlign.LEFT);
     }
 }

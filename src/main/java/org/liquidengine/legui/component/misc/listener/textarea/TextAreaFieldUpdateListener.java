@@ -14,11 +14,12 @@ import static org.liquidengine.legui.style.util.StyleUtilities.getPadding;
 
 
 /**
+ * Used to update text area field sizes according to changes in text area field.
  * Created by ShchAlexander on 17.07.2018.
  */
 public class TextAreaFieldUpdateListener implements TextAreaFieldUpdateEventListener {
 
-    private TextArea textArea;
+    private final TextArea textArea;
 
     public TextAreaFieldUpdateListener(TextArea textArea) {
         this.textArea = textArea;
@@ -32,7 +33,6 @@ public class TextAreaFieldUpdateListener implements TextAreaFieldUpdateEventList
         Vector4f padding = getPadding(textAreaField, textAreaField.getStyle());
         if (parent instanceof TextAreaViewport) {
             TextAreaViewport textAreaViewport = (TextAreaViewport) parent;
-
 
             float maxTextWidth = Math.max(
                 textAreaField.getMaxTextWidth() + padding.x + padding.z,
@@ -53,7 +53,7 @@ public class TextAreaFieldUpdateListener implements TextAreaFieldUpdateEventList
 
     private void updateHorizontalOffset(TextAreaField textAreaField, Vector2f absolutePosition, float paddingLeft) {
         ScrollBar horizontalScrollBar = textArea.getHorizontalScrollBar();
-        float caretX = textAreaField.getCaretX() - absolutePosition.x - paddingLeft;
+        float caretX = (textAreaField.getCaretX() == null ? 0 : textAreaField.getCaretX()) - absolutePosition.x - paddingLeft;
         float maxTextWidth = textAreaField.getMaxTextWidth();
 
         float newVal = 0;
@@ -76,7 +76,7 @@ public class TextAreaFieldUpdateListener implements TextAreaFieldUpdateEventList
 
     private void updateVerticalOffset(TextAreaField textAreaField, Vector2f absolutePosition, float paddingTop) {
         ScrollBar verticalScrollbar = textArea.getVerticalScrollBar();
-        float caretY = textAreaField.getCaretY() - absolutePosition.y - paddingTop;
+        float caretY = (textAreaField.getCaretY() == null ? 0 : textAreaField.getCaretY()) - absolutePosition.y - paddingTop;
         float maxTextHeight = textAreaField.getMaxTextHeight();
 
         float newVal = 0;
@@ -85,8 +85,8 @@ public class TextAreaFieldUpdateListener implements TextAreaFieldUpdateEventList
         float minValue = verticalScrollbar.getMinValue();
         float valueRange = verticalScrollbar.getMaxValue() - verticalScrollbar.getMinValue();
 
-        if (maxTextHeight != textAreaField.getTextState().getFontSize()) {
-            newVal = valueRange * caretY / (maxTextHeight - textAreaField.getTextState().getFontSize());
+        if (maxTextHeight != textAreaField.getStyle().getFontSize()) {
+            newVal = valueRange * caretY / (maxTextHeight - textAreaField.getStyle().getFontSize());
         }
 
         if (newVal > maxValue) {
@@ -96,11 +96,6 @@ public class TextAreaFieldUpdateListener implements TextAreaFieldUpdateEventList
             newVal = minValue;
         }
         verticalScrollbar.setCurValue(newVal);
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        return obj != null && (obj == this || obj.getClass() == this.getClass());
     }
 
 }

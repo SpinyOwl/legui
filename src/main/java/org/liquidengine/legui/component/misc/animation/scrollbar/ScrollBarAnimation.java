@@ -1,11 +1,12 @@
 package org.liquidengine.legui.component.misc.animation.scrollbar;
 
-import java.lang.ref.WeakReference;
 import org.joml.Vector2f;
 import org.liquidengine.legui.animation.Animation;
 import org.liquidengine.legui.component.ScrollBar;
 import org.liquidengine.legui.component.Viewport;
 import org.liquidengine.legui.component.optional.Orientation;
+
+import java.lang.ref.WeakReference;
 
 /**
  * @author Aliaksandr_Shcherbin.

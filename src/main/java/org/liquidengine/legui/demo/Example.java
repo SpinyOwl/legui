@@ -1,29 +1,5 @@
 package org.liquidengine.legui.demo;
 
-import static org.liquidengine.legui.style.color.ColorUtil.fromInt;
-import static org.lwjgl.glfw.GLFW.GLFW_DONT_CARE;
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_ESCAPE;
-import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
-import static org.lwjgl.glfw.GLFW.glfwCreateWindow;
-import static org.lwjgl.glfw.GLFW.glfwDestroyWindow;
-import static org.lwjgl.glfw.GLFW.glfwGetMonitors;
-import static org.lwjgl.glfw.GLFW.glfwGetVideoMode;
-import static org.lwjgl.glfw.GLFW.glfwInit;
-import static org.lwjgl.glfw.GLFW.glfwMakeContextCurrent;
-import static org.lwjgl.glfw.GLFW.glfwPollEvents;
-import static org.lwjgl.glfw.GLFW.glfwSetWindowMonitor;
-import static org.lwjgl.glfw.GLFW.glfwSetWindowTitle;
-import static org.lwjgl.glfw.GLFW.glfwShowWindow;
-import static org.lwjgl.glfw.GLFW.glfwSwapBuffers;
-import static org.lwjgl.glfw.GLFW.glfwSwapInterval;
-import static org.lwjgl.glfw.GLFW.glfwTerminate;
-import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
-import static org.lwjgl.opengl.GL11.GL_STENCIL_BUFFER_BIT;
-import static org.lwjgl.opengl.GL11.glClear;
-import static org.lwjgl.opengl.GL11.glClearColor;
-import static org.lwjgl.opengl.GL11.glViewport;
-import static org.lwjgl.system.MemoryUtil.NULL;
-
 import org.joml.Vector2i;
 import org.liquidengine.legui.DefaultInitializer;
 import org.liquidengine.legui.animation.Animator;
@@ -32,19 +8,23 @@ import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.event.WindowSizeEvent;
 import org.liquidengine.legui.listener.WindowSizeEventListener;
-import org.liquidengine.legui.style.border.SimpleLineBorder;
 import org.liquidengine.legui.style.color.ColorConstants;
+import org.liquidengine.legui.style.font.FontRegistry;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.layout.LayoutManager;
 import org.liquidengine.legui.system.renderer.Renderer;
 import org.liquidengine.legui.theme.Themes;
 import org.liquidengine.legui.theme.colored.FlatColoredTheme;
-import org.liquidengine.legui.theme.colored.def.FlatComponentTheme;
 import org.lwjgl.PointerBuffer;
 import org.lwjgl.glfw.GLFWKeyCallbackI;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.glfw.GLFWWindowCloseCallbackI;
 import org.lwjgl.opengl.GL;
+
+import static org.liquidengine.legui.style.color.ColorUtil.fromInt;
+import static org.lwjgl.glfw.GLFW.*;
+import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.system.MemoryUtil.NULL;
 
 /**
  * Created by Aliaksandr_Shcherbin on 1/25/2017.
@@ -89,7 +69,10 @@ public class Example {
             fromInt(100, 181, 246, 1), // strokeColor
             fromInt(165, 214, 167, 1), // allowColor
             fromInt(239, 154, 154, 1), // denyColor
-            ColorConstants.transparent() // shadowColor
+            ColorConstants.transparent(), // shadowColor
+            ColorConstants.darkGray(), // text color
+            FontRegistry.getDefaultFont(), // font
+            16f //font size
         ));
 
         // Firstly we need to create frame component for window.
@@ -163,6 +146,13 @@ public class Example {
             // Clear screen
             glClear(GL_COLOR_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
+            // We need to relayout components.
+            if (gui.getGenerateEventsByLayoutManager().isChecked()) {
+                LayoutManager.getInstance().layout(frame, context);
+            } else {
+                LayoutManager.getInstance().layout(frame);
+            }
+
             // render frame
             renderer.render(frame, context);
 
@@ -190,13 +180,6 @@ public class Example {
                 toggleFullscreen = false;
             }
 
-            if(gui.getGenerateEventsByLayoutManager().isChecked()) {
-                // When everything done we need to relayout components.
-                LayoutManager.getInstance().layout(frame, context);
-            } else {
-                LayoutManager.getInstance().layout(frame);
-            }
-
             update();
             updCntr++;
             if (System.currentTimeMillis() >= time + 1000) {
@@ -217,6 +200,9 @@ public class Example {
         if (context != null) {
             Component mouseTargetGui = context.getMouseTargetGui();
             gui.getMouseTargetLabel().getTextState().setText("-> " + (mouseTargetGui == null ? null : mouseTargetGui.getClass().getSimpleName()));
+
+            Component focusedGui = context.getFocusedGui();
+            gui.getFocusedGuiLabel().getTextState().setText("-> " + (focusedGui == null ? null : focusedGui.getClass().getSimpleName()));
         }
     }
 
@@ -225,6 +211,5 @@ public class Example {
         gui.setFocusable(false);
         gui.getListenerMap().addListener(WindowSizeEvent.class, (WindowSizeEventListener) event -> gui.setSize(event.getWidth(), event.getHeight()));
         frame.getContainer().add(gui);
-        frame.getContainer().setFocusable(false);
     }
 }

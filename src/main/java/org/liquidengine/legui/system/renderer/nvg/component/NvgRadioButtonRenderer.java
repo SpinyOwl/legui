@@ -1,17 +1,22 @@
 package org.liquidengine.legui.system.renderer.nvg.component;
 
+import static org.liquidengine.legui.style.util.StyleUtilities.getPadding;
+import static org.liquidengine.legui.style.util.StyleUtilities.getStyle;
+import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderIcon;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.createScissor;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.resetScissor;
+
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.RadioButton;
 import org.liquidengine.legui.component.optional.TextState;
+import org.liquidengine.legui.component.optional.align.HorizontalAlign;
+import org.liquidengine.legui.component.optional.align.VerticalAlign;
 import org.liquidengine.legui.icon.Icon;
+import org.liquidengine.legui.style.Style;
+import org.liquidengine.legui.style.font.FontRegistry;
 import org.liquidengine.legui.system.context.Context;
 import org.liquidengine.legui.system.renderer.nvg.util.NvgText;
-
-import static org.liquidengine.legui.style.util.StyleUtilities.getPadding;
-import static org.liquidengine.legui.system.renderer.nvg.NvgRenderer.renderIcon;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.createScissor;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.resetScissor;
 
 /**
  * Created by ShchAlexander on 11.02.2017.
@@ -23,6 +28,7 @@ public class NvgRadioButtonRenderer extends NvgDefaultComponentRenderer<RadioBut
         createScissor(nanovg, radioButton);
         {
             // default renderer used
+            Style style = radioButton.getStyle();
             Vector2f pos = radioButton.getAbsolutePosition();
             Vector2f size = radioButton.getSize();
 
@@ -31,7 +37,7 @@ public class NvgRadioButtonRenderer extends NvgDefaultComponentRenderer<RadioBut
 
             TextState textState = radioButton.getTextState();
             Icon icon = radioButton.isChecked() ? radioButton.getIconChecked() : radioButton.getIconUnchecked();
-            Vector4f padding = getPadding(radioButton, radioButton.getStyle());
+            Vector4f padding = getPadding(radioButton, style);
             Vector4f pad = new Vector4f(padding.w, padding.x, padding.y, padding.z);
 
             // renderNvg text
@@ -40,7 +46,14 @@ public class NvgRadioButtonRenderer extends NvgDefaultComponentRenderer<RadioBut
             Vector2f textRectPos = new Vector2f(pos.x + iconWidthForUse, pos.y + pad.y);
             Vector2f textRectSize = new Vector2f(size.x - iconWidthForUse - pad.z, size.y - (pad.y + pad.w));
 
-            NvgText.drawTextLineToRect(nanovg, textState, textRectPos, textRectSize, true);
+            Vector4f rect = new Vector4f(textRectPos, textRectSize.x(), textRectSize.y());
+            NvgText.drawTextLineToRect(nanovg, rect, true,
+                    getStyle(radioButton, Style::getHorizontalAlign, HorizontalAlign.LEFT),
+                    getStyle(radioButton, Style::getVerticalAlign, VerticalAlign.MIDDLE),
+                    getStyle(radioButton, Style::getFontSize, 16F),
+                    getStyle(radioButton, Style::getFont, FontRegistry.getDefaultFont()),
+                    textState.getText(),
+                    getStyle(radioButton, Style::getTextColor));
             renderIcon(icon, radioButton, context);
         }
         resetScissor(nanovg);

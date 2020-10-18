@@ -1,6 +1,0 @@
-<class-binding xmlns="binding.legui.liquidengine.org"
-    for="org.liquidengine.legui.component.Layer" to="layer" default="true">
-    <bind field="container" to="container" as="field"/>
-    <bind field="eventPassable"/>
-    <bind field="eventReceivable"/>
-</class-binding>
