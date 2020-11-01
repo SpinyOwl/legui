@@ -20,7 +20,7 @@ import static org.liquidengine.legui.event.MouseClickEvent.MouseClickAction.CLIC
 import static org.liquidengine.legui.event.MouseClickEvent.MouseClickAction.RELEASE;
 
 /**
- * @author Aliaksandr_Shcherbin.
+ * @author ShchAlexander.
  */
 public class MenuLayerDemo extends Demo {
 

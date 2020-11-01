@@ -27,7 +27,7 @@ import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
 /**
- * Created by Aliaksandr_Shcherbin on 1/25/2017.
+ * Created by ShchAlexander on 1/25/2017.
  */
 public class Example {
 

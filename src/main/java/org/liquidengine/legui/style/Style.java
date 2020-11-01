@@ -16,7 +16,7 @@ import static org.liquidengine.legui.style.length.LengthType.pixel;
 /**
  * The type Style.
  *
- * @author Aliaksandr_Shcherbin.
+ * @author ShchAlexander.
  */
 public class Style {
 

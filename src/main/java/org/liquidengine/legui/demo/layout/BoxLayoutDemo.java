@@ -10,7 +10,7 @@ import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.style.flex.FlexStyle.FlexDirection;
 
 /**
- * @author Aliaksandr_Shcherbin.
+ * @author ShchAlexander.
  */
 public class BoxLayoutDemo extends Demo {
 

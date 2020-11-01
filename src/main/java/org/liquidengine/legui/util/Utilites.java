@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Utility class which store some common methods.
  *
- * @author Aliaksandr_Shcherbin.
+ * @author ShchAlexander.
  */
 public final class Utilites {
 

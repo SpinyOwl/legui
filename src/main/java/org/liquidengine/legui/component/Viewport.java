@@ -3,7 +3,7 @@ package org.liquidengine.legui.component;
 import org.joml.Vector2f;
 
 /**
- * @author Aliaksandr_Shcherbin.
+ * @author ShchAlexander.
  */
 public interface Viewport {
 

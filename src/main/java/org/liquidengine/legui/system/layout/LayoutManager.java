@@ -8,7 +8,7 @@ import org.liquidengine.legui.system.context.Context;
 /**
  * Layout manager. Used to layout component and it's child components.
  *
- * @author Aliaksandr_Shcherbin.
+ * @author ShchAlexander.
  */
 public abstract class LayoutManager {
 

@@ -6,7 +6,7 @@ import org.liquidengine.legui.component.ScrollablePanel;
 import org.liquidengine.legui.component.misc.animation.ViewportAnimation;
 
 /**
- * @author Aliaksandr_Shcherbin.
+ * @author ShchAlexander.
  */
 public class ScrollablePanelAnimation extends ViewportAnimation<ScrollablePanel> {
 

@@ -15,7 +15,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * Default layout manager.
  *
- * @author Aliaksandr_Shcherbin.
+ * @author ShchAlexander.
  */
 public class DefaultLayoutManager extends LayoutManager {
 

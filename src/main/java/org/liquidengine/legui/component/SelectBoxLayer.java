@@ -1,7 +1,7 @@
 package org.liquidengine.legui.component;
 
 /**
- * @author Aliaksandr_Shcherbin.
+ * @author ShchAlexander.
  */
 public class SelectBoxLayer extends Layer {
 

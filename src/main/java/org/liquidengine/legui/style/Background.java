@@ -8,7 +8,7 @@ import org.liquidengine.legui.style.color.ColorConstants;
 /**
  * The type Background.
  *
- * @author Aliaksandr_Shcherbin.
+ * @author ShchAlexander.
  */
 public class Background {
 
