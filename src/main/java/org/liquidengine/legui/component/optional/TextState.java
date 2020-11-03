@@ -1,10 +1,11 @@
 package org.liquidengine.legui.component.optional;
 
-import java.util.Objects;
-import java.util.function.BiConsumer;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.io.Serializable;
+import java.util.Objects;
+import java.util.function.BiConsumer;
+import java.util.function.Predicate;
 
 /**
  * Used to hold text state of components.
@@ -52,6 +53,8 @@ public class TextState implements Serializable {
      */
     private BiConsumer<String, String> textSetCallback;
 
+    private Predicate<String> validator;
+
 
     /**
      * Default constructor.
@@ -73,7 +76,7 @@ public class TextState implements Serializable {
      * Used to create TextState with predefined text.
      *
      * @param textSetCallback callback to call some extra functionality after {@link #setText(String)}. Accepts old value as first arg, and new value as the
-     * second arg.
+     *                        second arg.
      */
     public TextState(BiConsumer<String, String> textSetCallback) {
         this("", textSetCallback);
@@ -82,9 +85,9 @@ public class TextState implements Serializable {
     /**
      * Used to create TextState with predefined text.
      *
-     * @param text text to set.
+     * @param text            text to set.
      * @param textSetCallback callback to call some extra functionality after {@link #setText(String)}. Accepts old value as first arg, and new value as the
-     * second arg.
+     *                        second arg.
      */
     public TextState(String text, BiConsumer<String, String> textSetCallback) {
         this.textSetCallback = textSetCallback;
@@ -106,6 +109,10 @@ public class TextState implements Serializable {
      * @param text new text.
      */
     public void setText(String text) {
+        if (validator != null && !validator.test(text)) {
+            return;
+        }
+
         String oldValue = this.text;
         String newValue = text;
 
@@ -126,7 +133,6 @@ public class TextState implements Serializable {
      * Returns text length.
      *
      * @return text length.
-     *
      * @see StringBuffer#length()
      */
     public int length() {
@@ -304,11 +310,11 @@ public class TextState implements Serializable {
         }
         TextState textState = (TextState) o;
         return caretPosition == textState.caretPosition &&
-            mouseCaretPosition == textState.mouseCaretPosition &&
-            startSelectionIndex == textState.startSelectionIndex &&
-            endSelectionIndex == textState.endSelectionIndex &&
-            editable == textState.editable &&
-            Objects.equals(text, textState.text);
+                mouseCaretPosition == textState.mouseCaretPosition &&
+                startSelectionIndex == textState.startSelectionIndex &&
+                endSelectionIndex == textState.endSelectionIndex &&
+                editable == textState.editable &&
+                Objects.equals(text, textState.text);
     }
 
     @Override
@@ -319,12 +325,23 @@ public class TextState implements Serializable {
     @Override
     public String toString() {
         return new ToStringBuilder(this)
-            .append("text", text)
-            .append("caretPosition", caretPosition)
-            .append("mouseCaretPosition", mouseCaretPosition)
-            .append("startSelectionIndex", startSelectionIndex)
-            .append("endSelectionIndex", endSelectionIndex)
-            .append("editable", editable)
-            .toString();
+                .append("text", text)
+                .append("caretPosition", caretPosition)
+                .append("mouseCaretPosition", mouseCaretPosition)
+                .append("startSelectionIndex", startSelectionIndex)
+                .append("endSelectionIndex", endSelectionIndex)
+                .append("editable", editable)
+                .toString();
     }
+
+    public Predicate<String> getValidator() {
+        return validator;
+    }
+
+    public void setValidator(Predicate<String> validator) {
+        this.validator = validator;
+    }
+
+    public static final Predicate<String> INTEGER_VALIDATOR = s -> s.matches("-?\\d+");
+    public static final Predicate<String> NUMBER_VALIDATOR = s -> s.matches("-?\\d+(\\.\\d+)?");
 }
