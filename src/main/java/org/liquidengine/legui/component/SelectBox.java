@@ -600,4 +600,17 @@ public class SelectBox<T> extends Component {
 
     }
 
+    /**
+     * @author ShchAlexander.
+     */
+    public static class SelectBoxLayer extends Layer {
+
+        /**
+         * Default constructor of dialog layer.
+         */
+        public SelectBoxLayer() {
+            setEventPassable(true);
+            setEventReceivable(true);
+        }
+    }
 }

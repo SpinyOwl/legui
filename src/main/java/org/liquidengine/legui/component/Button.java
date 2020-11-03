@@ -1,6 +1,8 @@
 package org.liquidengine.legui.component;
 
+import java.util.Objects;
 import java.util.function.BiConsumer;
+
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -42,9 +44,9 @@ public class Button extends Component implements TextComponent {
     /**
      * Creates a button with default text and specified position and size.
      *
-     * @param x x position in parent.
-     * @param y y position in parent.
-     * @param width width of component.
+     * @param x      x position in parent.
+     * @param y      y position in parent.
+     * @param width  width of component.
      * @param height height of component.
      */
     public Button(float x, float y, float width, float height) {
@@ -55,7 +57,7 @@ public class Button extends Component implements TextComponent {
      * Creates a button with default text and specified position and size.
      *
      * @param position position in parent.
-     * @param size size of component.
+     * @param size     size of component.
      */
     public Button(Vector2f position, Vector2f size) {
         this(DEFAULT_BUTTON_TEXT, position, size);
@@ -73,10 +75,10 @@ public class Button extends Component implements TextComponent {
     /**
      * Creates a button with specified text and specified position and size.
      *
-     * @param text button text.
-     * @param x x position in parent.
-     * @param y y position in parent.
-     * @param width width of component.
+     * @param text   button text.
+     * @param x      x position in parent.
+     * @param y      y position in parent.
+     * @param width  width of component.
      * @param height height of component.
      */
     public Button(String text, float x, float y, float width, float height) {
@@ -87,9 +89,9 @@ public class Button extends Component implements TextComponent {
     /**
      * Creates a button with specified text and specified position and size.
      *
-     * @param text button text.
+     * @param text     button text.
      * @param position position in parent.
-     * @param size size of component.
+     * @param size     size of component.
      */
     public Button(String text, Vector2f position, Vector2f size) {
         super(position, size);
@@ -103,7 +105,7 @@ public class Button extends Component implements TextComponent {
      */
     private void initialize(String text) {
         BiConsumer<String, String> callback = (oldValue, newValue) ->
-            EventProcessorProvider.getInstance().pushEvent(new ButtonContentChangeEvent(this, null, this.getFrame(), oldValue, newValue));
+                EventProcessorProvider.getInstance().pushEvent(new ButtonContentChangeEvent(this, null, this.getFrame(), oldValue, newValue));
         this.textState = new TextState(text, callback);
         getStyle().setHorizontalAlign(HorizontalAlign.CENTER);
         Themes.getDefaultTheme().getThemeManager().getComponentTheme(Button.class).applyAll(this);
@@ -119,6 +121,11 @@ public class Button extends Component implements TextComponent {
     }
 
     @Override
+    public void setTextState(TextState textState) {
+        this.textState = Objects.requireNonNull(textState);
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
@@ -131,24 +138,24 @@ public class Button extends Component implements TextComponent {
         Button button = (Button) o;
 
         return new EqualsBuilder()
-            .appendSuper(super.equals(o))
-            .append(getTextState(), button.getTextState())
-            .isEquals();
+                .appendSuper(super.equals(o))
+                .append(getTextState(), button.getTextState())
+                .isEquals();
     }
 
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
-            .appendSuper(super.hashCode())
-            .append(textState)
-            .toHashCode();
+                .appendSuper(super.hashCode())
+                .append(textState)
+                .toHashCode();
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-            .append("textState", textState)
-            .toString();
+                .append("textState", textState)
+                .toString();
     }
 
     public TextDirection getTextDirection() {

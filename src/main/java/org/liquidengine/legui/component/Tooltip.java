@@ -8,6 +8,8 @@ import org.joml.Vector2f;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.theme.Themes;
 
+import java.util.Objects;
+
 /**
  * Created by ShchAlexander on 1/24/2017.
  */
@@ -50,6 +52,11 @@ public class Tooltip extends Component implements TextComponent {
      */
     public TextState getTextState() {
         return textState;
+    }
+
+    @Override
+    public void setTextState(TextState textState) {
+        this.textState = Objects.requireNonNull(textState);
     }
 
     /**

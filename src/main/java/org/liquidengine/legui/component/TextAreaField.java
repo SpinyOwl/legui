@@ -12,6 +12,8 @@ import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.event.*;
 import org.liquidengine.legui.theme.Themes;
 
+import java.util.Objects;
+
 /**
  * TextAreaField is multiline text component which allow to enter text.
  */
@@ -124,6 +126,11 @@ public class TextAreaField extends Component implements TextComponent {
      */
     public TextState getTextState() {
         return textState;
+    }
+
+    @Override
+    public void setTextState(TextState textState) {
+        this.textState = Objects.requireNonNull(textState);
     }
 
     /**

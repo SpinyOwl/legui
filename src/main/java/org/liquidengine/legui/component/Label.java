@@ -125,6 +125,10 @@ public class Label extends Component implements TextComponent {
         return textState;
     }
 
+    @Override
+    public void setTextState(TextState textState) {
+        this.textState = Objects.requireNonNull(textState);
+    }
 
     public TextDirection getTextDirection() {
         return textDirection;

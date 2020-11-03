@@ -3,7 +3,6 @@ package org.liquidengine.legui.component.misc.listener.selectbox;
 import org.joml.Vector2f;
 import org.liquidengine.legui.component.Frame;
 import org.liquidengine.legui.component.SelectBox;
-import org.liquidengine.legui.component.SelectBoxLayer;
 import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.listener.MouseClickEventListener;
 
@@ -27,7 +26,7 @@ public class SelectBoxClickListener<T> implements MouseClickEventListener {
         SelectBox<T> box = selectBox;
         if (event.getAction() == CLICK) {
             Frame frame = event.getFrame();
-            SelectBoxLayer selectBoxLayer = box.getSelectBoxLayer();
+            SelectBox.SelectBoxLayer selectBoxLayer = box.getSelectBoxLayer();
             boolean collapsed = box.isCollapsed();
             box.setCollapsed(!collapsed);
             if (collapsed) {
