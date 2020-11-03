@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 import static org.liquidengine.legui.system.layout.flex.FlexUtils.*;
 
 /**
- * @author Aliaksandr_Shcherbin.
+ * @author ShchAlexander.
  */
 public class FlexLayout implements Layout {
 

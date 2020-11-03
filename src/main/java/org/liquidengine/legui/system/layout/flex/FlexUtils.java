@@ -14,7 +14,7 @@ import static org.liquidengine.legui.style.length.LengthType.PERCENT;
 import static org.liquidengine.legui.style.length.LengthType.PIXEL;
 
 /**
- * @author Aliaksandr_Shcherbin.
+ * @author ShchAlexander.
  */
 final class FlexUtils {
 

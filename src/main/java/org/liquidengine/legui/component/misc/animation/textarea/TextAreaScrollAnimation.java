@@ -6,7 +6,7 @@ import org.liquidengine.legui.component.TextArea;
 import org.liquidengine.legui.component.misc.animation.ViewportAnimation;
 
 /**
- * @author Aliaksandr_Shcherbin.
+ * @author ShchAlexander.
  */
 public class TextAreaScrollAnimation extends ViewportAnimation<TextArea> {
 

@@ -9,7 +9,7 @@ import org.liquidengine.legui.component.optional.Orientation;
 import java.lang.ref.WeakReference;
 
 /**
- * @author Aliaksandr_Shcherbin.
+ * @author ShchAlexander.
  */
 public class ScrollBarAnimation extends Animation {
 

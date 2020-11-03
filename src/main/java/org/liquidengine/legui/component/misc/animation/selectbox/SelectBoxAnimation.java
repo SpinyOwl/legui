@@ -8,7 +8,7 @@ import org.liquidengine.legui.component.SelectBox.SelectBoxScrollablePanel;
 import java.lang.ref.WeakReference;
 
 /**
- * @author Aliaksandr_Shcherbin.
+ * @author ShchAlexander.
  */
 public class SelectBoxAnimation extends Animation {
 

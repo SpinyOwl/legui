@@ -18,6 +18,7 @@ import org.liquidengine.legui.listener.EventListener;
 import org.liquidengine.legui.theme.Themes;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Text input is a single line text component which can be used to enter text.
@@ -224,6 +225,11 @@ public class TextInput extends Component implements TextComponent {
      */
     public TextState getTextState() {
         return textState;
+    }
+
+    @Override
+    public void setTextState(TextState textState) {
+        this.textState = Objects.requireNonNull(textState);
     }
 
     /**

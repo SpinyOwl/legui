@@ -18,6 +18,8 @@ import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.style.length.Length;
 import org.liquidengine.legui.theme.Themes;
 
+import java.util.Objects;
+
 import static org.liquidengine.legui.style.length.LengthType.pixel;
 
 /**
@@ -312,6 +314,11 @@ public class TextArea extends Component implements TextComponent, Viewport {
     @Override
     public TextState getTextState() {
         return textAreaField.getTextState();
+    }
+
+    @Override
+    public void setTextState(TextState textState) {
+        this.textAreaField.setTextState(textState);
     }
 
     /**

@@ -4,6 +4,9 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.joml.Vector2f;
+import org.liquidengine.legui.component.optional.TextState;
+
+import java.util.Objects;
 
 /**
  * This component used to enter passwords securely by users.
@@ -150,5 +153,10 @@ public class PasswordInput extends TextInput {
             .append(maskCharacter)
             .append(masked)
             .toHashCode();
+    }
+
+    @Override
+    public void setTextState(TextState textState) {
+        this.textState = Objects.requireNonNull(textState);
     }
 }

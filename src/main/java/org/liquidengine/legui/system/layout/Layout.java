@@ -9,7 +9,7 @@ import org.liquidengine.legui.system.context.Context;
 /**
  * Layout interface.
  *
- * @author Aliaksandr_Shcherbin.
+ * @author ShchAlexander.
  */
 public interface Layout {
 
