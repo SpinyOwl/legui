@@ -1,8 +1,5 @@
 package org.liquidengine.legui.component;
 
-import java.util.Objects;
-import java.util.function.BiConsumer;
-
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -11,9 +8,11 @@ import org.joml.Vector2f;
 import org.liquidengine.legui.component.event.button.ButtonContentChangeEvent;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
-import org.liquidengine.legui.style.font.TextDirection;
 import org.liquidengine.legui.listener.processor.EventProcessorProvider;
+import org.liquidengine.legui.style.font.TextDirection;
 import org.liquidengine.legui.theme.Themes;
+
+import java.util.function.BiConsumer;
 
 /**
  * An implementation of "push" button.
@@ -105,20 +104,6 @@ public class Button extends AbstractTextComponent {
         this.textState = new TextState(text, callback);
         getStyle().setHorizontalAlign(HorizontalAlign.CENTER);
         Themes.getDefaultTheme().getThemeManager().getComponentTheme(Button.class).applyAll(this);
-    }
-
-    /**
-     * Returns text data of button.
-     *
-     * @return text state of button.
-     */
-    public TextState getTextState() {
-        return textState;
-    }
-
-    @Override
-    public void setTextState(TextState textState) {
-        this.textState = Objects.requireNonNull(textState);
     }
 
     @Override

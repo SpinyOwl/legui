@@ -8,8 +8,6 @@ import org.joml.Vector2f;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.theme.Themes;
 
-import java.util.Objects;
-
 /**
  * Created by ShchAlexander on 1/24/2017.
  */
@@ -42,20 +40,6 @@ public class Tooltip extends AbstractTextComponent {
         this.textState = new TextState(text);
 
         Themes.getDefaultTheme().getThemeManager().getComponentTheme(Tooltip.class).applyAll(this);
-    }
-
-    /**
-     * Returns current text state.
-     *
-     * @return text state of component.
-     */
-    public TextState getTextState() {
-        return textState;
-    }
-
-    @Override
-    public void setTextState(TextState textState) {
-        this.textState = Objects.requireNonNull(textState);
     }
 
     /**

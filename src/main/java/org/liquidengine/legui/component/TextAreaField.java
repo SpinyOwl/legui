@@ -20,8 +20,6 @@ import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.event.MouseDragEvent;
 import org.liquidengine.legui.theme.Themes;
 
-import java.util.Objects;
-
 /**
  * TextAreaField is multiline text component which allow to enter text.
  */
@@ -120,20 +118,6 @@ public class TextAreaField extends AbstractTextComponent {
         getListenerMap().addListener(CharEvent.class, new TextAreaFieldCharEventListener());
 
         Themes.getDefaultTheme().getThemeManager().getComponentTheme(TextAreaField.class).applyAll(this);
-    }
-
-    /**
-     * Returns current text state.
-     *
-     * @return text state of component.
-     */
-    public TextState getTextState() {
-        return textState;
-    }
-
-    @Override
-    public void setTextState(TextState textState) {
-        this.textState = Objects.requireNonNull(textState);
     }
 
     /**

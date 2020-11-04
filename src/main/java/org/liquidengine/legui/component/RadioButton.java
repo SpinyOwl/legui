@@ -13,8 +13,6 @@ import org.liquidengine.legui.icon.CharIcon;
 import org.liquidengine.legui.icon.Icon;
 import org.liquidengine.legui.theme.Themes;
 
-import java.util.Objects;
-
 import static org.liquidengine.legui.style.font.FontRegistry.MATERIAL_ICONS_REGULAR;
 
 /**
@@ -218,20 +216,6 @@ public class RadioButton extends AbstractTextComponent {
      */
     public void setIconChecked(Icon iconChecked) {
         this.iconChecked = iconChecked;
-    }
-
-    /**
-     * Returns current text state.
-     *
-     * @return text state of component.
-     */
-    public TextState getTextState() {
-        return textState;
-    }
-
-    @Override
-    public void setTextState(TextState textState) {
-        this.textState = Objects.requireNonNull(textState);
     }
 
     @Override

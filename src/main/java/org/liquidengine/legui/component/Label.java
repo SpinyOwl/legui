@@ -111,20 +111,6 @@ public class Label extends AbstractTextComponent {
         Themes.getDefaultTheme().getThemeManager().getComponentTheme(Label.class).applyAll(this);
     }
 
-    /**
-     * Returns current text state.
-     *
-     * @return text state of component.
-     */
-    public TextState getTextState() {
-        return textState;
-    }
-
-    @Override
-    public void setTextState(TextState textState) {
-        this.textState = Objects.requireNonNull(textState);
-    }
-
     public TextDirection getTextDirection() {
         return textDirection;
     }
