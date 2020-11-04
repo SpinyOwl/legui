@@ -7,7 +7,18 @@ import org.liquidengine.legui.component.optional.TextState;
  */
 public interface TextComponent {
 
+    /**
+     * Returns current text state.
+     *
+     * @return text state of component.
+     */
     TextState getTextState();
 
-    void setTextState(TextState textState);
+    /**
+     * Used to set text state
+     *
+     * @param textState new text state to set.
+     * @throws NullPointerException in case if textState is null.
+     */
+    void setTextState(TextState textState) throws NullPointerException;
 }

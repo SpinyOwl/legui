@@ -24,16 +24,12 @@ import static org.liquidengine.legui.style.font.FontRegistry.MATERIAL_ICONS_REGU
 /**
  * An implementation of a check box -- an item that can be selected or deselected, and which displays its state to the user.
  */
-public class CheckBox extends Component implements TextComponent {
+public class CheckBox extends AbstractTextComponent {
 
     /**
      * Default text for checkbox.
      */
     public static final String DEFAULT_CHECK_BOX_TEXT = "CheckBox";
-    /**
-     * Check box text state.
-     */
-    private TextState textState;
     /**
      * Checkbox state.
      */

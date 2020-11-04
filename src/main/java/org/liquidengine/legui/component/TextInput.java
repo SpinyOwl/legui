@@ -8,7 +8,12 @@ import org.joml.Vector2f;
 import org.liquidengine.legui.component.event.textinput.TextInputContentChangeEvent;
 import org.liquidengine.legui.component.misc.listener.text.CopyTextEventListener;
 import org.liquidengine.legui.component.misc.listener.text.SelectAllTextEventListener;
-import org.liquidengine.legui.component.misc.listener.textinput.*;
+import org.liquidengine.legui.component.misc.listener.textinput.CutTextInputKeyboardEventListener;
+import org.liquidengine.legui.component.misc.listener.textinput.PasteTextInputKeyboardEventListener;
+import org.liquidengine.legui.component.misc.listener.textinput.TextInputCharEventListener;
+import org.liquidengine.legui.component.misc.listener.textinput.TextInputDragEventListener;
+import org.liquidengine.legui.component.misc.listener.textinput.TextInputKeyEventListener;
+import org.liquidengine.legui.component.misc.listener.textinput.TextInputMouseClickEventListener;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.event.CharEvent;
 import org.liquidengine.legui.event.KeyboardEvent;
@@ -23,12 +28,7 @@ import java.util.Objects;
 /**
  * Text input is a single line text component which can be used to enter text.
  */
-public class TextInput extends Component implements TextComponent {
-
-    /**
-     * Used to store text state of text input.
-     */
-    protected TextState textState;
+public class TextInput extends AbstractTextComponent {
 
     /**
      * Default constructor. Used to create component instance without any parameters. <p> Also if you want to make it easy to use with Json

@@ -7,9 +7,17 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 import org.liquidengine.legui.component.misc.listener.text.CopyTextEventListener;
 import org.liquidengine.legui.component.misc.listener.text.SelectAllTextEventListener;
-import org.liquidengine.legui.component.misc.listener.textarea.*;
+import org.liquidengine.legui.component.misc.listener.textarea.CutTextAreaKeyboardEventListener;
+import org.liquidengine.legui.component.misc.listener.textarea.PasteTextAreaKeyboardEventListener;
+import org.liquidengine.legui.component.misc.listener.textarea.TextAreaFieldCharEventListener;
+import org.liquidengine.legui.component.misc.listener.textarea.TextAreaFieldDragEventListener;
+import org.liquidengine.legui.component.misc.listener.textarea.TextAreaFieldKeyEventListener;
+import org.liquidengine.legui.component.misc.listener.textarea.TextAreaFieldMouseClickEventListener;
 import org.liquidengine.legui.component.optional.TextState;
-import org.liquidengine.legui.event.*;
+import org.liquidengine.legui.event.CharEvent;
+import org.liquidengine.legui.event.KeyboardEvent;
+import org.liquidengine.legui.event.MouseClickEvent;
+import org.liquidengine.legui.event.MouseDragEvent;
 import org.liquidengine.legui.theme.Themes;
 
 import java.util.Objects;
@@ -17,12 +25,7 @@ import java.util.Objects;
 /**
  * TextAreaField is multiline text component which allow to enter text.
  */
-public class TextAreaField extends Component implements TextComponent {
-
-    /**
-     * Used to hold text state of text area.
-     */
-    protected TextState textState;
+public class TextAreaField extends AbstractTextComponent {
 
     /**
      * Used to describe size of '\t' symbol in spaces.

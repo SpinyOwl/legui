@@ -13,9 +13,8 @@ import java.util.Objects;
 /**
  * Created by ShchAlexander on 1/24/2017.
  */
-public class Tooltip extends Component implements TextComponent {
+public class Tooltip extends AbstractTextComponent {
 
-    private TextState textState;
     private Component component;
 
     /**
@@ -124,23 +123,23 @@ public class Tooltip extends Component implements TextComponent {
         Tooltip tooltip = (Tooltip) o;
 
         return new EqualsBuilder()
-            .appendSuper(super.equals(o))
-            .append(textState, tooltip.textState)
-            .isEquals();
+                .appendSuper(super.equals(o))
+                .append(textState, tooltip.textState)
+                .isEquals();
     }
 
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
-            .appendSuper(super.hashCode())
-            .append(textState)
-            .toHashCode();
+                .appendSuper(super.hashCode())
+                .append(textState)
+                .toHashCode();
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-            .append("textState", textState)
-            .toString();
+                .append("textState", textState)
+                .toString();
     }
 }

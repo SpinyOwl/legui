@@ -18,16 +18,12 @@ import org.liquidengine.legui.theme.Themes;
 /**
  * An implementation of "push" button.
  */
-public class Button extends Component implements TextComponent {
+public class Button extends AbstractTextComponent {
 
     /**
      * Default text for button component.
      */
     public static final String DEFAULT_BUTTON_TEXT = "Button";
-    /**
-     * Button text state.
-     */
-    private TextState textState;
 
     /**
      * Used to set text direction (vertical, horizontal).

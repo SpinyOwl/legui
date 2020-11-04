@@ -28,16 +28,12 @@ import static org.liquidengine.legui.style.font.FontRegistry.MATERIAL_ICONS_REGU
  * radioButton2.setRadioButtonGroup(radioButtonGroup);
  * }</pre>
  */
-public class RadioButton extends Component implements TextComponent {
+public class RadioButton extends AbstractTextComponent {
 
     /**
      * Default text for radiobutton.
      */
     public static final String DEFAULT_RADIO_BUTTON_TEXT = "RadioButton";
-    /**
-     * Used to represent text state of radio button.
-     */
-    protected TextState textState;
 
     /**
      * Used to render unchecked state of radio button.

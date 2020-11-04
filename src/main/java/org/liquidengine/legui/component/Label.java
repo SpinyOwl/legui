@@ -1,6 +1,5 @@
 package org.liquidengine.legui.component;
 
-import java.util.function.BiConsumer;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -14,21 +13,17 @@ import org.liquidengine.legui.style.font.TextDirection;
 import org.liquidengine.legui.theme.Themes;
 
 import java.util.Objects;
+import java.util.function.BiConsumer;
 
 /**
  * Class represent single line non-editable text component.
  */
-public class Label extends Component implements TextComponent {
+public class Label extends AbstractTextComponent {
 
     /**
      * Default label text.
      */
     public static final String DEFAULT_LABEL_TEXT = "Label";
-
-    /**
-     * Used to hold text state of component.
-     */
-    private TextState textState;
 
     /**
      * Used to set text direction (vertical, horizontal).
@@ -45,9 +40,9 @@ public class Label extends Component implements TextComponent {
     /**
      * Creates label with specified size and on specified position.
      *
-     * @param x x position.
-     * @param y y position.
-     * @param width label width.
+     * @param x      x position.
+     * @param y      y position.
+     * @param width  label width.
      * @param height label height.
      */
     public Label(float x, float y, float width, float height) {
@@ -58,7 +53,7 @@ public class Label extends Component implements TextComponent {
      * Creates label with specified size and on specified position.
      *
      * @param position label position.
-     * @param size label size.
+     * @param size     label size.
      */
     public Label(Vector2f position, Vector2f size) {
         this(DEFAULT_LABEL_TEXT, position, size);
@@ -76,10 +71,10 @@ public class Label extends Component implements TextComponent {
     /**
      * Creates label with specified text, size and on specified position.
      *
-     * @param text text to set.
-     * @param x x position.
-     * @param y y position.
-     * @param width label width.
+     * @param text   text to set.
+     * @param x      x position.
+     * @param y      y position.
+     * @param width  label width.
      * @param height label height.
      */
     public Label(String text, float x, float y, float width, float height) {
@@ -90,9 +85,9 @@ public class Label extends Component implements TextComponent {
     /**
      * Creates label with specified text, size and on specified position.
      *
-     * @param text text to set.
+     * @param text     text to set.
      * @param position label position.
-     * @param size label size.
+     * @param size     label size.
      */
     public Label(String text, Vector2f position, Vector2f size) {
         super(position, size);
@@ -107,7 +102,7 @@ public class Label extends Component implements TextComponent {
     private void initialize(String text) {
 
         BiConsumer<String, String> callback = (oldValue, newValue) ->
-            EventProcessorProvider.getInstance().pushEvent(new LabelContentChangeEvent(this, null, this.getFrame(), oldValue, newValue));
+                EventProcessorProvider.getInstance().pushEvent(new LabelContentChangeEvent(this, null, this.getFrame(), oldValue, newValue));
 
         textState = new TextState(text, callback);
 
@@ -151,27 +146,27 @@ public class Label extends Component implements TextComponent {
         Label label = (Label) o;
 
         return new EqualsBuilder()
-            .appendSuper(super.equals(o))
-            .append(textState, label.textState)
-            .append(textDirection, label.textDirection)
-            .isEquals();
+                .appendSuper(super.equals(o))
+                .append(textState, label.textState)
+                .append(textDirection, label.textDirection)
+                .isEquals();
     }
 
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
-            .appendSuper(super.hashCode())
-            .append(textState)
-            .append(textDirection)
-            .toHashCode();
+                .appendSuper(super.hashCode())
+                .append(textState)
+                .append(textDirection)
+                .toHashCode();
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-            .append("textState", textState)
-            .append("textDirection", textDirection)
-            .toString();
+                .append("textState", textState)
+                .append("textDirection", textDirection)
+                .toString();
     }
 
 }
