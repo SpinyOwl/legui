@@ -1,12 +1,5 @@
 package org.liquidengine.legui.system.renderer.nvg.component;
 
-import static org.liquidengine.legui.style.util.StyleUtilities.getStyle;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.calculateTextBoundsRect;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.createScissor;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.resetScissor;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgText.drawTextLineToRect;
-import static org.lwjgl.nanovg.NanoVG.nvgIntersectScissor;
-
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.Button;
@@ -18,7 +11,13 @@ import org.liquidengine.legui.listener.processor.EventProcessorProvider;
 import org.liquidengine.legui.style.Style;
 import org.liquidengine.legui.style.font.FontRegistry;
 import org.liquidengine.legui.system.context.Context;
-import org.liquidengine.legui.system.renderer.nvg.component.NvgDefaultComponentRenderer;
+
+import static org.liquidengine.legui.style.util.StyleUtilities.getStyle;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.calculateTextBoundsRect;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.createScissor;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.resetScissor;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgText.drawTextLineToRect;
+import static org.lwjgl.nanovg.NanoVG.nvgIntersectScissor;
 
 /**
  * Created by ShchAlexander on 11.02.2017.
@@ -45,7 +44,7 @@ public class NvgButtonRenderer extends NvgDefaultComponentRenderer<Button> {
             if (Math.abs(textWidth - textBounds[2]) > 0.001) {
                 EventProcessorProvider.getInstance().pushEvent(new ButtonWidthChangeEvent(component, context, component.getFrame(), textBounds[2]));
             }
-            
+
             pos = component.getAbsolutePosition();
             size = component.getSize();
 
