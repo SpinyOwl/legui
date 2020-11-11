@@ -118,6 +118,11 @@ public abstract class Component implements Serializable {
     private Style style = new Style();
 
     /**
+     * Used to redefine rendering pipeline to not skip element rendering if it is not visible in parent components (is out of view).
+     */
+    private boolean keepRendering;
+
+    /**
      * Default constructor. Used to create component instance without any parameters.
      * <p>
      * Also if you want to make it easy to use with Json marshaller/unmarshaller component should contain empty constructor.
@@ -833,5 +838,23 @@ public abstract class Component implements Serializable {
 
     public Frame getFrame() {
         return parent == null ? null : parent.getFrame();
+    }
+
+    /**
+     * Shows if rendering pipeline should be redefined to not skip element rendering if it is not visible in parent components (is out of view).
+     *
+     * @return true if component should be rendered out of view.
+     */
+    public boolean keepRendering() {
+        return keepRendering;
+    }
+
+    /**
+     * Used to redefine rendering pipeline to not skip element rendering if it is not visible in parent components (is out of view).
+     *
+     * @param keepRendering set to true to allow component be rendered even if it is out of view.
+     */
+    public void keepRendering(boolean keepRendering) {
+        this.keepRendering = keepRendering;
     }
 }

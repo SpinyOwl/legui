@@ -35,16 +35,17 @@ public abstract class NvgComponentRenderer<C extends Component> extends Componen
     @Override
     public void renderComponent(C component, Context context) {
         long nanovgContext = (long) context.getContextData().get(NVG_CONTEXT);
-        if (!component.isVisible() || !Utilites.visibleInParents(component)) {
-            return;
-        }
-        renderComponent(component, context, nanovgContext);
-        if (context.isDebugEnabled()) {
-            if (component.isFocused()) {
-                debugBorderRenderer.renderBorder(debugFocusBorder, component, context);
-            } else {
-                debugBorderRenderer.renderBorder(debugBorder, component, context);
+        if (component.isVisible() && (component.keepRendering() || Utilites.visibleInParents(component))) {
+            renderComponent(component, context, nanovgContext);
+            if (context.isDebugEnabled()) {
+                if (component.isFocused()) {
+                    debugBorderRenderer.renderBorder(debugFocusBorder, component, context);
+                } else {
+                    debugBorderRenderer.renderBorder(debugBorder, component, context);
+                }
             }
+        } else {
+            return;
         }
     }
 
