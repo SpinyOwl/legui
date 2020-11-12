@@ -23,7 +23,7 @@ public class SelectBoxElementClickListener<T> implements MouseClickEventListener
     @Override
     public void process(MouseClickEvent event) {
         SelectBox<T>.SelectBoxElement<T> component = (SelectBox<T>.SelectBoxElement<T>) event.getTargetComponent();
-        if (event.getAction() == CLICK && event.getButton().equals(Mouse.MouseButton.MOUSE_BUTTON_1)) {
+        if (event.getAction() == CLICK && event.getButton().equals(Mouse.MouseButton.MOUSE_BUTTON_1) && selectBox.isEnabled()) {
             T selection = selectBox.getSelection();
             T newValue = component.getObject();
             selectBox.setSelected(newValue, true);
