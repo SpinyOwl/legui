@@ -69,10 +69,6 @@ jobs:
       - name: Run tests
         run: ./gradlew test
 
-      # RUN PMD ANALYZER
-      - name: PMD Automatic reviewer
-        uses: krukmat/setup-pmd@v0.4
-
       # SONAR CHECK
       - name: Run sonarqube check
         env:
