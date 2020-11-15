@@ -1,9 +1,8 @@
-name: Build and publish
+name: Build and check PR
 
 on:
   pull_request:
     branches:
-      - releases
       - develop
 
 jobs:
@@ -13,29 +12,6 @@ jobs:
     steps:
       # CHECKOUT
       - uses: actions/checkout@v2
-
-      # EVALUATE VARIABLES
-      - name: Set env to develop
-        if: github.base_ref == 'refs/heads/develop'
-        run: |
-          echo "::set-env name=branch::develop";
-
-      - name: Set env to release
-        if: github.base_ref == 'refs/heads/releases'
-        run: |
-          echo "::set-env name=branch::releases"
-
-      # CALL WEBHOOK
-
-      - name: send message build started
-        uses: rjstone/discord-webhook-notify@v1
-        if: success()
-        with:
-          severity: info
-          color: '#808080'
-          description: Build started for PR to `${{github.base_ref}}` from `${{github.head_ref}}`
-          footer: "https://github.com/SpinyOwl/legui"
-          webhookUrl:  ${{ secrets.WEBHOOK_URL }}
 
       # PREPARE AND BUILD
       - name: Set up JDK 1.8
@@ -51,45 +27,3 @@ jobs:
       # RUN TESTS
       - name: Run tests
         run: ./gradlew test
-
-      # SONAR CHECK
-      - name: Run sonarqube check
-        env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-          sonarLogin: ${{secrets.sonarToken}}
-          sonarUsername: ${{secrets.sonarUsername}}
-          sonarPassword: ${{secrets.sonarPassword}}
-          JAVA_OPTS: -Xmx3072m -XX:MaxPermSize=512m -XX:ReservedCodeCacheSize=128m
-          GRADLE_OPTS: -Xmx3800m -XX:ReservedCodeCacheSize=128m -Dorg.gradle.daemon=false
-        run: ./gradlew sonarqube
-
-      # CALL WEBHOOK
-      - name: send message build finished
-        uses: rjstone/discord-webhook-notify@v1
-        if: success()
-        with:
-          severity: info
-          details: |
-            Build successfully finished for PR to `${{github.base_ref}}` from `${{github.head_ref}}`
-          footer: "https://github.com/SpinyOwl/legui"
-          webhookUrl:  ${{ secrets.WEBHOOK_URL }}
-
-      - name: send failure message
-        uses: rjstone/discord-webhook-notify@v1
-        if: failure()
-        with:
-          severity: error
-          details: |
-            Build failed for PR to `${{github.base_ref}}` from `${{github.head_ref}}`
-          footer: "https://github.com/SpinyOwl/legui"
-          webhookUrl:  ${{ secrets.WEBHOOK_URL }}
-
-      - name: send cancelled message
-        uses: rjstone/discord-webhook-notify@v1
-        if: cancelled()
-        with:
-          severity: warn
-          details: |
-            Build cancelled for PR to `${{github.base_ref}}` from `${{github.head_ref}}`
-          footer: "https://github.com/SpinyOwl/legui"
-          webhookUrl:  ${{ secrets.WEBHOOK_URL }}
