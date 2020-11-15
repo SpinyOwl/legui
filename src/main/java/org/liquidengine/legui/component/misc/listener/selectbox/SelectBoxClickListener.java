@@ -24,7 +24,7 @@ public class SelectBoxClickListener<T> implements MouseClickEventListener {
     @Override
     public void process(MouseClickEvent event) {
         SelectBox<T> box = selectBox;
-        if (event.getAction() == CLICK) {
+        if (event.getAction() == CLICK && selectBox.isEnabled()) {
             Frame frame = event.getFrame();
             SelectBox.SelectBoxLayer selectBoxLayer = box.getSelectBoxLayer();
             boolean collapsed = box.isCollapsed();

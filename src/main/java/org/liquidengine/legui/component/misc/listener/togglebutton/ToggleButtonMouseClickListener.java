@@ -12,7 +12,7 @@ public class ToggleButtonMouseClickListener implements MouseClickEventListener {
     @Override
     public void process(MouseClickEvent event) {
         ToggleButton toggleButton = (ToggleButton) event.getTargetComponent();
-        if (event.getAction() == MouseClickEvent.MouseClickAction.CLICK) {
+        if (event.getAction() == MouseClickEvent.MouseClickAction.CLICK && toggleButton.isEnabled()) {
             toggleButton.setToggled(!toggleButton.isToggled());
         }
     }
