@@ -89,9 +89,9 @@ jobs:
 
       - name: SSH Setup
         if: "!contains(github.event.head_commit.message, '[skip publish]')"
-        uses: MrSquaare/ssh-setup-action@v1.0.0
+        uses: MrSquaare/ssh-setup-action@v1.0.1
         with:
-          host:  github.com
+          host: github.com
           private-key: ${{ secrets.REPO_TOKEN }}
 
       - name: publish
