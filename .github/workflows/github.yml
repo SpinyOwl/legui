@@ -24,25 +24,25 @@ jobs:
           prop_path: version
 
       - name: Set env version
-        run: echo "::set-env name=V::${{steps.extract_version.outputs.prop}}"
+        run: echo "V=${{steps.extract_version.outputs.prop}}" >> $GITHUB_ENV
 
       - name: Set env to develop
         if: github.ref == 'refs/heads/develop'
         run: |
-          echo "::set-env name=branch::develop";
-          echo "::set-env name=VEXT::SNAPSHOT";
-          echo "::set-env name=publishUrl::git:snapshots://git@github.com:SpinyOwl/repo.git"
-          echo "::set-env name=version::$V-SNAPSHOT"
-          echo "::set-env name=repoUrl::https://github.com/SpinyOwl/repo/tree/snapshots/org/liquidengine/legui/$version"
+          echo "branch=develop" >> $GITHUB_ENV
+          echo "VEXT=SNAPSHOT" >> $GITHUB_ENV
+          echo "publishUrl=git:snapshots://git@github.com:SpinyOwl/repo.git" >> $GITHUB_ENV
+          echo "version=$V-SNAPSHOT" >> $GITHUB_ENV
+          echo "repoUrl=https://github.com/SpinyOwl/repo/tree/snapshots/org/liquidengine/legui/$version" >> $GITHUB_ENV
 
       - name: Set env to release
         if: github.ref == 'refs/heads/releases'
         run: |
-          echo "::set-env name=branch::releases"
-          echo "::set-env name=VEXT::"
-          echo "::set-env name=publishUrl::git:releases://git@github.com:SpinyOwl/repo.git"
-          echo "::set-env name=version::$V"
-          echo "::set-env name=repoUrl::https://github.com/SpinyOwl/repo/tree/releases/org/liquidengine/legui/$version"
+          echo "branch=releases" >> $GITHUB_ENV
+          echo "VEXT=" >> $GITHUB_ENV
+          echo "publishUrl=git:releases://git@github.com:SpinyOwl/repo.git" >> $GITHUB_ENV
+          echo "version=$V" >> $GITHUB_ENV
+          echo "repoUrl=https://github.com/SpinyOwl/repo/tree/releases/org/liquidengine/legui/$version" >> $GITHUB_ENV
 
       # CALL WEBHOOK
       - name: send message build started
@@ -53,7 +53,7 @@ jobs:
           description: Build started on branch `${{env.branch}}`
           footer: "https://github.com/SpinyOwl/legui"
           webhookUrl:  ${{ secrets.WEBHOOK_URL }}
-      
+
       # PREPARE AND BUILD
       - name: Set up JDK 1.8
         uses: actions/setup-java@v1
