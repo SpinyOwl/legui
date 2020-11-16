@@ -112,9 +112,6 @@ public class ScrollablePanel extends Component implements Viewport {
     }
 
     private void initialize() {
-        verticalScrollBar = new ScrollBar();
-        horizontalScrollBar = new ScrollBar();
-
         container = new ScrollablePanelContainer();
         container.setTabFocusable(false);
         container.getListenerMap().addListener(AddChildEvent.class, e -> calculateSize());
@@ -126,16 +123,6 @@ public class ScrollablePanel extends Component implements Viewport {
         viewport.setTabFocusable(false);
 
         this.add(viewport);
-        this.add(verticalScrollBar);
-        this.add(horizontalScrollBar);
-
-        verticalScrollBar.setViewport(this);
-        verticalScrollBar.setOrientation(Orientation.VERTICAL);
-        verticalScrollBar.setTabFocusable(false);
-
-        horizontalScrollBar.setViewport(this);
-        horizontalScrollBar.setOrientation(Orientation.HORIZONTAL);
-        horizontalScrollBar.setTabFocusable(false);
 
         applyStyles();
         autoResize = true;
@@ -146,6 +133,20 @@ public class ScrollablePanel extends Component implements Viewport {
 
         animation = new ScrollablePanelAnimation(this);
         animation.startAnimation();
+
+        verticalScrollBar = new ScrollBar();
+        horizontalScrollBar = new ScrollBar();
+
+        this.add(verticalScrollBar);
+        this.add(horizontalScrollBar);
+
+        verticalScrollBar.setViewport(this);
+        verticalScrollBar.setOrientation(Orientation.VERTICAL);
+        verticalScrollBar.setTabFocusable(false);
+
+        horizontalScrollBar.setViewport(this);
+        horizontalScrollBar.setOrientation(Orientation.HORIZONTAL);
+        horizontalScrollBar.setTabFocusable(false);
     }
 
     private void calculateSize() {
@@ -267,6 +268,10 @@ public class ScrollablePanel extends Component implements Viewport {
         calculateSize();
     }
 
+    public boolean isHorizontalScrollBarVisible() {
+        return horizontalScrollBar.getStyle().getDisplay() != DisplayType.NONE;
+    }
+
     public void setHorizontalScrollBarVisible(boolean enabled) {
         if (enabled) {
             Length height = this.horizontalScrollBar.getStyle().getHeight();
@@ -284,8 +289,8 @@ public class ScrollablePanel extends Component implements Viewport {
         calculateSize();
     }
 
-    public boolean isHorizontalScrollBarVisible() {
-        return horizontalScrollBar.getStyle().getDisplay() != DisplayType.NONE;
+    public boolean isVerticalScrollBarVisible() {
+        return verticalScrollBar.getStyle().getDisplay() != DisplayType.NONE;
     }
 
     public void setVerticalScrollBarVisible(boolean enabled) {
@@ -303,10 +308,6 @@ public class ScrollablePanel extends Component implements Viewport {
         }
         this.verticalScrollBar.getStyle().setDisplay(enabled ? DisplayType.MANUAL : DisplayType.NONE);
         calculateSize();
-    }
-
-    public boolean isVerticalScrollBarVisible() {
-        return verticalScrollBar.getStyle().getDisplay() != DisplayType.NONE;
     }
 
     public void setHorizontalScrollBarHeight(float height) {
@@ -357,33 +358,33 @@ public class ScrollablePanel extends Component implements Viewport {
         ScrollablePanel panel = (ScrollablePanel) o;
 
         return new EqualsBuilder()
-            .appendSuper(super.equals(o))
-            .append(verticalScrollBar, panel.verticalScrollBar)
-            .append(horizontalScrollBar, panel.horizontalScrollBar)
-            .append(viewport, panel.viewport)
-            .append(container, panel.container)
-            .isEquals();
+                .appendSuper(super.equals(o))
+                .append(verticalScrollBar, panel.verticalScrollBar)
+                .append(horizontalScrollBar, panel.horizontalScrollBar)
+                .append(viewport, panel.viewport)
+                .append(container, panel.container)
+                .isEquals();
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-            .append("verticalScrollBar", verticalScrollBar)
-            .append("horizontalScrollBar", horizontalScrollBar)
-            .append("viewport", viewport)
-            .append("container", container)
-            .toString();
+                .append("verticalScrollBar", verticalScrollBar)
+                .append("horizontalScrollBar", horizontalScrollBar)
+                .append("viewport", viewport)
+                .append("container", container)
+                .toString();
     }
 
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
-            .appendSuper(super.hashCode())
-            .append(verticalScrollBar)
-            .append(horizontalScrollBar)
-            .append(viewport)
-            .append(container)
-            .toHashCode();
+                .appendSuper(super.hashCode())
+                .append(verticalScrollBar)
+                .append(horizontalScrollBar)
+                .append(viewport)
+                .append(container)
+                .toHashCode();
     }
 
     public Component getViewport() {

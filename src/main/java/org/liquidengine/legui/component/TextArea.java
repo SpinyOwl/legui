@@ -116,24 +116,6 @@ public class TextArea extends Component implements TextComponent, Viewport {
         float viewportWidth = getSize().x - INITIAL_SCROLL_SIZE;
         float viewportHeight = getSize().y - INITIAL_SCROLL_SIZE;
 
-        verticalScrollBar = new ScrollBar();
-        verticalScrollBar.getStyle().setWidth(INITIAL_SCROLL_SIZE);
-        verticalScrollBar.getStyle().setTop(0f);
-        verticalScrollBar.getStyle().setRight(0f);
-        verticalScrollBar.getStyle().setBottom(INITIAL_SCROLL_SIZE);
-        verticalScrollBar.setOrientation(Orientation.VERTICAL);
-        verticalScrollBar.setViewport(this);
-        verticalScrollBar.setTabFocusable(false);
-
-        horizontalScrollBar = new ScrollBar();
-        horizontalScrollBar.getStyle().setHeight(INITIAL_SCROLL_SIZE);
-        horizontalScrollBar.getStyle().setLeft(0f);
-        horizontalScrollBar.getStyle().setRight(INITIAL_SCROLL_SIZE);
-        horizontalScrollBar.getStyle().setBottom(0f);
-        horizontalScrollBar.setOrientation(Orientation.HORIZONTAL);
-        horizontalScrollBar.setViewport(this);
-        horizontalScrollBar.setTabFocusable(false);
-
         viewport = new TextAreaViewport(0, 0, viewportWidth, viewportHeight);
 
         viewport.getStyle().getBackground().setColor(1, 1, 1, 0);
@@ -153,14 +135,33 @@ public class TextArea extends Component implements TextComponent, Viewport {
         viewport.add(textAreaField);
 
         this.add(viewport);
-        this.add(verticalScrollBar);
-        this.add(horizontalScrollBar);
         this.getStyle().getBackground().setColor(ColorConstants.transparent());
 
         Themes.getDefaultTheme().getThemeManager().getComponentTheme(TextArea.class).applyAll(this);
 
         animation = new TextAreaScrollAnimation(this);
         animation.startAnimation();
+
+        verticalScrollBar = new ScrollBar();
+        verticalScrollBar.getStyle().setWidth(INITIAL_SCROLL_SIZE);
+        verticalScrollBar.getStyle().setTop(0f);
+        verticalScrollBar.getStyle().setRight(0f);
+        verticalScrollBar.getStyle().setBottom(INITIAL_SCROLL_SIZE);
+        verticalScrollBar.setOrientation(Orientation.VERTICAL);
+        verticalScrollBar.setViewport(this);
+        verticalScrollBar.setTabFocusable(false);
+
+        horizontalScrollBar = new ScrollBar();
+        horizontalScrollBar.getStyle().setHeight(INITIAL_SCROLL_SIZE);
+        horizontalScrollBar.getStyle().setLeft(0f);
+        horizontalScrollBar.getStyle().setRight(INITIAL_SCROLL_SIZE);
+        horizontalScrollBar.getStyle().setBottom(0f);
+        horizontalScrollBar.setOrientation(Orientation.HORIZONTAL);
+        horizontalScrollBar.setViewport(this);
+        horizontalScrollBar.setTabFocusable(false);
+
+        this.add(verticalScrollBar);
+        this.add(horizontalScrollBar);
     }
 
     /**
