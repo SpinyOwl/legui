@@ -116,6 +116,7 @@ public class FlexLayout implements Layout {
         setJustifyContent(node, flexStyle.getJustifyContent(), component);
         setAlignItems(node, flexStyle.getAlignItems(), component);
         setAlignSelf(node, flexStyle.getAlignSelf(), component);
+        setFlexWrap(node, flexStyle.getFlexWrap());
 
         setMinWidth(node, style);
         setMinHeight(node, style);

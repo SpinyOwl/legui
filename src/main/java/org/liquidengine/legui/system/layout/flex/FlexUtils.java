@@ -2,6 +2,7 @@ package org.liquidengine.legui.system.layout.flex;
 
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.style.Style;
+import org.liquidengine.legui.style.flex.FlexStyle;
 import org.liquidengine.legui.style.flex.FlexStyle.AlignItems;
 import org.liquidengine.legui.style.flex.FlexStyle.AlignSelf;
 import org.liquidengine.legui.style.flex.FlexStyle.FlexDirection;
@@ -57,6 +58,17 @@ final class FlexUtils {
             Yoga.YGNodeStyleSetFlexDirection(rootNode, Yoga.YGFlexDirectionRowReverse);
         } else if (flexDirection == FlexDirection.COLUMN_REVERSE) {
             Yoga.YGNodeStyleSetFlexDirection(rootNode, Yoga.YGFlexDirectionColumnReverse);
+        }
+    }
+
+
+    public static void setFlexWrap(long node, FlexStyle.FlexWrap flexWrap) {
+        if (flexWrap == FlexStyle.FlexWrap.WRAP) {
+            Yoga.YGNodeStyleSetFlexWrap(node, Yoga.YGWrapWrap);
+        } else if (flexWrap == FlexStyle.FlexWrap.WRAP_REVERSE) {
+            Yoga.YGNodeStyleSetFlexWrap(node, Yoga.YGWrapReverse);
+        } else if (flexWrap == FlexStyle.FlexWrap.NOWRAP) {
+            Yoga.YGNodeStyleSetFlexWrap(node, Yoga.YGWrapNoWrap);
         }
     }
 

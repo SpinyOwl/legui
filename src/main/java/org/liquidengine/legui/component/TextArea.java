@@ -137,8 +137,6 @@ public class TextArea extends Component implements TextComponent, Viewport {
         this.add(viewport);
         this.getStyle().getBackground().setColor(ColorConstants.transparent());
 
-        Themes.getDefaultTheme().getThemeManager().getComponentTheme(TextArea.class).applyAll(this);
-
         animation = new TextAreaScrollAnimation(this);
         animation.startAnimation();
 
@@ -162,6 +160,8 @@ public class TextArea extends Component implements TextComponent, Viewport {
 
         this.add(verticalScrollBar);
         this.add(horizontalScrollBar);
+
+        Themes.getDefaultTheme().getThemeManager().getComponentTheme(TextArea.class).applyAll(this);
     }
 
     /**

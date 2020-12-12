@@ -124,15 +124,9 @@ public class ScrollablePanel extends Component implements Viewport {
 
         this.add(viewport);
 
-        applyStyles();
         autoResize = true;
-        calculateSize();
         autoResize = false;
 
-        Themes.getDefaultTheme().getThemeManager().getComponentTheme(ScrollablePanel.class).applyAll(this);
-
-        animation = new ScrollablePanelAnimation(this);
-        animation.startAnimation();
 
         verticalScrollBar = new ScrollBar();
         horizontalScrollBar = new ScrollBar();
@@ -147,6 +141,14 @@ public class ScrollablePanel extends Component implements Viewport {
         horizontalScrollBar.setViewport(this);
         horizontalScrollBar.setOrientation(Orientation.HORIZONTAL);
         horizontalScrollBar.setTabFocusable(false);
+
+        applyStyles();
+        calculateSize();
+
+        animation = new ScrollablePanelAnimation(this);
+        animation.startAnimation();
+
+        Themes.getDefaultTheme().getThemeManager().getComponentTheme(ScrollablePanel.class).applyAll(this);
     }
 
     private void calculateSize() {
