@@ -93,7 +93,7 @@ public class Example {
         DefaultInitializer initializer = new DefaultInitializer(window, frame);
 
         GLFWKeyCallbackI exitOnEscCallback = (w1, key, code, action, mods) -> running = !(key == GLFW_KEY_ESCAPE && action != GLFW_RELEASE);
-        GLFWKeyCallbackI toggleFullscreenCallback = (w1, key, code, action, mods) -> toggleFullscreen = !(key == GLFW_KEY_F && action != GLFW_RELEASE && (mods & GLFW_MOD_CONTROL) != 0);
+        GLFWKeyCallbackI toggleFullscreenCallback = (w1, key, code, action, mods) -> toggleFullscreen = (key == GLFW_KEY_F && action == GLFW_RELEASE && (mods & GLFW_MOD_CONTROL) != 0);
         GLFWWindowCloseCallbackI glfwWindowCloseCallbackI = w -> running = false;
 
         // if we want to create some callbacks for system events you should create and put them to keeper
