@@ -48,13 +48,17 @@ public class Example {
         if (!glfwInit()) {
             throw new RuntimeException("Can't initialize GLFW");
         }
+        // create glfw window
         long window = glfwCreateWindow(WIDTH, HEIGHT, "Example", NULL, NULL);
+        // show window
         glfwShowWindow(window);
 
+        // make window current on thread
         glfwMakeContextCurrent(window);
         GL.createCapabilities();
         glfwSwapInterval(0);
 
+        // read monitors
         PointerBuffer pointerBuffer = glfwGetMonitors();
         int remaining = pointerBuffer.remaining();
         monitors = new long[remaining];
@@ -62,6 +66,7 @@ public class Example {
             monitors[i] = pointerBuffer.get(i);
         }
 
+        // create LEGUI theme and set it as default
         Themes.setDefaultTheme(new FlatColoredTheme(
             fromInt(245, 245, 245, 1), // backgroundColor
             fromInt(176, 190, 197, 1), // borderColor
@@ -87,17 +92,19 @@ public class Example {
         // or if you want some customizations you can do it by yourself.
         DefaultInitializer initializer = new DefaultInitializer(window, frame);
 
-        GLFWKeyCallbackI glfwKeyCallbackI = (w1, key, code, action, mods) -> running = !(key == GLFW_KEY_ESCAPE && action != GLFW_RELEASE);
+        GLFWKeyCallbackI exitOnEscCallback = (w1, key, code, action, mods) -> running = !(key == GLFW_KEY_ESCAPE && action != GLFW_RELEASE);
+        GLFWKeyCallbackI toggleFullscreenCallback = (w1, key, code, action, mods) -> toggleFullscreen = !(key == GLFW_KEY_F && action != GLFW_RELEASE && (mods & GLFW_MOD_CONTROL) != 0);
         GLFWWindowCloseCallbackI glfwWindowCloseCallbackI = w -> running = false;
 
         // if we want to create some callbacks for system events you should create and put them to keeper
         //
         // Wrong:
-        // glfwSetKeyCallback(window, glfwKeyCallbackI);
+        // glfwSetKeyCallback(window, exitOnEscCallback);
         // glfwSetWindowCloseCallback(window, glfwWindowCloseCallbackI);
         //
         // Right:
-        initializer.getCallbackKeeper().getChainKeyCallback().add(glfwKeyCallbackI);
+        initializer.getCallbackKeeper().getChainKeyCallback().add(exitOnEscCallback);
+        initializer.getCallbackKeeper().getChainKeyCallback().add(toggleFullscreenCallback);
         initializer.getCallbackKeeper().getChainWindowCloseCallback().add(glfwWindowCloseCallbackI);
 
         // Initialization finished, so we can start render loop.
@@ -169,6 +176,8 @@ public class Example {
             // When system events are translated to GUI events we need to handle them.
             // This event processor calls listeners added to ui components
             initializer.getGuiEventProcessor().processEvents();
+
+            // check toggle fullscreen flag and execute.
             if (toggleFullscreen) {
                 if (fullscreen) {
                     glfwSetWindowMonitor(window, NULL, 100, 100, WIDTH, HEIGHT, GLFW_DONT_CARE);
