@@ -35,8 +35,8 @@ apply plugin: 'maven'
 apply plugin: 'maven-publish'
 
 idea { module { downloadJavadoc = true; downloadSources = true } }
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+sourceCompatibility = 11
+targetCompatibility = 11
 compileJava.options.encoding = 'UTF-8'
 
 repositories {
