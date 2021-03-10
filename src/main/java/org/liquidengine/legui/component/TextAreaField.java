@@ -5,6 +5,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
+import org.liquidengine.legui.component.event.textarea.TextAreaFieldUpdateEvent;
 import org.liquidengine.legui.component.misc.listener.text.CopyTextEventListener;
 import org.liquidengine.legui.component.misc.listener.text.SelectAllTextEventListener;
 import org.liquidengine.legui.component.misc.listener.textarea.CutTextAreaKeyboardEventListener;
@@ -18,6 +19,7 @@ import org.liquidengine.legui.event.CharEvent;
 import org.liquidengine.legui.event.KeyboardEvent;
 import org.liquidengine.legui.event.MouseClickEvent;
 import org.liquidengine.legui.event.MouseDragEvent;
+import org.liquidengine.legui.listener.processor.EventProcessorProvider;
 import org.liquidengine.legui.theme.Themes;
 
 /**
@@ -105,7 +107,7 @@ public class TextAreaField extends AbstractTextComponent {
      * @param s text to set.
      */
     private void initialize(String s) {
-        textState = new TextState(s);
+        textState = new TextState(s, (prev, next)-> EventProcessorProvider.getInstance().pushEvent(new TextAreaFieldUpdateEvent(this, null, getFrame())));
         getStyle().setPadding(10f, 5f);
 
         getListenerMap().addListener(MouseDragEvent.class, new TextAreaFieldDragEventListener());
