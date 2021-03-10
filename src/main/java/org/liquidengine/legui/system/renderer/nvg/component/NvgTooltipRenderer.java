@@ -3,9 +3,11 @@ package org.liquidengine.legui.system.renderer.nvg.component;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.Tooltip;
+import org.liquidengine.legui.component.event.tooltip.TooltipTextSizeChangeEvent;
 import org.liquidengine.legui.component.optional.TextState;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
 import org.liquidengine.legui.component.optional.align.VerticalAlign;
+import org.liquidengine.legui.listener.processor.EventProcessorProvider;
 import org.liquidengine.legui.style.Style;
 import org.liquidengine.legui.style.font.FontRegistry;
 import org.liquidengine.legui.system.context.Context;
@@ -77,15 +79,27 @@ public class NvgTooltipRenderer extends NvgDefaultComponentRenderer<Tooltip> {
                     nvgFillColor(nanovg, colorA);
 
                     // calculate text bounds for every line and start/end indices
-
+                    float newWidth = 0;
+                    float newHeight = 0;
                     int rows = 0;
                     while (nnvgTextBreakLines(nanovg, start, end, size.x, memAddress(buffer), 1) != 0) {
                         NVGTextRow row = buffer.get(0);
                         float[] bounds = createBounds(x, y + rows * fontSize, w, h, horizontalAlign, verticalAlign, row.width(), fontSize);
                         boundList.add(bounds);
+                        newWidth = Math.max(row.width(), newWidth);
                         indicesList.add(new long[]{row.start(), row.end()});
                         start = row.next();
                         rows++;
+                    }
+                    newHeight = rows * fontSize;
+
+                    float textWidth = textState.getTextWidth();
+                    float textHeight = textState.getTextHeight();
+                    textState.setTextWidth(newWidth);
+                    textState.setTextHeight(newHeight);
+
+                    if (Math.abs(textWidth - newWidth) > 0.001 || Math.abs(textHeight - newHeight) > 0.001) {
+                        EventProcessorProvider.getInstance().pushEvent(new TooltipTextSizeChangeEvent(component, context, component.getFrame(), newWidth, newHeight));
                     }
 
                     // calculate offset for all lines
