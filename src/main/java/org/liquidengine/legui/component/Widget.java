@@ -380,6 +380,7 @@ public class Widget extends Component {
      * @param titleHeight title height to set.
      */
     public void setTitleHeight(float titleHeight) {
+        this.titleContainer.getSize().y = titleHeight;
         this.titleContainer.getStyle().setMinHeight(titleHeight);
         this.titleContainer.getStyle().setHeight(titleHeight);
         this.titleContainer.getStyle().setMaxHeight(titleHeight);
