@@ -9,6 +9,7 @@ import org.liquidengine.legui.component.event.label.LabelWidthChangeEvent;
 import org.liquidengine.legui.component.event.selectbox.SelectBoxChangeSelectionEventListener;
 import org.liquidengine.legui.component.event.slider.SliderChangeValueEvent;
 import org.liquidengine.legui.component.event.slider.SliderChangeValueEventListener;
+import org.liquidengine.legui.component.event.tooltip.TooltipTextSizeChangeEvent;
 import org.liquidengine.legui.component.misc.listener.label.UpdateLabelWidthListener;
 import org.liquidengine.legui.component.optional.Orientation;
 import org.liquidengine.legui.component.optional.align.HorizontalAlign;
@@ -206,12 +207,12 @@ public class ExampleGui extends Panel {
         this.add(scrollablePanel);
 
         slider2.getListenerMap().addListener(SliderChangeValueEvent.class,
-            (SliderChangeValueEventListener) event -> scrollablePanel
-                .setHorizontalScrollBarHeight(event.getNewValue() / 2f + 10)
+                (SliderChangeValueEventListener) event -> scrollablePanel
+                        .setHorizontalScrollBarHeight(event.getNewValue() / 2f + 10)
         );
         slider1.getListenerMap().addListener(SliderChangeValueEvent.class,
-            (SliderChangeValueEventListener) event -> scrollablePanel.getHorizontalScrollBar()
-                .setArrowSize(event.getNewValue() / 4f + 10)
+                (SliderChangeValueEventListener) event -> scrollablePanel.getHorizontalScrollBar()
+                        .setArrowSize(event.getNewValue() / 4f + 10)
         );
 
         textArea = new TextArea(420, 280, 150, 100);
@@ -574,10 +575,12 @@ public class ExampleGui extends Panel {
         Button button = new Button(20, 170, 50, 20); /*button.getStyle().getBackground().setColor(new Vector4f(1));*/
         button.getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) System.out::println);
 
-        button.setTooltip(new Tooltip("Just button"));
-        button.getTooltip().setPosition(0, 25);
-        button.getTooltip().getSize().set(50, 60);
-        button.getTooltip().getStyle().setPadding(4f);
+        Tooltip tooltip = new Tooltip("Just button");
+        button.setTooltip(tooltip);
+        tooltip.setPosition(0, 25);
+        tooltip.getSize().set(50, 60);
+        tooltip.getStyle().setPadding(4f);
+        tooltip.getListenerMap().addListener(TooltipTextSizeChangeEvent.class, e -> tooltip.setSize(50, e.getHeight()));
 
         int[] idv = {0};
         button.getListenerMap().addListener(MouseClickEvent.class, (MouseClickEventListener) (MouseClickEvent event) -> {
@@ -612,8 +615,8 @@ public class ExampleGui extends Panel {
                         break;
                 }
                 System.out.println(h + " " + v);
-                button.getTooltip().getStyle().setHorizontalAlign(h);
-                button.getTooltip().getStyle().setVerticalAlign(v);
+                tooltip.getStyle().setHorizontalAlign(h);
+                tooltip.getStyle().setVerticalAlign(v);
             }
         });
         return button;

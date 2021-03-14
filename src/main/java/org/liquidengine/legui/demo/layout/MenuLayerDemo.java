@@ -25,7 +25,6 @@ import static org.liquidengine.legui.event.MouseClickEvent.MouseClickAction.RELE
 public class MenuLayerDemo extends Demo {
 
     public static final float MENU_HEIGHT = 20;
-    private Frame frame;
 
     public MenuLayerDemo(int width, int height, String title) {
         super(width, height, title);
@@ -37,13 +36,7 @@ public class MenuLayerDemo extends Demo {
     }
 
     @Override
-    protected void update() {
-
-    }
-
-    @Override
-    protected void createGuiElements(Frame frame, int width, int height) {
-        this.frame = frame;
+    protected void createGuiElements(Frame frame) {
         MenuContainer menuContainer = new MenuContainer();
         MenuBar menuBar = menuContainer.getMenuBar();
 

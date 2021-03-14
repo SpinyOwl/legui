@@ -24,20 +24,22 @@ public class CheckBoxChangeValueEvent<T extends CheckBox> extends Event<T> {
 
     /**
      * Returns old value.
-     * @deprecated since 2.0.0 - use {@link #getOldValue()}
      *
      * @return old value.
+     * @deprecated since 2.0.0 - use {@link #getOldValue()}
      */
+    @Deprecated
     public boolean isOldValue() {
         return oldValue;
     }
 
     /**
      * Returns new value.
-     * @deprecated since 2.0.0 - use {@link #getNewValue()}
      *
      * @return new value.
+     * @deprecated since 2.0.0 - use {@link #getNewValue()}
      */
+    @Deprecated
     public boolean isNewValue() {
         return newValue;
     }

@@ -1,12 +1,13 @@
 package org.liquidengine.legui.component.misc.listener.splitpanel;
 
-import static org.liquidengine.legui.component.optional.Orientation.HORIZONTAL;
-
 import org.joml.Vector2f;
 import org.liquidengine.legui.component.SplitPanel;
 import org.liquidengine.legui.component.optional.Orientation;
 import org.liquidengine.legui.event.MouseDragEvent;
+import org.liquidengine.legui.input.Mouse;
 import org.liquidengine.legui.listener.MouseDragEventListener;
+
+import static org.liquidengine.legui.component.optional.Orientation.HORIZONTAL;
 
 public class SplitPanelDragListener implements MouseDragEventListener {
 
@@ -23,15 +24,26 @@ public class SplitPanelDragListener implements MouseDragEventListener {
      */
     @Override
     public void process(MouseDragEvent event) {
-
         Orientation orientation = splitPanel.getOrientation();
         float ratio = splitPanel.getRatio();
         Vector2f delta = event.getDelta();
         float d;
         if (orientation == HORIZONTAL) {
             d = delta.x;
+            if (d > 0 && splitPanel.getPosition().x > Mouse.getCursorPosition().x) {
+                return;
+            }
+            if (d < 0 && splitPanel.getPosition().x + splitPanel.getSize().x < Mouse.getCursorPosition().x) {
+                return;
+            }
         } else {
             d = delta.y;
+            if (d > 0 && splitPanel.getPosition().y > Mouse.getCursorPosition().y) {
+                return;
+            }
+            if (d < 0 && splitPanel.getPosition().y + splitPanel.getSize().y < Mouse.getCursorPosition().y) {
+                return;
+            }
         }
         ratio += 100 * d / getActualSpace(orientation);
         updateGrow(ratio, orientation);

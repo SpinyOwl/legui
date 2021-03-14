@@ -243,6 +243,7 @@ public class Widget extends Component {
         titleContainer.getStyle().getBackground().setColor(ColorConstants.white());
         titleContainer.getStyle().setDisplay(DisplayType.FLEX);
         titleContainer.getStyle().setPosition(PositionType.RELATIVE);
+        titleContainer.getSize().y = INITIAL_TITLE_HEIGHT;
         titleContainer.getStyle().setHeight((float) INITIAL_TITLE_HEIGHT);
         titleContainer.getStyle().setMinHeight((float) INITIAL_TITLE_HEIGHT);
         titleContainer.getStyle().setMaxHeight((float) INITIAL_TITLE_HEIGHT);
@@ -253,6 +254,7 @@ public class Widget extends Component {
         this.title = new Label(title);
         this.title.getStyle().setPosition(PositionType.RELATIVE);
         this.title.getStyle().setMaxWidth(Float.MAX_VALUE);
+        this.title.getSize().y = INITIAL_TITLE_HEIGHT;
         this.title.getStyle().setMaxHeight((float) INITIAL_TITLE_HEIGHT);
         this.title.getStyle().setHeight((float) INITIAL_TITLE_HEIGHT);
         this.title.getStyle().setMinWidth(0f);
@@ -277,6 +279,7 @@ public class Widget extends Component {
         closeButton.getStyle().setPosition(PositionType.RELATIVE);
         closeButton.getStyle().getBackground().setIcon(closeIcon);
         closeButton.getStyle().getBackground().setColor(ColorConstants.transparent());
+        closeButton.getSize().y = INITIAL_TITLE_HEIGHT;
         closeButton.getStyle().setMaxWidth((float) INITIAL_TITLE_HEIGHT);
         closeButton.getStyle().setMaxHeight((float) INITIAL_TITLE_HEIGHT);
         closeButton.getStyle().setMinWidth((float) INITIAL_TITLE_HEIGHT);
@@ -312,6 +315,7 @@ public class Widget extends Component {
         minimizeButton.getStyle().getBackground().setColor(ColorConstants.transparent());
         minimizeButton.getStyle().getBackground().setIcon(minimizeIcon);
         minimizeButton.getStyle().setPosition(PositionType.RELATIVE);
+        minimizeButton.getSize().y = INITIAL_TITLE_HEIGHT;
         minimizeButton.getStyle().setMaxWidth((float) INITIAL_TITLE_HEIGHT);
         minimizeButton.getStyle().setMaxHeight((float) INITIAL_TITLE_HEIGHT);
         minimizeButton.getStyle().setMinWidth((float) INITIAL_TITLE_HEIGHT);
@@ -376,6 +380,7 @@ public class Widget extends Component {
      * @param titleHeight title height to set.
      */
     public void setTitleHeight(float titleHeight) {
+        this.titleContainer.getSize().y = titleHeight;
         this.titleContainer.getStyle().setMinHeight(titleHeight);
         this.titleContainer.getStyle().setHeight(titleHeight);
         this.titleContainer.getStyle().setMaxHeight(titleHeight);

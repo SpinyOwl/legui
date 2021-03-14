@@ -180,7 +180,7 @@ public abstract class Demo {
         window = glfwCreateWindow(width, height, title, NULL, NULL);
         glfwSetWindowPos(window, 50, 50);
         glfwShowWindow(window);
-        createGuiElements(frame, width, height);
+        createGuiElements(frame);
 
         context = new Context(window);
         keeper = new DefaultCallbackKeeper();
@@ -204,8 +204,10 @@ public abstract class Demo {
         running = false;
     }
 
-    protected abstract void update();
+    protected void update() {
+        // could be implemented for further update logic.
+    };
 
-    protected abstract void createGuiElements(Frame frame, int width, int height);
+    protected abstract void createGuiElements(Frame frame);
 
 }

@@ -291,6 +291,14 @@ public class TextState implements Serializable {
         return caretY;
     }
 
+    public BiConsumer<String, String> getTextSetCallback() {
+        return textSetCallback;
+    }
+
+    public void setTextSetCallback(BiConsumer<String, String> textSetCallback) {
+        this.textSetCallback = textSetCallback;
+    }
+
     /**
      * Used by renderer to set absolute caret y position.
      *
