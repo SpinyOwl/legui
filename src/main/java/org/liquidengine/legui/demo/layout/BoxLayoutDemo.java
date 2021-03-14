@@ -14,13 +14,11 @@ import org.liquidengine.legui.style.flex.FlexStyle.FlexDirection;
  */
 public class BoxLayoutDemo extends Demo {
 
-    private Frame frame;
     private Panel c1;
     private Panel c2;
 
     private Panel c11;
     private Panel c12;
-    private Panel c13;
 
     public BoxLayoutDemo(int width, int height, String title) {
         super(width, height, title);
@@ -32,12 +30,7 @@ public class BoxLayoutDemo extends Demo {
     }
 
     @Override
-    protected void update() {
-    }
-
-    @Override
-    protected void createGuiElements(Frame frame, int width, int height) {
-        this.frame = frame;
+    protected void createGuiElements(Frame frame) {
         Component frameContainer = frame.getContainer();
         frameContainer.getStyle().setDisplay(DisplayType.FLEX);
         frameContainer.getStyle().getBackground().setColor(ColorConstants.lightGray());
@@ -61,7 +54,6 @@ public class BoxLayoutDemo extends Demo {
 
         c2.getStyle().getBackground().setColor(ColorConstants.lightBlue());
         c2.getStyle().setHeight(50f);
-//        c2.getStyle().setWidth(50f);
         c2.getStyle().setLeft(0f);
         c2.getStyle().setRight(0f);
         c2.getStyle().setBottom(0f);
