@@ -66,7 +66,7 @@ API is close to Swing API.
 See the [contribution guide](docs/CONTRIBUTING.md) for more information.
 
 ## System requirements
-LEGUI requires Java 8+ cause it uses lambda expressions.
+LEGUI requires Java 11+.
 
 ## OpenGL state touched by the backend
 
