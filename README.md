@@ -124,7 +124,8 @@ compile group: 'org.liquidengine', name: 'legui', version: "${legui_version}";
   ```
 
 ### Demos:
-All examples located under `demo` package.
+All examples located under [demo](/src/main/java/org/liquidengine/legui/demo/) package.
+
 
 ## Projects using LEGUI:
 ### Modeler by Cout970
