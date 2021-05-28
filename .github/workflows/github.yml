@@ -3,7 +3,6 @@ name: Build and publish
 on:
   push:
     branches:
-      - releases
       - develop
 
 jobs:
@@ -23,29 +22,15 @@ jobs:
           path: version.json
           prop_path: version
 
-      - name: Set env version
-        run: echo "V=${{steps.extract_version.outputs.prop}}" >> $GITHUB_ENV
-
-      - name: Set env to develop
-        if: github.ref == 'refs/heads/develop'
+      - name: Set environment variables
         run: |
           echo "branch=develop" >> $GITHUB_ENV
-          echo "VEXT=SNAPSHOT" >> $GITHUB_ENV
-          echo "publishUrl=git:snapshots://git@github.com:SpinyOwl/repo.git" >> $GITHUB_ENV
-          echo "version=$V-SNAPSHOT" >> $GITHUB_ENV
-          echo "repoUrl=https://github.com/SpinyOwl/repo/tree/snapshots/org/liquidengine/legui/$version" >> $GITHUB_ENV
-
-      - name: Set env to release
-        if: github.ref == 'refs/heads/releases'
-        run: |
-          echo "branch=releases" >> $GITHUB_ENV
-          echo "VEXT=" >> $GITHUB_ENV
           echo "publishUrl=git:releases://git@github.com:SpinyOwl/repo.git" >> $GITHUB_ENV
-          echo "version=$V" >> $GITHUB_ENV
-          echo "repoUrl=https://github.com/SpinyOwl/repo/tree/releases/org/liquidengine/legui/$version" >> $GITHUB_ENV
+          echo "version=${{steps.extract_version.outputs.prop}}" >> $GITHUB_ENV
+          echo "repoUrl=https://github.com/SpinyOwl/repo/tree/releases/org/liquidengine/legui" >> $GITHUB_ENV
 
       # CALL WEBHOOK
-      - name: send message build started
+      - name: Send message build started
         uses: rjstone/discord-webhook-notify@v1
         with:
           severity: info
@@ -81,20 +66,20 @@ jobs:
         run: ./gradlew sonarqube
 
       # PUBLISH ARTIFACTS
-      - name: prepare to publish
+      - name: Prepare environment to publish artifacts
         if: "!contains(github.event.head_commit.message, '[skip publish]')"
         run: |
           git config --global user.name ${{ secrets.publishUsername }}
           git config --global user.email ${{ secrets.publishEmail }}
 
-      - name: SSH Setup
+      - name: Configure SSH to publish artifacts
         if: "!contains(github.event.head_commit.message, '[skip publish]')"
         uses: MrSquaare/ssh-setup-action@v1.0.1
         with:
           host: github.com
           private-key: ${{ secrets.REPO_TOKEN }}
 
-      - name: publish
+      - name: Publish artifacts to github repository
         if: "!contains(github.event.head_commit.message, '[skip publish]')"
         env:
           publishUsername: ${{ secrets.publishUsername }}
@@ -102,7 +87,7 @@ jobs:
         run: ./gradlew uploadArchives
 
       # CALL WEBHOOK
-      - name: send message build finished
+      - name: Send message build finished
         uses: rjstone/discord-webhook-notify@v1
         if: success() && !contains(github.event.head_commit.message, '[skip publish]')
         with:
@@ -110,39 +95,39 @@ jobs:
           details: |
             Build successfully finished on branch `${{env.branch}}`.
             **Artifact version** - `${{env.version}}`.
-            Open in GitHub: [Open repository](${{env.repoUrl}})
+            Browse artifacts: [Browse artifacts](${{env.repoUrl}}${{env.version}})
           footer: "https://github.com/SpinyOwl/legui"
           webhookUrl:  ${{ secrets.WEBHOOK_URL }}
 
-      - name: send message build finished
+      - name: Send message build finished
         uses: rjstone/discord-webhook-notify@v1
         if: success() && contains(github.event.head_commit.message, '[skip publish]')
         with:
           severity: info
           details: |
             Build successfully finished on branch `${{env.branch}}`.
-            Open in GitHub: [Open repository](${{env.repoUrl}})
+            Browse artifacts: [Browse artifacts](${{env.repoUrl}})
           footer: "https://github.com/SpinyOwl/legui"
           webhookUrl:  ${{ secrets.WEBHOOK_URL }}
 
-      - name: send failure message
+      - name: Send message build failed
         uses: rjstone/discord-webhook-notify@v1
         if: failure()
         with:
           severity: error
           details: |
             Build failed on branch `${{env.branch}}`.
-            Open in GitHub: [Open repository](${{env.repoUrl}})
+            Browse artifacts: [Browse artifacts](${{env.repoUrl}})
           footer: "https://github.com/SpinyOwl/legui"
           webhookUrl:  ${{ secrets.WEBHOOK_URL }}
 
-      - name: send cancelled message
+      - name: Send message build cancelled
         uses: rjstone/discord-webhook-notify@v1
         if: cancelled()
         with:
           severity: warn
           details: |
             Build cancelled on branch `${{env.branch}}`.
-            Open in GitHub: [Open repository](${{env.repoUrl}})
+            Browse artifacts: [Browse artifacts](${{env.repoUrl}})
           footer: "https://github.com/SpinyOwl/legui"
           webhookUrl:  ${{ secrets.WEBHOOK_URL }}

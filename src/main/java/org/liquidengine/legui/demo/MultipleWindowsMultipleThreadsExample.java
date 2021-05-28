@@ -216,6 +216,7 @@ public class MultipleWindowsMultipleThreadsExample {
         GLFWWindowCloseCallbackI glfwWindowCloseCallbackI = w -> running = false;
 
         Frame frame = new Frame(WIDTH, HEIGHT);
+        createGuiElements(frame);
 
         for (int i = 0; i < WINDOW_COUNT; i++) {
             windows[i] = glfwCreateWindow(WIDTH, HEIGHT, "Multiple Windows Multiple Threads Example " + i, NULL, NULL);
@@ -223,7 +224,6 @@ public class MultipleWindowsMultipleThreadsExample {
             glfwShowWindow(windows[i]);
 
             frames[i] = frame;
-            createGuiElements(frames[i]);
 
             contexts[i] = new Context(windows[i]);
             keepers[i] = new DefaultCallbackKeeper();

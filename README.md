@@ -1,13 +1,11 @@
-![REPO SIZE](https://img.shields.io/github/repo-size/SpinyOwl/legui.svg) 
-![CODE SIZE](https://img.shields.io/github/languages/code-size/SpinyOwl/legui.svg) 
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=SpinyOwl_legui&metric=alert_status)](https://sonarcloud.io/dashboard?id=SpinyOwl_legui)
-![License](https://img.shields.io/github/license/SpinyOwl/legui.svg)  
-![Build and publish](https://img.shields.io/github/workflow/status/SpinyOwl/legui/Build%20and%20publish/develop?label=build%20develop&logo=Github)
-![Build and publish](https://img.shields.io/github/workflow/status/SpinyOwl/legui/Build%20and%20publish/releases?label=build%20releases&logo=Github)  
-[![STABLE SNAPSHOT VERSION](https://img.shields.io/badge/dynamic/xml.svg?label=snapshot&url=https%3A%2F%2Fraw.github.com%2FSpinyOwl%2Frepo%2Fsnapshots%2Forg%2Fliquidengine%2Flegui%2Fmaven-metadata.xml&query=%2F%2Fmetadata%2Fversioning%2Fversions%2Fversion%5Blast()%5D&colorB=blue)](https://github.com/SpinyOwl/repo/tree/snapshots/org/liquidengine/legui)
-[![STABLE RELEASE VERSION](https://img.shields.io/badge/dynamic/xml.svg?label=release&url=https%3A%2F%2Fraw.github.com%2FSpinyOwl%2Frepo%2Freleases%2Forg%2Fliquidengine%2Flegui%2Fmaven-metadata.xml&query=%2F%2Fmetadata%2Fversioning%2Fversions%2Fversion%5Blast()%5D&colorB=blue)](https://github.com/SpinyOwl/repo/tree/releases/org/liquidengine/legui)
+![REPO SIZE](https://img.shields.io/github/repo-size/SpinyOwl/legui.svg?style=for-the-badge) 
+![CODE SIZE](https://img.shields.io/github/languages/code-size/SpinyOwl/legui.svg?style=for-the-badge) 
+[![Sonar Quality Gate](https://img.shields.io/sonar/alert_status/SpinyOwl_legui?logo=sonarcloud&server=https%3A%2F%2Fsonarcloud.io&style=for-the-badge)](https://sonarcloud.io/dashboard?id=SpinyOwl_legui)
+[![License](https://img.shields.io/github/license/SpinyOwl/legui.svg?style=for-the-badge)](/LICENSE)
+[![Discord](https://img.shields.io/discord/245558983123927040.svg?slongCache=true&label=Discord&logo=discord&style=for-the-badge)](https://discord.gg/6wfqXpJ)
 
-[![Discord](https://img.shields.io/discord/245558983123927040.svg?slongCache=true&label=Discord&logo=discord)](https://discord.gg/6wfqXpJ)
+![Build and publish](https://img.shields.io/github/workflow/status/SpinyOwl/legui/Build%20and%20publish/develop?label=build&logo=Github&style=for-the-badge)
+[![STABLE SNAPSHOT VERSION](https://img.shields.io/badge/dynamic/xml.svg?label=latest%20version&url=https%3A%2F%2Fraw.github.com%2FSpinyOwl%2Frepo%2Freleases%2Forg%2Fliquidengine%2Flegui%2Fmaven-metadata.xml&query=%2F%2Fmetadata%2Fversioning%2Fversions%2Fversion%5Blast()%5D&colorB=blue&style=for-the-badge)](https://github.com/SpinyOwl/repo/tree/snapshots/org/liquidengine/legui)
 
 ___
 
@@ -101,32 +99,18 @@ The data for the whole frame is buffered and flushed in end of rendering. The fo
 #### Add dependency repo
 For using this library you should add these urls as repositories:  
 For **[LWJGL](https://github.com/LWJGL/lwjgl3)** and **[JOML](https://github.com/JOML-CI/JOML)** dependencies  
-`https://oss.sonatype.org/content/repositories/snapshots/`  
+`https://oss.sonatype.org/content/repositories/snapshots/` - for snapshots  
+`https://oss.sonatype.org/content/repositories/releases/` -  for releases  
 Also you can add your own versions of these libraries using [LWJGL form](https://www.lwjgl.org/download).
 
 For **LEGUI** and **[CBCHAIN](https://github.com/SpinyOwl/cbchain)** dependency  
 `https://raw.github.com/SpinyOwl/repo/releases`  
-`https://raw.github.com/SpinyOwl/repo/snapshots` 
-
-For latest develop build you can use next repository:
-`https://raw.github.com/SpinyOwl/repo/develop`
- 
-And for feature you can use feature repository:
-`https://raw.github.com/SpinyOwl/repo/feature`
 
 And add this dependency to your build script:  
 #### Add dependency (Maven):
+
  ```xml
-<!-- LEGUI - SNAPSHOT - https://github.com/SpinyOwl/legui -->
-<dependency>
-    <groupId>org.liquidengine</groupId>
-    <artifactId>legui</artifactId>
-    <version>${legui_version}-SNAPSHOT</version>
-</dependency>
- ```
-**OR** 
- ```xml
-<!-- LEGUI - RELEASE/DEVELOP/FEATURE - https://github.com/SpinyOwl/legui -->
+<!-- LEGUI - https://github.com/SpinyOwl/legui -->
 <dependency>
     <groupId>org.liquidengine</groupId>
     <artifactId>legui</artifactId>
@@ -135,11 +119,8 @@ And add this dependency to your build script:
  ```
 #### Add dependency (Gradle):
   ```groovy
-// LEGUI - SNAPSHOT - https://github.com/SpinyOwl/legui
-compile group: 'org.liquidengine', name: 'legui', version: legui_version + '-SNAPSHOT', changing: true;
-// OR
-// LEGUI - RELEASE/DEVELOP/FEATURE - https://github.com/SpinyOwl/legui
-compile group: 'org.liquidengine', name: 'legui', version: legui_version, changing: true;
+// LEGUI - https://github.com/SpinyOwl/legui
+compile group: 'org.liquidengine', name: 'legui', version: "${legui_version}";
   ```
 
 ### Demos:
