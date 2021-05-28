@@ -35,7 +35,7 @@ jobs:
         with:
           severity: info
           color: '#808080'
-          description: Build started on branch `${{env.branch}}`
+          description: Build started
           footer: "https://github.com/SpinyOwl/legui"
           webhookUrl:  ${{ secrets.WEBHOOK_URL }}
 
@@ -93,7 +93,7 @@ jobs:
         with:
           severity: info
           details: |
-            Build successfully finished on branch `${{env.branch}}`.
+            Build successfully finished.
             **Artifact version** - `${{env.version}}`.
             Browse artifacts: [Browse artifacts](${{env.repoUrl}}${{env.version}})
           footer: "https://github.com/SpinyOwl/legui"
@@ -105,7 +105,7 @@ jobs:
         with:
           severity: info
           details: |
-            Build successfully finished on branch `${{env.branch}}`.
+            Build successfully finished.
             Browse artifacts: [Browse artifacts](${{env.repoUrl}})
           footer: "https://github.com/SpinyOwl/legui"
           webhookUrl:  ${{ secrets.WEBHOOK_URL }}
@@ -116,7 +116,7 @@ jobs:
         with:
           severity: error
           details: |
-            Build failed on branch `${{env.branch}}`.
+            Build failed.
             Browse artifacts: [Browse artifacts](${{env.repoUrl}})
           footer: "https://github.com/SpinyOwl/legui"
           webhookUrl:  ${{ secrets.WEBHOOK_URL }}
@@ -127,7 +127,7 @@ jobs:
         with:
           severity: warn
           details: |
-            Build cancelled on branch `${{env.branch}}`.
+            Build cancelled.
             Browse artifacts: [Browse artifacts](${{env.repoUrl}})
           footer: "https://github.com/SpinyOwl/legui"
           webhookUrl:  ${{ secrets.WEBHOOK_URL }}
