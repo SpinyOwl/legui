@@ -64,6 +64,9 @@ jobs:
         run: ./gradlew sonarqube
 
       # PUBLISH ARTIFACTS
+      - name: Build artifacts
+        run: ./gradlew publish
+
       - name: Publish Artifact to GIT
         uses: SpinyOwl/publish-artifact-to-git@1.0.0
         if: "!contains(github.event.head_commit.message, '[skip publish]')"
