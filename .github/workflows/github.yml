@@ -87,7 +87,7 @@ jobs:
           details: |
             Build successfully finished.
             **Artifact version** - `${{env.version}}`.
-            Browse artifacts: [Browse artifacts](${{env.repoUrl}}${{env.version}})
+            Browse artifacts: [Browse artifacts](${{env.repoUrl}}/${{env.version}})
           footer: "https://github.com/SpinyOwl/legui"
           webhookUrl:  ${{ secrets.WEBHOOK_URL }}
 
