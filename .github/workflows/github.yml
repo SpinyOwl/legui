@@ -15,18 +15,18 @@ jobs:
       - uses: actions/checkout@v2
 
       # EVALUATE VARIABLES
-      - name: Get JSON Property
-        id: extract_version
-        uses: notiz-dev/github-action-json-property@release
+      - name: Get Version Property
+        id: read_property
+        uses: christian-draeger/read-properties@1.0.1
         with:
-          path: version.json
-          prop_path: version
+          path: ./gradle.properties
+          property: version
 
       - name: Set environment variables
         run: |
           echo "branch=develop" >> $GITHUB_ENV
           echo "publishUrl=git:releases://git@github.com:SpinyOwl/repo.git" >> $GITHUB_ENV
-          echo "version=${{steps.extract_version.outputs.prop}}" >> $GITHUB_ENV
+          echo "version=${{steps.read_property.outputs.value}}" >> $GITHUB_ENV
           echo "repoUrl=https://github.com/SpinyOwl/repo/tree/releases/org/liquidengine/legui" >> $GITHUB_ENV
 
       # CALL WEBHOOK
@@ -40,12 +40,10 @@ jobs:
           webhookUrl:  ${{ secrets.WEBHOOK_URL }}
 
       # PREPARE AND BUILD
-      - name: Set up JDK 1.8
-        uses: actions/setup-java@v1
+      - name: Set up JDK
+        uses: actions/setup-java@v1.4.3
         with:
           java-version: 11
-          server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
-          settings-path: ${{ github.workspace }} # location for the settings.xml file
 
       - name: Build with Gradle
         run: ./gradlew build
@@ -66,25 +64,16 @@ jobs:
         run: ./gradlew sonarqube
 
       # PUBLISH ARTIFACTS
-      - name: Prepare environment to publish artifacts
+      - name: Publish Artifact to GIT
+        uses: SpinyOwl/publish-artifact-to-git@1.0.0
         if: "!contains(github.event.head_commit.message, '[skip publish]')"
-        run: |
-          git config --global user.name ${{ secrets.publishUsername }}
-          git config --global user.email ${{ secrets.publishEmail }}
-
-      - name: Configure SSH to publish artifacts
-        if: "!contains(github.event.head_commit.message, '[skip publish]')"
-        uses: MrSquaare/ssh-setup-action@v1.0.1
         with:
-          host: github.com
-          private-key: ${{ secrets.REPO_TOKEN }}
-
-      - name: Publish artifacts to github repository
-        if: "!contains(github.event.head_commit.message, '[skip publish]')"
-        env:
-          publishUsername: ${{ secrets.publishUsername }}
-          publishPassword: ${{ secrets.publishPassword }}
-        run: ./gradlew uploadArchives
+          repository: SpinyOwl/repo
+          branch: releases
+          github_token: '${{ secrets.GITHUB_TOKEN  }}'
+          github_pat: '${{ secrets.GH_PAT }}'
+          source_folder: build/publish
+          no_delete: true
 
       # CALL WEBHOOK
       - name: Send message build finished

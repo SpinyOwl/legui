@@ -1,16 +1,13 @@
+import java.text.SimpleDateFormat
+
 plugins {
+    id 'maven-publish'
     id 'java-library'
     id "org.sonarqube" version "2.7"
     id 'net.nemerosa.versioning' version '2.6.1'
 }
 
 group 'org.liquidengine'
-
-import groovy.json.JsonSlurper
-
-// SETUP VERSION
-def versionJson = new JsonSlurper().parseText(new File("$project.projectDir/version.json").text)
-project.version = versionJson.version
 
 printProjectInfo()
 
@@ -30,7 +27,6 @@ configurations.all {
 
 apply plugin: 'idea'
 apply plugin: 'eclipse'
-apply plugin: 'maven'
 apply plugin: 'maven-publish'
 
 idea { module { downloadJavadoc = true; downloadSources = true } }
@@ -39,11 +35,12 @@ targetCompatibility = 11
 compileJava.options.encoding = 'UTF-8'
 
 java {
+    withJavadocJar()
+    withSourcesJar()
     modularity.inferModulePath = true
 }
 
 repositories {
-    jcenter()
     mavenCentral()
     maven { url "https://oss.sonatype.org/content/repositories/releases/" }
     maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
@@ -106,73 +103,34 @@ test {
 }
 
 // PUBLISH SECTION
-configurations {
-    deployerJar
-}
-repositories {
-    maven { url 'https://raw.githubusercontent.com/synergian/wagon-git/releases' }
-}
-dependencies {
-    deployerJar 'ar.com.synergian:wagon-git:0.3.0'
+
+jar {
+    exclude("org/liquidengine/legui/demo/**")
+    manifest.attributes(
+            'Build-Timestamp': new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").format(new Date()),
+            'Build-Revision': versioning.info.commit,
+            'Created-By': "Gradle ${gradle.gradleVersion}",
+            'Build-Jdk': "${System.properties.getProperty('java.version')} (${System.properties.getProperty('java.vendor')} ${System.properties.getProperty('java.vm.version')})",
+            'Build-OS': "${System.properties.getProperty('os.name')} ${System.properties.getProperty('os.arch')} ${System.properties.getProperty('os.version')}",
+            'Full-Version': project.version
+    )
 }
 
-def publishUrl = System.getProperty("publishUrl") ?: System.getenv("publishUrl") ?: null
-def publishUsername = System.getProperty("publishUsername") ?: System.getenv("publishUsername") ?: null
-def publishPassword = System.getProperty("publishPassword") ?: System.getenv("publishPassword") ?: null
-
-uploadArchives {
-    repositories.mavenDeployer {
-        configuration = configurations.deployerJar
-        repository(url: publishUrl) {
-            authentication(userName: publishUsername, password: publishPassword)
+def mavenLocalRepo = new File(project.buildDir.path, 'publish').toURI().toURL()
+publishing {
+    repositories {
+        maven {
+            url mavenLocalRepo
+        }
+    }
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
         }
     }
 }
 
-//@formatter:off
-jar {
-    exclude("org/liquidengine/legui/demo/**")
-    manifest {
-        attributes(
-                'Build-Timestamp': new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").format(new Date()),
-                'Build-Revision' : versioning.info.commit,
-                'Created-By'     : "Gradle ${gradle.gradleVersion}",
-                'Build-Jdk'      : "${System.properties['java.version']} (${System.properties['java.vendor']} ${System.properties['java.vm.version']})",
-                'Build-OS'       : "${System.properties['os.name']} ${System.properties['os.arch']} ${System.properties['os.version']}",
-                'Full-Version'   : project.version
-        )
-    }
-}
-//@formatter:on
-
-task sourcesJar(type: Jar, dependsOn: classes) {
-    archiveClassifier.set('sources')
-    from(sourceSets.main.allSource) {
-        exclude("org/liquidengine/legui/demo/**")
-    }
-}
-
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    archiveClassifier.set('javadoc')
-    from(javadoc.destinationDir) {
-        exclude("org/liquidengine/legui/demo/**")
-    }
-}
-
-javadocJar.dependsOn javadoc
-uploadArchives.dependsOn jar
-uploadArchives.dependsOn sourcesJar
-uploadArchives.dependsOn javadocJar
-
-artifacts {
-    archives sourcesJar
-    archives javadocJar
-}
-
-
 // SONARQUBE CONFIGURATION
-
-
 def sonarLogin = System.getProperty("sonarLogin") ?: System.getenv("sonarLogin") ?: null
 sonarqube {
     properties {
