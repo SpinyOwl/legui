@@ -124,14 +124,12 @@ public class TextArea extends Component implements TextComponent, Viewport {
         viewport.getStyle().setLeft(0f);
         viewport.getStyle().setBottom(INITIAL_SCROLL_SIZE);
         viewport.getStyle().setRight(INITIAL_SCROLL_SIZE);
-        viewport.getListenerMap().addListener(ScrollEvent.class, new TextAreaViewportScrollListener());
         viewport.setTabFocusable(false);
 
         textAreaField = new TextAreaField(0, 0, viewportWidth, viewportHeight);
 
         textAreaField.getStyle().setBorder(null);
         textAreaField.setTabFocusable(false);
-        textAreaField.getListenerMap().addListener(TextAreaFieldUpdateEvent.class, new TextAreaFieldUpdateListener(this));
         viewport.add(textAreaField);
 
         this.add(viewport);
@@ -160,6 +158,9 @@ public class TextArea extends Component implements TextComponent, Viewport {
 
         this.add(verticalScrollBar);
         this.add(horizontalScrollBar);
+
+        viewport.getListenerMap().addListener(ScrollEvent.class, new TextAreaViewportScrollListener());
+        textAreaField.getListenerMap().addListener(TextAreaFieldUpdateEvent.class, new TextAreaFieldUpdateListener(this));
 
         Themes.getDefaultTheme().getThemeManager().getComponentTheme(TextArea.class).applyAll(this);
     }
