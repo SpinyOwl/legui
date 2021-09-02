@@ -5,6 +5,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
+import org.joml.Vector4f;
 import org.liquidengine.legui.animation.Animation;
 import org.liquidengine.legui.component.event.textarea.TextAreaFieldUpdateEvent;
 import org.liquidengine.legui.component.misc.animation.textarea.TextAreaScrollAnimation;
@@ -18,9 +19,8 @@ import org.liquidengine.legui.style.color.ColorConstants;
 import org.liquidengine.legui.style.length.Length;
 import org.liquidengine.legui.theme.Themes;
 
-import java.util.Objects;
-
 import static org.liquidengine.legui.style.length.LengthType.pixel;
+import static org.liquidengine.legui.style.util.StyleUtilities.getPadding;
 
 /**
  * Panel with scroll bars. Default container layout is null.
@@ -65,9 +65,9 @@ public class TextArea extends Component implements TextComponent, Viewport {
     /**
      * Constructor with position and size parameters.
      *
-     * @param x x position position in parent component.
-     * @param y y position position in parent component.
-     * @param width width of component.
+     * @param x      x position position in parent component.
+     * @param y      y position position in parent component.
+     * @param width  width of component.
      * @param height height of component.
      */
     public TextArea(float x, float y, float width, float height) {
@@ -79,7 +79,7 @@ public class TextArea extends Component implements TextComponent, Viewport {
      * Constructor with position and size parameters.
      *
      * @param position position position in parent component.
-     * @param size size of component.
+     * @param size     size of component.
      */
     public TextArea(Vector2f position, Vector2f size) {
         super(position, size);
@@ -270,33 +270,33 @@ public class TextArea extends Component implements TextComponent, Viewport {
         TextArea panel = (TextArea) o;
 
         return new EqualsBuilder()
-            .appendSuper(super.equals(o))
-            .append(verticalScrollBar, panel.verticalScrollBar)
-            .append(horizontalScrollBar, panel.horizontalScrollBar)
+                .appendSuper(super.equals(o))
+                .append(verticalScrollBar, panel.verticalScrollBar)
+                .append(horizontalScrollBar, panel.horizontalScrollBar)
 //            .append(viewport, panel.viewport)
-            .append(textAreaField, panel.textAreaField)
-            .isEquals();
+                .append(textAreaField, panel.textAreaField)
+                .isEquals();
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-            .append("verticalScrollBar", verticalScrollBar)
-            .append("horizontalScrollBar", horizontalScrollBar)
-            .append("viewport", viewport)
-            .append("textAreaField", textAreaField)
-            .toString();
+                .append("verticalScrollBar", verticalScrollBar)
+                .append("horizontalScrollBar", horizontalScrollBar)
+                .append("viewport", viewport)
+                .append("textAreaField", textAreaField)
+                .toString();
     }
 
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
-            .appendSuper(super.hashCode())
-            .append(verticalScrollBar)
-            .append(horizontalScrollBar)
-            .append(viewport)
-            .append(textAreaField)
-            .toHashCode();
+                .appendSuper(super.hashCode())
+                .append(verticalScrollBar)
+                .append(horizontalScrollBar)
+                .append(viewport)
+                .append(textAreaField)
+                .toHashCode();
     }
 
     public Component getViewport() {
@@ -440,7 +440,7 @@ public class TextArea extends Component implements TextComponent, Viewport {
         textAreaField.setTabSize(tabSize);
     }
 
-    public static class TextAreaViewport extends Panel {
+    public class TextAreaViewport extends Panel {
 
         public TextAreaViewport() {
         }
@@ -452,6 +452,30 @@ public class TextArea extends Component implements TextComponent, Viewport {
         public TextAreaViewport(Vector2f position, Vector2f size) {
             super(position, size);
         }
+
+        @Override
+        public void setSize(float width, float height) {
+            super.setSize(width, height);
+        }
+
+        @Override
+        public void setSize(Vector2f size) {
+            super.setSize(size);
+            resizeTextAreaField();
+        }
     }
 
+    public void resizeTextAreaField() {
+        Vector2f viewportSize = getViewportSize();
+        Vector4f padding = getPadding(textAreaField, textAreaField.getStyle());
+        float maxTextWidth = Math.max(
+                textAreaField.getMaxTextWidth() + padding.x + padding.z,
+                viewportSize.x
+        );
+        float maxTextHeight = Math.max(
+                textAreaField.getMaxTextHeight() + padding.y + padding.w,
+                viewportSize.y
+        );
+        textAreaField.setSize(maxTextWidth, maxTextHeight);
+    }
 }

@@ -2,10 +2,8 @@ package org.liquidengine.legui.component.misc.listener.textarea;
 
 import org.joml.Vector2f;
 import org.joml.Vector4f;
-import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.component.ScrollBar;
 import org.liquidengine.legui.component.TextArea;
-import org.liquidengine.legui.component.TextArea.TextAreaViewport;
 import org.liquidengine.legui.component.TextAreaField;
 import org.liquidengine.legui.component.event.textarea.TextAreaFieldUpdateEvent;
 import org.liquidengine.legui.component.event.textarea.TextAreaFieldUpdateEventListener;
@@ -28,25 +26,11 @@ public class TextAreaFieldUpdateListener implements TextAreaFieldUpdateEventList
     @Override
     public void process(TextAreaFieldUpdateEvent event) {
         TextAreaField textAreaField = event.getTargetComponent();
-        Component parent = textAreaField.getParent();
 
-        Vector4f padding = getPadding(textAreaField, textAreaField.getStyle());
-        if (parent instanceof TextAreaViewport) {
-            TextAreaViewport textAreaViewport = (TextAreaViewport) parent;
-
-            float maxTextWidth = Math.max(
-                textAreaField.getMaxTextWidth() + padding.x + padding.z,
-                textAreaViewport.getSize().x
-            );
-            float maxTextHeight = Math.max(
-                textAreaField.getMaxTextHeight() + padding.y + padding.w,
-                textAreaViewport.getSize().y
-            );
-            textAreaField.setSize(maxTextWidth, maxTextHeight);
-        }
+        textArea.resizeTextAreaField();
 
         Vector2f absolutePosition = textAreaField.getAbsolutePosition();
-
+        Vector4f padding = getPadding(textAreaField, textAreaField.getStyle());
         updateHorizontalOffset(textAreaField, absolutePosition, padding.x);
         updateVerticalOffset(textAreaField, absolutePosition, padding.y);
     }

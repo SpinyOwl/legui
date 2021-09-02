@@ -76,10 +76,14 @@ public class NvgTextAreaFieldRenderer extends NvgDefaultComponentRenderer<TextAr
 
     private void renderText(Context leguiContext, long context, TextAreaField gui, Vector4f rect, Vector4f viewportRect, Vector4f bc) {
 
+        String font = getStyle(gui, Style::getFont, FontRegistry.getDefaultFont());
+        // switch to default font if font not found in nanovg.
+        if (nvgFindFont(context, font) == -1) {
+            font = FontRegistry.getDefaultFont();
+        }
         try (NVGGlyphPosition.Buffer glyphs = NVGGlyphPosition.calloc(maxGlyphCount)) {
 
             TextState textState = gui.getTextState();
-            String font = getStyle(gui, Style::getFont, FontRegistry.getDefaultFont());
             float fontSize = getStyle(gui, Style::getFontSize, 16F);
             HorizontalAlign halign = getStyle(gui, Style::getHorizontalAlign, HorizontalAlign.LEFT);
             VerticalAlign valign = getStyle(gui, Style::getVerticalAlign, VerticalAlign.MIDDLE);
@@ -113,7 +117,7 @@ public class NvgTextAreaFieldRenderer extends NvgDefaultComponentRenderer<TextAr
             if (!focused && gui.isStickToAlignment()) {
                 caretLine = (valign == VerticalAlign.TOP ? 0 : (valign == VerticalAlign.BOTTOM ? lineCount - 1 : lineCount / 2));
                 lineCaretPosition = (halign == HorizontalAlign.LEFT ? 0
-                    : (halign == HorizontalAlign.RIGHT ? lines[caretLine].length() : lines[caretLine].length() / 2));
+                        : (halign == HorizontalAlign.RIGHT ? lines[caretLine].length() : lines[caretLine].length() / 2));
             }
 
             int vp = valign == VerticalAlign.TOP ? 0 : valign == VerticalAlign.MIDDLE ? 1 : valign == VerticalAlign.BOTTOM ? 2 : 1;
@@ -275,9 +279,9 @@ public class NvgTextAreaFieldRenderer extends NvgDefaultComponentRenderer<TextAr
             endSelectionIndexInLine = endSelectionIndex - lineStartIndeces[endSelectionLine];
 
             float startSelectionCaretX =
-                getCaretx(context, startSelectionIndexInLine, lines[startSelectionLine], bounds[startSelectionLine], glyphs, spaceWidth, gui.getTabSize());
+                    getCaretx(context, startSelectionIndexInLine, lines[startSelectionLine], bounds[startSelectionLine], glyphs, spaceWidth, gui.getTabSize());
             float endSelectionCaretX =
-                getCaretx(context, endSelectionIndexInLine, lines[endSelectionLine], bounds[endSelectionLine], glyphs, spaceWidth, gui.getTabSize());
+                    getCaretx(context, endSelectionIndexInLine, lines[endSelectionLine], bounds[endSelectionLine], glyphs, spaceWidth, gui.getTabSize());
 
             // render every line of text
             {
@@ -384,7 +388,7 @@ public class NvgTextAreaFieldRenderer extends NvgDefaultComponentRenderer<TextAr
                                 }
                                 w = x2 - x1;
                                 NvgShapes
-                                    .drawRect(context, new Vector4f(x1, bounds[i][5] + voffset + fontSize * i, w, bounds[i][7]), getStyle(gui, Style::getHighlightColor));
+                                        .drawRect(context, new Vector4f(x1, bounds[i][5] + voffset + fontSize * i, w, bounds[i][7]), getStyle(gui, Style::getHighlightColor));
                             }
 
                             // render current line background
@@ -393,8 +397,8 @@ public class NvgTextAreaFieldRenderer extends NvgDefaultComponentRenderer<TextAr
                             char[] spaces = new char[gui.getTabSize()];
                             Arrays.fill(spaces, SPACEC);
                             NvgText.drawTextLineToRect(context, new Vector4f(lineX, lineY, lineWidth, lineHeight),
-                                false, HorizontalAlign.LEFT, VerticalAlign.MIDDLE,
-                                fontSize, font, line.replace(TABS, new String(spaces)), textColor);
+                                    false, HorizontalAlign.LEFT, VerticalAlign.MIDDLE,
+                                    fontSize, font, line.replace(TABS, new String(spaces)), textColor);
                             if (i == caretLine && focused) {
                                 // render caret
                                 NvgShapes.drawRectStroke(context, new Vector4f(caretx - 1, lineY, 1, lineHeight), caretColor, 1);
@@ -521,8 +525,8 @@ public class NvgTextAreaFieldRenderer extends NvgDefaultComponentRenderer<TextAr
 
     private boolean inRect(Vector4f rect, float lineX, float lineWidth, float lineY, float lineHeight) {
         return rect == null
-            || lineY <= rect.y + rect.w && lineY + lineHeight >= rect.y
-            && lineX <= rect.x + rect.z && lineX + lineWidth >= rect.x;
+                || lineY <= rect.y + rect.w && lineY + lineHeight >= rect.y
+                && lineX <= rect.x + rect.z && lineX + lineWidth >= rect.x;
     }
 
     private List<Integer> getTabIndices(String line) {

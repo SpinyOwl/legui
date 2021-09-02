@@ -77,6 +77,13 @@ public class NvgTextInputRenderer extends NvgDefaultComponentRenderer<TextInput>
     }
 
     private void renderText(Context leguiContext, long context, TextInput gui, Vector2f size, Vector4f rect, Vector4f bc) {
+
+        String font = getStyle(gui, Style::getFont, FontRegistry.getDefaultFont());
+        // switch to default font if font not found in nanovg.
+        if (nvgFindFont(context, font) == -1) {
+            font = FontRegistry.getDefaultFont();
+        }
+
         Vector4f textColor = getStyle(gui, Style::getTextColor);
         try (
             NVGGlyphPosition.Buffer glyphs = NVGGlyphPosition.calloc(MAX_GLYPH_COUNT);
@@ -84,7 +91,6 @@ public class NvgTextInputRenderer extends NvgDefaultComponentRenderer<TextInput>
         ) {
             TextState textState = gui.getTextState();
             String text = textState.getText();
-            String font = getStyle(gui, Style::getFont, FontRegistry.getDefaultFont());
             float fontSize = getStyle(gui, Style::getFontSize, 16F);
             Vector4f highlightColor = getStyle(gui, Style::getHighlightColor);
             HorizontalAlign halign = getStyle(gui, Style::getHorizontalAlign, HorizontalAlign.LEFT);

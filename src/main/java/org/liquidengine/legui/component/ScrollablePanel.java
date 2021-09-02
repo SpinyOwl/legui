@@ -155,18 +155,17 @@ public class ScrollablePanel extends Component implements Viewport {
         if (autoResize) {
             Vector2f viewportSize = calculateViewportSize();
 
-            Vector2f size = new Vector2f(viewportSize);
             for (Component childComponent : container.getChildComponents()) {
                 float right = childComponent.getPosition().x + childComponent.getSize().x;
                 float bottom = childComponent.getPosition().y + childComponent.getSize().y;
-                if (right > size.x) {
-                    size.x = right;
+                if (right > viewportSize.x) {
+                    viewportSize.x = right;
                 }
-                if (bottom > size.y) {
-                    size.y = bottom;
+                if (bottom > viewportSize.y) {
+                    viewportSize.y = bottom;
                 }
             }
-            container.setSize(size);
+            container.setSize(viewportSize);
         }
     }
 
