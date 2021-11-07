@@ -81,7 +81,7 @@ public class IOUtil {
      */
     public static ByteBuffer resourceToByteBuffer(File file) throws IOException {
         if (!file.exists() || !file.isFile()) {
-            throw new IllegalArgumentException("File is not exist or is not a file.");
+            throw new IllegalArgumentException("File does not exist or is not a file.");
         }
         ByteBuffer data;
         InputStream stream = new FileInputStream(file);
