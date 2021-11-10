@@ -5,7 +5,7 @@
 [![Discord](https://img.shields.io/discord/245558983123927040.svg?slongCache=true&label=Discord&logo=discord&style=for-the-badge)](https://discord.gg/6wfqXpJ)
 
 ![Build and publish](https://img.shields.io/github/workflow/status/SpinyOwl/legui/Build%20and%20publish/develop?label=build&logo=Github&style=for-the-badge)
-[![STABLE SNAPSHOT VERSION](https://img.shields.io/badge/dynamic/xml.svg?label=latest%20version&url=https%3A%2F%2Fraw.github.com%2FSpinyOwl%2Frepo%2Freleases%2Forg%2Fliquidengine%2Flegui%2Fmaven-metadata.xml&query=%2F%2Fmetadata%2Fversioning%2Fversions%2Fversion%5Blast()%5D&colorB=blue&style=for-the-badge)](https://github.com/SpinyOwl/repo/tree/snapshots/com/spinyowl/legui)
+[![STABLE VERSION](https://img.shields.io/badge/dynamic/xml.svg?label=latest%20version&url=https%3A%2F%2Fraw.github.com%2FSpinyOwl%2Frepo%2Freleases%2Fcom%2Fspinyowl%2Flegui%2Fmaven-metadata.xml&query=%2F%2Fmetadata%2Fversioning%2Fversions%2Fversion%5Blast()%5D&colorB=blue&style=for-the-badge)](https://github.com/SpinyOwl/repo/tree/releases/com/spinyowl/legui)
 
 ___
 
