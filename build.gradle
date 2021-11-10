@@ -11,7 +11,7 @@ plugins {
 
 def version = SemVer.of(version.toString())
 
-project.group = 'org.liquidengine'
+project.group = 'com.spinyowl'
 
 processResources {
     filesMatching('**/version.properties') {
@@ -56,7 +56,7 @@ dependencies {
     // https://mvnrepository.com/artifact/com.squareup.moshi/moshi
     api group: 'com.squareup.moshi', name: 'moshi', version: '1.12.0'
 
-    api group: 'org.liquidengine', name: 'cbchain', version: le_cbchain, changing: true
+    api group: 'com.spinyowl', name: 'cbchain', version: cbchain_version, changing: true
 
     api group: 'org.lwjgl', name: 'lwjgl-stb', version: lwjgl_version, changing: true
     api group: 'org.lwjgl', name: 'lwjgl-stb', version: lwjgl_version, changing: true, classifier: 'natives-windows'
@@ -106,7 +106,7 @@ java {
 }
 
 jar {
-    exclude("org/liquidengine/legui/demo/**")
+    exclude("com/spinyowl/legui/demo/**")
     manifest.attributes(
             'Build-Timestamp': new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").format(new Date()),
             'Build-Revision': versioning.info.commit,

@@ -27,7 +27,7 @@ jobs:
           echo "branch=develop" >> $GITHUB_ENV
           echo "publishUrl=git:releases://git@github.com:SpinyOwl/repo.git" >> $GITHUB_ENV
           echo "version=${{steps.read_property.outputs.value}}" >> $GITHUB_ENV
-          echo "repoUrl=https://github.com/SpinyOwl/repo/tree/releases/org/liquidengine/legui" >> $GITHUB_ENV
+          echo "repoUrl=https://github.com/SpinyOwl/repo/tree/releases/com/spinyowl/legui" >> $GITHUB_ENV
 
       # CALL WEBHOOK
       - name: Send message build started
@@ -37,7 +37,7 @@ jobs:
           color: '#808080'
           description: Build started
           footer: "https://github.com/SpinyOwl/legui"
-          webhookUrl:  ${{ secrets.WEBHOOK_URL }}
+          webhookUrl: ${{ secrets.WEBHOOK_URL }}
 
       # PREPARE AND BUILD
       - name: Set up JDK
@@ -89,7 +89,7 @@ jobs:
             **Artifact version** - `${{env.version}}`.
             Browse artifacts: [Browse artifacts](${{env.repoUrl}}/${{env.version}})
           footer: "https://github.com/SpinyOwl/legui"
-          webhookUrl:  ${{ secrets.WEBHOOK_URL }}
+          webhookUrl: ${{ secrets.WEBHOOK_URL }}
 
       - name: Send message build finished
         uses: rjstone/discord-webhook-notify@v1
@@ -100,7 +100,7 @@ jobs:
             Build successfully finished.
             Browse artifacts: [Browse artifacts](${{env.repoUrl}})
           footer: "https://github.com/SpinyOwl/legui"
-          webhookUrl:  ${{ secrets.WEBHOOK_URL }}
+          webhookUrl: ${{ secrets.WEBHOOK_URL }}
 
       - name: Send message build failed
         uses: rjstone/discord-webhook-notify@v1
@@ -111,7 +111,7 @@ jobs:
             Build failed.
             Browse artifacts: [Browse artifacts](${{env.repoUrl}})
           footer: "https://github.com/SpinyOwl/legui"
-          webhookUrl:  ${{ secrets.WEBHOOK_URL }}
+          webhookUrl: ${{ secrets.WEBHOOK_URL }}
 
       - name: Send message build cancelled
         uses: rjstone/discord-webhook-notify@v1
@@ -122,4 +122,4 @@ jobs:
             Build cancelled.
             Browse artifacts: [Browse artifacts](${{env.repoUrl}})
           footer: "https://github.com/SpinyOwl/legui"
-          webhookUrl:  ${{ secrets.WEBHOOK_URL }}
+          webhookUrl: ${{ secrets.WEBHOOK_URL }}
