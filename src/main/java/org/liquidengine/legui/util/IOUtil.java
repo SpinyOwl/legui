@@ -2,21 +2,20 @@ package org.liquidengine.legui.util;
 
 import org.apache.commons.io.IOUtils;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.net.URL;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 /**
  * IO utility. Used to read resource as {@link ByteBuffer} or as {@link String}.
  *
  * @author ShchAlexander.
  */
-public class IOUtil {
+public final class IOUtil {
+    private IOUtil() {}
 
     /**
      * Creates {@link ByteBuffer} from:
@@ -31,7 +30,6 @@ public class IOUtil {
      * @throws IOException in case if any IO exception occurs.
      */
     public static ByteBuffer resourceToByteBuffer(String path) throws IOException {
-        ByteBuffer data = null;
         byte[] bytes;
         path = path.trim();
         if (path.startsWith("http")) {
@@ -49,7 +47,7 @@ public class IOUtil {
             }
             bytes = IOUtils.toByteArray(stream);
         }
-        data = ByteBuffer.allocateDirect(bytes.length).order(ByteOrder.nativeOrder()).put(bytes);
+        ByteBuffer data = ByteBuffer.allocateDirect(bytes.length).order(ByteOrder.nativeOrder()).put(bytes);
         data.flip();
         return data;
     }
@@ -65,9 +63,8 @@ public class IOUtil {
         if (stream == null) {
             throw new IllegalArgumentException("InputStream can not be null!");
         }
-        ByteBuffer data = null;
         byte[] bytes = IOUtils.toByteArray(stream);
-        data = ByteBuffer.allocateDirect(bytes.length).order(ByteOrder.nativeOrder()).put(bytes);
+        ByteBuffer data = ByteBuffer.allocateDirect(bytes.length).order(ByteOrder.nativeOrder()).put(bytes);
         data.flip();
         return data;
     }
@@ -83,10 +80,9 @@ public class IOUtil {
         if (!file.exists() || !file.isFile()) {
             throw new IllegalArgumentException("File does not exist or is not a file.");
         }
-        ByteBuffer data;
         InputStream stream = new FileInputStream(file);
         byte[] bytes = IOUtils.toByteArray(stream);
-        data = ByteBuffer.allocateDirect(bytes.length).order(ByteOrder.nativeOrder()).put(bytes);
+        ByteBuffer data = ByteBuffer.allocateDirect(bytes.length).order(ByteOrder.nativeOrder()).put(bytes);
         data.flip();
         return data;
     }
@@ -131,6 +127,16 @@ public class IOUtil {
      * @return string or null.
      */
     public static String byteBufferToString(ByteBuffer byteBuffer) {
+        return byteBufferToString(byteBuffer, StandardCharsets.UTF_8);
+    }
+
+    /**
+     * Used to transfer buffer data to {@link String}.
+     *
+     * @param byteBuffer data to transfer
+     * @return string or null.
+     */
+    public static String byteBufferToString(ByteBuffer byteBuffer, Charset charset) {
         if (byteBuffer == null) {
             return null;
         }
@@ -139,7 +145,7 @@ public class IOUtil {
         }
         byte[] buffer = new byte[byteBuffer.limit()];
         byteBuffer.get(buffer);
-        return new String(buffer);
+        return new String(buffer, charset);
     }
 
 }

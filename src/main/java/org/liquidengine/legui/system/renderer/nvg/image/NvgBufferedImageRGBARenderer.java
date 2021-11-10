@@ -1,8 +1,6 @@
 package org.liquidengine.legui.system.renderer.nvg.image;
 
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.joml.Vector2fc;
 import org.liquidengine.legui.image.BufferedImageRGBA;
 import org.liquidengine.legui.system.context.Context;
@@ -20,7 +18,6 @@ import static org.lwjgl.nanovg.NanoVG.nvgCreateImageRGBA;
  * Used to render image rectangle if no other renderers implemented.
  */
 public class NvgBufferedImageRGBARenderer extends NvgImageRenderer<BufferedImageRGBA> {
-    private static final Logger LOGGER = LogManager.getLogger();
 
     @Override
     public void initialize() {
@@ -38,7 +35,7 @@ public class NvgBufferedImageRGBARenderer extends NvgImageRenderer<BufferedImage
                         return reference;
                     });
                 } catch (ExecutionException e) {
-                    LOGGER.error(e.getMessage(), e);
+                    e.printStackTrace();
                 }
             }
             return imageRef;

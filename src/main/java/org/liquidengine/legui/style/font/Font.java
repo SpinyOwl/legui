@@ -2,12 +2,8 @@ package org.liquidengine.legui.style.font;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.liquidengine.legui.util.IOUtil;
 
-import java.io.IOException;
 import java.nio.ByteBuffer;
-
-import static org.liquidengine.legui.exception.LeguiExceptionTemplate.FAILED_TO_LOAD_FONT;
 
 /**
  * Representation of font. Used by text components to specify font to use by renderer.
@@ -17,29 +13,12 @@ public class Font {
     /**
      * Font data.
      */
-    private ByteBuffer data;
+    private final ByteBuffer data;
 
     /**
      * Path to font.
      */
-    private String path;
-
-    /**
-     * Default constructor. Should be used with path setter and {@link #load()} method.
-     */
-    public Font() {
-    }
-
-    /**
-     * Used to create font by specified path. Loads font from specified path.
-     *
-     * @param path path to font data.
-     */
-    public Font(String path) {
-        this.path = path;
-        load();
-
-    }
+    private final String path;
 
     /**
      * Used to create font with specified path and data.
@@ -50,14 +29,6 @@ public class Font {
     public Font(String path, ByteBuffer data) {
         this.path = path;
         this.data = data;
-    }
-
-    public void load() {
-        try {
-            data = IOUtil.resourceToByteBuffer(path);
-        } catch (IOException e) {
-            throw FAILED_TO_LOAD_FONT.create(e, path);
-        }
     }
 
     /**
@@ -78,17 +49,6 @@ public class Font {
         return path;
     }
 
-    /**
-     * Used to set path. Can be used only once. Used with default constructor.
-     *
-     * @param path path to set.
-     */
-    public void setPath(String path) {
-        if (this.path == null && path != null) {
-            this.path = path;
-        }
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -102,16 +62,16 @@ public class Font {
         Font font = (Font) o;
 
         return new EqualsBuilder()
-            .append(getData(), font.getData())
-            .append(getPath(), font.getPath())
-            .isEquals();
+                .append(getData(), font.getData())
+                .append(getPath(), font.getPath())
+                .isEquals();
     }
 
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
-            .append(getData())
-            .append(getPath())
-            .toHashCode();
+                .append(getData())
+                .append(getPath())
+                .toHashCode();
     }
 }

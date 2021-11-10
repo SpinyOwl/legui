@@ -1,7 +1,5 @@
 package org.liquidengine.legui.system.renderer.nvg.image;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.joml.Vector2fc;
 import org.liquidengine.legui.image.StbBackedLoadableImage;
 import org.liquidengine.legui.system.context.Context;
@@ -18,7 +16,6 @@ import java.util.concurrent.ExecutionException;
  * Created by ShchAlexander on 3/31/2017.
  */
 public class NvgStbBackedLoadableImageRenderer extends NvgImageRenderer<StbBackedLoadableImage> {
-    private static final Logger LOGGER = LogManager.getLogger();
 
     @Override
     public void initialize() {
@@ -30,7 +27,7 @@ public class NvgStbBackedLoadableImageRenderer extends NvgImageRenderer<StbBacke
                 try {
                     imageRef = manager.getImageCache().get(path, createReference(manager, image, context));
                 } catch (ExecutionException e) {
-                    LOGGER.error(e.getMessage(), e);
+                    e.printStackTrace();
                 }
             } else {
                 return 0;

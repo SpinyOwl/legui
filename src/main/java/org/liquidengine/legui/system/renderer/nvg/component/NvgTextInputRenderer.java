@@ -1,7 +1,5 @@
 package org.liquidengine.legui.system.renderer.nvg.component;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.TextInput;
@@ -37,7 +35,6 @@ public class NvgTextInputRenderer extends NvgDefaultComponentRenderer<TextInput>
     public static final String PRATIO = "pratio";
     public static final String PALIGN = "palign";
     public static final String POFFSET = "poffset";
-    private static final Logger LOGGER = LogManager.getLogger();
     private static final int MAX_GLYPH_COUNT = 1024;
     private final Vector4f caretColor = new Vector4f(0, 0, 0, 0.5f);
 
@@ -50,8 +47,7 @@ public class NvgTextInputRenderer extends NvgDefaultComponentRenderer<TextInput>
      */
     @Override
     protected void renderSelf(TextInput component, Context context, long nanovg) {
-        createScissor(nanovg, component);
-        {
+        runWithScissor(nanovg, component, () -> {
             Vector2f pos = component.getAbsolutePosition();
             Vector2f size = component.getSize();
             boolean enabled = component.isEnabled();
@@ -72,8 +68,7 @@ public class NvgTextInputRenderer extends NvgDefaultComponentRenderer<TextInput>
             Vector4f intersectRect = getInnerContentRectangle(pos, size, padding);
             intersectScissor(nanovg, new Vector4f(intersectRect).sub(1, 1, -2, -2));
             renderText(context, nanovg, component, size, intersectRect, bc);
-        }
-        resetScissor(nanovg);
+        });
     }
 
     private void renderText(Context leguiContext, long context, TextInput gui, Vector2f size, Vector4f rect, Vector4f bc) {
@@ -86,8 +81,8 @@ public class NvgTextInputRenderer extends NvgDefaultComponentRenderer<TextInput>
 
         Vector4f textColor = getStyle(gui, Style::getTextColor);
         try (
-            NVGGlyphPosition.Buffer glyphs = NVGGlyphPosition.calloc(MAX_GLYPH_COUNT);
-            NVGColor colorA = NvgColorUtil.create(textColor)
+                NVGGlyphPosition.Buffer glyphs = NVGGlyphPosition.calloc(MAX_GLYPH_COUNT);
+                NVGColor colorA = NvgColorUtil.create(textColor)
         ) {
             TextState textState = gui.getTextState();
             String text = textState.getText();
@@ -122,7 +117,17 @@ public class NvgTextInputRenderer extends NvgDefaultComponentRenderer<TextInput>
 
                 int textLength = text.length();
                 if (!focused) {
-                    caretPosition = (halign == HorizontalAlign.LEFT ? 0 : (halign == HorizontalAlign.RIGHT ? textLength : textLength / 2));
+                    switch (halign) {
+                        case LEFT:
+                            caretPosition = (0);
+                            break;
+                        case RIGHT:
+                            caretPosition = textLength;
+                            break;
+                        default:
+                            caretPosition = textLength / 2;
+                            break;
+                    }
                 }
 
                 float[] textBounds = calculateTextBoundsRect(context, rect, text, halign, valign, fontSize);
@@ -165,55 +170,49 @@ public class NvgTextInputRenderer extends NvgDefaultComponentRenderer<TextInput>
                     poffset = recalculateOffsetX(rect, halign, caretx, ratio, offsetX, poffset, pratio, palign);
 
                     // calculate mouse caret position
-                    if (textLength == 0) {
-                        mouseCaretX = caretx;
-                    } else {
-                        float mx = Mouse.getCursorPosition().x + poffset;
-                        if (mx <= glyphs.get(0).x()) {
-                            mouseCaretPosition = 0;
-                            mouseCaretX = glyphs.get(0).x();
-                        } else if (mx >= glyphs.get(ng - 1).maxx()) {
-                            mouseCaretPosition = ng;
-                            mouseCaretX = glyphs.get(ng - 1).maxx();
-                            // if window not minimized
-                        } else if (!leguiContext.isIconified()) {
-                            // binary search mouse caret position
-                            int upper = ng;
-                            int lower = 0;
-                            boolean found = false;
-                            do {
-                                int index = (upper + lower) / 2;
-                                float left = index == 0 ? glyphs.get(index).minx() : glyphs.get(index).x();
-                                float right = index >= ng - 1 ? glyphs.get(ng - 1).maxx() : glyphs.get(index + 1).x();
-                                float mid = (left + right) / 2f;
-                                if (mx >= left && mx < right) {
-                                    found = true;
-                                    if (mx > mid) {
-                                        mouseCaretPosition = index + 1;
-                                        mouseCaretX = right;
-                                    } else {
-                                        mouseCaretPosition = index;
-                                        mouseCaretX = left;
-                                    }
-                                } else if (mx >= right) {
-                                    if (index != ng) {
-                                        lower = index + 1;
-                                    } else {
-                                        found = true;
-                                        mouseCaretPosition = ng;
-                                        mouseCaretX = right;
-                                    }
-                                } else if (mx < left) {
-                                    if (index != 0) {
-                                        upper = index;
-                                    } else {
-                                        found = true;
-                                        mouseCaretPosition = 0;
-                                        mouseCaretX = left;
-                                    }
+                    float mx = Mouse.getCursorPosition().x + poffset;
+                    if (mx <= glyphs.get(0).x()) {
+                        mouseCaretX = glyphs.get(0).x();
+                    } else if (mx >= glyphs.get(ng - 1).maxx()) {
+                        mouseCaretPosition = ng;
+                        mouseCaretX = glyphs.get(ng - 1).maxx();
+                        // if window not minimized
+                    } else if (!leguiContext.isIconified()) {
+                        // binary search mouse caret position
+                        int upper = ng;
+                        int lower = 0;
+                        boolean found = false;
+                        do {
+                            int index = (upper + lower) / 2;
+                            float left = index == 0 ? glyphs.get(index).minx() : glyphs.get(index).x();
+                            float right = index >= ng - 1 ? glyphs.get(ng - 1).maxx() : glyphs.get(index + 1).x();
+                            float mid = (left + right) / 2f;
+                            if (mx >= left && mx < right) {
+                                found = true;
+                                if (mx > mid) {
+                                    mouseCaretPosition = index + 1;
+                                    mouseCaretX = right;
+                                } else {
+                                    mouseCaretPosition = index;
+                                    mouseCaretX = left;
                                 }
-                            } while (!found);
-                        }
+                            } else if (mx >= right) {
+                                if (index != ng) {
+                                    lower = index + 1;
+                                } else {
+                                    found = true;
+                                    mouseCaretPosition = ng;
+                                    mouseCaretX = right;
+                                }
+                            } else if (mx < left) {
+                                if (index != 0) {
+                                    upper = index;
+                                } else {
+                                    found = true;
+                                    mouseCaretX = left;
+                                }
+                            }
+                        } while (!found);
                     }
                     mouseCaretX -= poffset;
                     float nCaretX = caretx - poffset;
@@ -230,13 +229,13 @@ public class NvgTextInputRenderer extends NvgDefaultComponentRenderer<TextInput>
                     }
 
                     drawSelection(context, rect, highlightColor,
-                        startSelectionIndex, endSelectionIndex,
-                        focused, startSelectionX, endSelectionX, poffset);
+                            startSelectionIndex, endSelectionIndex,
+                            focused, startSelectionX, endSelectionX, poffset);
                     // render text
 
                     Vector4f bounds = new Vector4f(textBounds[4] - poffset, textBounds[5], textBounds[6], textBounds[7]);
                     NvgText.drawTextLineToRect(context, bounds, false,
-                        HorizontalAlign.LEFT, VerticalAlign.MIDDLE, fontSize, font, text, textColor);
+                            HorizontalAlign.LEFT, VerticalAlign.MIDDLE, fontSize, font, text, textColor);
 
                     if (focused) {
                         // render caret
@@ -258,7 +257,7 @@ public class NvgTextInputRenderer extends NvgDefaultComponentRenderer<TextInput>
                 gui.setMouseCaretPosition(mouseCaretPosition);
             }
         } catch (Exception e) {
-            LOGGER.error(e.getMessage(), e);
+            e.printStackTrace();
         }
     }
 
@@ -320,7 +319,7 @@ public class NvgTextInputRenderer extends NvgDefaultComponentRenderer<TextInput>
             try {
                 caretx = glyphs.get(caretPosition).x();
             } catch (IndexOutOfBoundsException e) {
-                LOGGER.error(e.getMessage(), e);
+                e.printStackTrace();
             }
         } else {
             if (ng > 0) {

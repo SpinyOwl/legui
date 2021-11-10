@@ -1,27 +1,5 @@
 package org.liquidengine.legui.system.renderer.nvg.component;
 
-import static org.liquidengine.legui.style.color.ColorUtil.oppositeBlackOrWhite;
-import static org.liquidengine.legui.style.util.StyleUtilities.getInnerContentRectangle;
-import static org.liquidengine.legui.style.util.StyleUtilities.getPadding;
-import static org.liquidengine.legui.style.util.StyleUtilities.getStyle;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.alignTextInBox;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.calculateTextBoundsRect;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.createScissor;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.intersectScissor;
-import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.resetScissor;
-import static org.lwjgl.nanovg.NanoVG.NVG_ROUND;
-import static org.lwjgl.nanovg.NanoVG.nnvgTextGlyphPositions;
-import static org.lwjgl.nanovg.NanoVG.nvgFillColor;
-import static org.lwjgl.nanovg.NanoVG.nvgFontFace;
-import static org.lwjgl.nanovg.NanoVG.nvgFontSize;
-import static org.lwjgl.system.MemoryUtil.memAddress;
-import static org.lwjgl.system.MemoryUtil.memFree;
-import static org.lwjgl.system.MemoryUtil.memUTF8;
-
-import java.nio.ByteBuffer;
-import java.util.Map;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.PasswordInput;
@@ -39,11 +17,19 @@ import org.lwjgl.glfw.GLFW;
 import org.lwjgl.nanovg.NVGColor;
 import org.lwjgl.nanovg.NVGGlyphPosition;
 
+import java.nio.ByteBuffer;
+import java.util.Map;
+
+import static org.liquidengine.legui.style.color.ColorUtil.oppositeBlackOrWhite;
+import static org.liquidengine.legui.style.util.StyleUtilities.*;
+import static org.liquidengine.legui.system.renderer.nvg.util.NvgRenderUtils.*;
+import static org.lwjgl.nanovg.NanoVG.*;
+import static org.lwjgl.system.MemoryUtil.*;
+
 /**
  * Password input renderer.
  */
 public class NvgPasswordInputRenderer extends NvgDefaultComponentRenderer<PasswordInput> {
-    private static final Logger LOGGER = LogManager.getLogger();
 
     public static final String PRATIO = "pratio";
     public static final String PALIGN = "palign";
@@ -53,8 +39,7 @@ public class NvgPasswordInputRenderer extends NvgDefaultComponentRenderer<Passwo
 
     @Override
     public void renderSelf(PasswordInput component, Context leguiContext, long nanovg) {
-        createScissor(nanovg, component);
-        {
+        runWithScissor(nanovg, component, () -> {
             Vector2f pos = component.getAbsolutePosition();
             Vector2f size = component.getSize();
             boolean enabled = component.isEnabled();
@@ -74,25 +59,24 @@ public class NvgPasswordInputRenderer extends NvgDefaultComponentRenderer<Passwo
             Vector4f intersectRect = getInnerContentRectangle(pos, size, padding);
             intersectScissor(nanovg, new Vector4f(intersectRect).sub(1, 1, -2, -2));
             renderText(leguiContext, nanovg, component, size, intersectRect, bc);
-        }
-        resetScissor(nanovg);
+        });
     }
 
     /**
      * This method used to render password field and cursor.
      *
      * @param leguiContext legui context.
-     * @param context nanovg context.
-     * @param gui password input.
-     * @param size input size.
-     * @param rect rectangle in which should be rendered password.
-     * @param bc background color.
+     * @param context      nanovg context.
+     * @param gui          password input.
+     * @param size         input size.
+     * @param rect         rectangle in which should be rendered password.
+     * @param bc           background color.
      */
     private void renderText(Context leguiContext, long context, PasswordInput gui, Vector2f size, Vector4f rect, Vector4f bc) {
         Vector4f textColor = getStyle(gui, Style::getTextColor);
         try (
-            NVGGlyphPosition.Buffer glyphs = NVGGlyphPosition.calloc(MAX_GLYPH_COUNT);
-            NVGColor colorA = NvgColorUtil.create(textColor)
+                NVGGlyphPosition.Buffer glyphs = NVGGlyphPosition.calloc(MAX_GLYPH_COUNT);
+                NVGColor colorA = NvgColorUtil.create(textColor)
         ) {
 
             TextState textState = gui.getTextState();
@@ -117,7 +101,11 @@ public class NvgPasswordInputRenderer extends NvgDefaultComponentRenderer<Passwo
 
             int maskedLength = maskedText.length();
             if (!focused) {
-                caretPosition = (halign == HorizontalAlign.LEFT ? 0 : (halign == HorizontalAlign.RIGHT ? maskedLength : maskedLength / 2));
+                switch (halign) {
+                    case LEFT: caretPosition = (0); break;
+                    case RIGHT: caretPosition = maskedLength; break;
+                    default: caretPosition = maskedLength / 2; break;
+                }
             }
 
             if (text == null || text.isEmpty()) {
@@ -175,7 +163,6 @@ public class NvgPasswordInputRenderer extends NvgDefaultComponentRenderer<Passwo
                     } else {
                         float mx = Mouse.getCursorPosition().x + poffset;
                         if (mx <= glyphs.get(0).x()) {
-                            mouseCaretPosition = 0;
                             mouseCaretX = glyphs.get(0).x();
                         } else if (mx >= glyphs.get(ng - 1).maxx()) {
                             mouseCaretPosition = ng;
@@ -213,7 +200,6 @@ public class NvgPasswordInputRenderer extends NvgDefaultComponentRenderer<Passwo
                                         upper = index;
                                     } else {
                                         found = true;
-                                        mouseCaretPosition = 0;
                                         mouseCaretX = left;
                                     }
                                 }
@@ -224,11 +210,11 @@ public class NvgPasswordInputRenderer extends NvgDefaultComponentRenderer<Passwo
                     float nCaretX = caretx - poffset;
 
                     drawSelectionAndUpdateCaret(context, rect, bc, highlightColor, startSelectionIndex, endSelectionIndex, focused, startSelectionX,
-                                                endSelectionX,
-                                                poffset);
+                            endSelectionX,
+                            poffset);
                     // render text
                     NvgText.drawTextLineToRect(context, new Vector4f(textBounds[4] - poffset, textBounds[5], textBounds[6], textBounds[7]),
-                                               false, HorizontalAlign.LEFT, VerticalAlign.MIDDLE, fontSize, font, maskedText, textColor);
+                            false, HorizontalAlign.LEFT, VerticalAlign.MIDDLE, fontSize, font, maskedText, textColor);
 
                     if (focused) {
                         // render caret
@@ -250,7 +236,7 @@ public class NvgPasswordInputRenderer extends NvgDefaultComponentRenderer<Passwo
                 gui.setMouseCaretPosition(mouseCaretPosition);
             }
         } catch (Exception e) {
-            LOGGER.error(e.getMessage(), e);
+            e.printStackTrace();
         }
     }
 
@@ -260,9 +246,7 @@ public class NvgPasswordInputRenderer extends NvgDefaultComponentRenderer<Passwo
             int length = text.length();
             int maskCharacter = gui.getMaskCharacter();
             char[] mask = Character.toChars(maskCharacter);
-            for (int i = 0; i < length; i++) {
-                b.append(mask);
-            }
+            b.append(String.valueOf(mask).repeat(length));
             return b.toString();
         } else {
             return text;
@@ -325,7 +309,7 @@ public class NvgPasswordInputRenderer extends NvgDefaultComponentRenderer<Passwo
             try {
                 caretx = glyphs.get(caretPosition).x();
             } catch (IndexOutOfBoundsException e) {
-                LOGGER.error(e.getMessage(), e);
+                e.printStackTrace();
             }
         } else {
             if (ng > 0) {

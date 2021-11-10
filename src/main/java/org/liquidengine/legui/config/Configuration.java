@@ -1,22 +1,18 @@
 package org.liquidengine.legui.config;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import com.squareup.moshi.JsonAdapter;
+import com.squareup.moshi.Moshi;
+import com.squareup.moshi.Types;
 import org.liquidengine.legui.input.KeyCode;
 import org.liquidengine.legui.input.Keyboard;
 import org.liquidengine.legui.input.Shortcut;
 import org.liquidengine.legui.util.IOUtil;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
+import java.lang.reflect.ParameterizedType;
 import java.util.Map;
 
 public class Configuration {
-    private static final Logger LOGGER = LogManager.getLogger();
-
     private static Configuration instance;
 
     static {
@@ -34,65 +30,56 @@ public class Configuration {
     private Shortcuts shortcuts;
 
     /**
-     * Map that contains key configurations per keyboard layout.
+     * Map that contains key configurations per keyboard layout.=
      */
     private Map<String, Map<KeyCode, Integer>> keyboardLayouts;
 
     private static void initialize() {
-        Gson gson = new Gson();
+        Moshi moshi = new Moshi.Builder().build();
+        JsonAdapter<Configuration> configurationAdapter = moshi.adapter(Configuration.class);
+        ParameterizedType mapType = Types.newParameterizedType(Map.class, String.class, Object.class);
+        JsonAdapter<Map<String, Object>> mapAdapter = moshi.adapter(mapType);
         try {
-            String defaultConfig = new String(IOUtil.resourceToString("defaultLegui.json").getBytes(), StandardCharsets.UTF_8);
-            JsonObject initial = gson.fromJson(defaultConfig, JsonObject.class);
-            try {
-                String configBytes = IOUtil.resourceToString("legui.json");
-                String config = new String(configBytes.getBytes(), StandardCharsets.UTF_8);
-                JsonObject imported = gson.fromJson(config, JsonObject.class);
-                merge(initial, imported);
-            } catch (Exception e) {
-                // skip
+            Map<String, Object> initialJson = getJson("defaultLegui.json", mapAdapter, Map.of());
+            Map<String, Object> importedJson = getJson("legui.json", mapAdapter, null);
+
+            merge(initialJson, importedJson);
+            String mergedJson = mapAdapter.toJson(initialJson);
+
+            Configuration configuration = configurationAdapter.fromJson(mergedJson);
+            if (configuration != null) {
+                configuration.updateKeyboard();
+                Configuration.instance = configuration;
             }
-
-            instance = gson.fromJson(initial, Configuration.class);
-
-            Map<KeyCode, Integer> mapping = instance.getKeyboardLayouts().get(instance.getKeyboardLayout());
-            if (mapping != null) {
-                Keyboard.updateMapping(mapping);
-            }
-            Shortcut copy = instance.getShortcuts().getCopy();
-            if (copy != null) {
-                Keyboard.setCopyShortcut(copy);
-            }
-
-            Shortcut cut = instance.getShortcuts().getCut();
-            if (cut != null) {
-                Keyboard.setCutShortcut(cut);
-            }
-
-            Shortcut paste = instance.getShortcuts().getPaste();
-            if (paste != null) {
-                Keyboard.setPasteShortcut(paste);
-            }
-
-            Shortcut selectAll = instance.getShortcuts().getSelectAll();
-            if (selectAll != null) {
-                Keyboard.setSelectAllShortcut(selectAll);
-            }
-
-
         } catch (IOException e) {
-            LOGGER.error("LEGUI - Failed to load config.");
+            e.printStackTrace();
         }
     }
 
-    private static void merge(JsonObject initial, JsonObject imported) {
-        for (Map.Entry<String, JsonElement> entry : imported.entrySet()) {
-            JsonElement jsonElement = initial.get(entry.getKey());
-            if (jsonElement != null && jsonElement.isJsonObject() && entry.getValue().isJsonObject()) {
-                merge(jsonElement.getAsJsonObject(), entry.getValue().getAsJsonObject());
-            } else {
-                initial.add(entry.getKey(), entry.getValue());
-            }
+    private static Map<String, Object> getJson(String path, JsonAdapter<Map<String, Object>> adapter, Map<String, Object> defaultJson) {
+        try {
+            String json = IOUtil.resourceToString(path);
+            return adapter.fromJson(json);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return defaultJson;
         }
+    }
+
+    @SuppressWarnings({"unchecked"})
+    private static Map<String, Object> merge(Map<String, Object> left, Map<String, Object> right) {
+        if (right == null) {
+            return left;
+        }
+        for (Map.Entry<String, Object> importedEntry : right.entrySet()) {
+            left.merge(importedEntry.getKey(), importedEntry.getValue(), (leftChild, rightChild) -> {
+                if (leftChild instanceof Map && rightChild instanceof Map) {
+                    return merge((Map<String, Object>) leftChild, (Map<String, Object>) rightChild);
+                }
+                return rightChild;
+            });
+        }
+        return left;
     }
 
     public static Configuration getInstance() {
@@ -101,6 +88,32 @@ public class Configuration {
 
     public static void setInstance(Configuration instance) {
         Configuration.instance = instance;
+    }
+
+    private void updateKeyboard() {
+        Map<KeyCode, Integer> mapping = this.getKeyboardLayouts().get(this.getKeyboardLayout());
+        if (mapping != null) {
+            Keyboard.updateMapping(mapping);
+        }
+        Shortcut copy = this.getShortcuts().getCopy();
+        if (copy != null) {
+            Keyboard.setCopyShortcut(copy);
+        }
+
+        Shortcut cut = this.getShortcuts().getCut();
+        if (cut != null) {
+            Keyboard.setCutShortcut(cut);
+        }
+
+        Shortcut paste = this.getShortcuts().getPaste();
+        if (paste != null) {
+            Keyboard.setPasteShortcut(paste);
+        }
+
+        Shortcut selectAll = this.getShortcuts().getSelectAll();
+        if (selectAll != null) {
+            Keyboard.setSelectAllShortcut(selectAll);
+        }
     }
 
     public String getKeyboardLayout() {

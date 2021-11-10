@@ -4,40 +4,68 @@
  */
 package org.liquidengine.legui;
 
-import java.io.InputStream;
-import java.net.URL;
-import java.util.jar.JarFile;
-import java.util.jar.Manifest;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import java.util.ResourceBundle;
 
 /**
  * This class can be used to query the LEGUI version.
  */
 public final class Version {
-    private static final Logger LOGGER = LogManager.getLogger();
+
+    private static final ResourceBundle BUNDLE = ResourceBundle.getBundle("org/liquidengine/legui/version");
 
     private Version() {
     }
 
+    /**
+     * Returns the version of the library.
+     *
+     * @return version of the library.
+     */
     public static String getVersion() {
-        URL url = Version.class.getClassLoader().getResource("org/liquidengine/legui/Version.class");
-        if (url != null) {
-            String classURL = url.toString();
-            if (classURL.startsWith("jar:")) {
-                try (InputStream stream = new URL(classURL.substring(0, classURL.lastIndexOf('!') + 1) + '/' + JarFile.MANIFEST_NAME).openStream()) {
-                    return new Manifest(stream).getMainAttributes().getValue("Full-Version");
-                } catch (Exception e) {
-                    LOGGER.error(e.getMessage(), e);
-                }
-            }
-        }
-
-        return null;
+        return BUNDLE.getString("version.full");
     }
 
+    /**
+     * Returns the major version of the library.
+     *
+     * @return major version of the library.
+     */
+    public static int getMajorVersion() {
+        return Integer.parseInt(BUNDLE.getString("version.major"));
+    }
+
+    /**
+     * Returns the minor version of the library.
+     *
+     * @return minor version of the library.
+     */
+    public static int getMinorVersion() {
+        return Integer.parseInt(BUNDLE.getString("version.minor"));
+    }
+
+    /**
+     * Returns the patch version of the library.
+     *
+     * @return patch version of the library.
+     */
+    public static int getPatchVersion() {
+        return Integer.parseInt(BUNDLE.getString("version.patch"));
+    }
+
+    /**
+     * Returns the revision of the build.
+     *
+     * @return revision of the build.
+     */
+    public static String getRevision() {
+        return BUNDLE.getString("version.revision");
+    }
+
+    /**
+     * Prints the version of the library.
+     */
     public static void main(String[] args) {
-        System.out.println("LEGUI: " + getVersion());
+        System.out.println("Version: " + getVersion() + "\nRevision: " + getRevision());
     }
 
 }

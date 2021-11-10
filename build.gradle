@@ -1,44 +1,39 @@
 import java.text.SimpleDateFormat
 
 plugins {
+    id 'idea'
+    id 'eclipse'
     id 'maven-publish'
     id 'java-library'
     id "org.sonarqube" version "2.7"
-    id 'net.nemerosa.versioning' version '2.6.1'
+    id 'net.nemerosa.versioning' version '2.15.0'
 }
 
-group 'org.liquidengine'
+def version = SemVer.of(version.toString())
+
+project.group = 'org.liquidengine'
+
+processResources {
+    filesMatching('**/version.properties') {
+        filteringCharset = 'UTF-8'
+        expand "version_major": version.major,
+                "version_minor": version.minor,
+                "version_patch": version.patch,
+                "version_revision": versioning.info.build,
+                "version_full": project.version
+    }
+}
 
 printProjectInfo()
 
-private void printProjectInfo() {
-    println "##################################################"
-    println "# Project info:                                  #"
-    println sprintf("#     group:    %-33s#", project.group)
-    println sprintf("#     name:     %-33s#", project.name)
-    println sprintf("#     version:  %-33s#", project.version)
-    println "##################################################"
-}
-
-
-configurations.all {
-    resolutionStrategy.cacheChangingModulesFor(0, 'seconds')
-}
-
-apply plugin: 'idea'
-apply plugin: 'eclipse'
-apply plugin: 'maven-publish'
-
 idea { module { downloadJavadoc = true; downloadSources = true } }
+
 sourceCompatibility = 11
 targetCompatibility = 11
-compileJava.options.encoding = 'UTF-8'
 
-java {
-    withJavadocJar()
-    withSourcesJar()
-    modularity.inferModulePath = true
-}
+compileJava.options.encoding = "UTF-8"
+compileTestJava.options.encoding = "UTF-8"
+javadoc.options.encoding = 'UTF-8'
 
 repositories {
     mavenCentral()
@@ -53,12 +48,13 @@ dependencies {
 
     //@formatter:off
     api group: "org.joml", name: "joml", version: joml_version, changing: true
-    api group: 'org.apache.logging.log4j', name: 'log4j-core', version: log4j_version, changing: false
     api group: 'commons-io', name: 'commons-io', version: commons_io
     api group: 'org.apache.commons', name: 'commons-lang3', version: commons_version, changing: false
     api group: 'org.apache.commons', name: 'commons-collections4', version: commons_collections, changing: false
     api group: 'com.google.guava', name: 'guava', version: guava_version, changing: false
-    api group: 'com.google.code.gson', name: 'gson', version: gson_version, changing: false
+
+    // https://mvnrepository.com/artifact/com.squareup.moshi/moshi
+    api group: 'com.squareup.moshi', name: 'moshi', version: '1.12.0'
 
     api group: 'org.liquidengine', name: 'cbchain', version: le_cbchain, changing: true
 
@@ -93,9 +89,9 @@ dependencies {
     api group: 'org.lwjgl', name: 'lwjgl-yoga', version: lwjgl_version, changing: true, classifier: 'natives-macos'
     //@formatter:on
 
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.1'
-    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.7.1'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.1'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
 }
 
 test {
@@ -103,6 +99,11 @@ test {
 }
 
 // PUBLISH SECTION
+java {
+    withJavadocJar()
+    withSourcesJar()
+    modularity.inferModulePath = true
+}
 
 jar {
     exclude("org/liquidengine/legui/demo/**")
@@ -139,4 +140,46 @@ sonarqube {
         property "sonar.host.url", "https://sonarcloud.io"
         property "sonar.login", sonarLogin
     }
+}
+
+// utility methods
+private void printProjectInfo() {
+    println "##################################################"
+    println "# Project info:                                  #"
+    println sprintf("#     group:    %-33s#", project.group)
+    println sprintf("#     name:     %-33s#", project.name)
+    println sprintf("#     version:  %-33s#", project.version)
+    println "##################################################"
+}
+
+class SemVer implements Serializable {
+    enum PatchLevel {
+        MAJOR, MINOR, PATCH
+    }
+    public final int major, minor, patch
+
+    static SemVer of(String version) {
+        def versionParts = version.split('\\.')
+        if (versionParts.length != 3) {
+            throw new IllegalArgumentException("Wrong version format - expected MAJOR.MINOR.PATCH - got ${version}")
+        }
+        return new SemVer(Integer.parseInt(versionParts[0]), Integer.parseInt(versionParts[1]), Integer.parseInt(versionParts[2]))
+    }
+
+    SemVer(int major, int minor, int patch) {
+        this.major = major
+        this.minor = minor
+        this.patch = patch
+    }
+
+    SemVer bump(PatchLevel patchLevel) {
+        switch (patchLevel) {
+            case PatchLevel.MAJOR: return new SemVer(major + 1, 0, 0); break
+            case PatchLevel.MINOR: return new SemVer(major, minor + 1, 0); break
+            case PatchLevel.PATCH: return new SemVer(major, minor, patch + 1); break
+        }
+        return new SemVer()
+    }
+
+    String toString() { return "${major}.${minor}.${patch}" }
 }

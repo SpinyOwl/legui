@@ -24,6 +24,12 @@ public abstract class ImageLoader {
         return loader.createImage(path);
     }
 
+    /**
+     * Creates and loads image.
+     *
+     * @param path path to image.
+     * @return loaded image.
+     */
     protected abstract LoadableImage createImage(String path);
 
 }

@@ -1,26 +1,26 @@
 package org.liquidengine.legui.listener.processor;
 
-import java.util.List;
-import java.util.Queue;
-import java.util.concurrent.ConcurrentLinkedQueue;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.liquidengine.legui.component.Component;
 import org.liquidengine.legui.event.Event;
 import org.liquidengine.legui.listener.EventListener;
+
+import java.util.List;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.function.Consumer;
 
 /**
  * Default implementation of event processor.
  * <p>
  * Created by ShchAlexander on 1/25/2017.
  */
+@SuppressWarnings({ "unchecked", "rawtypes" })
 public class EventProcessorImpl implements EventProcessor {
-
-    private static final Logger LOGGER = LogManager.getLogger();
 
     private Queue<Event> first = new ConcurrentLinkedQueue<>();
     private Queue<Event> second = new ConcurrentLinkedQueue<>();
 
+    private Consumer<Event> debugEventConsumer;
 
     /**
      * Should be called to process events.
@@ -54,8 +54,8 @@ public class EventProcessorImpl implements EventProcessor {
      */
     @Override
     public void pushEvent(Event event) {
-        if (event.getContext() != null && event.getContext().isDebugEnabled()) {
-            LOGGER.debug(event);
+        if (event.getContext() != null && event.getContext().isDebugEnabled() && debugEventConsumer != null) {
+            debugEventConsumer.accept(event);
         }
         first.add(event);
     }
@@ -68,5 +68,16 @@ public class EventProcessorImpl implements EventProcessor {
     @Override
     public boolean hasEvents() {
         return !(first.isEmpty() && second.isEmpty());
+    }
+
+    /**
+     * Used to add additional logic to see pushed events.
+     * <p>
+     * Could be used to log events that pushed to event processor.
+     *
+     * @param debugEventConsumer consumer to add.
+     */
+    public void setDebugEventConsumer(Consumer<Event> debugEventConsumer) {
+        this.debugEventConsumer = debugEventConsumer;
     }
 }

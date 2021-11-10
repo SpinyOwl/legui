@@ -1,7 +1,5 @@
 package org.liquidengine.legui.system.renderer.nvg.component;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.Component;
@@ -39,17 +37,15 @@ import static org.lwjgl.system.MemoryUtil.*;
  */
 public class NvgTextAreaFieldRenderer extends NvgDefaultComponentRenderer<TextAreaField> {
     public static final String NEWLINE = "\n";
-    private static final Logger LOGGER = LogManager.getLogger();
     private static final String TABS = "\t";
     private static final String SPACES = " ";
     private static final char SPACEC = ' ';
+    private static final int MAX_GLYPH_COUNT = 2048;
     private final Vector4f caretColor = new Vector4f(0, 0, 0, 0.5f);
-    private final int maxGlyphCount = 2048;
 
     @Override
     public void renderSelf(TextAreaField component, Context context, long nanovg) {
-        createScissor(nanovg, component);
-        {
+        runWithScissor(nanovg, component, () -> {
             Vector2f pos = component.getAbsolutePosition();
             Vector2f size = component.getSize();
             Style style = component.getStyle();
@@ -70,8 +66,7 @@ public class NvgTextAreaFieldRenderer extends NvgDefaultComponentRenderer<TextAr
             intersectScissor(nanovg, new Vector4f(textRect));
 
             renderText(context, nanovg, component, textRect, viewportRect, backgroundColor);
-        }
-        resetScissor(nanovg);
+        });
     }
 
     private void renderText(Context leguiContext, long context, TextAreaField gui, Vector4f rect, Vector4f viewportRect, Vector4f bc) {
@@ -81,7 +76,7 @@ public class NvgTextAreaFieldRenderer extends NvgDefaultComponentRenderer<TextAr
         if (nvgFindFont(context, font) == -1) {
             font = FontRegistry.getDefaultFont();
         }
-        try (NVGGlyphPosition.Buffer glyphs = NVGGlyphPosition.calloc(maxGlyphCount)) {
+        try (NVGGlyphPosition.Buffer glyphs = NVGGlyphPosition.calloc(MAX_GLYPH_COUNT)) {
 
             TextState textState = gui.getTextState();
             float fontSize = getStyle(gui, Style::getFontSize, 16F);
@@ -115,12 +110,43 @@ public class NvgTextAreaFieldRenderer extends NvgDefaultComponentRenderer<TextAr
 
             // if not focused set caret line and caret position in line to default
             if (!focused && gui.isStickToAlignment()) {
-                caretLine = (valign == VerticalAlign.TOP ? 0 : (valign == VerticalAlign.BOTTOM ? lineCount - 1 : lineCount / 2));
-                lineCaretPosition = (halign == HorizontalAlign.LEFT ? 0
-                        : (halign == HorizontalAlign.RIGHT ? lines[caretLine].length() : lines[caretLine].length() / 2));
+                switch (valign) {
+                    case TOP:
+                        caretLine = 0;
+                        break;
+                    case BOTTOM:
+                        caretLine = lineCount - 1;
+                        break;
+                    default:
+                        caretLine = lineCount / 2;
+                        break;
+                }
+                switch (halign) {
+                    case LEFT:
+                        lineCaretPosition = (0);
+                        break;
+                    case RIGHT:
+                        lineCaretPosition = lines[caretLine].length();
+                        break;
+                    default:
+                        lineCaretPosition = lines[caretLine].length() / 2;
+                        break;
+                }
             }
 
-            int vp = valign == VerticalAlign.TOP ? 0 : valign == VerticalAlign.MIDDLE ? 1 : valign == VerticalAlign.BOTTOM ? 2 : 1;
+            int vp;
+            switch (valign) {
+                case TOP:
+                    vp = 0;
+                    break;
+                case MIDDLE:
+                    vp = 1;
+                    break;
+                default:
+                    vp = valign == VerticalAlign.BOTTOM ? 2 : 1;
+                    break;
+            }
+
             float voffset = (lineCount - 1) * fontSize * vp * -0.5f + (valign == VerticalAlign.BASELINE ? fontSize / 4f : 0);
             float caretx;
             float mouseCaretX = 0;
@@ -150,74 +176,70 @@ public class NvgTextAreaFieldRenderer extends NvgDefaultComponentRenderer<TextAr
             int last = lineCount - 1;
 
             if (viewportRect != null) {
-                {
-                    int mid = (first + last) / 2;
+                int mid = (first + last) / 2;
 
-                    // search for any line in viewport rect
-                    while (first <= last) {
-                        String line = lines[mid];
-                        float[] lineBounds = calculateTextBoundsRect(context, rect, line, halign, valign, fontSize);
-                        bounds[mid] = lineBounds;
+                // search for any line in viewport rect
+                while (first <= last) {
+                    String line = lines[mid];
+                    float[] lineBounds = calculateTextBoundsRect(context, rect, line, halign, valign, fontSize);
+                    bounds[mid] = lineBounds;
 
-                        float lineY = lineBounds[5] + voffset + fontSize * mid;
-                        float lineHeight = lineBounds[7];
+                    float lineY = lineBounds[5] + voffset + fontSize * mid;
+                    float lineHeight = lineBounds[7];
 
-                        if (lineY > viewportRect.y + viewportRect.w) {
-                            last = mid - 1;
-                        } else if (lineY <= viewportRect.y + viewportRect.w && lineY + lineHeight >= viewportRect.y) {
-                            break;
-                        } else {
-                            first = mid + 1;
-                        }
-
-                        mid = (first + last) / 2;
-                    }
-
-                    // search start and end lines in viewport rect and calculate bounds
-                    first = mid;
-                    float lineY;
-                    float lineHeight;
-
-                    for (first = mid - 1; first >= 0; first--) {
-                        String line = lines[first];
-                        float[] lineBounds = calculateTextBoundsRect(context, rect, line, halign, valign, fontSize);
-                        bounds[first] = lineBounds;
-
-                        lineY = lineBounds[5] + voffset + fontSize * first;
-                        lineHeight = lineBounds[7];
-                        if (lineY + lineHeight <= viewportRect.y) break;
-                    }
-                    first++;
-
-                    for (last = mid + 1; last < lineCount; last++) {
-                        String line = lines[last];
-                        float[] lineBounds = calculateTextBoundsRect(context, rect, line, halign, valign, fontSize);
-                        bounds[last] = lineBounds;
-
-                        lineY = lineBounds[5] + voffset + fontSize * last;
-                        if (lineY > viewportRect.y + viewportRect.w) break;
-                    }
-                    last--;
-
-
-                    // calculate max width
-                    int maxLength = 0;
-                    int longestStringIndex = 0;
-                    for (int i = 0; i < lines.length; i++) {
-                        String s = lines[i];
-                        if (s.length() > maxLength) {
-                            maxLength = s.length();
-                            longestStringIndex = i;
-                        }
-                    }
-                    if (longestStringIndex < first || longestStringIndex > last) {
-                        float[] lineBounds = calculateTextBoundsRect(context, rect, lines[longestStringIndex], halign, valign, fontSize);
-                        maxWid = lineBounds[2];
+                    if (lineY > viewportRect.y + viewportRect.w) {
+                        last = mid - 1;
+                    } else if (lineY <= viewportRect.y + viewportRect.w && lineY + lineHeight >= viewportRect.y) {
+                        break;
                     } else {
-                        maxWid = bounds[longestStringIndex][2];
+                        first = mid + 1;
                     }
+
+                    mid = (first + last) / 2;
                 }
 
+                // search start and end lines in viewport rect and calculate bounds
+                float lineY;
+                float lineHeight;
+
+                for (first = mid - 1; first >= 0; first--) {
+                    String line = lines[first];
+                    float[] lineBounds = calculateTextBoundsRect(context, rect, line, halign, valign, fontSize);
+                    bounds[first] = lineBounds;
+
+                    lineY = lineBounds[5] + voffset + fontSize * first;
+                    lineHeight = lineBounds[7];
+                    if (lineY + lineHeight <= viewportRect.y) break;
+                }
+                first++;
+
+                for (last = mid + 1; last < lineCount; last++) {
+                    String line = lines[last];
+                    float[] lineBounds = calculateTextBoundsRect(context, rect, line, halign, valign, fontSize);
+                    bounds[last] = lineBounds;
+
+                    lineY = lineBounds[5] + voffset + fontSize * last;
+                    if (lineY > viewportRect.y + viewportRect.w) break;
+                }
+                last--;
+
+
+                // calculate max width
+                int maxLength = 0;
+                int longestStringIndex = 0;
+                for (int i = 0; i < lines.length; i++) {
+                    String s = lines[i];
+                    if (s.length() > maxLength) {
+                        maxLength = s.length();
+                        longestStringIndex = i;
+                    }
+                }
+                if (longestStringIndex < first || longestStringIndex > last) {
+                    float[] lineBounds = calculateTextBoundsRect(context, rect, lines[longestStringIndex], halign, valign, fontSize);
+                    maxWid = lineBounds[2];
+                } else {
+                    maxWid = bounds[longestStringIndex][2];
+                }
             } else {
                 maxWid = calculateLineBoundsAndMaxWidth(context, gui, rect, fontSize, halign, valign, spaceWidth, lines, lineCount, bounds, maxWid);
             }
@@ -241,11 +263,9 @@ public class NvgTextAreaFieldRenderer extends NvgDefaultComponentRenderer<TextAr
             }
 
             // calculate default mouse line index
-            if (lineCount > 0) {
-                float llineY = bounds[lineCount - 1][5] - voffset + fontSize * (lineCount - 1);
-                if (mouseY > llineY + fontSize) {
-                    mouseLineIndex = lineCount - 1;
-                }
+            float llineY = bounds[lineCount - 1][5] - voffset + fontSize * (lineCount - 1);
+            if (mouseY > llineY + fontSize) {
+                mouseLineIndex = lineCount - 1;
             }
 
             // calculate caret color based on time
@@ -284,131 +304,129 @@ public class NvgTextAreaFieldRenderer extends NvgDefaultComponentRenderer<TextAr
                     getCaretx(context, endSelectionIndexInLine, lines[endSelectionLine], bounds[endSelectionLine], glyphs, spaceWidth, gui.getTabSize());
 
             // render every line of text
-            {
-                for (int i = first; i <= last; i++) {
-                    ByteBuffer lineBytes = null;
-                    try {
-                        String line = lines[i];
-                        lineBytes = memUTF8(line);
+            for (int i = first; i <= last; i++) {
+                ByteBuffer lineBytes = null;
+                try {
+                    String line = lines[i];
+                    lineBytes = memUTF8(line);
 
-                        alignTextInBox(context, HorizontalAlign.LEFT, VerticalAlign.MIDDLE);
-                        int ng = nnvgTextGlyphPositions(context, bounds[i][4], 0, memAddress(lineBytes), 0, memAddress(glyphs), maxGlyphCount);
+                    alignTextInBox(context, HorizontalAlign.LEFT, VerticalAlign.MIDDLE);
+                    int ng = nnvgTextGlyphPositions(context, bounds[i][4], 0, memAddress(lineBytes), 0, memAddress(glyphs), MAX_GLYPH_COUNT);
 
-                        float lineX = bounds[i][4];
-                        float lineWidth = bounds[i][6];
-                        float lineY = bounds[i][5] + voffset + fontSize * i;
-                        float lineHeight = bounds[i][7];
-                        if (inRect(viewportRect, lineX, lineWidth, lineY, lineHeight)) {
+                    float lineX = bounds[i][4];
+                    float lineWidth = bounds[i][6];
+                    float lineY = bounds[i][5] + voffset + fontSize * i;
+                    float lineHeight = bounds[i][7];
+                    if (inRect(viewportRect, lineX, lineWidth, lineY, lineHeight)) {
 
-                            List<Integer> tabIndices = getTabIndices(line);
-                            // calculate mouse caret position
-                            if (lineY <= mouseY && lineY + fontSize > mouseY) {
-                                if (line.length() == 0) {
-                                    mouseCaretX = caretx;
-                                } else {
-                                    if (mouseX <= glyphs.get(0).x()) {
-                                        mouseCaretPositionInLine = 0;
-                                        mouseCaretX = glyphs.get(0).x();
-                                    } else if (mouseX >= glyphs.get(ng - 1).maxx() + spaceWidth * (gui.getTabSize() - 1) * tabIndices.size()) {
-                                        mouseCaretPositionInLine = ng;
-                                        mouseCaretX = glyphs.get(ng - 1).maxx() + spaceWidth * (gui.getTabSize() - 1) * tabIndices.size();
-                                        // if window not minimized
-                                    } else if (!leguiContext.isIconified()) {
-                                        // binary search mouse caret position
-                                        int upper = ng;
-                                        int lower = 0;
-                                        boolean found = false;
-                                        do {
-                                            int index = (upper + lower) / 2;
-                                            float tabAddition = 0;
-                                            for (Integer tabIndex : tabIndices) {
-                                                if (index > tabIndex) {
-                                                    tabAddition += spaceWidth * (gui.getTabSize() - 1);
-                                                }
+                        List<Integer> tabIndices = getTabIndices(line);
+                        // calculate mouse caret position
+                        if (lineY <= mouseY && lineY + fontSize > mouseY) {
+                            if (line.length() == 0) {
+                                mouseCaretX = caretx;
+                            } else {
+                                if (mouseX <= glyphs.get(0).x()) {
+                                    mouseCaretPositionInLine = 0;
+                                    mouseCaretX = glyphs.get(0).x();
+                                } else if (mouseX >= glyphs.get(ng - 1).maxx() + spaceWidth * (gui.getTabSize() - 1) * tabIndices.size()) {
+                                    mouseCaretPositionInLine = ng;
+                                    mouseCaretX = glyphs.get(ng - 1).maxx() + spaceWidth * (gui.getTabSize() - 1) * tabIndices.size();
+                                    // if window not minimized
+                                } else if (!leguiContext.isIconified()) {
+                                    // binary search mouse caret position
+                                    int upper = ng;
+                                    int lower = 0;
+                                    boolean found = false;
+                                    do {
+                                        int index = (upper + lower) / 2;
+                                        float tabAddition = 0;
+                                        for (Integer tabIndex : tabIndices) {
+                                            if (index > tabIndex) {
+                                                tabAddition += spaceWidth * (gui.getTabSize() - 1);
                                             }
-                                            float left = glyphs.get(index).x();
-                                            float right = index >= ng - 1 ? glyphs.get(ng - 1).maxx() : glyphs.get(index + 1).x();
-                                            left += tabAddition;
-                                            right += tabAddition;
-                                            if (tabIndices.contains(index)) {
-                                                right += spaceWidth * (gui.getTabSize() - 1);
-                                            }
+                                        }
+                                        float left = glyphs.get(index).x();
+                                        float right = index >= ng - 1 ? glyphs.get(ng - 1).maxx() : glyphs.get(index + 1).x();
+                                        left += tabAddition;
+                                        right += tabAddition;
+                                        if (tabIndices.contains(index)) {
+                                            right += spaceWidth * (gui.getTabSize() - 1);
+                                        }
 
-                                            float mid = (left + right) / 2f;
-                                            if (mouseX >= left && mouseX < right) {
+                                        float mid = (left + right) / 2f;
+                                        if (mouseX >= left && mouseX < right) {
+                                            found = true;
+                                            if (mouseX > mid) {
+                                                mouseCaretPositionInLine = index + 1;
+                                                mouseCaretX = right;
+                                            } else {
+                                                mouseCaretPositionInLine = index;
+                                                mouseCaretX = left;
+                                            }
+                                        } else if (mouseX >= right) {
+                                            if (index != ng) {
+                                                lower = index + 1;
+                                            } else {
                                                 found = true;
-                                                if (mouseX > mid) {
-                                                    mouseCaretPositionInLine = index + 1;
-                                                    mouseCaretX = right;
-                                                } else {
-                                                    mouseCaretPositionInLine = index;
-                                                    mouseCaretX = left;
-                                                }
-                                            } else if (mouseX >= right) {
-                                                if (index != ng) {
-                                                    lower = index + 1;
-                                                } else {
-                                                    found = true;
-                                                    mouseCaretPositionInLine = ng;
-                                                    mouseCaretX = right;
-                                                }
-                                            } else if (mouseX < left) {
-                                                if (index != 0) {
-                                                    upper = index;
-                                                } else {
-                                                    found = true;
-                                                    mouseCaretPositionInLine = 0;
-                                                    mouseCaretX = left;
-                                                }
+                                                mouseCaretPositionInLine = ng;
+                                                mouseCaretX = right;
                                             }
-                                        } while (!found);
-                                    }
-                                }
-
-                                mouseLineIndex = i;
-                                // render mouse caret
-                                if (leguiContext.isDebugEnabled()) {
-                                    NvgShapes.drawRectStroke(context, new Vector4f(mouseCaretX - 1, lineY, 1, lineHeight), new Vector4f(caretColor).div(2), 1);
+                                        } else if (mouseX < left) {
+                                            if (index != 0) {
+                                                upper = index;
+                                            } else {
+                                                found = true;
+                                                mouseCaretPositionInLine = 0;
+                                                mouseCaretX = left;
+                                            }
+                                        }
+                                    } while (!found);
                                 }
                             }
-                            if (mouseY >= bounds[lineCount - 1][5] + voffset + fontSize * (lineCount - 1) + fontSize) {
-                                mouseLineIndex = lineCount - 1;
-                                mouseCaretPositionInLine = lines[mouseLineIndex].length();
-                            }
-                            // render selection background
-                            if (startSelectionIndex != endSelectionIndex && i >= startSelectionLine && i <= endSelectionLine) {
-                                float x1 = bounds[i][4];
-                                float w = bounds[i][6];
-                                float x2 = x1 + w;
-                                if (i == startSelectionLine) {
-                                    x1 = startSelectionCaretX;
-                                }
-                                if (i == endSelectionLine) {
-                                    x2 = endSelectionCaretX;
-                                }
-                                w = x2 - x1;
-                                NvgShapes
-                                        .drawRect(context, new Vector4f(x1, bounds[i][5] + voffset + fontSize * i, w, bounds[i][7]), getStyle(gui, Style::getHighlightColor));
-                            }
 
-                            // render current line background
-                            renderCurrentLineBackground(context, rect, bc, fontSize, focused, caretLine, i, lineY);
-
-                            char[] spaces = new char[gui.getTabSize()];
-                            Arrays.fill(spaces, SPACEC);
-                            NvgText.drawTextLineToRect(context, new Vector4f(lineX, lineY, lineWidth, lineHeight),
-                                    false, HorizontalAlign.LEFT, VerticalAlign.MIDDLE,
-                                    fontSize, font, line.replace(TABS, new String(spaces)), textColor);
-                            if (i == caretLine && focused) {
-                                // render caret
-                                NvgShapes.drawRectStroke(context, new Vector4f(caretx - 1, lineY, 1, lineHeight), caretColor, 1);
+                            mouseLineIndex = i;
+                            // render mouse caret
+                            if (leguiContext.isDebugEnabled()) {
+                                NvgShapes.drawRectStroke(context, new Vector4f(mouseCaretX - 1, lineY, 1, lineHeight), new Vector4f(caretColor).div(2), 1);
                             }
                         }
-                    } finally {
-                        // free allocated memory
-                        if (lineBytes != null) {
-                            memFree(lineBytes);
+                        if (mouseY >= bounds[lineCount - 1][5] + voffset + fontSize * (lineCount - 1) + fontSize) {
+                            mouseLineIndex = lineCount - 1;
+                            mouseCaretPositionInLine = lines[mouseLineIndex].length();
                         }
+                        // render selection background
+                        if (startSelectionIndex != endSelectionIndex && i >= startSelectionLine && i <= endSelectionLine) {
+                            float x1 = bounds[i][4];
+                            float w = bounds[i][6];
+                            float x2 = x1 + w;
+                            if (i == startSelectionLine) {
+                                x1 = startSelectionCaretX;
+                            }
+                            if (i == endSelectionLine) {
+                                x2 = endSelectionCaretX;
+                            }
+                            w = x2 - x1;
+                            NvgShapes
+                                    .drawRect(context, new Vector4f(x1, bounds[i][5] + voffset + fontSize * i, w, bounds[i][7]), getStyle(gui, Style::getHighlightColor));
+                        }
+
+                        // render current line background
+                        renderCurrentLineBackground(context, rect, bc, fontSize, focused, caretLine, i, lineY);
+
+                        char[] spaces = new char[gui.getTabSize()];
+                        Arrays.fill(spaces, SPACEC);
+                        NvgText.drawTextLineToRect(context, new Vector4f(lineX, lineY, lineWidth, lineHeight),
+                                false, HorizontalAlign.LEFT, VerticalAlign.MIDDLE,
+                                fontSize, font, line.replace(TABS, new String(spaces)), textColor);
+                        if (i == caretLine && focused) {
+                            // render caret
+                            NvgShapes.drawRectStroke(context, new Vector4f(caretx - 1, lineY, 1, lineHeight), caretColor, 1);
+                        }
+                    }
+                } finally {
+                    // free allocated memory
+                    if (lineBytes != null) {
+                        memFree(lineBytes);
                     }
                 }
             }
@@ -444,11 +462,11 @@ public class NvgTextAreaFieldRenderer extends NvgDefaultComponentRenderer<TextAr
         String s = SPACES + SPACES;
         ByteBuffer spaceBytes = null;
 
-        try (NVGGlyphPosition.Buffer glyphs = NVGGlyphPosition.calloc(maxGlyphCount)) {
+        try (NVGGlyphPosition.Buffer glyphs = NVGGlyphPosition.calloc(MAX_GLYPH_COUNT)) {
             spaceBytes = memUTF8(s);
 
             alignTextInBox(context, HorizontalAlign.LEFT, VerticalAlign.MIDDLE);
-            nnvgTextGlyphPositions(context, 10, 0, memAddress(spaceBytes), 0, memAddress(glyphs), maxGlyphCount);
+            nnvgTextGlyphPositions(context, 10, 0, memAddress(spaceBytes), 0, memAddress(glyphs), MAX_GLYPH_COUNT);
 
             float x1 = glyphs.get(1).x();
             float x0 = glyphs.get(0).x();
@@ -481,11 +499,11 @@ public class NvgTextAreaFieldRenderer extends NvgDefaultComponentRenderer<TextAr
             caretLineBytes = memUTF8(text);
             // align text for calculations
             alignTextInBox(context, HorizontalAlign.LEFT, VerticalAlign.MIDDLE);
-            int ng = nnvgTextGlyphPositions(context, caretLineBounds[4], 0, memAddress(caretLineBytes), 0, memAddress(glyphs), maxGlyphCount);
+            int ng = nnvgTextGlyphPositions(context, caretLineBounds[4], 0, memAddress(caretLineBytes), 0, memAddress(glyphs), MAX_GLYPH_COUNT);
             caretx = calculateCaretPos(caretPosInText, caretLineBounds, ng, glyphs);
 
             String substring = text.substring(0, caretPosInText);
-            int tabCountBeforeCaret = 0;
+            int tabCountBeforeCaret;
             if (substring.contains(TABS)) {
                 tabCountBeforeCaret = substring.length() - substring.replace(TABS, "").length();
                 caretx += spaceWidth * tabCountBeforeCaret * (tabSize - 1);
@@ -511,7 +529,7 @@ public class NvgTextAreaFieldRenderer extends NvgDefaultComponentRenderer<TextAr
             try {
                 caretx = glyphs.get(caretPosition).x();
             } catch (IndexOutOfBoundsException e) {
-                LOGGER.error(e.getMessage(), e);
+                e.printStackTrace();
             }
         } else {
             if (ng > 0) {

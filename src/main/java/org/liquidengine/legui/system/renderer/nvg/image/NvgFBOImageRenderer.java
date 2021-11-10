@@ -1,8 +1,6 @@
 package org.liquidengine.legui.system.renderer.nvg.image;
 
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.joml.Vector2fc;
 import org.liquidengine.legui.image.FBOImage;
 import org.liquidengine.legui.system.context.Context;
@@ -24,7 +22,6 @@ import static org.lwjgl.opengl.GL30.GL_MINOR_VERSION;
  * Used to render image rectangle if no other renderers implemented.
  */
 public class NvgFBOImageRenderer extends NvgImageRenderer<FBOImage> {
-    private static final Logger LOGGER = LogManager.getLogger();
 
     @Override
     public void initialize() {
@@ -38,7 +35,7 @@ public class NvgFBOImageRenderer extends NvgImageRenderer<FBOImage> {
                 try {
                     imageRef = manager.getImageCache().get(path, createReference(manager, i, c, getFboPath));
                 } catch (ExecutionException e) {
-                    LOGGER.error(e.getMessage(), e);
+                    e.printStackTrace();
                 }
             } else {
                 return 0;
@@ -52,7 +49,7 @@ public class NvgFBOImageRenderer extends NvgImageRenderer<FBOImage> {
             int handle = i.getTextureId();
             int width = i.getWidth();
             int height = i.getHeight();
-            int reference = 0;
+            int reference;
             boolean isVersionNew = (glGetInteger(GL_MAJOR_VERSION) > 3) || (glGetInteger(GL_MAJOR_VERSION) == 3 && glGetInteger(GL_MINOR_VERSION) >= 2);
             if (isVersionNew) {
                 reference = NanoVGGL3.nvglCreateImageFromHandle(c, handle, width, height, 0);

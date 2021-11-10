@@ -26,6 +26,7 @@ import static org.lwjgl.system.MemoryUtil.memUTF8;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
+
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.liquidengine.legui.component.Component;
@@ -88,8 +89,18 @@ public final class NvgRenderUtils {
     }
 
     public static float[] createBounds(float w, float h, HorizontalAlign horizontalAlign, VerticalAlign verticalAlign, float[] bounds, float ww, float hh) {
-        int hp = horizontalAlign == HorizontalAlign.LEFT ? 0 : horizontalAlign == HorizontalAlign.CENTER ? 1 : 2;
-        int vp = verticalAlign == VerticalAlign.TOP ? 0 : verticalAlign == VerticalAlign.MIDDLE ? 1 : verticalAlign == VerticalAlign.BOTTOM ? 2 : 3;
+        int hp;
+        switch (horizontalAlign) {
+            case LEFT: hp = 0; break;
+            case CENTER: hp = 1; break;
+            default: hp = 2; break;
+        }
+        int vp;
+        switch (verticalAlign) {
+            case TOP: vp = 0; break;
+            case MIDDLE: vp = 1; break;
+            default: vp = verticalAlign == VerticalAlign.BOTTOM ? 2 : 3; break;
+        }
         float x1 = bounds[0] + (w + ww) * 0.5f * hp;
 
         float baseline = (vp > 2 ? hh / 4.0f : 0);
@@ -118,9 +129,19 @@ public final class NvgRenderUtils {
 
 
     public static void alignTextInBox(long context, HorizontalAlign hAlig, VerticalAlign vAlig) {
-        int hAlign = hAlig == HorizontalAlign.CENTER ? NVG_ALIGN_CENTER : hAlig == HorizontalAlign.LEFT ? NVG_ALIGN_LEFT : NVG_ALIGN_RIGHT;
-        int vAlign = vAlig == VerticalAlign.TOP ? NVG_ALIGN_TOP : vAlig == VerticalAlign.BOTTOM ?
-                NVG_ALIGN_BOTTOM : vAlig == VerticalAlign.MIDDLE ? NVG_ALIGN_MIDDLE : NVG_ALIGN_BASELINE;
+        int hAlign;
+        switch (hAlig) {
+            case CENTER: hAlign = NVG_ALIGN_CENTER; break;
+            case LEFT: hAlign = NVG_ALIGN_LEFT; break;
+            default: hAlign = NVG_ALIGN_RIGHT; break;
+        }
+        int vAlign;
+      switch (vAlig) {
+        case TOP: vAlign = NVG_ALIGN_TOP; break;
+        case BOTTOM: vAlign = NVG_ALIGN_BOTTOM; break;
+        case MIDDLE: vAlign = NVG_ALIGN_MIDDLE; break;
+        default: vAlign = NVG_ALIGN_BASELINE; break;
+      }
         nvgTextAlign(context, hAlign | vAlign);
     }
 
@@ -194,6 +215,16 @@ public final class NvgRenderUtils {
         nvgResetScissor(context);
     }
 
+    /**
+     * Wraps the given runnable execution with scissor.
+     */
+    public static void runWithScissor(long context, Component parent, Runnable runnable) {
+        createScissorByParent(context, parent);
+        runnable.run();
+        resetScissor(context);
+    }
+
+
     public static Vector4f getBorderRadius(Component component) {
         Style style = component.getStyle();
         Vector4f r = StyleUtilities.getBorderRadius(component, style);
@@ -246,7 +277,7 @@ public final class NvgRenderUtils {
             try (
                     NVGPaint shadowPaint = NVGPaint.calloc();
                     NVGColor firstColor = NvgColorUtil.create(shadow.getColor());
-                    NVGColor secondColor = NvgColorUtil.create(0,0,0,0)
+                    NVGColor secondColor = NvgColorUtil.create(0, 0, 0, 0)
             ) {
                 // creating gradient and put it to shadowPaint
                 nvgBoxGradient(context,
