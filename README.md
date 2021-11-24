@@ -1,13 +1,11 @@
-![REPO SIZE](https://img.shields.io/github/repo-size/SpinyOwl/legui.svg) 
-![CODE SIZE](https://img.shields.io/github/languages/code-size/SpinyOwl/legui.svg) 
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=SpinyOwl_legui&metric=alert_status)](https://sonarcloud.io/dashboard?id=SpinyOwl_legui)
-![License](https://img.shields.io/github/license/SpinyOwl/legui.svg)  
-![Build and publish](https://img.shields.io/github/workflow/status/SpinyOwl/legui/Build%20and%20publish/develop?label=build%20develop&logo=Github)
-![Build and publish](https://img.shields.io/github/workflow/status/SpinyOwl/legui/Build%20and%20publish/releases?label=build%20releases&logo=Github)  
-[![STABLE SNAPSHOT VERSION](https://img.shields.io/badge/dynamic/xml.svg?label=snapshot&url=https%3A%2F%2Fraw.github.com%2FSpinyOwl%2Frepo%2Fsnapshots%2Forg%2Fliquidengine%2Flegui%2Fmaven-metadata.xml&query=%2F%2Fmetadata%2Fversioning%2Fversions%2Fversion%5Blast()%5D&colorB=blue)](https://github.com/SpinyOwl/repo/tree/snapshots/org/liquidengine/legui)
-[![STABLE RELEASE VERSION](https://img.shields.io/badge/dynamic/xml.svg?label=release&url=https%3A%2F%2Fraw.github.com%2FSpinyOwl%2Frepo%2Freleases%2Forg%2Fliquidengine%2Flegui%2Fmaven-metadata.xml&query=%2F%2Fmetadata%2Fversioning%2Fversions%2Fversion%5Blast()%5D&colorB=blue)](https://github.com/SpinyOwl/repo/tree/releases/org/liquidengine/legui)
+![REPO SIZE](https://img.shields.io/github/repo-size/SpinyOwl/legui.svg?style=for-the-badge)
+![CODE SIZE](https://img.shields.io/github/languages/code-size/SpinyOwl/legui.svg?style=for-the-badge)
+[![Sonar Quality Gate](https://img.shields.io/sonar/alert_status/SpinyOwl_legui?logo=sonarcloud&server=https%3A%2F%2Fsonarcloud.io&style=for-the-badge)](https://sonarcloud.io/dashboard?id=SpinyOwl_legui)
+[![License](https://img.shields.io/github/license/SpinyOwl/legui.svg?style=for-the-badge)](/LICENSE)
+[![Discord](https://img.shields.io/discord/245558983123927040.svg?slongCache=true&label=Discord&logo=discord&style=for-the-badge)](https://discord.gg/6wfqXpJ)
 
-[![Discord](https://img.shields.io/discord/245558983123927040.svg?slongCache=true&label=Discord&logo=discord)](https://discord.gg/6wfqXpJ)
+![Build and publish](https://img.shields.io/github/workflow/status/SpinyOwl/legui/Build%20and%20publish/develop?label=build&logo=Github&style=for-the-badge)
+[![STABLE VERSION](https://img.shields.io/badge/dynamic/xml.svg?label=latest%20version&url=https%3A%2F%2Fraw.github.com%2FSpinyOwl%2Frepo%2Freleases%2Fcom%2Fspinyowl%2Flegui%2Fmaven-metadata.xml&query=%2F%2Fmetadata%2Fversioning%2Fversions%2Fversion%5Blast()%5D&colorB=blue&style=for-the-badge)](https://github.com/SpinyOwl/repo/tree/releases/com/spinyowl/legui)
 
 ___
 
@@ -15,30 +13,42 @@ ___
 ![preview](images/preview.png)
 
 ___
+
 # TOC
+
 * [LEGUI - What is it?](#legui---what-is-it)
 * [Contribution to LEGUI](#contribution-to-legui)
 * [System requirements](#system-requirements)
 * [OpenGL state touched by the backend](#opengl-state-touched-by-the-backend)
 * [Usage](#usage)
-* * [Dependencies](#dependencies)
-* * * [Add dependency repo](#add-dependency-repo)
-* * * [Add dependency (Maven)](#add-dependency-maven)
-* * * [Add dependency (Gradle)](#add-dependency-gradle)
-* * [Demos](#demos)
+*
+    * [Dependencies](#dependencies)
+*
+    *
+        * [Add dependency repo](#add-dependency-repo)
+*
+    *
+        * [Add dependency (Maven)](#add-dependency-maven)
+*
+    *
+        * [Add dependency (Gradle)](#add-dependency-gradle)
+*
+    * [Demos](#demos)
 * [Projects using LEGUI](#projects-using-legui)
-* * [Modeler by Cout970](#modeler-by-cout970)
+*
+    * [Modeler by Cout970](#modeler-by-cout970)
 * [Links](#links)
 
+## LEGUI - [What is it?](https://spinyowl.github.io/legui/)
 
+GUI implementation for using with LWJGL3.
 
-## LEGUI - [What is it?](https://spinyowl.github.io/legui/)  
-GUI implementation for using with LWJGL3.  
-
-This gui library made for using with OpenGL port (LWJGL) to allow programmers fast and easy integrate user interface to their OpenGL apps written in Java or Kotlin.  
-API is close to Swing API.  
+This gui library made for using with OpenGL port (LWJGL) to allow programmers fast and easy
+integrate user interface to their OpenGL apps written in Java or Kotlin.  
+API is close to Swing API.
 
 ### Examples
+
 <table>
     <tr>
         <td>Radio button and text input</td>
@@ -63,18 +73,26 @@ API is close to Swing API.
 </table>
 
 ## Contribution to LEGUI
+
 See the [contribution guide](docs/CONTRIBUTING.md) for more information.
 
 ## System requirements
-LEGUI requires Java 8+ cause it uses lambda expressions.
+
+LEGUI requires Java 11+.
 
 ## OpenGL state touched by the backend
 
 Default renderer made on top of NanoVG which touches following states:
 
-When textures are uploaded or updated, the following pixel store is set to defaults: `GL_UNPACK_ALIGNMENT`, `GL_UNPACK_ROW_LENGTH`, `GL_UNPACK_SKIP_PIXELS`, `GL_UNPACK_SKIP_ROWS`. Texture binding is also affected. Texture updates can happen when the user loads images, or when new font glyphs are added. Glyphs are added as needed start and end of `render()` method.
+When textures are uploaded or updated, the following pixel store is set to
+defaults: `GL_UNPACK_ALIGNMENT`, `GL_UNPACK_ROW_LENGTH`, `GL_UNPACK_SKIP_PIXELS`
+, `GL_UNPACK_SKIP_ROWS`. Texture binding is also affected. Texture updates can happen when the user
+loads images, or when new font glyphs are added. Glyphs are added as needed start and end
+of `render()` method.
 
-The data for the whole frame is buffered and flushed in end of rendering. The following code illustrates the OpenGL state touched by the rendering code:
+The data for the whole frame is buffered and flushed in end of rendering. The following code
+illustrates the OpenGL state touched by the rendering code:
+
 ```C
 	glUseProgram(prog);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -97,58 +115,52 @@ The data for the whole frame is buffered and flushed in end of rendering. The fo
 ```
 
 ## Usage
+
 ### Dependencies
+
 #### Add dependency repo
+
 For using this library you should add these urls as repositories:  
-For **[LWJGL](https://github.com/LWJGL/lwjgl3)** and **[JOML](https://github.com/JOML-CI/JOML)** dependencies  
-`https://oss.sonatype.org/content/repositories/snapshots/`  
-Also you can add your own versions of these libraries using [LWJGL form](https://www.lwjgl.org/download).
+For **[LWJGL](https://github.com/LWJGL/lwjgl3)** and **[JOML](https://github.com/JOML-CI/JOML)**
+dependencies  
+`https://oss.sonatype.org/content/repositories/snapshots/` - for snapshots  
+`https://oss.sonatype.org/content/repositories/releases/` - for releases  
+Also you can add your own versions of these libraries
+using [LWJGL form](https://www.lwjgl.org/download).
 
 For **LEGUI** and **[CBCHAIN](https://github.com/SpinyOwl/cbchain)** dependency  
-`https://raw.github.com/SpinyOwl/repo/releases`  
-`https://raw.github.com/SpinyOwl/repo/snapshots` 
+`https://raw.github.com/SpinyOwl/repo/releases`
 
-For latest develop build you can use next repository:
-`https://raw.github.com/SpinyOwl/repo/develop`
- 
-And for feature you can use feature repository:
-`https://raw.github.com/SpinyOwl/repo/feature`
+And add this dependency to your build script:
 
-And add this dependency to your build script:  
 #### Add dependency (Maven):
+
  ```xml
-<!-- LEGUI - SNAPSHOT - https://github.com/SpinyOwl/legui -->
+<!-- LEGUI - https://github.com/SpinyOwl/legui -->
 <dependency>
-    <groupId>org.liquidengine</groupId>
-    <artifactId>legui</artifactId>
-    <version>${legui_version}-SNAPSHOT</version>
-</dependency>
- ```
-**OR** 
- ```xml
-<!-- LEGUI - RELEASE/DEVELOP/FEATURE - https://github.com/SpinyOwl/legui -->
-<dependency>
-    <groupId>org.liquidengine</groupId>
+    <groupId>com.spinyowl</groupId>
     <artifactId>legui</artifactId>
     <version>${legui_version}</version>
 </dependency>
  ```
+
 #### Add dependency (Gradle):
+
   ```groovy
-// LEGUI - SNAPSHOT - https://github.com/SpinyOwl/legui
-compile group: 'org.liquidengine', name: 'legui', version: legui_version + '-SNAPSHOT', changing: true;
-// OR
-// LEGUI - RELEASE/DEVELOP/FEATURE - https://github.com/SpinyOwl/legui
-compile group: 'org.liquidengine', name: 'legui', version: legui_version, changing: true;
+// LEGUI - https://github.com/SpinyOwl/legui
+compile group: 'com.spinyowl', name: 'legui', version: "${legui_version}";
   ```
 
 ### Demos:
-All examples located under `demo` package.
+
+All examples located under [demo](/src/main/java/com/spinyowl/legui/demo/) package.
 
 ## Projects using LEGUI:
+
 ### Modeler by Cout970
+
 > Open 3D Modeling Tool  ([Cout970/Modeler](https://github.com/cout970/Modeler))  
-> This tool is written in Kotlin, using LWJGL3 for rendering and Legui to build user interfaces  
+> This tool is written in Kotlin, using LWJGL3 for rendering and Legui to build user interfaces
 <table>
   <tr>
     <td><img src="https://camo.githubusercontent.com/f21283491b2bdc4cff48206af8a87a41760319fd/68747470733a2f2f692e696d6775722e636f6d2f4257576f7470702e706e67"/></td>
@@ -156,7 +168,19 @@ All examples located under `demo` package.
   </tr>
 </table>
 
+### FMT by Fexcraft
+
+> Fex's Modelling Toolbox  ([Fexcraft/FMT](https://github.com/Fexcraft/FMT))  
+> A Tool to create Models basing on the "TMT" (updated and maintained version of Fex/FCL) Library.
+<table>
+  <tr>
+    <td><img src="https://camo.githubusercontent.com/9e04a76b191c798ca7d2884df79b1e55058f518c4b788ac64ecd539aeefb272b/68747470733a2f2f63646e2e646973636f72646170702e636f6d2f6174746163686d656e74732f3336353632383536313831393639373136322f3730363136373531383438393733393331342f6a617661775f323032302d30352d30325f31372d33342d30392e706e67"/></td>
+    <td><img src="https://camo.githubusercontent.com/0ada25a2c5913d8abbebba78a2ca022021f7125da4521eaaed14b272268c7480/68747470733a2f2f63646e2e646973636f72646170702e636f6d2f6174746163686d656e74732f3336353632383536313831393639373136322f3730363136373530383139373137393439322f6a617661775f323032302d30352d30325f31372d33322d33382e706e67"/></td>
+  </tr>
+</table>
+
 ## Links
+
 [LWJGL - Lightweight Java Game Library 3](https://github.com/LWJGL/lwjgl3)  
 [JOML – Java OpenGL Math Library](https://github.com/JOML-CI/JOML)  
 [CBCHAIN - Callback Chain for LWJGL3](https://github.com/SpinyOwl/cbchain)  

@@ -2,7 +2,7 @@
   "keyboardLayout": "qwerty",
   "keyboardLayouts": {
     "qwerty": {
-      "UNKNOWN" : -1,
+      "UNKNOWN": -1,
       "SPACE": 32,
       "APOSTROPHE": 39,
       "COMMA": 44,
@@ -125,7 +125,7 @@
       "KEY_MENU": 348
     },
     "azerty": {
-      "UNKNOWN" : -1,
+      "UNKNOWN": -1,
       "SPACE": 32,
       "APOSTROPHE": 39,
       "COMMA": 44,
@@ -250,19 +250,27 @@
   },
   "shortcuts": {
     "copy": {
-      "mods": ["CONTROL"],
+      "mods": [
+        "CONTROL"
+      ],
       "key": "KEY_C"
     },
     "paste": {
-      "mods": ["CONTROL"],
+      "mods": [
+        "CONTROL"
+      ],
       "key": "KEY_V"
     },
     "cut": {
-      "mods": ["CONTROL"],
+      "mods": [
+        "CONTROL"
+      ],
       "key": "KEY_X"
     },
     "selectAll": {
-      "mods": ["CONTROL"],
+      "mods": [
+        "CONTROL"
+      ],
       "key": "KEY_A"
     }
   }
