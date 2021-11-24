@@ -44,7 +44,7 @@ repositories {
 
 dependencies {
     // https://mvnrepository.com/artifact/org.reflections/reflections
-    api group: 'org.reflections', name: 'reflections', version: '0.9.11'
+    api group: 'org.reflections', name: 'reflections', version: '0.10.2'
 
     //@formatter:off
     api group: "org.joml", name: "joml", version: joml_version, changing: true
