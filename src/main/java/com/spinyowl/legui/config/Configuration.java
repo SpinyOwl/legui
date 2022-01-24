@@ -62,7 +62,7 @@ public class Configuration {
       String json = IOUtil.resourceToString(path);
       return adapter.fromJson(json);
     } catch (IOException e) {
-      e.printStackTrace();
+//      e.printStackTrace();
       return defaultJson;
     }
   }

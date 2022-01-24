@@ -14,7 +14,7 @@ import org.joml.Vector2f;
  *
  * @param <T> {@link CheckBox} subclasses.
  */
-public class FlatCheckBoxTheme<T extends CheckBox> extends FlatBorderlessTheme<T> {
+public class FlatCheckBoxTheme<T extends CheckBox> extends FlatBorderlessTransparentTheme<T> {
 
   /**
    * Default constructor. Settings should be specified before using this theme.

@@ -9,7 +9,8 @@ import com.spinyowl.legui.theme.colored.FlatColoredTheme.FlatColoredThemeSetting
  *
  * @param <T> {@link TextAreaField} subclasses.
  */
-public class FlatTextAreaFieldTheme<T extends TextAreaField> extends FlatBorderlessTheme<T> {
+public class FlatTextAreaFieldTheme<T extends TextAreaField> extends
+    FlatBorderlessTransparentTheme<T> {
 
   /**
    * Default constructor. Settings should be specified before using this theme.

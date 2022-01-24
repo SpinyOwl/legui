@@ -10,13 +10,13 @@ public abstract class ViewportAnimation<T extends Component> extends Animation {
 
   private static final double DOUBLE_THRESHOLD = 0.001;
 
-  private double updateTime;
+  private final double updateTime;
   private double deltaSum;
 
   private double deltaT;
-  private Vector2f initialPosition = new Vector2f();
+  private final Vector2f initialPosition = new Vector2f();
 
-  private WeakReference<T> componentReference;
+  private final WeakReference<T> componentReference;
 
   public ViewportAnimation(T component, double updateTime) {
     this.componentReference = new WeakReference<>(component);
@@ -26,7 +26,6 @@ public abstract class ViewportAnimation<T extends Component> extends Animation {
   public WeakReference<T> getComponentReference() {
     return componentReference;
   }
-
 
   /**
    * This method used to update animated object. Called by animator every frame. Removed from
@@ -52,8 +51,8 @@ public abstract class ViewportAnimation<T extends Component> extends Animation {
 
   protected abstract void updateViewport(T component, double delta);
 
-
-  protected void updateViewport(Component viewport,
+  protected void updateViewport(
+      Component viewport,
       Component container,
       ScrollBar verticalScrollBar,
       ScrollBar horizontalScrollBar,
@@ -77,6 +76,7 @@ public abstract class ViewportAnimation<T extends Component> extends Animation {
 
     Vector2f targetPosition = new Vector2f(targetX, targetY);
 
+    Vector2f position;
     if (deltaT < updateTime) {
       if (deltaT == 0) {
         initialPosition.set(container.getPosition());
@@ -85,14 +85,18 @@ public abstract class ViewportAnimation<T extends Component> extends Animation {
 
       double tt = deltaT / updateTime;
       double modifier = easeInQuad(tt);
-      Vector2f position = new Vector2f(targetPosition).sub(initialPosition).mul((float) modifier)
-          .add(initialPosition);
-      container.setPosition(position);
+      position =
+          new Vector2f(targetPosition)
+              .sub(initialPosition)
+              .mul((float) modifier)
+              .add(initialPosition);
     } else {
-      Vector2f position = new Vector2f(targetX, targetY);
+      position = new Vector2f(targetX, targetY);
       initialPosition.set(position);
-      container.setPosition(position);
     }
+    container.setPosition(position);
+    container.getStyle().setLeft(position.x);
+    container.getStyle().setTop(position.y);
   }
 
   private float calculateTargetPosition(ScrollBar horizontalScrollBar, float vw, float cw) {

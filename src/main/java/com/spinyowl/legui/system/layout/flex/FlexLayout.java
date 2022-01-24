@@ -7,6 +7,45 @@ import static com.spinyowl.legui.system.layout.flex.FlexUtils.setFlexWrap;
 import static com.spinyowl.legui.system.layout.flex.FlexUtils.setJustifyContent;
 import static com.spinyowl.legui.system.layout.flex.FlexUtils.setMargin;
 import static com.spinyowl.legui.system.layout.flex.FlexUtils.setPadding;
+import static org.lwjgl.util.yoga.Yoga.YGConfigFree;
+import static org.lwjgl.util.yoga.Yoga.YGConfigNew;
+import static org.lwjgl.util.yoga.Yoga.YGDirectionLTR;
+import static org.lwjgl.util.yoga.Yoga.YGDisplayFlex;
+import static org.lwjgl.util.yoga.Yoga.YGEdgeBottom;
+import static org.lwjgl.util.yoga.Yoga.YGEdgeLeft;
+import static org.lwjgl.util.yoga.Yoga.YGEdgeRight;
+import static org.lwjgl.util.yoga.Yoga.YGEdgeTop;
+import static org.lwjgl.util.yoga.Yoga.YGNodeCalculateLayout;
+import static org.lwjgl.util.yoga.Yoga.YGNodeFree;
+import static org.lwjgl.util.yoga.Yoga.YGNodeInsertChild;
+import static org.lwjgl.util.yoga.Yoga.YGNodeLayoutGetHeight;
+import static org.lwjgl.util.yoga.Yoga.YGNodeLayoutGetLeft;
+import static org.lwjgl.util.yoga.Yoga.YGNodeLayoutGetTop;
+import static org.lwjgl.util.yoga.Yoga.YGNodeLayoutGetWidth;
+import static org.lwjgl.util.yoga.Yoga.YGNodeNewWithConfig;
+import static org.lwjgl.util.yoga.Yoga.YGNodeStyleSetDisplay;
+import static org.lwjgl.util.yoga.Yoga.YGNodeStyleSetFlexBasis;
+import static org.lwjgl.util.yoga.Yoga.YGNodeStyleSetFlexGrow;
+import static org.lwjgl.util.yoga.Yoga.YGNodeStyleSetFlexShrink;
+import static org.lwjgl.util.yoga.Yoga.YGNodeStyleSetHeight;
+import static org.lwjgl.util.yoga.Yoga.YGNodeStyleSetHeightAuto;
+import static org.lwjgl.util.yoga.Yoga.YGNodeStyleSetHeightPercent;
+import static org.lwjgl.util.yoga.Yoga.YGNodeStyleSetMaxHeight;
+import static org.lwjgl.util.yoga.Yoga.YGNodeStyleSetMaxHeightPercent;
+import static org.lwjgl.util.yoga.Yoga.YGNodeStyleSetMaxWidth;
+import static org.lwjgl.util.yoga.Yoga.YGNodeStyleSetMaxWidthPercent;
+import static org.lwjgl.util.yoga.Yoga.YGNodeStyleSetMinHeight;
+import static org.lwjgl.util.yoga.Yoga.YGNodeStyleSetMinHeightPercent;
+import static org.lwjgl.util.yoga.Yoga.YGNodeStyleSetMinWidth;
+import static org.lwjgl.util.yoga.Yoga.YGNodeStyleSetMinWidthPercent;
+import static org.lwjgl.util.yoga.Yoga.YGNodeStyleSetPosition;
+import static org.lwjgl.util.yoga.Yoga.YGNodeStyleSetPositionPercent;
+import static org.lwjgl.util.yoga.Yoga.YGNodeStyleSetPositionType;
+import static org.lwjgl.util.yoga.Yoga.YGNodeStyleSetWidth;
+import static org.lwjgl.util.yoga.Yoga.YGNodeStyleSetWidthAuto;
+import static org.lwjgl.util.yoga.Yoga.YGNodeStyleSetWidthPercent;
+import static org.lwjgl.util.yoga.Yoga.YGPositionTypeAbsolute;
+import static org.lwjgl.util.yoga.Yoga.YGPositionTypeRelative;
 
 import com.spinyowl.legui.component.Component;
 import com.spinyowl.legui.component.Frame;
@@ -25,11 +64,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.joml.Vector2f;
-import org.lwjgl.util.yoga.Yoga;
-
 
 public class FlexLayout implements Layout {
-
 
   public static final float THRESHOLD = 0.0001f;
 
@@ -46,77 +82,87 @@ public class FlexLayout implements Layout {
   /**
    * Used to lay out child components for parent component.
    *
-   * @param parent  component to lay out.
-   * @param frame   component frame (for event generation).
+   * @param parent component to lay out.
+   * @param frame component frame (for event generation).
    * @param context context (used for event generation).
    */
   @Override
   public void layout(Component parent, Frame frame, Context context) {
+//    if (parent.isEmpty()) {
+//      return;
+//    }
     // initialize
-    long rootNode = Yoga.YGNodeNew();
+    long yogaConfig = YGConfigNew();
+    long rootNode = YGNodeNewWithConfig(yogaConfig);
+
     prepareParentNode(parent, rootNode);
-    Yoga.YGNodeStyleSetDisplay(rootNode, Yoga.YGDisplayFlex);
+    YGNodeStyleSetDisplay(rootNode, YGDisplayFlex);
 
     List<Long> childNodes = new ArrayList<>();
-    List<Component> components = parent.getChildComponents().stream().filter(Component::isVisible)
-        .collect(Collectors.toList());
+    List<Component> components =
+        parent.getChildComponents().stream()
+            .filter(Component::isVisible)
+            .collect(Collectors.toList());
     for (Component component : components) {
-      long childNode = Yoga.YGNodeNew();
+      long childNode = YGNodeNewWithConfig(yogaConfig);
       prepareNode(component, childNode);
-      Yoga.YGNodeInsertChild(rootNode, childNode, childNodes.size());
+      YGNodeInsertChild(rootNode, childNode, childNodes.size());
       childNodes.add(childNode);
     }
 
     // calculate
-    Yoga.nYGNodeCalculateLayout(rootNode, parent.getSize().x, parent.getSize().y,
-        Yoga.YGDirectionLTR);
+    YGNodeCalculateLayout(rootNode, parent.getSize().x, parent.getSize().y, YGDirectionLTR);
 
     // apply to components
     for (int i = 0; i < components.size(); i++) {
       Component childComponent = components.get(i);
       Long yogaNode = childNodes.get(i);
 
-      Vector2f newPos = new Vector2f(Yoga.YGNodeLayoutGetLeft(yogaNode),
-          Yoga.YGNodeLayoutGetTop(yogaNode));
-      Vector2f oldPos = childComponent.getPosition();
-      childComponent.setPosition(newPos);
-
-      Vector2f newSize = new Vector2f(Yoga.YGNodeLayoutGetWidth(yogaNode),
-          Yoga.YGNodeLayoutGetHeight(yogaNode));
-      Vector2f oldSize = childComponent.getSize();
-      childComponent.setSize(newSize);
-
-      if (frame != null && context != null) {
-        if (!oldPos.equals(newPos, THRESHOLD)) {
-          EventProcessorProvider.getInstance()
-              .pushEvent(new ChangePositionEvent(childComponent, context, frame, oldPos, newPos));
-        }
-        if (!oldSize.equals(newSize, THRESHOLD)) {
-          EventProcessorProvider.getInstance()
-              .pushEvent(new ChangeSizeEvent(childComponent, context, frame, oldSize, newSize));
-        }
-      }
+      updateComponent(frame, context, childComponent, yogaNode);
     }
 
     // free mem
     for (Long childNode : childNodes) {
-      Yoga.YGNodeFree(childNode);
+      YGNodeFree(childNode);
     }
 
-    Yoga.YGNodeFree(rootNode);
+    YGNodeFree(rootNode);
+    YGConfigFree(yogaConfig);
+  }
+
+  private void updateComponent(Frame frame, Context context, Component component, Long yogaNode) {
+    Vector2f newPos = new Vector2f(YGNodeLayoutGetLeft(yogaNode), YGNodeLayoutGetTop(yogaNode));
+    Vector2f oldPos = component.getPosition();
+    component.setPosition(newPos);
+
+    Vector2f newSize =
+        new Vector2f(YGNodeLayoutGetWidth(yogaNode), YGNodeLayoutGetHeight(yogaNode));
+    Vector2f oldSize = component.getSize();
+    component.setSize(newSize);
+
+    if (frame != null && context != null) {
+      if (!oldPos.equals(newPos, THRESHOLD)) {
+        EventProcessorProvider.getInstance()
+            .pushEvent(new ChangePositionEvent<>(component, context, frame, oldPos, newPos));
+      }
+      if (!oldSize.equals(newSize, THRESHOLD)) {
+        EventProcessorProvider.getInstance()
+            .pushEvent(new ChangeSizeEvent<>(component, context, frame, oldSize, newSize));
+      }
+    }
   }
 
   private void prepareParentNode(Component parent, long rootNode) {
     prepareNode(parent, rootNode);
-    Yoga.YGNodeStyleSetWidth(rootNode, parent.getSize().x);
-    Yoga.YGNodeStyleSetHeight(rootNode, parent.getSize().y);
+    YGNodeStyleSetWidth(rootNode, parent.getSize().x);
+    YGNodeStyleSetHeight(rootNode, parent.getSize().y);
   }
 
   /**
    * Used to prepare root node.
    *
    * @param component parent component associated to root node.
-   * @param node      root yoga node.
+   * @param node root yoga node.
    */
   private void prepareNode(Component component, long node) {
     Style style = component.getStyle();
@@ -136,31 +182,33 @@ public class FlexLayout implements Layout {
     setWidth(node, style);
     setHeight(node, style);
 
-    setPosition(node, style.getTop(), Yoga.YGEdgeTop);
-    setPosition(node, style.getBottom(), Yoga.YGEdgeBottom);
-    setPosition(node, style.getRight(), Yoga.YGEdgeRight);
-    setPosition(node, style.getLeft(), Yoga.YGEdgeLeft);
+    setPosition(node, style.getTop(), YGEdgeTop);
+    setPosition(node, style.getBottom(), YGEdgeBottom);
+    setPosition(node, style.getRight(), YGEdgeRight);
+    setPosition(node, style.getLeft(), YGEdgeLeft);
 
-    Yoga.YGNodeStyleSetFlexBasis(node, flexStyle.getFlexBasis());
+    YGNodeStyleSetFlexBasis(node, flexStyle.getFlexBasis());
 
     setPadding(node, style);
     setMargin(node, style);
 
-    Yoga.YGNodeStyleSetPositionType(node,
-        style.getPosition() == PositionType.RELATIVE ? Yoga.YGPositionTypeRelative
-            : Yoga.YGPositionTypeAbsolute);
+    YGNodeStyleSetPositionType(
+        node,
+        style.getPosition() == PositionType.RELATIVE
+            ? YGPositionTypeRelative
+            : YGPositionTypeAbsolute);
 
-    Yoga.YGNodeStyleSetFlexGrow(node, flexStyle.getFlexGrow());
-    Yoga.YGNodeStyleSetFlexShrink(node, flexStyle.getFlexShrink());
+    YGNodeStyleSetFlexGrow(node, flexStyle.getFlexGrow());
+    YGNodeStyleSetFlexShrink(node, flexStyle.getFlexShrink());
   }
 
-  private void setPosition(long node, Length distance, int edge) {
-    if (distance != null) {
-      if (LengthType.PIXEL.equals(distance.type())) {
-        Yoga.YGNodeStyleSetPosition(node, edge, LengthType.PIXEL.type().cast(distance.get()));
-      } else if (LengthType.PERCENT.equals(distance.type())) {
-        Yoga.YGNodeStyleSetPositionPercent(node, edge,
-            LengthType.PERCENT.type().cast(distance.get()));
+  private void setPosition(long node, Unit distance, int edge) {
+    if (distance != null && distance.isLength()) {
+      Length<?> length = distance.asLength();
+      if (LengthType.PIXEL.equals(length.type())) {
+        YGNodeStyleSetPosition(node, edge, LengthType.PIXEL.type().cast(length.get()));
+      } else if (LengthType.PERCENT.equals(length.type())) {
+        YGNodeStyleSetPositionPercent(node, edge, LengthType.PERCENT.type().cast(length.get()));
       }
     }
   }
@@ -169,13 +217,13 @@ public class FlexLayout implements Layout {
     Unit height = style.getHeight();
     if (height != null) {
       if (height.isAuto()) {
-        Yoga.YGNodeStyleSetHeightAuto(node);
+        YGNodeStyleSetHeightAuto(node);
       } else {
-        Length length = height.asLength();
+        Length<?> length = height.asLength();
         if (LengthType.PIXEL.equals(length.type())) {
-          Yoga.YGNodeStyleSetHeight(node, LengthType.PIXEL.type().cast(length.get()));
+          YGNodeStyleSetHeight(node, LengthType.PIXEL.type().cast(length.get()));
         } else if (LengthType.PERCENT.equals(length.type())) {
-          Yoga.YGNodeStyleSetHeightPercent(node, LengthType.PERCENT.type().cast(length.get()));
+          YGNodeStyleSetHeightPercent(node, LengthType.PERCENT.type().cast(length.get()));
         }
       }
     }
@@ -185,61 +233,59 @@ public class FlexLayout implements Layout {
     Unit width = style.getWidth();
     if (width != null) {
       if (width.isAuto()) {
-        Yoga.YGNodeStyleSetWidthAuto(node);
+        YGNodeStyleSetWidthAuto(node);
       } else {
-        Length length = width.asLength();
+        Length<?> length = width.asLength();
         if (LengthType.PIXEL.equals(length.type())) {
-          Yoga.YGNodeStyleSetWidth(node, LengthType.PIXEL.type().cast(length.get()));
+          YGNodeStyleSetWidth(node, LengthType.PIXEL.type().cast(length.get()));
         } else if (LengthType.PERCENT.equals(length.type())) {
-          Yoga.YGNodeStyleSetWidthPercent(node, LengthType.PERCENT.type().cast(length.get()));
+          YGNodeStyleSetWidthPercent(node, LengthType.PERCENT.type().cast(length.get()));
         }
       }
     }
   }
 
   private void setMaxHeight(long node, Style style) {
-    Length maxHeight = style.getMaxHeight();
+    Length<?> maxHeight = style.getMaxHeight();
     if (maxHeight != null) {
       if (LengthType.PIXEL.equals(maxHeight.type())) {
-        Yoga.YGNodeStyleSetMaxHeight(node, LengthType.PIXEL.type().cast(maxHeight.get()));
+        YGNodeStyleSetMaxHeight(node, LengthType.PIXEL.type().cast(maxHeight.get()));
       } else if (LengthType.PERCENT.equals(maxHeight.type())) {
-        Yoga.YGNodeStyleSetMaxHeightPercent(node, LengthType.PERCENT.type().cast(maxHeight.get()));
+        YGNodeStyleSetMaxHeightPercent(node, LengthType.PERCENT.type().cast(maxHeight.get()));
       }
     }
   }
 
   private void setMaxWidth(long node, Style style) {
-    Length maxWidth = style.getMaxWidth();
+    Length<?> maxWidth = style.getMaxWidth();
     if (maxWidth != null) {
       if (LengthType.PIXEL.equals(maxWidth.type())) {
-        Yoga.YGNodeStyleSetMaxWidth(node, LengthType.PIXEL.type().cast(maxWidth.get()));
+        YGNodeStyleSetMaxWidth(node, LengthType.PIXEL.type().cast(maxWidth.get()));
       } else if (LengthType.PERCENT.equals(maxWidth.type())) {
-        Yoga.YGNodeStyleSetMaxWidthPercent(node, LengthType.PERCENT.type().cast(maxWidth.get()));
+        YGNodeStyleSetMaxWidthPercent(node, LengthType.PERCENT.type().cast(maxWidth.get()));
       }
     }
   }
 
   private void setMinHeight(long node, Style style) {
-    Length minHeight = style.getMinHeight();
+    Length<?> minHeight = style.getMinHeight();
     if (minHeight != null) {
       if (LengthType.PIXEL.equals(minHeight.type())) {
-        Yoga.YGNodeStyleSetMinHeight(node, LengthType.PIXEL.type().cast(minHeight.get()));
+        YGNodeStyleSetMinHeight(node, LengthType.PIXEL.type().cast(minHeight.get()));
       } else if (LengthType.PERCENT.equals(minHeight.type())) {
-        Yoga.YGNodeStyleSetMinHeightPercent(node, LengthType.PERCENT.type().cast(minHeight.get()));
+        YGNodeStyleSetMinHeightPercent(node, LengthType.PERCENT.type().cast(minHeight.get()));
       }
     }
   }
 
   private void setMinWidth(long node, Style style) {
-    Length minWidth = style.getMinWidth();
+    Length<?> minWidth = style.getMinWidth();
     if (minWidth != null) {
       if (LengthType.PIXEL.equals(minWidth.type())) {
-        Yoga.YGNodeStyleSetMinWidth(node, LengthType.PIXEL.type().cast(minWidth.get()));
+        YGNodeStyleSetMinWidth(node, LengthType.PIXEL.type().cast(minWidth.get()));
       } else if (LengthType.PERCENT.equals(minWidth.type())) {
-        Yoga.YGNodeStyleSetMinWidthPercent(node, LengthType.PERCENT.type().cast(minWidth.get()));
+        YGNodeStyleSetMinWidthPercent(node, LengthType.PERCENT.type().cast(minWidth.get()));
       }
     }
   }
-
-
 }

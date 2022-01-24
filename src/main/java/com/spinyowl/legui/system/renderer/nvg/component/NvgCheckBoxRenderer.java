@@ -55,7 +55,6 @@ public class NvgCheckBoxRenderer extends NvgDefaultComponentRenderer<CheckBox> {
           getStyle(checkBox, Style::getFont, FontRegistry.getDefaultFont()),
           textState.getText(),
           getStyle(checkBox, Style::getTextColor));
-
       renderIcon(icon, checkBox, context);
     }
     resetScissor(nanovg);

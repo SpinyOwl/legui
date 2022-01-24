@@ -8,7 +8,7 @@ import com.spinyowl.legui.theme.colored.FlatColoredTheme.FlatColoredThemeSetting
  *
  * @param <T> {@link Slider} subclasses.
  */
-public class FlatSliderTheme<T extends Slider> extends FlatBorderlessTheme<T> {
+public class FlatSliderTheme<T extends Slider> extends FlatBorderlessTransparentTheme<T> {
 
   /**
    * Default constructor. Settings should be specified before using this theme.

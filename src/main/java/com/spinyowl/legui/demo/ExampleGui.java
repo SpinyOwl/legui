@@ -132,6 +132,12 @@ public class ExampleGui extends Panel {
         textInput.getStyle().setHorizontalAlign(CENTER);
       } else if (event.getKey() == GLFW.GLFW_KEY_F3 && event.getAction() == GLFW.GLFW_RELEASE) {
         textInput.getStyle().setHorizontalAlign(RIGHT);
+      } else if (event.getKey() == GLFW.GLFW_KEY_F4 && event.getAction() == GLFW.GLFW_RELEASE) {
+        textInput.getStyle().setVerticalAlign(TOP);
+      } else if (event.getKey() == GLFW.GLFW_KEY_F5 && event.getAction() == GLFW.GLFW_RELEASE) {
+        textInput.getStyle().setVerticalAlign(MIDDLE);
+      } else if (event.getKey() == GLFW.GLFW_KEY_F6 && event.getAction() == GLFW.GLFW_RELEASE) {
+        textInput.getStyle().setVerticalAlign(BOTTOM);
       }
     });
     this.add(textInput);
@@ -279,7 +285,7 @@ public class ExampleGui extends Panel {
 
     TextInput inpur = new TextInput(420, 430, 50, 35);
     inpur.getTextState().setText("00");
-    inpur.getStyle().setFontSize(35f);
+    inpur.getStyle().setFontSize(30f);
     inpur.getStyle().setHorizontalAlign(CENTER);
     inpur.getStyle().setVerticalAlign(MIDDLE);
     inpur.getStyle().getBackground().setColor(ColorConstants.white());
@@ -484,7 +490,7 @@ public class ExampleGui extends Panel {
     b.getStyle().setFont(FontRegistry.MATERIAL_ICONS_REGULAR);
     b.getStyle().setVerticalAlign(MIDDLE);
     b.getStyle().setHorizontalAlign(CENTER);
-    b.getStyle().setFontSize(20f);
+    b.getStyle().setFontSize(16f);
 
     String up = TextUtil.cpToStr(0xE5D8);
     String down = TextUtil.cpToStr(0xE5DB);
@@ -501,7 +507,7 @@ public class ExampleGui extends Panel {
     Button b2 = new Button(55, 30, 40, 20);
     b2.getStyle().setVerticalAlign(MIDDLE);
     b2.getStyle().setHorizontalAlign(CENTER);
-    b2.getStyle().setFontSize(20f);
+    b2.getStyle().setFontSize(16f);
 
     String up2 = "-";
     String down2 = "+";
@@ -800,42 +806,42 @@ public class ExampleGui extends Panel {
     hOffsetSlider.addSliderChangeValueEventListener((e) ->
         shadowWidget.getStyle().getShadow().sethOffset(hOffsetSlider.getValue() - 50f)
     );
-    Label hOffsetLabel = new Label(10, 5 + 20 * 0, 90, 10);
-    hOffsetLabel.getStyle().setFontSize(18f);
-    hOffsetLabel.getHoveredStyle().setFontSize(20f);
+    Label hOffsetLabel = new Label(10, 2 + 20 * 0, 90, 14);
+    hOffsetLabel.getStyle().setFontSize(12f);
+    hOffsetLabel.getHoveredStyle().setFontSize(14f);
     hOffsetLabel.getTextState().setText("HOffset: ");
     shadowWidget.getContainer().add(hOffsetLabel);
 
-    Slider vOffsetSlider = new Slider(110, 5 + 20 * 1, 80, 10);
+    Slider vOffsetSlider = new Slider(110, 2 + 20 * 1, 80, 14);
     shadowWidget.getContainer().add(vOffsetSlider);
     vOffsetSlider.setValue(50f);
     vOffsetSlider.addSliderChangeValueEventListener((e) ->
         shadowWidget.getStyle().getShadow().setvOffset(vOffsetSlider.getValue() - 50f)
     );
-    Label vOffsetLabel = new Label(10, 5 + 20 * 1, 90, 10);
+    Label vOffsetLabel = new Label(10, 2 + 20 * 1, 90, 14);
     vOffsetLabel.getTextState().setText("VOffset: ");
     shadowWidget.getContainer().add(vOffsetLabel);
 
-    Slider blurSlider = new Slider(110, 5 + 20 * 2, 80, 10);
+    Slider blurSlider = new Slider(110, 2 + 20 * 2, 80, 14);
     shadowWidget.getContainer().add(blurSlider);
     blurSlider.addSliderChangeValueEventListener((e) ->
         shadowWidget.getStyle().getShadow().setBlur(blurSlider.getValue())
     );
-    Label blurLabel = new Label(10, 5 + 20 * 2, 90, 10);
+    Label blurLabel = new Label(10, 2 + 20 * 2, 90, 14);
     blurLabel.getTextState().setText("Blur: ");
     shadowWidget.getContainer().add(blurLabel);
 
-    Slider spreadSlider = new Slider(110, 5 + 20 * 3, 80, 10);
+    Slider spreadSlider = new Slider(110, 2 + 20 * 3, 80, 14);
     shadowWidget.getContainer().add(spreadSlider);
     spreadSlider.setValue(50f);
     spreadSlider.addSliderChangeValueEventListener((e) ->
         shadowWidget.getStyle().getShadow().setSpread(spreadSlider.getValue() - 50f)
     );
-    Label spreadLabel = new Label(10, 5 + 20 * 3, 90, 10);
+    Label spreadLabel = new Label(10, 2 + 20 * 3, 90, 14);
     spreadLabel.getTextState().setText("Spread: ");
     shadowWidget.getContainer().add(spreadLabel);
 
-    Slider transparencySlider = new Slider(110, 5 + 20 * 4, 80, 10);
+    Slider transparencySlider = new Slider(110, 2 + 20 * 4, 80, 14);
     shadowWidget.getContainer().add(transparencySlider);
     transparencySlider.addSliderChangeValueEventListener((e) -> {
       shadowWidget.getStyle().getBackground().getColor().w =
@@ -843,7 +849,7 @@ public class ExampleGui extends Panel {
       shadowWidget.getContainer().getStyle().getBackground().getColor().w =
           1 - transparencySlider.getValue() / 100f;
     });
-    Label transparencyLabel = new Label(10, 5 + 20 * 4, 90, 10);
+    Label transparencyLabel = new Label(10, 2 + 20 * 4, 90, 14);
     transparencyLabel.getTextState().setText("W Transparency: ");
     shadowWidget.getContainer().add(transparencyLabel);
     return shadowWidget;

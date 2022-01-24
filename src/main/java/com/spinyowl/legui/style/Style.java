@@ -29,8 +29,8 @@ public class Style {
   private Length borderBottomRightRadius;
   private Length borderBottomLeftRadius;
 
-  private Length width;
-  private Length height;
+  private Unit width;
+  private Unit height;
 
   private Length minWidth;
   private Length minHeight;
@@ -48,10 +48,10 @@ public class Style {
   private Unit marginRight;
   private Unit marginLeft;
 
-  private Length top;
-  private Length bottom;
-  private Length right;
-  private Length left;
+  private Unit top;
+  private Unit bottom;
+  private Unit right;
+  private Unit left;
 
   private Shadow shadow;
 
@@ -288,7 +288,7 @@ public class Style {
    *
    * @return width.
    */
-  public Length getWidth() {
+  public Unit getWidth() {
     return width;
   }
 
@@ -306,7 +306,7 @@ public class Style {
    *
    * @param width width to set.
    */
-  public void setWidth(Length width) {
+  public void setWidth(Unit width) {
     this.width = width;
   }
 
@@ -315,7 +315,7 @@ public class Style {
    *
    * @return height to set.
    */
-  public Length getHeight() {
+  public Unit getHeight() {
     return height;
   }
 
@@ -323,7 +323,7 @@ public class Style {
     setHeight(pixel(height));
   }
 
-  public void setHeight(Length height) {
+  public void setHeight(Unit height) {
     this.height = height;
   }
 
@@ -520,7 +520,7 @@ public class Style {
    *
    * @return top style.
    */
-  public Length getTop() {
+  public Unit getTop() {
     return top;
   }
 
@@ -538,7 +538,7 @@ public class Style {
    *
    * @param top top style.
    */
-  public void setTop(Length top) {
+  public void setTop(Unit top) {
     this.top = top;
   }
 
@@ -547,7 +547,7 @@ public class Style {
    *
    * @return bottom style.
    */
-  public Length getBottom() {
+  public Unit getBottom() {
     return bottom;
   }
 
@@ -565,7 +565,7 @@ public class Style {
    *
    * @param bottom bottom style.
    */
-  public void setBottom(Length bottom) {
+  public void setBottom(Unit bottom) {
     this.bottom = bottom;
   }
 
@@ -574,7 +574,7 @@ public class Style {
    *
    * @return right style.
    */
-  public Length getRight() {
+  public Unit getRight() {
     return right;
   }
 
@@ -592,7 +592,7 @@ public class Style {
    *
    * @param right right style.
    */
-  public void setRight(Length right) {
+  public void setRight(Unit right) {
     this.right = right;
   }
 
@@ -601,7 +601,7 @@ public class Style {
    *
    * @return left style.
    */
-  public Length getLeft() {
+  public Unit getLeft() {
     return left;
   }
 
@@ -619,7 +619,7 @@ public class Style {
    *
    * @param left left style.
    */
-  public void setLeft(Length left) {
+  public void setLeft(Unit left) {
     this.left = left;
   }
 

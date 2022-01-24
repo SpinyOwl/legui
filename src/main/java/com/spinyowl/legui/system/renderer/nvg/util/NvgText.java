@@ -35,7 +35,6 @@ import org.lwjgl.system.MemoryUtil;
 
 public class NvgText {
 
-  public static final double THRESHOLD = 0.001;
   public static final float _90 = (float) (Math.PI / 2);
   public static final float _270 = (float) (3 * Math.PI / 2);
 
@@ -110,7 +109,9 @@ public class NvgText {
             x = textPosition.x - rect.x();
             y = (int) textPosition.y - rect.y();
           }
-          nnvgText(nvg, (int) x, (int) y, rowStart, rowEnd);
+          int xx = (int) x;
+          int yy = (int) y;
+          nnvgText(nvg, xx, yy, rowStart, rowEnd);
           nvgRestore(nvg);
         }
       }

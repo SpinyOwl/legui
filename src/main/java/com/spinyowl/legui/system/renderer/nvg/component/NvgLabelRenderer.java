@@ -20,7 +20,6 @@ import com.spinyowl.legui.system.renderer.nvg.util.NvgText;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 
-
 public class NvgLabelRenderer extends NvgDefaultComponentRenderer<Label> {
 
   @Override
@@ -34,14 +33,14 @@ public class NvgLabelRenderer extends NvgDefaultComponentRenderer<Label> {
       TextState textState = label.getTextState();
       Vector4f padding = getPadding(label, style);
       Vector4f rect = getInnerContentRectangle(pos, size, padding);
-      Float fontSize = getStyle(label, Style::getFontSize, 16F);
-      VerticalAlign verticalAlign = getStyle(label, Style::getVerticalAlign, VerticalAlign.MIDDLE);
-      HorizontalAlign horizontalAlign = getStyle(label, Style::getHorizontalAlign,
-          HorizontalAlign.LEFT);
 
-      float[] textBounds = calculateTextBoundsRect(nanovg, rect, textState.getText(),
-          horizontalAlign,
-          verticalAlign, fontSize);
+      Float fontSize = getStyle(label, Style::getFontSize, 16F);
+
+      HorizontalAlign hAlign = getStyle(label, Style::getHorizontalAlign, HorizontalAlign.LEFT);
+      VerticalAlign vAlign = getStyle(label, Style::getVerticalAlign, VerticalAlign.MIDDLE);
+
+      float[] textBounds =
+          calculateTextBoundsRect(nanovg, rect, textState.getText(), hAlign, vAlign, fontSize);
       float textWidth = textState.getTextWidth();
 
       // Calculation of the text size and sending of the sizing event
@@ -59,8 +58,8 @@ public class NvgLabelRenderer extends NvgDefaultComponentRenderer<Label> {
       padding = getPadding(label, style);
       rect = getInnerContentRectangle(pos, size, padding);
       fontSize = getStyle(label, Style::getFontSize, 16F);
-      verticalAlign = getStyle(label, Style::getVerticalAlign, VerticalAlign.MIDDLE);
-      horizontalAlign = getStyle(label, Style::getHorizontalAlign, HorizontalAlign.LEFT);
+      vAlign = getStyle(label, Style::getVerticalAlign, VerticalAlign.MIDDLE);
+      hAlign = getStyle(label, Style::getHorizontalAlign, HorizontalAlign.LEFT);
 
       // Applying the new settings to the text
       textState.setTextWidth(textBounds[2]);
@@ -71,10 +70,17 @@ public class NvgLabelRenderer extends NvgDefaultComponentRenderer<Label> {
       renderBackground(label, context, nanovg);
 
       // At the end we draw the text
-      NvgText.drawTextLineToRect(nanovg, rect, false, horizontalAlign, verticalAlign, fontSize,
-          getStyle(label, Style::getFont, FontRegistry.getDefaultFont()), textState.getText(),
-          getStyle(label, Style::getTextColor), label.getTextDirection());
-
+      NvgText.drawTextLineToRect(
+          nanovg,
+          rect,
+          false,
+          hAlign,
+          vAlign,
+          fontSize,
+          getStyle(label, Style::getFont, FontRegistry.getDefaultFont()),
+          textState.getText(),
+          getStyle(label, Style::getTextColor),
+          label.getTextDirection());
     }
     resetScissor(nanovg);
   }

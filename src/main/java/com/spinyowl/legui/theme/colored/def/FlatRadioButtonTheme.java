@@ -14,7 +14,7 @@ import org.joml.Vector2f;
  *
  * @param <T> {@link RadioButton} subclasses.
  */
-public class FlatRadioButtonTheme<T extends RadioButton> extends FlatBorderlessTheme<T> {
+public class FlatRadioButtonTheme<T extends RadioButton> extends FlatBorderlessTransparentTheme<T> {
 
   /**
    * Default constructor. Settings should be specified before using this theme.

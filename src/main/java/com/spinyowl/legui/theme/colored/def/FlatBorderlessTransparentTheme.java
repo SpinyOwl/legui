@@ -10,15 +10,15 @@ import com.spinyowl.legui.theme.colored.FlatColoredTheme.FlatColoredThemeSetting
  *
  * @param <T> {@link Label} subclasses.
  */
-public class FlatBorderlessTheme<T extends Component> extends FlatComponentTheme<T> {
+public class FlatBorderlessTransparentTheme<T extends Component> extends FlatComponentTheme<T> {
 
   /**
    * Default constructor. Settings should be specified before using this theme.
    */
-  public FlatBorderlessTheme() {
+  public FlatBorderlessTransparentTheme() {
   }
 
-  public FlatBorderlessTheme(FlatColoredThemeSettings settings) {
+  public FlatBorderlessTransparentTheme(FlatColoredThemeSettings settings) {
     super(settings);
   }
 

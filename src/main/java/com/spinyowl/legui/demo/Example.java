@@ -1,6 +1,6 @@
 package com.spinyowl.legui.demo;
 
-import static com.spinyowl.legui.style.color.ColorUtil.fromInt;
+import static com.spinyowl.legui.style.color.ColorUtil.rgba;
 import static org.lwjgl.glfw.GLFW.GLFW_DONT_CARE;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_ESCAPE;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_F;
@@ -33,6 +33,8 @@ import com.spinyowl.legui.component.Component;
 import com.spinyowl.legui.component.Frame;
 import com.spinyowl.legui.event.WindowSizeEvent;
 import com.spinyowl.legui.listener.WindowSizeEventListener;
+import com.spinyowl.legui.style.Style.DisplayType;
+import com.spinyowl.legui.style.Style.PositionType;
 import com.spinyowl.legui.style.color.ColorConstants;
 import com.spinyowl.legui.style.font.FontRegistry;
 import com.spinyowl.legui.system.context.Context;
@@ -47,7 +49,6 @@ import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.glfw.GLFWWindowCloseCallbackI;
 import org.lwjgl.opengl.GL;
 
-
 public class Example {
 
   public static final int WIDTH = 800;
@@ -59,7 +60,8 @@ public class Example {
   private static ExampleGui gui;
   private static Context context;
 
-//    private static String json = IOUtil.loadResourceAsString("com/spinyowl/legui/demo/json.json", 1024);
+  //    private static String json =
+  // IOUtil.loadResourceAsString("com/spinyowl/legui/demo/json.json", 1024);
 
   public static void main(String[] args) {
     System.setProperty("joml.nounsafe", Boolean.TRUE.toString());
@@ -86,38 +88,42 @@ public class Example {
     }
 
     // create LEGUI theme and set it as default
-    Themes.setDefaultTheme(new FlatColoredTheme(
-        fromInt(245, 245, 245, 1), // backgroundColor
-        fromInt(176, 190, 197, 1), // borderColor
-        fromInt(176, 190, 197, 1), // sliderColor
-        fromInt(100, 181, 246, 1), // strokeColor
-        fromInt(165, 214, 167, 1), // allowColor
-        fromInt(239, 154, 154, 1), // denyColor
-        ColorConstants.transparent(), // shadowColor
-        ColorConstants.darkGray(), // text color
-        FontRegistry.getDefaultFont(), // font
-        16f //font size
-    ));
+    //    Themes.setDefaultTheme(new FlatColoredTheme(
+    //        rgba(255, 255, 255, 1), // backgroundColor
+    //        rgba(176, 190, 197, 1), // borderColor
+    //        rgba(176, 190, 197, 1), // sliderColor
+    //        rgba(100, 181, 246, 1), // strokeColor
+    //        rgba(194, 219, 245, 1), // allowColor
+    //        rgba(239, 154, 154, 1), // denyColor
+    //        ColorConstants.transparent(), // shadowColor
+    //        ColorConstants.darkGray(), // text color
+    //        FontRegistry.getDefaultFont(), // font
+    //        FlatColoredTheme.FONT_SIZE
+    //    ));
 
     // Firstly we need to create frame component for window.
-    Frame frame = new Frame(WIDTH, HEIGHT);// new Frame(WIDTH, HEIGHT);
+    Frame frame = new Frame(WIDTH, HEIGHT); // new Frame(WIDTH, HEIGHT);
     createGuiElements(frame, WIDTH, HEIGHT);
     // also we can create frame for example just by unmarshal it
-//        frame = GsonMarshalUtil.unmarshal(json);
-//        frame.setSize(WIDTH, HEIGHT);
+    //        frame = GsonMarshalUtil.unmarshal(json);
+    //        frame.setSize(WIDTH, HEIGHT);
 
     // We need to create legui instance one for window
     // which hold all necessary library components
     // or if you want some customizations you can do it by yourself.
     DefaultInitializer initializer = new DefaultInitializer(window, frame);
 
-    GLFWKeyCallbackI exitOnEscCallback = (w1, key, code, action, mods) -> running = !(
-        key == GLFW_KEY_ESCAPE && action != GLFW_RELEASE);
-    GLFWKeyCallbackI toggleFullscreenCallback = (w1, key, code, action, mods) -> toggleFullscreen = (
-        key == GLFW_KEY_F && action == GLFW_RELEASE && (mods & GLFW_MOD_CONTROL) != 0);
+    GLFWKeyCallbackI exitOnEscCallback =
+        (w1, key, code, action, mods) ->
+            running = !(key == GLFW_KEY_ESCAPE && action != GLFW_RELEASE);
+    GLFWKeyCallbackI toggleFullscreenCallback =
+        (w1, key, code, action, mods) ->
+            toggleFullscreen =
+                (key == GLFW_KEY_F && action == GLFW_RELEASE && (mods & GLFW_MOD_CONTROL) != 0);
     GLFWWindowCloseCallbackI glfwWindowCloseCallbackI = w -> running = false;
 
-    // if we want to create some callbacks for system events you should create and put them to keeper
+    // if we want to create some callbacks for system events you should create and put them to
+    // keeper
     //
     // Wrong:
     // glfwSetKeyCallback(window, exitOnEscCallback);
@@ -143,11 +149,11 @@ public class Example {
     int updCntr = 0;
 
     context = initializer.getContext();
-//        context.setDebugEnabled(true);
+    //        context.setDebugEnabled(true);
     while (running) {
 
       // Before rendering we need to update context with window size and window framebuffer size
-      //{
+      // {
       //    int[] windowWidth = {0}, windowHeight = {0};
       //    GLFW.glfwGetWindowSize(window, windowWidth, windowHeight);
       //    int[] frameBufferWidth = {0}, frameBufferHeight = {0};
@@ -162,7 +168,7 @@ public class Example {
       //            xpos[0], ypos[0],
       //            mx[0], my[0]
       //    );
-      //}
+      // }
 
       // Also we can do it in one line
       context.updateGlfwWindow();
@@ -204,7 +210,13 @@ public class Example {
           glfwSetWindowMonitor(window, NULL, 100, 100, WIDTH, HEIGHT, GLFW_DONT_CARE);
         } else {
           GLFWVidMode glfwVidMode = glfwGetVideoMode(monitors[0]);
-          glfwSetWindowMonitor(window, monitors[0], 0, 0, glfwVidMode.width(), glfwVidMode.height(),
+          glfwSetWindowMonitor(
+              window,
+              monitors[0],
+              0,
+              0,
+              glfwVidMode.width(),
+              glfwVidMode.height(),
               glfwVidMode.refreshRate());
         }
         fullscreen = !fullscreen;
@@ -230,11 +242,14 @@ public class Example {
   private static void update() {
     if (context != null) {
       Component mouseTargetGui = context.getMouseTargetGui();
-      gui.getMouseTargetLabel().getTextState().setText(
-          "-> " + (mouseTargetGui == null ? null : mouseTargetGui.getClass().getSimpleName()));
+      gui.getMouseTargetLabel()
+          .getTextState()
+          .setText(
+              "-> " + (mouseTargetGui == null ? null : mouseTargetGui.getClass().getSimpleName()));
 
       Component focusedGui = context.getFocusedGui();
-      gui.getFocusedGuiLabel().getTextState()
+      gui.getFocusedGuiLabel()
+          .getTextState()
           .setText("-> " + (focusedGui == null ? null : focusedGui.getClass().getSimpleName()));
     }
   }
@@ -242,8 +257,13 @@ public class Example {
   private static void createGuiElements(Frame frame, int w, int h) {
     gui = new ExampleGui(w, h);
     gui.setFocusable(false);
-    gui.getListenerMap().addListener(WindowSizeEvent.class,
-        (WindowSizeEventListener) event -> gui.setSize(event.getWidth(), event.getHeight()));
+    gui.getStyle().setMinWidth(100F);
+    gui.getStyle().setMinHeight(100F);
+    gui.getStyle().getFlexStyle().setFlexGrow(1);
+    gui.getStyle().setPosition(PositionType.RELATIVE);
+    gui.getStyle().getBackground().setColor(ColorConstants.transparent());
+
+    frame.getContainer().getStyle().setDisplay(DisplayType.FLEX);
     frame.getContainer().add(gui);
   }
 }

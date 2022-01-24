@@ -16,8 +16,12 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 
 /**
- * RadioButtons create a series of items where only one item can be checked. <p> By default all
- * created radio buttons have no group so all of them can be checked. <p>Usage example:</p>
+ * RadioButtons create a series of items where only one item can be checked.
+ *
+ * <p>By default all created radio buttons have no group so all of them can be checked.
+ *
+ * <p>Usage example:
+ *
  * <pre>{@code
  * RadioButtonGroup rbg = new RadioButtonGroup();
  * RadioButton      rb1 = new RadioButton();
@@ -28,36 +32,25 @@ import org.joml.Vector2f;
  */
 public class RadioButton extends AbstractTextComponent {
 
-  /**
-   * Default text for radiobutton.
-   */
+  /** Default text for radiobutton. */
   public static final String DEFAULT_RADIO_BUTTON_TEXT = "RadioButton";
 
-  /**
-   * Used to render unchecked state of radio button.
-   */
-  private Icon iconUnchecked = new CharIcon(new Vector2f(14, 14), MATERIAL_ICONS_REGULAR,
-      (char) 0xE836);
+  /** Used to render unchecked state of radio button. */
+  private Icon iconUnchecked = new CharIcon(MATERIAL_ICONS_REGULAR, (char) 0xE836);
 
-  /**
-   * Used to render checked state of radio button.
-   */
-  private Icon iconChecked = new CharIcon(new Vector2f(14, 14), MATERIAL_ICONS_REGULAR,
-      (char) 0xE837);
+  /** Used to render checked state of radio button. */
+  private Icon iconChecked = new CharIcon(MATERIAL_ICONS_REGULAR, (char) 0xE837);
 
-  /**
-   * Used to represent if radio button checked or not.
-   */
+  /** Used to represent if radio button checked or not. */
   private boolean checked;
-  /**
-   * Used to determine group of radio buttons where only one can be checked.
-   */
+  /** Used to determine group of radio buttons where only one can be checked. */
   private RadioButtonGroup radioButtonGroup;
 
   /**
-   * Default constructor. Used to create component instance without any parameters. <p> Also if you
-   * want to make it easy to use with Json marshaller/unmarshaller component should contain empty
-   * constructor.
+   * Default constructor. Used to create component instance without any parameters.
+   *
+   * <p>Also if you want to make it easy to use with Json marshaller/unmarshaller component should
+   * contain empty constructor.
    */
   public RadioButton() {
     this(DEFAULT_RADIO_BUTTON_TEXT);
@@ -66,9 +59,9 @@ public class RadioButton extends AbstractTextComponent {
   /**
    * Constructor with position and size parameters.
    *
-   * @param x      x position position in parent component.
-   * @param y      y position position in parent component.
-   * @param width  width of component.
+   * @param x x position position in parent component.
+   * @param y y position position in parent component.
+   * @param width width of component.
    * @param height height of component.
    */
   public RadioButton(float x, float y, float width, float height) {
@@ -79,16 +72,17 @@ public class RadioButton extends AbstractTextComponent {
    * Constructor with position and size parameters.
    *
    * @param position position position in parent component.
-   * @param size     size of component.
+   * @param size size of component.
    */
   public RadioButton(Vector2f position, Vector2f size) {
     this(DEFAULT_RADIO_BUTTON_TEXT, position, size);
   }
 
   /**
-   * Default constructor. Used to create component instance without any parameters. <p> Also if you
-   * want to make it easy to use with Json marshaller/unmarshaller component should contain empty
-   * constructor.
+   * Default constructor. Used to create component instance without any parameters.
+   *
+   * <p>Also if you want to make it easy to use with Json marshaller/unmarshaller component should
+   * contain empty constructor.
    *
    * @param text text to set.
    */
@@ -99,10 +93,10 @@ public class RadioButton extends AbstractTextComponent {
   /**
    * Constructor with position and size parameters.
    *
-   * @param text   text to set.
-   * @param x      x position position in parent component.
-   * @param y      y position position in parent component.
-   * @param width  width of component.
+   * @param text text to set.
+   * @param x x position position in parent component.
+   * @param y y position position in parent component.
+   * @param width width of component.
    * @param height height of component.
    */
   public RadioButton(String text, float x, float y, float width, float height) {
@@ -113,9 +107,9 @@ public class RadioButton extends AbstractTextComponent {
   /**
    * Constructor with position and size parameters.
    *
-   * @param text     text to set.
+   * @param text text to set.
    * @param position position position in parent component.
-   * @param size     size of component.
+   * @param size size of component.
    */
   public RadioButton(String text, Vector2f position, Vector2f size) {
     super(position, size);
@@ -167,7 +161,7 @@ public class RadioButton extends AbstractTextComponent {
   }
 
   /**
-   * Used to set  radio button group.
+   * Used to set radio button group.
    *
    * @param radioButtonGroup radio button group to set.
    */
@@ -260,5 +254,4 @@ public class RadioButton extends AbstractTextComponent {
         .append("radioButtonGroup", radioButtonGroup)
         .toString();
   }
-
 }
