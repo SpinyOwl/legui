@@ -8,7 +8,7 @@ import com.spinyowl.legui.theme.colored.FlatColoredTheme.FlatColoredThemeSetting
  *
  * @param <T> {@link Label} subclasses.
  */
-public class FlatLabelTheme<T extends Label> extends FlatBorderlessTheme<T> {
+public class FlatLabelTheme<T extends Label> extends FlatBorderlessTransparentTheme<T> {
 
   /**
    * Default constructor. Settings should be specified before using this theme.

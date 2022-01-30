@@ -51,7 +51,7 @@ public class FlatComponentTheme<T extends Component> extends AbstractTheme<T> {
     } else {
       component.getStyle().setBorder(new SimpleLineBorder(settings.borderColor(), 1));
     }
-    component.getStyle().setBorderRadius(2f);
+    component.getStyle().setBorderRadius(1f);
     component.getStyle().getBackground().setColor(settings.backgroundColor());
     component.getStyle().setFocusedStrokeColor(settings.strokeColor());
     component.getStyle().setTextColor(settings.textColor());
@@ -61,7 +61,7 @@ public class FlatComponentTheme<T extends Component> extends AbstractTheme<T> {
     component.getStyle().setVerticalAlign(VerticalAlign.MIDDLE);
 
     if (settings.shadowColor() != null && settings.shadowColor().length() > 0.00001f) {
-      component.getStyle().setShadow(new Shadow(1, 1, 16, -4, settings.shadowColor()));
+      component.getStyle().setShadow(new Shadow(2, 2, 20, -8, settings.shadowColor()));
     } else {
       component.getStyle().setShadow(null);
     }

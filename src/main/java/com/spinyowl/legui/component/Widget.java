@@ -20,6 +20,7 @@ import com.spinyowl.legui.style.color.ColorConstants;
 import com.spinyowl.legui.style.flex.FlexStyle.FlexDirection;
 import com.spinyowl.legui.style.font.FontRegistry;
 import com.spinyowl.legui.style.length.Length;
+import com.spinyowl.legui.style.length.Unit;
 import com.spinyowl.legui.theme.Themes;
 import java.util.List;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -71,12 +72,12 @@ public class Widget extends Component {
   private Button minimizeButton;
   private Button resizeButton;
 
-  private Length maximizedMinWidth;
-  private Length maximizedMinHeight;
-  private Length maximizedMaxWidth;
-  private Length maximizedMaxHeight;
-  private Length maximizedWidth;
-  private Length maximizedHeight;
+  private Length<?> maximizedMinWidth;
+  private Length<?> maximizedMinHeight;
+  private Length<?> maximizedMaxWidth;
+  private Length<?> maximizedMaxHeight;
+  private Unit maximizedWidth;
+  private Unit maximizedHeight;
 
   private boolean ascendible = true;
 
@@ -255,9 +256,9 @@ public class Widget extends Component {
     titleContainer.getStyle().setDisplay(DisplayType.FLEX);
     titleContainer.getStyle().setPosition(PositionType.RELATIVE);
     titleContainer.getSize().y = INITIAL_TITLE_HEIGHT;
-    titleContainer.getStyle().setHeight((float) INITIAL_TITLE_HEIGHT);
-    titleContainer.getStyle().setMinHeight((float) INITIAL_TITLE_HEIGHT);
-    titleContainer.getStyle().setMaxHeight((float) INITIAL_TITLE_HEIGHT);
+    titleContainer.getStyle().setHeight(INITIAL_TITLE_HEIGHT);
+    titleContainer.getStyle().setMinHeight(INITIAL_TITLE_HEIGHT);
+    titleContainer.getStyle().setMaxHeight(INITIAL_TITLE_HEIGHT);
     titleContainer.getStyle().getFlexStyle().setFlexGrow(1);
     titleContainer.getStyle().getFlexStyle().setFlexShrink(1);
     titleContainer.getStyle().getFlexStyle().setFlexDirection(FlexDirection.ROW);
@@ -266,10 +267,10 @@ public class Widget extends Component {
     this.title.getStyle().setPosition(PositionType.RELATIVE);
     this.title.getStyle().setMaxWidth(Float.MAX_VALUE);
     this.title.getSize().y = INITIAL_TITLE_HEIGHT;
-    this.title.getStyle().setMaxHeight((float) INITIAL_TITLE_HEIGHT);
-    this.title.getStyle().setHeight((float) INITIAL_TITLE_HEIGHT);
+    this.title.getStyle().setMaxHeight(INITIAL_TITLE_HEIGHT);
+    this.title.getStyle().setHeight(INITIAL_TITLE_HEIGHT);
     this.title.getStyle().setMinWidth(0f);
-    this.title.getStyle().setMinHeight((float) INITIAL_TITLE_HEIGHT);
+    this.title.getStyle().setMinHeight(INITIAL_TITLE_HEIGHT);
     this.title.getStyle().getBackground().setColor(ColorConstants.transparent());
     this.title.getStyle().setBorder(null);
     this.title.getStyle().getFlexStyle().setFlexGrow(1);
@@ -292,12 +293,12 @@ public class Widget extends Component {
     closeButton.getStyle().getBackground().setIcon(closeIcon);
     closeButton.getStyle().getBackground().setColor(ColorConstants.transparent());
     closeButton.getSize().y = INITIAL_TITLE_HEIGHT;
-    closeButton.getStyle().setMaxWidth((float) INITIAL_TITLE_HEIGHT);
-    closeButton.getStyle().setMaxHeight((float) INITIAL_TITLE_HEIGHT);
-    closeButton.getStyle().setMinWidth((float) INITIAL_TITLE_HEIGHT);
-    closeButton.getStyle().setMinHeight((float) INITIAL_TITLE_HEIGHT);
-    closeButton.getStyle().setWidth((float) INITIAL_TITLE_HEIGHT);
-    closeButton.getStyle().setHeight((float) INITIAL_TITLE_HEIGHT);
+    closeButton.getStyle().setMaxWidth(INITIAL_TITLE_HEIGHT);
+    closeButton.getStyle().setMaxHeight(INITIAL_TITLE_HEIGHT);
+    closeButton.getStyle().setMinWidth(INITIAL_TITLE_HEIGHT);
+    closeButton.getStyle().setMinHeight(INITIAL_TITLE_HEIGHT);
+    closeButton.getStyle().setWidth(INITIAL_TITLE_HEIGHT);
+    closeButton.getStyle().setHeight(INITIAL_TITLE_HEIGHT);
     closeButton.getStyle().setBorder(null);
     closeButton.getStyle().getFlexStyle().setFlexGrow(1);
     closeButton.getStyle().getFlexStyle().setFlexShrink(1);
@@ -329,12 +330,12 @@ public class Widget extends Component {
     minimizeButton.getStyle().getBackground().setIcon(minimizeIcon);
     minimizeButton.getStyle().setPosition(PositionType.RELATIVE);
     minimizeButton.getSize().y = INITIAL_TITLE_HEIGHT;
-    minimizeButton.getStyle().setMaxWidth((float) INITIAL_TITLE_HEIGHT);
-    minimizeButton.getStyle().setMaxHeight((float) INITIAL_TITLE_HEIGHT);
-    minimizeButton.getStyle().setMinWidth((float) INITIAL_TITLE_HEIGHT);
-    minimizeButton.getStyle().setMinHeight((float) INITIAL_TITLE_HEIGHT);
-    minimizeButton.getStyle().setWidth((float) INITIAL_TITLE_HEIGHT);
-    minimizeButton.getStyle().setHeight((float) INITIAL_TITLE_HEIGHT);
+    minimizeButton.getStyle().setMaxWidth(INITIAL_TITLE_HEIGHT);
+    minimizeButton.getStyle().setMaxHeight(INITIAL_TITLE_HEIGHT);
+    minimizeButton.getStyle().setMinWidth(INITIAL_TITLE_HEIGHT);
+    minimizeButton.getStyle().setMinHeight(INITIAL_TITLE_HEIGHT);
+    minimizeButton.getStyle().setWidth(INITIAL_TITLE_HEIGHT);
+    minimizeButton.getStyle().setHeight(INITIAL_TITLE_HEIGHT);
     minimizeButton.getStyle().getFlexStyle().setFlexGrow(1);
     minimizeButton.getStyle().getFlexStyle().setFlexShrink(1);
     minimizeButton.getStyle().setBorder(null);
@@ -353,8 +354,8 @@ public class Widget extends Component {
 
     resizeButton = new Button("");
     CharIcon icon = new CharIcon(FontRegistry.MATERIAL_DESIGN_ICONS, '\uF45D');
-    icon.setSize(new Vector2f(20, 20));
-    icon.setPosition(new Vector2f(-10, -10));
+    icon.setHorizontalAlign(HorizontalAlign.RIGHT);
+    icon.setVerticalAlign(VerticalAlign.BOTTOM);
     resizeButton.getStyle().getBackground().setIcon(icon);
     resizeButton.getStyle().setWidth(10f);
     resizeButton.getStyle().setHeight(10f);

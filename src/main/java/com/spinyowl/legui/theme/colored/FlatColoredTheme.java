@@ -47,74 +47,118 @@ import com.spinyowl.legui.theme.colored.def.FlatTooltipTheme;
 import com.spinyowl.legui.theme.colored.def.FlatWidgetTheme;
 import org.joml.Vector4f;
 
-/**
- * Dark Theme. Used to change theme of components to dark.
- */
+/** Dark Theme. Used to change theme of components to dark. */
 public class FlatColoredTheme extends Theme {
 
+  public static final float FONT_SIZE = 12f;
+
   /**
    * Used to create theme instance.
    *
    * @param backgroundColor background color.
-   * @param borderColor     border color.
-   * @param strokeColor     stroke color.
-   * @param allowColor      allow color.
-   * @param denyColor       deny color.
-   * @param shadowColor     shadow color.
-   * @param textColor       text color.
+   * @param borderColor border color.
+   * @param strokeColor stroke color.
+   * @param allowColor allow color.
+   * @param denyColor deny color.
+   * @param shadowColor shadow color.
+   * @param textColor text color.
    */
   public FlatColoredTheme(
-      Vector4f backgroundColor, Vector4f borderColor, Vector4f strokeColor,
-      Vector4f allowColor, Vector4f denyColor, Vector4f shadowColor, Vector4f textColor
-  ) {
-    super(createThemeManager(
-        new FlatColoredThemeSettings(backgroundColor, borderColor, borderColor, strokeColor,
-            allowColor, denyColor, shadowColor, textColor, FontRegistry.getDefaultFont(), 16f)));
+      Vector4f backgroundColor,
+      Vector4f borderColor,
+      Vector4f strokeColor,
+      Vector4f allowColor,
+      Vector4f denyColor,
+      Vector4f shadowColor,
+      Vector4f textColor) {
+    super(
+        createThemeManager(
+            new FlatColoredThemeSettings(
+                backgroundColor,
+                borderColor,
+                borderColor,
+                strokeColor,
+                allowColor,
+                denyColor,
+                shadowColor,
+                textColor,
+                FontRegistry.getDefaultFont(),
+                FONT_SIZE)));
   }
 
   /**
    * Used to create theme instance.
    *
    * @param backgroundColor background color.
-   * @param borderColor     border color.
-   * @param sliderColor     slider color.
-   * @param strokeColor     stroke color.
-   * @param allowColor      allow color.
-   * @param denyColor       deny color.
-   * @param shadowColor     shadow color.
-   * @param textColor       text color.
+   * @param borderColor border color.
+   * @param sliderColor slider color.
+   * @param strokeColor stroke color.
+   * @param allowColor allow color.
+   * @param denyColor deny color.
+   * @param shadowColor shadow color.
+   * @param textColor text color.
    */
   public FlatColoredTheme(
-      Vector4f backgroundColor, Vector4f borderColor, Vector4f sliderColor, Vector4f strokeColor,
-      Vector4f allowColor, Vector4f denyColor, Vector4f shadowColor, Vector4f textColor
-  ) {
-    super(createThemeManager(
-        new FlatColoredThemeSettings(backgroundColor, borderColor, sliderColor,
-            strokeColor, allowColor, denyColor, shadowColor, textColor,
-            FontRegistry.getDefaultFont(), 16f)));
+      Vector4f backgroundColor,
+      Vector4f borderColor,
+      Vector4f sliderColor,
+      Vector4f strokeColor,
+      Vector4f allowColor,
+      Vector4f denyColor,
+      Vector4f shadowColor,
+      Vector4f textColor) {
+    super(
+        createThemeManager(
+            new FlatColoredThemeSettings(
+                backgroundColor,
+                borderColor,
+                sliderColor,
+                strokeColor,
+                allowColor,
+                denyColor,
+                shadowColor,
+                textColor,
+                FontRegistry.getDefaultFont(),
+                FONT_SIZE)));
   }
 
   /**
    * Used to create theme instance.
    *
    * @param backgroundColor background color.
-   * @param borderColor     border color.
-   * @param sliderColor     slider color.
-   * @param strokeColor     stroke color.
-   * @param allowColor      allow color.
-   * @param denyColor       deny color.
-   * @param shadowColor     shadow color.
-   * @param textColor       text color.
-   * @param fontSize        font size.
+   * @param borderColor border color.
+   * @param sliderColor slider color.
+   * @param strokeColor stroke color.
+   * @param allowColor allow color.
+   * @param denyColor deny color.
+   * @param shadowColor shadow color.
+   * @param textColor text color.
+   * @param fontSize font size.
    */
   public FlatColoredTheme(
-      Vector4f backgroundColor, Vector4f borderColor, Vector4f sliderColor, Vector4f strokeColor,
-      Vector4f allowColor, Vector4f denyColor, Vector4f shadowColor, Vector4f textColor,
-      String font, Float fontSize
-  ) {
-    super(createThemeManager(
-        new FlatColoredThemeSettings(backgroundColor, borderColor, sliderColor,
-            strokeColor, allowColor, denyColor, shadowColor, textColor, font, fontSize)));
+      Vector4f backgroundColor,
+      Vector4f borderColor,
+      Vector4f sliderColor,
+      Vector4f strokeColor,
+      Vector4f allowColor,
+      Vector4f denyColor,
+      Vector4f shadowColor,
+      Vector4f textColor,
+      String font,
+      Float fontSize) {
+    super(
+        createThemeManager(
+            new FlatColoredThemeSettings(
+                backgroundColor,
+                borderColor,
+                sliderColor,
+                strokeColor,
+                allowColor,
+                denyColor,
+                shadowColor,
+                textColor,
+                font,
+                fontSize)));
   }
 
   /**
@@ -124,19 +168,21 @@ public class FlatColoredTheme extends Theme {
    * @return initialized theme manager.
    */
   private static ThemeManager createThemeManager(FlatColoredThemeSettings settings) {
-    ThemeManager m = new DefaultThemeManager() {
-      @Override
-      public <T extends Component> void setComponentTheme(Class<T> clazz, AbstractTheme<T> theme) {
-        if (theme instanceof FlatComponentTheme) {
-          FlatComponentTheme flatComponentTheme = (FlatComponentTheme) theme;
-          if (flatComponentTheme.getSettings() == null) {
-            flatComponentTheme.setSettings(settings);
+    ThemeManager m =
+        new DefaultThemeManager() {
+          @Override
+          public <T extends Component> void setComponentTheme(
+              Class<T> clazz, AbstractTheme<T> theme) {
+            if (theme instanceof FlatComponentTheme) {
+              FlatComponentTheme flatComponentTheme = (FlatComponentTheme) theme;
+              if (flatComponentTheme.getSettings() == null) {
+                flatComponentTheme.setSettings(settings);
+              }
+            }
+            super.setComponentTheme(clazz, theme);
           }
-        }
-        super.setComponentTheme(clazz, theme);
-      }
-    };
-    //@formatter:off
+        };
+    // @formatter:off
     m.setComponentTheme(Button.class, new FlatButtonTheme<>());
     m.setComponentTheme(Panel.class, new FlatPanelTheme<>());
     m.setComponentTheme(CheckBox.class, new FlatCheckBoxTheme<>());
@@ -157,71 +203,58 @@ public class FlatColoredTheme extends Theme {
     m.setComponentTheme(ToggleButton.class, new FlatToggleButtonTheme<>());
     m.setComponentTheme(Tooltip.class, new FlatTooltipTheme<>());
     m.setComponentTheme(Widget.class, new FlatWidgetTheme<>());
-    //@formatter:on
+    // @formatter:on
     return m;
   }
 
-  /**
-   * Flat colored theme settings.
-   */
+  /** Flat colored theme settings. */
   public static class FlatColoredThemeSettings {
 
-    /**
-     * Background color.
-     */
+    /** Background color. */
     private final Vector4f backgroundColor;
-    /**
-     * Border color.
-     */
+    /** Border color. */
     private final Vector4f borderColor;
-    /**
-     * Slider color.
-     */
+    /** Slider color. */
     private final Vector4f sliderColor;
-    /**
-     * Stroke color.
-     */
+    /** Stroke color. */
     private final Vector4f allowColor;
-    /**
-     * Allow color.
-     */
+    /** Allow color. */
     private final Vector4f strokeColor;
-    /**
-     * Deny color.
-     */
+    /** Deny color. */
     private final Vector4f denyColor;
-    /**
-     * Shadow color.
-     */
+    /** Shadow color. */
     private final Vector4f shadowColor;
-    /**
-     * Font color.
-     */
+    /** Font color. */
     private final Vector4f textColor;
+
     private final String font;
-    /**
-     * Font size
-     */
+    /** Font size */
     private final Float fontSize;
 
     /**
      * Used to create theme settings instance.
      *
      * @param backgroundColor background color.
-     * @param borderColor     border color.
-     * @param sliderColor     slider color.
-     * @param strokeColor     stroke color.
-     * @param allowColor      allow color.
-     * @param denyColor       deny color.
-     * @param shadowColor     shadow color.
-     * @param textColor       text color.
-     * @param fontSize        font size.
+     * @param borderColor border color.
+     * @param sliderColor slider color.
+     * @param strokeColor stroke color.
+     * @param allowColor allow color.
+     * @param denyColor deny color.
+     * @param shadowColor shadow color.
+     * @param textColor text color.
+     * @param fontSize font size.
      */
     public FlatColoredThemeSettings(
-        Vector4f backgroundColor, Vector4f borderColor, Vector4f sliderColor, Vector4f strokeColor,
-        Vector4f allowColor, Vector4f denyColor, Vector4f shadowColor, Vector4f textColor,
-        String font, Float fontSize
-    ) {
+        Vector4f backgroundColor,
+        Vector4f borderColor,
+        Vector4f sliderColor,
+        Vector4f strokeColor,
+        Vector4f allowColor,
+        Vector4f denyColor,
+        Vector4f shadowColor,
+        Vector4f textColor,
+        String font,
+        Float fontSize) {
       this.backgroundColor = backgroundColor;
       this.borderColor = borderColor;
       this.sliderColor = sliderColor;
@@ -238,19 +271,30 @@ public class FlatColoredTheme extends Theme {
      * Used to create theme settings instance.
      *
      * @param backgroundColor background color.
-     * @param borderColor     border color (also used as slider color).
-     * @param strokeColor     stroke color.
-     * @param allowColor      allow color.
-     * @param denyColor       deny color.
-     * @param shadowColor     shadow color.
+     * @param borderColor border color (also used as slider color).
+     * @param strokeColor stroke color.
+     * @param allowColor allow color.
+     * @param denyColor deny color.
+     * @param shadowColor shadow color.
      */
     public FlatColoredThemeSettings(
-        Vector4f backgroundColor, Vector4f borderColor, Vector4f strokeColor,
-        Vector4f allowColor, Vector4f denyColor, Vector4f shadowColor
-    ) {
-      this(backgroundColor, borderColor, borderColor,
-          strokeColor, allowColor, denyColor,
-          shadowColor, borderColor, FontRegistry.getDefaultFont(), 16f);
+        Vector4f backgroundColor,
+        Vector4f borderColor,
+        Vector4f strokeColor,
+        Vector4f allowColor,
+        Vector4f denyColor,
+        Vector4f shadowColor) {
+      this(
+          backgroundColor,
+          borderColor,
+          borderColor,
+          strokeColor,
+          allowColor,
+          denyColor,
+          shadowColor,
+          borderColor,
+          FontRegistry.getDefaultFont(),
+          FONT_SIZE);
     }
 
     /**
@@ -270,7 +314,6 @@ public class FlatColoredTheme extends Theme {
     public Vector4f borderColor() {
       return borderColor == null ? null : new Vector4f(borderColor);
     }
-
 
     /**
      * Returns slider color.
@@ -329,5 +372,4 @@ public class FlatColoredTheme extends Theme {
       return textColor == null ? null : new Vector4f(textColor);
     }
   }
-
 }

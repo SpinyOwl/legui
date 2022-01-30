@@ -9,7 +9,7 @@ import com.spinyowl.legui.theme.colored.FlatColoredTheme.FlatColoredThemeSetting
  * @param <T> {@link SelectBox.SelectBoxElement} subclasses.
  */
 public class FlatSelectBoxElementTheme<T extends SelectBox.SelectBoxElement> extends
-    FlatBorderlessTheme<T> {
+    FlatBorderlessTransparentTheme<T> {
 
   /**
    * Default constructor. Settings should be specified before using this theme.

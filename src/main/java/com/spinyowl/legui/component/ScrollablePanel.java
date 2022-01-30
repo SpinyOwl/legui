@@ -11,32 +11,26 @@ import com.spinyowl.legui.event.RemoveChildEvent;
 import com.spinyowl.legui.event.ScrollEvent;
 import com.spinyowl.legui.style.Style.DisplayType;
 import com.spinyowl.legui.style.color.ColorConstants;
-import com.spinyowl.legui.style.length.Length;
+import com.spinyowl.legui.style.flex.FlexStyle.AlignItems;
+import com.spinyowl.legui.style.length.Unit;
 import com.spinyowl.legui.theme.Themes;
+import com.spinyowl.legui.util.Utilites;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 
-/**
- * Panel with scroll bars. Default container layout is null.
- */
+/** Panel with scroll bars. Default container layout is null. */
 public class ScrollablePanel extends Component implements Viewport {
 
-  /**
-   * Initial scrollbar width/height.
-   */
+  /** Initial scrollbar width/height. */
   private static final float INITIAL_SCROLL_SIZE = 8f;
 
-  /**
-   * Used to scroll panel vertically.
-   */
+  /** Used to scroll panel vertically. */
   private ScrollBar verticalScrollBar;
 
-  /**
-   * Used to scroll panel horizontally.
-   */
+  /** Used to scroll panel horizontally. */
   private ScrollBar horizontalScrollBar;
 
   /**
@@ -45,21 +39,18 @@ public class ScrollablePanel extends Component implements Viewport {
    */
   private Component viewport;
 
-  /**
-   * Used to hold components added by user.
-   */
+  /** Used to hold components added by user. */
   private Component container;
-  /**
-   * Scrollable panel animation. Updates container position in viewport.
-   */
+  /** Scrollable panel animation. Updates container position in viewport. */
   private Animation animation;
 
   private boolean autoResize = false;
 
   /**
-   * Default constructor. Used to create component instance without any parameters. <p> Also if you
-   * want to make it easy to use with Json marshaller/unmarshaller component should contain empty
-   * constructor.
+   * Default constructor. Used to create component instance without any parameters.
+   *
+   * <p>Also if you want to make it easy to use with Json marshaller/unmarshaller component should
+   * contain empty constructor.
    */
   public ScrollablePanel() {
     initialize();
@@ -68,9 +59,9 @@ public class ScrollablePanel extends Component implements Viewport {
   /**
    * Constructor with position and size parameters.
    *
-   * @param x      x position position in parent component.
-   * @param y      y position position in parent component.
-   * @param width  width of component.
+   * @param x x position position in parent component.
+   * @param y y position position in parent component.
+   * @param width width of component.
    * @param height height of component.
    */
   public ScrollablePanel(float x, float y, float width, float height) {
@@ -82,7 +73,7 @@ public class ScrollablePanel extends Component implements Viewport {
    * Constructor with position and size parameters.
    *
    * @param position position position in parent component.
-   * @param size     size of component.
+   * @param size size of component.
    */
   public ScrollablePanel(Vector2f position, Vector2f size) {
     super(position, size);
@@ -116,12 +107,13 @@ public class ScrollablePanel extends Component implements Viewport {
   private void initialize() {
     container = new ScrollablePanelContainer();
     container.setTabFocusable(false);
-    container.getListenerMap().addListener(AddChildEvent.class, e -> calculateSize());
-    container.getListenerMap().addListener(RemoveChildEvent.class, e -> calculateSize());
+    container.getListenerMap().addListener(AddChildEvent.class, e -> autoRecalculateSize());
+    container.getListenerMap().addListener(RemoveChildEvent.class, e -> autoRecalculateSize());
 
-    viewport = new ScrollablePanelViewport();
+    viewport = new ScrollablePanelViewport(this);
     viewport.add(container);
-    viewport.getListenerMap()
+    viewport
+        .getListenerMap()
         .addListener(ScrollEvent.class, new ScrollablePanelViewportScrollListener());
     viewport.setTabFocusable(false);
 
@@ -145,35 +137,42 @@ public class ScrollablePanel extends Component implements Viewport {
     horizontalScrollBar.setTabFocusable(false);
 
     applyStyles();
-    calculateSize();
+    autoRecalculateSize();
 
     animation = new ScrollablePanelAnimation(this);
     animation.startAnimation();
 
-    Themes.getDefaultTheme().getThemeManager().getComponentTheme(ScrollablePanel.class)
+    Themes.getDefaultTheme()
+        .getThemeManager()
+        .getComponentTheme(ScrollablePanel.class)
         .applyAll(this);
   }
 
-  private void calculateSize() {
+  private void autoRecalculateSize() {
     if (autoResize) {
-      Vector2f viewportSize = calculateViewportSize();
-
-      for (Component childComponent : container.getChildComponents()) {
-        float right = childComponent.getPosition().x + childComponent.getSize().x;
-        float bottom = childComponent.getPosition().y + childComponent.getSize().y;
-        if (right > viewportSize.x) {
-          viewportSize.x = right;
-        }
-        if (bottom > viewportSize.y) {
-          viewportSize.y = bottom;
-        }
-      }
-      container.setSize(viewportSize);
+      recalculateSize();
     }
+  }
+
+  public void recalculateSize() {
+    Vector2f viewportSize = calculateViewportSize();
+
+    for (Component childComponent : container.getChildComponents()) {
+      float right = childComponent.getPosition().x + childComponent.getSize().x;
+      float bottom = childComponent.getPosition().y + childComponent.getSize().y;
+      if (right > viewportSize.x) {
+        viewportSize.x = right;
+      }
+      if (bottom > viewportSize.y) {
+        viewportSize.y = bottom;
+      }
+    }
+    container.setSize(viewportSize);
   }
 
   private void applyStyles() {
     this.getStyle().setDisplay(DisplayType.FLEX);
+    this.getStyle().getFlexStyle().setAlignItems(AlignItems.STRETCH);
 
     setVStyles();
     setHStyles();
@@ -189,6 +188,8 @@ public class ScrollablePanel extends Component implements Viewport {
     verticalScrollBar.getStyle().setTop(0f);
     verticalScrollBar.getStyle().setRight(0f);
     verticalScrollBar.getStyle().setBottom(INITIAL_SCROLL_SIZE);
+    verticalScrollBar.getStyle().getFlexStyle().setFlexShrink(0);
+    verticalScrollBar.getStyle().getFlexStyle().setFlexGrow(0);
   }
 
   private void setHStyles() {
@@ -196,6 +197,8 @@ public class ScrollablePanel extends Component implements Viewport {
     horizontalScrollBar.getStyle().setLeft(0f);
     horizontalScrollBar.getStyle().setRight(INITIAL_SCROLL_SIZE);
     horizontalScrollBar.getStyle().setBottom(0f);
+    horizontalScrollBar.getStyle().getFlexStyle().setFlexShrink(0);
+    horizontalScrollBar.getStyle().getFlexStyle().setFlexGrow(0);
   }
 
   private void setViewportStyles() {
@@ -219,13 +222,11 @@ public class ScrollablePanel extends Component implements Viewport {
   @Override
   public void setSize(float width, float height) {
     super.setSize(width, height);
-    calculateSize();
   }
 
   @Override
   public void setSize(Vector2f size) {
     super.setSize(size);
-    calculateSize();
   }
 
   /**
@@ -248,7 +249,7 @@ public class ScrollablePanel extends Component implements Viewport {
     this.verticalScrollBar = verticalScrollBar;
     this.add(verticalScrollBar);
     this.verticalScrollBar.setViewport(this);
-    calculateSize();
+    autoRecalculateSize();
   }
 
   /**
@@ -271,7 +272,7 @@ public class ScrollablePanel extends Component implements Viewport {
     this.horizontalScrollBar = horizontalScrollBar;
     this.add(horizontalScrollBar);
     this.horizontalScrollBar.setViewport(this);
-    calculateSize();
+    autoRecalculateSize();
   }
 
   public boolean isHorizontalScrollBarVisible() {
@@ -280,7 +281,7 @@ public class ScrollablePanel extends Component implements Viewport {
 
   public void setHorizontalScrollBarVisible(boolean enabled) {
     if (enabled) {
-      Length height = this.horizontalScrollBar.getStyle().getHeight();
+      Unit height = this.horizontalScrollBar.getStyle().getHeight();
       if (height == null) {
         height = pixel(this.horizontalScrollBar.getSize().y);
         this.horizontalScrollBar.getStyle().setHeight(height);
@@ -292,7 +293,7 @@ public class ScrollablePanel extends Component implements Viewport {
       this.verticalScrollBar.getStyle().setBottom(0f);
     }
     this.horizontalScrollBar.getStyle().setDisplay(enabled ? DisplayType.MANUAL : DisplayType.NONE);
-    calculateSize();
+    autoRecalculateSize();
   }
 
   public boolean isVerticalScrollBarVisible() {
@@ -301,7 +302,7 @@ public class ScrollablePanel extends Component implements Viewport {
 
   public void setVerticalScrollBarVisible(boolean enabled) {
     if (enabled) {
-      Length width = this.verticalScrollBar.getStyle().getWidth();
+      Unit width = this.verticalScrollBar.getStyle().getWidth();
       if (width == null) {
         width = pixel(this.verticalScrollBar.getSize().x);
         this.verticalScrollBar.getStyle().setWidth(width);
@@ -313,23 +314,22 @@ public class ScrollablePanel extends Component implements Viewport {
       this.horizontalScrollBar.getStyle().setRight(0f);
     }
     this.verticalScrollBar.getStyle().setDisplay(enabled ? DisplayType.MANUAL : DisplayType.NONE);
-    calculateSize();
+    autoRecalculateSize();
   }
 
   public void setHorizontalScrollBarHeight(float height) {
     this.horizontalScrollBar.getStyle().setHeight(height);
     this.viewport.getStyle().setBottom(height);
     this.verticalScrollBar.getStyle().setBottom(height);
-    calculateSize();
+    autoRecalculateSize();
   }
 
   public void setVerticalScrollBarWidth(float width) {
     this.verticalScrollBar.getStyle().setWidth(width);
     this.viewport.getStyle().setRight(width);
     this.horizontalScrollBar.getStyle().setRight(width);
-    calculateSize();
+    autoRecalculateSize();
   }
-
 
   /**
    * Returns container which should used to add components to scrollable panel.
@@ -404,6 +404,14 @@ public class ScrollablePanel extends Component implements Viewport {
 
   @Override
   public Vector2f getViewportViewSize() {
+    //    Vector2f viewportViewSize = viewport.getSize();
+    //    container.getChildComponents().stream()
+    //        .filter(Component::isVisible)
+    //        .filter(Utilites::visibleInParents)
+    //        .map(component -> new Vector2f(component.getPosition()).add(component.getSize()))
+    //        .forEach(viewportViewSize::max);
+    //
+    //    return viewportViewSize;
     return new Vector2f(container.getSize());
   }
 
@@ -417,8 +425,9 @@ public class ScrollablePanel extends Component implements Viewport {
 
   public static class ScrollablePanelViewport extends Panel {
 
-    public ScrollablePanelViewport() {
-    }
+    private ScrollablePanel scrollablePanel;
+
+    public ScrollablePanelViewport() {}
 
     public ScrollablePanelViewport(float x, float y, float width, float height) {
       super(x, y, width, height);
@@ -427,12 +436,27 @@ public class ScrollablePanel extends Component implements Viewport {
     public ScrollablePanelViewport(Vector2f position, Vector2f size) {
       super(position, size);
     }
+
+    public ScrollablePanelViewport(ScrollablePanel scrollablePanel) {
+      this.scrollablePanel = scrollablePanel;
+    }
+
+    @Override
+    public void setSize(Vector2f size) {
+      super.setSize(size);
+//      scrollablePanel.recalculateSize();
+    }
+
+    @Override
+    public void setSize(float width, float height) {
+      super.setSize(width, height);
+//      scrollablePanel.recalculateSize();
+    }
   }
 
   public static class ScrollablePanelContainer extends Panel {
 
-    public ScrollablePanelContainer() {
-    }
+    public ScrollablePanelContainer() {}
 
     public ScrollablePanelContainer(float x, float y, float width, float height) {
       super(x, y, width, height);

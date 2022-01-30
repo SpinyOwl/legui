@@ -8,13 +8,10 @@ import com.spinyowl.legui.theme.colored.FlatColoredTheme.FlatColoredThemeSetting
  *
  * @param <T> {@link Layer} subclasses.
  */
-public class FlatLayerTheme<T extends Layer> extends FlatBorderlessTheme<T> {
+public class FlatLayerTheme<T extends Layer> extends FlatBorderlessTransparentTheme<T> {
 
-  /**
-   * Default constructor. Settings should be specified before using this theme.
-   */
-  public FlatLayerTheme() {
-  }
+  /** Default constructor. Settings should be specified before using this theme. */
+  public FlatLayerTheme() {}
 
   public FlatLayerTheme(FlatColoredThemeSettings settings) {
     super(settings);

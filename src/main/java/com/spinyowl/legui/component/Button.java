@@ -5,6 +5,7 @@ import com.spinyowl.legui.component.optional.TextState;
 import com.spinyowl.legui.component.optional.align.HorizontalAlign;
 import com.spinyowl.legui.listener.processor.EventProcessorProvider;
 import com.spinyowl.legui.style.font.TextDirection;
+import com.spinyowl.legui.theme.Theme;
 import com.spinyowl.legui.theme.Themes;
 import java.util.function.BiConsumer;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -13,24 +14,16 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joml.Vector2f;
 
-/**
- * An implementation of "push" button.
- */
+/** An implementation of "push" button. */
 public class Button extends AbstractTextComponent {
 
-  /**
-   * Default text for button component.
-   */
+  /** Default text for button component. */
   public static final String DEFAULT_BUTTON_TEXT = "Button";
 
-  /**
-   * Used to set text direction (vertical, horizontal).
-   */
+  /** Used to set text direction (vertical, horizontal). */
   private TextDirection textDirection = TextDirection.HORIZONTAL;
 
-  /**
-   * Creates a button with default text.
-   */
+  /** Creates a button with default text. */
   public Button() {
     this(DEFAULT_BUTTON_TEXT);
   }
@@ -38,9 +31,9 @@ public class Button extends AbstractTextComponent {
   /**
    * Creates a button with default text and specified position and size.
    *
-   * @param x      x position in parent.
-   * @param y      y position in parent.
-   * @param width  width of component.
+   * @param x x position in parent.
+   * @param y y position in parent.
+   * @param width width of component.
    * @param height height of component.
    */
   public Button(float x, float y, float width, float height) {
@@ -51,7 +44,7 @@ public class Button extends AbstractTextComponent {
    * Creates a button with default text and specified position and size.
    *
    * @param position position in parent.
-   * @param size     size of component.
+   * @param size size of component.
    */
   public Button(Vector2f position, Vector2f size) {
     this(DEFAULT_BUTTON_TEXT, position, size);
@@ -69,10 +62,10 @@ public class Button extends AbstractTextComponent {
   /**
    * Creates a button with specified text and specified position and size.
    *
-   * @param text   button text.
-   * @param x      x position in parent.
-   * @param y      y position in parent.
-   * @param width  width of component.
+   * @param text button text.
+   * @param x x position in parent.
+   * @param y y position in parent.
+   * @param width width of component.
    * @param height height of component.
    */
   public Button(String text, float x, float y, float width, float height) {
@@ -83,9 +76,9 @@ public class Button extends AbstractTextComponent {
   /**
    * Creates a button with specified text and specified position and size.
    *
-   * @param text     button text.
+   * @param text button text.
    * @param position position in parent.
-   * @param size     size of component.
+   * @param size size of component.
    */
   public Button(String text, Vector2f position, Vector2f size) {
     super(position, size);
@@ -98,12 +91,14 @@ public class Button extends AbstractTextComponent {
    * @param text used to initialize text state.
    */
   private void initialize(String text) {
-    BiConsumer<String, String> callback = (oldValue, newValue) ->
-        EventProcessorProvider.getInstance().pushEvent(
-            new ButtonContentChangeEvent(this, null, this.getFrame(), oldValue, newValue));
+    BiConsumer<String, String> callback =
+        (oldValue, newValue) ->
+            EventProcessorProvider.getInstance()
+                .pushEvent(
+                    new ButtonContentChangeEvent(this, null, this.getFrame(), oldValue, newValue));
     this.textState = new TextState(text, callback);
     getStyle().setHorizontalAlign(HorizontalAlign.CENTER);
-    Themes.getDefaultTheme().getThemeManager().getComponentTheme(Button.class).applyAll(this);
+    Themes.getDefaultTheme().applyAll(this);
   }
 
   @Override
@@ -126,10 +121,7 @@ public class Button extends AbstractTextComponent {
 
   @Override
   public int hashCode() {
-    return new HashCodeBuilder(17, 37)
-        .appendSuper(super.hashCode())
-        .append(textState)
-        .toHashCode();
+    return new HashCodeBuilder(17, 37).appendSuper(super.hashCode()).append(textState).toHashCode();
   }
 
   @Override

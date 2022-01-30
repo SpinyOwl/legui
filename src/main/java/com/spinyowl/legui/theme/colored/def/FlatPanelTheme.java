@@ -2,7 +2,9 @@ package com.spinyowl.legui.theme.colored.def;
 
 import com.spinyowl.legui.component.Button;
 import com.spinyowl.legui.component.Panel;
+import com.spinyowl.legui.style.color.ColorUtil;
 import com.spinyowl.legui.theme.colored.FlatColoredTheme.FlatColoredThemeSettings;
+import org.joml.Vector4f;
 
 /**
  * Dark Button Theme for all buttons. Used to make button dark.
@@ -29,6 +31,11 @@ public class FlatPanelTheme<T extends Panel> extends FlatComponentTheme<T> {
   @Override
   public void apply(T component) {
     super.apply(component);
-    component.getStyle().getBackground().setColor(settings.backgroundColor());
+    Vector4f first = settings.backgroundColor();
+    Vector4f second = ColorUtil.oppositeBlackOrWhite(settings.backgroundColor());
+    Vector4f subtraction = new Vector4f(first).sub(second).mul(0.04F);
+    first.sub(subtraction);
+
+    component.getStyle().getBackground().setColor(first);
   }
 }

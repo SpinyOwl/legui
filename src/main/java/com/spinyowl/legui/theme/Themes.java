@@ -1,5 +1,7 @@
 package com.spinyowl.legui.theme;
 
+import static com.spinyowl.legui.style.color.ColorUtil.rgba;
+
 import com.spinyowl.legui.style.color.ColorConstants;
 import com.spinyowl.legui.style.font.FontRegistry;
 import com.spinyowl.legui.theme.colored.FlatColoredTheme;
@@ -20,7 +22,7 @@ public final class Themes {
       rgba(0, 0, 0, 1f),  // shadowColor
       ColorConstants.black(),
       FontRegistry.getDefaultFont(),
-      16f
+      FlatColoredTheme.FONT_SIZE
   );
   public static final Theme FLAT_PETERRIVER_DARK = new FlatColoredTheme(
       rgba(44, 62, 80, 1), // backgroundColor
@@ -32,19 +34,19 @@ public final class Themes {
       rgba(0, 0, 0, 1f),  // shadowColor
       ColorConstants.white(),
       FontRegistry.getDefaultFont(),
-      16f
+      FlatColoredTheme.FONT_SIZE
   );
   public static final Theme FLAT_WHITE = new FlatColoredTheme(
-      rgba(245, 245, 245, 1), // backgroundColor
+      rgba(255, 255, 255, 1), // backgroundColor
       rgba(176, 190, 197, 1), // borderColor
       rgba(176, 190, 197, 1), // sliderColor
       rgba(100, 181, 246, 1), // strokeColor
-      rgba(165, 214, 167, 1), // allowColor
+      rgba(194, 219, 245, 1), // allowColor
       rgba(239, 154, 154, 1), // denyColor
       ColorConstants.black(),  // shadowColor
       ColorConstants.black(),
       FontRegistry.getDefaultFont(),
-      16f
+      FlatColoredTheme.FONT_SIZE
   );
   public static final Theme FLAT_DARK = new FlatColoredTheme(
       rgba(33, 33, 33, 1), // backgroundColor
@@ -56,15 +58,11 @@ public final class Themes {
       rgba(250, 250, 250, 0.5f),  // shadowColor
       ColorConstants.white(),
       FontRegistry.getDefaultFont(),
-      16f
+      FlatColoredTheme.FONT_SIZE
   );
   private static Theme DEFAULT_THEME = FLAT_WHITE;
 
   private Themes() {
-  }
-
-  private static Vector4f rgba(int r, int g, int b, float a) {
-    return new Vector4f(r / 255f, g / 255f, b / 255f, a);
   }
 
   public static Theme getDefaultTheme() {

@@ -41,7 +41,7 @@ public class Layer extends Component {
     getStyle().setBorder(null);
     setFocusable(false);
     setTabFocusable(false);
-    Themes.getDefaultTheme().getThemeManager().getComponentTheme(Layer.class).applyAll(this);
+    Themes.getDefaultTheme().applyAll(this);
   }
 
   /**

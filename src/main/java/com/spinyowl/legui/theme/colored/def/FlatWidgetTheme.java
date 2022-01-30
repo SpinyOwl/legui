@@ -59,8 +59,8 @@ public class FlatWidgetTheme<T extends Widget> extends FlatComponentTheme<T> {
     resizeButton.getPressedStyle().getBackground().setColor(ColorConstants.transparent());
 
     CharIcon icon = new CharIcon(FontRegistry.MATERIAL_DESIGN_ICONS, '\uF45D');
-    icon.setSize(new Vector2f(20, 20));
-    icon.setPosition(new Vector2f(-10, -10));
+    icon.setHorizontalAlign(HorizontalAlign.RIGHT);
+    icon.setVerticalAlign(VerticalAlign.BOTTOM);
     icon.setColor(settings.textColor());
     resizeButton.getStyle().getBackground().setIcon(icon);
     resizeButton.getStyle().setShadow(null);
@@ -92,7 +92,6 @@ public class FlatWidgetTheme<T extends Widget> extends FlatComponentTheme<T> {
     }
 
     Themes.getDefaultTheme().applyAll(component.getContainer());
-    component.getContainer().getStyle().getBackground().setColor(settings.backgroundColor());
     component.getContainer().getStyle().setShadow(null);
 
 

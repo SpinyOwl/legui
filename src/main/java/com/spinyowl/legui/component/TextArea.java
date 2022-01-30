@@ -13,7 +13,7 @@ import com.spinyowl.legui.component.optional.TextState;
 import com.spinyowl.legui.event.ScrollEvent;
 import com.spinyowl.legui.style.Style.DisplayType;
 import com.spinyowl.legui.style.color.ColorConstants;
-import com.spinyowl.legui.style.length.Length;
+import com.spinyowl.legui.style.length.Unit;
 import com.spinyowl.legui.theme.Themes;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -214,7 +214,7 @@ public class TextArea extends Component implements TextComponent, Viewport {
 
   public void setHorizontalScrollBarVisible(boolean enabled) {
     if (enabled) {
-      Length height = this.horizontalScrollBar.getStyle().getHeight();
+      Unit height = this.horizontalScrollBar.getStyle().getHeight();
       if (height == null) {
         height = pixel(this.horizontalScrollBar.getSize().y);
         this.horizontalScrollBar.getStyle().setHeight(height);
@@ -230,7 +230,7 @@ public class TextArea extends Component implements TextComponent, Viewport {
 
   public void setVerticalScrollBarVisible(boolean enabled) {
     if (enabled) {
-      Length width = this.verticalScrollBar.getStyle().getWidth();
+      Unit width = this.verticalScrollBar.getStyle().getWidth();
       if (width == null) {
         width = pixel(this.verticalScrollBar.getSize().x);
         this.verticalScrollBar.getStyle().setWidth(width);

@@ -19,7 +19,6 @@ import com.spinyowl.legui.system.context.Context;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 
-
 public class NvgButtonRenderer extends NvgDefaultComponentRenderer<Button> {
 
   @Override
@@ -32,30 +31,32 @@ public class NvgButtonRenderer extends NvgDefaultComponentRenderer<Button> {
       // Render text
       TextState textState = component.getTextState();
       Vector4f rect = new Vector4f(pos, size.x(), size.y());
-      HorizontalAlign horizontalAlign = getStyle(component, Style::getHorizontalAlign,
-          HorizontalAlign.LEFT);
-      VerticalAlign verticalAlign = getStyle(component, Style::getVerticalAlign,
-          VerticalAlign.MIDDLE);
+
       Float fontSize = getStyle(component, Style::getFontSize, 16F);
 
-      float[] textBounds = calculateTextBoundsRect(nanovg, rect, textState.getText(),
-          horizontalAlign, verticalAlign, fontSize);
+      HorizontalAlign hAlign = getStyle(component, Style::getHorizontalAlign, HorizontalAlign.LEFT);
+      VerticalAlign vAlign = getStyle(component, Style::getVerticalAlign, VerticalAlign.MIDDLE);
+
+      float[] textBounds =
+          calculateTextBoundsRect(nanovg, rect, textState.getText(), hAlign, vAlign, fontSize);
       float textWidth = textState.getTextWidth();
 
       if (Math.abs(textWidth - textBounds[2]) > 0.001) {
-        EventProcessorProvider.getInstance().pushEvent(
-            new ButtonWidthChangeEvent(component, context, component.getFrame(), textBounds[2]));
+        EventProcessorProvider.getInstance()
+            .pushEvent(
+                new ButtonWidthChangeEvent(
+                    component, context, component.getFrame(), textBounds[2]));
       }
 
       pos = component.getAbsolutePosition();
       size = component.getSize();
 
+      renderBackground(component, context, nanovg);
+
       // Render text
       nvgIntersectScissor(nanovg, pos.x, pos.y, size.x, size.y);
       textState = component.getTextState();
       rect = new Vector4f(pos, size.x(), size.y());
-      horizontalAlign = getStyle(component, Style::getHorizontalAlign, HorizontalAlign.LEFT);
-      verticalAlign = getStyle(component, Style::getVerticalAlign, VerticalAlign.MIDDLE);
       fontSize = getStyle(component, Style::getFontSize, 16F);
 
       textState.setTextWidth(textBounds[2]);
@@ -63,9 +64,13 @@ public class NvgButtonRenderer extends NvgDefaultComponentRenderer<Button> {
       textState.setCaretX(null);
       textState.setCaretY(null);
 
-      renderBackground(component, context, nanovg);
-      drawTextLineToRect(nanovg, rect, true,
-          horizontalAlign, verticalAlign, fontSize,
+      drawTextLineToRect(
+          nanovg,
+          rect,
+          true,
+          getStyle(component, Style::getHorizontalAlign, HorizontalAlign.LEFT),
+          getStyle(component, Style::getVerticalAlign, VerticalAlign.MIDDLE),
+          fontSize,
           getStyle(component, Style::getFont, FontRegistry.getDefaultFont()),
           textState.getText(),
           getStyle(component, Style::getTextColor),

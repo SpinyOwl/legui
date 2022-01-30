@@ -10,7 +10,7 @@ import com.spinyowl.legui.component.Component;
 public abstract class AbstractTheme<T extends Component> {
 
   /**
-   * Used to apply theme only for component and not apply for child components. Applies changes only
+   * Used to apply theme only for component and not apply for child components. Apply changes only
    * for current class part and not for parent part.
    *
    * @param component component to apply theme.

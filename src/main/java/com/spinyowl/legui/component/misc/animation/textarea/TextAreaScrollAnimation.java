@@ -13,7 +13,7 @@ public class TextAreaScrollAnimation extends ViewportAnimation<TextArea> {
   }
 
   public TextAreaScrollAnimation(TextArea textArea) {
-    this(textArea, 0.2d);
+    this(textArea, 0.1d);
   }
 
 
