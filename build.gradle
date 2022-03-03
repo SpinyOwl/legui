@@ -28,8 +28,8 @@ printProjectInfo()
 
 idea { module { downloadJavadoc = true; downloadSources = true } }
 
-sourceCompatibility = 11
-targetCompatibility = 11
+sourceCompatibility = 16
+targetCompatibility = 16
 
 compileJava.options.encoding = "UTF-8"
 compileTestJava.options.encoding = "UTF-8"
@@ -47,7 +47,7 @@ dependencies {
     api group: 'org.reflections', name: 'reflections', version: '0.10.2'
 
     //@formatter:off
-    api group: "org.joml", name: "joml", version: joml_version, changing: true
+    api group: "org.joml", name: "joml", version: joml_version
     api group: 'commons-io', name: 'commons-io', version: commons_io
     api group: 'org.apache.commons', name: 'commons-lang3', version: commons_version, changing: false
     api group: 'org.apache.commons', name: 'commons-collections4', version: commons_collections, changing: false
@@ -56,37 +56,26 @@ dependencies {
     // https://mvnrepository.com/artifact/com.squareup.moshi/moshi
     api group: 'com.squareup.moshi', name: 'moshi', version: '1.12.0'
 
-    api group: 'com.spinyowl', name: 'cbchain', version: cbchain_version, changing: true
+    api("com.spinyowl:cbchain:${cbchain_version}") {
+        exclude group: 'org.lwjgl'
+    }
 
-    api group: 'org.lwjgl', name: 'lwjgl-stb', version: lwjgl_version, changing: true
-    api group: 'org.lwjgl', name: 'lwjgl-stb', version: lwjgl_version, changing: true, classifier: 'natives-windows'
-    api group: 'org.lwjgl', name: 'lwjgl-stb', version: lwjgl_version, changing: true, classifier: 'natives-linux'
-    api group: 'org.lwjgl', name: 'lwjgl-stb', version: lwjgl_version, changing: true, classifier: 'natives-macos'
+    api group: 'org.lwjgl', name: 'lwjgl-stb', version: lwjgl_version
+    api group: 'org.lwjgl', name: 'lwjgl-glfw', version: lwjgl_version
+    api group: 'org.lwjgl', name: 'lwjgl-nanovg', version: lwjgl_version
+    api group: 'org.lwjgl', name: 'lwjgl-opengl', version: lwjgl_version
+    api group: 'org.lwjgl', name: 'lwjgl', version: lwjgl_version
+    api group: 'org.lwjgl', name: 'lwjgl-yoga', version: lwjgl_version
 
-    api group: 'org.lwjgl', name: 'lwjgl-glfw', version: lwjgl_version, changing: true
-    api group: 'org.lwjgl', name: 'lwjgl-glfw', version: lwjgl_version, changing: true, classifier: 'natives-windows'
-    api group: 'org.lwjgl', name: 'lwjgl-glfw', version: lwjgl_version, changing: true, classifier: 'natives-linux'
-    api group: 'org.lwjgl', name: 'lwjgl-glfw', version: lwjgl_version, changing: true, classifier: 'natives-macos'
-
-    api group: 'org.lwjgl', name: 'lwjgl-nanovg', version: lwjgl_version, changing: true
-    api group: 'org.lwjgl', name: 'lwjgl-nanovg', version: lwjgl_version, changing: true, classifier: 'natives-windows'
-    api group: 'org.lwjgl', name: 'lwjgl-nanovg', version: lwjgl_version, changing: true, classifier: 'natives-linux'
-    api group: 'org.lwjgl', name: 'lwjgl-nanovg', version: lwjgl_version, changing: true, classifier: 'natives-macos'
-
-    api group: 'org.lwjgl', name: 'lwjgl-opengl', version: lwjgl_version, changing: true
-    api group: 'org.lwjgl', name: 'lwjgl-opengl', version: lwjgl_version, changing: true, classifier: 'natives-windows'
-    api group: 'org.lwjgl', name: 'lwjgl-opengl', version: lwjgl_version, changing: true, classifier: 'natives-linux'
-    api group: 'org.lwjgl', name: 'lwjgl-opengl', version: lwjgl_version, changing: true, classifier: 'natives-macos'
-
-    api group: 'org.lwjgl', name: 'lwjgl', version: lwjgl_version, changing: true
-    api group: 'org.lwjgl', name: 'lwjgl', version: lwjgl_version, changing: true, classifier: 'natives-windows'
-    api group: 'org.lwjgl', name: 'lwjgl', version: lwjgl_version, changing: true, classifier: 'natives-linux'
-    api group: 'org.lwjgl', name: 'lwjgl', version: lwjgl_version, changing: true, classifier: 'natives-macos'
-
-    api group: 'org.lwjgl', name: 'lwjgl-yoga', version: lwjgl_version, changing: true
-    api group: 'org.lwjgl', name: 'lwjgl-yoga', version: lwjgl_version, changing: true, classifier: 'natives-windows'
-    api group: 'org.lwjgl', name: 'lwjgl-yoga', version: lwjgl_version, changing: true, classifier: 'natives-linux'
-    api group: 'org.lwjgl', name: 'lwjgl-yoga', version: lwjgl_version, changing: true, classifier: 'natives-macos'
+    def classifiers = ["natives-windows", "natives-linux", "natives-macos"]
+    for (c in classifiers) {
+        api group: 'org.lwjgl', name: 'lwjgl-stb', version: lwjgl_version, classifier: c
+        api group: 'org.lwjgl', name: 'lwjgl-glfw', version: lwjgl_version, classifier: c
+        api group: 'org.lwjgl', name: 'lwjgl-nanovg', version: lwjgl_version, classifier: c
+        api group: 'org.lwjgl', name: 'lwjgl-opengl', version: lwjgl_version, classifier: c
+        api group: 'org.lwjgl', name: 'lwjgl', version: lwjgl_version, classifier: c
+        api group: 'org.lwjgl', name: 'lwjgl-yoga', version: lwjgl_version, classifier: c
+    }
     //@formatter:on
 
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
@@ -107,14 +96,12 @@ java {
 
 jar {
     exclude("com/spinyowl/legui/demo/**")
-    manifest.attributes(
-            'Build-Timestamp': new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").format(new Date()),
+    manifest.attributes('Build-Timestamp': new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").format(new Date()),
             'Build-Revision': versioning.info.commit,
             'Created-By': "Gradle ${gradle.gradleVersion}",
             'Build-Jdk': "${System.properties.getProperty('java.version')} (${System.properties.getProperty('java.vendor')} ${System.properties.getProperty('java.vm.version')})",
             'Build-OS': "${System.properties.getProperty('os.name')} ${System.properties.getProperty('os.arch')} ${System.properties.getProperty('os.version')}",
-            'Full-Version': project.version
-    )
+            'Full-Version': project.version)
 }
 
 def mavenLocalRepo = new File(project.buildDir.path, 'publish').toURI().toURL()
