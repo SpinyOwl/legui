@@ -44,7 +44,6 @@ repositories {
 dependencies {
     //@formatter:off
     api group: "org.joml", name: "joml", version: joml_version
-    api group: 'commons-io', name: 'commons-io', version: commons_io
     api group: 'org.apache.commons', name: 'commons-lang3', version: commons_version, changing: false
     api group: 'com.google.guava', name: 'guava', version: guava_version, changing: false
 

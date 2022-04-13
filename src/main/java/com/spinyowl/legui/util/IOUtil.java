@@ -1,5 +1,6 @@
 package com.spinyowl.legui.util;
 
+import com.google.common.io.ByteStreams;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -10,7 +11,6 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import org.apache.commons.io.IOUtils;
 
 /**
  * IO utility. Used to read resource as {@link ByteBuffer} or as {@link String}..
@@ -36,7 +36,7 @@ public final class IOUtil {
     byte[] bytes;
     path = path.trim();
     if (path.startsWith("http")) {
-      bytes = IOUtils.toByteArray(new URL(path));
+      bytes = ByteStreams.toByteArray(new URL(path).openStream());
     } else {
       InputStream stream;
       File file = new File(path);
@@ -48,7 +48,7 @@ public final class IOUtil {
       if (stream == null) {
         throw new FileNotFoundException(path);
       }
-      bytes = IOUtils.toByteArray(stream);
+      bytes = ByteStreams.toByteArray(stream);
     }
     ByteBuffer data = ByteBuffer.allocateDirect(bytes.length).order(ByteOrder.nativeOrder())
         .put(bytes);
@@ -67,7 +67,7 @@ public final class IOUtil {
     if (stream == null) {
       throw new IllegalArgumentException("InputStream can not be null!");
     }
-    byte[] bytes = IOUtils.toByteArray(stream);
+    byte[] bytes = ByteStreams.toByteArray(stream);
     ByteBuffer data = ByteBuffer.allocateDirect(bytes.length).order(ByteOrder.nativeOrder())
         .put(bytes);
     data.flip();
@@ -86,7 +86,7 @@ public final class IOUtil {
       throw new IllegalArgumentException("File does not exist or is not a file.");
     }
     InputStream stream = new FileInputStream(file);
-    byte[] bytes = IOUtils.toByteArray(stream);
+    byte[] bytes = ByteStreams.toByteArray(stream);
     ByteBuffer data = ByteBuffer.allocateDirect(bytes.length).order(ByteOrder.nativeOrder())
         .put(bytes);
     data.flip();
