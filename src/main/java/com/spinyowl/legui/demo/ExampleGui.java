@@ -708,6 +708,10 @@ public class ExampleGui extends Panel {
 
   private ToggleButton createToggleButtonWithLongTooltip() {
     ToggleButton toggleButton = new ToggleButton("", 100, 170, 40, 20);
+
+    // width of space with toggle = 60 pixels. total width of image = 100 pixels
+    //   40  20  40
+    // |----|  |----|
     Icon bgImageNormal = new ImageIcon(ImageLoader.loadImage("com/spinyowl/legui/demo/toggle.png"));
 
     toggleButton.getListenerMap()
@@ -770,8 +774,11 @@ public class ExampleGui extends Panel {
           }
         });
 
-    bgImageNormal.setSize(new Vector2f(100 * 40 / 60, 20));
-    bgImageNormal.setPosition(new Vector2f(40 - 100 * 40 / 60, 0));
+    // width of resized image should be such, so 40 pixels of button
+    // would hold 60 pixels of original image. (40 / size = 60 / 100)
+    int imgWid = 40 * 100 / 60;
+    bgImageNormal.setSize(new Vector2f(imgWid, 20));
+    bgImageNormal.setPosition(new Vector2f(40 - imgWid, 0)); // toggle should be at left position.
     toggleButton.getStyle().getBackground().setIcon(bgImageNormal);
     return toggleButton;
   }
