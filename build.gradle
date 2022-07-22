@@ -6,7 +6,7 @@ plugins {
     id 'maven-publish'
     id 'java-library'
     id "org.sonarqube" version "3.3"
-    id 'net.nemerosa.versioning' version '2.15.0'
+    id 'net.nemerosa.versioning' version '3.0.0'
 }
 
 def version = SemVer.of(version.toString())
