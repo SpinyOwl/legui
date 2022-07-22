@@ -74,7 +74,7 @@ API is close to Swing API.
 
 ## Contribution to LEGUI
 
-See the [contribution guide](docs/CONTRIBUTING.md) for more information.
+See the [contribution guide](.github/CONTRIBUTING.md) for more information.
 
 ## System requirements
 
