@@ -12,7 +12,7 @@ jobs:
     steps:
 
       # CHECKOUT
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       # EVALUATE VARIABLES
       - name: Get Version Property
