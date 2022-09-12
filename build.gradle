@@ -54,7 +54,7 @@ dependencies {
     api group: 'com.google.guava', name: 'guava', version: guava_version, changing: false
 
     // https://mvnrepository.com/artifact/com.squareup.moshi/moshi
-    api group: 'com.squareup.moshi', name: 'moshi', version: '1.13.0'
+    api group: 'com.squareup.moshi', name: 'moshi', version: '1.14.0'
 
     api("com.spinyowl:cbchain:${cbchain_version}") {
         exclude group: 'org.lwjgl'
