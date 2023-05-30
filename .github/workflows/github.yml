@@ -17,7 +17,7 @@ jobs:
       # EVALUATE VARIABLES
       - name: Get Version Property
         id: read_property
-        uses: christian-draeger/read-properties@1.0.1
+        uses: christian-draeger/read-properties@1.1.1
         with:
           path: ./gradle.properties
           property: version
@@ -41,7 +41,7 @@ jobs:
 
       # PREPARE AND BUILD
       - name: Set up JDK
-        uses: actions/setup-java@v3.4.1
+        uses: actions/setup-java@v3.10.0
         with:
           java-version: 16
           distribution: 'temurin'
