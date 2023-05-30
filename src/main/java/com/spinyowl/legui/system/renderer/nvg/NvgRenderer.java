@@ -32,7 +32,6 @@ import org.lwjgl.nanovg.NanoVGGL2;
 import org.lwjgl.nanovg.NanoVGGL3;
 import org.lwjgl.opengl.GL30;
 
-
 public class NvgRenderer extends AbstractRenderer {
 
   public static final String NVG_CONTEXT = "NVG_CONTEXT";
@@ -144,7 +143,7 @@ public class NvgRenderer extends AbstractRenderer {
       String fontName = fontDataEntry.getKey();
       Font font = fontDataEntry.getValue();
       if (loadedFonts.get(fontName) == null || !loadedFonts.get(fontName).equals(font)) {
-        nvgCreateFontMem(nvgContext, fontName, fontDataEntry.getValue().getData(), 0);
+        nvgCreateFontMem(nvgContext, fontName, fontDataEntry.getValue().getData(), false);
         loadedFonts.put(fontName, font);
       }
     }

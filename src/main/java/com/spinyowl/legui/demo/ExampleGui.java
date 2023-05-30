@@ -307,7 +307,7 @@ public class ExampleGui extends Panel {
     selectBox.addElement(0.5d);
     selectBox.addElement(1);
     selectBox.addElement("MyText");
-    selectBox.addElement(new Long(2L));
+    selectBox.addElement(2L);
     selectBox.setVisibleCount(7);
     selectBox.setElementHeight(20);
     selectBox.addSelectBoxChangeSelectionEventListener(

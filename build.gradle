@@ -54,7 +54,7 @@ dependencies {
     api group: 'com.google.guava', name: 'guava', version: guava_version, changing: false
 
     // https://mvnrepository.com/artifact/com.squareup.moshi/moshi
-    api group: 'com.squareup.moshi', name: 'moshi', version: '1.13.0'
+    api group: 'com.squareup.moshi', name: 'moshi', version: moshi_version
 
     api("com.spinyowl:cbchain:${cbchain_version}") {
         exclude group: 'org.lwjgl'
@@ -78,9 +78,9 @@ dependencies {
     }
     //@formatter:on
 
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
-    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.8.2'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: junit_version
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-params', version: junit_version
+    testRuntimeOnly group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: junit_version
 }
 
 test {
