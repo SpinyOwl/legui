@@ -38,19 +38,13 @@ javadoc.options.encoding = 'UTF-8'
 repositories {
     mavenCentral()
     maven { url "https://oss.sonatype.org/content/repositories/releases/" }
-    maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
     maven { url "https://raw.githubusercontent.com/SpinyOwl/repo/releases" }
 }
 
 dependencies {
-    // https://mvnrepository.com/artifact/org.reflections/reflections
-    api group: 'org.reflections', name: 'reflections', version: '0.10.2'
-
     //@formatter:off
     api group: "org.joml", name: "joml", version: joml_version
-    api group: 'commons-io', name: 'commons-io', version: commons_io
     api group: 'org.apache.commons', name: 'commons-lang3', version: commons_version, changing: false
-    api group: 'org.apache.commons', name: 'commons-collections4', version: commons_collections, changing: false
     api group: 'com.google.guava', name: 'guava', version: guava_version, changing: false
 
     // https://mvnrepository.com/artifact/com.squareup.moshi/moshi

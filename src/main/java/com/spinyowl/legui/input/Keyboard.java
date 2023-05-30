@@ -122,10 +122,9 @@ import static org.lwjgl.glfw.GLFW.GLFW_KEY_X;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_Y;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_Z;
 
+import com.google.common.collect.EnumHashBiMap;
 import java.util.Map;
 import java.util.Objects;
-import org.apache.commons.collections4.BidiMap;
-import org.apache.commons.collections4.bidimap.DualHashBidiMap;
 
 /**
  * This class used to store key mapping to native keys. Key state updated only for keyboard that
@@ -133,7 +132,7 @@ import org.apache.commons.collections4.bidimap.DualHashBidiMap;
  */
 public final class Keyboard {
 
-  private static final BidiMap<KeyCode, Integer> keys = new DualHashBidiMap<>();
+  private static final EnumHashBiMap<KeyCode, Integer> keys = EnumHashBiMap.create(KeyCode.class);
   private static Shortcut copyShortcut = new Shortcut(KeyCode.KEY_C, KeyMod.CONTROL);
   private static Shortcut pasteShortcut = new Shortcut(KeyCode.KEY_V, KeyMod.CONTROL);
   private static Shortcut selectAllShortcut = new Shortcut(KeyCode.KEY_A, KeyMod.CONTROL);
@@ -271,7 +270,7 @@ public final class Keyboard {
   }
 
   public static KeyCode getKeyCode(int nativeCode) {
-    return keys.getKey(nativeCode);
+    return keys.inverse().get(nativeCode);
   }
 
   public static int getNativeCode(KeyCode keyCode) {

@@ -1,5 +1,6 @@
 package com.spinyowl.legui.util;
 
+import com.google.common.io.ByteStreams;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -10,22 +11,19 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import org.apache.commons.io.IOUtils;
 
-/**
- * IO utility. Used to read resource as {@link ByteBuffer} or as {@link String}..
- */
+/** IO utility. Used to read resource as {@link ByteBuffer} or as {@link String}.. */
 public final class IOUtil {
 
-  private IOUtil() {
-  }
+  private IOUtil() {}
 
   /**
    * Creates {@link ByteBuffer} from:
+   *
    * <ul>
-   *     <li>file</li>
-   *     <li>resource</li>
-   *     <li>url (http/https) protocol</li>
+   *   <li>file
+   *   <li>resource
+   *   <li>url (http/https) protocol
    * </ul>
    *
    * @param path path to file or resource.
@@ -35,10 +33,10 @@ public final class IOUtil {
   public static ByteBuffer resourceToByteBuffer(String path) throws IOException {
     byte[] bytes;
     path = path.trim();
+    InputStream stream;
     if (path.startsWith("http")) {
-      bytes = IOUtils.toByteArray(new URL(path));
+      stream = new URL(path).openStream();
     } else {
-      InputStream stream;
       File file = new File(path);
       if (file.exists() && file.isFile()) {
         stream = new FileInputStream(file);
@@ -48,10 +46,10 @@ public final class IOUtil {
       if (stream == null) {
         throw new FileNotFoundException(path);
       }
-      bytes = IOUtils.toByteArray(stream);
     }
-    ByteBuffer data = ByteBuffer.allocateDirect(bytes.length).order(ByteOrder.nativeOrder())
-        .put(bytes);
+    bytes = ByteStreams.toByteArray(stream);
+    ByteBuffer data =
+        ByteBuffer.allocateDirect(bytes.length).order(ByteOrder.nativeOrder()).put(bytes);
     data.flip();
     return data;
   }
@@ -67,9 +65,9 @@ public final class IOUtil {
     if (stream == null) {
       throw new IllegalArgumentException("InputStream can not be null!");
     }
-    byte[] bytes = IOUtils.toByteArray(stream);
-    ByteBuffer data = ByteBuffer.allocateDirect(bytes.length).order(ByteOrder.nativeOrder())
-        .put(bytes);
+    byte[] bytes = ByteStreams.toByteArray(stream);
+    ByteBuffer data =
+        ByteBuffer.allocateDirect(bytes.length).order(ByteOrder.nativeOrder()).put(bytes);
     data.flip();
     return data;
   }
@@ -86,9 +84,9 @@ public final class IOUtil {
       throw new IllegalArgumentException("File does not exist or is not a file.");
     }
     InputStream stream = new FileInputStream(file);
-    byte[] bytes = IOUtils.toByteArray(stream);
-    ByteBuffer data = ByteBuffer.allocateDirect(bytes.length).order(ByteOrder.nativeOrder())
-        .put(bytes);
+    byte[] bytes = ByteStreams.toByteArray(stream);
+    ByteBuffer data =
+        ByteBuffer.allocateDirect(bytes.length).order(ByteOrder.nativeOrder()).put(bytes);
     data.flip();
     return data;
   }
@@ -153,5 +151,4 @@ public final class IOUtil {
     byteBuffer.get(buffer);
     return new String(buffer, charset);
   }
-
 }
