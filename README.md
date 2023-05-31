@@ -1,18 +1,22 @@
-![REPO SIZE](https://img.shields.io/github/repo-size/SpinyOwl/legui.svg?style=for-the-badge)
-![CODE SIZE](https://img.shields.io/github/languages/code-size/SpinyOwl/legui.svg?style=for-the-badge)
-[![Sonar Quality Gate](https://img.shields.io/sonar/alert_status/SpinyOwl_legui?logo=sonarcloud&server=https%3A%2F%2Fsonarcloud.io&style=for-the-badge)](https://sonarcloud.io/dashboard?id=SpinyOwl_legui)
-[![License](https://img.shields.io/github/license/SpinyOwl/legui.svg?style=for-the-badge)](/LICENSE)
-[![Discord](https://img.shields.io/discord/245558983123927040.svg?slongCache=true&label=Discord&logo=discord&style=for-the-badge)](https://discord.gg/6wfqXpJ)
-
-![Build and publish](https://img.shields.io/github/workflow/status/SpinyOwl/legui/Build%20and%20publish/develop?label=build&logo=Github&style=for-the-badge)
-[![STABLE VERSION](https://img.shields.io/badge/dynamic/xml.svg?label=latest%20version&url=https%3A%2F%2Fraw.github.com%2FSpinyOwl%2Frepo%2Freleases%2Fcom%2Fspinyowl%2Flegui%2Fmaven-metadata.xml&query=%2F%2Fmetadata%2Fversioning%2Fversions%2Fversion%5Blast()%5D&colorB=blue&style=for-the-badge)](https://github.com/SpinyOwl/repo/tree/releases/com/spinyowl/legui)
-
-___
 
 ![legui_api](images/legui_api.png)
 ![preview](images/preview.png)
 
-___
+# LEGUI
+
+![REPO SIZE](https://img.shields.io/github/repo-size/SpinyOwl/legui.svg?style=for-the-badge)
+![CODE SIZE](https://img.shields.io/github/languages/code-size/SpinyOwl/legui.svg?style=for-the-badge)
+[![Sonar Quality Gate](https://img.shields.io/sonar/alert_status/SpinyOwl_legui?logo=sonarcloud&server=https%3A%2F%2Fsonarcloud.io&style=for-the-badge)](https://sonarcloud.io/dashboard?id=SpinyOwl_legui)
+[![License](https://img.shields.io/github/license/SpinyOwl/legui.svg?style=for-the-badge)](/LICENSE)
+[![Discord](https://img.shields.io/discord/245558983123927040.svg?slongCache=true&label=Discord&logo=discord&style=for-the-badge)](https://discord.gg/6wfqXpJ)  
+![Build and publish](https://img.shields.io/github/workflow/status/SpinyOwl/legui/Build%20and%20publish/develop?label=build&logo=Github&style=for-the-badge)
+[![STABLE VERSION](https://img.shields.io/badge/dynamic/xml.svg?label=latest%20version&url=https%3A%2F%2Fraw.github.com%2FSpinyOwl%2Frepo%2Freleases%2Fcom%2Fspinyowl%2Flegui%2Fmaven-metadata.xml&query=%2F%2Fmetadata%2Fversioning%2Fversions%2Fversion%5Blast()%5D&colorB=blue&style=for-the-badge)](https://github.com/SpinyOwl/repo/tree/releases/com/spinyowl/legui)
+
+## Community and Support
+You can join the community in [the Discord server!](https://discord.gg/6wfqXpJ) I also encourage everyone to voice your suggestions, comments, and questions in the Discord.
+
+If you'd like to help support and sustain this library, please consider becoming a donor!  
+<a href='https://ko-fi.com/J3J4L9ASJ' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://storage.ko-fi.com/cdn/kofi1.png?v=3' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
 
 # TOC
 
@@ -185,3 +189,6 @@ All examples located under [demo](/src/main/java/com/spinyowl/legui/demo/) packa
 [JOML – Java OpenGL Math Library](https://github.com/JOML-CI/JOML)  
 [CBCHAIN - Callback Chain for LWJGL3](https://github.com/SpinyOwl/cbchain)  
 [NanoVG -Small antialiased vector graphics rendering library for OpenGL.](https://github.com/memononen/nanovg)  
+
+## Statistics
+![Alt](https://repobeats.axiom.co/api/embed/0cbc0ac5fb5a710ac355daafa6e1a5475109bfac.svg "Repobeats analytics image")
