@@ -5,7 +5,7 @@ plugins {
     id 'eclipse'
     id 'maven-publish'
     id 'java-library'
-    id "org.sonarqube" version "4.0.0.2929"
+    id "org.sonarqube" version "4.2.0.3129"
     id 'net.nemerosa.versioning' version '3.0.0'
 }
 
