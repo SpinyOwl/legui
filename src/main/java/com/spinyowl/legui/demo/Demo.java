@@ -198,7 +198,6 @@ public abstract class Demo {
     glfwShowWindow(window);
     createGuiElements(frame);
 
-    context = new Context(window);
     keeper = new DefaultCallbackKeeper();
 
     CallbackKeeper.registerCallbacks(window, keeper);
@@ -208,6 +207,7 @@ public abstract class Demo {
     systemEventProcessor = new SystemEventProcessorImpl();
     SystemEventProcessor.addDefaultCallbacks(keeper, systemEventProcessor);
 
+    context = new Context(window, systemEventProcessor);
     running = true;
   }
 

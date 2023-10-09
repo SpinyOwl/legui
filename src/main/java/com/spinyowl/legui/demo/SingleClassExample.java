@@ -96,11 +96,6 @@ public class SingleClassExample {
     // we can add elements here or on the fly
     createGuiElements(frame);
 
-    // We need to create legui context which shared by renderer and event processor.
-    // Also we need to pass event processor for ui events such as click on component, key typing and
-    // etc.
-    Context context = new Context(window);
-
     // We need to create callback keeper which will hold all of callbacks.
     // These callbacks will be used in initialization of system event processor
     // (will be added callbacks which will push system events to event queue and after that
@@ -130,6 +125,11 @@ public class SingleClassExample {
     // events.
     SystemEventProcessor systemEventProcessor = new SystemEventProcessorImpl();
     SystemEventProcessor.addDefaultCallbacks(keeper, systemEventProcessor);
+
+    // We need to create legui context which shared by renderer and event processor.
+    // Also we need to pass event processor for ui events such as click on component, key typing and
+    // etc.
+    Context context = new Context(window, systemEventProcessor);
 
     // Also we need to create renderer provider
     // and create renderer which will render our ui components.

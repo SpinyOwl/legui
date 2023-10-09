@@ -25,9 +25,6 @@ public class DefaultInitializer {
     this.frame = frame;
     this.window = window;
 
-    // We need to create legui context which shared by renderer and event processor.
-    // Also we need to pass event processor for ui events such as click on component, key typing and etc.
-    context = new Context(window);
 
     // We need to create callback keeper which will hold all of callbacks.
     // These callbacks will be used in initialization of system event processor
@@ -39,6 +36,10 @@ public class DefaultInitializer {
     // Event processor for system events. System events should be processed and translated to gui events.
     systemEventProcessor = new SystemEventProcessorImpl();
     SystemEventProcessor.addDefaultCallbacks(callbackKeeper, systemEventProcessor);
+
+    // We need to create legui context which shared by renderer and event processor.
+    // Also we need to pass event processor for ui events such as click on component, key typing and etc.
+    context = new Context(window, systemEventProcessor);
 
     eventProcessor = EventProcessorProvider.getInstance();
 

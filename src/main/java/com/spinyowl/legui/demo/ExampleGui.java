@@ -73,7 +73,6 @@ import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.lwjgl.glfw.GLFW;
 
-
 public class ExampleGui extends Panel {
 
   private final Label mouseTargetLabel;

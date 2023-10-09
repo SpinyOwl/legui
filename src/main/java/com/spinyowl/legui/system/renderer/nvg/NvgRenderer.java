@@ -3,6 +3,7 @@ package com.spinyowl.legui.system.renderer.nvg;
 import static org.lwjgl.nanovg.NanoVG.nvgBeginFrame;
 import static org.lwjgl.nanovg.NanoVG.nvgCreateFontMem;
 import static org.lwjgl.nanovg.NanoVG.nvgEndFrame;
+import static org.lwjgl.nanovg.NanoVG.nvgScale;
 import static org.lwjgl.opengl.GL11.GL_BLEND;
 import static org.lwjgl.opengl.GL11.GL_DEPTH_TEST;
 import static org.lwjgl.opengl.GL11.GL_ONE_MINUS_SRC_ALPHA;
@@ -26,6 +27,7 @@ import com.spinyowl.legui.system.renderer.RendererProvider;
 import com.spinyowl.legui.system.renderer.nvg.util.NvgRenderUtils;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import org.joml.Vector2f;
 import org.joml.Vector2fc;
 import org.joml.Vector2i;
 import org.lwjgl.nanovg.NanoVGGL2;
@@ -159,7 +161,10 @@ public class NvgRenderer extends AbstractRenderer {
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     Vector2i windowSize = context.getWindowSize();
+    Vector2f scale = context.getScale();
+
     nvgBeginFrame(nvgContext, windowSize.x, windowSize.y, context.getPixelRatio());
+    nvgScale(nvgContext, scale.x, scale.y);
   }
 
   @Override

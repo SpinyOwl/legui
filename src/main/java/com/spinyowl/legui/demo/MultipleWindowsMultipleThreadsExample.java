@@ -244,7 +244,6 @@ public class MultipleWindowsMultipleThreadsExample {
 
       frames[i] = frame;
 
-      contexts[i] = new Context(windows[i]);
       keepers[i] = new DefaultCallbackKeeper();
 
       CallbackKeeper.registerCallbacks(windows[i], keepers[i]);
@@ -253,6 +252,7 @@ public class MultipleWindowsMultipleThreadsExample {
 
       systemEventProcessors[i] = new SystemEventProcessorImpl();
       SystemEventProcessor.addDefaultCallbacks(keepers[i], systemEventProcessors[i]);
+      contexts[i] = new Context(windows[i], systemEventProcessors[i]);
     }
 
     running = true;

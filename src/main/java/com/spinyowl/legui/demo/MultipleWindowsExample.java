@@ -87,9 +87,6 @@ public class MultipleWindowsExample {
       renderers[i] = new NvgRenderer();
       renderers[i].initialize();
       createGuiElements(frames[i] = new Frame(WIDTH, HEIGHT));
-
-      contexts[i] = new Context(windows[i]);
-
       keepers[i] = new DefaultCallbackKeeper();
       CallbackKeeper.registerCallbacks(windows[i], keepers[i]);
       keepers[i].getChainKeyCallback().add(glfwKeyCallbackI);
@@ -97,6 +94,9 @@ public class MultipleWindowsExample {
 
       systemEventProcessors[i] = new SystemEventProcessorImpl();
       SystemEventProcessor.addDefaultCallbacks(keepers[i], systemEventProcessors[i]);
+
+      contexts[i] = new Context(windows[i], systemEventProcessors[i]);
+
     }
 
     running = true;
