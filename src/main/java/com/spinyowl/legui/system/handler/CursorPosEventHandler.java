@@ -14,9 +14,7 @@ import java.util.Collections;
 import java.util.List;
 import org.joml.Vector2f;
 
-/**
- * Cursor position event handler.
- */
+/** Cursor position event handler. */
 public class CursorPosEventHandler extends AbstractSystemEventHandler<SystemCursorPosEvent> {
 
   /**
@@ -28,8 +26,7 @@ public class CursorPosEventHandler extends AbstractSystemEventHandler<SystemCurs
    */
   protected void preHandle(SystemCursorPosEvent event, Frame frame, Context context) {
     Vector2f cursorPosition = new Vector2f(event.fx, event.fy);
-    Mouse.setCursorPositionPrev(new Vector2f(Mouse.getCursorPosition()));
-    Mouse.setCursorPosition(cursorPosition);
+    Mouse.pushCursorPosition(cursorPosition);
 
     List<Layer> allLayers = frame.getAllLayers();
     Collections.reverse(allLayers);
@@ -93,8 +90,8 @@ public class CursorPosEventHandler extends AbstractSystemEventHandler<SystemCurs
   private void handle(Component component, Context context, Frame frame) {
     if (component.isEmpty()) {
       if ((Mouse.MouseButton.MOUSE_BUTTON_LEFT.isPressed()
-          || Mouse.MouseButton.MOUSE_BUTTON_RIGHT.isPressed()) &&
-          component == context.getFocusedGui()) {
+              || Mouse.MouseButton.MOUSE_BUTTON_RIGHT.isPressed())
+          && component == context.getFocusedGui()) {
         Vector2f delta = Mouse.getCursorPosition().sub(Mouse.getCursorPositionPrev());
         EventProcessorProvider.getInstance()
             .pushEvent(new MouseDragEvent(component, context, frame, delta));

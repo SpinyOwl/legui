@@ -28,8 +28,8 @@ printProjectInfo()
 
 idea { module { downloadJavadoc = true; downloadSources = true } }
 
-sourceCompatibility = JavaVersion.VERSION_16
-targetCompatibility = JavaVersion.VERSION_16
+sourceCompatibility = JavaVersion.VERSION_17
+targetCompatibility = JavaVersion.VERSION_17
 
 compileJava.options.encoding = "UTF-8"
 compileTestJava.options.encoding = "UTF-8"
@@ -43,6 +43,11 @@ repositories {
 
 dependencies {
     //@formatter:off
+    api group: 'org.projectlombok', name: 'lombok', version: lombok_version
+    annotationProcessor group: 'org.projectlombok', name: 'lombok', version: lombok_version
+    testCompileOnly group: 'org.projectlombok', name: 'lombok', version: lombok_version
+    testAnnotationProcessor group: 'org.projectlombok', name: 'lombok', version: lombok_version
+
     api group: "org.joml", name: "joml", version: joml_version
     api group: 'org.apache.commons', name: 'commons-lang3', version: commons_version, changing: false
     api group: 'com.google.guava', name: 'guava', version: guava_version, changing: false
@@ -71,10 +76,6 @@ dependencies {
         api group: 'org.lwjgl', name: 'lwjgl-yoga', version: lwjgl_version, classifier: c
     }
     //@formatter:on
-}
-
-test {
-    useJUnitPlatform()
 }
 
 // PUBLISH SECTION

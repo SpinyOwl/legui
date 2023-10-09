@@ -37,6 +37,10 @@ public class Mouse {
     Mouse.cursorPosition = cursorPosition != null ? cursorPosition : new Vector2f();
   }
 
+  public static void pushCursorPosition(Vector2f cursorPosition) {
+    Mouse.cursorPositionPrev = Mouse.cursorPosition;
+    Mouse.cursorPosition = cursorPosition != null ? cursorPosition : new Vector2f();
+  }
   /**
    * Gets previous cursor position.
    *
