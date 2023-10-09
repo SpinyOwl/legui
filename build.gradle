@@ -6,7 +6,7 @@ plugins {
     id 'maven-publish'
     id 'java-library'
     id "org.sonarqube" version "4.0.0.2929"
-    id 'net.nemerosa.versioning' version '3.0.0'
+    id "net.nemerosa.versioning" version "3.0.0"
 }
 
 def version = SemVer.of(version.toString())
@@ -114,9 +114,10 @@ def sonarLogin = System.getProperty("sonarLogin") ?: System.getenv("sonarLogin")
 sonarqube {
     properties {
         property "sonar.projectKey", "SpinyOwl_legui"
+        property "sonar.java.source", "17"
         property "sonar.organization", "spinyowl"
         property "sonar.host.url", "https://sonarcloud.io"
-        property "sonar.login", sonarLogin
+        property "sonar.branch.name", versioning.info.branch
     }
 }
 
