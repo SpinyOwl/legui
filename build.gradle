@@ -110,7 +110,6 @@ publishing {
 }
 
 // SONARQUBE CONFIGURATION
-def sonarLogin = System.getProperty("sonarLogin") ?: System.getenv("sonarLogin") ?: null
 sonarqube {
     properties {
         property "sonar.projectKey", "SpinyOwl_legui"

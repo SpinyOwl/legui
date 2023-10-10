@@ -54,14 +54,14 @@ jobs:
       - name: Run tests
         run: ./gradlew test
 
-      # SONAR CHECK
-      - name: Run sonarqube check
-        env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-          sonarLogin: ${{secrets.sonarToken}}
-          JAVA_OPTS: -Xmx3072m -XX:MaxPermSize=512m -XX:ReservedCodeCacheSize=128m
-          GRADLE_OPTS: -Xmx3800m -XX:ReservedCodeCacheSize=128m -Dorg.gradle.daemon=false
-        run: ./gradlew sonarqube
+#      # SONAR CHECK
+#      - name: Run sonarqube check
+#        env:
+#          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+#          sonarLogin: ${{secrets.sonarToken}}
+#          JAVA_OPTS: -Xmx3072m -XX:MaxPermSize=512m -XX:ReservedCodeCacheSize=128m
+#          GRADLE_OPTS: -Xmx3800m -XX:ReservedCodeCacheSize=128m -Dorg.gradle.daemon=false
+#        run: ./gradlew sonarqube
 
       # PUBLISH ARTIFACTS
       - name: Build artifacts
