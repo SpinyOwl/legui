@@ -31,7 +31,7 @@ jobs:
 
       # CALL WEBHOOK
       - name: Send message build started
-        uses: rjstone/discord-webhook-notify@v1.4
+        uses: rjstone/discord-webhook-notify@v1.0.4
         with:
           severity: info
           color: '#808080'
@@ -43,7 +43,7 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v4
         with:
-          java-version: 21
+          java-version: 24
           distribution: 'temurin'
           cache: 'gradle'
 
@@ -71,7 +71,7 @@ jobs:
 
       # CALL WEBHOOK
       - name: Send message build finished
-        uses: rjstone/discord-webhook-notify@v1.4
+        uses: rjstone/discord-webhook-notify@v1.0.4
         if: success() && !contains(github.event.head_commit.message, '[skip publish]')
         with:
           severity: info
@@ -83,7 +83,7 @@ jobs:
           webhookUrl: ${{ secrets.WEBHOOK_URL }}
 
       - name: Send message build finished
-        uses: rjstone/discord-webhook-notify@v1.4
+        uses: rjstone/discord-webhook-notify@v1.0.4
         if: success() && contains(github.event.head_commit.message, '[skip publish]')
         with:
           severity: info
@@ -94,7 +94,7 @@ jobs:
           webhookUrl: ${{ secrets.WEBHOOK_URL }}
 
       - name: Send message build failed
-        uses: rjstone/discord-webhook-notify@v1.4
+        uses: rjstone/discord-webhook-notify@v1.0.4
         if: failure()
         with:
           severity: error
@@ -105,7 +105,7 @@ jobs:
           webhookUrl: ${{ secrets.WEBHOOK_URL }}
 
       - name: Send message build cancelled
-        uses: rjstone/discord-webhook-notify@v1.4
+        uses: rjstone/discord-webhook-notify@v1.0.4
         if: cancelled()
         with:
           severity: warn
